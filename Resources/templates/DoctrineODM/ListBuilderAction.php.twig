@@ -115,7 +115,7 @@ use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter as PagerAdapter;
                 $field          = $filterData['field'];
                 $operator       = $filterData['operator'];
                 $value          = $filterData['value'];
-                $param          = $queryFilter->getParamName();
+                $param          = $queryFilter->getUniqueName();
 
                 $filterParts[] = $queryFilter->getComparison($field, $operator, $param);
                 $query->setParameter($param, $queryFilter->formatValue($value, $operator, $field));

@@ -78,7 +78,7 @@ class FilterItemSubscriber implements EventSubscriberInterface
 
         if (null === $this->fieldName && null !== $data['field']) {
             $this->fieldName = $data['field'];
-            $this->addFilterFields($form, $config);
+            $this->addFilterFields($form);
         }
     }
 

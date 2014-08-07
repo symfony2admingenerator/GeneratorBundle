@@ -13,7 +13,7 @@
  *  > jquery-ui draggable
  *  > jquery-ui droppable
  *  > twitter bootstrap modal
- *  > jquery treeTable 3.2.0
+ *  > jquery treeTable (modified version)
  */
 // the semi-colon before function invocation is a safety net against concatenated
 // scripts and/or other plugins which may not be closed properly.
@@ -72,7 +72,9 @@
     		$(this.element).treeTable({
                 stringExpand: this.options.labels.expand,
                 stringCollapse: this.options.labels.collapse,
-                initialState: "collapsed",
+                doubleclickMode: true,
+                initialRootState: "expanded",
+                initialIndent: -19,
                 onNodeInit: function(node, expandable, isRootNode) {
                 	self._treeOnNodeInitCallback(node, expandable, isRootNode);
                 },

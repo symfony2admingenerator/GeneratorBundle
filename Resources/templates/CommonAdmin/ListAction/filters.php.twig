@@ -1,12 +1,6 @@
 {% block filters %}
     public function filtersAction()
     {
-        if ($this->getRequest()->get('reset')) {
-            $this->setFilters(array());
-
-            return new RedirectResponse($this->generateUrl("{{ builder.routePrefixWithSubfolder ~ '_' ~ bundle_name ~ (builder.BaseGeneratorName ? '_' ~ builder.BaseGeneratorName : '') ~ '_list' }}"));
-        }
-
         if ($this->getRequest()->getMethod() == "POST") {
             $form = $this->getFilterForm();
             $form->handleRequest($this->getRequest());

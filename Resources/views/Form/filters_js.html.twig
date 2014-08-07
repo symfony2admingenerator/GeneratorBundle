@@ -16,6 +16,7 @@ jQuery(document).ready(function($) {
                 {% for fieldName,prototype in prototypes %}
                 "{{ fieldName }}": function(filterId) {
                     var $field;
+                    console.log("Filter ID: "+filterId);
                     // enable operator field js
                     $field = $('#'+filterId+'_operator');
                     {{ form_js(prototype.operator, true) }}

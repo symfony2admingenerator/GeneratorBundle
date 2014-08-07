@@ -68,7 +68,9 @@
             that.$ctrlAddGroup  = that.$element.find('[role="filters-ctrl-add-group"]').first();
 
             // init toggle and dismiss on existing groups
-            that.$rootList.children(that.selector.group).each(function(i, group) {
+            var $initGroups = that.$rootList.children(that.selector.group);
+            that.$rootList.data('index', $initGroups.length);
+            $initGroups.each(function(i, group) {
                 that._enableGroup(group);
             });
 
@@ -109,6 +111,7 @@
             var gIndex          = $group.prevAll(that.selector.group).length;
             var groupId         = $group.attr('id');
             var groupName       = $group.attr('name');
+            var $gFilters       = $gList.children(that.selector.filter);
 
             // enable collapse toggle
             $gPanel.collapse({
@@ -128,7 +131,8 @@
             });
 
             // enable filters
-            $gList.children(that.selector.filter).each(function(i, filter) {
+            $gList.data('index', $gFilters.length);
+            $gFilters.each(function(i, filter) {
                 that._enableFilter(filter);
             });
 
@@ -167,7 +171,7 @@
             var fJsPrototype    = that.options.js_prototypes[fField];
 
             // run prototype js
-            fJsPrototype.call(window, $newFilter.attr('id'));
+            fJsPrototype.call(window, $filter.attr('id'));
 
             $dismissFilter.on('click', function(e) {
                 e.preventDefault();

@@ -16,7 +16,7 @@
                 <h3 class="fa fa-info-circle pull-left"></h3>
                 {{ 'filters.info'|trans }}
             </div>
-            <div class="panel-group" role="filters-root-list" data-index="{{ form|length }}">
+            <div class="panel-group" role="filters-root-list">
                 {% for child in form %}
                     {{ form_widget(child) }}
                 {% endfor %}
@@ -53,7 +53,7 @@
     </div>
     <div id="#{{ id ~ '_group_panel' }}" class="panel-collapse collapse" role="filters-group-panel">
         <table class="table">
-            <tbody role="filters-group-list" data-index="{{ form|length }}">
+            <tbody role="filters-group-list">
             {% for item in form %}
                 {{ form_widget(item) }}
             {% endfor %}  
