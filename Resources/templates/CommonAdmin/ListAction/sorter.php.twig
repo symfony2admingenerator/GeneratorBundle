@@ -1,0 +1,51 @@
+{% block sorter %}
+    /**
+     * Store in the session service the current sort
+     *
+     * @param string $column The column
+     * @param string $order_by The order sorting (ASC,DESC)
+     */
+    protected function setSort($column, $order_by)
+    {
+        $this->get('session')->set('{{ namespace_prefix }}\{{ bundle_name }}\{{ builder.BaseGeneratorName }}List\Sort', $column);
+
+        if ($order_by == 'desc') {
+            $this->get('session')->set('{{ namespace_prefix }}\{{ bundle_name }}\{{ builder.BaseGeneratorName }}List\OrderBy', 'DESC');
+        } else {
+             $this->get('session')->set('{{ namespace_prefix }}\{{ bundle_name }}\{{ builder.BaseGeneratorName }}List\OrderBy', 'ASC');
+        }
+    }
+
+    /**
+     * Return the stored sort
+     *
+     * @return string The column to sort
+     */
+    protected function getSortColumn()
+    {
+        {% if sort is defined and sort[0] != '' -%}
+
+            return $this->get('session')->get('{{ namespace_prefix }}\{{ bundle_name }}\{{ builder.BaseGeneratorName }}List\Sort', '{{ sort[0] }}');
+        {% else -%}
+
+            return $this->get('session')->get('{{ namespace_prefix }}\{{ bundle_name }}\{{ builder.BaseGeneratorName }}List\Sort');
+        {% endif -%}
+    }
+
+    /**
+     * Return the stored sort order
+     *
+     * @return string the order mode ASC|DESC
+     */
+    protected function getSortOrder()
+    {
+        {% if sort is defined and sort[1] is defined -%}
+
+            return $this->get('session')->get('{{ namespace_prefix }}\{{ bundle_name }}\{{ builder.BaseGeneratorName }}List\OrderBy', '{{ sort[1] }}');
+        {% else -%}
+
+            return $this->get('session')->get('{{ namespace_prefix }}\{{ bundle_name }}\{{ builder.BaseGeneratorName }}List\OrderBy', 'ASC');
+        {% endif -%}
+    }
+
+{% endblock %}

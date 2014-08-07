@@ -1,0 +1,12 @@
+generator: ~
+params:
+    model: ~
+    namespace_prefix: ~
+    entity_manager: ~
+    concurrency_lock: ~
+    bundle_name: ~
+    fields: ~
+    credentials: ~
+    actions: []
+    object_actions: []
+    batch_actions: []

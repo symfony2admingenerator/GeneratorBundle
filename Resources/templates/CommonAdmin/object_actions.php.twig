@@ -1,0 +1,75 @@
+{% block object_actions %}
+    {{ echo_block("object_actions") }}
+        {% if object_actions is defined  and object_actions|length > 0 %}
+            {% if builder.yamlKey is sameas('list') or builder.yamlKey is sameas('nested_list') %}
+            <td class="object_actions">
+            {% endif %}
+                <div class="btn-group{% if builder.yamlKey is not sameas('list') %} pull-right{% endif %}">
+                {% for action in builder.ObjectActions %}
+                    {{ echo_block('object_action_' ~ action.twigName) }}
+                        {% if action.credentials or builder.generator.getFromYaml('builders.' ~ action.name ~ '.params.credentials') %}
+                            {{ echo_if_granted( action.credentials ? action.credentials : builder.generator.getFromYaml('builders.' ~ action.name ~ '.params.credentials'), builder.ModelClass ) }}
+                        {% endif -%}
+                    
+                            {% if action.conditionalFunction %}
+                                {{ echo_if((action.conditionalInverse ? 'not ' : '') ~ builder.ModelClass ~ "." ~ action.conditionalFunction ~ '(' ~ action.conditionalParameters|join(',') ~')') }}
+                            {% endif %}
+    
+                            {{ block('object_action_block') }}
+    
+                            {% if action.conditionalFunction %}
+                                {{ echo_endif () }}
+                            {% endif %}
+                    
+                        {%- if action.credentials or builder.generator.getFromYaml('builders.' ~ action.name ~ '.params.credentials') %}
+                            {{ echo_endif () }}
+                        {% endif %}
+                    {{ echo_endblock() }}
+                {% endfor %}
+                {{ echo_block('object_actions_customActions') }}{{ echo_endblock() }}
+                </div>
+            {% if builder.yamlKey is sameas('list') or builder.yamlKey is sameas('nested_list') %}
+            </td>
+            {% endif %}
+        {% endif -%}
+    {{ echo_endblock() }}
+{% endblock %}
+
+{% block object_actions_script %}
+    {{ echo_block("object_actions_script") }}
+    {% if object_actions is defined and object_actions|length > 0 %}
+    
+    <script type="text/javascript">
+    jQuery(document).ready(function($) {
+        $(".object-actions-{{ builder.ModelClass }}").agen$objectActions({
+            actionsSelector: '.object_actions a'
+        });
+    });
+    </script>
+    {% endif %}
+    {{ echo_endblock() }}
+{% endblock %}
+
+{% block object_action_block %}
+    {% set actionRoute  = action.route ? action.route : (builder.routePrefixWithSubfolder ~ '_' ~ bundle_name ~ (builder.BaseGeneratorName ? "_" ~ builder.BaseGeneratorName : "") ~ '_object') %}
+    {% set actionParams = action.params ? echo_twig_assoc(action.params) : "{ 'pk': " ~ builder.ModelClass ~ "." ~ builder.getFieldGuesser().getModelPrimaryKeyName(model) ~ ", action: '" ~ action.name ~ "' }" %}
+    {% set translationDomain = action.type is sameas('custom') ? i18n_catalog|default("Admin") : 'Admingenerator' %}
+
+    {% spaceless %}
+    {{ echo_spaceless() }}
+    <a  class="btn btn-default {% if builder.yamlKey is sameas('list') %}btn-xs {% endif %}{{ action.class|default('') }}" href="{{ echo_path(actionRoute, actionParams) }}"
+        data-original-title="{{ echo_trans(action.label, {}, translationDomain) }}"
+        {% if builder.yamlKey is sameas('list') %}
+        rel="tooltip"
+        {% endif %}
+        {%- if action.confirm %} data-confirm="{{ echo_trans(action.confirm, {}, translationDomain) }}" {% endif -%}
+        {%- if action.csrfProtected %} data-csrf-token="{{ echo_path(actionRoute, actionParams, ['csrf_token']) }}" {% endif -%}>
+            <i class="fa {{ action.icon|default('fa-asterisk') }}">
+                {% if builder.yamlKey is not sameas('list') %}
+                {{ echo_trans(action.label, {}, translationDomain) }}
+                {% endif %}
+            </i>
+    </a>
+    {{ echo_endspaceless() }}
+    {% endspaceless %}
+{% endblock %}

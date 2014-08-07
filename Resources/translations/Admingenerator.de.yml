@@ -1,0 +1,145 @@
+# Filters
+filters:
+    header:     Filters
+    label:      Criteria group
+    info:       The filtered results will match at least one group of criteria.
+    ctrl:
+        submit:         Filter
+        reset:          Reset
+        add_group:      Add group
+        add_filter:     Add filter
+        remove:         Remove
+    boolean:
+        equal:                  Is
+    date:
+        equal:                  Equal
+        not_equal:              Not equal
+        greater_than:           Greater than
+        greater_than_equal:     Greater than or equal
+        less_than:              Less than
+        less_than_equal:        Less than or equal
+    time:
+        equal:                  Equal
+        not_equal:              Not equal
+        greater_than:           Greater than
+        greater_than_equal:     Greater than or equal
+        less_than:              Less than
+        less_than_equal:        Less than or equal
+    datetime:
+        equal:                  Equal
+        not_equal:              Not equal
+        greater_than:           Greater than
+        greater_than_equal:     Greater than or equal
+        less_than:              Less than
+        less_than_equal:        Less than or equal
+    number:
+        equal:                  Equal
+        not_equal:              Not equal
+        greater_than:           Greater than
+        greater_than_equal:     Greater than or equal
+        less_than:              Less than
+        less_than_equal:        Less than or equal
+    text:
+        equal:                  Equal
+        not_equal:              Not equal
+        like:                   Like
+        not_like:               Not like
+    array:
+        like:                   Like
+        not_like:               Not like
+    collection:
+        contains:               Contains
+        not_contains:           Not contains
+    model:
+        equal:                  Equal
+        not_equal:              Not equal
+
+# Pager
+pagerfanta:
+    previous:       Zurück
+    next:           Vor
+    view.perpage:   Anzeige
+    num.elements:   %number% Einträge
+
+# List
+list:
+    no.results: Keine Einträge vorhanden.
+    filters:    Filter
+list.button:
+    filter:     Filtern
+    reset:      Zurücksetzen
+list.display:
+    range:      Zeige <b>%start%</b> bis <b>%end%</b> von <b>%count%</b> Datensätze.
+    all:        Zeige alle <b>%count%</b> Datensätze.
+list.header:
+    actions:    Aktionen
+
+# Nested List
+nested.list:
+    expand:     Zeigen
+    collapse:   Verbergen
+    loading:    Laden
+    success:    Der Eintrag wurde erfolgreich verschoben.
+    error:      Der Eintrag konnte nicht verschoben werden.
+
+# Profile
+profile:
+    welcome:  <b>Willkommen</b>, %username%!
+    login:    Anmelden
+    logout:   Abmelden
+    exit:     Identitätswechselmodus verlassen
+
+# Generic actions
+action.generic:
+    list:   Übersicht
+    new:    Neu
+    save:   Speichern
+    save-and-add:   Speichern und Neu
+    save-and-list:  Speichern und Übersicht
+
+# Object actions
+action.object.edit:
+    label:    Bearbeiten
+    success:  Der Eintrag wurde erfolgreich gespeichert.
+    error:    |
+                Die Daten konnten nicht gespeichert werden. Bitte überprüfen Sie die Eingaben
+                und versuchen es erneut.
+    locked:   |
+                Entschuldigung, aber jemand anderes hat bereits diesen Eintrag verändert.<br />
+                <a href="%path%" target="_blank">Klicken Sie hier</a> um die
+                Änderungen in einem neuen Tab anzusehen oder senden Sie das Formular
+                erneut ab, um Ihre Änderungen zu übernehmen!
+action.object.delete:
+    label:    Löschen
+    confirm:  Sind Sie sicher, dass Sie diesen Eintrag löschen möchten?
+    success:  Der Eintrag wurde erfolgreich gelöscht.
+    error:    Der Eintrag kann nicht gelöscht werden.
+action.object.show:
+    label:    Zeigen
+
+# Batch actions
+action.batch.delete:
+    label:    Löschen
+    confirm:  Möchten Sie wirklich alle ausgewählten Einträge löschen?
+    success:  Die Einträge wurden erfolgreich gelöscht.
+    error:    Die Einträge können nicht gelöscht werden.
+
+# Custom actions
+action.custom:
+    title:    Sind Sie sicher, dass Sie die Aktion %name% ausführen möchten?
+    success:  Die Aktion %name% wurde erfolgreich ausgeführt.
+    error:    Konnte die Aktion %name% nicht ausführen.
+    confirm:  Ausführen
+    cancel:   Abbrechen
+
+# Batch list
+batch.list:
+    selected:       Ausgewählte
+    none.selected:  Sie müssen mindestens einen Eintrag auswählen.
+    warning:        Konnte die Aktion aufgrund fehlender Parameter nicht ausführen.
+    send:           Senden
+
+# Layout
+dashboard:
+    homepage:   Startseite
+    brand:      Übersicht

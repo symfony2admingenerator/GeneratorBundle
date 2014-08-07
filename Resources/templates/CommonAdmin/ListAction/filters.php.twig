@@ -1,0 +1,61 @@
+{% block filters %}
+    public function filtersAction()
+    {
+        if ($this->getRequest()->get('reset')) {
+            $this->setFilters(array());
+
+            return new RedirectResponse($this->generateUrl("{{ builder.routePrefixWithSubfolder ~ '_' ~ bundle_name ~ (builder.BaseGeneratorName ? '_' ~ builder.BaseGeneratorName : '') ~ '_list' }}"));
+        }
+
+        if ($this->getRequest()->getMethod() == "POST") {
+            $form = $this->getFilterForm();
+            $form->handleRequest($this->getRequest());
+
+            if ($form->isValid()) {
+                $filters = $form->getViewData();
+            }
+        }
+
+        if ($this->getRequest()->getMethod() == "GET") {
+            $filters = $this->getRequest()->query->all();
+        }
+
+        if (isset($filters)) {
+            $this->setFilters($filters);
+        }
+
+        return new RedirectResponse($this->generateUrl("{{ builder.routePrefixWithSubfolder ~ '_' ~ bundle_name ~ (builder.BaseGeneratorName ? '_' ~ builder.BaseGeneratorName : '') ~ '_list' }}"));
+    }
+
+    {% block setFilters -%}
+    protected function setFilters($filters)
+    {
+        $this->get('session')->set('{{ namespace_prefix }}\{{ bundle_name }}\{{ builder.BaseGeneratorName }}List\Filters', $filters);
+    }
+    {% endblock %}
+
+    {% block getFilters -%}
+    protected function getFilters()
+    {
+        return $this->get('session')->get('{{ namespace_prefix }}\{{ bundle_name }}\{{ builder.BaseGeneratorName }}List\Filters', array());
+    }
+    {% endblock %}
+
+    {% block getFilterForm -%}
+    protected function getFilterForm()
+    {
+        return $this->createForm($this->getFiltersType(), $this->getFilters());
+    }
+    {% endblock %}
+
+    {% block getFiltersType -%}
+    protected function getFiltersType()
+    {
+        $type = new FiltersType();
+        $type->setSecurityContext($this->get('security.context'));
+
+        return $type;
+    }
+    {% endblock %}
+
+{% endblock %}

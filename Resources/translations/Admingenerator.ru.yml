@@ -1,0 +1,144 @@
+# Filters
+filters:
+    header:     Filters
+    label:      Criteria group
+    info:       The filtered results will match at least one group of criteria.
+    ctrl:
+        submit:         Filter
+        reset:          Reset
+        add_group:      Add group
+        add_filter:     Add filter
+        remove:         Remove
+    boolean:
+        equal:                  Is
+    date:
+        equal:                  Equal
+        not_equal:              Not equal
+        greater_than:           Greater than
+        greater_than_equal:     Greater than or equal
+        less_than:              Less than
+        less_than_equal:        Less than or equal
+    time:
+        equal:                  Equal
+        not_equal:              Not equal
+        greater_than:           Greater than
+        greater_than_equal:     Greater than or equal
+        less_than:              Less than
+        less_than_equal:        Less than or equal
+    datetime:
+        equal:                  Equal
+        not_equal:              Not equal
+        greater_than:           Greater than
+        greater_than_equal:     Greater than or equal
+        less_than:              Less than
+        less_than_equal:        Less than or equal
+    number:
+        equal:                  Equal
+        not_equal:              Not equal
+        greater_than:           Greater than
+        greater_than_equal:     Greater than or equal
+        less_than:              Less than
+        less_than_equal:        Less than or equal
+    text:
+        equal:                  Equal
+        not_equal:              Not equal
+        like:                   Like
+        not_like:               Not like
+    array:
+        like:                   Like
+        not_like:               Not like
+    collection:
+        contains:               Contains
+        not_contains:           Not contains
+    model:
+        equal:                  Equal
+        not_equal:              Not equal
+
+# Pager
+pagerfanta:
+    previous:       Пред
+    next:           След
+    view.perpage:   Показать
+    num.elements:   %number% элементов
+
+# List
+list:
+    no.results: Нет записей.
+    filters:    Фильтры
+list.button:
+    filter:     Фильтровать
+    reset:      Сбросить
+list.display:
+    range:      Показаны <b>%start%</b> - <b>%end%</b> из <b>%count%</b> записи(ей).
+    all:        Показаны все <b>%count%</b> записи(ей).
+list.header:
+    actions:    Действия
+
+# Nested List
+nested.list:
+    expand:     Показывать
+    collapse:   Скрывать
+    loading:    Погрузка в прогрессе
+    success:    Элемент был успешно перемещен.
+    error:      Не удалось переместить элемент.
+
+# Profile
+profile:
+    welcome:  <b>Здравствуйте</b>, %username%!
+    login:    Войти
+    logout:   Выйти
+    exit:     Выход олицетворение режима
+
+# Generic actions
+action.generic:
+    list:   Список
+    new:    Добавить
+    excel:  Экспорт в Excel
+    save:   Сохранить
+    save-and-add:   Сохранить и Добавить
+    save-and-list:  Сохранить и Список
+
+# Object actions
+action.object.edit:
+    label:    Редактировать
+    success:  Материал успешно сохранен.
+    error:    Форма не сохранена. Исправьте ошибки и попробуйте еще раз.
+    locked:   |
+                Извините, но кто-то уже изменил этот объект.<br />
+                <a href="%path%" target="_blank">Щелкните здесь</a>
+                для просмотра изменений в новой вкладке или отправить форму еще 
+                раз для изменения изменения!
+action.object.delete:
+    label:    Удалять
+    confirm:  Вы действительно хотите удалить этот элемент?
+    success:  Элемент успешно удалены.
+    error:    Элемент не может быть удален.
+action.object.show:
+    label:    Показывать
+
+# Batch actions
+action.batch.delete:
+    label:    Удалять
+    confirm:  Вы подтверждаете удаление выбранных элементов?
+    success:  Материалы были успешно удалены.
+    error:    Невозможно удалить материалы.
+
+# Custom actions
+action.custom:
+    title:    Вы уверены, что хотите выполнить действие %name%?
+    success:  Действие %name% успешно выполнено.
+    error:    Не удалось выполнить %name% действиям.
+    confirm:  Подтверждать
+    cancel:   Отменить
+
+# Batch list
+batch.list:
+    selected:       Выберите действие
+    none.selected:  Необходимо выбрать не менее одного элемента.
+    warning:        Не удалось завершить периодического действия из-за отсутствия параметров.
+    send:           Выполнять
+
+# Layout
+dashboard:
+    homepage:   Главная
+    brand:      Панель мониторинга

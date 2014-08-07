@@ -1,0 +1,22 @@
+{% use '../CommonAdmin/stylesheets.php.twig' %}
+{% use '../CommonAdmin/javascripts.php.twig' %}
+{% use '../CommonAdmin/ActionsTemplate/form.php.twig' %}
+{% use '../CommonAdmin/ActionsTemplate/title.php.twig' %}
+
+{{ echo_extends( builder.getBaseAdminTemplate ) }}
+
+{{ echo_block("stylesheets") }}
+    {{- block('complementary_stylesheets') -}}
+{{ echo_endblock() }}
+
+{{ echo_block("javascripts") }}
+    {{- block('complementary_javascripts') -}}
+{{ echo_endblock() }}
+
+{{- block('site_title') -}}
+
+{{ echo_block("body") }}
+    {{- block('title') -}}
+
+    {{ block('form') }}
+{{ echo_endblock() }}

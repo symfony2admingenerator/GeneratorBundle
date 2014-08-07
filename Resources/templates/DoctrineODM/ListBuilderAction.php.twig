@@ -1,0 +1,211 @@
+{% extends '../CommonAdmin/ListAction/ListBuilderAction.php.twig' %}
+{% block pager_adapter -%}
+use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter as PagerAdapter;
+{% endblock %}
+{% block setFilters -%}
+    /**
+     * Store in the session service the current filters
+     *
+     * @param array the filters
+     */
+    protected function setFilters($filters)
+    {
+
+        {%- for filter in builder.filters.display -%}
+            {%- if 'document' == builder.getFieldGuesser().getDbType(model, filter) or 'collection' == builder.getFieldGuesser().getDbType(model, filter) -%}
+            {% set filterModel = builder.getFieldGuesser().getModelType(model, filter) %}
+        if (isset($filters['{{ filter }}'])) {
+                $filters['{{ filter }}'] = array (
+                    'id' => $filters['{{ filter }}']->get{{ builder.getFieldGuesser().getModelPrimaryKeyName(filterModel)|capitalize }}(),
+                    'documentName' => '{{ filterModel }}'
+                );
+        }
+
+            {%- endif %}
+
+        {% endfor -%}
+
+        $this->get('session')->set('{{ namespace_prefix }}\{{ bundle_name }}\{{ builder.BaseGeneratorName }}List\Filters', $filters);
+    }
+{% endblock %}
+
+{% block getFilters -%}
+    /**
+     * Get filters from session
+     */
+    protected function getFilters()
+    {
+        $filters = $this->get('session')->get('{{ namespace_prefix }}\{{ bundle_name }}\{{ builder.BaseGeneratorName }}List\Filters', array());
+
+        {%- for filter in builder.filters.display -%}
+            {%- if 'document' == builder.getFieldGuesser().getDbType(model, filter) or 'collection' == builder.getFieldGuesser().getDbType(model, filter) -%}
+
+        if (isset($filters['{{ filter }}'])) {
+                $filters['{{ filter }}'] = $this->getDoctrineMongoDB()->getRepository($filters['{{ filter }}']['documentName'])->find($filters['{{ filter }}']['id']);
+        }
+
+            {%- endif %}
+
+        {% endfor -%}
+
+        return $filters;
+    }
+{% endblock %}
+{% block getQuery -%}
+    protected function getQuery()
+    {
+        $query = $this->buildQuery();
+
+        $this->processQuery($query);
+        $this->processSort($query);
+        $this->processFilters($query);
+        $this->processScopes($query);
+
+        return $query;
+    }
+
+    protected function buildQuery()
+    {
+        return $this->getDocumentManager()
+                      ->createQueryBuilder('{{ model }}');
+    }
+
+{% endblock %}
+
+{% block processSort -%}
+    protected function processSort($query)
+    {
+        if ($this->getSortColumn()) {
+            $queryFilter = $this->getQueryFilter();
+            $queryFilter->setQuery($query);
+            $queryFilter->setAliasPrefix('o_');
+            $queryFilter->setNamePrefix('order_');
+            $queryFilter->addSortBy($this->getSortColumn(), $this->getSortOrder());
+        }
+    }
+{% endblock %}
+
+{% block processFilters -%}
+    protected function processFilters($query)
+    {
+        $filtersFormData = $this->getFilters();
+        $filtersMap = array(
+        {% for column in builder.filterColumns %}
+            {{ column.name|as_php }} => {{ column.filterType|as_php }},
+        {% endfor %}
+        );
+
+        $primaryKeysMap = array(
+        {% for column in builder.filterColumns %}
+            {{ column.name|as_php }} => {{ column.primaryKey|as_php }},
+        {% endfor %}
+        );
+
+        $queryFilter = $this->getQueryFilter();
+        $queryFilter->setQuery($query);
+        $queryFilter->setAliasPrefix('f_');
+        $queryFilter->setNamePrefix('filters_');
+        $queryFilter->setFiltersMap($filtersMap);
+        $queryFilter->setPrimaryKeysMap($primaryKeysMap);
+
+        $groupParts = array();
+        foreach ($filtersFormData as $groupData) {
+            $filterParts = array();
+            foreach ($groupData as $filterData) {
+                $field          = $filterData['field'];
+                $operator       = $filterData['operator'];
+                $value          = $filterData['value'];
+                $param          = $queryFilter->getParamName();
+
+                $filterParts[] = $queryFilter->getComparison($field, $operator, $param);
+                $query->setParameter($param, $queryFilter->formatValue($value, $operator, $field));
+            }
+            // for a group to be true, all partial conditions must be true
+            $groupParts[] = $queryFilter->getConjunction($filterParts);
+        }
+
+        if (count($filtersFormData) > 0) {
+            // the results must meet conditions of at least one group
+            $query->andWhere($queryFilter->getDisjunction($groupParts));
+        }
+    }
+{% endblock %}
+
+{% block processScopes -%}
+    protected function processScopes($query)
+    {
+
+    {% if scopes is defined %}
+        $scopes = $this->getScopes();
+        
+        $filtersMap = array(
+        {% for column in builder.scopeColumns %}
+            {{ column.name|as_php }} => {{ column.filterType|as_php }},
+        {% endfor %}
+        );
+
+        $primaryKeysMap = array(
+        {% for column in builder.scopeColumns %}
+            {{ column.name|as_php }} => {{ column.primaryKey|as_php }},
+        {% endfor %}
+        );
+
+        $queryFilter = $this->getQueryFilter();
+        $queryFilter->setQuery($query);
+        $queryFilter->setAliasPrefix('s_');
+        $queryFilter->setNamePrefix('scopes_');
+        $queryFilter->setFiltersMap($filtersMap);
+        $queryFilter->setPrimaryKeysMap($primaryKeysMap);
+
+        {% for groupName, group in scopes -%}
+            {%- for scopeName, scopeParams in group %}
+
+        if (isset($scopes['{{ groupName }}']) && $scopes['{{ groupName }}'] == '{{ scopeName }}') {
+            {% if scopeParams["filters"] is defined -%}
+                {%- for filter, filterParams in scopeParams["filters"] -%}
+                {%- if filter|is_numeric -%}
+                $this->scope{{ filterParams|classify }}($queryFilter);
+                {%- else -%}
+                $queryFilter->addEqualFilter('{{ filter }}', {{ filterParams|as_php }});
+                {%- endif -%}
+                {%- endfor -%}
+            {%- endif %}
+
+        }
+            {% endfor -%}
+        {%- endfor %}
+    {%- endif %}
+    }
+
+    {% if scopes is defined %}
+    {% for groupName, group in scopes -%}
+        {%- for scopeName, scopeParams in group %}
+            {% if scopeParams["filters"] is defined -%}
+            {%- for filter, filterParams in scopeParams["filters"] -%}
+                {%- if filter|is_numeric -%}
+    /**
+     * Add the filters to the query for {{ groupName }} => {{ scopeName }}
+     *
+     * @param queryFilter the queryFilter
+     */
+    protected function scope{{ filterParams|classify }}($query)
+    {
+    }
+
+                {%- endif -%}
+            {%- endfor -%}
+            {%- endif -%}
+        {% endfor -%}
+    {%- endfor -%}
+    {%- endif %}
+{% endblock %}
+
+{% block getQueryFilter %}
+    /**
+     * @return \Admingenerator\GeneratorBundle\QueryFilter\QueryFilterInterface
+     */
+    protected function getQueryFilter()
+    {
+        return $this->get('admingenerator.queryfilter.doctrine_odm');
+    }
+{% endblock %}

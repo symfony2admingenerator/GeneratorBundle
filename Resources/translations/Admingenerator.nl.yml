@@ -1,0 +1,143 @@
+# Filters
+filters:
+    header:     Filters
+    label:      Criteria group
+    info:       The filtered results will match at least one group of criteria.
+    ctrl:
+        submit:         Filter
+        reset:          Reset
+        add_group:      Add group
+        add_filter:     Add filter
+        remove:         Remove
+    boolean:
+        equal:                  Is
+    date:
+        equal:                  Equal
+        not_equal:              Not equal
+        greater_than:           Greater than
+        greater_than_equal:     Greater than or equal
+        less_than:              Less than
+        less_than_equal:        Less than or equal
+    time:
+        equal:                  Equal
+        not_equal:              Not equal
+        greater_than:           Greater than
+        greater_than_equal:     Greater than or equal
+        less_than:              Less than
+        less_than_equal:        Less than or equal
+    datetime:
+        equal:                  Equal
+        not_equal:              Not equal
+        greater_than:           Greater than
+        greater_than_equal:     Greater than or equal
+        less_than:              Less than
+        less_than_equal:        Less than or equal
+    number:
+        equal:                  Equal
+        not_equal:              Not equal
+        greater_than:           Greater than
+        greater_than_equal:     Greater than or equal
+        less_than:              Less than
+        less_than_equal:        Less than or equal
+    text:
+        equal:                  Equal
+        not_equal:              Not equal
+        like:                   Like
+        not_like:               Not like
+    array:
+        like:                   Like
+        not_like:               Not like
+    collection:
+        contains:               Contains
+        not_contains:           Not contains
+    model:
+        equal:                  Equal
+        not_equal:              Not equal
+
+# Pager
+pagerfanta:
+    previous:       Vorige
+    next:           Volgende
+    view.perpage:   Weergeven
+    num.elements:   %number% elementen
+
+# List
+list:
+    no.results: Er zijn geen resultaten.
+    filters:    Filters
+list.button:
+    filter:     Filter
+    reset:      Reset
+list.display:
+    range:      Geef <b>%start%</b> - <b>%end%</b> of <b>%count%</b> resultaten weer.
+    all:        Geef alle <b>%count%</b> resultaten weer.
+list.header:
+    actions:    Acties
+
+# Nested List
+nested.list:
+    expand:     Weergeven
+    collapse:   Verbergen
+    loading:    Aan het laden
+    success:    Het element is successvol verplaatst.
+    error:      Kan element niet verplaatsen.
+
+# Profile
+profile:
+    welcome:  <b>Welkom</b>, %username%!
+    login:    Inloggen
+    logout:   Uitloggen
+    exit:     Verlaat impersonatie mode
+
+# Generic actions
+action.generic:
+    list:   Lijst
+    new:    Nieuw
+    excel:  Exporteren naar Excel
+    save:   Opslaan
+    save-and-add:   Opslaan en naar toevoegen
+    save-and-list:  Opslaan en naar lijst
+
+# Object actions
+action.object.edit:
+    label:    Bewerken
+    success:  Het object is succesvol opgeslagen.
+    error:    Het formulier kan niet worden opgeslagen. Controleer op fouten en probeer opnieuw.
+    locked:   |
+                Helaas heeft iemand anders dit object al gewijzigd.<br />
+                <a href="%path%" target="_blank">Klik hier</a> om de wijzigingen in een nieuwe tab te bekijken 
+                of verstuur het formulier opnieuw om uw wijzigingen toe te passen!
+action.object.delete:
+    label:    Verwijderen
+    confirm:  Weet u zeker dat u dit element wilt verwijderen?
+    success:  Element is succesvol verwijderd.
+    error:    Element kan niet verwijderd worden.
+action.object.show:
+    label:    Tonen
+
+# Batch actions
+action.batch.delete:
+    label:    Verwijderen
+    confirm:  Weet u zeker dat u alle geselecteerde elementen wilt verwijderen?
+    success:  Records zijn succesvol verwijderd.
+    error:    Records kunnen niet verwijderd worden.
+
+# Custom actions
+action.custom:
+    title:    Weet u zeker dat u %name% wilt uitvoeren?
+    success:  De %name% actie is succesvol uitgevoerd.
+    error:    Kon %name% actie niet uitvoeren.
+    confirm:  Bevestigen
+    cancel:   Annuleren
+
+# Batch list
+batch.list:
+    selected:       Geselecteerd
+    none.selected:  U moet minstens 1 element selecteren.
+    warning:        Kon batch actie niet uitvoeren vanwege ontbrekende parameters
+    send:           Uitvoeren
+
+# Layout
+dashboard:
+    homepage:   Homepage
+    brand:      Dashboard

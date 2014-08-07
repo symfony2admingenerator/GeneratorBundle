@@ -1,0 +1,66 @@
+{% use '../CommonAdmin/NewAction/index.php.twig' %}
+{% use '../CommonAdmin/NewAction/create.php.twig' %}
+{% use '../CommonAdmin/security_action.php.twig' %}
+<?php
+
+namespace Admingenerated\{{ namespace_prefix }}{{ bundle_name }}\{{ builder.generator.GeneratedControllerFolder }};
+
+use {{ builder.generator.baseController }} as BaseController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+
+{{- block('index_use') -}}
+
+{{- block('create_use') -}}
+
+{{- block('security_use') }}
+
+class NewController extends BaseController
+{
+    {{- block('index') -}}
+
+    {{- block('create') -}}
+
+    {{- block('security_check') }}
+
+    /**
+     * Get additional parameters for rendering.
+     *
+     * @param \{{ model }} ${{ builder.ModelClass }} your \{{ model }} object
+     * return array
+     */
+    protected function getAdditionalRenderParameters(\{{ model }} ${{ builder.ModelClass }})
+    {
+        return array();
+    }
+
+    /**
+     * Get optional form options.
+     *
+     * @param \{{ model }} ${{ builder.ModelClass }} your \{{ model }} object
+     * return array
+     **/
+    protected function getFormOptions(\{{ model }} ${{ builder.ModelClass }})
+    {
+        return array();
+    }
+
+    protected function getNewType()
+    {
+        $type = new NewType();
+        $type->setSecurityContext($this->get('security.context'));
+
+        return $type;
+    }
+    
+    protected function getNewObject()
+    {
+        return new \{{ model }};
+    }
+
+    {% block saveObject -%}
+    protected function saveObject(\{{ model }} ${{ builder.ModelClass }})
+    {
+        // ORM JOB
+    }
+    {% endblock %}
+}

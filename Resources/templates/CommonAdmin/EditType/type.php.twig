@@ -1,0 +1,50 @@
+{% block type %}
+<?php
+
+namespace Admingenerated\{{ namespace_prefix }}{{ bundle_name }}\Form\Base{{ builder.BaseGeneratorName }}Type;
+
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+use JMS\SecurityExtraBundle\Security\Authorization\Expression\Expression;
+
+class {{ builder.YamlKey|ucfirst }}Type extends AbstractType
+{
+    protected $securityContext;
+
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+    {% for column in builder.columns %}
+    {%- if column.credentials -%}
+        if (false !== $this->securityContext->isGranted(array(new Expression('{{ column.credentials }}')), $builder->getData())) {
+    {%- endif %}
+
+        $formOptions = $this->getFormOption('{{ column.name }}', {{ column.formOptions|merge({
+            'label': column.label,
+            'translation_domain': i18n_catalog|default('Admin')
+        })|as_php|convert_as_form(column.formType) }});
+        $builder->add('{{ column.name }}', {{ column.formType|as_php|convert_as_form(column.formType) }}, $formOptions);
+
+    {% if column.credentials %}
+        }
+    {%- endif -%}
+    {%- endfor %}
+
+    }
+
+    protected function getFormOption($name, array $formOptions)
+    {
+        return $formOptions;
+    }
+
+    public function getName()
+    {
+        return '{{ builder.YamlKey }}_{{ builder.ModelClass|lower }}';
+    }
+
+    public function setSecurityContext($securityContext)
+    {
+        $this->securityContext = $securityContext;
+    }
+
+}
+{% endblock %}

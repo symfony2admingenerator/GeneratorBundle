@@ -1,0 +1,148 @@
+# Filters
+filters:
+    header:     Filters
+    label:      Criteria group
+    info:       The filtered results will match at least one group of criteria.
+    ctrl:
+        submit:         Filter
+        reset:          Reset
+        add_group:      Add group
+        add_filter:     Add filter
+        remove:         Remove
+    boolean:
+        equal:                  Is
+    date:
+        equal:                  Equal
+        not_equal:              Not equal
+        greater_than:           Greater than
+        greater_than_equal:     Greater than or equal
+        less_than:              Less than
+        less_than_equal:        Less than or equal
+    time:
+        equal:                  Equal
+        not_equal:              Not equal
+        greater_than:           Greater than
+        greater_than_equal:     Greater than or equal
+        less_than:              Less than
+        less_than_equal:        Less than or equal
+    datetime:
+        equal:                  Equal
+        not_equal:              Not equal
+        greater_than:           Greater than
+        greater_than_equal:     Greater than or equal
+        less_than:              Less than
+        less_than_equal:        Less than or equal
+    number:
+        equal:                  Equal
+        not_equal:              Not equal
+        greater_than:           Greater than
+        greater_than_equal:     Greater than or equal
+        less_than:              Less than
+        less_than_equal:        Less than or equal
+    text:
+        equal:                  Equal
+        not_equal:              Not equal
+        like:                   Like
+        not_like:               Not like
+    array:
+        like:                   Like
+        not_like:               Not like
+    collection:
+        contains:               Contains
+        not_contains:           Not contains
+    model:
+        equal:                  Equal
+        not_equal:              Not equal
+
+# Pager
+pagerfanta:
+    previous:       Anterior
+    next:           Siguiente
+    view.perpage:   Mostrar
+    num.elements:   %number% elementos
+
+# List
+list:
+    no.results: No existen resultados.
+    filters:    Filtros
+list.button:
+    filter:     Filtro
+    reset:      Reajustar
+list.display:
+    range:      Mostrar <b>%start%</b> - <b>%end%</b> de <b>%count%</b> resultados.
+    all:        Mostrar todos los <b>%count%</b> resultados.
+list.header:
+    actions:    Acciones
+
+# Nested List
+nested.list:
+    expand:     Mostrar
+    collapse:   Ocultar
+    loading:    Carga en curso
+    success:    El elemento fue trasladado con éxito.
+    error:      No se pudo mover el elemento.
+
+# Profile
+profile:
+    welcome:  <b>Bienvenido</b>, %username%!
+    login:    Iniciar sesión
+    logout:   Cerrar sesión
+    exit:     Salga del modo de suplantación
+
+# Generic actions
+action.generic:
+    list:   Listar
+    new:    Nuevo
+    save:   Guardar
+    save-and-add:   Guardar y Nuevo
+    save-and-list:  Guardar y Listar
+
+# Object actions
+action.object.edit:
+    label:    Editar
+    success:  El objeto fue guardado satisfactoriamente.
+    error:    |
+                El formulario no pudo ser guardado. comprueba los errores y 
+                vuelve a intentarlo.
+    locked:   |
+                Lo sentimos, pero alguien ya ha cambiado este objeto.<br />
+                <a href="%path%" target="_blank">Haz clic aquí</a> para ver 
+                los cambios en una nueva pestaña o enviar el formulario de nuevo 
+                para aplicar los cambios! 
+action.object.delete:
+    label:    Borrar
+    confirm:  ¿Está seguro que desea eliminar este elemento?
+    success:  El elemento se ha eliminado correctamente.
+    error:    El elemento no se puede eliminar.
+action.object.show:
+    label:    Mostrar
+
+# Batch actions
+action.batch.delete:
+    label:    Borrar
+    confirm:  ¿Te confirmar la eliminación de todos los elementos seleccionados?
+    success:  El registro ha sido borrado correctamente.
+    error:    Este registro no puede ser borrado.
+
+# Custom actions
+action.custom:
+    title:    ¿Está seguro de que desea ejecutar la acción %name%?
+    success:  La acción %name% se ejecutó con éxito.
+    error:    No se pudo ejecutar la acción %name%.
+    confirm:  Confirmar
+    cancel:   Cancelar
+
+# Batch list
+batch.list:
+    selected:       Seleccionado
+    none.selected:  Debe seleccionar al menos un elemento.
+    warning:        |
+                      No se pudo completar la acción de lote debido a los 
+                      parámetros que faltan.
+    selector:       Choose an action for selection
+    send:           Ejecutar
+
+# Layout
+dashboard:
+    homepage:   Página principal
+    brand:      Tablero de instrumentos

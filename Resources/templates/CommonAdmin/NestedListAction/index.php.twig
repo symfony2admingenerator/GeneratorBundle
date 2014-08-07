@@ -1,0 +1,19 @@
+{% use '../CommonAdmin/security_action.php.twig' %}
+{% block index_use %}
+use {{ builder.namespacePrefixWithSubfolder }}\{{ bundle_name }}\Form\Type\{{ builder.BaseGeneratorName ? builder.BaseGeneratorName ~ char(92) : "" }}FiltersType;
+{% endblock %}
+{% block index %}
+
+    public function indexAction()
+    {
+        {{ block('security_action') }}
+
+        $form = $this->getFilterForm();
+
+        return $this->render('{{ builder.namespacePrefixForTemplate }}{{ bundle_name }}:{{ builder.BaseGeneratorName }}List:index.html.twig', $this->getAdditionalRenderParameters() + array(
+            '{{ builder.ModelClass }}s'   => $this->getTree(),
+            'form'                        => $form->createView(),
+            'scopes'                      => $this->getScopes(),
+        ));
+    }
+{% endblock %}

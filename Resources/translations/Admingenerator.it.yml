@@ -1,0 +1,147 @@
+# Filters
+filters:
+    header:     Filters
+    label:      Criteria group
+    info:       The filtered results will match at least one group of criteria.
+    ctrl:
+        submit:         Filter
+        reset:          Reset
+        add_group:      Add group
+        add_filter:     Add filter
+        remove:         Remove
+    boolean:
+        equal:                  Is
+    date:
+        equal:                  Equal
+        not_equal:              Not equal
+        greater_than:           Greater than
+        greater_than_equal:     Greater than or equal
+        less_than:              Less than
+        less_than_equal:        Less than or equal
+    time:
+        equal:                  Equal
+        not_equal:              Not equal
+        greater_than:           Greater than
+        greater_than_equal:     Greater than or equal
+        less_than:              Less than
+        less_than_equal:        Less than or equal
+    datetime:
+        equal:                  Equal
+        not_equal:              Not equal
+        greater_than:           Greater than
+        greater_than_equal:     Greater than or equal
+        less_than:              Less than
+        less_than_equal:        Less than or equal
+    number:
+        equal:                  Equal
+        not_equal:              Not equal
+        greater_than:           Greater than
+        greater_than_equal:     Greater than or equal
+        less_than:              Less than
+        less_than_equal:        Less than or equal
+    text:
+        equal:                  Equal
+        not_equal:              Not equal
+        like:                   Like
+        not_like:               Not like
+    array:
+        like:                   Like
+        not_like:               Not like
+    collection:
+        contains:               Contains
+        not_contains:           Not contains
+    model:
+        equal:                  Equal
+        not_equal:              Not equal
+
+# Pager
+pagerfanta:
+    previous:       Precedente
+    next:           Successivo
+    view.perpage:   Mostra
+    num.elements:   %number% elementi
+
+# List
+list:
+    no.results: Nessun risultato.
+    filters:    Filtri
+list.button:
+    filter:     Filtra
+    reset:      Pulisci
+list.display:
+    range:      Mostra i risultati da <b>%start%</b> a <b>%end%</b> di <b>%count%</b>.
+    all:        Mostra tutti i <b>%count%</b> risultati.
+list.header:
+    actions:    Azioni
+
+# Nested List
+nested.list:
+    expand:     Mostra
+    collapse:   Nascondere
+    loading:    Caricamento in corso
+    success:    L'elemento è stato spostato con successo.
+    error:      Impossibile spostare elemento.
+
+# Profile
+profile:
+    welcome:  <b>Benvenuto</b>, %username%!
+    login:    Accedi
+    logout:   Esci
+    exit:     Uscire dalla modalità di rappresentazione
+
+# Generic actions
+action.generic:
+  list:   Lista
+  new:    Nuovo
+  save:   Salva
+  save-and-add:   Salva e Nuovo
+  save-and-list:  Salva e Lista
+
+# Object actions
+action.object.edit:
+    label:    Modifica
+    success:  L'oggetto è stato salvato con successo.
+    error:    |
+                Non è stato possibile salvare il form. Controlla gli errori e 
+                reinvia il form.
+    locked:   |
+                Siamo spiacenti, ma qualcun altro ha già cambiato questo 
+                oggetto.<br />
+                <a href="%path%" target="_blank">Clicca qui</a> per 
+                visualizzare le modifiche in una nuova scheda o inviare 
+                nuovamente il form di applicare le modifiche!
+action.object.delete:
+    label:    Cancellare
+    confirm:  Sei sicuro di voler eliminare questo elemento?
+    success:  Elemento è stato eliminato con successo.
+    error:    Elemento non può essere eliminato.
+action.object.show:
+    label:    Mostra
+
+# Batch actions
+action.batch.delete:
+    label:    Cancellare
+    confirm:  Confermi l'eliminazione di tutti gli elementi selezionati?
+    success:  I dati sono stati correttamente eliminati.
+    error:    I dati non possono essere eliminati.
+
+# Custom actions
+action.custom:
+    title:    Sei sicuro che si desidera eseguire l'azione %name%?
+    success:  L'azione %name% è stato eseguito con successo.
+    error:    Impossibile eseguire l'azione %name%.
+    confirm:  Confermare
+    cancel:   Annullare
+
+# Batch list
+batch.list:
+    selected:       Selezionati
+    none.selected:  È necessario selezionare alemeno uno elemento.
+    warning:        Impossibile completare l'azione partita a causa di parametri mancanti.
+    selector:       Choose an action for selection
+    send:           Eseguire
+
+# Layout
+dashboard:
+    homepage:   Inizio pagina
+    brand:      Cruscotto

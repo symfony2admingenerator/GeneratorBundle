@@ -1,0 +1,90 @@
+{% block type %}
+<?php
+
+namespace Admingenerated\{{ namespace_prefix }}{{ bundle_name }}\Form\Base{{ builder.BaseGeneratorName }}Type;
+
+use JMS\SecurityExtraBundle\Security\Authorization\Expression\Expression;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+
+class {{ builder.YamlKey|ucfirst }}Type extends AbstractType
+{
+    protected $securityContext;
+    
+    public function setSecurityContext($securityContext)
+    {
+        $this->securityContext = $securityContext;
+    }
+
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(array(
+            'prototype' => true,
+            'options'   => array(
+                // options for FilterGroupType
+                'fields'                => $this->getFieldsHash(),
+                'translation_domain'    => {{ i18n_catalog|default('Admin')|as_php }},
+                'options' => array(
+                    // options for FilterItemType
+                    'filters'               => $this->getFilters(),
+                    'translation_domain'    => {{ i18n_catalog|default('Admin')|as_php }},
+                )
+            ),
+            'translation_domain' => {{ i18n_catalog|default('Admin')|as_php }}
+        ));
+    }
+
+    /**
+     * @return  array A hash of field name and label pairs.
+     */
+    protected function getFieldsHash()
+    {
+        return array(
+        {% for column in builder.columns %}
+            {{ column.name|as_php }} => {{ column.label|as_php }},
+        {% endfor %}
+        );
+    }
+
+    /**
+     * @return array
+     */
+    protected function getFilters()
+    {
+        return array(
+        {% for column in builder.columns %}
+            {% set optionsHash = {
+                'label': column.label,
+                'translation_domain': i18n_catalog|default('Admin')
+            } %}
+            {{ column.name|as_php }} => array(
+                'field'     => {{ column.name|as_php }},
+                'label'     => {{ column.label|as_php }},
+                'filter'    => {{ column.filterType|as_php }},
+                'form'      => {{ column.formType|as_php|convert_as_form(column.formType) }},
+                'options'   => $this->getFormOption(
+                    {{ column.name|as_php }},
+                    {{ column.formOptions|merge(optionsHash)|as_php|convert_as_form(column.formType) }}
+                )
+            ),
+        {% endfor %}
+        );
+    }
+
+    protected function getFormOption($name, array $formOptions)
+    {
+        return $formOptions;
+    }
+    
+    public function getParent()
+    {
+        return 'admingenerator_filter_root';
+    }
+
+    public function getName()
+    {
+        return '{{ builder.YamlKey }}_{{ builder.ModelClass|lower }}';
+    }
+
+}
+{% endblock %}

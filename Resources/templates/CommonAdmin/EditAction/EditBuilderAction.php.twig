@@ -1,0 +1,102 @@
+{% use '../CommonAdmin/EditAction/index.php.twig' %}
+{% use '../CommonAdmin/EditAction/update.php.twig' %}
+{% use '../CommonAdmin/security_action.php.twig' %}
+<?php
+
+namespace Admingenerated\{{ namespace_prefix }}{{ bundle_name }}\{{ builder.generator.GeneratedControllerFolder }};
+
+use {{ builder.generator.baseController }} as BaseController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+
+{% block orm_use %}{% endblock %}
+
+{{- block('index_use') -}}
+
+{{- block('update_use') -}}
+
+{{- block('security_use') }}
+
+class EditController extends BaseController
+{
+    {{- block('index') -}}
+
+    {{- block('update') -}}
+
+    {{- block('security_check') }}
+
+    protected function getEditType()
+    {
+        $type = new EditType();
+        $type->setSecurityContext($this->get('security.context'));
+
+        return $type;
+    }
+
+
+    /**
+     * Get additional parameters for rendering.
+     *
+     * @param \{{ model }} ${{ builder.ModelClass }} your \{{ model }} object
+     * return array
+     **/
+    protected function getAdditionalRenderParameters(\{{ model }} ${{ builder.ModelClass }})
+    {
+        return array();
+    }
+
+    /**
+     * Get optional form options.
+     *
+     * @param \{{ model }} ${{ builder.ModelClass }} your \{{ model }} object
+     * return array
+     **/
+    protected function getFormOptions(\{{ model }} ${{ builder.ModelClass }})
+    {
+        return array();
+    }
+
+    {% block getObject -%}
+    protected function getObject($pk)
+    {
+        //ORM do JOB
+    }
+    {% endblock %}
+
+    {% block getQuery -%}
+    protected function getQuery($pk)
+    {
+        //ORM do JOB
+    }
+    {% endblock %}
+
+    {% block saveObject -%}
+    protected function saveObject(\{{ model }} ${{ builder.ModelClass }})
+    {
+        //ORM do JOB
+    }
+    {% endblock %}
+
+    {% block getVersions %}
+    protected function getVersions()
+    {
+        return $this->get('session')->get('{{ namespace_prefix }}\{{ bundle_name }}\{{ builder.BaseGeneratorName }}Edit\Versions', array());
+    }
+    {% endblock %}
+
+    {% block setVersions %}
+    protected function setVersions($versions = array())
+    {
+        $this->get('session')->set('{{ namespace_prefix }}\{{ bundle_name }}\{{ builder.BaseGeneratorName }}Edit\Versions', $versions);
+    }
+    {% endblock %}
+
+    {% block saveVersion %}
+    protected function saveVersion($pk, $version)
+    {
+        $versions = $this->getVersions();
+        $versions[$pk] = $version;
+        $this->setVersions($versions);
+    }
+    {% endblock %}
+
+}

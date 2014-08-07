@@ -1,0 +1,146 @@
+# Filters
+filters:
+    header:     Filters
+    label:      Criteria group
+    info:       The filtered results will match at least one group of criteria.
+    ctrl:
+        submit:         Filter
+        reset:          Reset
+        add_group:      Add group
+        add_filter:     Add filter
+        remove:         Remove
+    boolean:
+        equal:                  Is
+    date:
+        equal:                  Equal
+        not_equal:              Not equal
+        greater_than:           Greater than
+        greater_than_equal:     Greater than or equal
+        less_than:              Less than
+        less_than_equal:        Less than or equal
+    time:
+        equal:                  Equal
+        not_equal:              Not equal
+        greater_than:           Greater than
+        greater_than_equal:     Greater than or equal
+        less_than:              Less than
+        less_than_equal:        Less than or equal
+    datetime:
+        equal:                  Equal
+        not_equal:              Not equal
+        greater_than:           Greater than
+        greater_than_equal:     Greater than or equal
+        less_than:              Less than
+        less_than_equal:        Less than or equal
+    number:
+        equal:                  Equal
+        not_equal:              Not equal
+        greater_than:           Greater than
+        greater_than_equal:     Greater than or equal
+        less_than:              Less than
+        less_than_equal:        Less than or equal
+    text:
+        equal:                  Equal
+        not_equal:              Not equal
+        like:                   Like
+        not_like:               Not like
+    array:
+        like:                   Like
+        not_like:               Not like
+    collection:
+        contains:               Contains
+        not_contains:           Not contains
+    model:
+        equal:                  Equal
+        not_equal:              Not equal
+
+# Pager
+pagerfanta:
+    previous: Précédent
+    next:     Suivant
+    view.perpage:   Montrer
+    num.elements:   %number% éléments
+
+# List
+list:
+    no.results: Aucun résultat
+    filters:    Filtres
+list.button:
+    filter:     Filtrer
+    reset:      Réinitialiser
+list.display:
+    range:      Résultats <b>%start%</b> à <b>%end%</b> sur <b>%count%</b>.
+    all:        Affiche les <b>%count%</b> résultats.
+list.header:
+    actions:    Actions
+
+# Nested List
+nested.list:
+    expand:     Montrer
+    collapse:   Cacher
+    loading:    Chargement en cours
+    success:    L'élément a été déplacé avec succès.
+    error:      Impossible de déplacer l'élément.
+
+# Profile
+profile:
+    welcome:  <b>Bienvenue</b>, %username%!
+    login:    Connexion
+    logout:   Déconnexion
+    exit:     Revenir sur mon compte
+
+# Generic actions
+action.generic:
+    list:   Retour à la liste
+    new:    Nouveau
+    save:   Enregistrer
+    save-and-add:   Enregistrer et Nouveau
+    save-and-list:  Enregistrer et Retour à la liste
+
+# Object actions
+action.object.edit:
+    label:    Éditer
+    success:  L'enregistrement a été effectué avec succès.
+    error:    |
+                Une erreur est survenue. Vérifiez les données saisies, et 
+                validez à nouveau le formulaire.
+    locked:   |
+                Désolé, quelqu'un d'autre a modifié cet objet depuis votre 
+                dernier chargement.<br />
+                <a href="%path%" target="_blank">Cliquez ici</a> pour voir les 
+                changements dans un nouvel onglet, ou validez de nouveau le 
+                formulaire pour forcer l'enregistrement de vos données.
+action.object.delete:
+    label:    Effacer
+    confirm:  Etes-vous sur de vouloir supprimer cet élement?
+    success:  L'élément sélectionné a été supprimé.
+    error:    L'élément sélectionné ne peut pas être supprimé.
+action.object.show:
+    label:    Montrer
+
+# Batch actions
+action.batch.delete:
+    label:    Effacer
+    confirm:  Etes-vous sur de vouloir supprimer les élements sélectionnés?
+    success:  Les enregistrements ont été supprimés avec succès.
+    error:    Les enregistrements n'ont pu être supprimés.
+
+# Custom actions
+action.custom:
+    title:    Êtes-vous sûr de vouloir exécuter l'action %name%?
+    success:  L'action %name% a été exécutée avec succès.
+    error:    Impossible d'exécuter l'action %name%.
+    confirm:  Confirmer
+    cancel:   Annuler
+
+# Batch list
+batch.list:
+    selected:       Pour la sélection
+    none.selected:  Vous devez sélectionner au moins un élément.
+    warning:        Impossible de terminer l'action du lot en raison de paramètres manquants.
+    send:           Exécuter
+
+# Layout
+dashboard:
+    homepage:   Accueil
+    brand:      Tableau de bord

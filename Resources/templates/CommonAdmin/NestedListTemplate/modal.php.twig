@@ -1,0 +1,28 @@
+{% block nestedset_modal %}
+{{ echo_block("nestedset_modal") }}
+    <div id="nestedset_loading" class="modal fade" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h3>{{ echo_trans('nested.list.loading') }}</h3>
+            </div>
+            <div class="modal-body">
+                <i class="icon-spinner icon-spin icon-4x"></i>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="hidden">
+        <div id="nestedset_success" class="alert alert-success">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            {{ echo_trans('nested.list.success') }}
+        </div>
+
+        <div id="nestedset_error" class="alert alert-danger">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            {{ echo_trans('nested.list.error') }}
+        </div>
+    </div>
+{{ echo_endblock() }}
+{% endblock %}

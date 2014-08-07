@@ -1,0 +1,116 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <!--  Base -->
+        <parameter key="routing.loader.admingenerator.class">Admingenerator\GeneratorBundle\Routing\RoutingLoader</parameter>
+        <parameter key="routing.loader.admingenerator_nested.class">Admingenerator\GeneratorBundle\Routing\NestedRoutingLoader</parameter>
+        <parameter key="admingenerator.cache_warmer.class">Admingenerator\GeneratorBundle\CacheWarmer\GeneratorCacheWarmer</parameter>
+        <parameter key="admingenerator.finder.class">Admingenerator\GeneratorBundle\CacheWarmer\GeneratorFinder</parameter>
+        <parameter key="form.type_guesser.admingenerator.class">Admingenerator\GeneratorBundle\Validator\ValidatorTypeGuesser</parameter>
+        <parameter key="admingenerator.pagination.class">Admingenerator\GeneratorBundle\Pagerfanta\View\AdmingeneratorView</parameter>
+        <parameter key="admingenerator.base_admin_template">AdmingeneratorOldThemeBundle::base_admin.html.twig</parameter>
+        <parameter key="admingenerator.overwrite_if_exists">false</parameter>
+        <parameter key="admingenerator.validator.model_class.class">Admingenerator\GeneratorBundle\Validator\ModelClassValidator</parameter>
+        <parameter key="admingenerator.validator.propel_model_class.class">Admingenerator\GeneratorBundle\Validator\PropelModelClassValidator</parameter>
+    </parameters>
+
+    <services>
+        <!-- Twig -->
+        <service id="twig.extension.admingenerator.echo" class="Admingenerator\GeneratorBundle\Twig\Extension\EchoExtension" public="false">
+            <tag name="twig.extension" />
+            <argument type="service" id="twig.loader" />
+        </service>
+        
+        <service id="twig.extension.admingenerator.config" class="Admingenerator\GeneratorBundle\Twig\Extension\ConfigExtension" public="false">
+            <tag name="twig.extension" />
+            <argument type="service" id="service_container" />
+        </service>
+        
+        <service id="twig.extension.admingenerator.csrf" class="Admingenerator\GeneratorBundle\Twig\Extension\CsrfTokenExtension" public="false">
+            <tag name="twig.extension" />
+            <argument type="service" id="service_container" />
+        </service>
+        
+        <service id="twig.extension.admingenerator.localized_money" class="Admingenerator\GeneratorBundle\Twig\Extension\LocalizedMoneyExtension" public="false">
+            <tag name="twig.extension" />
+        </service>
+        
+        <service id="twig.extension.admingenerator.extends" class="Admingenerator\GeneratorBundle\Twig\Extension\ExtendsAdmingeneratedExtension" public="false">
+            <tag name="twig.extension" />
+            <argument type="service" id="twig.loader.filesystem" />
+            <call method="addCachePath">
+                <argument type="service" id="service_container" />
+            </call>
+        </service>
+
+        <!-- General -->
+        <service id="admingenerator.generator.listener"
+            class="Admingenerator\GeneratorBundle\EventListener\ControllerListener">
+            <tag name="kernel.event_listener" event="kernel.request"
+                method="onKernelRequest" />
+            <argument type="service" id="service_container" />
+        </service>
+
+        <service id="routing.loader.admingenerator" class="%routing.loader.admingenerator.class%" public="false">
+            <tag name="routing.loader" />
+            <argument type="service" id="file_locator" />
+        </service>
+
+        <service id="routing.loader.admingenerator_nested" class="%routing.loader.admingenerator_nested.class%" public="false">
+            <tag name="routing.loader" />
+            <argument type="service" id="file_locator" />
+        </service>
+
+        <service id="pagerfanta.view.admingenerator" class="%admingenerator.pagination.class%">
+            <tag name="pagerfanta.view" alias="admingenerator" />
+            <argument type="service" id="translator" />
+        </service>
+        
+        <!-- Filters -->
+        <service id="admingenerator.filter.root" class="Admingenerator\GeneratorBundle\Filter\Type\FilterRootType">
+            <tag name="form.type" alias="admingenerator_filter_root" />
+        </service>
+        
+        <service id="admingenerator.filter.group" class="Admingenerator\GeneratorBundle\Filter\Type\FilterGroupType">
+            <tag name="form.type" alias="admingenerator_filter_group" />
+        </service>
+        
+        <service id="admingenerator.filter.item" class="Admingenerator\GeneratorBundle\Filter\Type\FilterItemType">
+            <tag name="form.type" alias="admingenerator_filter_item" />
+        </service>
+
+        <!-- Validators -->
+        <service id="admingenerator.validator.model_class" class="%admingenerator.validator.model_class.class%" public="false">
+            <tag name="admingenerator.validator" alias="model_class" />
+        </service>
+
+        <service id="admingenerator.validator.propel_model_class" class="%admingenerator.validator.propel_model_class.class%" public="false">
+            <tag name="admingenerator.validator.propel" alias="propel_model_class" />
+        </service>
+
+        <!-- Validators -->
+        <service id="admingenerator.validator.model_class" class="%admingenerator.validator.model_class.class%" public="false">
+            <tag name="admingenerator.validator" alias="model_class" />
+        </service>
+
+        <service id="admingenerator.validator.propel_model_class" class="%admingenerator.validator.propel_model_class.class%" public="false">
+            <tag name="admingenerator.validator.propel" alias="propel_model_class" />
+        </service>
+
+        <!-- Warmup -->
+        <service id="admingenerator.finder" class="%admingenerator.finder.class%" public="false">
+            <argument type="service" id="kernel" />
+        </service>
+
+        <service id="admingenerator.cache_warmer" class="%admingenerator.cache_warmer.class%" public="false">
+            <tag name="kernel.cache_warmer" priority="100" />
+            <argument type="service" id="service_container" />
+            <argument type="service" id="admingenerator.finder" />
+        </service>
+        
+    </services>
+</container>

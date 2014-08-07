@@ -1,0 +1,144 @@
+# Filters
+filters:
+    header:     Filters
+    label:      Criteria group
+    info:       The filtered results will match at least one group of criteria.
+    ctrl:
+        submit:         Filter
+        reset:          Reset
+        add_group:      Add group
+        add_filter:     Add filter
+        remove:         Remove
+    boolean:
+        equal:                  Is
+    date:
+        equal:                  Equal
+        not_equal:              Not equal
+        greater_than:           Greater than
+        greater_than_equal:     Greater than or equal
+        less_than:              Less than
+        less_than_equal:        Less than or equal
+    time:
+        equal:                  Equal
+        not_equal:              Not equal
+        greater_than:           Greater than
+        greater_than_equal:     Greater than or equal
+        less_than:              Less than
+        less_than_equal:        Less than or equal
+    datetime:
+        equal:                  Equal
+        not_equal:              Not equal
+        greater_than:           Greater than
+        greater_than_equal:     Greater than or equal
+        less_than:              Less than
+        less_than_equal:        Less than or equal
+    number:
+        equal:                  Equal
+        not_equal:              Not equal
+        greater_than:           Greater than
+        greater_than_equal:     Greater than or equal
+        less_than:              Less than
+        less_than_equal:        Less than or equal
+    text:
+        equal:                  Equal
+        not_equal:              Not equal
+        like:                   Like
+        not_like:               Not like
+    array:
+        like:                   Like
+        not_like:               Not like
+    collection:
+        contains:               Contains
+        not_contains:           Not contains
+    model:
+        equal:                  Equal
+        not_equal:              Not equal
+
+# Pager
+pagerfanta:
+    previous:       Nazaj
+    next:           Naprej
+    view.perpage:   Prikazal
+    num.elements:   %number% elementov
+
+# List
+list:
+    no.results: Ni rezultatov.
+    filters:    Filtri
+list.button:
+    filter:     Filter
+    reset:      Počisti
+list.display:
+    range:      Prikazani rezultati <b>%start%</b> - <b>%end%</b> od <b>%count%</b>.
+    all:        Prikazani vsi rezultati <b>(%count%)</b>.
+list.header:
+    actions:    Akcije
+
+# Nested List
+nested.list:
+    expand:     Prikaži
+    collapse:   Schovať
+    loading:    Nalaganje v teku
+    success:    Element je bil uspešno prestavljen.
+    error:      Ne morem premakniti element.
+
+# Profile
+profile:
+    welcome:  <b>Dobrodošli</b>, %username%!
+    login:    Prijava
+    logout:   Odjava
+    exit:     Izhod iz lažnem
+
+# Generic actions
+action.generic:
+    list:   Seznam
+    new:    Novo
+    excel:  Izvoz v Excel
+    save:   Shrani
+    save-and-add:   Shrani in Novo
+    save-and-list:  Shrani in Seznam
+
+# Object actions
+action.object.edit:
+    label:    Urejanje
+    success:  Predmet je bil uspešno shranjen.
+    error:    Predmet ni bil shranjen. Preverite napake in poskusite ponovno.
+    locked:   |
+                Oprosti, ampak nekdo drug je že spremenil ta objekt.<br />
+                <a href="%path%" target="_blank">Kliknite tukaj</a>, da si 
+                ogledate spremembe v novem zavihku ali znova predložiti obrazec 
+                uporablja vaše spremembe!
+action.object.delete:
+    label:    Izbriši
+    confirm:  Ali ste prepričani, da želite izbrisati ta element?
+    success:  Element je bil uspešno izbrisan.
+    error:    Element, ki ga ni mogoče izbrisati.
+action.object.show:
+    label:    Prikaži
+
+# Batch actions
+action.batch.delete:
+    label:    Izbriši
+    confirm:  Ali lahko potrdite brisanje vseh izbranih elementov?
+    success:  Predmet je bil uspešno izbrisan.
+    error:    Predmet ni bil izbrisan.
+
+# Custom actions
+action.custom:
+    title:    Ali ste prepričani, da želite izvršiti %name% ukrepanje?
+    success:  Akcija %name% je bila uspešno izvedena.
+    error:    Ni mogoče izvesti %name% ukrepanje.
+    confirm:  Potrdite
+    cancel:   Prekliči
+
+# Batch list
+batch.list:
+    selected:       Izbrano
+    none.selected:  Izbrati morate vsaj en element.
+    warning:        Ni mogel dokončati serije tožbo zaradi manjkajočih parametrov.
+    send:           Izvršiti
+
+# Layout
+dashboard:
+    homepage:   Domača stran
+    brand:      Nadzorne plošče

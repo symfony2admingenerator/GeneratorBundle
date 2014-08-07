@@ -1,0 +1,88 @@
+{% use '../CommonAdmin/NestedListAction/index.php.twig' %}
+{% use '../CommonAdmin/ListAction/filters.php.twig' %}
+{% use '../CommonAdmin/ListAction/scopes.php.twig' %}
+{% use '../CommonAdmin/security_action.php.twig' %}
+{% use '../CommonAdmin/csrf_protection.php.twig' %}
+<?php
+
+namespace Admingenerated\{{ namespace_prefix }}{{ bundle_name }}\{{ builder.generator.GeneratedControllerFolder }};
+
+{{ block('index_use') -}}
+
+{{- block('security_use') }}
+
+use {{ builder.generator.baseController }} as BaseController;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+
+use Pagerfanta\Pagerfanta;
+{% block pager_adapter -%}
+use Pagerfanta\Adapter\DoctrineORMAdapter as PagerAdapter;
+{% endblock %}
+
+class ListController extends BaseController
+{
+    {{- block('index') -}}
+
+    {{- block('filters') -}}
+
+    {{- block('scopes') -}}
+
+    {{- block('csrf_generate_token') -}}
+
+    {{- block('security_check') }}
+
+    /**
+     * Get additional parameters for rendering.
+     *
+     * return array
+     **/
+    protected function getAdditionalRenderParameters()
+    {
+        return array();
+    }
+
+    {% block getQuery -%}
+    protected function getQuery()
+    {
+        // ORM JOB
+    }
+    {% endblock %}
+
+    {% block addJoinFor -%}
+    protected function addJoinFor($table, $query)
+    {
+        // ORM JOB
+    }
+    {% endblock %}
+
+    {% block processFilters -%}
+    protected function processFilters($query)
+    {
+        // ORM JOB
+    }
+    {% endblock %}
+
+    {% block processScopes -%}
+    protected function processScopes($query)
+    {
+        // ORM JOB
+    }
+    {% endblock %}
+
+    {% block nested_moveAction %}
+    public function nested_moveAction($dragged, $action, $dropped)
+    {
+        // ORM JOB
+    }
+    {% endblock %}
+
+    {{ block('csrf_check_token') }}
+
+    protected function getFilterForm()
+    {
+        return $this->createForm($this->getFiltersType(), $this->getFilters());
+    }
+}

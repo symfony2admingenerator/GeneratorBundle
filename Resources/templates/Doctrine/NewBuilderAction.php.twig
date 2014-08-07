@@ -1,0 +1,10 @@
+{% extends '../CommonAdmin/NewAction/NewBuilderAction.php.twig' %}
+
+{% block saveObject -%}
+    protected function saveObject(\{{ model }} ${{ builder.ModelClass }})
+    {
+        $em = $this->getDoctrine()->getManagerForClass('{{ model }}');
+        $em->persist(${{ builder.ModelClass }});
+        $em->flush();
+    }
+{% endblock %}

@@ -1,0 +1,72 @@
+{% block pager %}
+    /**
+     * Check if request contains pager parameters and
+     * persist them in session if any.
+     */
+    protected function parseRequestForPager()
+    {
+        if ($this->get('request')->query->get('page'))
+        {
+          $this->setPage($this->get('request')->query->get('page'));
+        }
+
+        if ($this->get('request')->query->get('perPage'))
+        {
+          $this->setPerPage($this->get('request')->query->get('perPage'));
+        }
+
+        if ($this->get('request')->query->get('sort'))
+        {
+          $this->setSort($this->get('request')->query->get('sort'), $this->get('request')->query->get('order_by','ASC'));
+        }
+    }
+
+    /**
+     * Store in the session service the current page
+     *
+     * @param integer $page The page number
+     */
+    protected function setPage($page)
+    {
+        $this->get('session')->set('{{ namespace_prefix }}\{{ bundle_name }}\{{ builder.BaseGeneratorName }}List\Page', $page);
+    }
+
+    /**
+     * Return the stored page
+     *
+     * @return integer $page The page number
+     */
+    protected function getPage()
+    {
+        return $this->get('session')->get('{{ namespace_prefix }}\{{ bundle_name }}\{{ builder.BaseGeneratorName }}List\Page', 1);
+    }
+
+    /**
+     * Store in the session service the perPage
+     *
+     * @param integer $perPage The perPage number
+     */
+    protected function setPerPage($perPage)
+    {
+        $this->get('session')->set('{{ namespace_prefix }}\{{ bundle_name }}\{{ builder.BaseGeneratorName }}List\PerPage', $perPage);
+    }
+
+    /**
+     * Return the stored perPage
+     *
+     * @return integer $perPage The perPage number
+     */
+    protected function getPerPage()
+    {
+        return $this->get('session')->get('{{ namespace_prefix }}\{{ bundle_name }}\{{ builder.BaseGeneratorName }}List\PerPage', {{ max_per_page is defined ? max_per_page : 10 }});
+    }
+
+    protected function getPager()
+    {
+        $paginator = new Pagerfanta(new PagerAdapter($this->getQuery()));
+        $paginator->setMaxPerPage($this->getPerPage());
+        $paginator->setCurrentPage($this->getPage(), false, true);
+
+        return $paginator;
+    }
+{% endblock %}

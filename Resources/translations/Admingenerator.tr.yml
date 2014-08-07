@@ -1,0 +1,137 @@
+# Filters
+filters:
+    header:     Filters
+    label:      Criteria group
+    info:       The filtered results will match at least one group of criteria.
+    ctrl:
+        submit:         Filter
+        reset:          Reset
+        add_group:      Add group
+        add_filter:     Add filter
+        remove:         Remove
+    boolean:
+        equal:                  Is
+    date:
+        equal:                  Equal
+        not_equal:              Not equal
+        greater_than:           Greater than
+        greater_than_equal:     Greater than or equal
+        less_than:              Less than
+        less_than_equal:        Less than or equal
+    time:
+        equal:                  Equal
+        not_equal:              Not equal
+        greater_than:           Greater than
+        greater_than_equal:     Greater than or equal
+        less_than:              Less than
+        less_than_equal:        Less than or equal
+    datetime:
+        equal:                  Equal
+        not_equal:              Not equal
+        greater_than:           Greater than
+        greater_than_equal:     Greater than or equal
+        less_than:              Less than
+        less_than_equal:        Less than or equal
+    number:
+        equal:                  Equal
+        not_equal:              Not equal
+        greater_than:           Greater than
+        greater_than_equal:     Greater than or equal
+        less_than:              Less than
+        less_than_equal:        Less than or equal
+    text:
+        equal:                  Equal
+        not_equal:              Not equal
+        like:                   Like
+        not_like:               Not like
+    array:
+        like:                   Like
+        not_like:               Not like
+    collection:
+        contains:               Contains
+        not_contains:           Not contains
+    model:
+        equal:                  Equal
+        not_equal:              Not equal
+
+# Pager
+pagerfanta:
+    previous:       Önceki
+    next:           Sonraki
+    view.perpage:   Göster
+    num.elements:   %number% element
+
+# List
+list:
+    no.results: Hiç bir sonuç bulunamadı.
+    filters:    Filtreler
+list.button:
+    filter:     Filtrele
+    reset:      Sıfırla
+list.display:
+    range:      Toplam <b>%count%</b> sonuçtan <b>%start%</b> - <b>%end%</b> kadarı gösteriliyor.
+    all:        Tüm <b>%count%</b> sonuçlar.
+list.header:
+    actions:    Eylemler
+
+# Profile
+profile:
+    welcome:  <b>Merhaba</b>, %username%!
+    login:    Giriş
+    logout:   Çıkış
+    exit:     Kimliğe bürünme modundan çıkın
+
+# Generic actions
+action.generic:
+    list:   Liste
+    new:    Yeni
+    excel:  Excel'e verme
+    save:   Kaydet
+    save-and-add:   Kaydet ve Yeni Oluştur
+    save-and-list:  Kaydet ve Listeye Dön
+
+# Object actions
+action.object.edit:
+    label:    Düzenle
+    success:  Nesne başarıyla kaydedildi.
+    error:    Form kaydı yapılamadı. Hataları düzeltip tekrar deneyin.
+    locked:   |
+                Üzgünüz, ama başkası zaten bu nesne değişti.<br />
+                Yeni bir sekmede değişiklikleri görüntülemek veya uygulamak için 
+                tekrar formu göndermek 
+                <a href="%path%" target="_blank">için tıklayınız</a> 
+                Yaptığınız değişiklikleri!
+action.object.delete:
+    label:    Sil
+    confirm:  Bu öğeyi silmek istediğinize emin misiniz?
+    success:  Eleman başarıyla silindi.
+    error:    Eleman silinemez.
+action.object.show:
+    label:    Göster
+
+# Batch actions
+action.batch.delete:
+    label:    Sil
+    confirm:  Seçili tüm öğeleri silmek istediğinize emin misiniz?
+    success:  Öğeler başarıyla silindi.
+    error:    Öğeler silinirken bir hata oluştu.
+
+# Custom actions
+action.custom:
+    title:    Eğer %name% eylem yürütmek istediğinizden emin misiniz?
+    success:  Eylem %name% başarıyla idam edildi.
+    error:    Eylem %name% yürütmek olamazdı.
+    confirm:  Onaylamak
+    cancel:   Iptal
+
+# Batch list
+batch.list:
+    selected:       Seçili
+    none.selected:  En az bir öğe seçmek zorundasınız.
+    warning:        Nedeniyle kayıp parametreleri için toplu eylem tamamlanamadı.
+    send:           Gerçekleştirmek
+
+# Layout
+dashboard:
+    homepage:   Anasayfa
+    brand:      Kontrol paneli
