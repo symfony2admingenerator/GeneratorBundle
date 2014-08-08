@@ -91,11 +91,12 @@ profile:
 
 # Generic actions
 action.generic:
-  list:   Lista
-  new:    Nuovo
-  save:   Salva
-  save-and-add:   Salva e Nuovo
-  save-and-list:  Salva e Lista
+    list:   Lista
+    new:    Nuovo
+    save:   Salva
+    save-and-add:   Salva e Nuovo
+    save-and-list:  Salva e Lista
+    excel:  Export to Excel
 
 # Object actions
 action.object.edit:

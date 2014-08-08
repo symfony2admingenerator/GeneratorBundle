@@ -96,6 +96,7 @@ action.generic:
     save:   Guardar
     save-and-add:   Guardar y Nuevo
     save-and-list:  Guardar y Listar
+    excel:  Export to Excel
 
 # Object actions
 action.object.edit:

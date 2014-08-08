@@ -96,6 +96,7 @@ action.generic:
     save:   Αποθήκευση
     save-and-add:   Αποθήκευση και προσθήκη νέου
     save-and-list:  Αποθήκευση και επιστροφή στην λίστα
+    excel:  Export to Excel
 
 # Object actions
 action.object.edit:

@@ -17,8 +17,8 @@ class ExcelAction extends Action
   {
     parent::__construct($name, 'generic');
 
-    $this->setClass('btn-primary');
-    $this->setIcon('fa-print');
+    $this->setClass('btn-info');
+    $this->setIcon('fa-file-excel-o');
     $this->setLabel('action.generic.excel');
   }
 }

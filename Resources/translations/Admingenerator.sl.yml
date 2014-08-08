@@ -93,10 +93,10 @@ profile:
 action.generic:
     list:   Seznam
     new:    Novo
-    excel:  Izvoz v Excel
     save:   Shrani
     save-and-add:   Shrani in Novo
     save-and-list:  Shrani in Seznam
+    excel:  Izvoz v Excel
 
 # Object actions
 action.object.edit:

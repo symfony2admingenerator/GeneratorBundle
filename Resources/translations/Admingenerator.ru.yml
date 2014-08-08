@@ -93,10 +93,10 @@ profile:
 action.generic:
     list:   Список
     new:    Добавить
-    excel:  Экспорт в Excel
     save:   Сохранить
     save-and-add:   Сохранить и Добавить
     save-and-list:  Сохранить и Список
+    excel:  Экспорт в Excel
 
 # Object actions
 action.object.edit:
