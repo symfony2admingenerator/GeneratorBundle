@@ -49,7 +49,7 @@ class BaseBuilder extends GenericBaseBuilder
     protected function findColumns()
     {
         foreach ($this->getDisplayColumns() as $columnName) {
-            $column = $this->createColumn($columnName);
+            $column = $this->createColumn($columnName, false);
 
             //Set the user parameters
             $this->setUserColumnConfiguration($column);
@@ -60,11 +60,11 @@ class BaseBuilder extends GenericBaseBuilder
     /**
      * Creates new column instance
      * 
-     * @param  string $columnName The name of the column.
-     * @param  string $builder    The builder name for which column is created.
+     * @param  string   $columnName The name of the column.
+     * @param  boolean  $withForms  If true, add column form configuration.
      * @return Admingenerator\GeneratorBundle\Generator\Column
      */
-    protected function createColumn($columnName)
+    protected function createColumn($columnName, $withForms = false)
     {
         $column = new $this->columnClass($columnName);
 
@@ -79,42 +79,44 @@ class BaseBuilder extends GenericBaseBuilder
 
         $column->setSortType($this->getFieldGuesser()->getSortType($column->getDbType()));
 
-        $column->setFormType($this->getFieldOption(
-            $column,
-            'formType',
-            $this->getFieldGuesser()->getFormType(
-                $column->getDbType(),
-                $columnName
-            )
-        ));
+        if ($withForms) {
+            $column->setFormType($this->getFieldOption(
+                $column,
+                'formType',
+                $this->getFieldGuesser()->getFormType(
+                    $column->getDbType(),
+                    $columnName
+                )
+            ));
 
-        $column->setFilterType($this->getFieldOption(
-            $column,
-            'filterType',
-            $this->getFieldGuesser()->getFilterType(
-                $column->getDbType(),
-                $columnName
-            )
-        ));
+            $column->setFilterType($this->getFieldOption(
+                $column,
+                'filterType',
+                $this->getFieldGuesser()->getFilterType(
+                    $column->getDbType(),
+                    $columnName
+                )
+            ));
 
-        $column->setFormOptions($this->getFieldOption(
-            $column,
-            'formOptions',
-            $this->getFieldGuesser()->getFormOptions(
-                $column->getFormType(),
-                $column->getDbType(),
-                $columnName
-            )
-        ));
+            $column->setFormOptions($this->getFieldOption(
+                $column,
+                'formOptions',
+                $this->getFieldGuesser()->getFormOptions(
+                    $column->getFormType(),
+                    $column->getDbType(),
+                    $columnName
+                )
+            ));
 
-        $column->setPrimaryKey($this->getFieldOption(
-            $column,
-            'primaryKey',
-            $this->getFieldGuesser()->getPrimaryKeyFor(
-                $this->getVariable('model'),
-                $columnName
-            )
-        ));
+            $column->setPrimaryKey($this->getFieldOption(
+                $column,
+                'primaryKey',
+                $this->getFieldGuesser()->getPrimaryKeyFor(
+                    $this->getVariable('model'),
+                    $columnName
+                )
+            ));
+        }
 
         return $column;
     }

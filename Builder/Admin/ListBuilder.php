@@ -48,7 +48,7 @@ class ListBuilder extends BaseBuilder
     protected function findFilterColumns()
     {
         foreach ($this->getFiltersDisplayColumns() as $columnName) {
-            $column = $this->createColumn($columnName);
+            $column = $this->createColumn($columnName, true);
 
             // Set the user parameters
             $this->setUserColumnConfiguration($column);
@@ -98,7 +98,7 @@ class ListBuilder extends BaseBuilder
     protected function findScopeColumns()
     {
         foreach ($this->getScopesDisplayColumns() as $columnName) {
-            $column = $this->createColumn($columnName);
+            $column = $this->createColumn($columnName, true);
 
             // Set the user parameters
             $this->setUserColumnConfiguration($column);
