@@ -91,9 +91,9 @@ class DoctrineQueryFilter extends BaseQueryFilter
             case 'GreaterThan':
                 return $this->query->expr()->gt($field, $param);
             case 'GreaterThanEqual':
-                return $this->query->expr()->lt($field, $param);
-            case 'LessThan':
                 return $this->query->expr()->gte($field, $param);
+            case 'LessThan':
+                return $this->query->expr()->lt($field, $param);
             case 'LessThanEqual':
                 return $this->query->expr()->lte($field, $param);
             case 'Like':

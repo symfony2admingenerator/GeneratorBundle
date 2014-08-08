@@ -88,9 +88,9 @@ class DoctrineODMQueryFilter extends BaseQueryFilter
             case 'GreaterThan':
                 return $this->query->expr()->field($field)->gt($param);
             case 'GreaterThanEqual':
-                return $this->query->expr()->field($field)->lt($param);
-            case 'LessThan':
                 return $this->query->expr()->field($field)->gte($param);
+            case 'LessThan':
+                return $this->query->expr()->field($field)->lt($param);
             case 'LessThanEqual':
                 return $this->query->expr()->field($field)->lte($param);
             case 'Like':
