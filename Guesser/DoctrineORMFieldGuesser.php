@@ -119,10 +119,7 @@ class DoctrineORMFieldGuesser extends ContainerAware
         if (array_key_exists($dbType, $formTypes)) {
             return $formTypes[$dbType];
         } elseif ('virtual' === $dbType) {
-            throw new NotImplementedException(
-                'The dbType "'.$dbType.'" is only for list implemented '
-                .'(column "'.$columnName.'" in "'.self::$current_class.'")'
-            );
+            return 'virtual_form';
         } else {
             throw new NotImplementedException(
                 'The dbType "'.$dbType.'" is not yet implemented '
@@ -137,7 +134,9 @@ class DoctrineORMFieldGuesser extends ContainerAware
         
         if (array_key_exists($dbType, $filterTypes)) {
             return $filterTypes[$dbType];
-        } else {
+        } elseif ('virtual' === $dbType) {
+            return 'virtual_filter';
+        }  else {
            throw new NotImplementedException(
                'The dbType "'.$dbType.'" is not yet implemented '
                .'(column "'.$columnName.'" in "'.self::$current_class.'")'
@@ -147,11 +146,15 @@ class DoctrineORMFieldGuesser extends ContainerAware
 
     public function getFormOptions($formType, $dbType, $columnName)
     {
-        if ('boolean' == $dbType) {
+        if ('virtual' === $dbType) {
+            return array();
+        }
+
+        if ('boolean' === $dbType) {
             return array('required' => false);
         }
 
-        if ('number' == $formType) {
+        if ('number' === $formType) {
             $mapping = $this->getMetadatas()->getFieldMapping($columnName);
 
             if (isset($mapping['scale'])) {

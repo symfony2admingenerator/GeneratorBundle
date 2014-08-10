@@ -132,10 +132,7 @@ class PropelORMFieldGuesser extends ContainerAware
         if (array_key_exists($dbType, $formTypes)) {
             return $formTypes[$dbType];
         } elseif ('virtual' === $dbType) {
-            throw new NotImplementedException(
-                'The dbType "'.$dbType.'" is only for list implemented '
-                .'(column "'.$columnName.'" in "'.self::$current_class.'")'
-            );
+            return 'virtual_form';
         } else {
             throw new NotImplementedException(
                 'The dbType "'.$dbType.'" is not yet implemented '
@@ -161,13 +158,22 @@ class PropelORMFieldGuesser extends ContainerAware
         
         if (array_key_exists($dbType, $filterTypes)) {
             return $filterTypes[$dbType];
-        }
-
-        return $this->getFormType($dbType, $columnName);
+        } elseif ('virtual' === $dbType) {
+            return 'virtual_filter';
+        }  else {
+           throw new NotImplementedException(
+               'The dbType "'.$dbType.'" is not yet implemented '
+               .'(column "'.$columnName.'" in "'.self::$current_class.'")'
+           );
+       }
     }
 
     public function getFormOptions($formType, $dbType, $columnName)
     {
+        if ('virtual' === $dbType) {
+            return array();
+        }
+
         if (\PropelColumnTypes::BOOLEAN == $dbType || \PropelColumnTypes::BOOLEAN_EMU == $dbType) {
             return array('required' => false);
         }

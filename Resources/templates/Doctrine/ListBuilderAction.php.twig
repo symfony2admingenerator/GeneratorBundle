@@ -25,20 +25,59 @@
 {% block processSort -%}
     protected function processSort($query)
     {
+        $virtualGettersMap = array(
+        {% for column in builder.columns %}
+            {% if column.dbType is sameas('virtual') %}
+            {{ column.name|as_php }} => {{ column.getter|classify|as_php }},
+            {% endif %}
+        {% endfor %}
+        );
+
         if ($this->getSortColumn()) {
             $queryFilter = $this->getQueryFilter();
             $queryFilter->setQuery($query);
             $queryFilter->setAliasPrefix('o_');
             $queryFilter->setNamePrefix('order_');
-            $queryFilter->addSortBy($this->getSortColumn(), $this->getSortOrder());
+
+            if (array_key_exists($field, $virtualGettersMap)) {
+                $handleSortMethod = 'handle'.$virtualGettersMap[$field].'Sort';
+                $this->$handleSortMethod($queryFilter, $this->getSortColumn(), $this->getSortOrder());
+            } else {
+                $queryFilter->addSortBy($this->getSortColumn(), $this->getSortOrder());
+            }
         }
     }
+
+    {% for column in builder.columns %}
+        {% if column.dbType is sameas('virtual') %}
+    /**
+     * Add the sort to the query for {{ column.name }}
+     *
+     * @param QueryFilterInterface  $queryFilter        The queryFilter.
+     * @param string                $field              The field.
+     * @param string                $order              The sort order.
+     */
+    protected function handle{{ column.getter|classify }}Sort($queryFilter, $field, $order)
+    {
+    }
+        {% endif %}
+    {% endfor %}
+
 {% endblock %}
 
 {% block processFilters -%}
     protected function processFilters($query)
     {
         $filtersFormData = $this->getFilters();
+
+        $virtualGettersMap = array(
+        {% for column in builder.filterColumns %}
+            {% if column.dbType is sameas('virtual') %}
+            {{ column.name|as_php }} => {{ column.getter|classify|as_php }},
+            {% endif %}
+        {% endfor %}
+        );
+        
         $filtersMap = array(
         {% for column in builder.filterColumns %}
             {{ column.name|as_php }} => {{ column.filterType|as_php }},
@@ -67,7 +106,13 @@
                 $value          = $filterData['value'];
                 $param          = $queryFilter->getUniqueName();
 
-                $filterParts[] = $queryFilter->getComparison($field, $operator, $param);
+                if (array_key_exists($field, $virtualGettersMap)) {
+                    $handleFilterMethod = 'handle'.$virtualGettersMap[$field].'Filter';
+                    $filterParts[] = $this->$handleFilterMethod($queryFilter, $field, $operator, $param);
+                } else {
+                    $filterParts[] = $queryFilter->getComparison($field, $operator, $param);
+                }
+
                 $query->setParameter($param, $queryFilter->formatValue($value, $operator, $field));
             }
             // for a group to be true, all partial conditions must be true
@@ -79,6 +124,23 @@
             $query->andWhere($queryFilter->getDisjunction($groupParts));
         }
     }
+
+    {% for column in builder.filterColumns %}
+        {% if column.dbType is sameas('virtual') %}
+    /**
+     * Add the filters to the query for {{ column.name }}
+     *
+     * @param QueryFilterInterface  $queryFilter       The queryFilter.
+     * @param string                $field             The field.
+     * @param string                $operator          The operator.
+     * @param string                $param             The parameter name.
+     */
+    protected function handle{{ column.getter|classify }}Filter($queryFilter, $field, $operator, $param)
+    {
+    }
+        {% endif %}
+    {% endfor %}
+    
 {% endblock %}
 
 {% block processScopes -%}
