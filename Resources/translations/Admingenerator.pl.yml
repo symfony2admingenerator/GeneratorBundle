@@ -42,11 +42,11 @@ filters:
     text:
         equal:                  Równe
         not_equal:              Nie równe
-        like:                   Podobne
-        not_like:               Nie podobne
+        like:                   Zawiera
+        not_like:               Nie zawiera
     array:
-        like:                   Podobne
-        not_like:               Nie podobne
+        like:                   Zawiera
+        not_like:               Nie zawiera
     collection:
         includes:               Zawiera
         not_includes:           Not zawiera

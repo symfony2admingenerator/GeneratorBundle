@@ -118,6 +118,8 @@ class DoctrineODMQueryFilter extends BaseQueryFilter
      */
     public function formatValue($value, $operator, $field)
     {
+        $value = trim($value);
+        
         switch ($this->getFilterFor($field)) {
             case 'boolean':
                 return !!$value;
