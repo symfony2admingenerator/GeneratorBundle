@@ -77,7 +77,7 @@ use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter as PagerAdapter;
     {
         $virtualGettersMap = array(
         {% for column in builder.columns %}
-            {% if column.dbType is sameas('virtual') %}
+            {% if column.dbType == 'virtual' %}
             {{ column.name|as_php }} => {{ column.getter|classify|as_php }},
             {% endif %}
         {% endfor %}
@@ -99,7 +99,7 @@ use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter as PagerAdapter;
     }
 
     {% for column in builder.columns %}
-        {% if column.dbType is sameas('virtual') %}
+        {% if column.dbType == 'virtual' %}
     /**
      * Add the sort to the query for {{ column.name }}
      *
@@ -122,7 +122,7 @@ use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter as PagerAdapter;
 
         $virtualGettersMap = array(
         {% for column in builder.filterColumns %}
-            {% if column.dbType is sameas('virtual') %}
+            {% if column.dbType == 'virtual' %}
             {{ column.name|as_php }} => {{ column.getter|classify|as_php }},
             {% endif %}
         {% endfor %}
@@ -176,7 +176,7 @@ use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter as PagerAdapter;
     }
 
     {% for column in builder.filterColumns %}
-        {% if column.dbType is sameas('virtual') %}
+        {% if column.dbType == 'virtual' %}
     /**
      * Add the filters to the query for {{ column.name }}
      *

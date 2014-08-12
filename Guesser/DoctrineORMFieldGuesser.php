@@ -56,16 +56,18 @@ class DoctrineORMFieldGuesser extends ContainerAware
         $class = $resolved['class'];
         $field = $resolved['field'];
 
-        if ($this->getMetadatas($class)->hasAssociation($field)) {
-            if ($this->getMetadatas()->isSingleValuedAssociation($field)) {
+        $metadata = $this->getMetadatas($class);
+
+        if ($metadata->hasAssociation($field)) {
+            if ($metadata->isSingleValuedAssociation($field)) {
                 return 'entity';
             } else {
                 return 'collection';
             }
         }
 
-        if ($this->getMetadatas()->hasField($field)) {
-            return $this->getMetadatas()->getTypeOfField($field);
+        if ($metadata->hasField($field)) {
+            return $metadata->getTypeOfField($field);
         }
 
         return 'virtual';
@@ -176,7 +178,7 @@ class DoctrineORMFieldGuesser extends ContainerAware
 
             return array(
                 'multiple'  => ($mapping['type'] === ClassMetadataInfo::MANY_TO_MANY || $mapping['type'] === ClassMetadataInfo::ONE_TO_MANY),
-                'em'        => 'default', // TODO: shouldn't this be configurable?
+                'em'        => 'default',
                 'class'     => $mapping['targetEntity'],
                 'required'  => $this->isRequired($columnName),
             );
@@ -197,12 +199,14 @@ class DoctrineORMFieldGuesser extends ContainerAware
 
     protected function isRequired($fieldName)
     {
-        $hasField = $this->getMetadatas()->hasField($fieldName);
-        $hasAssociation = $this->getMetadatas()->hasAssociation($fieldName);
-        $isSingleValAssoc = $this->getMetadatas()->isSingleValuedAssociation($fieldName);
+        $metadata = $this->getMetadatas();
+
+        $hasField = $metadata->hasField($fieldName);
+        $hasAssociation = $metadata->hasAssociation($fieldName);
+        $isSingleValAssoc = $metadata->isSingleValuedAssociation($fieldName);
 
         if ($hasField && (!$hasAssociation || $isSingleValAssoc)) {
-            return !$this->getMetadatas()->isNullable($fieldName);
+            return !$metadata->isNullable($fieldName);
         }
 
         return false;
@@ -214,7 +218,7 @@ class DoctrineORMFieldGuesser extends ContainerAware
      * @param  string $class The class name.
      * @return string Primary key field name.
      */
-    public function getModelPrimaryKeyName($class = null)
+    public function getModelPrimaryKeyName($class)
     {
         return $this->getMetadatas($class)->getSingleIdentifierFieldName();
     }
@@ -232,8 +236,10 @@ class DoctrineORMFieldGuesser extends ContainerAware
         $class = $resolved['class'];
         $field = $resolved['field'];
 
-        if ($this->getMetadatas($class)->hasAssociation($field)) {
-            $class = $this->getMetadatas()->getAssociationTargetClass($field);
+        $metadata = $this->getMetadatas($class);
+
+        if ($metadata->hasAssociation($field)) {
+            $class = $metadata->getAssociationTargetClass($field);
             return $this->getModelPrimaryKeyName($class);
         } else {
             // if the leaf node is not an association
@@ -255,11 +261,13 @@ class DoctrineORMFieldGuesser extends ContainerAware
         $class = $model;
 
         foreach ($path as $part) {
-            if (!$this->getMetadatas($class)->hasAssociation($part)) {
+            $metadata = $this->getMetadatas($class);
+
+            if (!$metadata->hasAssociation($part)) {
                 throw new \LogicException('Field "'.$part.'" for class "'.$class.'" is not an association.');
             }
 
-            $class = $this->getMetadatas()->getAssociationTargetClass($part);
+            $class = $metadata->getAssociationTargetClass($part);
         }
         
         return array(

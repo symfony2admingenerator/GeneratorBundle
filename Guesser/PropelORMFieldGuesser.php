@@ -266,7 +266,7 @@ class PropelORMFieldGuesser extends ContainerAware
     /**
      * Find the pk name
      */
-    public function getModelPrimaryKeyName($class = null)
+    public function getModelPrimaryKeyName($class)
     {
         $pks = $this->getMetadatas($class)->getPrimaryKeyColumns();
 

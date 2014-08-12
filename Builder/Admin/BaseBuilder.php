@@ -486,7 +486,7 @@ class BaseBuilder extends GenericBaseBuilder
      */
     public function getModelPrimaryKeyName()
     {
-        return $this->getGenerator()->getFieldGuesser()->getModelPrimaryKeyName();
+        return $this->getGenerator()->getFieldGuesser()->getModelPrimaryKeyName($this->getVariable('model'));
     }
 
     /**

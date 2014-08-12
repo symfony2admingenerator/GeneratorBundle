@@ -32,4 +32,15 @@ class FiltersBuilder extends BaseBuilder
 
         return $display;
     }
+
+    protected function findColumns()
+    {
+        foreach ($this->getDisplayColumns() as $columnName) {
+            $column = $this->createColumn($columnName, true);
+
+            //Set the user parameters
+            $this->setUserColumnConfiguration($column);
+            $this->addColumn($column);
+        }
+    }
 }

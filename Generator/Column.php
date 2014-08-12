@@ -101,7 +101,7 @@ class Column
 
     public function isSortable()
     {
-        return $this->isReal() && $this->sortable;
+        return $this->sortable;
     }
 
     public function isReal()
