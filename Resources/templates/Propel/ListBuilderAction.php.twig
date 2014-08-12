@@ -31,8 +31,11 @@ use Pagerfanta\Adapter\PropelAdapter as PagerAdapter;
             {% endif %}
         {% endfor %}
         );
+        
+        $field = $this->getSortColumn();
+        $order = $this->getSortOrder();
 
-        if ($this->getSortColumn()) {
+        if ($field) {
             $queryFilter = $this->getQueryFilter();
             $queryFilter->setQuery($query);
             $queryFilter->setAliasPrefix('o_');
@@ -40,9 +43,9 @@ use Pagerfanta\Adapter\PropelAdapter as PagerAdapter;
 
             if (array_key_exists($field, $virtualGettersMap)) {
                 $handleSortMethod = 'handle'.$virtualGettersMap[$field].'Sort';
-                $this->$handleSortMethod($queryFilter, $this->getSortColumn(), $this->getSortOrder());
+                $this->$handleSortMethod($queryFilter, $field, $order);
             } else {
-                $queryFilter->addSortBy($this->getSortColumn(), $this->getSortOrder());
+                $queryFilter->addSortBy($field, $order);
             }
         }
     }
