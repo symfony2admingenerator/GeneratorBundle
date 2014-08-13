@@ -61,13 +61,13 @@ interface QueryFilterInterface
     public function getUniqueName();
 
     /**
-     * @param mixed  $value     The value to format.
      * @param string $operator  The comparison operator.
      * @param string $field     The field name.
+     * @param mixed  $value     The value to format.
      * 
      * @return string The formatted value.
      *
      * @api
      */
-    public function formatValue($value, $operator, $field);
+    public function formatValue($field, $operator, $value);
 }

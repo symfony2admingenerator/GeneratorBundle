@@ -73,7 +73,7 @@ class DoctrineODMQueryFilter extends BaseQueryFilter
      * @param string $operator  The comparison operator.
      * @param string $param     The parameter name.
      * 
-     * @return Doctrine\ORM\Query\Expr\Comparison
+     * @return \Doctrine\MongoDB\Query\Expr
      */
     public function getComparison($field, $operator, $param = null)
     {
@@ -116,7 +116,7 @@ class DoctrineODMQueryFilter extends BaseQueryFilter
      * (non-PHPdoc)
      * @see GeneratorBundle\QueryFilter.QueryFilterInterface::formatValue()
      */
-    public function formatValue($value, $operator, $field)
+    public function formatValue($field, $operator, $value)
     {
         $value = trim($value);
         

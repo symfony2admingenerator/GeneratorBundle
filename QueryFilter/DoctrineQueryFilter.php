@@ -117,7 +117,7 @@ class DoctrineQueryFilter extends BaseQueryFilter
      * (non-PHPdoc)
      * @see GeneratorBundle\QueryFilter.QueryFilterInterface::formatValue()
      */
-    public function formatValue($value, $operator, $field)
+    public function formatValue($field, $operator, $value)
     {
         $value = trim($value);
         

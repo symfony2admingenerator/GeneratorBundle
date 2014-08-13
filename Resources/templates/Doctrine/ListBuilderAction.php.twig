@@ -107,16 +107,15 @@
                 $field          = $filterData['field'];
                 $operator       = $filterData['operator'];
                 $value          = $filterData['value'];
-                $param          = $queryFilter->getUniqueName();
 
                 if (array_key_exists($field, $virtualGettersMap)) {
                     $handleFilterMethod = 'handle'.$virtualGettersMap[$field].'Filter';
-                    $filterParts[] = $this->$handleFilterMethod($queryFilter, $field, $operator, $param);
+                    $filterParts[] = $this->$handleFilterMethod($queryFilter, $field, $operator, $value);
                 } else {
+                    $param = $queryFilter->getUniqueName();
                     $filterParts[] = $queryFilter->getComparison($field, $operator, $param);
+                    $query->setParameter($param, $queryFilter->formatValue($field, $operator, $value));
                 }
-
-                $query->setParameter($param, $queryFilter->formatValue($value, $operator, $field));
             }
             // for a group to be true, all partial conditions must be true
             $groupParts[] = $queryFilter->getConjunction($filterParts);
@@ -136,9 +135,10 @@
      * @param QueryFilterInterface  $queryFilter       The queryFilter.
      * @param string                $field             The field.
      * @param string                $operator          The operator.
-     * @param string                $param             The parameter name.
+     * @param string                $value             The value.
+     * @return Doctrine\ORM\Query\Expr\Comparison
      */
-    protected function handle{{ column.getter|classify }}Filter($queryFilter, $field, $operator, $param)
+    protected function handle{{ column.getter|classify }}Filter($queryFilter, $field, $operator, $value)
     {
     }
         {%- endif %}

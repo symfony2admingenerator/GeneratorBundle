@@ -94,7 +94,7 @@ abstract class BaseQueryFilter implements QueryFilterInterface
      * (non-PHPdoc)
      * @see GeneratorBundle\QueryFilter.QueryFilterInterface::formatValue()
      */
-    public function formatValue($value, $operator, $field)
+    public function formatValue($field, $operator, $value)
     {
         throw new \LogicException('Not implemented.');
     }

@@ -108,15 +108,13 @@ use Pagerfanta\Adapter\PropelAdapter as PagerAdapter;
                 $operator       = $filterData['operator'];
                 $value          = $filterData['value'];
 
-                $formattedValue = $this->formatValue($value, $operator, $field);
-
                 if (array_key_exists($field, $virtualGettersMap)) {
                     $handleFilterMethod = 'handle'.$virtualGettersMap[$field].'Filter';
-                    $filterParts[] = $this->$handleFilterMethod($queryFilter, $field, $operator, $formattedValue);
+                    $filterParts[] = $this->$handleFilterMethod($queryFilter, $field, $operator, $value);
                 } else {
+                    $formattedValue = $this->formatValue($field, $operator, $value);
                     $filterParts[] = $this->getCondition($field, $operator, $formattedValue);
                 }
-
                 
             }
             // for a group to be true, all partial conditions must be true
@@ -134,12 +132,13 @@ use Pagerfanta\Adapter\PropelAdapter as PagerAdapter;
     /**
      * Add the filters to the query for {{ column.name }}
      *
-     * @param QueryFilterInterface  $queryFilter       The queryFilter.
-     * @param string                $field             The field.
-     * @param string                $operator          The operator.
-     * @param string                $formattedValue    The formatted value.
+     * @param QueryFilterInterface  $queryFilter    The queryFilter.
+     * @param string                $field          The field.
+     * @param string                $operator       The operator.
+     * @param string                $value          The value.
+     * @return string Condition name.
      */
-    protected function handle{{ column.getter|classify }}Filter($queryFilter, $field, $operator, $formattedValue)
+    protected function handle{{ column.getter|classify }}Filter($queryFilter, $field, $operator, $value)
     {
     }
         {% endif %}
