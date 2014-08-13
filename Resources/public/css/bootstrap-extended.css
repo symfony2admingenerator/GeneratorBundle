@@ -64,6 +64,31 @@ button:hover > [class*=" fa-"]:before {
     background-image: none !important;
 }
 
+/* Form-actions toolbar */
+.form-actions {
+    padding: 19px 20px 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background-color: #f5f5f5;
+    border-top: 1px solid #e5e5e5;
+}
+
+.form-actions.form-actions-condensed {
+    padding: 9px 20px 10px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.form-actions:before, .form-actions:after {
+    display: table;
+    line-height: 0;
+    content: "";
+}
+
+.form-actions:after {
+    clear: both;
+}
+
 /* Callouts from BS docs */
 /* Side notes for calling out things
 -------------------------------------------------- */
