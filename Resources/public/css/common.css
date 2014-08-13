@@ -78,10 +78,5 @@ fieldset .row > .form_field {
     box-sizing: border-box;         /* Opera/IE 8+ */
     display: block;
     float: left;
-    margin-right: 2.5641%;
     min-height: 30px;
-}
-
-fieldset .row > .form_field:last-child {
-    margin-right: 0;
 }
