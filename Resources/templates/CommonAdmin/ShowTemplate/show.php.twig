@@ -10,7 +10,7 @@
     {{ echo_block('object') }}
         {% for fieldset in builder.fieldsets|keys %}
         <fieldset class="form_block form_fieldset_{{ fieldset|classify|replace({'.': '_'}) }} tab-pane">
-            {% if "NONE" != fieldset[:4] %}
+            {% if "NONE" != fieldset[:4] and "!" != fieldset[:1] %}
             <legend><span>{{ echo_trans(fieldset,{}, i18n_catalog is defined ? i18n_catalog : "Admin" ) }}</span></legend>
             {% endif %}
 
