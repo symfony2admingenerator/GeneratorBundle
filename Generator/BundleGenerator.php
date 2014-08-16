@@ -130,6 +130,14 @@ class BundleGenerator extends BaseBundleGenerator
             );
         }
 
+        $optionsFile = $dir.'/Form/Type/'.($this->prefix ? ucfirst($this->prefix).'/' : '').'Options.php';
+        $this->copyPreviousFile($formFile);
+        $this->renderGeneratedFile(
+            'DefaultOptions.php.twig',
+            $optionsFile,
+            $parameters
+        );
+
         $generatorFile = $dir.'/Resources/config/'.($this->prefix ? ucfirst($this->prefix).'-' : '').'generator.yml';
         $this->copyPreviousFile($generatorFile);
         $this->renderGeneratedFile(

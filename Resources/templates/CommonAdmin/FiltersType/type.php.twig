@@ -61,7 +61,7 @@ class {{ builder.YamlKey|ucfirst }}Type extends AbstractType
                 'field'     => {{ column.name|as_php }},
                 'label'     => {{ column.label|as_php }},
                 'filter'    => {{ column.filterType|as_php }},
-                'form'      => {{ column.formType|as_php|convert_as_form(column.formType) }},
+                'form'      => $this->getFormType({{ column.formType|as_php|convert_as_form(column.formType) }}),
                 'options'   => $this->getFormOption(
                     {{ column.name|as_php }},
                     {{ column.formOptions|merge(optionsHash)|as_php|convert_as_form(column.formType) }}
@@ -70,9 +70,27 @@ class {{ builder.YamlKey|ucfirst }}Type extends AbstractType
         {% endfor %}
         );
     }
+    
+    protected function getFormType($formType)
+    {
+        if (is_object($formType)) {
+            throw new \LogicException("Custom form types are not implemented in filters form.");
+        }
+
+        return $formType;
+    }
 
     protected function getFormOption($name, array $formOptions)
     {
+        $getter = 'get'.ucfirst($name).'Options';
+        $optionsClass = new Options();
+
+        if (method_exists($this, $getter)) {
+            $formOptions = $this->$getter($formOptions);
+        } else if ($optionsClass && method_exists($optionsClass, $getter)) {
+            $formOptions = $optionsClass->$getter($formOptions);
+        }
+        
         return $formOptions;
     }
     

@@ -6,6 +6,7 @@ namespace Admingenerated\{{ namespace_prefix }}{{ bundle_name }}\Form\Base{{ bui
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use JMS\SecurityExtraBundle\Security\Authorization\Expression\Expression;
+use {{ namespace_prefix }}\{{ bundle_name }}\Form\Type\{{ builder.BaseGeneratorName }}\Options;
 
 class {{ builder.YamlKey|ucfirst }}Type extends AbstractType
 {
@@ -33,6 +34,9 @@ class {{ builder.YamlKey|ucfirst }}Type extends AbstractType
 
     }
 
+    /**
+     * This method is used to pass the securityContext into custom formTypes.
+     */
     protected function getFormType($formType)
     {
         if (is_object($formType) && method_exists($formType, 'setSecurityContext')) {
@@ -44,6 +48,21 @@ class {{ builder.YamlKey|ucfirst }}Type extends AbstractType
 
     protected function getFormOption($name, array $formOptions)
     {
+        $getter = 'get'.ucfirst($name).'Options';
+        $optionsClass = new Options();
+
+        if (method_exists($this, $getter)) {
+            $formOptions = $this->$getter($formOptions);
+        } else if ($optionsClass && method_exists($optionsClass, $getter)) {
+            $formOptions = $optionsClass->$getter($formOptions);
+        }
+        
+        // Pass on securityContext to collection types
+        if (array_key_exists('type', $formOptions)) {
+            $formType = $formOptions['type'];
+            $formOptions['type'] = $this->getFormType($formType);
+        }
+
         return $formOptions;
     }
 
