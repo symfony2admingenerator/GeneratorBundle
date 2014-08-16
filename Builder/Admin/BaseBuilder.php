@@ -256,9 +256,9 @@ class BaseBuilder extends GenericBaseBuilder
 
         foreach ($rows_or_fields as $key => $field) {
             if (is_array($field)) { //The row is defined in yaml
-                $rows[$key] = array_combine($field, $field);
+                $rows[$key] = $field;
             } else {
-                $rows[$key][$field] = $field;
+                $rows[$key][] = $field;
             }
         }
 

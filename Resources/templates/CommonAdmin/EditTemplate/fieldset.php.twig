@@ -6,7 +6,9 @@
         {% endif %}
 			
         {% for rowName,rows in builder.fieldsets[fieldset] %}
-            {% if rowName is not divisible by(1) %}
+            {% if rowName|is_numeric %}
+                {% set rowspan = 'col-md-4' %}
+            {% else %}
                 {% set rowspan = rowName %}
             {% endif %}
             <div class="row">
@@ -14,7 +16,7 @@
                 {% if builder.Columns[field].credentials %}
                       {{ echo_if_granted(builder.Columns[field].credentials, builder.ModelClass) }}
                 {% endif %}
-                <div class="{{ rowspan|default('col-md-4') }} form_field field_{{ builder.Columns[field].formType }} field_{{ field }}">
+                <div class="{{ rowspan }} form_field field_{{ builder.Columns[field].formType }} field_{{ field }}">
                     {{ echo_block("form_" ~ field) }}
                         {{ echo_twig("form_row(form['" ~ field ~ "'])") }}
                     {{ echo_endblock() }}
