@@ -30,8 +30,8 @@ body {
 
 .form-actions.form-actions-condensed {
     padding: 9px 20px 10px;
-    margin-top: 0px;
-    margin-bottom: 0px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .form-actions:before, .form-actions:after {

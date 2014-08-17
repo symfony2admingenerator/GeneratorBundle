@@ -61,8 +61,8 @@ class {{ builder.YamlKey|ucfirst }}Type extends AbstractType
                 'field'     => {{ column.name|as_php }},
                 'label'     => {{ column.label|as_php }},
                 'filter'    => {{ column.filterType|as_php }},
-                'form'      => $this->getFormType({{ column.formType|as_php|convert_as_form(column.formType) }}),
-                'options'   => $this->getFormOption(
+                'form'      => $this->checkFieldType({{ column.formType|as_php|convert_as_form(column.formType) }}),
+                'options'   => $this->getFieldOption(
                     {{ column.name|as_php }},
                     {{ column.formOptions|merge(optionsHash)|as_php|convert_as_form(column.formType) }}
                 )
@@ -71,27 +71,41 @@ class {{ builder.YamlKey|ucfirst }}Type extends AbstractType
         );
     }
     
-    protected function getFormType($formType)
+    /**
+     * Check filter field type
+     * 
+     * @param  string|FormTypeInterface $fieldType Field type.
+     * @throws \LogicException If $fieldType is an object.
+     * @return string|FormTypeInterface Field type.
+     */
+    protected function checkFieldType($fieldType)
     {
-        if (is_object($formType)) {
+        if (is_object($fieldType)) {
             throw new \LogicException("Custom form types are not implemented in filters form.");
         }
 
-        return $formType;
+        return $fieldType;
     }
 
-    protected function getFormOption($name, array $formOptions)
+    /**
+     * Get form option for field
+     * 
+     * @param  string $name            Field name.
+     * @param  array  $fieldOptions    Field options.
+     * @return array Field options.
+     */
+    protected function getFieldOption($name, array $fieldOptions)
     {
         $getter = 'get'.ucfirst($name).'Options';
         $optionsClass = new Options();
 
         if (method_exists($this, $getter)) {
-            $formOptions = $this->$getter($formOptions);
+            $fieldOptions = $this->$getter($fieldOptions, array());
         } else if ($optionsClass && method_exists($optionsClass, $getter)) {
-            $formOptions = $optionsClass->$getter($formOptions);
+            $fieldOptions = $optionsClass->$getter($fieldOptions, array());
         }
         
-        return $formOptions;
+        return $fieldOptions;
     }
     
     public function getParent()

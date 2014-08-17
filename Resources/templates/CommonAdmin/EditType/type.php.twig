@@ -19,13 +19,13 @@ class {{ builder.YamlKey|ucfirst }}Type extends AbstractType
     if (false !== $this->securityContext->isGranted(array(new Expression('{{ column.credentials }}')), $builder->getData())) {
     {%- endif %}
 
-        $formOptions = $this->getFormOption('{{ column.name }}', {{ column.formOptions|merge({
+        $fieldOptions = $this->getFieldOption('{{ column.name }}', {{ column.formOptions|merge({
             'label': column.label,
             'translation_domain': i18n_catalog|default('Admin')
-        })|as_php|convert_as_form(column.formType) }});
-        $formType = {{ column.formType|as_php|convert_as_form(column.formType) }};
+        })|as_php|convert_as_form(column.formType) }}, $options);
+        $fieldType = $this->injectSecurityContext({{ column.formType|as_php|convert_as_form(column.formType) }});
 
-        $builder->add('{{ column.name }}', $this->getFormType($formType), $formOptions);
+        $builder->add('{{ column.name }}', $fieldType, $fieldOptions);
 
     {% if column.credentials %}
     }
@@ -36,8 +36,11 @@ class {{ builder.YamlKey|ucfirst }}Type extends AbstractType
 
     /**
      * This method is used to pass the securityContext into custom formTypes.
+     *
+     * @param string|FormTypeInterface $formType
+     * @return string|FormTypeInterface
      */
-    protected function getFormType($formType)
+    protected function injectSecurityContext($formType)
     {
         if (is_object($formType) && method_exists($formType, 'setSecurityContext')) {
             $formType->setSecurityContext($this->securityContext);
@@ -46,24 +49,32 @@ class {{ builder.YamlKey|ucfirst }}Type extends AbstractType
         return $formType;
     }
 
-    protected function getFormOption($name, array $formOptions)
+    /**
+     * Get form option for field
+     * 
+     * @param  string $name             Field name.
+     * @param  array  $fieldOptions     Field options.
+     * @param  array  $builderOptions   Form builder options.
+     * @return array Field options.
+     */
+    protected function getFieldOption($name, array $fieldOptions, array $builderOptions)
     {
         $getter = 'get'.ucfirst($name).'Options';
         $optionsClass = new Options();
 
         if (method_exists($this, $getter)) {
-            $formOptions = $this->$getter($formOptions);
+            $fieldOptions = $this->$getter($fieldOptions, $builderOptions);
         } else if ($optionsClass && method_exists($optionsClass, $getter)) {
-            $formOptions = $optionsClass->$getter($formOptions);
+            $fieldOptions = $optionsClass->$getter($fieldOptions, $builderOptions);
         }
         
         // Pass on securityContext to collection types
-        if (array_key_exists('type', $formOptions)) {
-            $formType = $formOptions['type'];
-            $formOptions['type'] = $this->getFormType($formType);
+        if (array_key_exists('type', $fieldOptions)) {
+            $fieldType = $fieldOptions['type'];
+            $fieldOptions['type'] = $this->injectSecurityContext($fieldType);
         }
 
-        return $formOptions;
+        return $fieldOptions;
     }
 
     public function getName()
