@@ -60,9 +60,12 @@ class Generator extends TwigGeneratorGenerator
     {
         parent::addBuilder($builder);
 
+        $params = $this->getFromYaml('params', array());
+        $paramsWithActionBuilderDefaults = $this->applyActionsBuilderDefaults($params);
+
         $builder->setVariables(
             $this->mergeParameters(
-                $this->getFromYaml('params', array()),
+                $paramsWithActionBuilderDefaults,
                 $this->getFromYaml(sprintf('builders.%s.params', $builder->getYamlKey()), array())
             )
         );
@@ -188,6 +191,60 @@ class Generator extends TwigGeneratorGenerator
         return $replace_values_recursive($base, $replacement);
     }
 
+    /**
+     * Inject default batch and object actions settings
+     */
+    protected function applyActionsBuilderDefaults(array $params)
+    {
+        $routeBase = $params['namespace_prefix'].'_'.$params['bundle_name'].'_'.$this->getBaseGeneratorName();
+
+        if (array_key_exists('object_actions', $params) && is_array($params['object_actions'])) {
+            foreach ($params['object_actions'] as $name => $config) {
+                $baseKey = 'object_actions.'.$name;
+
+                if (is_array($config) && array_key_exists('route', $config) && $config['route'] === 'inject_object_defaults') {
+                    $params['object_actions'][$name] = $this->recursiveReplace($params['object_actions'][$name], array(
+                        'route'         => $routeBase.'_object',
+                        'label'         => $baseKey.'.label',
+                        'csrfProtected' => true,
+                        'params'        => array(
+                            'pk'        => '{{ '.$this->getBaseGeneratorName().'.id }}',
+                            'action'    => $name,
+                        ),
+                        'options'       => array(
+                            'title'     => $baseKey.'.title',
+                            'success'   => $baseKey.'.success',
+                            'error'     => $baseKey.'.error',
+                        ),
+                    ));
+                }
+            }
+        }
+
+        if (array_key_exists('batch_actions', $params) && is_array($params['batch_actions'])) {
+            foreach ($params['batch_actions'] as $name => $config) {
+                $baseKey = 'batch_actions.'.$name;
+                
+                if (is_array($config) && array_key_exists('route', $config) && $config['route'] === 'inject_batch_defaults') {
+                    $params['batch_actions'][$name] = $this->recursiveReplace($params['batch_actions'][$name], array(
+                        'route'         => $routeBase.'_batch',
+                        'label'         => $baseKey.'.label',
+                        'csrfProtected' => true,
+                        'params'        => array(
+                            'action'    => $name,
+                        ),
+                        'options'       => array(
+                            'title'     => $baseKey.'.title',
+                            'success'   => $baseKey.'.success',
+                            'error'     => $baseKey.'.error',
+                        ),
+                    ));
+                }
+            }
+        }
+
+        return $params;
+    }
 
     protected function getColumnClass()
     {
