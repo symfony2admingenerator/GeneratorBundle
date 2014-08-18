@@ -196,6 +196,10 @@ class Generator extends TwigGeneratorGenerator
      */
     protected function applyActionsBuilderDefaults(array $params)
     {
+        if (!array_key_exists('namespace_prefix', $params) || !array_key_exists('bundle_name', $params)) {
+            return $params;
+        }
+
         $routeBase = $params['namespace_prefix'].'_'.$params['bundle_name'].'_'.$this->getBaseGeneratorName();
 
         if (array_key_exists('object_actions', $params) && is_array($params['object_actions'])) {
