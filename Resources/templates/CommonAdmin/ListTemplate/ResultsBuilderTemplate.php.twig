@@ -17,18 +17,23 @@
         </table>
 
         <div class="list-actions form-actions">
+        {{ echo_block("batch_actions_wrapper") }}
         {% if batch_actions is defined and batch_actions|length > 0 %}
             <div id="batch_actions" class="pull-left btn-toolbar" role="toolbar">
                 {{ block('batch_actions') }}
             </div>
         {% endif -%}
+        {{ echo_endblock() }}
 
+        {{ echo_block("generic_actions_wrapper") }}
         {% if actions is defined and actions|length > 0 %}
             <div id="generic_actions" class="pull-left btn-toolbar" role="toolbar">
                 {{ block('generic_actions') -}}
             </div>
         {% endif -%}
+        {{ echo_endblock() }}
 
+        {{ echo_block("pagination_wrapper") }}
             <div class="pull-right btn-toolbar" role="toolbar">
                 {{- block('list_paginator_perpage') -}}
             </div>
@@ -38,6 +43,7 @@
             </div>
 
             <div class="clearfix"></div>
+        {{ echo_endblock() }}
         </div>
     {{- block('endform_batch_actions') }}
 </div>
