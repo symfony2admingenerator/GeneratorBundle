@@ -23,11 +23,13 @@
     {{- block('title') -}}
 
     <div class="container-fluid">
+        {% if object_actions is defined  and object_actions|length > 0 %}
 	    <div class="row object-actions-{{ builder.ModelClass }} form-actions">
 	        <div class="btn-toolbar">
 	            {{- block('object_actions') -}}
 	        </div>
 	    </div>
+	    {% endif %}
 
 	    <div class="row">
 	        {% if sidebar is defined and sidebar|length > 0 %}
