@@ -5,19 +5,16 @@
      */
     protected function parseRequestForPager()
     {
-        if ($this->get('request')->query->get('page'))
-        {
-          $this->setPage($this->get('request')->query->get('page'));
+        if ($this->get('request')->query->get('page')) {
+            $this->setPage($this->get('request')->query->get('page'));
         }
 
-        if ($this->get('request')->query->get('perPage'))
-        {
-          $this->setPerPage($this->get('request')->query->get('perPage'));
+        if ($this->get('request')->query->get('perPage')) {
+            $this->setPerPage($this->get('request')->query->get('perPage'));
         }
 
-        if ($this->get('request')->query->get('sort'))
-        {
-          $this->setSort($this->get('request')->query->get('sort'), $this->get('request')->query->get('order_by','ASC'));
+        if ($this->get('request')->query->get('sort')) {
+            $this->setSort($this->get('request')->query->get('sort'), $this->get('request')->query->get('order_by','ASC'));
         }
     }
 
@@ -28,7 +25,7 @@
      */
     protected function setPage($page)
     {
-        $this->get('session')->set('{{ namespace_prefix }}\{{ bundle_name }}\{{ builder.BaseGeneratorName }}List\Page', $page);
+        $this->get('session')->set($this->getSessionPrefix().'List\Page', $page);
     }
 
     /**
@@ -38,7 +35,7 @@
      */
     protected function getPage()
     {
-        return $this->get('session')->get('{{ namespace_prefix }}\{{ bundle_name }}\{{ builder.BaseGeneratorName }}List\Page', 1);
+        return $this->get('session')->get($this->getSessionPrefix().'List\Page', 1);
     }
 
     /**
@@ -48,7 +45,7 @@
      */
     protected function setPerPage($perPage)
     {
-        $this->get('session')->set('{{ namespace_prefix }}\{{ bundle_name }}\{{ builder.BaseGeneratorName }}List\PerPage', $perPage);
+        $this->get('session')->set($this->getSessionPrefix().'List\PerPage', $perPage);
     }
 
     /**
@@ -58,7 +55,7 @@
      */
     protected function getPerPage()
     {
-        return $this->get('session')->get('{{ namespace_prefix }}\{{ bundle_name }}\{{ builder.BaseGeneratorName }}List\PerPage', {{ max_per_page is defined ? max_per_page : 10 }});
+        return $this->get('session')->get($this->getSessionPrefix().'List\PerPage', {{ max_per_page is defined ? max_per_page : 10 }});
     }
 
     protected function getPager()

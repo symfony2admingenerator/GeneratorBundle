@@ -18,20 +18,20 @@
             $this->setFilters($filters);
         }
 
-        return new RedirectResponse($this->generateUrl("{{ builder.routePrefixWithSubfolder ~ '_' ~ bundle_name ~ (builder.BaseGeneratorName ? '_' ~ builder.BaseGeneratorName : '') ~ '_list' }}"));
+        return new RedirectResponse($this->getListUrl());
     }
 
     {% block setFilters -%}
     protected function setFilters($filters)
     {
-        $this->get('session')->set('{{ namespace_prefix }}\{{ bundle_name }}\{{ builder.BaseGeneratorName }}List\Filters', $filters);
+        $this->get('session')->set($this->getSessionPrefix().'List\Filters', $filters);
     }
     {% endblock %}
 
     {% block getFilters -%}
     protected function getFilters()
     {
-        return $this->get('session')->get('{{ namespace_prefix }}\{{ bundle_name }}\{{ builder.BaseGeneratorName }}List\Filters', array());
+        return $this->get('session')->get($this->getSessionPrefix().'List\Filters', array());
     }
     {% endblock %}
 

@@ -7,12 +7,12 @@
      */
     protected function setSort($column, $order_by)
     {
-        $this->get('session')->set('{{ namespace_prefix }}\{{ bundle_name }}\{{ builder.BaseGeneratorName }}List\Sort', $column);
+        $this->get('session')->set($this->getSessionPrefix().'List\Sort', $column);
 
         if ($order_by == 'desc') {
-            $this->get('session')->set('{{ namespace_prefix }}\{{ bundle_name }}\{{ builder.BaseGeneratorName }}List\OrderBy', 'DESC');
+            $this->get('session')->set($this->getSessionPrefix().'List\OrderBy', 'DESC');
         } else {
-             $this->get('session')->set('{{ namespace_prefix }}\{{ bundle_name }}\{{ builder.BaseGeneratorName }}List\OrderBy', 'ASC');
+            $this->get('session')->set($this->getSessionPrefix().'List\OrderBy', 'ASC');
         }
     }
 
@@ -24,11 +24,9 @@
     protected function getSortColumn()
     {
         {% if sort is defined and sort[0] != '' -%}
-
-            return $this->get('session')->get('{{ namespace_prefix }}\{{ bundle_name }}\{{ builder.BaseGeneratorName }}List\Sort', '{{ sort[0] }}');
+            return $this->get('session')->get($this->getSessionPrefix().'List\Sort', '{{ sort[0] }}');
         {% else -%}
-
-            return $this->get('session')->get('{{ namespace_prefix }}\{{ bundle_name }}\{{ builder.BaseGeneratorName }}List\Sort');
+            return $this->get('session')->get($this->getSessionPrefix().'List\Sort');
         {% endif -%}
     }
 
@@ -40,11 +38,9 @@
     protected function getSortOrder()
     {
         {% if sort is defined and sort[1] is defined -%}
-
-            return $this->get('session')->get('{{ namespace_prefix }}\{{ bundle_name }}\{{ builder.BaseGeneratorName }}List\OrderBy', '{{ sort[1] }}');
+            return $this->get('session')->get($this->getSessionPrefix().'List\OrderBy', '{{ sort[1] }}');
         {% else -%}
-
-            return $this->get('session')->get('{{ namespace_prefix }}\{{ bundle_name }}\{{ builder.BaseGeneratorName }}List\OrderBy', 'ASC');
+            return $this->get('session')->get($this->getSessionPrefix().'List\OrderBy', 'ASC');
         {% endif -%}
     }
 

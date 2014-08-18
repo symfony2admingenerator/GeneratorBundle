@@ -32,13 +32,13 @@
 
                 $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans("{{ messages.success|default("action.object.edit.success") }}", array(), 'Admingenerator') );
 
-                if($this->get('request')->request->has('save-and-add'))
-                  return new RedirectResponse($this->generateUrl("{{ builder.routePrefixWithSubfolder }}_{{ bundle_name }}{{ builder.BaseGeneratorName ? "_" ~ builder.BaseGeneratorName : "" }}_new" ));
-                if($this->get('request')->request->has('save-and-list'))
-                  return new RedirectResponse($this->generateUrl("{{ builder.routePrefixWithSubfolder }}_{{ bundle_name }}{{ builder.BaseGeneratorName ? "_" ~ builder.BaseGeneratorName : "" }}_list" ));
-                else
-                  return new RedirectResponse($this->generateUrl("{{ builder.routePrefixWithSubfolder }}_{{ bundle_name }}{{ builder.BaseGeneratorName ? "_" ~ builder.BaseGeneratorName : "" }}_edit", array('pk' => $pk) ));
-
+                if ($this->get('request')->request->has('save-and-add')) {
+                    return new RedirectResponse($this->getNewUrl());
+                } else if ($this->get('request')->request->has('save-and-list')) {
+                    return new RedirectResponse($this->getListUrl());
+                } else {
+                    return new RedirectResponse($this->getEditUrl($pk));
+                }
             {% if concurrency_lock -%}
             } catch ({% block lockException %}// ORM job{% endblock %} $e) {
                 $this->get('session')->getFlashBag()->add(

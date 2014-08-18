@@ -16,6 +16,7 @@ use {{ builder.namespacePrefixWithSubfolder }}\{{ bundle_name }}\Form\Type\{{ bu
 
         return $this->render('{{ builder.namespacePrefixForTemplate }}{{ bundle_name }}:{{ builder.BaseGeneratorName }}List:index.html.twig', $this->getAdditionalRenderParameters() + array(
             '{{ builder.ModelClass }}s' => $this->getPager(),
+            'filtersUrl'                => $this->getFiltersUrl(),
             'form'                      => $form->createView(),
             'sortColumn'                => $this->getSortColumn(),
             'sortOrder'                 => $this->getSortOrder(),

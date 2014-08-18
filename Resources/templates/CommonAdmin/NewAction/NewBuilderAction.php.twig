@@ -23,6 +23,36 @@ class NewController extends BaseController
     {{- block('security_check') }}
 
     /**
+     * Get list URL
+     *
+     * @return string
+     */
+    protected function getListUrl()
+    {
+        return $this->generateUrl("{{ builder.routePrefixWithSubfolder ~ '_' ~ bundle_name ~ (builder.BaseGeneratorName ? '_' ~ builder.BaseGeneratorName : '') ~ '_list' }}");
+    }
+
+    /**
+     * Get new URL
+     *
+     * @return string
+     */
+    protected function getNewUrl()
+    {
+        return $this->generateUrl("{{ builder.routePrefixWithSubfolder }}_{{ bundle_name }}{{ builder.BaseGeneratorName ? "_" ~ builder.BaseGeneratorName : "" }}_new" );
+    }
+
+    /**
+     * Get edit URL
+     *
+     * @return string
+     */
+    protected function getEditUrl($pk)
+    {
+        return $this->generateUrl("{{ builder.routePrefixWithSubfolder }}_{{ bundle_name }}{{ builder.BaseGeneratorName ? "_" ~ builder.BaseGeneratorName : "" }}_edit", array('pk' => $pk) );
+    }
+
+    /**
      * Get additional parameters for rendering.
      *
      * @param \{{ model }} ${{ builder.ModelClass }} your \{{ model }} object

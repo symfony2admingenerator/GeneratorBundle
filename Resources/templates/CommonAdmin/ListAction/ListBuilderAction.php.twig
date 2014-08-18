@@ -39,9 +39,39 @@ class ListController extends BaseController
     {{- block('security_check') }}
 
     /**
+     * Get asession prefix
+     *
+     * @return string
+     */
+    protected function getSessionPrefix()
+    {
+        return '{{ namespace_prefix }}\{{ bundle_name }}\{{ builder.BaseGeneratorName }}';
+    }
+
+    /**
+     * Get list index URL
+     *
+     * @return string
+     */
+    protected function getListUrl()
+    {
+        return $this->generateUrl("{{ builder.routePrefixWithSubfolder ~ '_' ~ bundle_name ~ (builder.BaseGeneratorName ? '_' ~ builder.BaseGeneratorName : '') ~ '_list' }}");
+    }
+
+    /**
+     * Get list filters URL
+     *
+     * @return string
+     */
+    protected function getFiltersUrl()
+    {
+        return $this->generateUrl("{{ builder.routePrefixWithSubfolder ~ '_' ~ bundle_name ~ (builder.BaseGeneratorName ? '_' ~ builder.BaseGeneratorName : '') ~ '_filters' }}");
+    }
+
+    /**
      * Get additional parameters for rendering.
      *
-     * return array
+     * @return array
      */
     protected function getAdditionalRenderParameters()
     {
