@@ -39,6 +39,16 @@
     }
 
     /**
+     * Return array of possible perPageChoices
+     *
+     * @return array
+     */
+    protected function getPerPageChoices()
+    {
+        return {{ perPageChoices|default([10, 25, 50, 75, 100])|as_php }};
+    }
+
+    /**
      * Store in the session service the perPage
      *
      * @param integer $perPage The perPage number
