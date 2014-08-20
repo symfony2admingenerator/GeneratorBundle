@@ -13,6 +13,7 @@
             {{ echo_if_granted(column.credentials) }}
         {% endif %}
 
+        {{ echo_block('list_thead_column_' ~ column.name) -}}
         <th class="list_thead_column{{ echo_if (column.isSortable) }} sortable{{ echo_if ("sortColumn == '" ~ column.sortOn ~ "' and sortOrder == 'ASC'") }} sort_asc{{ echo_elseif ("sortColumn == '" ~ column.sortOn ~ "' and sortOrder == 'DESC'") }} sort_desc{{ echo_endif () }}{{ echo_endif () }}">
             <span class="sort-addon">
             {% if column.isSortable -%}
@@ -61,6 +62,7 @@
             {% endif -%}
             </span>
         </th>
+        {{ echo_endblock() }}
 
         {% if column.credentials %}
             {{ echo_endif () }}
@@ -68,7 +70,9 @@
     {% endfor -%}
 
     {%- if object_actions|length > 0 -%}
+    {{ echo_block("list_thead_actions") }}
         <th class="actions">{{ echo_trans('list.header.actions') }}</th>
+    {{ echo_endblock() }}
     {% endif -%}
     </tr>
     {{ echo_endblock() }}

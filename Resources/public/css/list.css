@@ -8,6 +8,10 @@
 }
 
 /* List sorting styles */
+.list_thead .actions {
+    min-width: 95px;
+}
+
 .list_thead_column .sort-addon {
     min-height: 0px;
     position: relative;
