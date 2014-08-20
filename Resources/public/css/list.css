@@ -21,7 +21,7 @@
 .list_thead_column .sort-addon > i.placeholder {
     position: absolute;
     bottom: 2px;
-    right: -1.2em;
+    right: 0;
 }
 
 .list_thead_column .sort-addon > i.active,
