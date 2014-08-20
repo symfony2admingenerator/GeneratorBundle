@@ -24,6 +24,9 @@
     {% block setFilters -%}
     protected function setFilters($filters)
     {
+        $serializer = $this->getSessionSerializer();
+        $filters = $serializer->serialize($filters);
+        
         $this->get('session')->set($this->getSessionPrefix().'List\Filters', $filters);
     }
     {% endblock %}
@@ -31,7 +34,10 @@
     {% block getFilters -%}
     protected function getFilters()
     {
-        return $this->get('session')->get($this->getSessionPrefix().'List\Filters', array());
+        $serializer = $this->getSessionSerializer();
+        $filters = $this->get('session')->get($this->getSessionPrefix().'List\Filters', array());
+
+        return $serializer->deserialize($filters);
     }
     {% endblock %}
 

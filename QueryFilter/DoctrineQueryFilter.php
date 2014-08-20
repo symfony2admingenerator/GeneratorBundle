@@ -119,7 +119,9 @@ class DoctrineQueryFilter extends BaseQueryFilter
      */
     public function formatValue($field, $operator, $value)
     {
-        $value = trim($value);
+        if (is_string($value)) {
+            $value = trim($value);
+        }
         
         switch ($this->getFilterFor($field)) {
             case 'boolean':

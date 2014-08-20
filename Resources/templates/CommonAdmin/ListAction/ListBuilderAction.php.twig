@@ -122,6 +122,13 @@ class ListController extends BaseController
     }
     {% endblock %}
 
+    {% block getSessionSerializer -%}
+    protected function getSessionSerializer()
+    {
+        // ORM JOB
+    }
+    {% endblock %}
+
     {{ block('csrf_check_token') }}
 
 }

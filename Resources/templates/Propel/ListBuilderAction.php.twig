@@ -225,3 +225,13 @@ use Pagerfanta\Adapter\PropelAdapter as PagerAdapter;
         return $this->get('admingenerator.queryfilter.propel');
     }
 {% endblock %}
+
+{% block getSessionSerializer %}
+    /**
+     * @return \Admingenerator\GeneratorBundle\SessionSerializer\SessionSerializerInterface
+     */
+    protected function getSessionSerializer()
+    {
+        return $this->get('admingenerator.sessionserializer.propel');
+    }
+{% endblock %}

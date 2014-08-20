@@ -224,3 +224,13 @@
         return $this->get('admingenerator.queryfilter.doctrine');
     }
 {% endblock %}
+
+{% block getSessionSerializer %}
+    /**
+     * @return \Admingenerator\GeneratorBundle\SessionSerializer\SessionSerializerInterface
+     */
+    protected function getSessionSerializer()
+    {
+        return $this->get('admingenerator.sessionserializer.doctrine');
+    }
+{% endblock %}

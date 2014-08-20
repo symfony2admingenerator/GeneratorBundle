@@ -275,3 +275,13 @@ use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter as PagerAdapter;
         return $this->get('admingenerator.queryfilter.doctrine_odm');
     }
 {% endblock %}
+
+{% block getSessionSerializer %}
+    /**
+     * @return \Admingenerator\GeneratorBundle\SessionSerializer\SessionSerializerInterface
+     */
+    protected function getSessionSerializer()
+    {
+        return $this->get('admingenerator.sessionserializer.doctrine_odm');
+    }
+{% endblock %}

@@ -176,8 +176,8 @@ class DoctrineODMFieldGuesser extends ContainerAware
             $mapping = $this->getMetadatas()->getFieldMapping($columnName);
 
             return array(
-                'class'     => $mapping['targetDocument'],
-                'multiple'  => false,
+                'class'         => $mapping['targetDocument'],
+                'multiple'      => false,
             );
         }
 

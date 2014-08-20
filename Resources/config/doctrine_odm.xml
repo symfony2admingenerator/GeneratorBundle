@@ -7,6 +7,7 @@
         <parameter key="admingenerator.doctrine_odm.class">Admingenerator\GeneratorBundle\Generator\DoctrineODMGenerator</parameter>
         <parameter key="admingenerator.fieldguesser.doctrine_odm.class">Admingenerator\GeneratorBundle\Guesser\DoctrineODMFieldGuesser</parameter>
         <parameter key="admingenerator.queryfilter.doctrine_odm.class">Admingenerator\GeneratorBundle\QueryFilter\DoctrineODMQueryFilter</parameter>
+        <parameter key="admingenerator.sessionserializer.doctrine_odm.class">Admingenerator\GeneratorBundle\SessionSerializer\DoctrineODMSessionSerializer</parameter>
     </parameters>
     
     <services>
@@ -33,6 +34,10 @@
 
         <service id="admingenerator.queryfilter.doctrine_odm"
             class="%admingenerator.queryfilter.doctrine_odm.class%">
+        </service>
+
+        <service id="admingenerator.sessionserializer.doctrine_odm" class="%admingenerator.sessionserializer.doctrine_odm.class%">
+            <argument type="service" id="doctrine.odm.mongodb.document_manager"></argument>
         </service>
         
     </services>
