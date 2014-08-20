@@ -72,8 +72,14 @@ button:hover > [class*=" fa-"]:before {
 .bs-callout {
     margin: 20px 0;
     padding: 15px 30px 15px 15px;
-    border-left: 5px solid #eee;
+    border: 1px solid #eee;
+    border-left-width: 5px;
+
+    -webkit-border-radius: 4px;
+       -moz-border-radius: 4px;
+            border-radius: 4px;
 }
+
 .bs-callout h1,
 .bs-callout h2,
 .bs-callout h3,
@@ -119,6 +125,12 @@ button:hover > [class*=" fa-"]:before {
     color: #3C763D;
 }
 
+.bs-callout h1:last-child,
+.bs-callout h2:last-child,
+.bs-callout h3:last-child,
+.bs-callout h4:last-child,
+.bs-callout h5:last-child,
+.bs-callout h6:last-child,
 .bs-callout p:last-child {
     margin-bottom: 0;
 }
@@ -133,17 +145,24 @@ button:hover > [class*=" fa-"]:before {
     background-color: #fcf2f2;
     border-color: #dFb5b4;
 }
+
 .bs-callout-warning {
     background-color: #fefbed;
     border-color: #f1e7bc;
 }
+
 .bs-callout-info {
     background-color: #f0f7fd;
     border-color: #d0e3f0;
-    }
+}
+
 .bs-callout-success {
     background-color: #dff0d8;
     border-color: #d6e9c6;
+}
+
+.bs-callout.highlight {
+    background-color: #ffffff;
 }
 
 /**

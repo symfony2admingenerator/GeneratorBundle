@@ -1,6 +1,7 @@
 {% block list_thead %}
 {{ echo_block("list_thead") }}
 <thead>
+    {{ echo_block("list_thead_rows") }}
     <tr class="list_thead">
         {% if batch_actions is defined and batch_actions|length > 0 %}
             <th class="list_thead_batch_action">
@@ -70,6 +71,7 @@
         <th class="actions">{{ echo_trans('list.header.actions') }}</th>
     {% endif -%}
     </tr>
+    {{ echo_endblock() }}
 </thead>
 {{ echo_endblock() }}
 {% endblock %}

@@ -2,6 +2,11 @@
  * List builder specific CSS
  */
 
+/* List results number bar styles */
+.list_nbresults {
+    margin-bottom: 8px;
+}
+
 /* List sorting styles */
 .list_thead_column .sort-addon {
     min-height: 0px;

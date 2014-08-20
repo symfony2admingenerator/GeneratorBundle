@@ -3,6 +3,7 @@
 {% block list_tbody %}
 {{ echo_block("list_tbody") }}
     <tbody>
+    {{ echo_block("list_tbody_rows") }}
         {{ echo_if (builder.ModelClass ~ "s|length > 0") }}
 
         {{ echo_for(builder.ModelClass, builder.ModelClass ~ "s" ) }}
@@ -20,6 +21,7 @@
         {% endif %}
         </tr>
         {{ echo_endif () }}
+    {{ echo_endblock() }}
     </tbody>
 {{ echo_endblock() }}
 {% endblock %}
