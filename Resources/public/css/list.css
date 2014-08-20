@@ -5,6 +5,14 @@
 /* List sorting styles */
 .list_thead_column .sort-addon {
     min-height: 0px;
+    position: relative;
+    padding-right: 20px;
+}
+
+.list_thead_column .sort-addon > i.placeholder {
+    position: absolute;
+    top: 2px;
+    right: -18px;
 }
 
 .list_thead_column .sort-addon > i.active,
