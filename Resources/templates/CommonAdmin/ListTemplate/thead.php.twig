@@ -68,7 +68,7 @@
     {% endfor -%}
 
     {%- if object_actions|length > 0 -%}
-        <th class="actions" style="min-width: {{ (object_actions|length * 31) }}px">{{ echo_trans('list.header.actions') }}</th>
+        <th class="actions">{{ echo_trans('list.header.actions') }}</th>
     {% endif -%}
     </tr>
     {{ echo_endblock() }}
