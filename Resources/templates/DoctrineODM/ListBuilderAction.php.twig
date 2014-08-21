@@ -252,9 +252,9 @@ use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter as PagerAdapter;
     /**
      * Add the filters to the query for {{ groupName }} => {{ scopeName }}
      *
-     * @param queryFilter the queryFilter
+     * @param $queryFilter The queryFilter.
      */
-    protected function scope{{ filterParams|classify }}($query)
+    protected function scope{{ filterParams|classify }}($queryFilter)
     {
     }
 
