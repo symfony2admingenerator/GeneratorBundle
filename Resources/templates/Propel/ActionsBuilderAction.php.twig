@@ -41,3 +41,18 @@
     }
 
 {% endblock %}
+
+{% block saveObject %}
+
+    protected function saveObject(\{{ model }} ${{ builder.ModelClass }})
+    {
+        $validator = $this->get('validator');
+        $errors = $validator->validate(${{ builder.ModelClass }});
+
+        if (count($errors) > 0) {
+            throw new ValidationException();
+        } else {
+            ${{ builder.ModelClass }}->save();
+        }
+    }
+{% endblock %}

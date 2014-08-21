@@ -11,6 +11,7 @@ namespace Admingenerated\{{ namespace_prefix }}{{ bundle_name }}\{{ builder.gene
 use {{ builder.generator.baseController }} as BaseController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Admingenerator\GeneratorBundle\Exception\ValidationException;
 
 {{ block('csrf_protection_use') }}
 
@@ -101,6 +102,13 @@ class ActionsController extends BaseController
 
     {% block getQuery -%}
     protected function getObjectQuery($pk)
+    {
+        //ORM do JOB
+    }
+    {% endblock %}
+
+    {% block saveObject -%}
+    protected function saveObject(\{{ model }} ${{ builder.ModelClass }})
     {
         //ORM do JOB
     }
