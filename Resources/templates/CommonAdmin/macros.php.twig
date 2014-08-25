@@ -1,0 +1,21 @@
+{% macro echo_if_granted_any(items, object = null) %}
+	{% set credentialsCollection = [] %}
+    {% for item in items %}
+    	{% if item.credentials is defined %}
+    		{% set credentialsCollection = credentialsCollection|merge([ '(' ~ item.credentials ~ ')']) %}
+    	{% endif %}
+    {% endfor %}
+
+    {% if credentialsCollection|length > 0 %}
+    	{% set credentialsSum = credentialsCollection|join(' or ') %}
+    {% else %}
+    	{# there are no credential checks, allow all #}
+    	{% set credentialsSum = 'allowAll' %}
+    {% endif %}
+
+    {% if object is not null %}
+        {{ echo_if_granted(credentialsSum, object) }}
+    {% else %}
+        {{ echo_if_granted(credentialsSum) }}
+    {% endif %}
+{% endmacro %}

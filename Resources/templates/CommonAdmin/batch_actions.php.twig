@@ -1,34 +1,36 @@
 {% block batch_actions %}
-{{ echo_block("batch_actions") }}
-<div class="btn-group">
-    <div class="btn select-caret">
-        <select id="batchActionSelector" name="action" class="form-control">
-            <option selected="selected" value="none">{{ echo_trans('batch.list.selected') }}</option>
-            {% for action in builder.BatchActions %}
-                {{ echo_block('batch_action_' ~ action.twigName) }}
-                {% if action.credentials or builder.generator.getFromYaml('builders.' ~ action.name ~ '.params.credentials') %}
-                    {{ echo_if_granted(action.credentials ? action.credentials : builder.generator.getFromYaml('builders.' ~ action.name ~ '.params.credentials')) }}
-                {% endif %}
+{% import '../CommonAdmin/macros.php.twig' as macros %}
 
-                    {% if action.conditionalFunction %}
-                        {{ echo_if((action.conditionalInverse ? 'not ' : '') ~ builder.ModelClass ~ "." ~ action.conditionalFunction ~ '(' ~ action.conditionalParameters|join(',') ~')') }}
+{{ echo_block("batch_actions") }}
+{% if builder.BatchActions is defined and builder.BatchActions|length > 0 %}
+
+    {{ macros.echo_if_granted_any(builder.BatchActions, builder.ModelClass) }}
+
+    <div class="btn-group">
+        <div class="btn select-caret">
+            <select id="batchActionSelector" name="action" class="form-control">
+                <option selected="selected" value="none">{{ echo_trans('batch.list.selected') }}</option>
+                {% for action in builder.BatchActions %}
+                    {{ echo_block('batch_action_' ~ action.twigName) }}
+                    {% if action.credentials %}
+                        {{ echo_if_granted(action.credentials) }}
                     {% endif %}
 
                     {{ block('batch_action_block') }}
 
-                    {% if action.conditionalFunction %}
+                    {% if action.credentials %}
                         {{ echo_endif() }}
                     {% endif %}
-
-                {% if action.credentials or builder.generator.getFromYaml('builders.' ~ action.name ~ '.params.credentials') %}
-                    {{ echo_endif() }}
-                {% endif %}
-                {{ echo_endblock() }}
-            {% endfor %}
-        </select>
+                    {{ echo_endblock() }}
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" name="batch" class="btn btn-default">{{ echo_trans('batch.list.send') }}</button>
     </div>
-    <button type="submit" name="batch" class="btn btn-default">{{ echo_trans('batch.list.send') }}</button>
-</div>
+
+    {{ echo_endif() }}
+
+{% endif %}
 {{ echo_endblock() }}
 {% endblock %}
 

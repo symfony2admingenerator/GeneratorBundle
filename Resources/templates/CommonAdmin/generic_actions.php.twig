@@ -1,30 +1,30 @@
 {% block generic_actions %}
+{% import '../CommonAdmin/macros.php.twig' as macros %}
+
 {{ echo_block("generic_actions") }}
-    {% if builder.Actions|length > 0 %}
-        {% for action in builder.Actions %}
-            {{ echo_block("generic_action_" ~ action.twigName) }}
-            {% if action.credentials or builder.generator.getFromYaml('builders.' ~ action.name ~ '.params.credentials') %}
-                {{ echo_if_granted(action.credentials ? action.credentials : builder.generator.getFromYaml('builders.' ~ action.name ~ '.params.credentials') ) }}
-            {% endif %}
+{% if builder.Actions is defined and builder.Actions|length > 0 %}
 
-                {% if action.conditionalFunction %}
-                    {{ echo_if((action.conditionalInverse ? 'not ' : '') ~ builder.ModelClass ~ "." ~ action.conditionalFunction ~ '(' ~ action.conditionalParameters|join(',') ~')') }}
-                {% endif %}
+    {{ macros.echo_if_granted_any(builder.Actions, builder.ModelClass) }}
 
-                {{ block('generic_action_block') }}
+    {% for action in builder.Actions %}
+        {{ echo_block("generic_action_" ~ action.twigName) }}
+        {% if action.credentials %}
+            {{ echo_if_granted(action.credentials) }}
+        {% endif %}
 
-                {% if action.conditionalFunction %}
-                    {{ echo_endif() }}
-                {% endif %}
+        {{ block('generic_action_block') }}
 
-            {% if action.credentials or builder.generator.getFromYaml('builders.' ~ action.name ~ '.params.credentials') %}
-                {{ echo_endif() }}
-            {% endif %}
-            {{ echo_endblock() }}
-        {% endfor %}
+        {% if action.credentials %}
+            {{ echo_endif() }}
+        {% endif %}
+        {{ echo_endblock() }}
+    {% endfor %}
 
-        {{ block('generic_actions_script') }}
-    {% endif %}
+    {{ block('generic_actions_script') }}
+
+    {{ echo_endif() }}
+
+{% endif %}
 {{ echo_endblock() }}
 {% endblock %}
 
