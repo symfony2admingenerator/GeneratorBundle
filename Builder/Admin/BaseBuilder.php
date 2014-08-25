@@ -266,6 +266,25 @@ class BaseBuilder extends GenericBaseBuilder
     }
 
     /**
+     * Get columns for tab, fieldset, row or field
+     * 
+     * @param  mixed $input
+     * @return array Array of columns.
+     */
+    public function getColumnsFor($input)
+    {
+        if (!is_array($input)) {
+            $input = array($input);
+        }
+        
+        $it = new \RecursiveIteratorIterator(new \RecursiveArrayIterator($input));
+
+        $fieldsNames = iterator_to_array($it, false);
+
+        return array_intersect_key($this->getColumns(), array_flip($fieldsNames));
+    }
+
+    /**
      * Return a list of action from list.actions
      * @return array
      */

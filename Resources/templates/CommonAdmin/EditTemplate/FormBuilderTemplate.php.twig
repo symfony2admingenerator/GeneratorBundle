@@ -1,4 +1,4 @@
-{% use "../CommonAdmin/EditTemplate/fieldset.php.twig" %}
+{% use "../CommonAdmin/EditTemplate/fieldsets.php.twig" %}
 {% use '../CommonAdmin/generic_actions.php.twig' %}
 
 {% block form %}
@@ -15,9 +15,9 @@
         {% if tabs is defined and tabs|length > 0 %}
         <div class="tab-content">
         {% endif %}
-        {% for fieldset in builder.fieldsets|keys %}
-            {{- block('form_fieldset') }}
-        {% endfor -%}
+
+            {{- block('form_fieldsets') }}
+
         {% if tabs is defined and tabs|length > 0 %}
         </div>
         {% endif %}

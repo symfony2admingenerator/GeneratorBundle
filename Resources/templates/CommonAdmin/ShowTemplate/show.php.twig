@@ -1,25 +1,27 @@
-{% use '../CommonAdmin/ListTemplate/Column/boolean.php.twig' %}
-{% use '../CommonAdmin/ListTemplate/Column/date.php.twig' %}
-{% use '../CommonAdmin/ListTemplate/Column/datetime.php.twig' %}
-{% use '../CommonAdmin/ListTemplate/Column/decimal.php.twig' %}
-{% use '../CommonAdmin/ListTemplate/Column/collection.php.twig' %}
 {% use '../CommonAdmin/generic_actions.php.twig' %}
+{% use '../CommonAdmin/ShowTemplate/column.php.twig' %}
 
 {% block show %}
+{% import '../CommonAdmin/macros.php.twig' as macros %}
 {{ echo_block('show') }}
     {{ echo_block('object') }}
-        {% for fieldset in builder.fieldsets|keys %}
+
+    {% for fieldset in builder.fieldsets|keys %}
+    {{ macros.echo_if_granted_any(builder.columnsFor(fieldset), builder.ModelClass) }}
+
         <fieldset class="form_block form_fieldset_{{ fieldset|classify|replace({'.': '_'}) }} tab-pane">
             {% if "NONE" != fieldset[:4] and "!" != fieldset[:1] %}
             <legend><span>{{ echo_trans(fieldset,{}, i18n_catalog is defined ? i18n_catalog : "Admin" ) }}</span></legend>
             {% endif %}
 
-            {% for rows in builder.fieldsets[fieldset] %}
-            <div class="row">
-                {% for field in rows %}
-                    {% set column = builder.Columns[field] %}
+            {% for row in builder.fieldsets[fieldset] %}
+            {% set rowColumns = builder.columnsFor(row) %}
+            {{ macros.echo_if_granted_any(rowColumns, builder.ModelClass) }}
+
+                <div class="row">
+                {% for column in rowColumns %}
                     {% if column.credentials %}
-                          {{ echo_if_granted(column.credentials, builder.ModelClass) }}
+                        {{ echo_if_granted(column.credentials, builder.ModelClass) }}
                     {% endif %}
 
                     <div class="col-md-2 text-right">
@@ -29,36 +31,23 @@
                     </div>
 
                     <div class="col-md-10">
-                        <div class="form-group form_field field_{{ field }}">
-                        {{ echo_block('show_column_' ~ column.name) -}}
-                            {%- if column.customView != null and builder.variable('custom_blocks') != null -%}
-                                {{- echo_use(builder.variable('custom_blocks')) -}}
-                                {{- echo_set('field_value', builder.ModelClass ~ '.' ~ column.getter, false) -}}
-                                {{- echo_print_block('column_' ~ column.customView|lower) -}}
-                            {%- elseif column.dbType|lower == "boolean" -%}
-                                {{- block('column_boolean') -}}
-                            {%- elseif column.dbType|lower == "date" -%}
-                                {{- block('column_date') -}}
-                            {%- elseif (column.dbType|lower == "datetime") or (column.dbType|lower == "timestamp") or (column.dbType|lower == "vardatetime") or (column.dbType|lower == "datetimetz") -%}
-                                {{- block('column_datetime') -}}
-                            {%- elseif column.dbType|lower == "decimal" -%}
-                                {{- block('column_decimal') -}}
-                            {%- elseif (column.dbType|lower == "array") or (column.dbType|lower == "collection")  -%}
-                                {{- block('column_collection') -}}
-                            {%- else -%}
-                                {{- echo_twig(builder.ModelClass ~ '.' ~ column.getter) -}}
-                            {%- endif -%}
-                        {{- echo_endblock() }}
+                        <div class="form-group form_field field_{{ column.name }}">
+                            {{ block('show_column') }}
                         </div>
                     </div>
                     {% if column.credentials %}
-                        {{ echo_endif () }}
+                        {{ echo_endif() }}
                     {% endif %}
                 {% endfor %}
-            </div>
+                </div>
+
+            {{ echo_endif () }}
             {% endfor %}
-    </fieldset>
+        </fieldset>
+
+    {{ echo_endif () }}
     {% endfor %}
+
     {{ echo_endblock() }}
 
     {{ echo_block('form_buttons') }}

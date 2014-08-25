@@ -1,7 +1,7 @@
 {% macro echo_if_granted_any(items, object = null) %}
 	{% set credentialsCollection = [] %}
     {% for item in items %}
-    	{% if item.credentials is defined %}
+    	{% if item.credentials is defined and item.credentials is not empty %}
     		{% set credentialsCollection = credentialsCollection|merge([ '(' ~ item.credentials ~ ')']) %}
     	{% endif %}
     {% endfor %}

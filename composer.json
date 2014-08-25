@@ -21,6 +21,7 @@
         "sensio/generator-bundle": ">= 2.3.3",
         "cedriclombardot/twig-generator": "1.0.*",
         "symfony2admingenerator/form-bundle": "@stable",
+        "jms/security-extra-bundle": ">= 1.5.0",
         "knplabs/knp-menu-bundle": ">1.0,<2.1",
         "white-october/pagerfanta-bundle": "1.0.*@dev",
         "twig/twig": ">= 1.9.0",
@@ -40,8 +41,7 @@
     "suggest": {
         "symfony2admingenerator/form-extensions-bundle": "Symfony2 form extensions for Admingenerator",
         "symfony2admingenerator/user-bundle": "FOSUserBundle integration for Admingenerator",
-        "liuggio/excelbundle": "(version >= 2.0) Allows the usage of the Excel export.",
-        "jms/security-extra-bundle": "Allows expressions in credential checks for generated actions"
+        "liuggio/excelbundle": "(version >= 2.0) Allows the usage of the Excel export."
     },
     "target-dir": "Admingenerator/GeneratorBundle",
     "autoload": {

@@ -1,0 +1,43 @@
+{% block form_fieldsets %}
+{% import '../CommonAdmin/macros.php.twig' as macros %}
+
+{% for fieldset in builder.fieldsets|keys %}
+{{ macros.echo_if_granted_any(builder.columnsFor(fieldset), builder.ModelClass) }}
+
+    {{ echo_block("form_fieldset_" ~ fieldset|classify|replace({'.': '_'})) }}
+        <fieldset class="container-fluid form_block form_fieldset_{{ fieldset|classify|replace({'.': '_'}) }} tab-pane">
+            {% if "NONE" != fieldset[:4] and "!" != fieldset[:1] %}
+            <legend><span>{{ echo_trans(fieldset,{}, i18n_catalog|default("Admin") ) }}</span></legend>
+            {% endif %}
+    			
+            {% for rowName,row in builder.fieldsets[fieldset] %}
+                {% set rowColumns = builder.columnsFor(row) %}
+                {% set rowspan = rowName|is_numeric ? 'col-md-4' : rowName %}
+
+                {{ macros.echo_if_granted_any(rowColumns, builder.ModelClass) }}
+
+                    <div class="row">
+                    {% for column in rowColumns %}
+                        {% if column.credentials %}
+                              {{ echo_if_granted(column.credentials, builder.ModelClass) }}
+                        {% endif %}
+                        <div class="{{ rowspan }} form_field field_{{ column.formType }} field_{{ column.name }}">
+                            {{ echo_block("form_" ~ column.name) }}
+                                {{ echo_twig("form_row(form['" ~ column.name ~ "'])") }}
+                            {{ echo_endblock() }}
+                        </div>
+                        {% if column.credentials %}
+                            {{ echo_endif () }}
+                        {% endif %}
+                    {% endfor %}
+                    </div>
+
+                {{ echo_endif() }}
+
+            {% endfor %}
+        </fieldset>
+    {{ echo_endblock() }}
+
+{{ echo_endif() }}
+{% endfor %}
+{% endblock %}

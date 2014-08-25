@@ -1,16 +1,21 @@
 {% block tabs %}
+{% import '../CommonAdmin/macros.php.twig' as macros %}
 {{ echo_block("form_tabs") }}
 {% if tabs is defined and tabs|length > 0 %}
+    
     <ul id="form_tabs" class="form_tabs nav nav-tabs">
         {% for name, tab in tabs %}
+        {{ macros.echo_if_granted_any(builder.getColumnsFor(tab), builder.ModelClass) }}
             <li>
-              <a data-toggle="tab" href="#"
-                 data-target="{%- for fieldsetName, fieldset in tab -%}{{ '.form_fieldset_'~fieldsetName|classify|replace({'.': '_'}) }}{%if not loop.last%},{% endif %}{% endfor %}">
-                 {{ echo_trans(name,{}, i18n_catalog|default("Admin") ) }}
-              </a>
+                <a data-toggle="tab" href="#"
+                   data-target="{%- for fieldsetName, fieldset in tab -%}{{ '.form_fieldset_'~fieldsetName|classify|replace({'.': '_'}) }}{%if not loop.last%},{% endif %}{% endfor %}">
+                    {{ echo_trans(name,{}, i18n_catalog|default("Admin") ) }}
+                </a>
             </li>
+        {{ echo_endif() }}
         {% endfor %}
     </ul>
+
     <script type="text/javascript">
         jQuery(document).ready(function($) {
             $('#form_tabs').agen$tabs();
