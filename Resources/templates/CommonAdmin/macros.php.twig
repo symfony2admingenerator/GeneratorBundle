@@ -10,7 +10,7 @@
     	{% set credentialsSum = credentialsCollection|join(' or ') %}
     {% else %}
     	{# there are no credential checks, allow all #}
-    	{% set credentialsSum = 'allowAll' %}
+    	{% set credentialsSum = 'permitAll' %}
     {% endif %}
 
     {% if object is not null %}
