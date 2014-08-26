@@ -76,6 +76,13 @@ div[class*=' object-actions-'] {
     margin-bottom: 10px
 }
 
+.object_actions > .btn-group > a.btn {
+    margin-left: -1px;
+    -webkit-border-radius: 0px;
+       -moz-border-radius: 0px;
+            border-radius: 0px;
+}
+
 .object_actions .btn [class^="fa-"],
 .object_actions .btn [class*=" fa-"] {
     font-size: 14px;
