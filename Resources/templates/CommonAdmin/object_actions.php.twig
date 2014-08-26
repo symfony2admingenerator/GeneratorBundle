@@ -13,7 +13,7 @@
         {% for action in builder.ObjectActions %}
             {{ echo_block('object_action_' ~ action.twigName) }}
                 {% if action.credentials %}
-                    {{ echo_if_granted(action.credentials) }}
+                    {{ echo_if_granted(action.credentials, builder.ModelClass) }}
                 {% endif -%}
 
                 {{ block('object_action_block') }}
