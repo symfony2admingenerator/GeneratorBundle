@@ -4,11 +4,11 @@
 {% block form %}
     {{ echo_block('form') }}
     <form class="admin_form"
-        {{ echo_if (builder.ModelClass ~ "." ~ builder.getFieldGuesser().getModelPrimaryKeyName(model) ) }}
+        {{ echo_if(builder.ModelClass ~ "." ~ builder.getFieldGuesser().getModelPrimaryKeyName(model)) }}
             action="{{ echo_path(builder.routePrefixWithSubfolder ~ '_' ~ bundle_name ~ ( builder.BaseGeneratorName ? "_" ~ builder.BaseGeneratorName : "" ) ~ "_update", "{ 'pk': " ~ builder.ModelClass ~ "."~ builder.getFieldGuesser().getModelPrimaryKeyName(model) ~ " }" ) }}"
         {{ echo_else() }}
             action="{{ echo_path(builder.routePrefixWithSubfolder ~ '_' ~ bundle_name ~ ( builder.BaseGeneratorName ? "_" ~ builder.BaseGeneratorName : "" ) ~ "_create" ) }}"
-        {{ echo_endif () }}
+        {{ echo_endif() }}
         method="post" {{ echo_twig("form_enctype(form)") }} role="form">
 
         {{ echo_twig("form_errors(form)") }}
@@ -16,7 +16,7 @@
         <div class="tab-content">
         {% endif %}
 
-            {{- block('form_fieldsets') }}
+        {{- block('form_fieldsets') }}
 
         {% if tabs is defined and tabs|length > 0 %}
         </div>
