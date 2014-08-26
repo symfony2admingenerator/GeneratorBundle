@@ -4,7 +4,7 @@
 {{ echo_block("generic_actions") }}
 {% if builder.Actions is defined and builder.Actions|length > 0 %}
 
-    {{ macros.echo_if_granted_any(builder.Actions, builder.ModelClass) }}
+    {{ macros.echo_if_granted_any(builder.Actions) }}
 
     {% for action in builder.Actions %}
         {{ echo_block("generic_action_" ~ action.twigName) }}

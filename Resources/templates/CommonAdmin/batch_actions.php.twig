@@ -4,7 +4,7 @@
 {{ echo_block("batch_actions") }}
 {% if builder.BatchActions is defined and builder.BatchActions|length > 0 %}
 
-    {{ macros.echo_if_granted_any(builder.BatchActions, builder.ModelClass) }}
+    {{ macros.echo_if_granted_any(builder.BatchActions) }}
 
     <div class="btn-group">
         <div class="btn select-caret">
