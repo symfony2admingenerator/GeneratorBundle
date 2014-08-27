@@ -9,11 +9,11 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
     {
         ${{ builder.ModelClass }} = $this->getObject($pk);
 
-        {{ block('security_action_with_object') }}
-
         if (!${{ builder.ModelClass }}) {
             throw new NotFoundHttpException("The {{ model }} with {{ builder.getFieldGuesser().getModelPrimaryKeyName(model) }} $pk can't be found");
         }
+
+        {{ block('security_action_with_object') }}
 
         return $this->render('{{ builder.namespacePrefixForTemplate }}{{ bundle_name }}:{{ builder.BaseGeneratorName }}Show:index.html.twig', $this->getAdditionalRenderParameters(${{ builder.ModelClass }}) + array(
             "{{ builder.ModelClass }}" => ${{ builder.ModelClass }}
