@@ -1,6 +1,6 @@
  /*
  *  Project:        Symfony2Admingenerator
- *  Description:    jQuery plugin for Tabs functionality
+ *  Description:    jQuery plugin for Form functionality
  *  Author:         loostro <loostro@gmail.com>
  *  License:        MIT
  */
@@ -19,7 +19,7 @@
     // minified (especially when both are regularly referenced in your plugin).
 
     // Create the defaults once
-    var pluginName = 'agen$tabs',
+    var pluginName = 'agen$form',
         document = window.document,
         defaults = {};
 
@@ -55,13 +55,29 @@
                     $link.find('span.badge-important').remove();
 
                     var target = $link.data('target');
-                    var invalid_items = $('fieldset'+target).find('.has-error');
+                    var invalid_items = $('fieldset'+target).find(':invalid');
                     if (invalid_items.length > 0) {
-                        $link.append('<span class="badge alert-danger">'+invalid_items.length+'</span>');
+                        $link.append('<span class="badge badge-important">'+invalid_items.length+'</span>');
                     }
                 });
             });
-        }
+        },
+
+        $.fn.bindFirst = function(name, fn) {
+    // bind as you normally would
+    // don't want to miss out on any jQuery magic
+    this.on(name, fn);
+
+    // Thanks to a comment by @Martin, adding support for
+    // namespaced events too.
+    this.each(function() {
+        var handlers = $._data(this, 'events')[name.split('.')[0]];
+        // take out the handler we just inserted from the end
+        var handler = handlers.pop();
+        // move it at the beginning
+        handlers.splice(0, 0, handler);
+    });
+};
 
     };
 
