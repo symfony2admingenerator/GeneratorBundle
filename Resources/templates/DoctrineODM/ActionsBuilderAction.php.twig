@@ -78,10 +78,10 @@
 
 {% block saveObject %}
 
-    protected function saveObject(\{{ model }} ${{ builder.ModelClass }})
+    protected function saveObject(\{{ model }} ${{ builder.ModelClass }}, array $validationGroups = array())
     {
         $validator = $this->get('validator');
-        $errors = $validator->validate(${{ builder.ModelClass }});
+        $errors = $validator->validate(${{ builder.ModelClass }}, $validationGroups);
 
         if (count($errors) > 0) {
             throw new ValidationException();
