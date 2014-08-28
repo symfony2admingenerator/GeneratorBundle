@@ -3,89 +3,68 @@
 
 namespace Admingenerated\{{ namespace_prefix }}{{ bundle_name }}\Form\Base{{ builder.BaseGeneratorName }}Type;
 
-use Symfony\Component\Form\AbstractType;
+use Admingenerator\GeneratorBundle\Form\BaseType;
 use Symfony\Component\Form\FormBuilderInterface;
 use JMS\SecurityExtraBundle\Security\Authorization\Expression\Expression;
 use {{ namespace_prefix }}\{{ bundle_name }}\Form\Type\{{ builder.BaseGeneratorName }}\Options;
 
-class {{ builder.YamlKey|ucfirst }}Type extends AbstractType
+class {{ builder.YamlKey|ucfirst }}Type extends BaseType
 {
     protected $securityContext;
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-{% for column in builder.columns %}
-    {%- if column.credentials %}
-    if (false !== $this->securityContext->isGranted(array(new Expression('{{ column.credentials }}')), $builder->getData())) {
-    {%- endif %}
+        $object = $builder->getData();
 
-        $fieldOptions = $this->getFieldOption('{{ column.name }}', {{ column.formOptions|merge({
-            'label': column.label,
-            'translation_domain': i18n_catalog|default('Admin')
-        })|as_php|convert_as_form(column.formType) }}, $options);
-        $fieldType = $this->injectSecurityContext({{ column.formType|as_php|convert_as_form(column.formType) }});
-
-        $builder->add('{{ column.name }}', $fieldType, $fieldOptions);
-
-    {% if column.credentials %}
-    }
-    {%- endif %}
-{% endfor %}
-
-    }
-
-    /**
-     * This method is used to pass the securityContext into custom formTypes.
-     *
-     * @param string|FormTypeInterface $formType
-     * @return string|FormTypeInterface
-     */
-    protected function injectSecurityContext($formType)
-    {
-        if (is_object($formType) && method_exists($formType, 'setSecurityContext')) {
-            $formType->setSecurityContext($this->securityContext);
+    {% for column in builder.columns %}
+        if ($this->isDisplayed{{ column.name|classify }}($object)) {
+            $builder->add('{{ column.name }}', $this->getType{{ column.name|classify }}(), $this->getOptions{{ column.name|classify }}());
         }
 
-        return $formType;
+    {% endfor %}
+    }
+
+{% for column in builder.columns %}
+    /**
+     * Get form type for {{ column.name }} field.
+     *
+     * @return string|FormTypeInterface Field form type.
+     */
+    protected function getType{{ column.name|classify }}()
+    {
+        return $this->injectSecurityContext({{ column.formType|as_php|convert_as_form(column.formType) }});
     }
 
     /**
-     * Get form option for field
-     * 
-     * @param  string $name             Field name.
-     * @param  array  $fieldOptions     Field options.
-     * @param  array  $builderOptions   Form builder options.
+     * Get options for {{ column.name }} field.
+     *
      * @return array Field options.
      */
-    protected function getFieldOption($name, array $fieldOptions, array $builderOptions)
+    protected function getOptions{{ column.name|classify }}()
     {
-        $getter = 'get'.ucfirst($name).'Options';
-        $optionsClass = new Options();
-
-        if (method_exists($this, $getter)) {
-            $fieldOptions = $this->$getter($fieldOptions, $builderOptions);
-        } else if ($optionsClass && method_exists($optionsClass, $getter)) {
-            $fieldOptions = $optionsClass->$getter($fieldOptions, $builderOptions);
-        }
-        
-        // Pass on securityContext to collection types
-        if (array_key_exists('type', $fieldOptions)) {
-            $fieldType = $fieldOptions['type'];
-            $fieldOptions['type'] = $this->injectSecurityContext($fieldType);
-        }
-
-        return $fieldOptions;
+        return $this->resolveOptions('{{ column.name }}', {{ column.formOptions|merge({
+            'label': column.label,
+            'translation_domain': i18n_catalog|default('Admin')
+        })|as_php|convert_as_form(column.formType) }}, $options, new Options());
     }
+
+    /**
+     * Check credentials for {{ column.name }} field.
+     *
+     * @param object $object The object handled by form.
+     * @return boolean
+     */
+    protected function isDisplayed{{ column.name|classify }}($object)
+    {
+        return $this->checkCredentials("{{ column.credentials|default('permitAll') }}")
+            && $this->checkGroups({{ column.validationGroups|as_php }});
+    }
+
+{% endfor %}
 
     public function getName()
     {
         return '{{ builder.YamlKey }}_{{ builder.ModelClass|lower }}';
     }
-
-    public function setSecurityContext($securityContext)
-    {
-        $this->securityContext = $securityContext;
-    }
-
 }
 {% endblock %}

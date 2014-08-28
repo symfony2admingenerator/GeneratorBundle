@@ -49,6 +49,8 @@ class Column
     /** For special columns template */
     protected $extras;
 
+    protected $validationGroups = array();
+
     public function __construct($name)
     {
         $this->name     = $name;
@@ -268,5 +270,15 @@ class Column
     public function getPrimaryKey()
     {
         return $this->primaryKey;
+    }
+
+    public function setValidationGroups(array $validationGroups = array())
+    {
+        return $this->validationGroups = $validationGroups;
+    }
+
+    public function getValidationGroups()
+    {
+        return $this->validationGroups;
     }
 }
