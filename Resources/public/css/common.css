@@ -44,6 +44,11 @@ body {
     clear: both;
 }
 
+/* Tab badge */
+.form_tabs a > span.badge {
+    margin-left: 5px;
+}
+
 /* Array lists */
 .array_list {
     margin-left: -15px;

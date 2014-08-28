@@ -43,23 +43,26 @@
     Plugin.prototype = {
 
         _init: function() {
-            // Plugin-scope helper
-            var that = this;
-
             // show first tab
-            that.$element.find('> li > a').first().tab('show');
+            this.$element.find('> li > a').first().tab('show');
 
-            $('input[type=submit],button[type=submit]').on('click', function(e) {
-                that.$element.children('li').each(function(i) {
-                    var $link = $(this).find('> a:first');
-                    $link.find('span.badge-important').remove();
+            // count on init
+            this._countErrors();
 
-                    var target = $link.data('target');
-                    var invalid_items = $('fieldset'+target).find('.has-error');
-                    if (invalid_items.length > 0) {
-                        $link.append('<span class="badge alert-danger">'+invalid_items.length+'</span>');
-                    }
-                });
+            // count on submit
+            $('input[type=submit],button[type=submit]').on('click', this._countErrors);
+        },
+
+        _countErrors: function() {
+            this.$element.children('li').each(function(i) {
+                var $link = $(this).find('> a:first');
+                $link.find('span.badge').remove();
+
+                var target = $link.data('target');
+                var invalid_items = $('fieldset'+target).find('.has-error');
+                if (invalid_items.length > 0) {
+                    $link.append('<span class="badge alert-danger"><small>'+invalid_items.length+'</small></span>');
+                }
             });
         }
 
