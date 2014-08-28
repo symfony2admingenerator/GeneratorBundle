@@ -66,7 +66,7 @@
         return $this->render('{{ builder.namespacePrefixForTemplate }}{{ bundle_name }}:{{ builder.BaseGeneratorName }}Edit:index.html.twig', $this->getAdditionalRenderParameters(${{ builder.ModelClass }}) + array(
             "{{ builder.ModelClass }}" => ${{ builder.ModelClass }},
             "form" => $form->createView(),
-            'groups' => $this->getGroups(),
+            'groups' => $this->getGroups(${{ builder.ModelClass }}),
         ));
     }
 
