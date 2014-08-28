@@ -13,6 +13,10 @@ class DoctrineODMFieldGuesser extends ContainerAware
 
     private $metadata;
 
+    private $guessRequired;
+
+    private $defaultRequired;
+
     private static $current_class;
 
     public function __construct(DocumentManager $documentManager)
@@ -203,6 +207,15 @@ class DoctrineODMFieldGuesser extends ContainerAware
 
     protected function isRequired($fieldName)
     {
+        if (!isset($this->guessRequired) || !isset($this->defaultRequired)) {
+            $this->guessRequired = $this->container->getParameter('admingenerator.guess_required');
+            $this->defaultRequired = $this->container->getParameter('admingenerator.default_required');
+        }
+
+        if (!$this->guessRequired) {
+            return $this->defaultRequired;
+        }
+
         $metadata = $this->getMetadatas();
 
         $hasField = $metadata->hasField($fieldName);

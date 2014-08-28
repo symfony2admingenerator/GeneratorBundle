@@ -9,6 +9,10 @@ use Symfony\Component\DependencyInjection\ContainerAware;
 
 class PropelORMFieldGuesser extends ContainerAware
 {
+    private $guessRequired;
+
+    private $defaultRequired;
+
     private $cache = array();
 
     private static $current_class;
@@ -217,6 +221,15 @@ class PropelORMFieldGuesser extends ContainerAware
 
     protected function isRequired($fieldName)
     {
+        if (!isset($this->guessRequired) || !isset($this->defaultRequired)) {
+            $this->guessRequired = $this->container->getParameter('admingenerator.guess_required');
+            $this->defaultRequired = $this->container->getParameter('admingenerator.default_required');
+        }
+
+        if (!$this->guessRequired) {
+            return $this->defaultRequired;
+        }
+        
         $column = $this->getColumn(self::$current_class, $fieldName);
 
         return $column ? $column->isNotNull() : false;
