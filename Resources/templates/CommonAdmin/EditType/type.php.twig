@@ -18,7 +18,7 @@ class {{ builder.YamlKey|ucfirst }}Type extends BaseType
         
     {% for column in builder.columns %}
         if ($this->isDisplayed{{ column.name|classify }}()) {
-            $builder->add('{{ column.name }}', $this->getType{{ column.name|classify }}(), $this->getOptions{{ column.name|classify }}());
+            $builder->add('{{ column.name }}', $this->getType{{ column.name|classify }}(), $this->getOptions{{ column.name|classify }}($options));
         }
 
     {% endfor %}
@@ -41,7 +41,7 @@ class {{ builder.YamlKey|ucfirst }}Type extends BaseType
      * @param  array $builderOptions The builder options.
      * @return array Field options.
      */
-    protected function getOptions{{ column.name|classify }}(array $builderOptions)
+    protected function getOptions{{ column.name|classify }}(array $builderOptions = array())
     {
         return $this->resolveOptions('{{ column.name }}', {{ column.formOptions|merge({
             'label': column.label,
