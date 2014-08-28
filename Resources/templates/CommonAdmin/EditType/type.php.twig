@@ -38,14 +38,15 @@ class {{ builder.YamlKey|ucfirst }}Type extends BaseType
     /**
      * Get options for {{ column.name }} field.
      *
+     * @param  array $builderOptions The builder options.
      * @return array Field options.
      */
-    protected function getOptions{{ column.name|classify }}()
+    protected function getOptions{{ column.name|classify }}(array $builderOptions)
     {
         return $this->resolveOptions('{{ column.name }}', {{ column.formOptions|merge({
             'label': column.label,
             'translation_domain': i18n_catalog|default('Admin')
-        })|as_php|convert_as_form(column.formType) }}, $options, new Options());
+        })|as_php|convert_as_form(column.formType) }}, $builderOptions, new Options());
     }
 
     /**

@@ -78,7 +78,7 @@ class BaseType extends AbstractType
      * @param  object|null  $optionsClass       The options class.
      * @return array                            Resolved field options.
      */
-    protected function resolveOptions($name, array $fieldOptions, array $builderOptions, $optionsClass = null)
+    protected function resolveOptions($name, array $fieldOptions, array $builderOptions = array(), $optionsClass = null)
     {
         $getter = 'get'.ucfirst($name).'Options';
 
