@@ -34,31 +34,7 @@ class Action
 
     protected $csrf_protected = false;
 
-    protected $credentials;
-
-    /**
-     * To be removed
-     *
-     * @deprecated use credentials instead and SecurityFunction annotation
-     * from JMS\DiExtraBundle
-     */
-    protected $conditional_function;
-
-    /**
-     * To be removed
-     *
-     * @deprecated use credentials instead and SecurityFunction annotation
-     * from JMS\DiExtraBundle
-     */
-    protected $conditional_parameters = array();
-
-    /**
-     * To be removed
-     *
-     * @deprecated use credentials instead and SecurityFunction annotation
-     * from JMS\DiExtraBundle
-     */
-    protected $conditional_inverse = false;
+    protected $credentials = 'permitAll';
 
     public function __construct($name, $type = 'custom')
     {
@@ -166,7 +142,7 @@ class Action
         return $this->csrf_protected;
     }
 
-    public function setCredentials($credentials)
+    public function setCredentials($credentials = 'permitAll')
     {
         $this->credentials = $credentials;
     }
@@ -184,62 +160,6 @@ class Action
     public function setParams(array $params)
     {
         $this->params = $params;
-    }
-
-    /**
-     * To be removed
-     *
-     * @deprecated use credentials instead and SecurityFunction annotation
-     * from JMS\DiExtraBundle
-     */
-    public function setCondition(array $condition)
-    {
-        if (!isset($condition['function'])) {
-            return false;
-        }
-
-        $this->conditional_function = $condition['function'];
-
-        if (isset($condition['parameters'])) {
-            $this->conditional_parameters = (array) $condition['parameters'];
-        }
-
-        if (isset($condition['inverse'])) {
-            $this->conditional_inverse = (boolean) $condition['inverse'];
-        }
-    }
-
-    /**
-     * To be removed
-     *
-     * @deprecated use credentials instead and SecurityFunction annotation
-     * from JMS\DiExtraBundle
-     */
-    public function getConditionalFunction()
-    {
-        return $this->conditional_function;
-    }
-
-    /**
-     * To be removed
-     *
-     * @deprecated use credentials instead and SecurityFunction annotation
-     * from JMS\DiExtraBundle
-     */
-    public function getConditionalParameters()
-    {
-        return $this->conditional_parameters;
-    }
-
-    /**
-     * To be removed
-     *
-     * @deprecated use credentials instead and SecurityFunction annotation
-     * from JMS\DiExtraBundle
-     */
-    public function getConditionalInverse()
-    {
-        return $this->conditional_inverse;
     }
 
     public function getOptions()

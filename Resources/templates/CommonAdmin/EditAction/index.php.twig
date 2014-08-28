@@ -21,11 +21,12 @@ use {{ builder.namespacePrefixWithSubfolder }}\{{ bundle_name }}\Form\Type\{{ bu
         {{ block('security_action_with_object') }}
 
         $this->preBindRequest(${{ builder.ModelClass }});
-        $form = $this->createForm($this->getEditType(), ${{ builder.ModelClass }}, $this->getFormOptions(${{ builder.ModelClass }}));
+        $form = $this->getEditForm(${{ builder.ModelClass }});
 
         return $this->render('{{ builder.namespacePrefixForTemplate }}{{ bundle_name }}:{{ builder.BaseGeneratorName }}Edit:index.html.twig', $this->getAdditionalRenderParameters(${{ builder.ModelClass }}) + array(
             "{{ builder.ModelClass }}" => ${{ builder.ModelClass }},
             "form" => $form->createView(),
+            'groups' => $this->getGroups(),
         ));
     }
 {% endblock %}

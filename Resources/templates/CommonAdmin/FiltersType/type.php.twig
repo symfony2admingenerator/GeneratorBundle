@@ -3,23 +3,16 @@
 
 namespace Admingenerated\{{ namespace_prefix }}{{ bundle_name }}\Form\Base{{ builder.BaseGeneratorName }}Type;
 
-use JMS\SecurityExtraBundle\Security\Authorization\Expression\Expression;
-use Symfony\Component\Form\AbstractType;
+use Admingenerator\GeneratorBundle\Form\BaseType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use {{ namespace_prefix }}\{{ bundle_name }}\Form\Type\{{ builder.BaseGeneratorName }}\Options;
 
-class {{ builder.YamlKey|ucfirst }}Type extends AbstractType
+class {{ builder.YamlKey|ucfirst }}Type extends BaseType
 {
-    protected $securityContext;
-    
-    public function setSecurityContext($securityContext)
-    {
-        $this->securityContext = $securityContext;
-    }
-
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
+            'groups' => array(),
             'prototype' => true,
             'options'   => array(
                 // options for FilterGroupType
@@ -33,6 +26,10 @@ class {{ builder.YamlKey|ucfirst }}Type extends AbstractType
             ),
             'translation_domain' => {{ i18n_catalog|default('Admin')|as_php }}
         ));
+
+        $resolver->setAllowedTypes(array(
+            'groups' => 'array',
+        ));
     }
 
     /**
@@ -40,11 +37,9 @@ class {{ builder.YamlKey|ucfirst }}Type extends AbstractType
      */
     protected function getFieldsHash()
     {
-        return array(
-        {% for column in builder.columns %}
-            {{ column.name|as_php }} => {{ column.label|as_php }},
-        {% endfor %}
-        );
+        return array_map(function($filter){
+            return $filter['label'];
+        }, $this->getFilters());
     }
 
     /**
@@ -52,25 +47,51 @@ class {{ builder.YamlKey|ucfirst }}Type extends AbstractType
      */
     protected function getFilters()
     {
-        return array(
+        $filters = array();
+
         {% for column in builder.columns %}
-            {% set optionsHash = {
-                'label': column.label,
-                'translation_domain': i18n_catalog|default('Admin')
-            } %}
-            {{ column.name|as_php }} => array(
-                'field'     => {{ column.name|as_php }},
-                'label'     => {{ column.label|as_php }},
-                'filter'    => {{ column.filterType|as_php }},
-                'form'      => $this->checkFieldType({{ column.formType|as_php|convert_as_form(column.formType) }}),
-                'options'   => $this->getFieldOption(
-                    {{ column.name|as_php }},
-                    {{ column.formOptions|merge(optionsHash)|as_php|convert_as_form(column.formType) }}
-                )
-            ),
+        if ($this->isDisplayed{{ column.name|classify }}()) {
+            $filters['{{ column.name }}'] = $this->getFilter{{ column.name|classify }}();
+        }
         {% endfor %}
+
+        return $filters;
+    }
+
+{% for column in builder.columns %}
+    /**
+     * Check groups for {{ column.name }} field.
+     *
+     * @return boolean
+     */
+    protected function isDisplayed{{ column.name|classify }}()
+    {
+        return $this->checkGroups({{ column.groups|as_php }});
+    }
+
+    /**
+     * Get filter for {{ column.name }} field.
+     *
+     * @return array 
+     */
+    protected function getFilter{{ column.name|classify }}()
+    {
+        {% set optionsHash = { 'label': column.label, 'translation_domain': i18n_catalog|default('Admin') } %}
+        return array(
+            'field'   => {{ column.name|as_php }},
+            'label'   => {{ column.label|as_php }},
+            'filter'  => {{ column.filterType|as_php }},
+            'form'    => $this->checkFieldType({{ column.formType|as_php|convert_as_form(column.formType) }}),
+            'options' => $this->resolveOptions(
+                {{ column.name|as_php }},
+                {{ column.formOptions|merge(optionsHash)|as_php|convert_as_form(column.formType) }},
+                array(),
+                new Options()
+            )
         );
     }
+
+{% endfor %}
     
     /**
      * Check filter field type
@@ -86,27 +107,6 @@ class {{ builder.YamlKey|ucfirst }}Type extends AbstractType
         }
 
         return $fieldType;
-    }
-
-    /**
-     * Get form option for field
-     * 
-     * @param  string $name            Field name.
-     * @param  array  $fieldOptions    Field options.
-     * @return array Field options.
-     */
-    protected function getFieldOption($name, array $fieldOptions)
-    {
-        $getter = 'get'.ucfirst($name).'Options';
-        $optionsClass = new Options();
-
-        if (method_exists($this, $getter)) {
-            $fieldOptions = $this->$getter($fieldOptions, array());
-        } else if ($optionsClass && method_exists($optionsClass, $getter)) {
-            $fieldOptions = $optionsClass->$getter($fieldOptions, array());
-        }
-        
-        return $fieldOptions;
     }
     
     public function getParent()

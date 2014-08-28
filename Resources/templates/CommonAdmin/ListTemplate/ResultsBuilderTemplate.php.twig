@@ -18,7 +18,7 @@
 
         <div class="list-actions form-actions">
         {{ echo_block("batch_actions_wrapper") }}
-        {% if batch_actions is defined and batch_actions|length > 0 %}
+        {% if batch_actions|default is not empty %}
             <div id="batch_actions" class="pull-left btn-toolbar" role="toolbar">
                 {{ block('batch_actions') }}
             </div>
@@ -26,7 +26,7 @@
         {{ echo_endblock() }}
 
         {{ echo_block("generic_actions_wrapper") }}
-        {% if actions is defined and actions|length > 0 %}
+        {% if actions|default is not empty %}
             <div id="generic_actions" class="pull-left btn-toolbar" role="toolbar">
                 {{ block('generic_actions') -}}
             </div>

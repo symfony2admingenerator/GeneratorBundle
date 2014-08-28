@@ -2,6 +2,8 @@
 
 namespace Admingenerator\GeneratorBundle\Generator;
 
+use Admingenerator\GeneratorBundle\Exception\InvalidOptionException;
+
 /**
  * This class describe a column
  *
@@ -38,8 +40,6 @@ class Column
 
     protected $help;
 
-    protected $credentials;
-
     protected $localizedDateFormat;
 
     protected $localizedTimeFormat;
@@ -49,19 +49,28 @@ class Column
     /** For special columns template */
     protected $extras;
 
-    protected $validationGroups = array();
+    protected $groups = array();
 
-    public function __construct($name)
+    /* Used for more verbose error messages */
+    protected $debug = array();
+
+    public function __construct($name, $debug)
     {
         $this->name     = $name;
+        $this->debug    = $debug;
         $this->sortable = true;
         $this->sortType = 'default';
     }
 
     public function setProperty($option, $value)
     {
-        $option = Inflector::classify($option);
-        call_user_func_array(array($this, 'set'.$option), array($value));
+        $setter = 'set'.Inflector::classify($option);
+
+        if (method_exists($this, $setter)) {
+            call_user_func_array(array($this, 'set'.$option), array($value));
+        } else {
+            throw new InvalidOptionException($option, $this->name, $this->debug['generator'], $this->debug['builder']);
+        }
     }
 
     public function getName()
@@ -186,16 +195,6 @@ class Column
         return $this->filterType;
     }
 
-    public function setCredentials($credentials)
-    {
-        $this->credentials = $credentials;
-    }
-
-    public function getCredentials()
-    {
-        return $this->credentials;
-    }
-
     public function setLocalizedDateFormat($localizedDateFormat)
     {
         $this->localizedDateFormat = $localizedDateFormat;
@@ -272,13 +271,13 @@ class Column
         return $this->primaryKey;
     }
 
-    public function setValidationGroups(array $validationGroups = array())
+    public function setGroups(array $groups = array())
     {
-        return $this->validationGroups = $validationGroups;
+        return $this->groups = $groups;
     }
 
-    public function getValidationGroups()
+    public function getGroups()
     {
-        return $this->validationGroups;
+        return $this->groups;
     }
 }

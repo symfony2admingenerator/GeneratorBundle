@@ -19,7 +19,11 @@
     </parameters>
 
     <services>
-        <!-- Twig -->
+        <!-- Twig -->        
+        <service id="twig.extension.admingenerator.array" class="Admingenerator\GeneratorBundle\Twig\Extension\ArrayFiltersExtension">
+            <tag name="twig.extension" />
+        </service>
+
         <service id="twig.extension.admingenerator.echo" class="Admingenerator\GeneratorBundle\Twig\Extension\EchoExtension" public="false">
             <tag name="twig.extension" />
             <argument type="service" id="twig.loader" />

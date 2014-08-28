@@ -66,7 +66,11 @@ class BaseBuilder extends GenericBaseBuilder
      */
     protected function createColumn($columnName, $withForms = false)
     {
-        $column = new $this->columnClass($columnName);
+        $column = new $this->columnClass($columnName, array(
+            /* used for more verbose error messages */
+            'builder'   => $this->getYamlKey(),
+            'generator' => $this->getBaseGeneratorName()
+        ));
 
         $column->setDbType($this->getFieldOption(
             $column,

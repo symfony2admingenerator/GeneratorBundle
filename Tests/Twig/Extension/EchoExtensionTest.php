@@ -25,6 +25,7 @@ class EchoExtensionTest extends TestCase
         self::$params = array(
             'name' => 'cedric',
             'obj'  => $object,
+            'arr_num' => array('val'),
             'arr'  => array('obj' => 'val'),
             'arr_obj' => array('obj' => $object),
             'options_form_collection_type_class' => "array( 'allow_add' => true, 'allow_delete' => true, 'by_reference' => false, 'type' => '\\\Admingenerator\\\PropelDemoBundle\\\Form\\\Type\\\ActorType',)",
@@ -58,6 +59,38 @@ class EchoExtensionTest extends TestCase
         $returns = array(
             'string' => array('&cedric&', 'Wrap format well string'),
             'empty' => array("", 'Wrap format well empty string'),
+        );
+
+        $this->runTwigTests($tpls, $returns);
+    }
+
+    public function testMapBy()
+    {
+        $tpls = array(
+            'numeric' => '{{ [ arr_num ]|mapBy(0) }}',
+            'assoc' => '{{ [ arr ]|mapBy("obj") }}',
+            'object' => '{{ [ arr_obj ]|mapBy("foobar") }}',
+        );
+
+        $returns = array(
+            'assoc' => array(array("val"), 'Correctly mapped array of numeric arrays'),
+            'assoc' => array(array("val"), 'Correctly mapped array of assoc arrays'),
+            'assoc' => array(array("foobar"), 'Correctly mapped array of objects'),
+        );
+
+        $this->runTwigTests($tpls, $returns);
+    }
+
+    public function testFlatten()
+    {
+        $tpls = array(
+            'numeric' => '{{ ["a", arr_num ]|flatten }}',
+            'assoc'   => '{{ {"a", arr_obj }|flatten }}',
+        );
+
+        $returns = array(
+            'numeric' => array(array("a", "val"), 'Flatten numeric array of arrays'),
+            'assoc'   => array(array("a", "val"), 'Flatten associative array of arrays'),
         );
 
         $this->runTwigTests($tpls, $returns);
@@ -486,6 +519,27 @@ class EchoExtensionTest extends TestCase
         $this->runTwigTests($tpls, $returns);
     }
 
+    public function testGetTwigArr()
+    {
+        $tpls = array(
+            'single_value' => "{{ echo_twig_arr({a: '1'}) }}",
+            'several_values' => "{{ echo_twig_arr({alpha: 'abcde', beta: '12345'}) }}",
+            'incomplete_variables' => "{{ echo_twig_arr({a:'{{ Item.id '}) }}",
+            'complete_valiables' => "{{ echo_twig_arr({a:'{{ Item.id }}'}) }}",
+            'mixed_values' => "{{ echo_twig_arr({a:'{{ Item.id }}', b:'Item.id }}', c: 'abcde'}) }}",
+        );
+
+        $returns = array(
+            'single_value' => array("[ '1' ]", 'Transform correctly array with single value'),
+            'several_values' => array("[ 'abcde', '12345' ]", 'Transform correctly array with values'),
+            'incomplete_variables' => array("[ '{{ Item.id ' ]", 'Variables with unclosed {{ }} are quoted'),
+            'complete_valiables' => array("[ Item.id ]", 'Variables are passed w/o surrounding {{ }}'),
+            'mixed_values' => array("[ Item.id, 'Item.id }}', 'abcde' }", 'Several values in the same expression'),
+        );
+
+        $this->runTwigTests($tpls, $returns);
+    }
+
     public function testGetTwigAssoc()
     {
         $tpls = array(
@@ -497,8 +551,8 @@ class EchoExtensionTest extends TestCase
         );
 
         $returns = array(
-            'single_value' => array("{ a: '1' }", 'Append a single hardcoded value to the route'),
-            'several_values' => array("{ alpha: 'abcde', beta: '12345' }", 'Several values are appended correctly'),
+            'single_value' => array("{ a: '1' }", 'Transform correctly array with single value'),
+            'several_values' => array("{ alpha: 'abcde', beta: '12345' }", 'Transform correctly array with values'),
             'incomplete_variables' => array("{ a: '{{ Item.id ' }", 'Variables with unclosed {{ }} are quoted'),
             'complete_valiables' => array("{ a: Item.id }", 'Variables are passed w/o surrounding {{ }}'),
             'mixed_values' => array("{ a: Item.id, b: 'Item.id }}', c: 'abcde' }", 'Several values in the same expression'),

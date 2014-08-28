@@ -28,7 +28,8 @@ Don't miss any updates from **Symfony2 Admin Generator**! Join Twitter today and
 * **Nestedset tree list features:** drag&drop to manage your tree
 * **New/Edit featues:** fieldsets, tabbable, cool widgets for *collection, file upload, date and entity* fields
 * Translated into DE, **EN (default)**, ES, FA, FR, GR, IT, JA, NL, PL, PT, RO, RU, SL, TR, UK (you can easily contribute to add your own)
-* Credentials for actions, columns and form fields
+* Credentials for actions
+* Easy coolumn display management with column groups
 * Complete admin design based on [twitter bootstrap](http://twitter.github.com/bootstrap/) *(see next section)*
 * ... and more!
 

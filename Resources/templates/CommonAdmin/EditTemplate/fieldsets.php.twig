@@ -1,8 +1,12 @@
 {% block form_fieldsets %}
-{% import '../CommonAdmin/macros.php.twig' as macros %}
-
 {% for fieldset in builder.fieldsets|keys %}
-{{ macros.echo_if_granted_any(builder.columnsFor(fieldset), builder.ModelClass) }}
+{% set fieldsetColumns = builder.columnsFor(fieldset) %}
+{% set fieldsetGroups = fieldsetColumns|mapBy('groups')|flatten %}
+
+{% if fieldsetGroups is not empty %}
+{{ echo_set('fieldsetGroups', echo_twig_arr(fieldsetGroups)) }}
+{{ echo_if('groups is empty or fieldsetGroups|intersect(groups) is not empty') }}
+{% endif %}
 
     {{ echo_block("form_fieldset_" ~ fieldset|classify|replace({'.': '_'})) }}
         <fieldset class="container-fluid form_block form_fieldset_{{ fieldset|classify|replace({'.': '_'}) }} tab-pane">
@@ -11,33 +15,42 @@
             {% endif %}
     			
             {% for rowName,row in builder.fieldsets[fieldset] %}
-                {% set rowColumns = builder.columnsFor(row) %}
                 {% set rowspan = rowName|is_numeric ? 'col-md-4' : rowName %}
+                {% set rowColumns = builder.columnsFor(row) %}
+                {% set rowGroups = rowColumns|mapBy('groups')|flatten %}
 
-                {{ macros.echo_if_granted_any(rowColumns, builder.ModelClass) }}
+                {% if rowGroups is not empty %}
+                {{ echo_set('rowGroups', echo_twig_arr(rowGroups)) }}
+                {{ echo_if('groups is empty or rowGroups|intersect(groups) is not empty') }}
+                {% endif %}
 
                     <div class="row">
                     {% for column in rowColumns %}
-                        {% if column.credentials %}
-                              {{ echo_if_granted(column.credentials, builder.ModelClass) }}
-                        {% endif %}
+                    {% if column.groups is not empty %}
+                    {{ echo_set('columnGroups', echo_twig_arr(column.groups)) }}
+                    {{ echo_if('groups is empty or columnGroups|intersect(groups) is not empty') }}
+                    {% endif %}
                         <div class="{{ rowspan }} form_field field_{{ column.formType }} field_{{ column.name }}">
                             {{ echo_block("form_" ~ column.name) }}
                                 {{ echo_twig("form_row(form['" ~ column.name ~ "'])") }}
                             {{ echo_endblock() }}
                         </div>
-                        {% if column.credentials %}
-                            {{ echo_endif () }}
-                        {% endif %}
+                    {% if column.groups is not empty %}
+                    {{ echo_endif () }}
+                    {% endif %}
                     {% endfor %}
                     </div>
 
+                {% if rowGroups is not empty %}
                 {{ echo_endif() }}
+                {% endif %}
 
             {% endfor %}
         </fieldset>
     {{ echo_endblock() }}
 
+{% if fieldsetGroups is not empty %}
 {{ echo_endif() }}
+{% endif %}
 {% endfor %}
 {% endblock %}

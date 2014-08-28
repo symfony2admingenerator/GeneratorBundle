@@ -56,9 +56,19 @@ class NewController extends BaseController
      * Get additional parameters for rendering.
      *
      * @param \{{ model }} ${{ builder.ModelClass }} your \{{ model }} object
-     * return array
+     * @return array
      */
     protected function getAdditionalRenderParameters(\{{ model }} ${{ builder.ModelClass }})
+    {
+        return array();
+    }
+
+    /**
+     * Get groups.
+     *
+     * @return array
+     */
+    protected function getGroups()
     {
         return array();
     }
@@ -67,11 +77,19 @@ class NewController extends BaseController
      * Get optional form options.
      *
      * @param \{{ model }} ${{ builder.ModelClass }} your \{{ model }} object
-     * return array
-     **/
+     * @return array
+     */
     protected function getFormOptions(\{{ model }} ${{ builder.ModelClass }})
     {
         return array();
+    }
+
+    protected function getNewForm(\{{ model }} ${{ builder.ModelClass }})
+    {
+        return $this->createForm($this->getNewType(), ${{ builder.ModelClass }}, array_merge(
+            $this->getFormOptions(${{ builder.ModelClass }}),
+            array('groups' => $this->getGroups())
+        ));
     }
 
     protected function getNewType()

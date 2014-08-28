@@ -1,10 +1,8 @@
 {% block batch_actions %}
-{% import '../CommonAdmin/macros.php.twig' as macros %}
-
 {{ echo_block("batch_actions") }}
-{% if builder.BatchActions is defined and builder.BatchActions|length > 0 %}
+{% if builder.BatchActions|default is not empty %}
 
-    {{ macros.echo_if_granted_any(builder.BatchActions) }}
+    {{ echo_if_granted(builder.BatchActions|mapBy('credentials')|flatten|join(' or ')|default('denyAll')) }}
 
     <div class="btn-group">
         <div class="btn select-caret">
@@ -53,7 +51,7 @@
     
 {% block endform_batch_actions %}
 {{ echo_block("endform_batch_actions") }}
-{% if batch_actions is defined and batch_actions|length > 0 %}
+{% if batch_actions|default is not empty %}
     </form>
     
     <script type="text/javascript">

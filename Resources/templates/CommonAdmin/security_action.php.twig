@@ -12,13 +12,13 @@ use JMS\SecurityExtraBundle\Security\Authorization\Expression\Expression;
      *
      * @param string $credentials
      * @param \{{ model }} ${{ builder.ModelClass }}
-     * @throw AccessDeniedException if is not allowed
+     * @throws AccessDeniedException if is not allowed
      */
     protected function checkCredentials($credentials, \{{ model }} ${{ builder.ModelClass }} = null)
     {
         $securityContext = $this->get('security.context');
 
-        if (false === $securityContext->isGranted(array(new Expression($credentials)), ${{ builder.ModelClass }})) {
+        if (!$securityContext->isGranted(array(new Expression($credentials)), ${{ builder.ModelClass }})) {
             throw new AccessDeniedException();
         }
     }

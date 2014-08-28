@@ -23,7 +23,7 @@
     {{- block('title') -}}
 
     <div class="container-fluid">
-        {% if object_actions is defined  and object_actions|length > 0 %}
+        {% if object_actions|default is not empty %}
 	    <div class="row object-actions-{{ builder.ModelClass }} form-actions">
 	        <div class="btn-toolbar">
 	            {{- block('object_actions') -}}
@@ -32,22 +32,22 @@
 	    {% endif %}
 
 	    <div class="row">
-	        {% if sidebar is defined and sidebar|length > 0 %}
-	            <div class="col-md-8">
-	        {% endif %}
-	                {{- block('tabs') }}
-	                {% if tabs is defined and tabs|length > 0 %}
-	                <div class="tab-content">
-	                {% endif %}
+            {% if sidebar|default is not empty %}
+            <div class="col-md-8">
+            {% endif %}
+                {{- block('tabs') }}
+                {% if tabs|default is not empty %}
+                <div class="tab-content">
+                {% endif %}
 	                {{- block('show') -}}
-	                {% if tabs is defined and tabs|length > 0 %}
-	                </div>
-	                {% endif %}
-	        {% if sidebar is defined and sidebar|length > 0 %}
-	            </div>
-	            <div class="col-md-4">
-	                {{- block('show_sidebar') -}}
-	            </div>
+                {% if tabs|default is not empty %}
+                </div>
+                {% endif %}
+	        {% if sidebar|default is not empty %}
+            </div>
+            <div class="col-md-4">
+                {{- block('show_sidebar') -}}
+            </div>
 	        {% endif %}
 	    </div>
     </div>

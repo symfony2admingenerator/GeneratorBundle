@@ -21,9 +21,19 @@ class ShowController extends BaseController
      * Get additional parameters for rendering.
      *
      * @param \{{ model }} ${{ builder.ModelClass }} your \{{ model }} object
-     * return array
-     **/
+     * @return array
+     */
     protected function getAdditionalRenderParameters(\{{ model }} ${{ builder.ModelClass }})
+    {
+        return array();
+    }
+
+    /**
+     * Get groups.
+     *
+     * @return array
+     */
+    protected function getGroups()
     {
         return array();
     }

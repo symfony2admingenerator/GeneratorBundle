@@ -5,6 +5,7 @@ namespace Admingenerator\GeneratorBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use JMS\SecurityExtraBundle\Security\Authorization\Expression\Expression;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * Base class for new and edit forms.
@@ -15,28 +16,27 @@ class BaseType extends AbstractType
 {
     protected $securityContext;
 
-    protected $fieldGroups;
+    protected $groups;
 
     public function setSecurityContext($securityContext)
     {
         $this->securityContext = $securityContext;
     }
 
-    public function setFieldGroups(array $fieldGroups = array())
+    public function setGroups(array $groups = array())
     {
-        $this->fieldGroups = $fieldGroups;
+        $this->groups = $groups;
     }
 
-    /**
-     * Checks if expression evaluates to true.
-     * 
-     * @param string       $expression The security expression.
-     * @param object|null  $object     The object.
-     * @return boolean
-     */
-    protected function checkCredentials($expression, $object = null)
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        return $this->securityContext->isGranted(array(new Expression($expression)), $object);
+        $resolver->setDefaults(array(
+            'groups' => array(),
+        ));
+
+        $resolver->setAllowedTypes(array(
+            'groups' => 'array',
+        ));
     }
 
     /**
@@ -47,11 +47,11 @@ class BaseType extends AbstractType
      */
     protected function checkGroups(array $groups)
     {
-        if (count($this->fieldGroups) === 0 || count($groups) === 0) {
+        if (count($this->groups) === 0 || count($groups) === 0) {
             return true;
         }
 
-        return count(array_intersect($this->fieldGroups, $groups)) > 0;
+        return count(array_intersect($this->groups, $groups)) > 0;
     }
 
     /**

@@ -1,13 +1,11 @@
 {% block object_actions %}
-{% import '../CommonAdmin/macros.php.twig' as macros %}
-
 {{ echo_block("object_actions") }}
-{% if object_actions is defined and object_actions|length > 0 %}
+{% if object_actions|default is not empty %}
     {% if builder.yamlKey is sameas('list') or builder.yamlKey is sameas('nested_list') %}
     <td class="object_actions">
     {% endif %}
 
-    {{ macros.echo_if_granted_any(object_actions, builder.ModelClass) }}
+    {{ echo_if_granted(builder.ObjectActions|mapBy('credentials')|flatten|join(' or ')|default('denyAll'), builder.ModelClass) }}
 
         <div class="btn-group{% if builder.yamlKey is not sameas('list') %} pull-right{% endif %}">
         {% for action in builder.ObjectActions %}
@@ -37,7 +35,7 @@
 
 {% block object_actions_script %}
     {{ echo_block("object_actions_script") }}
-    {% if object_actions is defined and object_actions|length > 0 %}
+    {% if object_actions|default is not empty %}
     
     <script type="text/javascript">
     jQuery(document).ready(function($) {
@@ -64,7 +62,7 @@
         {% endif %}
         {%- if action.confirm %} data-confirm="{{ echo_trans(action.confirm, {}, translationDomain) }}" {% endif -%}
         {%- if action.csrfProtected %} data-csrf-token="{{ echo_path(actionRoute, actionParams, ['csrf_token']) }}" {% endif -%}>
-            <i class="fa fa-fw {{ action.icon|default('fa-asterisk') }}">
+            <i class="fa fa-fw {{ action.icon|default('fa-square-o') }}">
                 {% if builder.yamlKey is not sameas('list') %}
                 {{ echo_trans(action.label, {}, translationDomain) }}
                 {% endif %}

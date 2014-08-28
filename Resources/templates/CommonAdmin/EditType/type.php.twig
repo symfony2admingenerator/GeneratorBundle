@@ -14,10 +14,10 @@ class {{ builder.YamlKey|ucfirst }}Type extends BaseType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $object = $builder->getData();
-
+        $this->setGroups($options['groups']);
+        
     {% for column in builder.columns %}
-        if ($this->isDisplayed{{ column.name|classify }}($object)) {
+        if ($this->isDisplayed{{ column.name|classify }}()) {
             $builder->add('{{ column.name }}', $this->getType{{ column.name|classify }}(), $this->getOptions{{ column.name|classify }}());
         }
 
@@ -49,15 +49,13 @@ class {{ builder.YamlKey|ucfirst }}Type extends BaseType
     }
 
     /**
-     * Check credentials for {{ column.name }} field.
+     * Check groups for {{ column.name }} field.
      *
-     * @param object $object The object handled by form.
      * @return boolean
      */
-    protected function isDisplayed{{ column.name|classify }}($object)
+    protected function isDisplayed{{ column.name|classify }}()
     {
-        return $this->checkCredentials("{{ column.credentials|default('permitAll') }}")
-            && $this->checkGroups({{ column.validationGroups|as_php }});
+        return $this->checkGroups({{ column.groups|as_php }});
     }
 
 {% endfor %}

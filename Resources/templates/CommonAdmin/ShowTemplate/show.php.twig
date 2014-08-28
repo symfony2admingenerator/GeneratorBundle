@@ -2,12 +2,17 @@
 {% use '../CommonAdmin/ShowTemplate/column.php.twig' %}
 
 {% block show %}
-{% import '../CommonAdmin/macros.php.twig' as macros %}
 {{ echo_block('show') }}
     {{ echo_block('object') }}
 
     {% for fieldset in builder.fieldsets|keys %}
-    {{ macros.echo_if_granted_any(builder.columnsFor(fieldset), builder.ModelClass) }}
+    {% set fieldsetColumns = builder.columnsFor(fieldset) %}
+    {% set fieldsetGroups = fieldsetColumns|mapBy('groups')|flatten %}
+
+    {% if fieldsetGroups is not empty %}
+    {{ echo_set('fieldsetGroups', echo_twig_arr(fieldsetGroups)) }}
+    {{ echo_if('groups is empty or fieldsetGroups|intersect(groups) is not empty') }}
+    {% endif %}
 
         <fieldset class="form_block form_fieldset_{{ fieldset|classify|replace({'.': '_'}) }} tab-pane">
             {% if "NONE" != fieldset[:4] and "!" != fieldset[:1] %}
@@ -16,13 +21,19 @@
 
             {% for row in builder.fieldsets[fieldset] %}
             {% set rowColumns = builder.columnsFor(row) %}
-            {{ macros.echo_if_granted_any(rowColumns, builder.ModelClass) }}
+            {% set rowGroups = rowColumns|mapBy('groups')|flatten %}
+
+            {% if rowGroups is not empty %}
+            {{ echo_set('rowGroups', echo_twig_arr(rowGroups)) }}
+            {{ echo_if('groups is empty or rowGroups|intersect(groups) is not empty') }}
+            {% endif %}
 
                 <div class="row">
                 {% for column in rowColumns %}
-                    {% if column.credentials %}
-                        {{ echo_if_granted(column.credentials, builder.ModelClass) }}
-                    {% endif %}
+                {% if column.groups is not empty %}
+                {{ echo_set('columnGroups', echo_twig_arr(column.groups)) }}
+                {{ echo_if('groups is empty or columnGroups|intersect(groups) is not empty') }}
+                {% endif %}
 
                     <div class="col-md-2 text-right">
                     {{ echo_block('show_column_label_' ~ column.name) -}}
@@ -35,17 +46,21 @@
                             {{ block('show_column') }}
                         </div>
                     </div>
-                    {% if column.credentials %}
-                        {{ echo_endif() }}
-                    {% endif %}
+                {% if column.groups is not empty %}
+                {{ echo_endif() }}
+                {% endif %}
                 {% endfor %}
                 </div>
 
-            {{ echo_endif () }}
+            {% if rowGroups is not empty %}
+            {{ echo_endif() }}
+            {% endif %}
             {% endfor %}
         </fieldset>
 
-    {{ echo_endif () }}
+    {% if fieldsetGroups is not empty %}
+    {{ echo_endif() }}
+    {% endif %}
     {% endfor %}
 
     {{ echo_endblock() }}

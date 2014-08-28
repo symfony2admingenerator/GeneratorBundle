@@ -3,14 +3,15 @@
 <thead>
     {{ echo_block("list_thead_rows") }}
     <tr class="list_thead">
-        {% if batch_actions is defined and batch_actions|length > 0 %}
+        {% if batch_actions|default is not empty %}
             <th class="list_thead_batch_action">
                 <input type="checkbox" name="batchAll" />
             </th>
         {% endif %}
     {% for column in builder.columns -%}
-        {% if column.credentials %}
-            {{ echo_if_granted(column.credentials) }}
+        {% if column.groups is not empty %}
+        {{ echo_set('columnGroups', echo_twig_arr(column.groups)) }}
+        {{ echo_if('groups is empty or columnGroups|intersect(groups) is not empty') }}
         {% endif %}
 
         {{ echo_block('list_thead_column_' ~ column.name) -}}
@@ -64,12 +65,12 @@
         </th>
         {{ echo_endblock() }}
 
-        {% if column.credentials %}
-            {{ echo_endif () }}
+        {% if column.groups is not empty %}
+        {{ echo_endif() }}
         {% endif %}
     {% endfor -%}
 
-    {%- if object_actions|length > 0 -%}
+    {%- if object_actions|default is not empty %}
     {{ echo_block("list_thead_actions") }}
         <th class="actions">{{ echo_trans('list.header.actions') }}</th>
     {{ echo_endblock() }}

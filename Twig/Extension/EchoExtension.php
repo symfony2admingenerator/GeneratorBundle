@@ -46,6 +46,7 @@ class EchoExtension extends \Twig_Extension
             'echo_path'           => new \Twig_Function_Method($this, 'getEchoPath'),
             'echo_set'            => new \Twig_Function_Method($this, 'getEchoSet'),
             'echo_trans'          => new \Twig_Function_Method($this, 'getEchoTrans'),
+            'echo_twig_arr'       => new \Twig_Function_Method($this, 'getEchoTwigArr'),
             'echo_twig_assoc'     => new \Twig_Function_Method($this, 'getEchoTwigAssoc'),
             'echo_twig_filter'    => new \Twig_Function_Method($this, 'getEchoTwigFilter'),
             'echo_include'        => new \Twig_Function_Method($this, 'getEchoInclude'),
@@ -63,6 +64,8 @@ class EchoExtension extends \Twig_Extension
             'php_name'        => new \Twig_Filter_Method($this, 'phpName'),
             'wrap'            => new \Twig_Filter_Method($this, 'wrap'),
             'convert_as_form' => new \Twig_Filter_Method($this, 'convertAsForm'),
+            'mapBy'           => new \Twig_Filter_Method($this, 'mapBy'),
+            'flatten'         => new \Twig_Filter_Method($this, 'flatten'),
         );
     }
 
@@ -188,6 +191,64 @@ class EchoExtension extends \Twig_Extension
         return (is_string($str) && $str !== '') ? $wrap.$str.$wrap : $str;
     }
 
+    /**
+     * Map collection by key. For objects, return the property, use
+     * get method or is method, if avaliable.
+     * 
+     * @param  array  $input Array of arrays or objects.
+     * @param  string $key   Key to map by.
+     * @throws \InvalidArgumentException If array item is not an array or object.
+     * @throws \LogicException If array item could not be mapped by given key.
+     * @return array Mapped array.
+     */
+    public function mapBy(array $input, $key)
+    {
+        return array_map(function($item) use ($key) {
+            if (is_array($item)) {
+                if (array_key_exists($key, $item)) {
+                    return $item[$key];
+                } else {
+                    throw new \LogicException("Could not map item by key \"$key\". Array key does not exist.");
+                }
+            } else if (is_object($item)) {
+                $ref = new \ReflectionClass($item);
+
+                if ($ref->hasProperty($key) && $ref->getProperty($key)->isPublic()) {
+                    return $item->$key;
+                }
+
+                $get = 'get'.ucfirst($key);
+                if ($ref->hasMethod($get) && !$ref->getMethod($get)->isPrivate()) {
+                    return $item->$get();
+                }
+
+                $is = 'is'.ucfirst($key);
+                if ($ref->hasMethod($is) && !$ref->getMethod($is)->isPrivate()) {
+                    return $item->$is();
+                }
+
+                throw new \LogicException("Could not map item by key \"$key\". Cannot access the property directly or through getter/is method.");
+            } else {
+                throw new \InvalidArgumentException("Item must be an array or object.");
+            }
+        }, $input);
+    }
+
+    /**
+     * Flatten nested arrays.
+     * 
+     * @param  array $input Array of arrays.
+     * @return array Flat array.
+     */
+    public function flatten(array $input)
+    {
+        $it = new \RecursiveIteratorIterator(
+            new \RecursiveArrayIterator($input)
+        );
+        return iterator_to_array($it, false);
+    }
+
+    
     public function export($variable)
     {
         return str_replace(array("\n", 'array (', '     '), array('', 'array(', ''), var_export($variable, true));
@@ -507,6 +568,39 @@ class EchoExtension extends \Twig_Extension
     public function getEchoEndSpaceless()
     {
         return '{% endspaceless %}';
+    }
+
+    /**
+     * Converts an array to a twig array expression (string).
+     * Only in case a value contains '{{' and '}}' the value won't be
+     * wrapped in quotes.
+     *
+     * An array like:
+     * <code>
+     * $array = array('a' => 'b', 'c' => 'd');
+     * </code>
+     *
+     * Will be converted to:
+     * <code>
+     * "[ 'b', 'd']"
+     * </code>
+     *
+     * @return string The parameters to be used in a URL
+     */
+    public function getEchoTwigArr(array $arr)
+    {
+        $contents = array();
+        foreach ($arr as $key => $value) {
+            if (!strstr($value, '{{') || !strstr($value, '}}')) {
+                $value = "'$value'";
+            } else {
+                $value = trim(str_replace(array('{{', '}}'), '', $value));
+            }
+
+            $contents[] = "$value";
+        }
+
+        return '[ ' . implode(', ', $contents) . ' ]';
     }
 
     /**

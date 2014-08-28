@@ -1,6 +1,6 @@
 {% block list_scopes %}
 {{ echo_block("list_scopes") }}
-{% if scopes is defined %}
+{% if scopes|default is not empty %}
 <div class="row-fluid">
     <div class="list_scopes btn-toolbar" role="toolbar">
         {% for groupName, group in scopes %}

@@ -44,7 +44,9 @@
     {% block getFilterForm -%}
     protected function getFilterForm()
     {
-        return $this->createForm($this->getFiltersType(), $this->getFilters());
+        return $this->createForm($this->getFiltersType(), $this->getFilters(), array(
+            'groups' => $this->getGroups()
+        ));
     }
     {% endblock %}
 

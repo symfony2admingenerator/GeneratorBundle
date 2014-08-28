@@ -24,6 +24,14 @@ class EditController extends BaseController
 
     {{- block('security_check') }}
 
+    protected function getEditForm(\{{ model }} ${{ builder.ModelClass }})
+    {
+        return $this->createForm($this->getEditType(), ${{ builder.ModelClass }}, array_merge(
+            $this->getFormOptions(${{ builder.ModelClass }}),
+            array('groups' => $this->getGroups())
+        ));
+    }
+
     protected function getEditType()
     {
         $type = new EditType();
@@ -66,9 +74,19 @@ class EditController extends BaseController
      * Get additional parameters for rendering.
      *
      * @param \{{ model }} ${{ builder.ModelClass }} your \{{ model }} object
-     * return array
-     **/
+     * @return array
+     */
     protected function getAdditionalRenderParameters(\{{ model }} ${{ builder.ModelClass }})
+    {
+        return array();
+    }
+
+    /**
+     * Get groups.
+     *
+     * @return array
+     */
+    protected function getGroups()
     {
         return array();
     }
@@ -77,8 +95,8 @@ class EditController extends BaseController
      * Get optional form options.
      *
      * @param \{{ model }} ${{ builder.ModelClass }} your \{{ model }} object
-     * return array
-     **/
+     * @return array
+     */
     protected function getFormOptions(\{{ model }} ${{ builder.ModelClass }})
     {
         return array();
