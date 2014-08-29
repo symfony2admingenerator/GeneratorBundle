@@ -16,11 +16,23 @@ use JMS\SecurityExtraBundle\Security\Authorization\Expression\Expression;
      */
     protected function checkCredentials($credentials, \{{ model }} ${{ builder.ModelClass }} = null)
     {
-        $securityContext = $this->get('security.context');
-
-        if (!$securityContext->isGranted(array(new Expression($credentials)), ${{ builder.ModelClass }})) {
+        if (!$this->evaluate($credentials, ${{ builder.ModelClass }})) {
             throw new AccessDeniedException();
         }
+    }
+
+    /**
+     * Evaluate expression
+     *
+     * @param string $expression
+     * @param \{{ model }} ${{ builder.ModelClass }}
+     * @return boolean
+     */
+    protected function evaluate($expression, \{{ model }} ${{ builder.ModelClass }} = null)
+    {
+        return $this
+            ->get('security.context')
+            ->isGranted(array(new Expression($expression)), ${{ builder.ModelClass }});
     }
 {% endif %}
 {% endblock %}
