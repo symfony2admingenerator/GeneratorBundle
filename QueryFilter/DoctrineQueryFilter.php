@@ -104,10 +104,10 @@ class DoctrineQueryFilter extends BaseQueryFilter
                 return $this->query->expr()->isNull($field);
             case 'IsNotNull':
                 return $this->query->expr()->isNotNull($field);
-            case 'Contains':
-                return $this->query->expr()->in($param, $field);
-            case 'NotContains':
-                return $this->query->expr()->notIn($param, $field);
+            case 'In':
+                return $this->query->expr()->in($field, $param);
+            case 'NotIn':
+                return $this->query->expr()->notIn($field, $param);
             default:
                 throw new \LogicException('Comparison for operator "'.$operator.'" is not implemented.');
         }
@@ -138,6 +138,9 @@ class DoctrineQueryFilter extends BaseQueryFilter
             case 'Like':
             case 'NotLike':
                 return '%'.$value.'%';
+            case 'In':
+            case 'NotIn':
+                return is_array($value) ? $value : array($value);
         }
 
         return $value;

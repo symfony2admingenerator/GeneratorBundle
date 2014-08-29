@@ -98,15 +98,15 @@ class DoctrineODMQueryFilter extends BaseQueryFilter
             case 'NotLike':
                 return $this->query->expr()->field($field)->notEqual(new \MongoRegex("/.*$param.*/i"));
             case 'IsNull':
-                // TODO: not sure which one is correct
                 return $this->query->expr()->field($field)->equals(null);
                 //return $this->query->expr()->field($field)->type(10);
             case 'IsNotNull':
-                // TODO: not sure which one is correct
                 return $this->query->expr()->field($field)->notEqual(null);
                 //return $this->query->expr()->not($this->query->expr()->field($field)->type(10));
-            // case 'Contains':
-            // case 'NotContains':
+            case 'In':
+                return $this->query->expr()->in($field, $param);
+            case 'NotIn':
+                return $this->query->expr()->notIn($field, $param);
             default:
                 throw new \LogicException('Comparison for operator "'.$operator.'" is not implemented.');
         }
@@ -137,6 +137,9 @@ class DoctrineODMQueryFilter extends BaseQueryFilter
             case 'Like':
             case 'NotLike':
                 return '%'.$value.'%';
+            case 'In':
+            case 'NotIn':
+                return is_array($value) ? $value : array($value);
         }
 
         return $value;

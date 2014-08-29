@@ -123,8 +123,10 @@ class PropelQueryFilter extends BaseQueryFilter
             case 'IsNotNull':
                 $this->query->condition($conditionName, $field.' IS NOT NULL');
                 return $conditionName;
-            // case 'Contains':
-            // case 'NotContains':
+            case 'In':
+                $this->query->condition($conditionName, $field.' IN ?', $value);
+            case 'NotIn':
+                $this->query->condition($conditionName, $field.' NOT IN ?', $value);
             default:
                 throw new \LogicException('Comparison for operator "'.$operator.'" is not implemented.');
         }
@@ -155,6 +157,9 @@ class PropelQueryFilter extends BaseQueryFilter
             case 'Like':
             case 'NotLike':
                 return '%'.$value.'%';
+            case 'In':
+            case 'NotIn':
+                return is_array($value) ? $value : array($value);
         }
 
         return $value;

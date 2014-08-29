@@ -184,14 +184,14 @@ class FilterItemSubscriber implements EventSubscriberInterface
                 );
             case 'array':
                 return array(
-                    'Like'              => 'filters.array.like',
-                    'NotLike'           => 'filters.array.not_like'
+                    'In'              => 'filters.array.in',
+                    'NotIn'           => 'filters.array.not_in'
                 );
-            case 'collection':
-                return array(
-                    'Contains'          => 'filters.collection.contains',
-                    'NotContains'       => 'filters.collection.not_contains'
-                );
+            // case 'collection':
+            //     return array(
+            //         'Contains'          => 'filters.collection.contains',
+            //         'NotContains'       => 'filters.collection.not_contains'
+            //     );
             case 'model':
                 return array(
                     'Equal'             => 'filters.model.equal',
