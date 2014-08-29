@@ -124,8 +124,6 @@ class DoctrineQueryFilter extends BaseQueryFilter
         }
         
         switch ($this->getFilterFor($field)) {
-            case 'boolean':
-                return !!$value;
             case 'datetime':
                 return $this->formatDate($value, 'Y-m-d H:i:s');
             case 'date':
