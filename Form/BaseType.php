@@ -87,8 +87,7 @@ class BaseType extends AbstractType
             $fieldType = $fieldOptions['type'];
             $fieldOptions['type'] = $this->inject($fieldType);
             $fieldOptions['options']['groups'] = $builderOptions['groups'];
-            $fieldOptions['options']['validation_groups'] = $builderOptions['validation_groups'];
-            $fieldOptions['cascade_validation'] = $builderOptions['cascade_validation'];
+            $fieldOptions['validation_groups'] = $builderOptions['validation_groups'];
         }
 
         return $fieldOptions;
