@@ -9,7 +9,7 @@
 
 /* List sorting styles */
 .list_thead .actions {
-    min-width: 95px;
+    min-width: 100px;
 }
 
 .list_thead_column .sort-addon {
