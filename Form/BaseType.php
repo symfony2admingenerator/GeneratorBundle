@@ -27,6 +27,7 @@ class BaseType extends AbstractType
     {
         $resolver->setDefaults(array(
             'groups' => array(),
+            'cascade_validation' => true
         ));
 
         $resolver->setAllowedTypes(array(
@@ -87,6 +88,7 @@ class BaseType extends AbstractType
             $fieldOptions['type'] = $this->inject($fieldType);
             $fieldOptions['options']['groups'] = $builderOptions['groups'];
             $fieldOptions['options']['validation_groups'] = $builderOptions['validation_groups'];
+            $fieldOptions['options']['cascade_validation'] = $builderOptions['cascade_validation'];
         }
 
         return $fieldOptions;
