@@ -42,7 +42,7 @@ class PropelQueryFilter extends BaseQueryFilter
      * @param  string $fieldPath The sort field path.
      * @param  string $order     The sort order.
      */
-    public function addSortBy($fieldPath, $order)
+    public function sortBy($fieldPath, $order)
     {
         $field = $this->addJoinFor($fieldPath);
         $this->query->orderBy($field, $order);

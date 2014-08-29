@@ -96,7 +96,7 @@ use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter as PagerAdapter;
                 $handleSortMethod = 'handle'.$virtualGettersMap[$field].'Sort';
                 $this->$handleSortMethod($queryFilter, $field, $order);
             } else {
-                $queryFilter->addSortBy($field, $order);
+                $queryFilter->sortBy($field, $order);
             }
         }
     }
