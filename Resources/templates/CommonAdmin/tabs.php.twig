@@ -8,7 +8,7 @@
             {% set tabGroups = tabColumns|mapBy('groups')|flatten %}
 
             {% if tabGroups is not empty %}
-            {{ echo_set('tabGroups', echo_twig_arr(tabGroups)) }}
+            {{ echo_set('tabGroups', echo_twig_arr(tabGroups), false) }}
             {{ echo_if('groups is empty or tabGroups|intersect(groups) is not empty') }}
             {% endif %}
             <li>

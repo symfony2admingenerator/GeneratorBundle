@@ -10,7 +10,7 @@
         {% endif %}
     {% for column in builder.columns -%}
         {% if column.groups is not empty %}
-        {{ echo_set('columnGroups', echo_twig_arr(column.groups)) }}
+        {{ echo_set('columnGroups', echo_twig_arr(column.groups), false) }}
         {{ echo_if('groups is empty or columnGroups|intersect(groups) is not empty') }}
         {% endif %}
 
