@@ -129,7 +129,7 @@ abstract class BaseQueryFilter implements QueryFilterInterface
      */
     protected function getFilterFor($field)
     {
-        return $this->filtersMap[$field];
+        return array_key_exists($field, $this->filtersMap) ? $this->filtersMap[$field] : '';
     }
 
     /**
@@ -141,7 +141,7 @@ abstract class BaseQueryFilter implements QueryFilterInterface
      */
     protected function getPrimaryKeyFor($field)
     {
-        return $this->primaryKeysMap[$field];
+        return array_key_exists($field, $this->primaryKeysMap) ? $this->primaryKeysMap[$field] : '';
     }
 
     /**
