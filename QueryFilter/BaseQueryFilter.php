@@ -143,4 +143,26 @@ abstract class BaseQueryFilter implements QueryFilterInterface
     {
         return $this->primaryKeysMap[$field];
     }
+
+    /**
+     * Add or overwrite filter map.
+     *
+     * @param string $field The field.
+     * @param string $field The filter.
+     */
+    protected function addFilterMap($field, $map)
+    {
+        $this->filtersMap[$field] = $map;
+    }
+
+    /**
+     * Add or overwrite primary key map.
+     *
+     * @param string $field The field.
+     * @param string $field The filter.
+     */
+    protected function addPrimaryKeyMap($field, $map)
+    {
+        $this->primaryKeysMap[$field] = $map;
+    }
 }
