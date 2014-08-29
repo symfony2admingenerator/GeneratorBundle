@@ -28,7 +28,7 @@
         $virtualGettersMap = array(
         {% for column in builder.columns %}
             {%- if column.dbType == 'virtual' %}
-            {{ column.name|as_php }} => {{ column.getter|classify|as_php }},
+            {{ column.name|as_php }}
             {%- endif %}
         {% endfor %}
         );
@@ -42,8 +42,8 @@
             $queryFilter->setAliasPrefix('o_');
             $queryFilter->setNamePrefix('order_');
 
-            if (array_key_exists($field, $virtualGettersMap)) {
-                $handleSortMethod = 'handle'.$virtualGettersMap[$field].'Sort';
+            if (in_array($field, $virtualGettersMap)) {
+                $handleSortMethod = 'handle'.$field.'Sort';
                 $this->$handleSortMethod($queryFilter, $field, $order);
             } else {
                 $queryFilter->sortBy($field, $order);
@@ -60,7 +60,7 @@
      * @param string                $field              The field.
      * @param string                $order              The sort order.
      */
-    protected function handle{{ column.getter|classify }}Sort($queryFilter, $field, $order)
+    protected function handle{{ column.name|classify }}Sort($queryFilter, $field, $order)
     {
     }
         {%- endif %}
@@ -76,7 +76,7 @@
         $virtualGettersMap = array(
         {% for column in builder.filterColumns -%}
             {%- if column.dbType == 'virtual' %}
-            {{ column.name|as_php }} => {{ column.getter|classify|as_php }},
+            {{ column.name|as_php }}
             {%- endif %}
         {% endfor %}
         );
@@ -108,8 +108,8 @@
                 $operator       = $filterData['operator'];
                 $value          = $filterData['value'];
 
-                if (array_key_exists($field, $virtualGettersMap)) {
-                    $handleFilterMethod = 'handle'.$virtualGettersMap[$field].'Filter';
+                if (in_array($field, $virtualGettersMap)) {
+                    $handleFilterMethod = 'handle'.$field.'Filter';
                     $filterParts[] = $this->$handleFilterMethod($queryFilter, $field, $operator, $value);
                 } else {
                     $param = $queryFilter->getUniqueName();
@@ -138,7 +138,7 @@
      * @param string                $value             The value.
      * @return Doctrine\ORM\Query\Expr\Comparison
      */
-    protected function handle{{ column.getter|classify }}Filter($queryFilter, $field, $operator, $value)
+    protected function handle{{ column.name|classify }}Filter($queryFilter, $field, $operator, $value)
     {
     }
         {%- endif %}
