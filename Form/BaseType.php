@@ -16,16 +16,11 @@ class BaseType extends AbstractType
 {
     protected $securityContext;
 
-    protected $groups;
+    protected $groups = array();
 
     public function setSecurityContext($securityContext)
     {
         $this->securityContext = $securityContext;
-    }
-
-    public function setGroups(array $groups = array())
-    {
-        $this->groups = $groups;
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
@@ -55,12 +50,12 @@ class BaseType extends AbstractType
     }
 
     /**
-     * This method is used to pass the securityContext into custom formTypes.
+     * This method is used to pass the securityContext and groups into custom formTypes.
      *
      * @param string|FormTypeInterface $formType
      * @return string|FormTypeInterface
      */
-    protected function injectSecurityContext($formType)
+    protected function inject($formType)
     {
         if (is_object($formType) && method_exists($formType, 'setSecurityContext')) {
             $formType->setSecurityContext($this->securityContext);
@@ -89,7 +84,8 @@ class BaseType extends AbstractType
         // Pass on securityContext to collection types
         if (array_key_exists('type', $fieldOptions)) {
             $fieldType = $fieldOptions['type'];
-            $fieldOptions['type'] = $this->injectSecurityContext($fieldType);
+            $fieldOptions['type'] = $this->inject($fieldType);
+            $fieldOptions['options']['groups'] = $builderOptions['groups'];
         }
 
         return $fieldOptions;

@@ -14,7 +14,7 @@ class {{ builder.YamlKey|ucfirst }}Type extends BaseType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->setGroups($options['groups']);
+        $this->groups = $options['groups'];
         
     {% for column in builder.columns %}
         if ($this->isDisplayed{{ column.name|classify }}()) {
@@ -32,7 +32,7 @@ class {{ builder.YamlKey|ucfirst }}Type extends BaseType
      */
     protected function getType{{ column.name|classify }}()
     {
-        return $this->injectSecurityContext({{ column.formType|as_php|convert_as_form(column.formType) }});
+        return $this->inject({{ column.formType|as_php|convert_as_form(column.formType) }});
     }
 
     /**
