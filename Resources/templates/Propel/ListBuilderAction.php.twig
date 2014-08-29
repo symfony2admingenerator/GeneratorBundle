@@ -27,7 +27,7 @@ use Pagerfanta\Adapter\PropelAdapter as PagerAdapter;
         $virtualGettersMap = array(
         {% for column in builder.columns %}
             {% if column.dbType == 'virtual' %}
-            {{ column.name|as_php }}
+            {{ column.name|as_php }},
             {% endif %}
         {% endfor %}
         );
@@ -75,7 +75,7 @@ use Pagerfanta\Adapter\PropelAdapter as PagerAdapter;
         $virtualGettersMap = array(
         {% for column in builder.filterColumns %}
             {% if column.dbType == 'virtual' %}
-            {{ column.name|as_php }}
+            {{ column.name|as_php }},
             {% endif %}
         {% endfor %}
         );
