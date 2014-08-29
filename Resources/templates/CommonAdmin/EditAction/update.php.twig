@@ -55,6 +55,7 @@
                 $this->saveVersion($pk, ${{ builder.ModelClass }}->getVersion());
             {% endif %}
             } catch (\Exception $e) {
+                $logger = $this->get('logger')->error($e->getMessage());
                 $this->get('session')->getFlashBag()->add('error',  $this->get('translator')->trans("{{ messages.error|default("action.object.edit.error") }}", array(), 'Admingenerator') );
                 $this->onException($e, $form, ${{ builder.ModelClass }});
             }
