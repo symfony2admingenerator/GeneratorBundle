@@ -5,7 +5,7 @@
 
 /* Form error styles */
 ul.form-errors {
-    margin-left: 15px;
+    margin-left: -15px;
 }
 
 /* Remove firefox grey dotted focus outline */
