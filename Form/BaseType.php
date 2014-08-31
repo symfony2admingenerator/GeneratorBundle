@@ -24,6 +24,11 @@ abstract class BaseType extends AbstractType
         $this->securityContext = $securityContext;
     }
 
+    public function getSecurityContext()
+    {
+        return $this->securityContext;
+    }
+
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
