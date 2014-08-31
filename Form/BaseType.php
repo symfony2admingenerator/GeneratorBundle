@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use JMS\SecurityExtraBundle\Security\Authorization\Expression\Expression;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Security\Core\SecurityContextInterface;
 
 /**
  * Base class for new and edit forms.
@@ -18,7 +19,7 @@ abstract class BaseType extends AbstractType
 
     protected $groups = array();
 
-    public function setSecurityContext($securityContext)
+    public function setSecurityContext(SecurityContextInterface $securityContext)
     {
         $this->securityContext = $securityContext;
     }

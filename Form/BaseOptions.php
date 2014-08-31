@@ -2,6 +2,8 @@
 
 namespace Admingenerator\GeneratorBundle\Form;
 
+use Symfony\Component\Security\Core\SecurityContextInterface;
+
 /**
  * Base class for form options.
  * 
@@ -11,7 +13,7 @@ abstract class BaseOptions
 {
     protected $securityContext;
 
-    public function setSecurityContext($securityContext)
+    public function setSecurityContext(SecurityContextInterface $securityContext)
     {
         $this->securityContext = $securityContext;
     }
