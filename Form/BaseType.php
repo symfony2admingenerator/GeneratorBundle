@@ -12,7 +12,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  * 
  * @author Piotr Gołębiewski <loostro@gmail.com>
  */
-class BaseType extends AbstractType
+abstract class BaseType extends AbstractType
 {
     protected $securityContext;
 

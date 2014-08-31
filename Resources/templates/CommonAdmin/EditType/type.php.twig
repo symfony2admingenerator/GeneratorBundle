@@ -6,7 +6,6 @@ namespace Admingenerated\{{ namespace_prefix }}{{ bundle_name }}\Form\Base{{ bui
 use Admingenerator\GeneratorBundle\Form\BaseType;
 use Symfony\Component\Form\FormBuilderInterface;
 use JMS\SecurityExtraBundle\Security\Authorization\Expression\Expression;
-use {{ namespace_prefix }}\{{ bundle_name }}\Form\Type\{{ builder.BaseGeneratorName }}\Options;
 
 class {{ builder.YamlKey|ucfirst }}Type extends BaseType
 {
@@ -43,10 +42,17 @@ class {{ builder.YamlKey|ucfirst }}Type extends BaseType
      */
     protected function getOptions{{ column.name|classify }}(array $builderOptions = array())
     {
+        $optionsClass = '{{ namespace_prefix }}\{{ bundle_name }}\Form\Type\{{ builder.BaseGeneratorName }}\Options';
+        $options = class_exists($optionsClass) ? new $optionsClass() : null;
+
+        if ($options && method_exists($options, 'setSecurityContext') {
+            $options->setSecurityContext($this->getSecurityContext());
+        }
+
         return $this->resolveOptions('{{ column.name }}', {{ column.formOptions|merge({
             'label': column.label,
             'translation_domain': i18n_catalog|default('Admin')
-        })|as_php|convert_as_form(column.formType) }}, $builderOptions, new Options());
+        })|as_php|convert_as_form(column.formType) }}, $builderOptions, $options);
     }
 
     /**
