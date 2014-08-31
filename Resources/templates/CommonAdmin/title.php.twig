@@ -1,13 +1,13 @@
 {% block title %}
     {{ echo_block("page_title") }}
         <header>
-            <h1>{{ echo_trans(title|default, {}, i18n_catalog|default("Admin") ) }}</h1>
+            <h1>{% if title|default is not empty %}{{ echo_trans(title, {}, i18n_catalog|default("Admin") ) }}{% endif %}</h1>
         </header>
     {{ echo_endblock() }}
 {% endblock %}
 
 {% block site_title %}
     {{ echo_block("title") }}
-        {{ echo_twig('parent()') }} - {{ echo_trans(title|default, {}, i18n_catalog|default("Admin") ) }}
+        {{ echo_twig('parent()') }} - {% if title|default is not empty %}{{ echo_trans(title, {}, i18n_catalog|default("Admin") ) }}{% endif %}
     {{ echo_endblock() }}
 {% endblock %}
