@@ -24,11 +24,6 @@ abstract class BaseType extends AbstractType
         $this->securityContext = $securityContext;
     }
 
-    public function getSecurityContext()
-    {
-        return $this->securityContext;
-    }
-
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
@@ -83,6 +78,10 @@ abstract class BaseType extends AbstractType
     protected function resolveOptions($name, array $fieldOptions, array $builderOptions = array(), $optionsClass = null)
     {
         $getter = 'get'.ucfirst($name).'Options';
+
+        if ($optionsClass && method_exists($optionsClass, 'setSecurityContext')) {
+            $optionsClass->setSecurityContext($this->securityContext);
+        }
 
         if ($optionsClass && method_exists($optionsClass, $getter)) {
             $fieldOptions = $optionsClass->$getter($fieldOptions, $builderOptions);
