@@ -46,6 +46,16 @@
             // show first tab
             this.$element.find('> li > a').first().tab('show');
 
+            // temporary dirty fix
+            // NOTE: required attribute breaks this script
+            // a temporary fix is to remove the attribute
+            // TODO: refactor this script to work with required attribute
+            this.$element.children('li').each(function(i) {
+                var $link = $(this).find('> a:first');
+                var target = $link.data('target');
+                $('fieldset'+target).find('[required]').removeAttr('required');
+            });
+
             // count on init
             this._countErrors();
 
