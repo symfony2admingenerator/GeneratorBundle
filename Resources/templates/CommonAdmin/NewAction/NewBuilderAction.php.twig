@@ -43,6 +43,16 @@ class NewController extends BaseController
     }
 
     /**
+     * Get create URL
+     *
+     * @return string
+     */
+    protected function getCreateUrl()
+    {
+        return $this->generateUrl("{{ builder.routePrefixWithSubfolder }}_{{ bundle_name }}{{ builder.BaseGeneratorName ? "_" ~ builder.BaseGeneratorName : "" }}_create" );
+    }
+
+    /**
      * Get edit URL
      *
      * @return string

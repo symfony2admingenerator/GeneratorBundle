@@ -25,6 +25,7 @@ use {{ builder.namespacePrefixWithSubfolder }}\{{ bundle_name }}\Form\Type\{{ bu
 
         return $this->render('{{ builder.namespacePrefixForTemplate }}{{ bundle_name }}:{{ builder.BaseGeneratorName }}Edit:index.html.twig', $this->getAdditionalRenderParameters(${{ builder.ModelClass }}) + array(
             "{{ builder.ModelClass }}" => ${{ builder.ModelClass }},
+            'updateUrl' => $this->getUpdateUrl(),
             "form" => $form->createView(),
             'groups' => $this->getGroups(${{ builder.ModelClass }}),
         ));

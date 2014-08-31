@@ -5,9 +5,9 @@
     {{ echo_block('form') }}
     <form class="admin_form"
         {{ echo_if(builder.ModelClass ~ "." ~ builder.getFieldGuesser().getModelPrimaryKeyName(model)) }}
-            action="{{ echo_path(builder.routePrefixWithSubfolder ~ '_' ~ bundle_name ~ ( builder.BaseGeneratorName ? "_" ~ builder.BaseGeneratorName : "" ) ~ "_update", "{ 'pk': " ~ builder.ModelClass ~ "."~ builder.getFieldGuesser().getModelPrimaryKeyName(model) ~ " }" ) }}"
+            action="{{ echo_twig('updateUrl') }}"
         {{ echo_else() }}
-            action="{{ echo_path(builder.routePrefixWithSubfolder ~ '_' ~ bundle_name ~ ( builder.BaseGeneratorName ? "_" ~ builder.BaseGeneratorName : "" ) ~ "_create" ) }}"
+            action="{{ echo_twig('createUrl') }}"
         {{ echo_endif() }}
         method="post" {{ echo_twig("form_enctype(form)") }} role="form">
 
