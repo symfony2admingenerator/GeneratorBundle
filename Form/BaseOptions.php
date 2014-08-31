@@ -18,6 +18,11 @@ abstract class BaseOptions
         $this->securityContext = $securityContext;
     }
 
+    public function getSecurityContext()
+    {
+        return $this->securityContext;
+    }
+
     public function getName()
     {
         return 'admingenerator_base_options';
