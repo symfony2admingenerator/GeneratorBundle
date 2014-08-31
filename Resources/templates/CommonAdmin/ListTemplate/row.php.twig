@@ -13,9 +13,7 @@
     {{ echo_if('groups is empty or columnGroups|intersect(groups) is not empty') }}
     {% endif %}
           <td class="td_{{ column.dbType }} td_{{ column.name }}">
-          {{ echo_block('list_td_column_' ~ column.name) -}}
               {{- block('column_default') -}}
-          {{- echo_endblock() }}
           </td>
     {% if column.groups|default is not empty %}
     {{ echo_endif() }}
