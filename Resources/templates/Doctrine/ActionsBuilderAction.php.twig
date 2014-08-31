@@ -84,7 +84,7 @@
         if (count($errors) > 0) {
             throw new ValidationException();
         } else {
-            $em = $this->getDoctrine()->getManagerForClass('{{ model }}');
+            $em = $this->getDoctrine()->getManagerForClass(get_class(${{ builder.ModelClass }}));
             $em->persist(${{ builder.ModelClass }});
             $em->flush();
         }
