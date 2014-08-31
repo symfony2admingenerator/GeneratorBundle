@@ -80,7 +80,7 @@ class DoctrineQueryFilter extends BaseQueryFilter
      */
     public function getComparison($fieldPath, $operator, $param = null)
     {
-        $field = $this->addJoinFor($fieldPath);
+        $field = $this->formatField($fieldPath, $this->addJoinFor($fieldPath));
         $param = ':'.$param;
 
         switch ($operator) {

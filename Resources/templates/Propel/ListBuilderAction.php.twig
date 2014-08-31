@@ -24,13 +24,6 @@ use Pagerfanta\Adapter\PropelAdapter as PagerAdapter;
 {% block processSort -%}
     protected function processSort($query)
     {
-        $virtualGettersMap = array(
-        {% for column in builder.columns %}
-            {% if column.dbType == 'virtual' %}
-            {{ column.name|as_php }},
-            {% endif %}
-        {% endfor %}
-        );
         
         $field = $this->getSortColumn();
         $order = $this->getSortOrder();
@@ -41,7 +34,7 @@ use Pagerfanta\Adapter\PropelAdapter as PagerAdapter;
             $queryFilter->setAliasPrefix('o_');
             $queryFilter->setNamePrefix('order_');
 
-            if (in_array($field, $virtualGettersMap)) {
+            if (in_array($field, $this->getVirtualGettersMap())) {
                 $handleSortMethod = 'handle'.$field.'Sort';
                 $this->$handleSortMethod($queryFilter, $field, $order);
             } else {
@@ -72,33 +65,14 @@ use Pagerfanta\Adapter\PropelAdapter as PagerAdapter;
     {
         $filtersFormData = $this->getFilters();
 
-        $virtualGettersMap = array(
-        {% for column in builder.filterColumns %}
-            {% if column.dbType == 'virtual' %}
-            {{ column.name|as_php }},
-            {% endif %}
-        {% endfor %}
-        );
-
-        $filtersMap = array(
-        {% for column in builder.filterColumns %}
-            {{ column.name|as_php }} => {{ column.filterType|as_php }},
-        {% endfor %}
-        );
-
-        $primaryKeysMap = array(
-        {% for column in builder.filterColumns %}
-            {{ column.name|as_php }} => {{ column.primaryKey|as_php }},
-        {% endfor %}
-        );
-
         $queryFilter = $this->getQueryFilter();
         $queryFilter->setQuery($query);
         $queryFilter->setModelName('{{ model }}');
         $queryFilter->setAliasPrefix('f_');
         $queryFilter->setNamePrefix('filters_');
-        $queryFilter->setFiltersMap($filtersMap);
-        $queryFilter->setPrimaryKeysMap($primaryKeysMap);
+        $queryFilter->setFiltersMap($this->getFiltersMap());
+        $queryFilter->setPrimaryKeysMap($this->getPrimaryKeysMap());
+        $queryFilter->setFieldFormats($this->getFieldFormats());
 
         $groupParts = array();
         foreach ($filtersFormData as $groupData) {
@@ -108,7 +82,7 @@ use Pagerfanta\Adapter\PropelAdapter as PagerAdapter;
                 $operator       = $filterData['operator'];
                 $value          = $filterData['value'];
 
-                if (in_array($field, $virtualGettersMap)) {
+                if (in_array($field, $this->getVirtualGettersMap())) {
                     $handleFilterMethod = 'handle'.$field.'Filter';
                     $filterParts[] = $this->$handleFilterMethod($queryFilter, $field, $operator, $value);
                 } else {
@@ -152,26 +126,15 @@ use Pagerfanta\Adapter\PropelAdapter as PagerAdapter;
 
     {% if scopes is defined %}
         $scopes = $this->getScopes();
-        
-        $filtersMap = array(
-        {% for column in builder.scopeColumns %}
-            {{ column.name|as_php }} => {{ column.filterType|as_php }},
-        {% endfor %}
-        );
-
-        $primaryKeysMap = array(
-        {% for column in builder.scopeColumns %}
-            {{ column.name|as_php }} => {{ column.primaryKey|as_php }},
-        {% endfor %}
-        );
 
         $queryFilter = $this->getQueryFilter();
         $queryFilter->setQuery($query);
         $queryFilter->setModelName('{{ model }}');
         $queryFilter->setAliasPrefix('s_');
         $queryFilter->setNamePrefix('scopes_');
-        $queryFilter->setFiltersMap($filtersMap);
-        $queryFilter->setPrimaryKeysMap($primaryKeysMap);
+        $queryFilter->setFiltersMap($this->getFiltersMap());
+        $queryFilter->setPrimaryKeysMap($this->getPrimaryKeysMap());
+        $queryFilter->setFieldFormats($this->getFieldFormats());
 
         {% for groupName, group in scopes -%}
             {%- for scopeName, scopeParams in group %}

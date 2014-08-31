@@ -61,6 +61,16 @@ interface QueryFilterInterface
     public function getUniqueName();
 
     /**
+     * @param string $fieldPath The field path.
+     * @param string $field     The field name.
+     * 
+     * @return string The formatted field.
+     *
+     * @api
+     */
+    public function formatField($fieldPath, $field);
+
+    /**
      * @param string $operator  The comparison operator.
      * @param string $field     The field name.
      * @param mixed  $value     The value to format.

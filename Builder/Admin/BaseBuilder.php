@@ -15,9 +15,9 @@ use Admingenerator\GeneratorBundle\Generator\Action;
  */
 class BaseBuilder extends GenericBaseBuilder
 {
-    protected $columns;
+    protected $columns = array();
 
-    protected $actions;
+    protected $actions = array();
 
     protected $objectActions = array();
 

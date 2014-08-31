@@ -1,0 +1,56 @@
+{% block columnData %}
+{% set dataColumns = builder.columns|merge(builder.scopeColumns)|merge(builder.filterColumns) %}
+
+    /**
+     * Array of virtual column names.
+     */
+    protected function getVirtualGettersMap()
+    {
+        return array(
+        {% for column in dataColumns %}
+            {%- if column.dbType == 'virtual' %}
+            {{ column.name|as_php }},
+            {%- endif %}
+        {% endfor %}
+        );
+    }
+
+    /**
+     * Map of columns filter types.
+     */
+    protected function getFiltersMap()
+    {
+        return array(
+        {% for column in dataColumns %}
+            {{ column.name|as_php }} => {{ column.filterType|as_php }},
+        {% endfor %}
+        );
+    }
+
+    /**
+     * Map of columns filter types.
+     */
+    protected function getPrimaryKeysMap()
+    {
+        return array(
+        {% for column in dataColumns %}
+            {{ column.name|as_php }} => {{ column.primaryKey|as_php }},
+        {% endfor %}
+        );
+    }
+
+    /**
+     * Map of colums database field formats.
+     */
+    protected function getFieldFormats()
+    {
+        return array(
+        {% for column in dataColumns %}
+            {%- if column.dbFormat|default is not empty %}
+            {{ column.name|as_php }} => {{ column.dbFormat|as_php }},
+            {%- endif %}
+        {% endfor %}
+        );
+    }
+
+{% endblock %}

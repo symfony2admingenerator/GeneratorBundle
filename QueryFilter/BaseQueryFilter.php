@@ -18,6 +18,8 @@ abstract class BaseQueryFilter implements QueryFilterInterface
 
     protected $primaryKeysMap = array();
 
+    protected $fieldFormats = array();
+
     /**
      * (non-PHPdoc)
      * @see GeneratorBundle\QueryFilter.QueryFilterInterface::setQuery()
@@ -74,6 +76,15 @@ abstract class BaseQueryFilter implements QueryFilterInterface
 
     /**
      * (non-PHPdoc)
+     * @see GeneratorBundle\QueryFilter.QueryFilterInterface::setFieldFormats()
+     */
+    public function setFieldFormats(array $fieldFormats)
+    {
+        $this->fieldFormats = $fieldFormats;
+    }
+
+    /**
+     * (non-PHPdoc)
      * @see GeneratorBundle\QueryFilter.QueryFilterInterface::getUniqueAlias()
      */
     public function getUniqueAlias()
@@ -88,6 +99,17 @@ abstract class BaseQueryFilter implements QueryFilterInterface
     public function getUniqueName()
     {
         return $this->namePrefix.$this->nameCount++;
+    }
+
+    /**
+     * (non-PHPdoc)
+     * @see GeneratorBundle\QueryFilter.QueryFilterInterface::formatField()
+     */
+    public function formatField($fieldPath, $field)
+    {
+        return array_key_exists($fieldPath, $this->fieldFormats) 
+            ? sprintf($this->fieldFormats[$fieldPath], $field)
+            : $field;
     }
 
     /**

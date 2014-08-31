@@ -13,11 +13,11 @@ use Admingenerator\GeneratorBundle\Generator\Action;
  */
 class ListBuilder extends BaseBuilder
 {
-    protected $batch_actions;
+    protected $batch_actions = array();
 
-    protected $filter_columns;
+    protected $filter_columns = array();
 
-    protected $scope_columns;
+    protected $scope_columns = array();
 
     /**
      * (non-PHPdoc)

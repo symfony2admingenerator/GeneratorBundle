@@ -25,6 +25,24 @@ class Column
     protected $filterOn;
 
     protected $dbType;
+
+    /**
+     * If set, formats field for scopes and filters. The formatting is a simple 
+     * sprintf with one string argument (field name).
+     *
+     * Example:
+     *    for field:  "createdAt"
+     *    dbFormat:   "DATE(%s)""
+     *    the output will be "DATE(createdAt)"
+     *    
+     * If undefined, the field will not be formatted.
+     *
+     * Since the functions may vary in diffrent Database types, Admingenerator does not,
+     * by default, format fields in any way. It is up to developer to implement this for his fields.
+     *
+     * Note: this feature was created mainly for Date/DateTime fields.
+     */
+    protected $dbFormat;
     
     protected $customView = null;
 
@@ -163,6 +181,16 @@ class Column
     public function getDbType()
     {
         return $this->dbType;
+    }
+
+    public function setDbFormat($dbFormat)
+    {
+        $this->dbFormat = $dbFormat;
+    }
+
+    public function getDbFormat()
+    {
+        return $this->dbFormat;
     }
 
     public function setFormType($formType)
