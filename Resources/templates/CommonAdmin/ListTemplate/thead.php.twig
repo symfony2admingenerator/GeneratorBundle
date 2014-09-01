@@ -19,15 +19,14 @@
             <span class="sort-addon">
             {% if column.isSortable -%}
                 {{ echo_if ("sortColumn == '" ~ column.sortOn ~ "' and sortOrder == 'ASC'") }}
-                    <a href="?sort={{ column.sortOn }}&order_by=desc">
+                    <a href="?sort={{ column.sortOn }}&order_by=desc" class="{{ block('sort_icon') }}">
                 {{ echo_else() }}
-                    <a href="?sort={{ column.sortOn }}&order_by=asc">
+                    <a href="?sort={{ column.sortOn }}&order_by=asc" class="{{ block('sort_icon') }}">
                 {{ echo_endif () }}
             {%- endif -%}
-                    {{ echo_twig("'" ~ column.label|addslashes ~ "'|trans({}, '" ~ i18n_catalog|default("Admin") ~ "')") }}
+                    <u>{{ echo_twig("'" ~ column.label|addslashes ~ "'|trans({}, '" ~ i18n_catalog|default("Admin") ~ "')") }}</u>
             {%- if column.isSortable -%}
-                    </a>
-                {{ block('sort_icon') }}
+                </a>
             {% endif -%}
             </span>
         </th>
@@ -53,34 +52,28 @@
 {{ echo_if ("sortColumn == '" ~ column.sortOn ~ "'") }}
     {{ echo_if ("sortColumn == '" ~ column.sortOn ~ "' and sortOrder == 'ASC'") }}
         {% if column.sortType == 'alphabetic' %}
-            <i class="fa fa-sort-alpha-asc active"></i>
-            <i class="fa fa-sort-alpha-desc hover"></i>
+            sort-icon sort-alpha-asc
         {% elseif column.sortType == 'numeric' %}
-            <i class="fa fa-sort-numeric-asc active"></i>
-            <i class="fa fa-sort-numeric-desc hover"></i>
+            sort-icon sort-numeric-asc
         {% else %}
-            <i class="fa fa-sort-amount-asc active"></i>
-            <i class="fa fa-sort-amount-desc hover"></i>
+            sort-icon sort-amount-asc
         {% endif %}
     {{ echo_else() }}
         {% if column.sortType == 'alphabetic' %}
-            <i class="fa fa-sort-alpha-asc hover"></i>
-            <i class="fa fa-sort-alpha-desc active"></i>
+            sort-icon sort-alpha-desc
         {% elseif column.sortType == 'numeric' %}
-            <i class="fa fa-sort-numeric-asc hover"></i>
-            <i class="fa fa-sort-numeric-desc active"></i>
+            sort-icon sort-numeric-desc
         {% else %}
-            <i class="fa fa-sort-amount-asc hover"></i>
-            <i class="fa fa-sort-amount-desc active"></i>
+            sort-icon sort-amount-desc
         {% endif %}
     {{ echo_endif () }}
 {{ echo_else() }}
     {% if column.sortType == 'alphabetic' %}
-        <i class="fa fa-sort-alpha-asc placeholder hover"></i>
+        sort-icon sort-alpha-desc placeholder
     {% elseif column.sortType == 'numeric' %}
-        <i class="fa fa-sort-numeric-asc placeholder hover"></i>
+        sort-icon sort-numeric-desc placeholder
     {% else %}
-        <i class="fa fa-sort-amount-asc placeholder hover"></i>
+        sort-icon sort-amount-desc placeholder
     {% endif %}
 {{ echo_endif () }}
 {% endblock %}
