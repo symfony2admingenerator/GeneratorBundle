@@ -26,6 +26,13 @@ button::-moz-focus-inner, select::-moz-focus-inner {
     text-align: justify;
 }
 
+/* Remove disabled state styles */
+[disabled].input-reset,
+[readonly].input-reset {
+    background: #FFFFFF; 
+    cursor: text;
+}
+
 /* Reset button styles on input element */
 .btn.btn-reset, 
 .btn.btn-reset:hover,
