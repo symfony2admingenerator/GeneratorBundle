@@ -130,7 +130,9 @@ class DoctrineODMQueryFilter extends BaseQueryFilter
             case 'model':
             case 'collection':
                 $getter = 'get'.ucfirst($this->getPrimaryKeyFor($field));
-                return new \MongoId($value->$getter());
+                return (is_object($value) && method_exists($value, $getter))
+                    ? new \MongoId($value->$getter())
+                    : $value;
         }
 
         switch ($operator) {

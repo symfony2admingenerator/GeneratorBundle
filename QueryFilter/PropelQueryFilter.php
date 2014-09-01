@@ -150,7 +150,9 @@ class PropelQueryFilter extends BaseQueryFilter
             case 'model':
             case 'collection':
                 $getter = 'get'.ucfirst($this->getPrimaryKeyFor($field));
-                return $value->$getter();
+                return (is_object($value) && method_exists($value, $getter))
+                    ? $value->$getter()
+                    : $value;
         }
 
         switch ($operator) {
