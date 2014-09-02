@@ -8,6 +8,11 @@ ul.form-errors {
     margin-left: -15px;
 }
 
+/* Nowrap class */
+.nowrap {
+    white-space: nowrap;
+}
+
 /* Remove firefox grey dotted focus outline */
 a:focus, .btn:focus {
     outline: none;
