@@ -83,8 +83,14 @@ abstract class BaseType extends AbstractType
             $optionsClass->setSecurityContext($this->securityContext);
         }
 
+        // merge options from options class
         if ($optionsClass && method_exists($optionsClass, $getter)) {
             $fieldOptions = $optionsClass->$getter($fieldOptions, $builderOptions);
+        }
+
+        // merge options from form type class
+        if ($optionsClass && method_exists($this, $getter)) {
+            $fieldOptions = $this->$getter($fieldOptions, $builderOptions);
         }
         
         // Pass on securityContext to collection types
