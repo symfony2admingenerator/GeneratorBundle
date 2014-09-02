@@ -9,9 +9,11 @@
             <i class="fa fa-caret-right fa-fw"></i>
             {{ 'filters.header'|trans }}
 
-            {% for child in form %}
+        {% for child in form %}
+            {% if child.vars.name|reverse[:6]|reverse is not sameas('_token') %}
             <span class="badge" data-for="{{ child.vars.id }}" role="filters-group-count">{{ child|length }}</span>
-            {% endfor %}
+            {% endif %}
+        {% endfor %}
         </h3>
     </div>
     <div id="{{ id ~ '_panel' }}" class="collapse" role="filters-panel">

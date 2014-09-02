@@ -136,6 +136,9 @@
             // enable dismiss group            
             $gDismiss.on('click', function(e) {
                 e.preventDefault();
+                that.$element.find(that.selector.groupCount)
+                    .filter('[data-for="'+groupId+'"]')
+                    .remove();
                 $group.remove();
             });
 
@@ -187,15 +190,14 @@
             fJsPrototype.call(window, $filter.attr('id'));
 
             $dismissFilter.on('click', function(e) {
-                var $group = $filter.closest(that.selector.group);
-                var $gList = $filter.closest(that.selector.groupList);
+                e.preventDefault();
+                var $group = $(this).closest(that.selector.group);
+                var $gList = $(this).closest(that.selector.groupList);
+                $filter.remove();
 
                 that.$element.find(that.selector.groupCount)
                     .filter('[data-for="'+$group.attr('id')+'"]')
                     .text($gList.children('tr').length);
-
-                e.preventDefault();
-                $filter.remove();
             });
         },
 
