@@ -23,14 +23,6 @@
     {{- block('title') -}}
 
     <div class="container-fluid">
-        {% if object_actions|default is not empty %}
-	    <div class="row object-actions-{{ builder.ModelClass }} form-actions">
-	        <div class="btn-toolbar">
-	            {{- block('object_actions') -}}
-	        </div>
-	    </div>
-	    {% endif %}
-
 	    <div class="row">
             {% if sidebar|default is not empty %}
             <div class="col-md-8">

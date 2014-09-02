@@ -62,11 +62,10 @@
         {% endif %}
         {%- if action.confirm %} data-confirm="{{ echo_trans(action.confirm, {}, translationDomain) }}" {% endif -%}
         {%- if action.csrfProtected %} data-csrf-token="{{ echo_path(actionRoute, actionParams, ['csrf_token']) }}" {% endif -%}>
-            <i class="fa fa-fw {{ action.icon|default('fa-square-o') }}">
-                {% if builder.yamlKey is not sameas('list') %}
-                {{ echo_trans(action.label, {}, translationDomain) }}
-                {% endif %}
-            </i>
+            <i class="fa fa-fw {{ action.icon|default('fa-square-o') }}"></i>
+            {% if builder.yamlKey is not sameas('list') %}
+            {{ echo_trans(action.label, {}, translationDomain) }}
+            {% endif %}
     </a>
     {{ echo_endspaceless() }}
     {% endspaceless %}
