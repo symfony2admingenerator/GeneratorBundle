@@ -52,7 +52,9 @@
 
             // setup selectors and vars necessary to operate
             that.selector = {
+                toggleTitle:        '[role="filters-toggle"] > .panel-title',
                 group:              '[role="filters-group"]',
+                groupCount:         '[role="filters-group-count"]',
                 groupDismiss:       '[role="filters-group-dismiss"]',
                 groupToggle:        '[role="filters-group-toggle"]',
                 groupPanel:         '[role="filters-group-panel"]',
@@ -91,6 +93,13 @@
 
                 that.$rootList.append($newGroup);
                 that.$rootList.data('index', gIndex+1);
+
+                var $newGroupCount = $('<span class="badge">0</span>')
+                    .attr('role', 'filters-group-count')
+                    .attr('data-for', that.elementId+'_'+gIndex);
+
+                that.$element.find(that.selector.toggleTitle).append($newGroupCount);
+                
                 that._enableGroup($newGroup);
             });
         },
@@ -157,6 +166,10 @@
                 $gList.append($newFilter);
                 $gList.data('index', fIndex+1);
 
+                that.$element.find(that.selector.groupCount)
+                    .filter('[data-for="'+groupId+'"]')
+                    .text($gList.children('tr').length);
+
                 that._enableFilter($newFilter);
             });
         },
@@ -174,6 +187,13 @@
             fJsPrototype.call(window, $filter.attr('id'));
 
             $dismissFilter.on('click', function(e) {
+                var $group = $filter.closest(that.selector.group);
+                var $gList = $filter.closest(that.selector.groupList);
+
+                that.$element.find(that.selector.groupCount)
+                    .filter('[data-for="'+$group.attr('id')+'"]')
+                    .text($gList.children('tr').length);
+
                 e.preventDefault();
                 $filter.remove();
             });

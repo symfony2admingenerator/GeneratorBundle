@@ -33,6 +33,14 @@
         %}
             <link rel="stylesheet" href="{{ asset_url }}" type="text/css" media="all" />
         {% endstylesheets %}
+        {% image
+            output='assetic/css/compiled/bootstrap.css.map'
+            '../vendor/components/bootstrap/css/bootstrap.css.map'
+        %}{% endimage %}
+        {% image
+            output='assetic/css/compiled/bootstrap-theme.css.map'
+            '../vendor/components/bootstrap/css/bootstrap-theme.css.map'
+        %}{% endimage %}
         <!--[if lt IE 7]>
         <link rel="stylesheet" href="{{ asset('components/font-awesome/css/font-awesome-ie7.min', 'admingenerator_css') }}" type="text/css" media="all" />
         <![endif]-->

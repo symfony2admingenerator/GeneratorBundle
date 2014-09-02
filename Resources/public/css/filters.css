@@ -1,6 +1,9 @@
 /**
  * Filters builder specific CSS
  */
+[role="filters-group-count"] {
+    margin-left: 5px;
+}
 
 [role="filters-toggle"],
 [role="filters-group-toggle"] {
