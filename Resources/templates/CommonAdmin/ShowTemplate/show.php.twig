@@ -35,7 +35,7 @@
                 {{ echo_if('groups is empty or columnGroups|intersect(groups) is not empty') }}
                 {% endif %}
 
-                    <div class="col-md-2 text-right">
+                    <div class="show_column_label col-md-2 text-right">
                     {{ echo_block('show_column_label_' ~ column.name) -}}
                         <strong>{{ echo_twig("'" ~ column.label|addslashes ~ "'|trans({}, '" ~ i18n_catalog|default("Admin") ~ "')") }}</strong>
                     {{- echo_endblock() }}
