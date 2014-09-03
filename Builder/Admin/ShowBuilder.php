@@ -18,4 +18,20 @@ class ShowBuilder extends BaseBuilder
     {
         return 'show';
     }
+
+    /**
+     * Return a list of action from list.object_actions
+     * @return array
+     */
+    public function getObjectActions()
+    {
+        $objectActions = parent::getObjectActions();
+
+        if (array_key_exists('show', $objectActions)) {
+            unset($objectActions['show']);
+            $this->objectActions = $objectActions;
+        }
+
+        return $this->objectActions;
+    }
 }
