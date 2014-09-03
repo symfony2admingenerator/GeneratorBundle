@@ -44,7 +44,7 @@
 
 {% block saveObject %}
 
-    protected function saveObject(\{{ model }} ${{ builder.ModelClass }}, array $validationGroups = array(), $debug = false)
+    protected function saveObject(\{{ model }} ${{ builder.ModelClass }}, array $validationGroups = array(), $debug = true)
     {
         $validator = $this->get('validator');
         $errors = $validator->validate(${{ builder.ModelClass }}, $validationGroups);
