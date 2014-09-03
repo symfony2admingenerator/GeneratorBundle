@@ -1,5 +1,6 @@
 {% use "../CommonAdmin/EditTemplate/fieldsets.php.twig" %}
 {% use '../CommonAdmin/generic_actions.php.twig' %}
+{% use '../CommonAdmin/object_actions.php.twig' %}
 
 {% block form %}
     {{ echo_block('form') }}
@@ -28,6 +29,7 @@
         <div id="edit-actions" class="form-group form-actions">
             <div class="btn-toolbar" role="toolbar">
                 {{ block("generic_actions") }}
+                {{ block('object_actions') }}
             </div>
         </div>
         {{ echo_endblock() }}
