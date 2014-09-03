@@ -97,8 +97,11 @@ abstract class BaseType extends AbstractType
         if (array_key_exists('type', $fieldOptions)) {
             $fieldType = $fieldOptions['type'];
             $fieldOptions['type'] = $this->inject($fieldType);
-            $fieldOptions['options']['groups'] = $builderOptions['groups'];
             $fieldOptions['validation_groups'] = $builderOptions['validation_groups'];
+            
+            if (is_object($fieldType)) {
+                $fieldOptions['options']['groups'] = $builderOptions['groups'];
+            }
         }
 
         return $fieldOptions;
