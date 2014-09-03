@@ -28,8 +28,8 @@
             {{ echo_if('groups is empty or rowGroups|intersect(groups) is not empty') }}
             {% endif %}
 
-                <div class="row">
                 {% for column in rowColumns %}
+                <div class="row">
                 {% if column.groups is not empty %}
                 {{ echo_set('columnGroups', echo_twig_arr(column.groups), false) }}
                 {{ echo_if('groups is empty or columnGroups|intersect(groups) is not empty') }}
@@ -49,8 +49,8 @@
                 {% if column.groups is not empty %}
                 {{ echo_endif() }}
                 {% endif %}
-                {% endfor %}
                 </div>
+                {% endfor %}
 
             {% if rowGroups is not empty %}
             {{ echo_endif() }}
