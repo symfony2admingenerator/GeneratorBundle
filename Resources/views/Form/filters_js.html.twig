@@ -6,10 +6,10 @@ jQuery(document).ready(function($) {
 
     {% block admingenerator_filter_root_js_prototype %}
         $field.agen$filters({
-            group_prototype: "{{ form_widget(prototype)|e }}",
+            group_prototype: "{{ form_widget(prototype)|e('js') }}",
         	html_prototypes: {
         		{% for fieldName,prototype in prototypes %}
-                "{{ fieldName }}": "{{ form_widget(prototype)|e }}"{% if not loop.last %},{% endif %}
+                "{{ fieldName }}": "{{ form_widget(prototype)|e('js') }}"{% if not loop.last %},{% endif %}
         		{% endfor %}
         	},
         	js_prototypes: {
