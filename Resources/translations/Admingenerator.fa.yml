@@ -69,8 +69,8 @@ list.button:
     filter:     فیلتر
     reset:      مجدد سازی
 list.display:
-    range:      نمایش <b>%start%</b> - <b>%end%</b> از <b>%count%</b> نتیجه.
-    all:        نمایش همه ی  <b>%count%</b> نتیجه.
+    range:      نمایش <b role="results-range-start">%start%</b> - <b role="results-range-end">%end%</b> از <b role="results-count">%count%</b> نتیجه.
+    all:        نمایش همه ی  <b role="results-count">%count%</b> نتیجه.
 list.header:
     actions:    اقدام ها
 

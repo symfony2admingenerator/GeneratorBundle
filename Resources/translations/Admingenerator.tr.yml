@@ -69,8 +69,8 @@ list.button:
     filter:     Filtrele
     reset:      Sıfırla
 list.display:
-    range:      Toplam <b>%count%</b> sonuçtan <b>%start%</b> - <b>%end%</b> kadarı gösteriliyor.
-    all:        Tüm <b>%count%</b> sonuçlar.
+    range:      Toplam <b role="results-count">%count%</b> sonuçtan <b role="results-range-start">%start%</b> - <b role="results-range-end">%end%</b> kadarı gösteriliyor.
+    all:        Tüm <b role="results-count">%count%</b> sonuçlar.
 list.header:
     actions:    Eylemler
 

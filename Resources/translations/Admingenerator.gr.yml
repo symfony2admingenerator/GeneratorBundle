@@ -69,8 +69,8 @@ list.button:
     filter:     Φίλτρο
     reset:      Επαναφορά
 list.display:
-    range:      Εμφανίζονται <b>%start%</b> - <b>%end%</b> από <b>%count%</b> τα αποτελέσματα.
-    all:        Εμφάνιση <b>%count%</b> αποτελεσμάτων.
+    range:      Εμφανίζονται <b role="results-range-start">%start%</b> - <b role="results-range-end">%end%</b> από <b role="results-count">%count%</b> τα αποτελέσματα.
+    all:        Εμφάνιση <b role="results-count">%count%</b> αποτελεσμάτων.
 list.header:
     actions:    Ενέργειες
 

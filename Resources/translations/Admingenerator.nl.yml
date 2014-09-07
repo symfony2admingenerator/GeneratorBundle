@@ -69,8 +69,8 @@ list.button:
     filter:     Filter
     reset:      Reset
 list.display:
-    range:      Geef <b>%start%</b> - <b>%end%</b> of <b>%count%</b> resultaten weer.
-    all:        Geef alle <b>%count%</b> resultaten weer.
+    range:      Geef <b role="results-range-start">%start%</b> - <b role="results-range-end">%end%</b> of <b role="results-count">%count%</b> resultaten weer.
+    all:        Geef alle <b role="results-count">%count%</b> resultaten weer.
 list.header:
     actions:    Acties
 

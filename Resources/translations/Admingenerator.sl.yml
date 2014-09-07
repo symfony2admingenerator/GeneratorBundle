@@ -69,7 +69,7 @@ list.button:
     filter:     Filter
     reset:      Počisti
 list.display:
-    range:      Prikazani rezultati <b>%start%</b> - <b>%end%</b> od <b>%count%</b>.
+    range:      Prikazani rezultati <b role="results-range-start">%start%</b> - <b role="results-range-end">%end%</b> od <b role="results-count">%count%</b>.
     all:        Prikazani vsi rezultati <b>(%count%)</b>.
 list.header:
     actions:    Akcije

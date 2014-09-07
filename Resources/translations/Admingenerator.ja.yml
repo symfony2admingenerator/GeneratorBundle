@@ -69,8 +69,8 @@ list.button:
     filter:     絞り込み
     reset:      リセット
 list.display:
-    range:      <b>%count%</b> 件中 <b>%start%</b> - <b>%end%</b> 件目を表示中
-    all:        <b>%count%</b> 件の結果を表示中
+    range:      <b role="results-count">%count%</b> 件中 <b role="results-range-start">%start%</b> - <b role="results-range-end">%end%</b> 件目を表示中
+    all:        <b role="results-count">%count%</b> 件の結果を表示中
 list.header:
     actions:    操作
 

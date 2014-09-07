@@ -69,8 +69,8 @@ list.button:
     filter:     Filtrer
     reset:      Réinitialiser
 list.display:
-    range:      Résultats <b>%start%</b> à <b>%end%</b> sur <b>%count%</b>.
-    all:        Affiche les <b>%count%</b> résultats.
+    range:      Résultats <b role="results-range-start">%start%</b> à <b role="results-range-end">%end%</b> sur <b role="results-count">%count%</b>.
+    all:        Affiche les <b role="results-count">%count%</b> résultats.
 list.header:
     actions:    Actions
 

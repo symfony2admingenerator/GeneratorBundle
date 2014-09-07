@@ -69,8 +69,8 @@ list.button:
     filter:     Фільтрувати
     reset:      Скинути
 list.display:
-    range:      Відображені <b>%start%</b> - <b>%end%</b> з <b>%count%</b> записи(ів).
-    all:        Відображені всі <b>%count%</b> записи(ів).
+    range:      Відображені <b role="results-range-start">%start%</b> - <b role="results-range-end">%end%</b> з <b role="results-count">%count%</b> записи(ів).
+    all:        Відображені всі <b role="results-count">%count%</b> записи(ів).
 list.header:
     actions:    Дії
 
