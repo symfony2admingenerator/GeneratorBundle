@@ -5,7 +5,6 @@ namespace Admingenerated\{{ namespace_prefix }}{{ bundle_name }}\Form\Base{{ bui
 
 use Admingenerator\GeneratorBundle\Form\BaseType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use {{ namespace_prefix }}\{{ bundle_name }}\Form\Type\{{ builder.BaseGeneratorName }}\Options;
 
 class {{ builder.YamlKey|ucfirst }}Type extends BaseType
 {
@@ -76,6 +75,9 @@ class {{ builder.YamlKey|ucfirst }}Type extends BaseType
      */
     protected function getFilter{{ column.name|classify }}()
     {
+        $optionsClass = '{{ namespace_prefix }}\{{ bundle_name }}\Form\Type\{{ builder.BaseGeneratorName }}\Options';
+        $options = class_exists($optionsClass) ? new $optionsClass() : null;
+
         {% set optionsHash = { 'label': column.label, 'translation_domain': i18n_catalog|default('Admin') } %}
         return array(
             'field'   => {{ column.name|as_php }},
@@ -86,7 +88,7 @@ class {{ builder.YamlKey|ucfirst }}Type extends BaseType
                 {{ column.name|as_php }},
                 {{ column.formOptions|merge(optionsHash)|as_php|convert_as_form(column.formType) }},
                 array(),
-                new Options()
+                $options
             )
         );
     }
