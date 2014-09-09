@@ -49,8 +49,8 @@ class {{ builder.YamlKey|ucfirst }}Type extends BaseType
         $filters = array();
 
         {% for column in builder.columns %}
-        if ($this->isDisplayed{{ column.name|classify }}()) {
-            $filters['{{ column.name }}'] = $this->getFilter{{ column.name|classify }}();
+        if ($this->isDisplayed{{ column.name|classify|phpName }}()) {
+            $filters['{{ column.name }}'] = $this->getFilter{{ column.name|classify|phpName }}();
         }
         {% endfor %}
 
@@ -63,7 +63,7 @@ class {{ builder.YamlKey|ucfirst }}Type extends BaseType
      *
      * @return boolean
      */
-    protected function isDisplayed{{ column.name|classify }}()
+    protected function isDisplayed{{ column.name|classify|phpName }}()
     {
         return $this->checkGroups({{ column.groups|as_php }});
     }
@@ -73,7 +73,7 @@ class {{ builder.YamlKey|ucfirst }}Type extends BaseType
      *
      * @return array 
      */
-    protected function getFilter{{ column.name|classify }}()
+    protected function getFilter{{ column.name|classify|phpName }}()
     {
         $optionsClass = '{{ namespace_prefix }}\{{ bundle_name }}\Form\Type\{{ builder.BaseGeneratorName }}\Options';
         $options = class_exists($optionsClass) ? new $optionsClass() : null;
