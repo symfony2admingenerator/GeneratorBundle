@@ -17,8 +17,8 @@ class {{ builder.YamlKey|ucfirst }}Type extends BaseType
         $this->groups = $options['groups'];
         
     {% for column in builder.columns %}
-        if ($this->isDisplayed{{ column.name|classify|phpName }}()) {
-            $builder->add('{{ column.name }}', $this->getType{{ column.name|classify|phpName }}(), $this->getOptions{{ column.name|classify|phpName }}($options));
+        if ($this->isDisplayed{{ column.name|classify|php_name }}()) {
+            $builder->add('{{ column.name }}', $this->getType{{ column.name|classify|php_name }}(), $this->getOptions{{ column.name|classify|php_name }}($options));
         }
 
     {% endfor %}
@@ -30,7 +30,7 @@ class {{ builder.YamlKey|ucfirst }}Type extends BaseType
      *
      * @return string|FormTypeInterface Field form type.
      */
-    protected function getType{{ column.name|classify|phpName }}()
+    protected function getType{{ column.name|classify|php_name }}()
     {
         return $this->inject({{ column.formType|as_php|convert_as_form(column.formType) }});
     }
@@ -41,7 +41,7 @@ class {{ builder.YamlKey|ucfirst }}Type extends BaseType
      * @param  array $builderOptions The builder options.
      * @return array Field options.
      */
-    protected function getOptions{{ column.name|classify|phpName }}(array $builderOptions = array())
+    protected function getOptions{{ column.name|classify|php_name }}(array $builderOptions = array())
     {
         $optionsClass = '{{ namespace_prefix }}\{{ bundle_name }}\Form\Type\{{ builder.BaseGeneratorName }}\Options';
         $options = class_exists($optionsClass) ? new $optionsClass() : null;
@@ -57,7 +57,7 @@ class {{ builder.YamlKey|ucfirst }}Type extends BaseType
      *
      * @return boolean
      */
-    protected function isDisplayed{{ column.name|classify|phpName }}()
+    protected function isDisplayed{{ column.name|classify|php_name }}()
     {
         return $this->checkGroups({{ column.groups|as_php }});
     }
