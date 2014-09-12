@@ -19,7 +19,7 @@ class DoctrineQueryFilter extends BaseQueryFilter
             list($field, $value) = $args;
             $param = $this->getUniqueName();
             $this->query->andWhere($this->getComparison($field, $matches['operator'], $param));
-            $this->query->setParameter($param, $this->formatValue($value, $matches['operator'], $field));
+            $this->query->setParameter($param, $this->formatValue($field, $matches['operator'], $value));
         }
     }
 
