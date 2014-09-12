@@ -1,5 +1,5 @@
 {% block column_decimal %}
 {% spaceless %}
-    {{- echo_twig(builder.ModelClass ~ '.' ~ column.getter ~ '|number_format') -}}
+    {{- echo_twig(builder.ModelClass ~ '.' ~ column.getter ~ "|number_format(2, '.', ',')") -}}
 {% endspaceless %}
 {% endblock %}
