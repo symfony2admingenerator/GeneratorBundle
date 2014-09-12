@@ -17,7 +17,7 @@ class PropelQueryFilter extends BaseQueryFilter
         if (preg_match('/^add(?P<operator>.+)Filter$/', $name, $matches)) {
             list($field, $value) = $args;
 
-            $formattedValue = $this->formatValue($value, $matches['operator'], $field);
+            $formattedValue = $this->formatValue($field, $matches['operator'], $value);
             $conditionName = $this->getCondition($field, $matches['operator'], $formattedValue);
 
             $this->query->where(array($conditionName), 'and');
