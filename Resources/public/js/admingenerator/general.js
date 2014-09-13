@@ -13,12 +13,12 @@ $(document).ready(function(){
     });
     
     // enable perfect scrollbar for list view
-    $('.results-list').perfectScrollbar({
+    $('.list-table-inner-wrapper').perfectScrollbar({
         suppressScrollY: true
     });
 
     $(window).resize(function() {
-        $('.results-list').perfectScrollbar('update');
+        $('.list-table-inner-wrapper').perfectScrollbar('update');
     });
 
     // Moved all scripts to dedicated widgets
