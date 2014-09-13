@@ -80,7 +80,7 @@
 
     <div class="container-fluid">
       {% block flashes %}
-        <div id="flashes" class="row-fluid">
+        <div id="flashes" class="row-fluid hidden-print">
           {% for type, flashMessages in app.session.flashbag.all() %}
             {% set alert = type is sameas('error') ? 'danger' : type %}
             {% for flashMessage in flashMessages %}
@@ -99,7 +99,7 @@
       {% endblock %}
 
       {% block footer %}
-      <footer>
+      <footer class="hidden-print">
         <hr>
         <p>{% block footer_text %}&copy; Symfony2Admingenerator {{ ("now"|date('Y') > 2012) ? '2012 - ' ~ "now"|date('Y') : '2012' }}{% endblock %}</p>
       </footer>
