@@ -16,34 +16,36 @@
             {{- block('list_tbody') }}
         </table>
 
-        <div class="list-actions form-actions hidden-print">
-        {{ echo_block("batch_actions_wrapper") }}
-        {% if batch_actions|default is not empty %}
-            <div id="batch_actions" class="pull-left btn-toolbar" role="toolbar">
-                {{ block('batch_actions') }}
-            </div>
-        {% endif -%}
-        {{ echo_endblock() }}
+        <div class="list-actions-wrapper hidden-print">
+            <div class="list-actions form-actions">
+            {{ echo_block("batch_actions_wrapper") }}
+            {% if batch_actions|default is not empty %}
+                <div id="batch_actions" class="pull-left btn-toolbar" role="toolbar">
+                    {{ block('batch_actions') }}
+                </div>
+            {% endif -%}
+            {{ echo_endblock() }}
 
-        {{ echo_block("generic_actions_wrapper") }}
-        {% if actions|default is not empty %}
-            <div id="generic_actions" class="pull-left btn-toolbar" role="toolbar">
-                {{ block('generic_actions') -}}
-            </div>
-        {% endif -%}
-        {{ echo_endblock() }}
+            {{ echo_block("generic_actions_wrapper") }}
+            {% if actions|default is not empty %}
+                <div id="generic_actions" class="pull-left btn-toolbar" role="toolbar">
+                    {{ block('generic_actions') -}}
+                </div>
+            {% endif -%}
+            {{ echo_endblock() }}
 
-        {{ echo_block("pagination_wrapper") }}
-            <div class="pull-right btn-toolbar" role="toolbar">
-                {{- block('list_paginator_perpage') -}}
-            </div>
+            {{ echo_block("pagination_wrapper") }}
+                <div class="pull-right btn-toolbar" role="toolbar">
+                    {{- block('list_paginator_perpage') -}}
+                </div>
 
-            <div class="pull-right btn-toolbar" role="toolbar">
-                {{- block('list_paginator_pages') -}}
-            </div>
+                <div class="pull-right btn-toolbar" role="toolbar">
+                    {{- block('list_paginator_pages') -}}
+                </div>
 
-            <div class="clearfix"></div>
-        {{ echo_endblock() }}
+                <div class="clearfix"></div>
+            {{ echo_endblock() }}
+            </div>
         </div>
     {{- block('endform_batch_actions') }}
 </div>
