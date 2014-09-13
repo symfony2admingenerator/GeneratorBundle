@@ -3,13 +3,13 @@
  */
  
  /* Scroll results list horizontally if the columns don't fit on the screen */
-.results-list-wrapper {
+.list-table-outer-wrapper {
     position: relative;
 }
 
-.results-list {
+.list-table-inner-wrapper {
     overflow-x: auto;
-    padding-top: 12px; /* make rook for scrollbar */
+    padding-top: 12px; /* make room for scrollbar */
 }
 
 /* List results number bar styles */
