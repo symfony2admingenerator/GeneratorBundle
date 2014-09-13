@@ -11,6 +11,12 @@ $(document).ready(function(){
     	keyboard: false,
     	show: false
     });
+    
+    // enable perfect scrollbar for list view
+    $('.results-list').perfectScrollbar();
+    $( window ).resize(function() {
+        $('.results-list').perfectScrollbar('update');
+    });
 
     // Moved all scripts to dedicated widgets
     // Do not remove, this file is used when developing new features
