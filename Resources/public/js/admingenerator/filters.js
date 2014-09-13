@@ -81,6 +81,7 @@
                 e.preventDefault();
 
                 that.$rootList.children(that.selector.group).remove();
+                that.$element.find(that.selector.toggleTitle).find(that.selector.groupCount).remove();
             });
 
             // enable add group button
