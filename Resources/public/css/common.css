@@ -11,6 +11,7 @@ html, body {
 body {
     padding-top: 60px;
     padding-bottom: 40px;
+    overflow: hidden;
 }
 
 @media (max-width: 979px) {
