@@ -16,7 +16,7 @@
             {{- block('list_tbody') }}
         </table>
 
-        <div class="list-actions form-actions">
+        <div class="list-actions form-actions hidden-print">
         {{ echo_block("batch_actions_wrapper") }}
         {% if batch_actions|default is not empty %}
             <div id="batch_actions" class="pull-left btn-toolbar" role="toolbar">
