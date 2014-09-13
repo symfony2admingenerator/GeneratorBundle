@@ -1,16 +1,6 @@
 /**
  * List builder specific CSS
  */
- 
- /* Scroll results list horizontally if the columns don't fit on the screen */
-.list-table-outer-wrapper {
-    position: relative;
-}
-
-.list-table-inner-wrapper {
-    overflow-x: auto;
-    padding-top: 12px; /* make room for scrollbar */
-}
 
 /* List results number bar styles */
 .list_nbresults {
@@ -101,9 +91,7 @@
 /* List actions bar styles */
 .list-actions-wrapper {
     /* this wrapper fixes the toolbar on small screens */
-    position: absolute;
-    left: 15px;
-    right: 15px;
+    position: relative;
 }
 
 .list-actions > .btn-toolbar + .btn-toolbar {
