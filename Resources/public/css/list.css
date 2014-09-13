@@ -102,8 +102,8 @@
 .list-actions-wrapper {
     /* this wrapper fixes the toolbar on small screens */
     position: absolute;
-    left: 0px;
-    right: 0px;
+    left: 15px;
+    right: 15px;
 }
 
 .list-actions > .btn-toolbar + .btn-toolbar {
