@@ -184,3 +184,16 @@ button:hover > [class*=" fa-"]:before {
 .panel-group .panel {
   overflow: visible;
 }
+
+@media all {
+	.page-break	{ display: none; }
+}
+
+@media print {
+	.page-break	{ display: block; page-break-before: always; }
+	.print-group { page-break-inside: avoid; }
+	
+	a[href]:after {
+	    content: none !important;
+	}
+}
