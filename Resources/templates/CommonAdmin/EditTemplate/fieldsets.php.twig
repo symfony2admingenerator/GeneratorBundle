@@ -24,7 +24,7 @@
                 {{ echo_if('groups is empty or rowGroups|intersect(groups) is not empty') }}
                 {% endif %}
 
-                    <div class="row">
+                    <div class="row print-group">
                     {% for column in rowColumns %}
                     {% if column.groups is not empty %}
                     {{ echo_set('columnGroups', echo_twig_arr(column.groups), false) }}
