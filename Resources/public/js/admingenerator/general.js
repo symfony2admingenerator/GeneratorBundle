@@ -5,21 +5,15 @@ $(document).ready(function(){
     $('a[rel=tooltip]').tooltip({
         container: 'body'
     });
-
-    $('#admingenerator_loading_modal').modal({
-    	backdrop: 'static',
-    	keyboard: false,
-    	show: false
-    });
     
-    // enable perfect scrollbar for list view
-    $('.list-table-inner-wrapper').perfectScrollbar({
-        suppressScrollY: true
+    // enable iScroll for list table
+    var listTable = new IScroll('.list-table-wrapper', {
+        scrollX: true,
+        scrollY: false,
+        mouseWheel: true,
+        scrollbars: true
     });
-
-    $(window).resize(function() {
-        $('.list-table-inner-wrapper').perfectScrollbar('update');
-    });
+    $(document).on('touchmove', function(e) { e.preventDefault(); }, false);
 
     // Moved all scripts to dedicated widgets
     // Do not remove, this file is used when developing new features

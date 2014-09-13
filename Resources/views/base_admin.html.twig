@@ -111,6 +111,7 @@
         {% javascripts package='admingenerator_js' filter='?uglifyjs2' 
             output='assetic/js/compiled/admingenerator.min.js'
             'components/bootstrap/js/bootstrap.js'
+            'bundles/admingeneratorgenerator/js/iScroll/iScroll.js'
             'bundles/admingeneratorgenerator/js/admingenerator/general.js'
             'bundles/admingeneratorgenerator/js/admingenerator/tabs.js'
             'bundles/admingeneratorgenerator/js/admingenerator/filters.js'
@@ -119,7 +120,6 @@
             'bundles/admingeneratorgenerator/js/admingenerator/object-actions.js'
             'bundles/admingeneratorgenerator/js/treeTable/jquery.treeTable-extended.js'
             'bundles/admingeneratorgenerator/js/admingenerator/nestedset.js'
-            'bundles/admingeneratorgenerator/js/admingenerator/ps-scrollbar.js'
         %}
             <script type="text/javascript" src="{{ asset_url }}"></script>
         {% endjavascripts %}
