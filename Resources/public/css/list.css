@@ -1,6 +1,11 @@
 /**
  * List builder specific CSS
  */
+ 
+ /* Scroll results list horizontally if the columns don't fit on the screen */
+.results-list {
+    overflow-x: auto;
+}
 
 /* List results number bar styles */
 .list_nbresults {
