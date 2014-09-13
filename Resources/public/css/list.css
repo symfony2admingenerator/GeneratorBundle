@@ -4,7 +4,9 @@
  
  /* Scroll results list horizontally if the columns don't fit on the screen */
 .results-list {
+    position: relative;
     overflow-x: auto;
+    padding-top: 12px; /* make rook for scrollbar */
 }
 
 /* List results number bar styles */
