@@ -23,7 +23,7 @@
     {{- block('title') -}}
 
     <div class="container-fluid">
-	    <div class="row">
+	<div class="row">
             {% if sidebar|default is not empty %}
             <div class="col-md-8">
             {% endif %}
@@ -35,12 +35,12 @@
                 {% if tabs|default is not empty %}
                 </div>
                 {% endif %}
-	        {% if sidebar|default is not empty %}
+	    {% if sidebar|default is not empty %}
             </div>
             <div class="col-md-4">
                 {{- block('show_sidebar') -}}
             </div>
-	        {% endif %}
-	    </div>
+	    {% endif %}
+	</div>
     </div>
 {{ echo_endblock() }}
