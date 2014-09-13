@@ -51,7 +51,9 @@
 <div id="{{ id }}" name="{{ full_name }}" class="panel panel-default" role="filters-group">
     <div class="panel-heading">
         <h4 class="panel-title collapsed" data-toggle="collapse" data-target="#{{ id ~ '_group_panel' }}" role="filters-group-toggle">
-            {{- 'filters.label'|trans -}}
+            <i class="fa fa-caret-down fa-fw"></i>
+            <i class="fa fa-caret-right fa-fw"></i>
+            {{ 'filters.label'|trans -}}
             <span class="badge" data-for="{{ id }}" role="filters-group-count">{{ form|length }}</span>
             <button type="button" class="close" data-dismiss="filters-group" role="filters-group-dismiss">
                 <span aria-hidden="true">&times;</span><span class="sr-only">{{ 'filters.ctrl.remove'|trans }}</span>
