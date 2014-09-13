@@ -1,6 +1,11 @@
 /**
  * List builder specific CSS
  */
+ 
+/* List table scrollbar position relatively to wrapper */
+.list-table-wrapper {
+    position: relative;
+}
 
 /* List results number bar styles */
 .list_nbresults {
