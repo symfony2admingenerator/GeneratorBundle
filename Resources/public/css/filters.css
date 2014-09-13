@@ -40,3 +40,13 @@
 [role="filters-group-panel"] > table {
 	margin-bottom: 0px;
 }
+
+[role="filters-group-toggle"] > .fa-caret-down,
+[role="filters-group-toggle"].collapsed > .fa-caret-right {
+	display: inline-block;
+}
+
+[role="filters-group-toggle"] > .fa-caret-right,
+[role="filters-group-toggle"].collapsed > .fa-caret-down {
+	display: none;
+}
