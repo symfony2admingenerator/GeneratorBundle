@@ -7,8 +7,6 @@
 [![Latest Stable Version](https://poser.pugx.org/symfony2admingenerator/generator-bundle/v/stable.png)](https://packagist.org/packages/symfony2admingenerator/generator-bundle)
 [![Total Downloads](https://poser.pugx.org/symfony2admingenerator/generator-bundle/downloads.png)](https://packagist.org/packages/symfony2admingenerator/generator-bundle)
 
-### The Real Missing Admin Generator for Symfony2!
-This package is a Symfony2 Admin Generator based on YAML configuration and Twig templating. It's inspired by [fzaninotto/Doctrine2ActiveRecord](https://github.com/fzaninotto/Doctrine2ActiveRecord).
 
 ### Follow us on Twitter!
 
