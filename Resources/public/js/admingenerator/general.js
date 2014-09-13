@@ -13,8 +13,11 @@ $(document).ready(function(){
     });
     
     // enable perfect scrollbar for list view
-    $('.results-list').perfectScrollbar();
-    $( window ).resize(function() {
+    $('.results-list').perfectScrollbar({
+        suppressScrollY: true
+    });
+
+    $(window).resize(function() {
         $('.results-list').perfectScrollbar('update');
     });
 
