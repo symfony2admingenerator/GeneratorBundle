@@ -26,7 +26,7 @@
         {{ echo_twig("form_rest(form)") }}
 
         {{ echo_block("form_buttons") }}
-        <div id="edit-actions" class="form-group form-actions">
+        <div id="edit-actions" class="form-group form-actions hidden-print">
             <div class="btn-toolbar" role="toolbar">
                 {{ block("generic_actions") }}
                 {{ block('object_actions') }}
