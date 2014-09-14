@@ -34,6 +34,8 @@ class Action
 
     protected $csrf_protected = false;
 
+    protected $force_intermediate = false;
+
     protected $credentials = 'permitAll';
 
     public function __construct($name, $type = 'custom')
@@ -145,6 +147,16 @@ class Action
     public function setCredentials($credentials = 'permitAll')
     {
         $this->credentials = $credentials;
+    }
+
+    public function setForceIntermediate($force_intermediate)
+    {
+        $this->force_intermediate = $force_intermediate;
+    }
+
+    public function getForceIntermediate()
+    {
+        return $this->force_intermediate;
     }
 
     public function getCredentials()
