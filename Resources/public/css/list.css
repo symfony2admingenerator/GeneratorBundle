@@ -8,6 +8,12 @@
     overflow: hidden;
 }
 
+@media print {
+  .list-table-wrapper {
+      overflow: visible;
+  }
+}
+
 /* List results number bar styles */
 .list_nbresults {
     margin-bottom: 8px;
