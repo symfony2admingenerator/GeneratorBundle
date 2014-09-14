@@ -38,8 +38,8 @@ and open a ticket on github.
 
 [go up][go-up]
 
-[installation-1]: https://github.com/symfony2admingenerator/AdmingeneratorGeneratorBundle/blob/master/Resources/doc/installation/installation-via-composer.md
-[installation-4]: https://github.com/symfony2admingenerator/AdmingeneratorGeneratorBundle/blob/master/Resources/doc/installation/configuration.md
+[installation-1]: https://github.com/symfony2admingenerator/GeneratorBundle/blob/master/Resources/doc/installation/installation-via-composer.md
+[installation-4]: https://github.com/symfony2admingenerator/GeneratorBundle/blob/master/Resources/doc/installation/configuration.md
 
 ## 2. Support and Contribution
 
