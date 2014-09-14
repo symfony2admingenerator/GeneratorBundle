@@ -49,9 +49,9 @@ and open a ticket on github.
 
 [go up][go-up]
 
-[support-and-contribution-1]: https://github.com/symfony2admingenerator/AdmingeneratorGeneratorBundle/blob/master/Resources/doc/support-and-contribution/submitting-issues.md
-[support-and-contribution-2]: https://github.com/symfony2admingenerator/AdmingeneratorGeneratorBundle/blob/master/Resources/doc/support-and-contribution/contributing.md
-[support-and-contribution-3]: https://github.com/symfony2admingenerator/AdmingeneratorGeneratorBundle/blob/master/Resources/doc/support-and-contribution/upgrade-notes.md
+[support-and-contribution-1]: https://github.com/symfony2admingenerator/GeneratorBundle/blob/master/Resources/doc/support-and-contribution/submitting-issues.md
+[support-and-contribution-2]: https://github.com/symfony2admingenerator/GeneratorBundle/blob/master/Resources/doc/support-and-contribution/contributing.md
+[support-and-contribution-3]: https://github.com/symfony2admingenerator/GeneratorBundle/blob/master/Resources/doc/support-and-contribution/upgrade-notes.md
 
 ## 3. Features
 
@@ -63,9 +63,9 @@ List of supported features for each model manager:
 
 [go up][go-up]
 
-[features-1]: https://github.com/symfony2admingenerator/AdmingeneratorGeneratorBundle/blob/master/Resources/doc/features/doctrine-orm-features.md
-[features-2]: https://github.com/symfony2admingenerator/AdmingeneratorGeneratorBundle/blob/master/Resources/doc/features/doctrine-odm-features.md
-[features-3]: https://github.com/symfony2admingenerator/AdmingeneratorGeneratorBundle/blob/master/Resources/doc/features/propel-features.md
+[features-1]: https://github.com/symfony2admingenerator/GeneratorBundle/blob/master/Resources/doc/features/doctrine-orm-features.md
+[features-2]: https://github.com/symfony2admingenerator/GeneratorBundle/blob/master/Resources/doc/features/doctrine-odm-features.md
+[features-3]: https://github.com/symfony2admingenerator/GeneratorBundle/blob/master/Resources/doc/features/propel-features.md
 
 ## 4. Generator
 
