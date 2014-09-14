@@ -68,6 +68,7 @@ class Generator extends TwigGeneratorGenerator
             $this->getFromYaml(sprintf('builders.%s.params', $builder->getYamlKey()), array())
         );
 
+        // TODO: fix this or remove
         //$params = $this->applyActionsCredentialDefaults($params);
 
         $builder->setVariables($params);
@@ -246,7 +247,10 @@ class Generator extends TwigGeneratorGenerator
                 $baseKey = 'object_actions.'.$name;
 
                 if (is_array($config) && array_key_exists('route', $config) && $config['route'] === 'inject_object_defaults') {
-                    $params['object_actions'][$name] = $this->recursiveReplace($params['object_actions'][$name], array(
+                    $customized = $params['object_actions'][$name];
+                    unset($customized['route']);
+
+                    $params['object_actions'][$name] = $this->recursiveReplace(array(
                         'route'         => $routeBase.'_object',
                         'label'         => $baseKey.'.label',
                         'csrfProtected' => true,
@@ -259,7 +263,7 @@ class Generator extends TwigGeneratorGenerator
                             'success'   => $baseKey.'.success',
                             'error'     => $baseKey.'.error',
                         ),
-                    ));
+                    ), $customized);
                 }
             }
         }
