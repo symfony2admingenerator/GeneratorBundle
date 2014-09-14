@@ -18,5 +18,14 @@
 {{ echo_block("body") }}
     {{- block('title') -}}
 
-    {{ block('form') }}
+    <div class="row-fluid">
+        {{ echo_twig("block('form_' ~ actionParams.action)") }}
+    </div>
 {{ echo_endblock() }}
+
+{% for action in builder.ObjectActions %}    
+{{ echo_block('form_' ~ action.name) }}
+    {{- block('form') -}}
+{{ echo_endblock() }}
+
+{% endfor %}
