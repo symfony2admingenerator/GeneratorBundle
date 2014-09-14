@@ -1,16 +1,25 @@
-{% use "../CommonAdmin/ActionsTemplate/actions.php.twig" %}
-
 {% block form %}
-    <div class="row-fluid">
-    {{ echo_block('form') }}
-        <form action="{{ echo_twig('path(actionRoute, actionParams)') }}" method="post" class="admin_form">
-            <input type="hidden" name="_csrf_token" value="{{ echo_twig('path(actionRoute, actionParams)|csrf_token') }}"/>
-            {{ echo_block("form_buttons") }}
-                <div class="btn-toolbar actions-bar">
-                    {{ block("form_actions") }}
-                </div>
-            {{ echo_endblock() }}
-        </form>
+<form action="{{ echo_twig('path(actionRoute, actionParams)') }}" method="post" class="admin_form">
+    <input type="hidden" name="_csrf_token" value="{{ echo_twig('path(actionRoute, actionParams)|csrf_token') }}"/>
+
+    {{ echo_block('form_fields_' ~ action.name) }}
     {{ echo_endblock() }}
+
+    <div id="actions-buttons" class="form-group form-actions hidden-print">
+        <div class="btn-toolbar actions-bar" role="toolbar">
+        {{ echo_block('form_actions_' ~ action.name) }}
+            {{ block("form_actions") }}
+        {{ echo_endblock() }}
+        </div>
     </div>
+</form>
+{% endblock %}
+
+{% block form_actions %}
+    <button type="submit" class="btn btn-primary">
+        <i class="fa fa-fw fa-check"></i> {{ echo_trans('action.custom.confirm') }}
+    </button>
+    <a class="btn btn-default" href="{{ echo_path(builder.routePrefixWithSubfolder ~ '_' ~ bundle_name ~ (builder.BaseGeneratorName ? "_" ~ builder.BaseGeneratorName : "") ~ '_list') }}">
+        <i class="fa fa-fw fa-times"></i> {{ echo_trans('action.custom.cancel') }}
+    </a>
 {% endblock %}
