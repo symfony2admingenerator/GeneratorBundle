@@ -12,7 +12,7 @@
 {{ echo_block("javascripts") }}
     {{- block('complementary_javascripts') -}}
     
-    <script type="text/javascript" src="{{ asset('bundles/admingeneratorgenerator/js/admingenerator/list.js') }}"></script>
+    <script type="text/javascript" src="{{ echo_twig("asset('bundles/admingeneratorgenerator/js/admingenerator/list.js')") }}"></script>
 {{ echo_endblock() }}
 
 {{- block('site_title') -}}
