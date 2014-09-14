@@ -61,7 +61,7 @@
         rel="tooltip"
         {% endif %}
         {%- if action.confirm %} data-confirm="{{ echo_trans(action.confirm, {}, translationDomain) }}" {% endif -%}
-        {%- if action.csrfProtected %} data-csrf-token="{{ echo_path(actionRoute, actionParams, ['csrf_token']) }}" {% endif -%}>
+        {%- if action.csrfProtected and not action.forceIntermediate %} data-csrf-token="{{ echo_path(actionRoute, actionParams, ['csrf_token']) }}" {% endif -%}>
             <i class="fa fa-fw {{ action.icon|default('fa-square-o') }}"></i>
             {% if builder.yamlKey is not sameas('list') %}
             {{ echo_trans(action.label, {}, translationDomain) }}
