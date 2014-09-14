@@ -10,7 +10,9 @@
 {{ echo_endblock() }}
 
 {{ echo_block("javascripts") }}
-    {{- block('complementary_javascripts') -}}    
+    {{- block('complementary_javascripts') -}}
+    
+    <script type="text/javascript" src="{{ asset('bundles/admingeneratorgenerator/js/admingenerator/list.js') }}"></script>
 {{ echo_endblock() }}
 
 {{- block('site_title') -}}
