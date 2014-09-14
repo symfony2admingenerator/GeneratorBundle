@@ -5,6 +5,7 @@
 /* List table scrollbar position relatively to wrapper */
 .list-table-wrapper {
     position: relative;
+    overflow: hidden;
 }
 
 /* List results number bar styles */
