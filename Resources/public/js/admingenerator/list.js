@@ -3,7 +3,7 @@ $(document).ready(function(){
     var listTable = new IScroll('.list-table-wrapper', {
         scrollX: true,
         scrollY: false,
-        mouseWheel: true,
+        mouseWheel: false,
         scrollbars: true
     });
     $(document).on('touchmove', function(e) { e.preventDefault(); }, false);
