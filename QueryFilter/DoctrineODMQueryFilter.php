@@ -20,12 +20,12 @@ class DoctrineODMQueryFilter extends BaseQueryFilter
         }
     }
 
-    public function addIsNullFilter($field, $value)
+    public function addIsNullFilter($field, $value = null)
     {
         $this->query->andWhere($this->getComparison($field, 'IsNull'));
     }
 
-    public function addIsNotNullFilter($field, $value)
+    public function addIsNotNullFilter($field, $value = null)
     {
         $this->query->andWhere($this->getComparison($field, 'IsNotNull'));
     }
