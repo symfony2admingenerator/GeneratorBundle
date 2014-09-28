@@ -24,13 +24,13 @@ class PropelQueryFilter extends BaseQueryFilter
         }
     }
 
-    public function addIsNullFilter($field, $value)
+    public function addIsNullFilter($field, $value = null)
     {
         $conditionName = $this->getCondition($field, 'IsNull');
         $this->query->where(array($conditionName), 'and');
     }
 
-    public function addIsNotNullFilter($field, $value)
+    public function addIsNotNullFilter($field, $value = null)
     {
         $conditionName = $this->getCondition($field, 'IsNotNull');
         $this->query->where(array($conditionName), 'and');
