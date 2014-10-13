@@ -17,9 +17,9 @@
 
         $this->preBindRequest(${{ builder.ModelClass }});
         $form = $this->getEditForm(${{ builder.ModelClass }});
-        $form->bind($this->get('request'));
+        $form->handleRequest($this->get('request'));
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             try {
                 {% if concurrency_lock -%}
                 $versions = $this->getVersions();
