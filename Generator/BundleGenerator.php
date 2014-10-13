@@ -131,7 +131,7 @@ class BundleGenerator extends BaseBundleGenerator
         }
 
         $optionsFile = $dir.'/Form/Type/'.($this->prefix ? ucfirst($this->prefix).'/' : '').'Options.php';
-        $this->copyPreviousFile($formFile);
+        $this->copyPreviousFile($optionsFile);
         $this->renderGeneratedFile(
             'DefaultOptions.php.twig',
             $optionsFile,
