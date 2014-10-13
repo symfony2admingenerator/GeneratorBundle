@@ -11,9 +11,9 @@
 
         $this->preBindRequest(${{ builder.ModelClass }});
         $form = $this->getNewForm(${{ builder.ModelClass }});
-        $form->bind($this->get('request'));
+        $form->handleRequest($this->get('request'));
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $this->preSave($form, ${{ builder.ModelClass }});
                 $this->saveObject(${{ builder.ModelClass }});
