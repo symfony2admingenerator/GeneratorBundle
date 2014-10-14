@@ -38,6 +38,16 @@ class AdmingeneratorGeneratorBundle extends Bundle
         $container->addCompilerPass(new ValidatorCompilerPass());
         $container->addCompilerPass(new FormCompilerPass());
     }
+    
+    /**
+     * @return \Admingenerator\GeneratorBundle\DependencyInjection\AdmingeneratorGeneratorExtension
+     */
+    public function getContainerExtension()
+    {
+        $this->extension = new DependencyInjection\AdmingeneratorGeneratorExtension();
+        
+        return $this->extension;
+    }
 
     /**
      * Initialize Admingenerator Class loader
