@@ -21,6 +21,11 @@ class ControllerListener
      * @var DoctrineCache\CacheProvider
      */
     protected $cacheProvider;
+    
+    /**
+     * @var string
+     */
+    protected $cacheSuffix;
 
     public function __construct(ContainerInterface $container)
     {
