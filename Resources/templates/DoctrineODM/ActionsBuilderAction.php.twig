@@ -87,7 +87,7 @@
             if ($debug) {
                 $this->get('logger')->error((string) $errors);
             }
-            throw new ValidationException();
+            throw new ValidationException($errors);
         } else {
             $em = $this->getDocumentManager();
             $em->persist(${{ builder.ModelClass }});

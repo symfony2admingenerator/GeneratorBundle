@@ -76,6 +76,14 @@ button:hover > [class*=" fa-"]:before {
     background-image: none !important;
 }
 
+/* Remove wrap from dl-horizontal */
+.dl-horizontal.dl-actions-error {
+    margin-bottom: 0px;
+}
+.dl-horizontal.dl-actions-error dt {
+    white-space: normal;
+}
+
 /* Callouts from BS docs */
 /* Side notes for calling out things
 -------------------------------------------------- */
