@@ -104,14 +104,15 @@
      */
     protected function errorObject{{ action.name|php_name|capitalize }}(\Exception $e, \{{ model }} ${{ builder.ModelClass }} = null)
     {
-        $this->get('session')->getFlashBag()->add(
-            'error',
-            $this->get('translator')->trans(
-                "{{ action.options.error|default("action.custom.error") }}",
-                array('%name%' => '{{ action.label }}'),
-                '{{ action.options.error is defined ? i18n_catalog|default("Admin") : 'Admingenerator' }}'
-            )
+        $header = $this->get('translator')->trans(
+            "{{ action.options.error|default("action.custom.error") }}",
+            array('%name%' => '{{ action.label }}'),
+            '{{ action.options.error is defined ? i18n_catalog|default("Admin") : 'Admingenerator' }}'
         );
+
+        $errors = $this->renderErrorsAsHTML($e, '{{ action.options.error is defined ? i18n_catalog|default("Admin") : "Admingenerator" }}');
+
+        $this->get('session')->getFlashBag()->add('error', $header.' '.$errors);
 
         return new RedirectResponse($this->generateUrl("{{ builder.routePrefixWithSubfolder }}_{{ bundle_name }}{{ builder.BaseGeneratorName ? "_" ~ builder.BaseGeneratorName : "" }}_list"));
     }

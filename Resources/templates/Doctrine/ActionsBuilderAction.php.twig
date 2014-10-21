@@ -85,7 +85,7 @@
             if ($debug) {
                 $this->get('logger')->error((string) $errors);
             }
-            throw new ValidationException();
+            throw new ValidationException($errors);
         } else {
             $em = $this->getDoctrine()->getManagerForClass(get_class(${{ builder.ModelClass }}));
             $em->persist(${{ builder.ModelClass }});
