@@ -14,7 +14,8 @@
 		{
 			"name" : "Cedric LOMBARDOT",
 			"email" : "cedric.lombardot@gmail.com"
-		}, {
+		},
+		{
 			"name" : "Symfony Community",
 			"homepage" : "http://github.com/symfony2admingenerator/GeneratorBundle/contributors"
 		}
