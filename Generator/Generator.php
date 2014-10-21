@@ -45,7 +45,7 @@ abstract class Generator extends ContainerAware implements GeneratorInterface
     /**
      * @var string
      */
-    protected $cacheSuffix;
+    protected $cacheSuffix = 'default';
 
     public function __construct($root_dir, $cache_dir)
     {
