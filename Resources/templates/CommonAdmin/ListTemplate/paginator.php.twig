@@ -9,9 +9,11 @@
         <ul class="dropdown-menu  dropdown-menu-right" role="menu">
             {{ echo_for('perPage', 'perPageChoices') }}
             <li>
-                <a href="{{ echo_path(builder.routePrefixWithSubfolder ~ '_' ~ bundle_name ~ ( builder.BaseGeneratorName ? "_" ~ builder.BaseGeneratorName : "" ) ~ '_list', '{perPage: perPage}') }}">
-                    {{ echo_twig('"pagerfanta.num.elements"|trans({"%number%": perPage}, "Admingenerator")') }}
-                </a>
+                {{ echo_block("list_paginator_perpage_link") }}
+                    <a href="{{ echo_path(builder.routePrefixWithSubfolder ~ '_' ~ bundle_name ~ ( builder.BaseGeneratorName ? "_" ~ builder.BaseGeneratorName : "" ) ~ '_list', '{perPage: perPage}') }}">
+                        {{ echo_twig('"pagerfanta.num.elements"|trans({"%number%": perPage}, "Admingenerator")') }}
+                    </a>
+                {{ echo_endblock() }}
             </li>
             {{ echo_endfor() }}
         </ul>
