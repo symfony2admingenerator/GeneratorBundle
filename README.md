@@ -43,7 +43,6 @@ Don't miss any updates from **Symfony2 Admin Generator**! Join Twitter today and
 
 Documentation is currently being rewritten. Old documentation can be found in:
 
-* [Resources/old-doc](https://github.com/symfony2admingenerator/GeneratorBundle/tree/master/Resources/old-doc) directory
 * [symfony2admingenerator.org](http://symfony2admingenerator.org) website
 * some new features configuration can be found in github issues/PR comments
 
