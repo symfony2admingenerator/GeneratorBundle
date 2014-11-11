@@ -115,11 +115,11 @@
     position: relative;
 }
 
+.list-actions > .btn-toolbar + .btn-group,
 .list-actions > .btn-toolbar + .btn-toolbar {
     margin-left: 10px;
 }
 
-.list-actions > .btn-toolbar + .btn-group,
 .list-actions > .btn-toolbar.pull-right + .btn-toolbar {
     margin-right: 10px;
 }
