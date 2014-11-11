@@ -10,47 +10,54 @@
 {% endblock %}
 
 {% block list_thead_filter %}
+{% if builder.filterColumnGroups is not empty %}
+{{ echo_set('filterColumnGroups', echo_twig_arr(builder.filterColumnGroups), false) }}
+{{ echo_if('groups is empty or filterColumnGroups|intersect(groups) is not empty') }}
+{% endif %}
 <form action="{{ echo_twig('filtersUrl') }}" method="post" {{ echo_twig("form_enctype(form)") }} role="form">
-<tr class="list_thead_filter active">
-    {% if batch_actions|default is not empty %}
-        <td></td>
-    {% endif %}
-{% for column in builder.columns -%}
-    {% if column.groups is not empty %}
-    {{ echo_set('columnGroups', echo_twig_arr(column.groups), false) }}
-    {{ echo_if('groups is empty or columnGroups|intersect(groups) is not empty') }}
-    {% endif %}
+    <tr class="list_thead_filter active">
+        {% if batch_actions|default is not empty %}
+            <td></td>
+        {% endif %}
+    {% for column in builder.columns -%}
+        {% if column.groups is not empty %}
+        {{ echo_set('columnGroups', echo_twig_arr(column.groups), false) }}
+        {{ echo_if('groups is empty or columnGroups|intersect(groups) is not empty') }}
+        {% endif %}
 
-    {{ echo_block('list_thead_filter_' ~ column.name) -}}
-    <td class="list_thead_filter">
-        {% if column.isFilterable -%}
-            {{ echo_twig("form_widget(form['" ~column.name ~ "'])") }}
-        {%- endif -%}
-    </td>
+        {{ echo_block('list_thead_filter_' ~ column.name) -}}
+        <td class="list_thead_filter">
+            {% if column.isFilterable -%}
+                {{ echo_twig("form_widget(form['" ~column.name ~ "'])") }}
+            {%- endif -%}
+        </td>
+        {{ echo_endblock() }}
+
+        {% if column.groups is not empty %}
+        {{ echo_endif() }}
+        {% endif %}
+    {% endfor -%}
+
+    {%- if object_actions|default is not empty %}
+    {{ echo_block("list_thead_filter_actions") }}
+        <td class="actions">
+             <div class="btn-group">
+                <button type="submit" class="btn btn-sm btn-primary" title="{{ echo_trans('list.filter') }}">
+                    <i class="fa fa-search"></i> {{ echo_trans('list.filter') }}
+                </button>
+                <button type="submit" class="btn btn-sm btn-default" title="{{ echo_trans('list.reset') }}" name="reset" value="true">
+                    <i class="fa fa-refresh"></i>
+                </button>
+            </div>
+            {{ echo_twig("form_rest(form)") }}
+        </td>
     {{ echo_endblock() }}
-
-    {% if column.groups is not empty %}
-    {{ echo_endif() }}
-    {% endif %}
-{% endfor -%}
-
-{%- if object_actions|default is not empty %}
-{{ echo_block("list_thead_filter_actions") }}
-    <td class="actions">
-         <div class="btn-group">
-            <button type="submit" class="btn btn-sm btn-primary" title="{{ echo_trans('list.filter') }}">
-                <i class="fa fa-search"></i> {{ echo_trans('list.filter') }}
-            </button>
-            <button type="submit" class="btn btn-sm btn-default" title="{{ echo_trans('list.reset') }}" name="reset" value="true">
-                <i class="fa fa-refresh"></i>
-            </button>
-        </div>
-        {{ echo_twig("form_rest(form)") }}
-    </td>
-{{ echo_endblock() }}
-{% endif -%}
-</tr>
+    {% endif -%}
+    </tr>
 </form>
+{% if builder.filterColumnGroups is not empty %}
+{{ echo_endif() }}
+{% endif %}
 {% endblock list_thead_filter %}
 
 {% block list_thead_label %}
