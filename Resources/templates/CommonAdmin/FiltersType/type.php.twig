@@ -48,10 +48,7 @@ class FiltersType extends BaseType
         return $this->resolveOptions('{{ column.name }}', {{ column.formOptions|merge({
             'label': column.label,
             'translation_domain': i18n_catalog|default('Admin'),
-            'required': false,
-            'attr': {
-                'class': 'input-sm'
-            }
+            'required': false
         })|as_php|convert_as_form(column.formType) }}, $builderOptions, $options);
     }
 
