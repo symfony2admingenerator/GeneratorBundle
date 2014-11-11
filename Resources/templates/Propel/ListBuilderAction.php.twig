@@ -17,135 +17,75 @@ use Pagerfanta\Adapter\PropelAdapter as PagerAdapter;
 
     protected function buildQuery()
     {
-        return \{{ model }}Query::create('q');
+        return \{{ model }}Query::create();
     }
 {% endblock %}
 
 {% block processSort -%}
     protected function processSort($query)
     {
-        
-        $field = $this->getSortColumn();
-        $order = $this->getSortOrder();
-
-        if ($field) {
-            $queryFilter = $this->getQueryFilter();
-            $queryFilter->setQuery($query);
-            $queryFilter->setAliasPrefix('o_');
-            $queryFilter->setNamePrefix('order_');
-
-            if (in_array($field, $this->getVirtualGettersMap())) {
-                $handleSortMethod = 'handle'.$field.'Sort';
-                $this->$handleSortMethod($queryFilter, $field, $order);
+        if ($this->getSortColumn()) {
+            if (!strstr($this->getSortColumn(), '.')) { //direct column
+                $query->orderBy($this->getSortColumn(), $this->getSortOrder());
             } else {
-                $queryFilter->sortBy($field, $order);
+                list($table, $column) = explode('.', $this->getSortColumn(), 2);
+                $this->addJoinFor($table, $query);
+                $query->orderBy($this->getSortColumn(), $this->getSortOrder());
             }
         }
     }
+{% endblock %}
 
-    {% for column in builder.columns %}
-        {% if column.dbType == 'virtual' %}
-    /**
-     * Add the sort to the query for {{ column.name }}
-     *
-     * @param QueryFilterInterface  $queryFilter        The queryFilter.
-     * @param string                $field              The field.
-     * @param string                $order              The sort order.
-     */
-    protected function handle{{ column.name|classify }}Sort($queryFilter, $field, $order)
+{% block getFilterForm -%}
+    protected function getFilterForm()
     {
+        $filters = $this->getFilters();
+        {# Don't we should handle "relations" for Propel too? #}
+        return $this->createForm($this->getFiltersType(), $this->getFilters());
     }
-        {% endif %}
-    {% endfor %}
+{% endblock %}
 
+{% block addJoinFor -%}
+    protected function addJoinFor($table, $query)
+    {
+        $query->leftJoin($table);
+    }
 {% endblock %}
 
 {% block processFilters -%}
     protected function processFilters($query)
     {
-        $filtersFormData = $this->getFilters();
+        $filterObject = $this->getFilters();
 
         $queryFilter = $this->getQueryFilter();
         $queryFilter->setQuery($query);
-        $queryFilter->setModelName('{{ model }}');
-        $queryFilter->setAliasPrefix('f_');
-        $queryFilter->setNamePrefix('filters_');
-        $queryFilter->setFiltersMap($this->getFiltersMap());
-        $queryFilter->setPrimaryKeysMap($this->getPrimaryKeysMap());
-        $queryFilter->setFieldFormats($this->getFieldFormats());
 
-        $groupParts = array();
-        foreach ($filtersFormData as $groupData) {
-            $filterParts = array();
-            foreach ($groupData as $filterData) {
-                $field          = $filterData['field'];
-                $operator       = $filterData['operator'];
-                $value          = $filterData['value'];
+        {% for filter in builder.filterColumns %}
 
-                if (in_array($field, $this->getVirtualGettersMap())) {
-                    $handleFilterMethod = 'handle'.$field.'Filter';
-                    $filterParts[] = $this->$handleFilterMethod($queryFilter, $field, $operator, $value);
-                } else {
-                    $formattedValue = $this->formatValue($field, $operator, $value);
-                    $filterParts[] = $this->getCondition($field, $operator, $formattedValue);
-                }
-                
-            }
-            // for a group to be true, all partial conditions must be true
-            $groupParts[] = $queryFilter->getConjunction($filterParts);
+        if (isset($filterObject['{{ filter.name }}']) && null !== $filterObject['{{ filter.name }}']) {
+            $queryFilter->add{{ filter.dbType|lower|classify }}Filter('{{ filter.filterOn }}', $filterObject['{{ filter.name }}']);
         }
+        {% endfor %}
 
-        if (count($filtersFormData) > 0) {
-            // the results must meet conditions of at least one group
-            $this->query->where(array($queryFilter->getDisjunction($groupParts)), 'and');
-        }
     }
-
-    {% for column in builder.filterColumns %}
-        {% if column.dbType == 'virtual' %}
-    /**
-     * Add the filters to the query for {{ column.name }}
-     *
-     * @param QueryFilterInterface  $queryFilter    The queryFilter.
-     * @param string                $field          The field.
-     * @param string                $operator       The operator.
-     * @param string                $value          The value.
-     * @return string Condition name.
-     */
-    protected function handle{{ column.name|classify }}Filter($queryFilter, $field, $operator, $value)
-    {
-    }
-        {% endif %}
-    {% endfor %}
-
 {% endblock %}
 
 {% block processScopes -%}
     protected function processScopes($query)
     {
-
     {% if scopes is defined %}
         $scopes = $this->getScopes();
 
-        $queryFilter = $this->getQueryFilter();
-        $queryFilter->setQuery($query);
-        $queryFilter->setModelName('{{ model }}');
-        $queryFilter->setAliasPrefix('s_');
-        $queryFilter->setNamePrefix('scopes_');
-        $queryFilter->setFiltersMap($this->getFiltersMap());
-        $queryFilter->setPrimaryKeysMap($this->getPrimaryKeysMap());
-        $queryFilter->setFieldFormats($this->getFieldFormats());
-
         {% for groupName, group in scopes -%}
-            {%- for scopeName, scopeParams in group %}
+            {%- for scopeName, params in group %}
 
         if (isset($scopes['{{ groupName }}']) && $scopes['{{ groupName }}'] == '{{ scopeName }}') {
-            {% if scopeParams["filters"] is defined -%}
-                {%- for filter, filterParams in scopeParams["filters"] -%}
+            {% if params["filters"] is defined -%}
+                {%- for filter, filterParams in params["filters"] -%}
                 {%- if filter|is_numeric -%}
-                $this->scope{{ filterParams|classify }}($queryFilter);
+                $query->{{ filterParams }}();
                 {%- else -%}
-                $queryFilter->addEqualFilter('{{ filter }}', {{ filterParams|as_php }});
+                $query->{{ filter }}({{ filterParams|as_php }});
                 {%- endif -%}
                 {%- endfor -%}
             {%- endif %}
@@ -153,30 +93,8 @@ use Pagerfanta\Adapter\PropelAdapter as PagerAdapter;
         }
             {% endfor -%}
         {%- endfor %}
-    {%- endif %}
+    {% endif %}
     }
-
-    {% if scopes is defined %}
-    {% for groupName, group in scopes -%}
-        {%- for scopeName, scopeParams in group %}
-            {% if scopeParams["filters"] is defined -%}
-            {%- for filter, filterParams in scopeParams["filters"] -%}
-                {%- if filter|is_numeric -%}
-    /**
-     * Add the filters to the query for {{ groupName }} => {{ scopeName }}
-     *
-     * @param $queryFilter The queryFilter.
-     */
-    protected function scope{{ filterParams|classify }}($queryFilter)
-    {
-    }
-
-                {%- endif -%}
-            {%- endfor -%}
-            {%- endif -%}
-        {% endfor -%}
-    {%- endfor -%}
-    {%- endif %}
 {% endblock %}
 
 {% block getQueryFilter %}
@@ -186,15 +104,5 @@ use Pagerfanta\Adapter\PropelAdapter as PagerAdapter;
     protected function getQueryFilter()
     {
         return $this->get('admingenerator.queryfilter.propel');
-    }
-{% endblock %}
-
-{% block getSessionSerializer %}
-    /**
-     * @return \Admingenerator\GeneratorBundle\SessionSerializer\SessionSerializerInterface
-     */
-    protected function getSessionSerializer()
-    {
-        return $this->get('admingenerator.sessionserializer.propel');
     }
 {% endblock %}

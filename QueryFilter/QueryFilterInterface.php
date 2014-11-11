@@ -5,79 +5,28 @@ namespace Admingenerator\GeneratorBundle\QueryFilter;
 interface QueryFilterInterface
 {
     /**
-     * @param object $query The query object interface depend of the ORM.
+     * @param object $query the query object interface depend of the ORM
      *
      * @api
      */
     public function setQuery($query);
 
     /**
-     * @return object $query The query object interface depend of the ORM.
+     * @return the query object interface depend of the ORM
      *
      * @api
      */
     public function getQuery();
 
     /**
-     * @param string $aliasPrefix Prefix used by QueryFilter for unique alias generation.
+     * Add filter for Default db types (types, not found
+     * by others add*Filter() methods
+     *
+     * @param string $field the db field
+     * @param string $value the search value
      *
      * @api
      */
-    public function setAliasPrefix($aliasPrefix);
+    public function addDefaultFilter($field, $value);
 
-    /**
-     * @param string $namePrefix Prefix used by QueryFilter for unique name generation.
-     *
-     * @api
-     */
-    public function setNamePrefix($namePrefix);
-
-    /**
-     * @param array $filtersMap An array containing field to filter map.
-     *
-     * @api
-     */
-    public function setFiltersMap(array $filtersMap);
-
-    /**
-     * @param array $primaryKeysMap An array containing field to primary key map.
-     *
-     * @api
-     */
-    public function setPrimaryKeysMap(array $primaryKeysMap);
-
-    /**
-     * @return string The unique alias.
-     *
-     * @api
-     */
-    public function getUniqueAlias();
-
-    /**
-     * @return string The unique name.
-     *
-     * @api
-     */
-    public function getUniqueName();
-
-    /**
-     * @param string $fieldPath The field path.
-     * @param string $field     The field name.
-     * 
-     * @return string The formatted field.
-     *
-     * @api
-     */
-    public function formatField($fieldPath, $field);
-
-    /**
-     * @param string $operator  The comparison operator.
-     * @param string $field     The field name.
-     * @param mixed  $value     The value to format.
-     * 
-     * @return string The formatted value.
-     *
-     * @api
-     */
-    public function formatValue($field, $operator, $value);
 }

@@ -2,173 +2,86 @@
 
 namespace Admingenerator\GeneratorBundle\QueryFilter;
 
-use Doctrine\ORM\Query\Expr\Andx;
-use Doctrine\ORM\Query\Expr\Orx;
-
 class DoctrineQueryFilter extends BaseQueryFilter
 {
-    /**
-     * Default add filter behaviour.
-     *
-     * @param $name
-     * @param $args
-     */
-    public function __call($name, $args = array())
+
+    public function addDefaultFilter($field, $value)
     {
-        if (preg_match('/^add(?P<operator>.+)Filter$/', $name, $matches)) {
-            list($field, $value) = $args;
-            $param = $this->getUniqueName();
-            $this->query->andWhere($this->getComparison($field, $matches['operator'], $param));
-            $this->query->setParameter($param, $this->formatValue($field, $matches['operator'], $value));
+        if (!is_array($value)) {
+            $this->query->andWhere(sprintf('q.%s = :%s',$field, $field));
+            $this->query->setParameter($field, $value);
+        } elseif (count($value) > 0) {
+            $this->query->andWhere(sprintf('q.%s IN (:%s)',$field, $field ));
+            $this->query->setParameter($field , $value);
         }
     }
 
-    public function addIsNullFilter($field, $value = null)
+    public function addBooleanFilter($field, $value)
     {
-        $this->query->andWhere($this->getComparison($field, 'IsNull'));
-    }
-
-    public function addIsNotNullFilter($field, $value = null)
-    {
-        $this->query->andWhere($this->getComparison($field, 'IsNotNull'));
-    }
-
-    /**
-     * Sort query.
-     * 
-     * @param  string $fieldPath The sort field path.
-     * @param  string $order     The sort order.
-     */
-    public function sortBy($fieldPath, $order)
-    {
-        $field = $this->addJoinFor($fieldPath);
-        $this->query->orderBy($field, $order);
-    }
-
-    /**
-     * Get conjunction expression.
-     *
-     * @param array $expressions An array of expressions.
-     *
-     * @return \Doctrine\ORM\Query\Expr\Andx
-     */
-    public function getConjunction($expressions)
-    {
-        return new Andx($expressions);
-    }
-
-    /**
-     * Get disjunction expression.
-     *
-     * @param array $expressions An array of expressions.
-     *
-     * @return \Doctrine\ORM\Query\Expr\Orx
-     */
-    public function getDisjunction($expressions)
-    {
-        return new Orx($expressions);
-    }
-
-    /**
-     * Get comparison expression.
-     * 
-     * @param string $fieldPath The field path.
-     * @param string $operator  The comparison operator.
-     * @param string $param     The parameter name.
-     * 
-     * @return Doctrine\ORM\Query\Expr\Comparison
-     */
-    public function getComparison($fieldPath, $operator, $param = null)
-    {
-        $field = $this->formatField($fieldPath, $this->addJoinFor($fieldPath));
-        $param = ':'.$param;
-
-        switch ($operator) {
-            case 'Equal':
-                return $this->query->expr()->eq($field, $param);
-            case 'NotEqual':
-                return $this->query->expr()->neq($field, $param);
-            case 'GreaterThan':
-                return $this->query->expr()->gt($field, $param);
-            case 'GreaterThanEqual':
-                return $this->query->expr()->gte($field, $param);
-            case 'LessThan':
-                return $this->query->expr()->lt($field, $param);
-            case 'LessThanEqual':
-                return $this->query->expr()->lte($field, $param);
-            case 'Like':
-                return $this->query->expr()->like($field, $param);
-            case 'NotLike':
-                return $this->query->expr()->notLike($field, $param);
-            case 'IsNull':
-                return $this->query->expr()->isNull($field);
-            case 'IsNotNull':
-                return $this->query->expr()->isNotNull($field);
-            case 'In':
-                return $this->query->expr()->in($field, $param);
-            case 'NotIn':
-                return $this->query->expr()->notIn($field, $param);
-            default:
-                throw new \LogicException('Comparison for operator "'.$operator.'" is not implemented.');
+        if ("" !== $value) {
+            $this->query->andWhere(sprintf('q.%s = :%s',$field, $field));
+            $this->query->setParameter($field, !!$value);
         }
     }
 
-    /**
-     * (non-PHPdoc)
-     * @see GeneratorBundle\QueryFilter.QueryFilterInterface::formatValue()
-     */
-    public function formatValue($field, $operator, $value)
+    public function addStringFilter($field, $value)
     {
-        if (is_string($value)) {
-            $value = trim($value);
-        }
-        
-        switch ($this->getFilterFor($field)) {
-            case 'datetime':
-                return $this->formatDate($value, 'Y-m-d H:i:s');
-            case 'date':
-                return $this->formatDate($value, 'Y-m-d');
-            case 'model':
-            case 'collection':
-                $getter = 'get'.ucfirst($this->getPrimaryKeyFor($field));
-                return (is_object($value) && method_exists($value, $getter))
-                    ? $value->$getter()
-                    : $value;
-        }
-
-        switch ($operator) {
-            case 'Like':
-            case 'NotLike':
-                return '%'.$value.'%';
-            case 'In':
-            case 'NotIn':
-                return is_array($value) ? $value : array($value);
-        }
-
-        return $value;
+        $this->query->andWhere(sprintf('q.%s LIKE :%s',$field, $field));
+        $this->query->setParameter($field, '%'.$value.'%');
     }
 
-    /**
-     * Adds joins for path and returns the field alias and name.
-     * 
-     * @param  string $fieldPath The field path.
-     * @return string            The field alias and name.
-     */     
-    public function addJoinFor($fieldPath)
+    public function addTextFilter($field, $value)
     {
-        $path = explode('.', $fieldPath);
-        $field = array_pop($path);
+        $this->addStringFilter($field, $value);
+    }
 
-        $alias = 'q';
-
-        foreach ($path as $part) {
-            $aliasName = $this->getUniqueAlias();
-            $this->query->leftJoin($alias.'.'.$part, $aliasName);
-            $alias = $aliasName;
+    public function addCollectionFilter($field, $value)
+    {
+        if (!is_array($value)) {
+            $value = array($value->getId());
         }
 
+        if (strstr($field, '.')) {
+            list($table, $field) = explode('.', $field);
+        } else {
+            $table = $field;
+            $field = 'id';
+        }
+
+        $this->query->leftJoin('q.'.$table, $table);
         $this->query->groupBy('q');
+        $this->query->andWhere(sprintf('%s.%s IN (:%s)',$table, $field, $table.'_'.$field));
+        $this->query->setParameter($table.'_'.$field, $value);
 
-        return $alias.'.'.$field;
+    }
+
+    public function addDateFilter($field, $value, $format = 'Y-m-d')
+    {
+        if (is_array($value)) {
+            if (array_key_exists('from', $value)) {
+                if (false !== $from = $this->formatDate($value['from'], $format)) {
+                    $this->query->andWhere(sprintf('q.%s >= :%s_from',$field, $field ));
+                    $this->query->setParameter($field.'_from' , $from);
+                }
+            }
+
+            if (array_key_exists('to', $value)) {
+                if (false !== $to = $this->formatDate($value['to'], $format)) {
+                    $this->query->andWhere(sprintf('q.%s <= :%s_to',$field, $field ));
+                    $this->query->setParameter($field.'_to' , $to);
+                }
+            }
+
+        } else {
+            if (false !== $date = $this->formatDate($value, $format)) {
+                $this->query->andWhere(sprintf('q.%s = :%s',$field, $field ));
+                $this->query->setParameter($field, $date);
+            }
+        }
+    }
+
+    public function addDatetimeFilter($field, $value, $format = 'Y-m-d H:i:s')
+    {
+        $this->addDateFilter($field, $value, $format);
     }
 }

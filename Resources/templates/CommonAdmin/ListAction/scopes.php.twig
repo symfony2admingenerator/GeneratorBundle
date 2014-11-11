@@ -45,13 +45,13 @@
         $scopes = array();
 
         {% if scopes is defined -%}
-        {%- for groupName, group in scopes -%}
+        {%- for groupName, group in scopes %}
         $scopes['{{ groupName }}'] = '';
 
         {% for scopeName, params in group -%}
-            {%- if params["default"] is defined -%}
+            {%- if params["default"] is defined %}
             $scopes['{{ groupName }}'] = '{{ scopeName }}';
-            {%- endif -%}
+            {% endif -%}
         {%- endfor -%}
         {%- endfor -%}
         {%- endif %}
