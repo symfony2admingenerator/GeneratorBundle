@@ -56,12 +56,12 @@ class DoctrineODMQueryFilter extends BaseQueryFilter
          $this->query->field($field.'.$id')->equals(new \MongoId($value->getId()));
     }      
                 
-    public function addNullFilter($field)
+    public function addNullFilter($field, $value = null)
     {
         $this->query->field($field)->equals(null);
     }
 
-    public function addNotNullFilter($field)
+    public function addNotNullFilter($field, $value = null)
     {
         $this->query->field($field)->notEqual(null);
     }

@@ -84,12 +84,12 @@ class DoctrineQueryFilter extends BaseQueryFilter
         $this->addDateFilter($field, $value, $format);
     }
 
-    public function addNullFilter($field)
+    public function addNullFilter($field, $value = null)
     {
         $this->query->andWhere(sprintf('q.%s IS NULL', $field));
     }
 
-    public function addNotNullFilter($field)
+    public function addNotNullFilter($field, $value = null)
     {
         $this->query->andWhere(sprintf('q.%s IS NOT NULL', $field));
     }
