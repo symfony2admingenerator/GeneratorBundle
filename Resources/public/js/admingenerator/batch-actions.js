@@ -70,6 +70,11 @@
             $batchAll.on('change', function(e){
                 that._onSelectAll($(e.target));
             });
+
+            // use selectpicker if avaliable
+            if ($().selectpicker) {
+                $(that.element).selectpicker();
+            }
         },
                 
         _onSelectAll: function($button) {
