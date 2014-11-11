@@ -110,8 +110,22 @@ class ListController extends BaseController
        // ORM JOB
     }
     {% endblock %}
-    
-    {% block processFilters %}
+
+    {% block getFilterForm -%}
+    protected function getFilterForm()
+    {
+        // ORM JOB
+    }
+    {% endblock %}
+
+    {% block addJoinFor -%}
+    protected function addJoinFor($table, $query)
+    {
+        // ORM JOB
+    }
+    {% endblock %}
+
+    {% block processFilters -%}
     protected function processFilters($query)
     {
         // ORM JOB
@@ -125,15 +139,18 @@ class ListController extends BaseController
     }
     {% endblock %}
 
+    {{ block('csrf_check_token') }}
+
+    protected function getFiltersType()
+    {
+        $type = new FiltersType();
+        $type->setSecurityContext($this->get('security.context'));
+
+        return $type;
+    }
+
     {% block getQueryFilter -%}
     protected function getQueryFilter()
-    {
-        // ORM JOB
-    }
-    {% endblock %}
-
-    {% block getSessionSerializer -%}
-    protected function getSessionSerializer()
     {
         // ORM JOB
     }
