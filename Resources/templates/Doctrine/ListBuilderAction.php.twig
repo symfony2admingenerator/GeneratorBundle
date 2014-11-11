@@ -123,7 +123,7 @@
 
     {% for filter,column in builder.filterColumns %}
         if (isset($filterObject['{{ column.name }}']) && null !== $filterObject['{{ column.name }}']) {
-        {% if column.filterOn|split('.')|length > 0 %}
+        {% if column.filterOn|split('.')|length > 1 %}
             $queryFilter->filter{{ filter|classify }}($queryFilter, $filterObject['{{ column.name }}']);
         {% else %}
             $this->add{{ column.dbType|classify }}Filter('{{ column.filterOn }}', $filterObject['{{ column.name }}']);
@@ -133,7 +133,7 @@
     }
 
     {% for filter,column in builder.filterColumns %}
-    {% if column.filterOn|split('.')|length > 0 %}
+    {% if column.filterOn|split('.')|length > 1 %}
     /**
      * Add the filters to the query for {{ filter }}
      *
