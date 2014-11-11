@@ -60,10 +60,9 @@ use Pagerfanta\Adapter\PropelAdapter as PagerAdapter;
         $queryFilter = $this->getQueryFilter();
         $queryFilter->setQuery($query);
 
-        {% for filter in builder.filterColumns %}
-
-        if (isset($filterObject['{{ filter.name }}']) && null !== $filterObject['{{ filter.name }}']) {
-            $queryFilter->add{{ filter.dbType|lower|classify }}Filter('{{ filter.filterOn }}', $filterObject['{{ filter.name }}']);
+        {% for filter,column in builder.filterColumns %}
+        if (isset($filterObject['{{ column.name }}']) && null !== $filterObject['{{ column.name }}']) {
+            $queryFilter->add{{ column.dbType|lower|classify }}Filter('{{ column.filterOn }}', $filterObject['{{ column.name }}']);
         }
         {% endfor %}
 

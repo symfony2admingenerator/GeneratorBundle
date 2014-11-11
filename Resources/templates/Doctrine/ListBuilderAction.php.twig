@@ -7,7 +7,7 @@
      */
     protected function setFilters($filters)
     {
-        {%- for filter in builder.filterColumns -%}
+        {%- for filter,column in builder.filterColumns -%}
             {%- if 'entity' == builder.getFieldGuesser().getDbType(model, filter) or 'collection' == builder.getFieldGuesser().getDbType(model, filter) -%}
             {% set filterModel = builder.getFieldGuesser().getModelType(model, filter) %}
         if (isset($filters['{{ filter }}'])) {
@@ -31,7 +31,7 @@
     {
         $filters = $this->get('session')->get($this->getSessionPrefix().'List\Filters', array());
 
-        {%- for filter in builder.filterColumns -%}
+        {%- for filter,column in builder.filterColumns -%}
             {%- if 'entity' == builder.getFieldGuesser().getDbType(model, filter) or 'collection' == builder.getFieldGuesser().getDbType(model, filter) -%}
             {% set filterModel = builder.getFieldGuesser().getModelType(model, filter) %}
         if (isset($filters['{{ filter }}'])) {
@@ -88,7 +88,7 @@
     {
         $filters = $this->getFilters();
 
-        {%- for filter in builder.filterColumns -%}
+        {%- for filter,column in builder.filterColumns -%}
             {%- if 'entity' == builder.getFieldGuesser().getDbType(model, filter) or 'collection' == builder.getFieldGuesser().getDbType(model, filter) -%}
             {% set filterModel = builder.getFieldGuesser().getModelType(model, filter) %}
               if (isset($filters['{{ filter }}'])) {
@@ -121,9 +121,9 @@
         $queryFilter = $this->getQueryFilter();
         $queryFilter->setQuery($query);
 
-        {% for filter in builder.filterColumns %}
-            if (isset($filterObject['{{ filter.name }}']) && null !== $filterObject['{{ filter.name }}']) {
-                $queryFilter->add{{ filter.dbType|classify }}Filter('{{ filter.filterOn }}', $filterObject['{{ filter.name }}']);
+        {% for filter,column in builder.filterColumns %}
+            if (isset($filterObject['{{ column.name }}']) && null !== $filterObject['{{ column.name }}']) {
+                $queryFilter->add{{ column.dbType|classify }}Filter('{{ column.filterOn }}', $filterObject['{{ column.name }}']);
             }
         {% endfor %}
 
