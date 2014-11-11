@@ -75,7 +75,6 @@ class DoctrineGenerator extends Generator
         if (array_key_exists('nested_list', $builders)) {
             $generator->addBuilder(new NestedListBuilderAction());
             $generator->addBuilder(new NestedListBuilderTemplate());
-            $generator->addBuilder(new FiltersBuilderType());
         }
 
         if (array_key_exists('edit', $builders)) {

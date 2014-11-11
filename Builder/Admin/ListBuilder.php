@@ -15,8 +15,6 @@ class ListBuilder extends BaseBuilder
 {
     protected $batch_actions = array();
 
-    protected $filter_columns = array();
-
     protected $scope_columns = array();
 
     /**
@@ -26,53 +24,6 @@ class ListBuilder extends BaseBuilder
     public function getYamlKey()
     {
         return 'list';
-    }
-
-    /**
-     * Find filters parameters
-     */
-    public function getFilters()
-    {
-        return $this->getGenerator()->getFromYaml('builders.filters.params');
-    }
-
-    public function getFilterColumns()
-    {
-        if (0 === count($this->filter_columns)) {
-            $this->findFilterColumns();
-        }
-
-        return $this->filter_columns;
-    }
-
-    protected function findFilterColumns()
-    {
-        foreach ($this->getFiltersDisplayColumns() as $columnName) {
-            $column = $this->createColumn($columnName, true);
-
-            // Set the user parameters
-            $this->setUserColumnConfiguration($column);
-            $this->addFilterColumn($column);
-        }
-    }
-
-    /**
-     * @return array Filters display column names
-     */
-    protected function getFiltersDisplayColumns()
-    {
-        $display = $this->getGenerator()->getFromYaml('builders.filters.params.display', array());
-
-        if (null === $display) {
-            $display = $this->getAllFields();
-        }
-
-        return $display;
-    }
-
-    protected function addFilterColumn(Column $column)
-    {
-        $this->filter_columns[$column->getName()] = $column;
     }
 
     /**
