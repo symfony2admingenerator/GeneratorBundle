@@ -6,7 +6,7 @@ namespace Admingenerator\GeneratorBundle\Builder\Admin;
  * This builder generates form for Filters
  * @author cedric Lombardot
  */
-class FiltersBuilderType extends FiltersBuilder
+class FiltersBuilderType extends ListBuilder
 {
     public function getOutputName()
     {
