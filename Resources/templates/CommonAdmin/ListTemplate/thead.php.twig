@@ -10,7 +10,7 @@
 {% endblock %}
 
 {% block list_thead_filter %}
-{% if builder.builder.filterColumns is not empty %}
+{% if builder.filterColumns is not empty %}
     {% if builder.filterColumnGroups is not empty %}
     {{ echo_set('filterColumnGroups', echo_twig_arr(builder.filterColumnGroups), false) }}
     {{ echo_if('groups is empty or filterColumnGroups|intersect(groups) is not empty') }}
