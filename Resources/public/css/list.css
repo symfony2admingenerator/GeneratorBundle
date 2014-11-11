@@ -115,6 +115,10 @@
     position: relative;
 }
 
+.list-actions > .btn-toolbar {
+    margin-left: 0px;
+}
+
 .list-actions > .btn-toolbar + .btn-group,
 .list-actions > .btn-toolbar + .btn-toolbar {
     margin-left: 10px;

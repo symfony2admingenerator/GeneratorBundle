@@ -4,10 +4,10 @@
 
     {{ echo_if_granted(builder.BatchActions|mapBy('credentials')|flatten|join(' or ')|default('denyAll')) }}
 
-    <div class="btn-toolbar">
+    <div id="batchActionToolbar" class="btn-toolbar">
         <div class="input-group btn-group">
             <div class="input-group-btn">
-                <button id="batchActionSubmit" type="submit" name="batch" class="btn btn-default" title="{{ echo_trans('batch.list.send') }}">
+                <button id="batchActionSubmit" type="submit" name="batch" class="btn btn-warning" title="{{ echo_trans('batch.list.send') }}">
                     <i class="fa fa-cogs"></i>
                 </button>
             </div>
