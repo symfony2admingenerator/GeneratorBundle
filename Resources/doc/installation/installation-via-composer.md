@@ -11,7 +11,7 @@
 
 ```json
 "require": {
-    "cedriclombardot/admingenerator-generator-bundle": "~2.0*@dev"
+    "symfony2admingenerator/generator-bundle": "dev-master"
 },
 ```
 
@@ -29,7 +29,7 @@ Then run `php composer.phar update` command.
     
 ### 2. Enable bundles
 
-Admingenerator has a dependency on KnpMenuBundle, WhiteOctroberPagerfantaBundle and AdmingeneratorFormBundle.
+Admingenerator has a dependency on KnpMenuBundle and WhiteOctroberPagerfantaBundle.
 
 > **Note:** there are also some optional dependencies, each is described in corresponding feature`s doc. This guide describes only the minimal-setup. 
 
@@ -44,7 +44,6 @@ public function registerBundles()
         new Admingenerator\GeneratorBundle\AdmingeneratorGeneratorBundle(),
         new Knp\Bundle\MenuBundle\KnpMenuBundle(),
         new WhiteOctober\PagerfantaBundle\WhiteOctoberPagerfantaBundle(),
-        new Admingenerator\FormBundle\AdmingeneratorFormBundle(),
     );
 }
 ?>
