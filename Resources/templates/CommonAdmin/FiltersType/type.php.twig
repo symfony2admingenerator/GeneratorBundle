@@ -4,60 +4,54 @@
 namespace Admingenerated\{{ namespace_prefix }}{{ bundle_name }}\Form\Base{{ builder.BaseGeneratorName }}Type;
 
 use Admingenerator\GeneratorBundle\Form\BaseType;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Admingenerator\GeneratorBundle\Form\BaseOptions;
+use Symfony\Component\Form\FormBuilderInterface;
+use JMS\SecurityExtraBundle\Security\Authorization\Expression\Expression;
 
 class {{ builder.YamlKey|ucfirst }}Type extends BaseType
 {
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    protected $securityContext;
+
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $resolver->setDefaults(array(
-            'groups' => array(),
-            'prototype' => true,
-            'options'   => array(
-                // options for FilterGroupType
-                'fields'                => $this->getFieldsHash(),
-                'translation_domain'    => {{ i18n_catalog|default('Admin')|as_php }},
-                'options' => array(
-                    // options for FilterItemType
-                    'filters'               => $this->getFilters(),
-                    'translation_domain'    => {{ i18n_catalog|default('Admin')|as_php }},
-                )
-            ),
-            'translation_domain' => {{ i18n_catalog|default('Admin')|as_php }}
-        ));
-
-        $resolver->setAllowedTypes(array(
-            'groups' => 'array',
-        ));
-    }
-
-    /**
-     * @return  array A hash of field name and label pairs.
-     */
-    protected function getFieldsHash()
-    {
-        return array_map(function($filter){
-            return $filter['label'];
-        }, $this->getFilters());
-    }
-
-    /**
-     * @return array
-     */
-    protected function getFilters()
-    {
-        $filters = array();
-
-        {% for column in builder.columns %}
+        $this->groups = $options['groups'];
+        
+    {% for column in builder.columns %}
         if ($this->isDisplayed{{ column.name|classify|php_name }}()) {
-            $filters['{{ column.name }}'] = $this->getFilter{{ column.name|classify|php_name }}();
+            $builder->add('{{ column.name }}', $this->getType{{ column.name|classify|php_name }}(), $this->getOptions{{ column.name|classify|php_name }}($options));
         }
-        {% endfor %}
 
-        return $filters;
+    {% endfor %}
     }
 
 {% for column in builder.columns %}
+    /**
+     * Get form type for {{ column.name }} field.
+     *
+     * @return string|FormTypeInterface Field form type.
+     */
+    protected function getType{{ column.name|classify|php_name }}()
+    {
+        return $this->inject({{ column.filterType|as_php|convert_as_form(column.filterType) }});
+    }
+
+    /**
+     * Get options for {{ column.name }} field.
+     *
+     * @param  array $builderOptions The builder options.
+     * @return array Field options.
+     */
+    protected function getOptions{{ column.name|classify|php_name }}(array $builderOptions = array())
+    {
+        $optionsClass = '{{ namespace_prefix }}\{{ bundle_name }}\Form\Type\{{ builder.BaseGeneratorName }}\Options';
+        $options = class_exists($optionsClass) ? new $optionsClass() : null;
+
+        return $this->resolveOptions('{{ column.name }}', {{ column.formOptions|merge({
+            'label': column.label,
+            'translation_domain': i18n_catalog|default('Admin')
+        })|as_php|convert_as_form(column.formType) }}, $builderOptions, $options);
+    }
+
     /**
      * Check groups for {{ column.name }} field.
      *
@@ -68,58 +62,11 @@ class {{ builder.YamlKey|ucfirst }}Type extends BaseType
         return $this->checkGroups({{ column.groups|as_php }});
     }
 
-    /**
-     * Get filter for {{ column.name }} field.
-     *
-     * @return array 
-     */
-    protected function getFilter{{ column.name|classify|php_name }}()
-    {
-        $optionsClass = '{{ namespace_prefix }}\{{ bundle_name }}\Form\Type\{{ builder.BaseGeneratorName }}\Options';
-        $options = class_exists($optionsClass) ? new $optionsClass() : null;
-
-        {% set optionsHash = { 'label': column.label, 'translation_domain': i18n_catalog|default('Admin') } %}
-        return array(
-            'field'   => {{ column.name|as_php }},
-            'label'   => {{ column.label|as_php }},
-            'filter'  => {{ column.filterType|as_php }},
-            'form'    => $this->checkFieldType({{ column.formType|as_php|convert_as_form(column.formType) }}),
-            'options' => $this->resolveOptions(
-                {{ column.name|as_php }},
-                {{ column.formOptions|merge(optionsHash)|as_php|convert_as_form(column.formType) }},
-                array(),
-                $options
-            )
-        );
-    }
-
 {% endfor %}
-    
-    /**
-     * Check filter field type
-     * 
-     * @param  string|FormTypeInterface $fieldType Field type.
-     * @throws \LogicException If $fieldType is an object.
-     * @return string|FormTypeInterface Field type.
-     */
-    protected function checkFieldType($fieldType)
-    {
-        if (is_object($fieldType)) {
-            throw new \LogicException("Custom form types are not implemented in filters form.");
-        }
-
-        return $fieldType;
-    }
-    
-    public function getParent()
-    {
-        return 'admingenerator_filter_root';
-    }
 
     public function getName()
     {
         return '{{ builder.YamlKey }}_{{ builder.ModelClass|lower }}';
     }
-
 }
 {% endblock %}
