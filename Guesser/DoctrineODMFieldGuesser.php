@@ -172,7 +172,8 @@ class DoctrineODMFieldGuesser extends ContainerAware
             return array();
         }
         
-        if ('boolean' == $dbType) {
+        if ('boolean' == $dbType && 
+            (preg_match("#^choice#i", $formType) || preg_match("#choice$#i", $formType))) {
             return array(
                 'choices' => array(
                    0 => $this->container->get('translator')->trans('boolean.no', array(), 'Admingenerator'),
