@@ -2,7 +2,7 @@
 
 {% block list_tbody %}
 {{ echo_block("list_tbody") }}
-    <tbody>
+    <tbody id="batchActionsItemsContainer">
     {{ echo_block("list_tbody_rows") }}
         {{ echo_if (builder.ModelClass ~ "s|length > 0") }}
 

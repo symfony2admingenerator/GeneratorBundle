@@ -22,9 +22,11 @@
     var pluginName = 'agen$batchActions',
         document = window.document,
         defaults = {
-            submitSelector: 'input[type=submit]',
-            actionsSelector: 'select[name=action]',
-            noneSelected: "You have to select at least one element."
+            submitSelector:     'input[type=submit]',
+            actionsSelector:    'select[name=action]',
+            selectAll:          'input[name="batchAll"]',
+            selectedItems:      'input[name="selected[]"]',
+            noneSelected:       "You have to select at least one element."
         };
 
     // The actual plugin constructor
@@ -53,12 +55,12 @@
             $(that.element).find(that.options.submitSelector).remove();
             
             // Select container
-            var $batch    = $(that.element).find('input[name="selected[]"]');
-            var $batchAll = $(that.element).find('input[name="batchAll"]');
+            var $batch    = $(that.options.selectedItems);
+            var $batchAll = $(that.options.selectAll);
             
             // Grant plugin-scope access to selectors
             that.$batch  = $batch;
-            that.$selector = $(that.element).find(that.options.actionsSelector); 
+            that.$selector = $(that.options.actionsSelector);
             
             // bind onSelect to button click event
             that.$selector.on('change', function(e){
@@ -72,8 +74,8 @@
             });
 
             // use selectpicker if avaliable
-            if ($().selectpicker) {
-                $(that.element).selectpicker();
+            if ($.fn.selectpicker) {
+                that.$selector.selectpicker();
             }
         },
                 
@@ -82,11 +84,11 @@
         },
 
         _onSelect: function() {
-        	if (this.$selector.val()=='none') {
-        		return false;
-        	}
+            if (this.$selector.val()=='none') {
+                return false;
+            }
             // Alert if none selected
-            if (this.$batch.filter(':checked').length == 0) {
+            if (this.$batch.filter(':checked').length === 0) {
                 alert(this.options.noneSelected);
                 this.$selector.val('none');
                 return false;
@@ -94,8 +96,8 @@
             
             // Confirm action
             if ($(':selected',this.$selector).data('confirm') && !confirm($(':selected',this.$selector).data('confirm'))) {
-            	this.$selector.val('none');
-            	return false;
+                this.$selector.val('none');
+                return false;
             }
             
             $(this.$selector).closest('form').submit();

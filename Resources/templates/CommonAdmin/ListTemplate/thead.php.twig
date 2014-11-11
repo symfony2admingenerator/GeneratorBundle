@@ -64,7 +64,7 @@
 <tr class="list_thead">
     {% if batch_actions|default is not empty %}
         <th class="list_thead_batch_action">
-            <input type="checkbox" name="batchAll" />
+            <input id="batchActionSelectAll" type="checkbox" name="batchAll" />
         </th>
     {% endif %}
 {% for column in builder.columns -%}
