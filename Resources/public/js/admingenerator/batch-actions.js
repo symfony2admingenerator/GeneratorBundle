@@ -75,7 +75,9 @@
 
             // use selectpicker if avaliable
             if ($.fn.selectpicker) {
-                that.$selector.selectpicker();
+                that.$selector.addClass('selectpicked dropup').selectpicker({
+                    dropupAuto: false
+                });
             }
         },
                 
