@@ -4,7 +4,6 @@ namespace Admingenerator\GeneratorBundle\QueryFilter;
 
 class DoctrineQueryFilter extends BaseQueryFilter
 {
-
     public function addDefaultFilter($field, $value)
     {
         if (!is_array($value)) {
@@ -83,5 +82,15 @@ class DoctrineQueryFilter extends BaseQueryFilter
     public function addDatetimeFilter($field, $value, $format = 'Y-m-d H:i:s')
     {
         $this->addDateFilter($field, $value, $format);
+    }
+
+    public function addNullFilter($field)
+    {
+        $this->query->andWhere(sprintf('q.%s IS NULL', $field));
+    }
+
+    public function addNotNullFilter($field)
+    {
+        $this->query->andWhere(sprintf('q.%s IS NOT NULL', $field));
     }
 }

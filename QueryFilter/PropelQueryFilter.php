@@ -76,5 +76,15 @@ class PropelQueryFilter extends BaseQueryFilter
     public function addTimestampFilter($field, $value)
     {
         return $this->addDateFilter($field, $value);
+    }    
+             
+    public function addNullFilter($field)
+    {
+        $this->query->filterBy($field, null, \Criteria::EQUAL);
+    }
+
+    public function addNotNullFilter($field)
+    {
+        $this->query->filterBy($field, null, \Criteria::NOT_EQUAL);
     }
 }
