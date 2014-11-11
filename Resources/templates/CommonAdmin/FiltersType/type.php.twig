@@ -17,14 +17,17 @@ class {{ builder.YamlKey|ucfirst }}Type extends BaseType
         $this->groups = $options['groups'];
         
     {% for column in builder.columns %}
+        {% if column.isFilterable -%}
         if ($this->isDisplayed{{ column.name|classify|php_name }}()) {
             $builder->add('{{ column.name }}', $this->getType{{ column.name|classify|php_name }}(), $this->getOptions{{ column.name|classify|php_name }}($options));
         }
-
+        {%- endif -%}
     {% endfor %}
     }
 
 {% for column in builder.columns %}
+    {% if column.isFilterable -%}
+
     /**
      * Get form type for {{ column.name }} field.
      *
@@ -62,6 +65,7 @@ class {{ builder.YamlKey|ucfirst }}Type extends BaseType
         return $this->checkGroups({{ column.groups|as_php }});
     }
 
+    {%- endif %}
 {% endfor %}
 
     public function getName()
