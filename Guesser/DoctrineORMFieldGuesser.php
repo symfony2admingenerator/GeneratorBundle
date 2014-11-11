@@ -155,9 +155,15 @@ class DoctrineORMFieldGuesser extends ContainerAware
         if ('virtual' === $dbType) {
             return array();
         }
-
-        if ('boolean' === $dbType) {
-            return array('required' => false);
+        
+        if ('boolean' == $dbType) {
+            return array(
+                'choices' => array(
+                   0 => $this->container->get('translator')->trans('boolean.no', array(), 'Admingenerator'),
+                   1 => $this->container->get('translator')->trans('boolean.yes', array(), 'Admingenerator')
+                ),
+                'empty_value' => $this->container->get('translator')->trans('boolean.yes_or_no', array(), 'Admingenerator')
+            );
         }
 
         if ('number' === $formType) {

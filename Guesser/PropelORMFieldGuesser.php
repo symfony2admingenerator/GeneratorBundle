@@ -179,7 +179,13 @@ class PropelORMFieldGuesser extends ContainerAware
         }
 
         if (\PropelColumnTypes::BOOLEAN == $dbType || \PropelColumnTypes::BOOLEAN_EMU == $dbType) {
-            return array('required' => false);
+            return array(
+                'choices' => array(
+                   0 => $this->container->get('translator')->trans('boolean.no', array(), 'Admingenerator'),
+                   1 => $this->container->get('translator')->trans('boolean.yes', array(), 'Admingenerator')
+                ),
+                'empty_value' => $this->container->get('translator')->trans('boolean.yes_or_no', array(), 'Admingenerator')
+            );
         }
 
         if (preg_match("#^model#i", $formType) || preg_match("#model$#i", $formType)) {
