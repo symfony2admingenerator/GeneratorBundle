@@ -136,7 +136,7 @@ use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter as PagerAdapter;
      * @param queryFilter The queryFilter
      * @param mixed The value
      */
-    protected function filter{{ filter|classify }}($query, $value)
+    protected function filter{{ filter|classify }}($queryFilter, $value)
     {
     }
     {% endif %}
@@ -184,7 +184,7 @@ use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter as PagerAdapter;
      *
      * @param queryFilter the queryFilter
      */
-    protected function scope{{ filterParams|classify }}($query)
+    protected function scope{{ filterParams|classify }}($queryFilter)
     {
     }
                 {%- endif -%}
