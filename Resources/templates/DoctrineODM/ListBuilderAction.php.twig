@@ -10,8 +10,7 @@ use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter as PagerAdapter;
      */
     protected function setFilters($filters)
     {
-
-        {%- for filter in builder.filters.display -%}
+        {%- for filter in builder.filterColumns -%}
             {%- if 'document' == builder.getFieldGuesser().getDbType(model, filter) or 'collection' == builder.getFieldGuesser().getDbType(model, filter) -%}
             {% set filterModel = builder.getFieldGuesser().getModelType(model, filter) %}
         if (isset($filters['{{ filter }}'])) {
@@ -20,9 +19,7 @@ use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter as PagerAdapter;
                     'documentName' => '{{ filterModel }}'
                 );
         }
-
             {%- endif %}
-
         {% endfor -%}
 
         $this->get('session')->set($this->getSessionPrefix().'List\Filters', $filters);
@@ -37,15 +34,13 @@ use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter as PagerAdapter;
     {
         $filters = $this->get('session')->get($this->getSessionPrefix().'List\Filters', array());
 
-        {%- for filter in builder.filters.display -%}
+        {%- for filter in builder.filterColumns -%}
             {%- if 'document' == builder.getFieldGuesser().getDbType(model, filter) or 'collection' == builder.getFieldGuesser().getDbType(model, filter) -%}
             {% set filterModel = builder.getFieldGuesser().getModelType(model, filter) %}            
         if (isset($filters['{{ filter }}'])) {
                 $filters['{{ filter }}'] = $this->getDoctrineMongoDB()->getRepository($filters['{{ filter }}']['documentName'])->find($filters['{{ filter }}']['{{ builder.getFieldGuesser().getModelPrimaryKeyName(filterModel) }}']);
         }
-
             {%- endif %}
-
         {% endfor -%}
 
         return $filters;
@@ -68,7 +63,7 @@ use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter as PagerAdapter;
     protected function buildQuery()
     {
         return $this->getDocumentManager()
-                      ->createQueryBuilder('{{ model }}');
+            ->createQueryBuilder('{{ model }}');
     }
 
 {% endblock %}
@@ -94,15 +89,13 @@ use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter as PagerAdapter;
     {
         $filters = $this->getFilters();
 
-        {%- for filter in builder.filters.display -%}
+        {%- for filter in builder.filterColumns -%}
             {%- if 'document' == builder.getFieldGuesser().getDbType(model, filter) or 'collection' == builder.getFieldGuesser().getDbType(model, filter) -%}
             {% set filterModel = builder.getFieldGuesser().getModelType(model, filter) %}
         if (isset($filters['{{ filter }}'])) {
              $this->getDocumentManager()->getUnitOfWork()->registerManaged($filters['{{ filter }}'], $filters['{{ filter }}']->get{{ builder.getFieldGuesser().getModelPrimaryKeyName(filterModel)|capitalize }}(), array());
         }
-
             {%- endif %}
-
         {% endfor -%}
 
         return $this->createForm($this->getFiltersType(), $this->getFilters());

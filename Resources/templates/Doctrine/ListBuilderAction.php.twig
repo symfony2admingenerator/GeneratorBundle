@@ -7,8 +7,7 @@
      */
     protected function setFilters($filters)
     {
-
-        {%- for filter in builder.filters.display -%}
+        {%- for filter in builder.filterColumns -%}
             {%- if 'entity' == builder.getFieldGuesser().getDbType(model, filter) or 'collection' == builder.getFieldGuesser().getDbType(model, filter) -%}
             {% set filterModel = builder.getFieldGuesser().getModelType(model, filter) %}
         if (isset($filters['{{ filter }}'])) {
@@ -17,9 +16,7 @@
                     'entityName' => '{{ filterModel }}'
                 );
         }
-
             {%- endif %}
-
         {% endfor -%}
 
         $this->get('session')->set($this->getSessionPrefix().'List\Filters', $filters);
@@ -34,7 +31,7 @@
     {
         $filters = $this->get('session')->get($this->getSessionPrefix().'List\Filters', array());
 
-        {%- for filter in builder.filters.display -%}
+        {%- for filter in builder.filterColumns -%}
             {%- if 'entity' == builder.getFieldGuesser().getDbType(model, filter) or 'collection' == builder.getFieldGuesser().getDbType(model, filter) -%}
             {% set filterModel = builder.getFieldGuesser().getModelType(model, filter) %}
         if (isset($filters['{{ filter }}'])) {
@@ -42,9 +39,7 @@
                 ->getManagerForClass($filters['{{ filter }}']['entityName'])
                 ->getRepository($filters['{{ filter }}']['entityName'])->find($filters['{{ filter }}']['{{ builder.getFieldGuesser().getModelPrimaryKeyName(filterModel) }}']);
         }
-
             {%- endif %}
-
         {% endfor -%}
 
         return $filters;
@@ -93,7 +88,7 @@
     {
         $filters = $this->getFilters();
 
-        {%- for filter in builder.filters.display -%}
+        {%- for filter in builder.filterColumns -%}
             {%- if 'entity' == builder.getFieldGuesser().getDbType(model, filter) or 'collection' == builder.getFieldGuesser().getDbType(model, filter) -%}
             {% set filterModel = builder.getFieldGuesser().getModelType(model, filter) %}
               if (isset($filters['{{ filter }}'])) {

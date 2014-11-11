@@ -17,6 +17,8 @@ class ListBuilder extends BaseBuilder
 
     protected $scope_columns = array();
 
+    protected $filter_columns = array();
+
     /**
      * (non-PHPdoc)
      * @see Admingenerator\GeneratorBundle\Builder.BaseBuilder::getYamlKey()
@@ -24,6 +26,30 @@ class ListBuilder extends BaseBuilder
     public function getYamlKey()
     {
         return 'list';
+    }
+
+    public function getFilterColumns()
+    {
+        if (0 === count($this->filter_columns)) {
+            $this->findFilterColumns();
+        }
+        return $this->filter_columns;
+    }
+
+    protected function findFilterColumns()
+    {
+        $filterColumns = array();
+
+        foreach ($this->getColumns() as $column) {
+            if ($column->isFiterable()) {
+                $this->addFilterColumn($column);
+            }
+        }
+    }
+
+    protected function addFilterColumn(Column $column)
+    {
+        $this->filter_columns[$column->getName()] = $column;
     }
 
     /**
