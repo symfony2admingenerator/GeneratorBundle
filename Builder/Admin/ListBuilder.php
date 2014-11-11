@@ -41,7 +41,7 @@ class ListBuilder extends BaseBuilder
         $filterColumns = array();
 
         foreach ($this->getColumns() as $column) {
-            if ($column->isFiterable()) {
+            if ($column->isFilterable()) {
                 $this->addFilterColumn($column);
             }
         }
