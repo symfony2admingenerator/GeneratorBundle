@@ -12,16 +12,13 @@ pagerfanta:
 
 # List
 list:
-    no.results: Немає записів.
-    filters:    Фільтри
-list.button:
-    filter:     Фільтрувати
-    reset:      Скинути
-list.display:
-    range:      Відображені <b role="results-range-start">%start%</b> - <b role="results-range-end">%end%</b> з <b role="results-count">%count%</b> записи(ів).
-    all:        Відображені всі <b role="results-count">%count%</b> записи(ів).
-list.header:
-    actions:    Дії
+    filter:         Фільтрувати
+    reset:          Скинути
+    no.results:     Немає записів.
+    display:
+        range:      Відображені <b role="results-range-start">%start%</b> - <b role="results-range-end">%end%</b> з <b role="results-count">%count%</b> записи(ів).
+        all:        Відображені всі <b role="results-count">%count%</b> записи(ів).
+    header.actions: Дії
 
 # Nested List
 nested.list:

@@ -13,16 +13,13 @@ pagerfanta:
 
 # List
 list:
-    no.results: Er zijn geen resultaten.
-    filters:    Filters
-list.button:
-    filter:     Filter
-    reset:      Reset
-list.display:
-    range:      Geef <b role="results-range-start">%start%</b> - <b role="results-range-end">%end%</b> of <b role="results-count">%count%</b> resultaten weer.
-    all:        Geef alle <b role="results-count">%count%</b> resultaten weer.
-list.header:
-    actions:    Acties
+    filter:         Filter
+    reset:          Reset
+    no.results:     Er zijn geen resultaten.
+    display:
+        range:      Geef <b role="results-range-start">%start%</b> - <b role="results-range-end">%end%</b> of <b role="results-count">%count%</b> resultaten weer.
+        all:        Geef alle <b role="results-count">%count%</b> resultaten weer.
+    header.actions: Acties
 
 # Nested List
 nested.list:

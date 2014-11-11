@@ -13,16 +13,13 @@ pagerfanta:
 
 # List
 list:
-    no.results: Exista intrari
-    filters:    Filtre
-list.button:
-    filter:     Filtru
-    reset:      Resetați
-list.display:
-    range:      Rezultate <b role="results-range-start">%start%</b> - <b role="results-range-end">%end%</b> de  <b role="results-count">%count%</b> înregistrarea(e).
-    all:        Afișează toate <b role="results-count">%count%</b> înregistrarea(e).
-list.header:
-    actions:    Acțiuni
+    filter:         Filtru
+    reset:          Resetați
+    no.results:     Exista intrari
+    display:
+        range:      Rezultate <b role="results-range-start">%start%</b> - <b role="results-range-end">%end%</b> de  <b role="results-count">%count%</b> înregistrarea(e).
+        all:        Afișează toate <b role="results-count">%count%</b> înregistrarea(e).
+    header.actions: Acțiuni
 
 # Nested List
 nested.list:

@@ -22,6 +22,8 @@ class Column
 
     protected $sortType;
 
+    protected $filterable;
+
     protected $filterOn;
 
     protected $dbType;
@@ -78,6 +80,7 @@ class Column
         $this->debug    = $debug;
         $this->sortable = true;
         $this->sortType = 'default';
+        $this->filterable = false;
     }
 
     public function setProperty($option, $value)
@@ -133,6 +136,11 @@ class Column
         return $this->sortable;
     }
 
+    public function isFilterable()
+    {
+        return $this->filterable;
+    }
+
     public function isReal()
     {
         return $this->dbType != 'virtual';
@@ -156,6 +164,16 @@ class Column
     public function setSortOn($sort_on)
     {
         return $this->sortOn = $sort_on;
+    }
+
+    public function getFilterable()
+    {
+        return $this->filterable;
+    }
+
+    public function setFilterable($filterable)
+    {
+        return $this->filterable = ($filterable === 'true');
     }
 
     public function getFilterOn()

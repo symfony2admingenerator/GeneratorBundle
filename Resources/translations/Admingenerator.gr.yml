@@ -13,16 +13,13 @@ pagerfanta:
 
 # List
 list:
-    no.results: Δεν υπάρχουν αποτελέσματα
-    filters:    Φίλτρα
-list.button:
-    filter:     Φίλτρο
-    reset:      Επαναφορά
-list.display:
-    range:      Εμφανίζονται <b role="results-range-start">%start%</b> - <b role="results-range-end">%end%</b> από <b role="results-count">%count%</b> τα αποτελέσματα.
-    all:        Εμφάνιση <b role="results-count">%count%</b> αποτελεσμάτων.
-list.header:
-    actions:    Ενέργειες
+    filter:         Φίλτρο
+    reset:          Επαναφορά
+    no.results:     Δεν υπάρχουν αποτελέσματα
+    display:
+        range:      Εμφανίζονται <b role="results-range-start">%start%</b> - <b role="results-range-end">%end%</b> από <b role="results-count">%count%</b> τα αποτελέσματα.
+        all:        Εμφάνιση <b role="results-count">%count%</b> αποτελεσμάτων.
+    header.actions: Ενέργειες
 
 # Nested List
 nested.list:

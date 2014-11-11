@@ -13,16 +13,13 @@ pagerfanta:
 
 # List
 list:
-    no.results: 結果がありません
-    filters:    絞り込み
-list.button:
-    filter:     絞り込み
-    reset:      リセット
-list.display:
-    range:      <b role="results-count">%count%</b> 件中 <b role="results-range-start">%start%</b> - <b role="results-range-end">%end%</b> 件目を表示中
-    all:        <b role="results-count">%count%</b> 件の結果を表示中
-list.header:
-    actions:    操作
+    filter:         絞り込み
+    reset:          リセット
+    no.results:     結果がありません
+    display:
+        range:      <b role="results-count">%count%</b> 件中 <b role="results-range-start">%start%</b> - <b role="results-range-end">%end%</b> 件目を表示中
+        all:        <b role="results-count">%count%</b> 件の結果を表示中
+    header.actions: 操作
 
 # Nested List
 nested.list:

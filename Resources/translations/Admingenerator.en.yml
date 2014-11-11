@@ -13,11 +13,13 @@ pagerfanta:
 
 # List
 list:
+    filter:         Filter
+    reset:          Reset
     no.results:     There are no results.
     display:
         range:      Display <b role="results-range-start">%start%</b> - <b role="results-range-end">%end%</b> of <b role="results-count">%count%</b> results.
         all:        Display all <b role="results-count">%count%</b> results.
-    header.actions:    Actions
+    header.actions: Actions
 
 # Nested List
 nested.list:

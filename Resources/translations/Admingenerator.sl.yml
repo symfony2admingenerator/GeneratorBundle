@@ -13,16 +13,13 @@ pagerfanta:
 
 # List
 list:
-    no.results: Ni rezultatov.
-    filters:    Filtri
-list.button:
-    filter:     Filter
-    reset:      Počisti
-list.display:
-    range:      Prikazani rezultati <b role="results-range-start">%start%</b> - <b role="results-range-end">%end%</b> od <b role="results-count">%count%</b>.
-    all:        Prikazani vsi rezultati <b>(%count%)</b>.
-list.header:
-    actions:    Akcije
+    filter:         Filter
+    reset:          Počisti
+    no.results:     Ni rezultatov.
+    display:
+        range:      Prikazani rezultati <b role="results-range-start">%start%</b> - <b role="results-range-end">%end%</b> od <b role="results-count">%count%</b>.
+        all:        Prikazani vsi rezultati <b>(%count%)</b>.
+    header.actions: Akcije
 
 # Nested List
 nested.list:

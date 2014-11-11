@@ -20,7 +20,7 @@
 {{ echo_block("body") }}
     {{- block('title') -}}
 
-    {{ echo_include(builder.namespacePrefixForTemplate ~ bundle_name ~ ':' ~ builder.BaseGeneratorName ~ 'List:filters.html.twig') }}
+    {#{ echo_include(builder.namespacePrefixForTemplate ~ bundle_name ~ ':' ~ builder.BaseGeneratorName ~ 'List:filters.html.twig') }#}
 
     {{- block('list_scopes') -}}
 

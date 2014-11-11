@@ -13,16 +13,13 @@ pagerfanta:
 
 # List
 list:
-    no.results: Nessun risultato.
-    filters:    Filtri
-list.button:
-    filter:     Filtra
-    reset:      Pulisci
-list.display:
-    range:      Mostra i risultati da <b role="results-range-start">%start%</b> a <b role="results-range-end">%end%</b> di <b role="results-count">%count%</b>.
-    all:        Mostra tutti i <b role="results-count">%count%</b> risultati.
-list.header:
-    actions:    Azioni
+    filter:         Filtra
+    reset:          Pulisci
+    no.results:     Nessun risultato.
+    display:
+        range:      Mostra i risultati da <b role="results-range-start">%start%</b> a <b role="results-range-end">%end%</b> di <b role="results-count">%count%</b>.
+        all:        Mostra tutti i <b role="results-count">%count%</b> risultati.
+    header.actions: Azioni
 
 # Nested List
 nested.list:
