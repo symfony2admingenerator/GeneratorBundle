@@ -1,14 +1,14 @@
 {% block type %}
 <?php
 
-namespace Admingenerated\{{ namespace_prefix }}{{ bundle_name }}\Form\Base{{ builder.BaseGeneratorName }}Type;
+namespace Admingenerated\{{ namespace_prefix }}{{ bundle_name }}\Form\BaseFiltersType;
 
 use Admingenerator\GeneratorBundle\Form\BaseType;
 use Admingenerator\GeneratorBundle\Form\BaseOptions;
 use Symfony\Component\Form\FormBuilderInterface;
 use JMS\SecurityExtraBundle\Security\Authorization\Expression\Expression;
 
-class {{ builder.YamlKey|ucfirst }}Type extends BaseType
+class FiltersType extends BaseType
 {
     protected $securityContext;
 
@@ -16,18 +16,14 @@ class {{ builder.YamlKey|ucfirst }}Type extends BaseType
     {
         $this->groups = $options['groups'];
         
-    {% for column in builder.columns %}
-        {% if column.isFilterable -%}
+    {% for column in builder.filterColumns %}
         if ($this->isDisplayed{{ column.name|classify|php_name }}()) {
             $builder->add('{{ column.name }}', $this->getType{{ column.name|classify|php_name }}(), $this->getOptions{{ column.name|classify|php_name }}($options));
         }
-        {%- endif -%}
     {% endfor %}
     }
 
-{% for column in builder.columns %}
-    {% if column.isFilterable -%}
-
+{% for column in builder.filterColumns %}
     /**
      * Get form type for {{ column.name }} field.
      *
@@ -70,7 +66,7 @@ class {{ builder.YamlKey|ucfirst }}Type extends BaseType
 
     public function getName()
     {
-        return '{{ builder.YamlKey }}_{{ builder.ModelClass|lower }}';
+        return 'filters_{{ bundle_name|lower }}_{{ builder.ModelClass|lower }}';
     }
 }
 {% endblock %}
