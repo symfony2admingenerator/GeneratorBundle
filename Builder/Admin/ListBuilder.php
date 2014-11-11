@@ -52,6 +52,17 @@ class ListBuilder extends BaseBuilder
         $this->filter_columns[$column->getName()] = $column;
     }
 
+    public function getFilterColumnGroups()
+    {
+        $groups = array();
+        
+        foreach ($this->getFilterColumns() as $column) {
+            $groups = array_merge($groups, $column->getGroups());
+        }
+
+        return $groups;
+    }
+
     /**
      * Find scopes parameters
      */

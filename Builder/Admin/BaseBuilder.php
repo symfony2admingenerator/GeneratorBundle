@@ -57,6 +57,17 @@ class BaseBuilder extends GenericBaseBuilder
         }
     }
 
+    public function getColumnGroups()
+    {
+        $groups = array();
+        
+        foreach ($this->getColumns() as $column) {
+            $groups = array_merge($groups, $column->getGroups());
+        }
+
+        return $groups;
+    }
+
     /**
      * Creates new column instance
      * 
