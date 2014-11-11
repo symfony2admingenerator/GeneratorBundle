@@ -52,7 +52,7 @@
             var that = this;
 
             // Hide submit button
-            $(that.element).find(that.options.submitSelector).remove();
+            $(that.options.submitSelector).remove();
             
             // Select container
             var $batch    = $(that.options.selectedItems);
