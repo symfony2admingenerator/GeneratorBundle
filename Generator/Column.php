@@ -153,7 +153,7 @@ class Column
 
     public function setSortable($sortable)
     {
-        return $this->sortable = ($sortable === 'true');
+        return $this->sortable = filter_var($sortable, FILTER_VALIDATE_BOOLEAN);
     }
 
     public function getSortOn()
@@ -173,7 +173,7 @@ class Column
 
     public function setFilterable($filterable)
     {
-        return $this->filterable = ($filterable === 'true');
+        return $this->filterable = filter_var($filterable, FILTER_VALIDATE_BOOLEAN);
     }
 
     public function getFilterOn()

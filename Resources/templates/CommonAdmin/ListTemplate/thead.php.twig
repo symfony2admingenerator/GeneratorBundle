@@ -97,8 +97,10 @@
 
     {{ echo_block('list_thead_filter_' ~ column.name) -}}
     <td class="list_thead_filter">
+        {{ column.isFilterable ? 'tru' : 'falś' }}
         {% if column.isFilterable -%}
-            {{ echo_twig("form_widget(form[" ~column.name ~ "])") }}
+            yes
+            {{ echo_twig("form_widget(form['" ~column.name ~ "'])") }}
         {%- endif -%}
     </td>
     {{ echo_endblock() }}
