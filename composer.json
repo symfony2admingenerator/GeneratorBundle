@@ -25,7 +25,6 @@
 		"doctrine/common" : "~2.2",
 		"sensio/generator-bundle" : ">= 2.3.3",
 		"cedriclombardot/twig-generator" : "1.0.*",
-		"symfony2admingenerator/form-bundle" : "~1.1",
 		"jms/security-extra-bundle" : ">= 1.5.0",
 		"knplabs/knp-menu-bundle" : ">1.0,<2.1",
 		"white-october/pagerfanta-bundle" : "1.0.*@dev",

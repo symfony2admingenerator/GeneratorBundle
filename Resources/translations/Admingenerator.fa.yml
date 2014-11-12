@@ -1,58 +1,8 @@
-# Filters
-filters:
-    header:     Filters
-    label:      Criteria group
-    info:       The filtered results will match at least one group of criteria.
-    ctrl:
-        submit:         Filter
-        reset:          Reset
-        add_group:      Add group
-        add_filter:     Add filter
-        remove:         Remove
-    boolean:
-        equal:                  Is
-    date:
-        equal:                  Equal
-        not_equal:              Not equal
-        greater_than:           Greater than
-        greater_than_equal:     Greater than or equal
-        less_than:              Less than
-        less_than_equal:        Less than or equal
-    time:
-        equal:                  Equal
-        not_equal:              Not equal
-        greater_than:           Greater than
-        greater_than_equal:     Greater than or equal
-        less_than:              Less than
-        less_than_equal:        Less than or equal
-    datetime:
-        equal:                  Equal
-        not_equal:              Not equal
-        greater_than:           Greater than
-        greater_than_equal:     Greater than or equal
-        less_than:              Less than
-        less_than_equal:        Less than or equal
-    number:
-        equal:                  Equal
-        not_equal:              Not equal
-        greater_than:           Greater than
-        greater_than_equal:     Greater than or equal
-        less_than:              Less than
-        less_than_equal:        Less than or equal
-    text:
-        equal:                  Equal
-        not_equal:              Not equal
-        like:                   Like
-        not_like:               Not like
-    array:
-        like:                   Like
-        not_like:               Not like
-    collection:
-        contains:               Contains
-        not_contains:           Not contains
-    model:
-        equal:                  Equal
-        not_equal:              Not equal
+# Boolean filter
+boolean:
+    yes:        بله
+    no:         خیر
+    yes_or_no:  بله یا خیر
 
 # Pager
 pagerfanta:
@@ -63,16 +13,13 @@ pagerfanta:
 
 # List
 list:
-    no.results: موردی پیدا نشد.
-    filters:    فیلترها
-list.button:
-    filter:     فیلتر
-    reset:      مجدد سازی
-list.display:
-    range:      نمایش <b role="results-range-start">%start%</b> - <b role="results-range-end">%end%</b> از <b role="results-count">%count%</b> نتیجه.
-    all:        نمایش همه ی  <b role="results-count">%count%</b> نتیجه.
-list.header:
-    actions:    اقدام ها
+    filter:         فیلتر
+    reset:          مجدد سازی
+    no.results:     موردی پیدا نشد.
+    display:
+        range:      نمایش <b role="results-range-start">%start%</b> - <b role="results-range-end">%end%</b> از <b role="results-count">%count%</b> نتیجه.
+        all:        نمایش همه ی  <b role="results-count">%count%</b> نتیجه.
+    header.actions: اقدام ها
 
 # Nested List
 nested.list:

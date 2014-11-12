@@ -2,51 +2,109 @@
 {{ echo_block("list_thead") }}
 <thead>
     {{ echo_block("list_thead_rows") }}
-    <tr class="list_thead">
-        {% if batch_actions|default is not empty %}
-            <th class="list_thead_batch_action">
-                <input type="checkbox" name="batchAll" />
-            </th>
-        {% endif %}
-    {% for column in builder.columns -%}
-        {% if column.groups is not empty %}
-        {{ echo_set('columnGroups', echo_twig_arr(column.groups), false) }}
-        {{ echo_if('groups is empty or columnGroups|intersect(groups) is not empty') }}
-        {% endif %}
-
-        {{ echo_block('list_thead_column_' ~ column.name) -}}
-        <th class="list_thead_column{{ echo_if (column.isSortable) }} sortable{{ echo_if ("sortColumn == '" ~ column.sortOn ~ "' and sortOrder == 'ASC'") }} sort_asc{{ echo_elseif ("sortColumn == '" ~ column.sortOn ~ "' and sortOrder == 'DESC'") }} sort_desc{{ echo_endif () }}{{ echo_endif () }}">
-            <span class="sort-addon">
-            {% if column.isSortable -%}
-                {{ echo_if ("sortColumn == '" ~ column.sortOn ~ "' and sortOrder == 'ASC'") }}
-                    <a href="?sort={{ column.sortOn }}&order_by=desc" class="{{ block('sort_icon') }}">
-                {{ echo_else() }}
-                    <a href="?sort={{ column.sortOn }}&order_by=asc" class="{{ block('sort_icon') }}">
-                {{ echo_endif () }}
-            {%- endif -%}
-                    <u>{{ echo_twig("'" ~ column.label|addslashes ~ "'|trans({}, '" ~ i18n_catalog|default("Admin") ~ "')") }}</u>
-            {%- if column.isSortable -%}
-                </a>
-            {% endif -%}
-            </span>
-        </th>
-        {{ echo_endblock() }}
-
-        {% if column.groups is not empty %}
-        {{ echo_endif() }}
-        {% endif %}
-    {% endfor -%}
-
-    {%- if object_actions|default is not empty %}
-    {{ echo_block("list_thead_actions") }}
-        <th class="actions">{{ echo_trans('list.header.actions') }}</th>
-    {{ echo_endblock() }}
-    {% endif -%}
-    </tr>
+        {{ block('list_thead_filter')}}
+        {{ block('list_thead_label')}}
     {{ echo_endblock() }}
 </thead>
 {{ echo_endblock() }}
 {% endblock %}
+
+{% block list_thead_filter %}
+{% if builder.filterColumns is not empty %}
+    {% if builder.filterColumnGroups is not empty %}
+    {{ echo_set('filterColumnGroups', echo_twig_arr(builder.filterColumnGroups), false) }}
+    {{ echo_if('groups is empty or filterColumnGroups|intersect(groups) is not empty') }}
+    {% endif %}
+    <form action="{{ echo_twig('filtersUrl') }}" method="post" {{ echo_twig("form_enctype(form)") }} role="form">
+        <tr class="list_thead_filter active">
+            {% if batch_actions|default is not empty %}
+                <td></td>
+            {% endif %}
+        {% for column in builder.columns -%}
+            {% if column.groups is not empty %}
+            {{ echo_set('columnGroups', echo_twig_arr(column.groups), false) }}
+            {{ echo_if('groups is empty or columnGroups|intersect(groups) is not empty') }}
+            {% endif %}
+
+            {{ echo_block('list_thead_filter_' ~ column.name) -}}
+            <td class="list_thead_filter">
+                {% if column.isFilterable -%}
+                    {{ echo_twig("form_widget(form['" ~column.name ~ "'])") }}
+                {%- endif -%}
+            </td>
+            {{ echo_endblock() }}
+
+            {% if column.groups is not empty %}
+            {{ echo_endif() }}
+            {% endif %}
+        {% endfor -%}
+
+        {%- if object_actions|default is not empty %}
+        {{ echo_block("list_thead_filter_actions") }}
+            <td class="actions">
+                 <div class="btn-group">
+                    <button type="submit" class="btn btn-primary" title="{{ echo_trans('list.filter') }}">
+                        <i class="fa fa-search"></i>
+                    </button>
+                    <button type="submit" class="btn btn-warning" title="{{ echo_trans('list.reset') }}" name="reset" value="true">
+                        <i class="fa fa-refresh"></i>
+                    </button>
+                </div>
+                {{ echo_twig("form_rest(form)") }}
+            </td>
+        {{ echo_endblock() }}
+        {% endif -%}
+        </tr>
+    </form>
+    {% if builder.filterColumnGroups is not empty %}
+    {{ echo_endif() }}
+    {% endif %}
+{% endif %}
+{% endblock list_thead_filter %}
+
+{% block list_thead_label %}
+<tr class="list_thead">
+    {% if batch_actions|default is not empty %}
+        <th class="list_thead_batch_action">
+            <input id="batchActionSelectAll" type="checkbox" name="batchAll" />
+        </th>
+    {% endif %}
+{% for column in builder.columns -%}
+    {% if column.groups is not empty %}
+    {{ echo_set('columnGroups', echo_twig_arr(column.groups), false) }}
+    {{ echo_if('groups is empty or columnGroups|intersect(groups) is not empty') }}
+    {% endif %}
+
+    {{ echo_block('list_thead_column_' ~ column.name) -}}
+    <th class="list_thead_column{{ echo_if (column.isSortable) }} sortable{{ echo_if ("sortColumn == '" ~ column.sortOn ~ "' and sortOrder == 'ASC'") }} sort_asc{{ echo_elseif ("sortColumn == '" ~ column.sortOn ~ "' and sortOrder == 'DESC'") }} sort_desc{{ echo_endif () }}{{ echo_endif () }}">
+        <span class="sort-addon">
+        {% if column.isSortable -%}
+            {{ echo_if ("sortColumn == '" ~ column.sortOn ~ "' and sortOrder == 'ASC'") }}
+                <a href="?sort={{ column.sortOn }}&order_by=desc" class="{{ block('sort_icon') }}">
+            {{ echo_else() }}
+                <a href="?sort={{ column.sortOn }}&order_by=asc" class="{{ block('sort_icon') }}">
+            {{ echo_endif () }}
+        {%- endif -%}
+                <u>{{ echo_twig("'" ~ column.label|addslashes ~ "'|trans({}, '" ~ i18n_catalog|default("Admin") ~ "')") }}</u>
+        {%- if column.isSortable -%}
+            </a>
+        {% endif -%}
+        </span>
+    </th>
+    {{ echo_endblock() }}
+
+    {% if column.groups is not empty %}
+    {{ echo_endif() }}
+    {% endif %}
+{% endfor -%}
+
+{%- if object_actions|default is not empty %}
+{{ echo_block("list_thead_actions") }}
+    <th class="actions">{{ echo_trans('list.header.actions') }}</th>
+{{ echo_endblock() }}
+{% endif -%}
+</tr>
+{% endblock list_thead_label %}
 
 {% block sort_icon %}
 {{ echo_if ("sortColumn == '" ~ column.sortOn ~ "'") }}

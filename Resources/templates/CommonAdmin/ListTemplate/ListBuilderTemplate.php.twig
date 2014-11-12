@@ -20,8 +20,6 @@
 {{ echo_block("body") }}
     {{- block('title') -}}
 
-    {{ echo_include(builder.namespacePrefixForTemplate ~ bundle_name ~ ':' ~ builder.BaseGeneratorName ~ 'List:filters.html.twig') }}
-
     {{- block('list_scopes') -}}
 
     {{ echo_include(builder.namespacePrefixForTemplate ~ bundle_name ~ ':' ~ builder.BaseGeneratorName ~ 'List:results.html.twig') }}

@@ -3,7 +3,6 @@
 {% use '../CommonAdmin/ListAction/sorter.php.twig' %}
 {% use '../CommonAdmin/ListAction/filters.php.twig' %}
 {% use '../CommonAdmin/ListAction/scopes.php.twig' %}
-{% use '../CommonAdmin/ListAction/columnData.php.twig' %}
 {% use '../CommonAdmin/csrf_protection.php.twig' %}
 {% use '../CommonAdmin/security_action.php.twig' %}
 <?php
@@ -11,9 +10,7 @@
 namespace Admingenerated\{{ namespace_prefix }}{{ bundle_name }}\{{ builder.generator.GeneratedControllerFolder }};
 
 {{ block('index_use') -}}
-
 {{- block('security_use') }}
-
 {{- block('csrf_protection_use') }}
 
 use {{ builder.generator.baseController }} as BaseController;
@@ -36,10 +33,10 @@ class ListController extends BaseController
     {{- block('filters') -}}
 
     {{- block('scopes') -}}
-    
-    {{- block('columnData') -}}
 
-    {{- block('security_check') }}
+    {{- block('security_check') -}}
+
+    {{- block('csrf_check_token') }}
 
     /**
      * Get asession prefix
@@ -113,8 +110,22 @@ class ListController extends BaseController
        // ORM JOB
     }
     {% endblock %}
-    
-    {% block processFilters %}
+
+    {% block getFilterForm -%}
+    protected function getFilterForm()
+    {
+        // ORM JOB
+    }
+    {% endblock %}
+
+    {% block addJoinFor -%}
+    protected function addJoinFor($table, $query)
+    {
+        // ORM JOB
+    }
+    {% endblock %}
+
+    {% block processFilters -%}
     protected function processFilters($query)
     {
         // ORM JOB
@@ -128,20 +139,19 @@ class ListController extends BaseController
     }
     {% endblock %}
 
+    protected function getFiltersType()
+    {
+        $type = new FiltersType();
+        $type->setSecurityContext($this->get('security.context'));
+
+        return $type;
+    }
+
     {% block getQueryFilter -%}
     protected function getQueryFilter()
     {
         // ORM JOB
     }
     {% endblock %}
-
-    {% block getSessionSerializer -%}
-    protected function getSessionSerializer()
-    {
-        // ORM JOB
-    }
-    {% endblock %}
-
-    {{ block('csrf_check_token') }}
 
 }

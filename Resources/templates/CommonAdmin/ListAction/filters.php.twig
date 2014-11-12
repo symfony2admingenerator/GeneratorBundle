@@ -1,9 +1,15 @@
 {% block filters %}
     public function filtersAction()
     {
+        if ($this->get('request')->get('reset')) {
+            $this->setFilters(array());
+
+            return new RedirectResponse($this->getListUrl());
+        }
+
         if ($this->getRequest()->getMethod() == "POST") {
             $form = $this->getFilterForm();
-            $form->handleRequest($this->getRequest());
+            $form->bind($this->get('request'));
 
             if ($form->isValid()) {
                 $filters = $form->getViewData();
@@ -24,9 +30,6 @@
     {% block setFilters -%}
     protected function setFilters($filters)
     {
-        $serializer = $this->getSessionSerializer();
-        $filters = $serializer->serialize($filters);
-        
         $this->get('session')->set($this->getSessionPrefix().'List\Filters', $filters);
     }
     {% endblock %}
@@ -34,30 +37,7 @@
     {% block getFilters -%}
     protected function getFilters()
     {
-        $serializer = $this->getSessionSerializer();
-        $filters = $this->get('session')->get($this->getSessionPrefix().'List\Filters', array());
-
-        return $serializer->deserialize($filters);
+        return $this->get('session')->get($this->getSessionPrefix().'List\Filters', array());
     }
     {% endblock %}
-
-    {% block getFilterForm -%}
-    protected function getFilterForm()
-    {
-        return $this->createForm($this->getFiltersType(), $this->getFilters(), array(
-            'groups' => $this->getGroups()
-        ));
-    }
-    {% endblock %}
-
-    {% block getFiltersType -%}
-    protected function getFiltersType()
-    {
-        $type = new FiltersType();
-        $type->setSecurityContext($this->get('security.context'));
-
-        return $type;
-    }
-    {% endblock %}
-
 {% endblock %}

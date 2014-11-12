@@ -217,7 +217,7 @@ class Configuration implements ConfigurationInterface
                                 // array types
                                 ->scalarNode('array')->defaultValue('text')->end()
                                 // boolean types
-                                ->scalarNode('boolean')->defaultValue('boolean')->end()
+                                ->scalarNode('boolean')->defaultValue('choice')->end()
                             ->end()
                         ->end()
                         ->arrayNode('doctrine_odm')
@@ -252,7 +252,7 @@ class Configuration implements ConfigurationInterface
                                 // hash types
                                 ->scalarNode('hash')->defaultValue('text')->end()
                                 // boolean types
-                                ->scalarNode('boolean')->defaultValue('boolean')->end()
+                                ->scalarNode('boolean')->defaultValue('choice')->end()
                             ->end()
                         ->end()
                         ->arrayNode('propel')
@@ -293,8 +293,8 @@ class Configuration implements ConfigurationInterface
                                 // choice types
                                 ->scalarNode('ENUM')->defaultValue('text')->end()
                                 // boolean types
-                                ->scalarNode('BOOLEAN')->defaultValue('boolean')->end()
-                                ->scalarNode('BOOLEAN_EMU')->defaultValue('boolean')->end()
+                                ->scalarNode('BOOLEAN')->defaultValue('choice')->end()
+                                ->scalarNode('BOOLEAN_EMU')->defaultValue('choice')->end()
                             ->end()
                         ->end()
                     ->end()

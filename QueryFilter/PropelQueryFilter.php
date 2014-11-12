@@ -6,187 +6,85 @@ use  Doctrine\Common\Util\Inflector;
 
 class PropelQueryFilter extends BaseQueryFilter
 {
-    /**
-     * Default add filter behaviour.
-     *
-     * @param $name
-     * @param $args
-     */
-    public function __call($name, $args = array())
+
+    public function addDefaultFilter($field, $value)
     {
-        if (preg_match('/^add(?P<operator>.+)Filter$/', $name, $matches)) {
-            list($field, $value) = $args;
-
-            $formattedValue = $this->formatValue($field, $matches['operator'], $value);
-            $conditionName = $this->getCondition($field, $matches['operator'], $formattedValue);
-
-            $this->query->where(array($conditionName), 'and');
+        if (!is_array($value)) {
+            $method = 'filterBy'.Inflector::classify($field);
+            $this->query->$method($value);
+        } elseif (count($value) > 0) {
+            $this->query->filterBy($field, $value, \Criteria::IN);
         }
     }
 
-    public function addIsNullFilter($field, $value = null)
+    public function addBooleanFilter($field, $value)
     {
-        $conditionName = $this->getCondition($field, 'IsNull');
-        $this->query->where(array($conditionName), 'and');
-    }
-
-    public function addIsNotNullFilter($field, $value = null)
-    {
-        $conditionName = $this->getCondition($field, 'IsNotNull');
-        $this->query->where(array($conditionName), 'and');
-    }
-
-    /**
-     * Sort query.
-     * 
-     * @param  string $fieldPath The sort field path.
-     * @param  string $order     The sort order.
-     */
-    public function sortBy($fieldPath, $order)
-    {
-        $field = $this->addJoinFor($fieldPath);
-        $this->query->orderBy($field, $order);
-    }
-
-    /**
-     * Get conjunction condition.
-     *
-     * @param array $conditions An array of condition names.
-     *
-     * @return string Condition name
-     */
-    public function getConjunction($conditions)
-    {
-        $conditionName = $this->getUniqueName();
-        $this->query->combine($conditions, 'and', $conditionName);
-
-        return $conditionName;
-    }
-
-    /**
-     * Get disjunction condition.
-     *
-     * @param array $conditions An array of condition names.
-     *
-     * @return string Condition name
-     */
-    public function getDisjunction($conditions)
-    {
-        $conditionName = $this->getUniqueName();
-        $this->query->combine($conditions, 'or', $conditionName);
-
-        return $conditionName;
-    }
-
-    /**
-     * Set condition and return it's name.
-     * 
-     * @param string $fieldPath The field path.
-     * @param string $operator  The comparison operator.
-     * @param string $value     The value.
-     * 
-     * @return string Condition name.
-     */
-    public function getCondition($field, $operator, $value = null)
-    {
-        $field = $this->addJoinFor($fieldPath);
-        $conditionName = $this->getUniqueName();
-
-        switch ($operator) {
-            case 'Equal':
-                $this->query->condition($conditionName, $field.' = ?', $value);
-                return $conditionName;
-            case 'NotEqual':
-                $this->query->condition($conditionName, $field.' <> ?', $value);
-                return $conditionName;
-            case 'GreaterThan':
-                $this->query->condition($conditionName, $field.' > ?', $value);
-                return $conditionName;
-            case 'GreaterThanEqual':
-                $this->query->condition($conditionName, $field.' >= ?', $value);
-                return $conditionName;
-            case 'LessThan':
-                $this->query->condition($conditionName, $field.' < ?', $value);
-                return $conditionName;
-            case 'LessThanEqual':
-                $this->query->condition($conditionName, $field.' <= ?', $value);
-                return $conditionName;
-            case 'Like':
-                $this->query->condition($conditionName, $field.' LIKE ?', $value);
-                return $conditionName;
-            case 'NotLike':
-                $this->query->condition($conditionName, $field.' NOT LIKE ?', $value);
-                return $conditionName;
-            case 'IsNull':
-                $this->query->condition($conditionName, $field.' IS NULL');
-                return $conditionName;
-            case 'IsNotNull':
-                $this->query->condition($conditionName, $field.' IS NOT NULL');
-                return $conditionName;
-            case 'In':
-                $this->query->condition($conditionName, $field.' IN ?', $value);
-            case 'NotIn':
-                $this->query->condition($conditionName, $field.' NOT IN ?', $value);
-            default:
-                throw new \LogicException('Comparison for operator "'.$operator.'" is not implemented.');
+        if ("" !== $value) {
+            $this->addDefaultFilter($field, $value);
         }
     }
 
-    /**
-     * (non-PHPdoc)
-     * @see GeneratorBundle\QueryFilter.QueryFilterInterface::formatValue()
-     */
-    public function formatValue($field, $operator, $value)
+    public function addVarcharFilter($field, $value)
     {
-        if (is_string($value)) {
-            $value = trim($value);
-        }
-        
-        switch ($this->getFilterFor($field)) {
-            case 'datetime':
-                return $this->formatDate($value, 'Y-m-d H:i:s');
-            case 'date':
-                return $this->formatDate($value, 'Y-m-d');
-            case 'model':
-            case 'collection':
-                $getter = 'get'.ucfirst($this->getPrimaryKeyFor($field));
-                return (is_object($value) && method_exists($value, $getter))
-                    ? $value->$getter()
-                    : $value;
-        }
-
-        switch ($operator) {
-            case 'Like':
-            case 'NotLike':
-                return '%'.$value.'%';
-            case 'In':
-            case 'NotIn':
-                return is_array($value) ? $value : array($value);
-        }
-
-        return $value;
+        $this->addDefaultFilter($field, '%'.$value.'%');
     }
 
-    /**
-     * Adds joins for path and returns the field alias and name.
-     * 
-     * @param  string $fieldPath The field path.
-     * @return string            The field alias and name.
-     */     
-    public function addJoinFor($fieldPath)
+    public function addCollectionFilter($field, $value)
     {
-        $path = explode('.', $fieldPath);
-        $field = Inflector::classify(array_pop($path));
-
-        $alias = 'q';
-
-        foreach ($path as $part) {
-            $tableName = Inflector::classify($part);
-            $aliasName = $this->getUniqueAlias();
-            $this->query->leftJoin($alias.'.'.$tableName.' '.$aliasName);
-            $alias = $aliasName;
+        if (!is_array($value)) {
+            $value = array($value->getId());
         }
 
-        return $alias.'.'.$field;
-    }  
+        if (strstr($field, '.')) {
+            list($table, $field) = explode('.', $field);
+        } else {
+            $table = $field;
+            $field = 'id';
+        }
+
+        $subquery = call_user_func_array(array($this->query, 'use'.$table.'Query'), array($table, \Criteria::INNER_JOIN));
+        $subquery->filterBy($field, $value, \Criteria::IN)
+                 ->endUse()
+                 ->groupById();
+    }
+
+    public function addDateFilter($field, $value, $format = 'Y-m-d')
+    {
+        if (is_array($value)) {
+            $filters = array();
+
+            if (array_key_exists('from', $value) && $from = $this->formatDate($value['from'], $format)) {
+                $filters['min'] = $from;
+            }
+
+            if (array_key_exists('to', $value) && $to = $this->formatDate($value['to'], $format)) {
+                $filters['max'] = $to;
+            }
+
+            if (count($filters) > 0) {
+                $method = 'filterBy'.Inflector::classify($field);
+                $this->query->$method($filters);
+            }
+
+        } else {
+            if (false !== $date = $this->formatDate($value, $format)) {
+                $this->query->filterBy($field, $date);
+            }
+        }
+    }
+
+    public function addTimestampFilter($field, $value)
+    {
+        return $this->addDateFilter($field, $value);
+    }    
+             
+    public function addNullFilter($field, $value = null)
+    {
+        $this->query->filterBy($field, null, \Criteria::EQUAL);
+    }
+
+    public function addNotNullFilter($field, $value = null)
+    {
+        $this->query->filterBy($field, null, \Criteria::NOT_EQUAL);
+    }
 }

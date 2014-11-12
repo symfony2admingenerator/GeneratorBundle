@@ -17,8 +17,6 @@ class ListBuilderTemplate extends ListBuilder
         return parent::getTemplatesToGenerate() + array(
             'ListBuilderTemplate'.self::TWIG_EXTENSION
                 => 'Resources/views/'.$this->getBaseGeneratorName().'List/index.html.twig',
-            'List/FiltersBuilderTemplate'.self::TWIG_EXTENSION
-                => 'Resources/views/'.$this->getBaseGeneratorName().'List/filters.html.twig',
             'List/ResultsBuilderTemplate'.self::TWIG_EXTENSION
                 => 'Resources/views/'.$this->getBaseGeneratorName().'List/results.html.twig',
             'List/RowBuilderTemplate'.self::TWIG_EXTENSION

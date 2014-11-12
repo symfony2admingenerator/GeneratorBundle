@@ -1,8 +1,8 @@
 # Boolean filter
 boolean:
-    yes:        Yes
-    no:         No
-    yes_or_no:  Yes or No
+    yes:        Ναι
+    no:         Όχι
+    yes_or_no:  Ναι ή Όχι
 
 # Pager
 pagerfanta:
@@ -17,9 +17,9 @@ list:
     reset:          Επαναφορά
     no.results:     Δεν υπάρχουν αποτελέσματα
     display:
-        range:      Εμφανίζονται <b role="results-range-start">%start%</b> - <b role="results-range-end">%end%</b> από <b role="results-count">%count%</b> τα αποτελέσματα.
-        all:        Εμφάνιση <b role="results-count">%count%</b> αποτελεσμάτων.
-    header.actions: Ενέργειες
+        range:      Εμφανίζονται <b>%start%</b> - <b>%end%</b> από <b>%count%</b> τα αποτελέσματα.
+        all:        Εμφάνιση <b>%count%</b> αποτελεσμάτων.
+    header,actions: Ενέργειες
 
 # Nested List
 nested.list:
@@ -43,7 +43,6 @@ action.generic:
     save:   Αποθήκευση
     save-and-add:   Αποθήκευση και προσθήκη νέου
     save-and-list:  Αποθήκευση και επιστροφή στην λίστα
-    excel:  Export to Excel
 
 # Object actions
 action.object.edit:
@@ -57,7 +56,7 @@ action.object.edit:
                 να αποθηκευτούν οι αλλαγές σας.
 action.object.delete:
     label:    Διαγραφή
-    confirm:
+    confirm:  Είστε σίγουρος ότι θέλετε να γίνει διαγραφή του αντικειμένου;
     success:  Το στοιχείο διεγράφει επιτυχώς!
     error:    Το στοιχείο δεν μπορεί να διαγραφεί.
 action.object.show:

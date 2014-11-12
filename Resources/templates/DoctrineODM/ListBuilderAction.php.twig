@@ -10,22 +10,19 @@ use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter as PagerAdapter;
      */
     protected function setFilters($filters)
     {
-
-        {%- for filter in builder.filters.display -%}
+        {%- for filter,column in builder.filterColumns -%}
             {%- if 'document' == builder.getFieldGuesser().getDbType(model, filter) or 'collection' == builder.getFieldGuesser().getDbType(model, filter) -%}
             {% set filterModel = builder.getFieldGuesser().getModelType(model, filter) %}
         if (isset($filters['{{ filter }}'])) {
                 $filters['{{ filter }}'] = array (
-                    'id' => $filters['{{ filter }}']->get{{ builder.getFieldGuesser().getModelPrimaryKeyName(filterModel)|capitalize }}(),
+                    '{{ builder.getFieldGuesser().getModelPrimaryKeyName(filterModel) }}' => $filters['{{ filter }}']->get{{ builder.getFieldGuesser().getModelPrimaryKeyName(filterModel)|capitalize }}(),
                     'documentName' => '{{ filterModel }}'
                 );
         }
-
             {%- endif %}
-
         {% endfor -%}
 
-        $this->get('session')->set('{{ namespace_prefix }}\{{ bundle_name }}\{{ builder.BaseGeneratorName }}List\Filters', $filters);
+        $this->get('session')->set($this->getSessionPrefix().'List\Filters', $filters);
     }
 {% endblock %}
 
@@ -35,22 +32,21 @@ use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter as PagerAdapter;
      */
     protected function getFilters()
     {
-        $filters = $this->get('session')->get('{{ namespace_prefix }}\{{ bundle_name }}\{{ builder.BaseGeneratorName }}List\Filters', array());
+        $filters = $this->get('session')->get($this->getSessionPrefix().'List\Filters', array());
 
-        {%- for filter in builder.filters.display -%}
+        {%- for filter,column in builder.filterColumns -%}
             {%- if 'document' == builder.getFieldGuesser().getDbType(model, filter) or 'collection' == builder.getFieldGuesser().getDbType(model, filter) -%}
-
+            {% set filterModel = builder.getFieldGuesser().getModelType(model, filter) %}            
         if (isset($filters['{{ filter }}'])) {
-                $filters['{{ filter }}'] = $this->getDoctrineMongoDB()->getRepository($filters['{{ filter }}']['documentName'])->find($filters['{{ filter }}']['id']);
+                $filters['{{ filter }}'] = $this->getDoctrineMongoDB()->getRepository($filters['{{ filter }}']['documentName'])->find($filters['{{ filter }}']['{{ builder.getFieldGuesser().getModelPrimaryKeyName(filterModel) }}']);
         }
-
             {%- endif %}
-
         {% endfor -%}
 
         return $filters;
     }
 {% endblock %}
+
 {% block getQuery -%}
     protected function getQuery()
     {
@@ -67,7 +63,7 @@ use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter as PagerAdapter;
     protected function buildQuery()
     {
         return $this->getDocumentManager()
-                      ->createQueryBuilder('{{ model }}');
+            ->createQueryBuilder('{{ model }}');
     }
 
 {% endblock %}
@@ -75,151 +71,122 @@ use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter as PagerAdapter;
 {% block processSort -%}
     protected function processSort($query)
     {
-        $field = $this->getSortColumn();
-        $order = $this->getSortOrder();
-
-        if ($field) {
-            $queryFilter = $this->getQueryFilter();
-            $queryFilter->setQuery($query);
-            $queryFilter->setAliasPrefix('o_');
-            $queryFilter->setNamePrefix('order_');
-
-            if (in_array($field, $this->getVirtualGettersMap())) {
-                $handleSortMethod = 'handle'.$field.'Sort';
-                $this->$handleSortMethod($queryFilter, $field, $order);
+        if ($this->getSortColumn()) {
+            if (!strstr($this->getSortColumn(), '.')) { //direct column
+                $query->sort($this->getSortColumn(), $this->getSortOrder());
             } else {
-                $queryFilter->sortBy($field, $order);
+                /* TODO FOR MONGO
+                list($table, $column) = explode('.', $this->getSortColumn(), 2);
+                $this->addJoinFor($table, $query);
+                $query->sort($this->getSortColumn(), $this->getSortOrder());*/
             }
         }
     }
+{% endblock %}
 
-    {% for column in builder.columns %}
-        {% if column.dbType == 'virtual' %}
-    /**
-     * Add the sort to the query for {{ column.name }}
-     *
-     * @param QueryFilterInterface  $queryFilter        The queryFilter.
-     * @param string                $field              The field.
-     * @param string                $order              The sort order.
-     */
-    protected function handle{{ column.name|classify }}Sort($queryFilter, $field, $order)
+{% block getFilterForm -%}
+    protected function getFilterForm()
     {
-    }
-        {% endif %}
-    {% endfor %}
+        $filters = $this->getFilters();
 
+        {%- for filter,column in builder.filterColumns -%}
+            {%- if 'document' == builder.getFieldGuesser().getDbType(model, filter) or 'collection' == builder.getFieldGuesser().getDbType(model, filter) -%}
+            {% set filterModel = builder.getFieldGuesser().getModelType(model, filter) %}
+        if (isset($filters['{{ filter }}'])) {
+             $this->getDocumentManager()->getUnitOfWork()->registerManaged($filters['{{ filter }}'], $filters['{{ filter }}']->get{{ builder.getFieldGuesser().getModelPrimaryKeyName(filterModel)|capitalize }}(), array());
+        }
+            {%- endif %}
+        {% endfor -%}
+
+        return $this->createForm($this->getFiltersType(), $this->getFilters());
+    }
+{% endblock %}
+
+{% block addJoinFor -%}
+    protected function addJoinFor($table, $query)
+    {
+        $query->leftJoin('q.'.$table, $table);
+    }
 {% endblock %}
 
 {% block processFilters -%}
     protected function processFilters($query)
     {
-        $filtersFormData = $this->getFilters();
+        $filterObject = $this->getFilters();
 
         $queryFilter = $this->getQueryFilter();
         $queryFilter->setQuery($query);
-        $queryFilter->setAliasPrefix('f_');
-        $queryFilter->setNamePrefix('filters_');
-        $queryFilter->setFiltersMap($this->getFiltersMap());
-        $queryFilter->setPrimaryKeysMap($this->getPrimaryKeysMap());
-        $queryFilter->setFieldFormats($this->getFieldFormats());
 
-        $groupParts = array();
-        foreach ($filtersFormData as $groupData) {
-            $filterParts = array();
-            foreach ($groupData as $filterData) {
-                $field          = $filterData['field'];
-                $operator       = $filterData['operator'];
-                $value          = $filterData['value'];
-
-                if (in_array($field, $this->getVirtualGettersMap())) {
-                    $handleFilterMethod = 'handle'.$field.'Filter';
-                    $filterParts[] = $this->$handleFilterMethod($queryFilter, $field, $operator, $value);
-                } else {
-                    $param = $queryFilter->getUniqueName();
-                    $filterParts[] = $queryFilter->getComparison($field, $operator, $param);
-                    $query->setParameter($param, $queryFilter->formatValue($field, $operator, $value));
-                }
-                
-            }
-            // for a group to be true, all partial conditions must be true
-            $groupParts[] = $queryFilter->getConjunction($filterParts);
+    {% for filter,column in builder.filterColumns %}
+        if (isset($filterObject['{{ column.name }}']) && null !== $filterObject['{{ column.name }}']) {
+        {% if column.filterOn|split('.')|length > 1 %}
+            $this->filter{{ filter|classify }}($queryFilter, $filterObject['{{ column.name }}']);
+        {% else %}
+            $queryFilter->add{{ column.dbType|classify }}Filter('{{ column.filterOn }}', $filterObject['{{ column.name }}']);
+        {% endif %}
         }
-
-        if (count($filtersFormData) > 0) {
-            // the results must meet conditions of at least one group
-            $query->andWhere($queryFilter->getDisjunction($groupParts));
-        }
+    {% endfor %}
     }
 
-    {% for column in builder.filterColumns %}
-        {% if column.dbType == 'virtual' %}
+    {% for filter,column in builder.filterColumns %}
+    {% if column.filterOn|split('.')|length > 1 %}
     /**
-     * Add the filters to the query for {{ column.name }}
+     * Add the filters to the query for {{ filter }}
      *
-     * @param QueryFilterInterface  $queryFilter       The queryFilter.
-     * @param string                $field             The field.
-     * @param string                $operator          The operator.
-     * @param string                $value             The value.
-     * @return \Doctrine\MongoDB\Query\Expr
+     * @param queryFilter The queryFilter
+     * @param mixed The value
      */
-    protected function handle{{ column.name|classify }}Filter($queryFilter, $field, $operator, $value)
+    protected function filter{{ filter|classify }}($queryFilter, $value)
     {
     }
-        {% endif %}
+    {% endif %}
     {% endfor %}
-    
 {% endblock %}
 
 {% block processScopes -%}
     protected function processScopes($query)
     {
-
-    {% if scopes is defined %}
+    {% if scopes is defined -%}
         $scopes = $this->getScopes();
 
         $queryFilter = $this->getQueryFilter();
         $queryFilter->setQuery($query);
-        $queryFilter->setAliasPrefix('s_');
-        $queryFilter->setNamePrefix('scopes_');
-        $queryFilter->setFiltersMap($this->getFiltersMap());
-        $queryFilter->setPrimaryKeysMap($this->getPrimaryKeysMap());
-        $queryFilter->setFieldFormats($this->getFieldFormats());
+
 
         {% for groupName, group in scopes -%}
-            {%- for scopeName, scopeParams in group %}
+            {%- for scopeName, params in group %}
 
         if (isset($scopes['{{ groupName }}']) && $scopes['{{ groupName }}'] == '{{ scopeName }}') {
-            {% if scopeParams["filters"] is defined -%}
-                {%- for filter, filterParams in scopeParams["filters"] -%}
+            {% if params["filters"] is defined -%}
+                {%- for filter, filterParams in params["filters"] -%}
                 {%- if filter|is_numeric -%}
                 $this->scope{{ filterParams|classify }}($queryFilter);
                 {%- else -%}
-                $queryFilter->addEqualFilter('{{ filter }}', {{ filterParams|as_php }});
+                $queryFilter->addDefaultFilter('{{ filter }}', {{ filterParams|as_php }});
                 {%- endif -%}
                 {%- endfor -%}
             {%- endif %}
 
         }
             {% endfor -%}
-        {%- endfor %}
+        {%- endfor -%}
     {%- endif %}
     }
 
-    {% if scopes is defined %}
+    {% if scopes is defined -%}
     {% for groupName, group in scopes -%}
-        {%- for scopeName, scopeParams in group %}
-            {% if scopeParams["filters"] is defined -%}
-            {%- for filter, filterParams in scopeParams["filters"] -%}
+        {%- for scopeName, params in group %}
+            {% if params["filters"] is defined -%}
+            {%- for filter, filterParams in params["filters"] -%}
                 {%- if filter|is_numeric -%}
     /**
      * Add the filters to the query for {{ groupName }} => {{ scopeName }}
      *
-     * @param $queryFilter The queryFilter.
+     * @param queryFilter the queryFilter
      */
     protected function scope{{ filterParams|classify }}($queryFilter)
     {
     }
-
                 {%- endif -%}
             {%- endfor -%}
             {%- endif -%}
@@ -235,15 +202,5 @@ use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter as PagerAdapter;
     protected function getQueryFilter()
     {
         return $this->get('admingenerator.queryfilter.doctrine_odm');
-    }
-{% endblock %}
-
-{% block getSessionSerializer %}
-    /**
-     * @return \Admingenerator\GeneratorBundle\SessionSerializer\SessionSerializerInterface
-     */
-    protected function getSessionSerializer()
-    {
-        return $this->get('admingenerator.sessionserializer.doctrine_odm');
     }
 {% endblock %}

@@ -15,9 +15,9 @@ class ListBuilder extends BaseBuilder
 {
     protected $batch_actions = array();
 
-    protected $filter_columns = array();
-
     protected $scope_columns = array();
+
+    protected $filter_columns = array();
 
     /**
      * (non-PHPdoc)
@@ -28,51 +28,39 @@ class ListBuilder extends BaseBuilder
         return 'list';
     }
 
-    /**
-     * Find filters parameters
-     */
-    public function getFilters()
-    {
-        return $this->getGenerator()->getFromYaml('builders.filters.params');
-    }
-
     public function getFilterColumns()
     {
         if (0 === count($this->filter_columns)) {
             $this->findFilterColumns();
         }
-
         return $this->filter_columns;
     }
 
     protected function findFilterColumns()
     {
-        foreach ($this->getFiltersDisplayColumns() as $columnName) {
-            $column = $this->createColumn($columnName, true);
+        $filterColumns = array();
 
-            // Set the user parameters
-            $this->setUserColumnConfiguration($column);
-            $this->addFilterColumn($column);
+        foreach ($this->getColumns() as $column) {
+            if ($column->isFilterable()) {
+                $this->addFilterColumn($column);
+            }
         }
-    }
-
-    /**
-     * @return array Filters display column names
-     */
-    protected function getFiltersDisplayColumns()
-    {
-        $display = $this->getGenerator()->getFromYaml('builders.filters.params.display', array());
-
-        if (null === $display) {
-            $display = $this->getAllFields();
-        }
-
-        return $display;
     }
 
     protected function addFilterColumn(Column $column)
     {
         $this->filter_columns[$column->getName()] = $column;
+    }
+
+    public function getFilterColumnGroups()
+    {
+        $groups = array();
+        
+        foreach ($this->getFilterColumns() as $column) {
+            $groups = array_merge($groups, $column->getGroups());
+        }
+
+        return $groups;
     }
 
     /**

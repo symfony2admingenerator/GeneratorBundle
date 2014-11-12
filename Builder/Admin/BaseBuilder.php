@@ -49,12 +49,23 @@ class BaseBuilder extends GenericBaseBuilder
     protected function findColumns()
     {
         foreach ($this->getDisplayColumns() as $columnName) {
-            $column = $this->createColumn($columnName, false);
+            $column = $this->createColumn($columnName, true);
 
             //Set the user parameters
             $this->setUserColumnConfiguration($column);
             $this->addColumn($column);
         }
+    }
+
+    public function getColumnGroups()
+    {
+        $groups = array();
+        
+        foreach ($this->getColumns() as $column) {
+            $groups = array_merge($groups, $column->getGroups());
+        }
+
+        return $groups;
     }
 
     /**

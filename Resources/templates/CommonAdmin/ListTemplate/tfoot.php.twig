@@ -1,0 +1,39 @@
+{% block list_tfoot %}
+{{ echo_block("list_tfoot") }}
+<tfoot>
+    {{ echo_block("list_tfoot_rows") }}
+    <tr class="list-actions-wrapper hidden-print active">
+        <td class="list-actions" colspan="999">
+            {{ echo_block("batch_actions_wrapper") }}
+        {% if batch_actions|default is not empty %}
+            <div id="batch_actions" class="pull-left btn-toolbar" role="toolbar">
+                {{ block('batch_actions') }}
+            </div>
+        {% endif -%}
+        {{ echo_endblock() }}
+
+        {{ echo_block("generic_actions_wrapper") }}
+        {% if actions|default is not empty %}
+            <div id="generic_actions" class="pull-left btn-toolbar" role="toolbar">
+                {{ block('generic_actions') -}}
+            </div>
+        {% endif -%}
+        {{ echo_endblock() }}
+
+        {{ echo_block("pagination_wrapper") }}
+            <div class="pull-right btn-toolbar" role="toolbar">
+                {{- block('list_paginator_perpage') -}}
+            </div>
+
+            <div class="pull-right btn-toolbar" role="toolbar">
+                {{- block('list_paginator_pages') -}}
+            </div>
+
+            <div class="clearfix"></div>
+        {{ echo_endblock() }}
+        </td>
+    </tr>
+    {{ echo_endblock() }}
+</tfoot>
+{{ echo_endblock() }}
+{% endblock %}
