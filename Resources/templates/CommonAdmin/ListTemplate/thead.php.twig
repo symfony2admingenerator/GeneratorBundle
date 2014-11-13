@@ -29,7 +29,9 @@
             {{ echo_block('list_thead_filter_' ~ column.name) -}}
             <td class="list_thead_filter">
                 {% if column.isFilterable -%}
+                <div class="filter-container">
                     {{ echo_twig("form_widget(form['" ~column.name ~ "'])") }}
+                </div>
                 {%- endif -%}
             </td>
             {{ echo_endblock() }}
