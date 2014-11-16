@@ -32,9 +32,7 @@ and open a ticket on github.
 ## 1. Installation
 
 1. [Installation via composer][installation-1]
-2. Installation via deps
-3. Installation via git submodules
-4. [Configuration][installation-4]
+2. [Configuration][installation-4]
 
 [go up][go-up]
 

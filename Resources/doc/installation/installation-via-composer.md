@@ -3,7 +3,7 @@
 
 [go back to Table of contents][back-to-index]
 
-[back-to-index]: https://github.com/symfony2admingenerator/AdmingeneratorGeneratorBundle/blob/master/Resources/doc/documentation.md#1-installation
+[back-to-index]: https://github.com/symfony2admingenerator/GeneratorBundle/blob/master/Resources/doc/documentation.md#1-installation
 
 ### 1. Download files
 
@@ -29,7 +29,7 @@ Then run `php composer.phar update` command.
     
 ### 2. Enable bundles
 
-Admingenerator has a dependency on KnpMenuBundle and WhiteOctroberPagerfantaBundle.
+Admingenerator has a dependency on KnpMenuBundle and WhiteOctoberPagerfantaBundle.
 
 > **Note:** there are also some optional dependencies, each is described in corresponding feature`s doc. This guide describes only the minimal-setup. 
 
