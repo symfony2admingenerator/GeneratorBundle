@@ -29,7 +29,12 @@ Then run `php composer.phar update` command.
     
 ### 2. Enable bundles
 
-Admingenerator has a dependency on KnpMenuBundle, WhiteOctoberPagerfantaBundle and FormBundle.
+Admingenerator has a dependency on:
+ 
+ * KnpMenuBundle
+ * WhiteOctoberPagerfantaBundle
+ * FormBundle
+ * JMSSecurityExtraBundle
 
 > **Note:** there are also some optional dependencies, each is described in corresponding feature`s doc. This guide describes only the minimal-setup. 
 
@@ -41,6 +46,9 @@ public function registerBundles()
 {
     $bundles = array(
         // ...
+        new JMS\AopBundle\JMSAopBundle(),
+        new JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
+        new JMS\DiExtraBundle\JMSDiExtraBundle($this),
         new Admingenerator\FormBundle\AdmingeneratorFormBundle(),
         new Admingenerator\GeneratorBundle\AdmingeneratorGeneratorBundle(),
         new Knp\Bundle\MenuBundle\KnpMenuBundle(),
@@ -48,6 +56,15 @@ public function registerBundles()
     );
 }
 ?>
+```
+
+You also need to configure the JMS Security Extra Bundle:
+
+```yaml
+jms_security_extra:
+    # Enables expression language
+    expressions: true
+
 ```
 
 ### 3. Basic configuration

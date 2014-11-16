@@ -8,6 +8,7 @@
     {{ echo_if_granted(builder.ObjectActions|mapBy('credentials')|flatten|join(' or ')|default('denyAll'), builder.ModelClass) }}
 
         <div class="btn-group{% if builder.yamlKey is not sameas('list') %} pull-right{% endif %}">
+        {{ echo_block('pre_object_actions') }}{{ echo_endblock() }}
         {% for action in builder.ObjectActions %}
             {{ echo_block('object_action_' ~ action.twigName) }}
                 {% if action.credentials %}
@@ -21,7 +22,7 @@
                 {% endif %}
             {{ echo_endblock() }}
         {% endfor %}
-        {{ echo_block('object_actions_customActions') }}{{ echo_endblock() }}
+        {{ echo_block('post_object_actions') }}{{ echo_endblock() }}
         </div>
 
     {{ echo_endif() }}
