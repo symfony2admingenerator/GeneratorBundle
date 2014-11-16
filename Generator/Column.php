@@ -88,7 +88,7 @@ class Column
         $setter = 'set'.Inflector::classify($option);
 
         if (method_exists($this, $setter)) {
-            call_user_func_array(array($this, 'set'.$option), array($value));
+            $this->{$setter}($value);
         } else {
             throw new InvalidOptionException($option, $this->name, $this->debug['generator'], $this->debug['builder']);
         }

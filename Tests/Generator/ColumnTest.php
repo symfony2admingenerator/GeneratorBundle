@@ -58,7 +58,7 @@ class ColumnTest extends TestCase
             'formOptions' => array('foo' => 'bar'),
         );
 
-        $column = new Column($from_to_array);
+        $column = new Column($from_to_array, false);
 
         foreach ($options as $option => $value) {
             $column->setProperty($option, $value);
@@ -72,7 +72,7 @@ class ColumnTest extends TestCase
             'name' => 'Date',
             'underscored_name' => 'Underscored name',
         );
-        $column = new Column($from_to_array);
+        $column = new Column($from_to_array, false);
 
         $column->setAddFormOptions(array('years' => array('.range' => array('from' => 1900, 'to' => 1915, 'step'=> 5 ))));
 
@@ -84,7 +84,7 @@ class ColumnTest extends TestCase
     protected function checkColumn($from_to_array, $method)
     {
         foreach ($from_to_array as $from => $to) {
-            $column = new Column($from);
+            $column = new Column($from, false);
             $this->assertEquals($to, $column->$method());
         }
     }

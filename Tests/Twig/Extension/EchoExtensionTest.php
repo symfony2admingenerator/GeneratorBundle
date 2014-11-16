@@ -73,9 +73,9 @@ class EchoExtensionTest extends TestCase
         );
 
         $returns = array(
-            'assoc' => array(array("val"), 'Correctly mapped array of numeric arrays'),
+            'numeric' => array(array("val"), 'Correctly mapped array of numeric arrays'),
             'assoc' => array(array("val"), 'Correctly mapped array of assoc arrays'),
-            'assoc' => array(array("foobar"), 'Correctly mapped array of objects'),
+            'object' => array(array("foobar"), 'Correctly mapped array of objects'),
         );
 
         $this->runTwigTests($tpls, $returns);
