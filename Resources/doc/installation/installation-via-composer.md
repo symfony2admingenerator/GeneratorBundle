@@ -29,7 +29,7 @@ Then run `php composer.phar update` command.
     
 ### 2. Enable bundles
 
-Admingenerator has a dependency on KnpMenuBundle and WhiteOctoberPagerfantaBundle.
+Admingenerator has a dependency on KnpMenuBundle, WhiteOctoberPagerfantaBundle and FormBundle.
 
 > **Note:** there are also some optional dependencies, each is described in corresponding feature`s doc. This guide describes only the minimal-setup. 
 
@@ -41,6 +41,7 @@ public function registerBundles()
 {
     $bundles = array(
         // ...
+        new Admingenerator\FormBundle\AdmingeneratorFormBundle(),
         new Admingenerator\GeneratorBundle\AdmingeneratorGeneratorBundle(),
         new Knp\Bundle\MenuBundle\KnpMenuBundle(),
         new WhiteOctober\PagerfantaBundle\WhiteOctoberPagerfantaBundle(),
