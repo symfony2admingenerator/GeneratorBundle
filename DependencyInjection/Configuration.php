@@ -72,7 +72,6 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
                 ->arrayNode('templates_dirs')
-                    ->useAttributeAsKey('key')
                     ->prototype('scalar')->end()
                 ->end()
                 ->arrayNode('form_types')

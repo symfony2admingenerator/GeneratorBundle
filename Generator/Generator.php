@@ -47,6 +47,15 @@ abstract class Generator extends ContainerAware implements GeneratorInterface
      */
     protected $cacheSuffix = 'default';
 
+    /**
+     * @var array
+     */
+    protected $templatesDirectories = array();
+
+    /**
+     * @param $root_dir
+     * @param $cache_dir
+     */
     public function __construct($root_dir, $cache_dir)
     {
         $this->root_dir = $root_dir;
@@ -64,21 +73,41 @@ abstract class Generator extends ContainerAware implements GeneratorInterface
         $this->cacheSuffix = $cacheSuffix;
     }
 
+    /**
+     * @param $directory
+     */
+    public function addTemplatesDirectory($directory)
+    {
+        $this->templatesDirectories[] = $directory;
+    }
+
+    /**
+     * @param $yaml_file
+     */
     public function setGeneratorYml($yaml_file)
     {
         $this->generator_yaml = $yaml_file;
     }
 
+    /**
+     * @return string
+     */
     public function getGeneratorYml()
     {
         return $this->generator_yaml;
     }
 
+    /**
+     * @param $base_generator_name
+     */
     public function setBaseGeneratorName($base_generator_name)
     {
         $this->base_generator_name = $base_generator_name;
     }
 
+    /**
+     * @return string
+     */
     protected function getBaseGeneratorName()
     {
         return $this->base_generator_name;

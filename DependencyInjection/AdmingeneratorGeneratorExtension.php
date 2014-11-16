@@ -67,19 +67,22 @@ class AdmingeneratorGeneratorExtension extends Extension implements PrependExten
             throw new ModelManagerNotSelectedException();
         }
 
-        $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader = new XmlFileLoader($container, new FileLocator(dirname(__DIR__).DIRECTORY_SEPARATOR.'Resources'.DIRECTORY_SEPARATOR.'config'));
+        $config['templates_dirs'][] = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'Resources' . DIRECTORY_SEPARATOR . 'templates';
 
-        // Fix template_dirs
-        $doctrine_template_dirs = $doctrineodm_template_dirs = $propel_template_dirs = array();
+        $doctrineOrmTemplatesDirs = array();
+        $doctrineOdmTemplatesDirs = array() ;
+        $propelTemplatesDirs = array();
         foreach ($config['templates_dirs'] as $dir) {
-            $doctrine_template_dirs[]    = $dir.'/Doctrine';
-            $doctrineodm_template_dirs[] = $dir.'/DoctrineODM';
-            $propel_template_dirs[]      = $dir.'/Propel';
+            $doctrineOrmTemplatesDirs[] = $dir.DIRECTORY_SEPARATOR.'Doctrine';
+            $doctrineOdmTemplatesDirs[] = $dir.DIRECTORY_SEPARATOR.'DoctrineODM';
+            $propelTemplatesDirs[]      = $dir.DIRECTORY_SEPARATOR.'Propel';
         }
+
 
         if ($config['use_doctrine_orm']) {
             $loader->load('doctrine_orm.xml');
-            $container->setParameter('admingenerator.doctrine_templates_dirs', $doctrine_template_dirs);
+            $this->addTemplatesInitialization($container->getDefinition('admingenerator.generator.doctrine'), $doctrineOrmTemplatesDirs);
 
             $formTypes = $config['form_types']['doctrine_orm'];
             $filterTypes = $config['filter_types']['doctrine_orm'];
@@ -89,7 +92,7 @@ class AdmingeneratorGeneratorExtension extends Extension implements PrependExten
 
         if ($config['use_doctrine_odm']) {
             $loader->load('doctrine_odm.xml');
-            $container->setParameter('admingenerator.doctrineodm_templates_dirs', $doctrineodm_template_dirs);
+            $this->addTemplatesInitialization($container->getDefinition('admingenerator.generator.doctrine_odm'), $doctrineOdmTemplatesDirs);
 
             $formTypes = $config['form_types']['doctrine_odm'];
             $filterTypes = $config['filter_types']['doctrine_odm'];
@@ -99,12 +102,29 @@ class AdmingeneratorGeneratorExtension extends Extension implements PrependExten
 
         if ($config['use_propel']) {
             $loader->load('propel.xml');
-            $container->setParameter('admingenerator.propel_templates_dirs', $propel_template_dirs);
+            $this->addTemplatesInitialization($container->getDefinition('admingenerator.generator.propel'), $propelTemplatesDirs);
 
             $formTypes = $config['form_types']['propel'];
             $filterTypes = $config['filter_types']['propel'];
             $container->setParameter('admingenerator.propel_form_types', $formTypes);
             $container->setParameter('admingenerator.propel_filter_types', $filterTypes);
+        }
+    }
+
+    /**
+     * Update $generatorDefinition to add calls to the addTemplatesDirectory
+     * for all $directories.
+     *
+     * @param Definition $generatorDefinition
+     * @param array $directories
+     */
+    private function addTemplatesInitialization(Definition $generatorDefinition, array $directories)
+    {
+        foreach ($directories as $directory) {
+            $generatorDefinition->addMethodCall(
+                'addTemplatesDirectory',
+                array($directory)
+            );
         }
     }
 

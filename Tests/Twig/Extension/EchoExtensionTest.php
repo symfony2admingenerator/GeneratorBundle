@@ -534,7 +534,7 @@ class EchoExtensionTest extends TestCase
             'several_values' => array("[ 'abcde', '12345' ]", 'Transform correctly array with values'),
             'incomplete_variables' => array("[ '{{ Item.id ' ]", 'Variables with unclosed {{ }} are quoted'),
             'complete_valiables' => array("[ Item.id ]", 'Variables are passed w/o surrounding {{ }}'),
-            'mixed_values' => array("[ Item.id, 'Item.id }}', 'abcde' }", 'Several values in the same expression'),
+            'mixed_values' => array("[ Item.id, 'Item.id }}', 'abcde' ]", 'Several values in the same expression'),
         );
 
         $this->runTwigTests($tpls, $returns);
