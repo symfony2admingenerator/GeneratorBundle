@@ -21,13 +21,6 @@ class ArrayFiltersExtension extends \Twig_Extension
         return call_user_func_array('array_intersect', func_get_args());
     }
 
-    public function flatten(array $input)
-    {
-        return array_values(new \RecursiveIteratorIterator(
-            new \RecursiveArrayIterator($input)
-        ));
-    }
-
     /**
      * Returns the name of the extension.
      *
