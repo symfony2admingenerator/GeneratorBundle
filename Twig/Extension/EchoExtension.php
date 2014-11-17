@@ -217,32 +217,35 @@ class EchoExtension extends \Twig_Extension
     {
         return array_map(function($item) use ($key) {
             if (is_array($item)) {
-                if (array_key_exists($key, $item)) {
-                    return $item[$key];
-                } else {
+                if (!array_key_exists($key, $item)) {
                     throw new \LogicException("Could not map item by key \"$key\". Array key does not exist.");
                 }
-            } else if (is_object($item)) {
-                $ref = new \ReflectionClass($item);
 
-                if ($ref->hasProperty($key) && $ref->getProperty($key)->isPublic()) {
-                    return $item->$key;
-                }
+                return $item[$key];
+            }
 
-                $get = 'get'.ucfirst($key);
-                if ($ref->hasMethod($get) && !$ref->getMethod($get)->isPrivate()) {
-                    return $item->$get();
-                }
-
-                $is = 'is'.ucfirst($key);
-                if ($ref->hasMethod($is) && !$ref->getMethod($is)->isPrivate()) {
-                    return $item->$is();
-                }
-
-                throw new \LogicException("Could not map item by key \"$key\". Cannot access the property directly or through getter/is method.");
-            } else {
+            if (!is_object($item)) {
                 throw new \InvalidArgumentException("Item must be an array or object.");
             }
+
+            $ref = new \ReflectionClass($item);
+
+            if ($ref->hasProperty($key) && $ref->getProperty($key)->isPublic()) {
+                return $item->$key;
+            }
+
+            $get = 'get'.ucfirst($key);
+            if ($ref->hasMethod($get) && !$ref->getMethod($get)->isPrivate()) {
+                return $item->$get();
+            }
+
+            $is = 'is'.ucfirst($key);
+            if ($ref->hasMethod($is) && !$ref->getMethod($is)->isPrivate()) {
+                return $item->$is();
+            }
+
+            throw new \LogicException("Could not map item by key \"$key\". Cannot access the property directly or through getter/is method.");
+
         }, $input);
     }
 
