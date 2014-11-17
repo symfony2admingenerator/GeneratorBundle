@@ -2,53 +2,37 @@
 
 namespace Admingenerator\GeneratorBundle\Tests\Twig\Extension;
 
-use Admingenerator\GeneratorBundle\Tests\TestCase;
 use Admingenerator\GeneratorBundle\Twig\Extension\EchoExtension;
-use Symfony\Bundle\FrameworkBundle\Templating\Loader\TemplateLocator;
-use Symfony\Bundle\TwigBundle\Loader\FilesystemLoader;
-use Symfony\Component\Config\FileLocator;
-use Symfony\Component\Templating\TemplateNameParser;
 
 /**
  * This class test the Admingenerator\GeneratorBundle\Twig\Extension\EchoExtension
  *
  * @author Cedric LOMBARDOT
  */
-class EchoExtensionTest extends TestCase
+class EchoExtensionTest extends BaseExtensionTest
 {
-    protected static $params;
-
-    public function setUp()
+    /**
+     * @return \Twig_Extension
+     */
+    protected function getTestedExtension()
     {
-        $object =  new Object();
-
-        self::$params = array(
-            'name' => 'cedric',
-            'obj'  => $object,
-            'arr_num' => array('val'),
-            'arr'  => array('obj' => 'val'),
-            'arr_obj' => array('obj' => $object),
-            'options_form_collection_type_class' => "array( 'allow_add' => true, 'allow_delete' => true, 'by_reference' => false, 'type' => '\\\Admingenerator\\\PropelDemoBundle\\\Form\\\Type\\\ActorType',)",
-            'options_form_collection_type_name' => "array( 'allow_add' => true, 'allow_delete' => true, 'by_reference' => false, 'type' => 'my_formType_name',)",
-            'options_form_model' => "array( 'query' => '\\\Admingenerator\\\PropelDemoBundle\\\Model\\\ActorQuery::create()->orderById()',)",
-            'options_form_choice_method' => "array( 'choices' => '\\\Admingenerator\\\PropelDemoBundle\\\Model\\\ActorQuery::getMyCustoms()',)",
-            'options_form_choice_array' => "array( 'choices' => array('a' => 'b'),)",
-        );
+        return new EchoExtension();
     }
 
-    public function testWrap()
+    /**
+     * @return array
+     */
+    protected function getTwigVariables()
     {
-        $tpls = array(
-            'string' => '{{ "cedric"|wrap("&") }}',
-            'empty' => '{{ ""|wrap("&") }}',
-        );
+        $object =  new TestObject();
 
-        $returns = array(
-            'string' => array('&cedric&', 'Wrap format well string'),
-            'empty' => array("", 'Wrap format well empty string'),
+        return array(
+            'obj'  => $object,
+            'name' => 'cedric',
+            'arr'  => array('obj' => 'val'),
+            'arr_num' => array('val'),
+            'arr_obj' => array('obj' => $object),
         );
-
-        $this->runTwigTests($tpls, $returns);
     }
 
     public function testMapBy()
@@ -247,41 +231,54 @@ class EchoExtensionTest extends TestCase
 
         $this->runTwigTests($tpls, $returns);
     }
+}
 
-    protected function runTwigTests($tpls, $returns)
+
+/**
+ * Dummy object for EchoExtensionTest
+ *
+ * @author Cedric LOMBARDOT
+ */
+class TestObject
+{
+    public static $called = array(
+        '__toString'  => 0,
+        'foo'         => 0,
+        'getFooBar'   => 0,
+    );
+
+    public function __construct($bar = 'bar')
     {
-        $twig = $this->getEnvironment(false, array(), $tpls);
 
-        foreach ($tpls as $name => $tpl) {
-            $this->assertEquals(
-                $returns[$name][0],
-                $twig->loadTemplate($name)->render(self::$params),
-                $returns[$name][1]
-            );
-        }
     }
 
-    protected function getEnvironment($sandboxed, $options, $templates, $tags = array(), $filters = array(), $methods = array(), $properties = array(), $functions = array())
+    public static function reset()
     {
-        $loader = new \Twig_Loader_Array($templates);
-        $twig = new \Twig_Environment(
-            $loader,
-            array_merge(
-                array(
-                    'debug' => true,
-                    'cache' => false,
-                    'autoescape' => false,
-                ),
-                $options
-            )
+        self::$called = array(
+            '__toString'  => 0,
+            'foo'         => 0,
+            'getFooBar'   => 0,
         );
+    }
 
-        $locator = new TemplateLocator(new FileLocator(array(__DIR__.'/../Fixtures')));
-        $templateNameParser = new TemplateNameParser();
-        $loader = new FilesystemLoader($locator, $templateNameParser);
+    public function __toString()
+    {
+        ++self::$called['__toString'];
 
-        $twig->addExtension(new EchoExtension($loader));
+        return 'foo';
+    }
 
-        return $twig;
+    public function foo()
+    {
+        ++self::$called['foo'];
+
+        return 'foo';
+    }
+
+    public function getFooBar()
+    {
+        ++self::$called['getFooBar'];
+
+        return 'foobar';
     }
 }
