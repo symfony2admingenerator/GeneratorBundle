@@ -82,29 +82,29 @@ class ExcelController extends ListController
         $row = 2;
         $results = $this->getResults();
 
-        {% set column = 0 %}
+        {% set colNum = 0 %}
         foreach($results as $rowData) {
-            {% for builder_column in builder.columns %}
+            {% for column in builder.columns %}
             // Retrieve relations
-            $getter = '{{ builder_column.getter }}';
+            $getter = '{{ column.getter }}';
             $data = $rowData;
 
             while (($pos = strpos($getter, '.')) > 0){
-                $tempGetter = 'get' . ucfirst(substr($getter, 0, $pos));
+                $tempGetter = 'get'.ucfirst(substr($getter, 0, $pos));
                 $getter = substr($getter, $pos + 1);
-                $data = $data->$tempGetter();
+                $data = method_exists($data, $tempGetter) ? $data->$tempGetter() : null;
             }
 
-            $getter = 'get' . ucfirst($getter);
-            $data = $data->$getter();
+            $getter = 'get'.ucfirst($getter);
+            $data = method_exists($data, $getter) ? $data->$getter() : null;
 
             // Convert DateTime object to given format
             if ($data instanceof \DateTime){
                 $data = $data->format('{{ builder.dateTimeFormat }}');
             }
 
-            $sheet->setCellValueByColumnAndRow({{ column }}, $row, $data);
-            {% set column = column + 1 %}
+            $sheet->setCellValueByColumnAndRow({{ colNum }}, $row, $data);
+            {% set colNum = colNum + 1 %}
             {% endfor %}
 
             $row++;
