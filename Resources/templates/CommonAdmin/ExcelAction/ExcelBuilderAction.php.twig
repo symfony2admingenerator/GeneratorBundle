@@ -84,7 +84,7 @@ class ExcelController extends ListController
 
         {% set colNum = 0 %}
         foreach($results as $rowData) {
-            {% for column in builder.columns %}
+            {% for name,column in builder.columns %}
             // Retrieve relations
             $getter = '{{ column.getter }}';
             $data = $rowData;
@@ -96,14 +96,16 @@ class ExcelController extends ListController
             }
 
             $getter = 'get'.ucfirst($getter);
-            $data = method_exists($data, $getter) ? $data->$getter() : null;
+            $value = method_exists($data, $getter) ? $data->$getter() : null;
+
+            $formatedValue = $this->format{{ name|classify }}($value);
 
             // Convert DateTime object to given format
-            if ($data instanceof \DateTime){
-                $data = $data->format('{{ builder.dateTimeFormat }}');
+            if ($formatedValue instanceof \DateTime){
+                $formatedValue = $formatedValue->format('{{ builder.dateTimeFormat }}');
             }
 
-            $sheet->setCellValueByColumnAndRow({{ colNum }}, $row, $data);
+            $sheet->setCellValueByColumnAndRow({{ colNum }}, $row, $formatedValue);
             {% set colNum = colNum + 1 %}
             {% endfor %}
 
@@ -117,4 +119,18 @@ class ExcelController extends ListController
         // ORM JOB
     }
     {% endblock %}
+
+    {% for name,column in builder.columns %}
+    /**
+     * Format column {{ name }} value
+     *
+     * @param mixed The value
+     * @return mixed The formated value
+     */
+    protected function format{{ name|classify }}($value)
+    {
+        return $value;
+    }
+
+    {% endfor %}
 }
