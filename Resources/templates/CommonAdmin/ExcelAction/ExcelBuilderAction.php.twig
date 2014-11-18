@@ -48,7 +48,8 @@ class ExcelController extends ListController
     /**
      * Override this method to add your own creator, title and more to the Excel spreadsheet
      */
-    protected function createExcelObject(\PHPExcel $phpExcelObject){
+    protected function createExcelObject(\PHPExcel $phpExcelObject)
+    {
         $phpExcelObject->getProperties()->setCreator("AdminGeneratorBundle")
           ->setTitle('AdminGenerator Excel Export')
           ->setSubject("AdminGenerator Excel Export")
@@ -60,14 +61,16 @@ class ExcelController extends ListController
      */
     protected function createExcelheader(\PhpExcel_Worksheet $sheet)
     {
-        {% set column = 0 %}
-        {% for builder_column in builder.columns %}
-        $sheet->setCellValueByColumnAndRow({{ column }}, 1, "{{ builder_column.label }}", true);
-        $columnLetter = \PHPExcel_Cell::stringFromColumnIndex({{ column }});
+        $translator = $this->get('translator');
+        
+        {% set colNum = 0 %}
+        {% for column in builder.columns %}
+        $sheet->setCellValueByColumnAndRow({{ colNum }}, 1, $translator->trans("{{ column.label }}", array(), '{{ i18n_catalog|default("Admin") }}'), true);
+        $columnLetter = \PHPExcel_Cell::stringFromColumnIndex({{ colNum }});
         $sheet->getStyle($columnLetter . '1')->getFont()->setBold(true);
         $sheet->getColumnDimension($columnLetter)->setAutoSize(true);
 
-        {% set column = column + 1 %}
+        {% set colNum = colNum + 1 %}
         {% endfor %}
     }
 
