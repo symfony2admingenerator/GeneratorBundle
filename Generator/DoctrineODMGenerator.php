@@ -132,12 +132,7 @@ class DoctrineODMGenerator extends Generator
         );
         $embedGenerator->setFieldGuesser($this->getFieldGuesser());
         $embedGenerator->setMustOverwriteIfExists($this->needToOverwrite($embedGenerator));
-        $embedGenerator->setTemplateDirs(
-            array_merge(
-                $this->container->getParameter('admingenerator.doctrineodm_templates_dirs'),
-                array(__DIR__.'/../Resources/templates/DoctrineODM')
-            )
-        );
+        $embedGenerator->setTemplateDirs($this->templatesDirectories);
 
         $embedGenerator->addBuilder(new EditBuilderType());
         $embedGenerator->addBuilder(new NewBuilderType());

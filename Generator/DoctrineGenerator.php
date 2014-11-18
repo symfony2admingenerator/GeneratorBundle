@@ -139,12 +139,7 @@ class DoctrineGenerator extends Generator
         );
         $embedGenerator->setFieldGuesser($this->getFieldGuesser());
         $embedGenerator->setMustOverwriteIfExists($this->needToOverwrite($embedGenerator));
-        $embedGenerator->setTemplateDirs(
-            array_merge(
-                $this->container->getParameter('admingenerator.doctrine_templates_dirs'),
-                array(__DIR__.'/../Resources/templates/Doctrine')
-            )
-        );
+        $embedGenerator->setTemplateDirs($this->templatesDirectories);
 
         $embedGenerator->addBuilder(new EditBuilderType());
         $embedGenerator->addBuilder(new NewBuilderType());

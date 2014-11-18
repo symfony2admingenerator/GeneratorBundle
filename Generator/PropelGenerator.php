@@ -139,13 +139,8 @@ class PropelGenerator extends Generator
         );
         $embedGenerator->setFieldGuesser($this->getFieldGuesser());
         $embedGenerator->setMustOverwriteIfExists($this->needToOverwrite($embedGenerator));
-        $embedGenerator->setTemplateDirs(
-            array_merge(
-                $this->container->getParameter('admingenerator.propel_templates_dirs'),
-                array(__DIR__.'/../Resources/templates/Propel')
-            )
-        );
-         $embedGenerator->setColumnClass('Admingenerator\GeneratorBundle\Generator\PropelColumn');
+        $embedGenerator->setTemplateDirs($this->templatesDirectories);
+        $embedGenerator->setColumnClass('Admingenerator\GeneratorBundle\Generator\PropelColumn');
 
         $embedGenerator->addBuilder(new EditBuilderType());
         $embedGenerator->addBuilder(new NewBuilderType());
