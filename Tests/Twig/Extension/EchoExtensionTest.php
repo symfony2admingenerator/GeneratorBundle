@@ -8,6 +8,7 @@ use Admingenerator\GeneratorBundle\Twig\Extension\EchoExtension;
  * This class test the Admingenerator\GeneratorBundle\Twig\Extension\EchoExtension
  *
  * @author Cedric LOMBARDOT
+ * @author Stéphane Escandell
  */
 class EchoExtensionTest extends BaseExtensionTest
 {
@@ -30,41 +31,7 @@ class EchoExtensionTest extends BaseExtensionTest
             'obj'  => $object,
             'name' => 'cedric',
             'arr'  => array('obj' => 'val'),
-            'arr_num' => array('val'),
-            'arr_obj' => array('obj' => $object),
         );
-    }
-
-    public function testMapBy()
-    {
-        $tpls = array(
-            'numeric' => '{{ [ arr_num ]|mapBy(0) }}',
-            'assoc' => '{{ [ arr ]|mapBy("obj") }}',
-            'object' => '{{ [ arr_obj ]|mapBy("foobar") }}',
-        );
-
-        $returns = array(
-            'numeric' => array(array("val"), 'Correctly mapped array of numeric arrays'),
-            'assoc' => array(array("val"), 'Correctly mapped array of assoc arrays'),
-            'object' => array(array("foobar"), 'Correctly mapped array of objects'),
-        );
-
-        $this->runTwigTests($tpls, $returns);
-    }
-
-    public function testFlatten()
-    {
-        $tpls = array(
-            'numeric' => '{{ ["a", arr_num ]|flatten }}',
-            'assoc'   => '{{ {"a", arr_obj }|flatten }}',
-        );
-
-        $returns = array(
-            'numeric' => array(array("a", "val"), 'Flatten numeric array of arrays'),
-            'assoc'   => array(array("a", "val"), 'Flatten associative array of arrays'),
-        );
-
-        $this->runTwigTests($tpls, $returns);
     }
 
     public function testGetEchoTrans()
@@ -230,55 +197,5 @@ class EchoExtensionTest extends BaseExtensionTest
         );
 
         $this->runTwigTests($tpls, $returns);
-    }
-}
-
-
-/**
- * Dummy object for EchoExtensionTest
- *
- * @author Cedric LOMBARDOT
- */
-class TestObject
-{
-    public static $called = array(
-        '__toString'  => 0,
-        'foo'         => 0,
-        'getFooBar'   => 0,
-    );
-
-    public function __construct($bar = 'bar')
-    {
-
-    }
-
-    public static function reset()
-    {
-        self::$called = array(
-            '__toString'  => 0,
-            'foo'         => 0,
-            'getFooBar'   => 0,
-        );
-    }
-
-    public function __toString()
-    {
-        ++self::$called['__toString'];
-
-        return 'foo';
-    }
-
-    public function foo()
-    {
-        ++self::$called['foo'];
-
-        return 'foo';
-    }
-
-    public function getFooBar()
-    {
-        ++self::$called['getFooBar'];
-
-        return 'foobar';
     }
 }
