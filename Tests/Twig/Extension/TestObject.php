@@ -1,5 +1,4 @@
 <?php
-
 namespace Admingenerator\GeneratorBundle\Tests\Twig\Extension;
 
 /**
@@ -7,7 +6,7 @@ namespace Admingenerator\GeneratorBundle\Tests\Twig\Extension;
  *
  * @author Cedric LOMBARDOT
  */
-class Object
+class TestObject
 {
     public static $called = array(
         '__toString'  => 0,

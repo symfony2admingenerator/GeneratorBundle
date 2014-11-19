@@ -2,32 +2,39 @@
 
 namespace Admingenerator\GeneratorBundle\Twig\Extension;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Form\Extension\Csrf\CsrfProvider\CsrfProviderInterface;
 
 /**
- * @author Piotr Gołębiewski <loostro@gmail.com>
+ * @author Stéphane Escandell
  */
 class CsrfTokenExtension extends \Twig_Extension
 {
-    protected $container;
+    /**
+     * @var CsrfProviderInterface
+     */
+    protected $csrfProvider;
 
-    public function __construct(ContainerInterface $container)
+    /**
+     * @param CsrfProviderInterface $csrfProvider
+     */
+    public function __construct(CsrfProviderInterface $csrfProvider)
     {
-        $this->container = $container;
+        $this->csrfProvider = $csrfProvider;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getFilters()
     {
         return array(
-            'csrf_token'          => new \Twig_Filter_Method($this, 'getCsrfToken'),
+            'csrf_token' => new \Twig_Filter_Method($this, 'getCsrfToken'),
         );
     }
 
     public function getCsrfToken($intention)
     {
-        $token = $this->container->get('form.csrf_provider')->generateCsrfToken($intention);
-
-        return $token;
+        return $this->csrfProvider->generateCsrfToken($intention);
     }
 
     /**

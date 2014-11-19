@@ -20,13 +20,20 @@
 
     <services>
         <!-- Twig -->        
-        <service id="twig.extension.admingenerator.array" class="Admingenerator\GeneratorBundle\Twig\Extension\ArrayFiltersExtension">
+        <service id="twig.extension.admingenerator.array" class="Admingenerator\GeneratorBundle\Twig\Extension\ArrayExtension">
             <tag name="twig.extension" />
         </service>
 
         <service id="twig.extension.admingenerator.echo" class="Admingenerator\GeneratorBundle\Twig\Extension\EchoExtension" public="false">
             <tag name="twig.extension" />
-            <argument type="service" id="twig.loader" />
+        </service>
+
+        <service id="twig.extension.twig_generator.twig_print" class="TwigGenerator\Extension\TwigPrintExtension" public="false">
+            <tag name="twig.extension" />
+        </service>
+
+        <service id="twig.extension.twig_generator.php_print" class="TwigGenerator\Extension\PHPPrintExtension" public="false">
+            <tag name="twig.extension" />
         </service>
         
         <service id="twig.extension.admingenerator.config" class="Admingenerator\GeneratorBundle\Twig\Extension\ConfigExtension" public="false">
@@ -36,7 +43,7 @@
         
         <service id="twig.extension.admingenerator.csrf" class="Admingenerator\GeneratorBundle\Twig\Extension\CsrfTokenExtension" public="false">
             <tag name="twig.extension" />
-            <argument type="service" id="service_container" />
+            <argument type="service" id="form.csrf_provider" />
         </service>
         
         <service id="twig.extension.admingenerator.localized_money" class="Admingenerator\GeneratorBundle\Twig\Extension\LocalizedMoneyExtension" public="false">
@@ -45,10 +52,6 @@
         
         <service id="twig.extension.admingenerator.extends" class="Admingenerator\GeneratorBundle\Twig\Extension\ExtendsAdmingeneratedExtension" public="false">
             <tag name="twig.extension" />
-            <argument type="service" id="twig.loader.filesystem" />
-            <call method="addCachePath">
-                <argument type="service" id="service_container" />
-            </call>
         </service>
 
         <!-- General -->

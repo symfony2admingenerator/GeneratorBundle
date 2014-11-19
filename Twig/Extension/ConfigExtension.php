@@ -9,8 +9,14 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class ConfigExtension extends \Twig_Extension
 {
+    /**
+     * @var ContainerInterface
+     */
     protected $container;
 
+    /**
+     * @param ContainerInterface $container
+     */
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
