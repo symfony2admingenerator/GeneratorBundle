@@ -4,6 +4,7 @@
 <div class="row-fluid">
     <div class="list_scopes btn-toolbar" role="toolbar">
         {% for groupName, group in scopes %}
+        {{ echo_block("list_scopes_"~groupName) }}
         <div class="list_scope_group btn-group">
             {% for scopeName, params in group %}
             <a class="{{ 'btn btn-sm ' ~ params.class|default('btn-default') }} {{ echo_twig("scopes['" ~ groupName ~ "'] == '" ~ scopeName ~ "' ? 'active': 'inactive'") }}" href="{{ echo_path(builder.routePrefixWithSubfolder ~ '_' ~ bundle_name ~ ( builder.BaseGeneratorName ? "_" ~ builder.BaseGeneratorName : "" ) ~ '_scopes',
@@ -13,6 +14,7 @@
             </a>
             {% endfor %}
         </div>
+        {{ echo_endblock() }}
         {% endfor %}
     </div>
 </div>
