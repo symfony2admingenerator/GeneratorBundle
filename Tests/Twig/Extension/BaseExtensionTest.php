@@ -39,7 +39,7 @@ abstract class BaseExtensionTest extends \PHPUnit_Framework_TestCase
         $this->extension = $this->getTestedExtension();
     }
 
-    protected function runTwigTests(array $templates, array $returns, $b = false)
+    protected function runTwigTests(array $templates, array $returns)
     {
         if (array_diff(array_keys($templates), array_keys($returns))) {
             throw new \LogicException(sprintf(
@@ -51,20 +51,10 @@ abstract class BaseExtensionTest extends \PHPUnit_Framework_TestCase
         }
         $twig = $this->getEnvironment($templates);
 
-
         foreach ($templates as $name => $tpl) {
-            $loaded = $twig->loadTemplate($name);
-            if ($b) {
-                var_dump(get_class($loaded));die;
-                var_dump($loaded->display($this->twigVariables));die;
-                var_dump($loaded);
-                die;
-            }
-            $rendered = $loaded->render($this->twigVariables);
-
             $this->assertEquals(
                 $returns[$name][0],
-                $rendered,
+                $twig->loadTemplate($name)->render($this->twigVariables),
                 $returns[$name][1]
             );
         }
