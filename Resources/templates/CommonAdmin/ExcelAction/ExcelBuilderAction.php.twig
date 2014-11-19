@@ -48,7 +48,8 @@ class ExcelController extends ListController
     /**
      * Override this method to add your own creator, title and more to the Excel spreadsheet
      */
-    protected function createExcelObject(\PHPExcel $phpExcelObject){
+    protected function createExcelObject(\PHPExcel $phpExcelObject)
+    {
         $phpExcelObject->getProperties()->setCreator("AdminGeneratorBundle")
           ->setTitle('AdminGenerator Excel Export')
           ->setSubject("AdminGenerator Excel Export")
@@ -60,14 +61,16 @@ class ExcelController extends ListController
      */
     protected function createExcelheader(\PhpExcel_Worksheet $sheet)
     {
-        {% set column = 0 %}
-        {% for builder_column in builder.columns %}
-        $sheet->setCellValueByColumnAndRow({{ column }}, 1, "{{ builder_column.label }}", true);
-        $columnLetter = \PHPExcel_Cell::stringFromColumnIndex({{ column }});
+        $translator = $this->get('translator');
+        
+        {% set colNum = 0 %}
+        {% for column in builder.columns %}
+        $sheet->setCellValueByColumnAndRow({{ colNum }}, 1, $translator->trans("{{ column.label }}", array(), '{{ i18n_catalog|default("Admin") }}'), true);
+        $columnLetter = \PHPExcel_Cell::stringFromColumnIndex({{ colNum }});
         $sheet->getStyle($columnLetter . '1')->getFont()->setBold(true);
         $sheet->getColumnDimension($columnLetter)->setAutoSize(true);
 
-        {% set column = column + 1 %}
+        {% set colNum = colNum + 1 %}
         {% endfor %}
     }
 
@@ -79,29 +82,31 @@ class ExcelController extends ListController
         $row = 2;
         $results = $this->getResults();
 
-        {% set column = 0 %}
+        {% set colNum = 0 %}
         foreach($results as $rowData) {
-            {% for builder_column in builder.columns %}
+            {% for name,column in builder.columns %}
             // Retrieve relations
-            $getter = '{{ builder_column.getter }}';
+            $getter = '{{ column.getter }}';
             $data = $rowData;
 
             while (($pos = strpos($getter, '.')) > 0){
-                $tempGetter = 'get' . ucfirst(substr($getter, 0, $pos));
+                $tempGetter = 'get'.ucfirst(substr($getter, 0, $pos));
                 $getter = substr($getter, $pos + 1);
-                $data = $data->$tempGetter();
+                $data = method_exists($data, $tempGetter) ? $data->$tempGetter() : null;
             }
 
-            $getter = 'get' . ucfirst($getter);
-            $data = $data->$getter();
+            $getter = 'get'.ucfirst($getter);
+            $value = method_exists($data, $getter) ? $data->$getter() : null;
+
+            $formatedValue = $this->format{{ name|classify }}($value);
 
             // Convert DateTime object to given format
-            if ($data instanceof \DateTime){
-                $data = $data->format('{{ builder.dateTimeFormat }}');
+            if ($formatedValue instanceof \DateTime){
+                $formatedValue = $formatedValue->format('{{ builder.dateTimeFormat }}');
             }
 
-            $sheet->setCellValueByColumnAndRow({{ column }}, $row, $data);
-            {% set column = column + 1 %}
+            $sheet->setCellValueByColumnAndRow({{ colNum }}, $row, $formatedValue);
+            {% set colNum = colNum + 1 %}
             {% endfor %}
 
             $row++;
@@ -114,4 +119,18 @@ class ExcelController extends ListController
         // ORM JOB
     }
     {% endblock %}
+
+    {% for name,column in builder.columns %}
+    /**
+     * Format column {{ name }} value
+     *
+     * @param mixed The value
+     * @return mixed The formated value
+     */
+    protected function format{{ name|classify }}($value)
+    {
+        return $value;
+    }
+
+    {% endfor %}
 }
