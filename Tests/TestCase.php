@@ -13,7 +13,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
     protected function getContainer()
     {
         return new ContainerBuilder(new ParameterBag(array(
-            'kernel.debug' => false,
+            'kernel.debug' => false
         )));
     }
 }
