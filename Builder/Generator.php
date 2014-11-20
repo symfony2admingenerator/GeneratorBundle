@@ -28,6 +28,9 @@ class Generator extends TwigGeneratorGenerator
 
     protected $base_generator_name;
 
+    /**
+     * @var ContainerInterface
+     */
     protected $container;
 
     /**

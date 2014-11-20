@@ -40,7 +40,6 @@ class AdmingeneratorGeneratorExtension extends Extension implements PrependExten
 
         $config = $this->processConfiguration($this->getConfiguration($configs, $container), $configs);
 
-        $container->setParameter('admingenerator.overwrite_if_exists', $config['overwrite_if_exists']);
         $container->setParameter('admingenerator.base_admin_template', $config['base_admin_template']);
         $container->setParameter('admingenerator.dashboard_welcome_path', $config['dashboard_welcome_path']);
         $container->setParameter('admingenerator.guess_required', $config['guess_required']);
@@ -83,6 +82,12 @@ class AdmingeneratorGeneratorExtension extends Extension implements PrependExten
         if ($config['use_doctrine_orm']) {
             $loader->load('doctrine_orm.xml');
             $this->addTemplatesInitialization($container->getDefinition('admingenerator.generator.doctrine'), $doctrineOrmTemplatesDirs);
+            if ($config['overwrite_if_exists']) {
+                $container
+                    ->getDefinition('admingenerator.generator.doctrine')
+                    ->addMethodCall('forceOverwriteIfExists');
+
+            }
 
             $formTypes = $config['form_types']['doctrine_orm'];
             $filterTypes = $config['filter_types']['doctrine_orm'];
@@ -93,6 +98,11 @@ class AdmingeneratorGeneratorExtension extends Extension implements PrependExten
         if ($config['use_doctrine_odm']) {
             $loader->load('doctrine_odm.xml');
             $this->addTemplatesInitialization($container->getDefinition('admingenerator.generator.doctrine_odm'), $doctrineOdmTemplatesDirs);
+            if ($config['overwrite_if_exists']) {
+                $container
+                    ->getDefinition('admingenerator.generator.doctrine_odm')
+                    ->addMethodCall('forceOverwriteIfExists');
+            }
 
             $formTypes = $config['form_types']['doctrine_odm'];
             $filterTypes = $config['filter_types']['doctrine_odm'];
@@ -103,6 +113,11 @@ class AdmingeneratorGeneratorExtension extends Extension implements PrependExten
         if ($config['use_propel']) {
             $loader->load('propel.xml');
             $this->addTemplatesInitialization($container->getDefinition('admingenerator.generator.propel'), $propelTemplatesDirs);
+            if ($config['overwrite_if_exists']) {
+                $container
+                    ->getDefinition('admingenerator.generator.propel')
+                    ->addMethodCall('forceOverwriteIfExists');
+            }
 
             $formTypes = $config['form_types']['propel'];
             $filterTypes = $config['filter_types']['propel'];

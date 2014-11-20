@@ -3,38 +3,14 @@
 namespace Admingenerator\GeneratorBundle\Builder;
 
 use Symfony\Component\Templating\TemplateNameParser;
-
 use Symfony\Component\Config\FileLocator;
-
 use Symfony\Bundle\FrameworkBundle\Templating\Loader\TemplateLocator;
-
 use Symfony\Bundle\TwigBundle\Loader\FilesystemLoader;
-
 use Symfony\Component\HttpFoundation\ParameterBag;
-
 use TwigGenerator\Builder\BaseBuilder as GenericBaseBuilder;
 
 abstract class BaseBuilder extends GenericBaseBuilder
 {
-    /**
-     * @var array
-     */
-    protected $twigFilters = array(
-        'addslashes',
-        'var_export',
-        'is_numeric',
-        'ucfirst',
-        '\Doctrine\Common\Util\Inflector::classify',
-        'substr',
-    );
-
-     /**
-     * @var array
-     */
-    protected $twigExtensions = array(
-        'Admingenerator\GeneratorBundle\Twig\Extension\EchoExtension',
-    );
-
     /**
      * @var array
      */
@@ -44,6 +20,8 @@ abstract class BaseBuilder extends GenericBaseBuilder
     {
         parent::__construct();
         $this->variables = new ParameterBag(array());
+        $this->twigFilters[] = '\\Doctrine\\Common\\Util\\Inflector::classify';
+        $this->twigExtensions[] = '\\Admingenerator\\GeneratorBundle\\Twig\\Extension\\EchoExtension';
     }
 
     /**
