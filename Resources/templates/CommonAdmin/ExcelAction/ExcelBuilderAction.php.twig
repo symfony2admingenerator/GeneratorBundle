@@ -1,3 +1,4 @@
+{% use '../CommonAdmin/security_action.php.twig' %}
 <?php
 
 namespace Admingenerated\{{ namespace_prefix }}{{ bundle_name }}\{{ builder.generator.GeneratedControllerFolder }};
@@ -19,6 +20,8 @@ class ExcelController extends ListController
      */
     public function excelAction()
     {
+        {{ block('security_action') }}
+        
         // Create the PHPExcel object with some standard values
         try {
           $phpexcel = $this->get('phpexcel');
