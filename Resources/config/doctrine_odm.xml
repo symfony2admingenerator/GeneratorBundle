@@ -24,6 +24,7 @@
             class="%admingenerator.doctrine_odm.class%">
             <argument type="string">%kernel.root_dir%</argument>
             <argument type="string">%kernel.cache_dir%</argument>
+            <!-- @TODO: Remove container injection -->
             <call method="setContainer">
                 <argument type="service" id="service_container" />
             </call>

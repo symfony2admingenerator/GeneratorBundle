@@ -20,4 +20,16 @@ interface GeneratorInterface
      */
     public function build();
 
+    /**
+     * Force generator to overwrite files if exist.
+     */
+    public function forceOverwriteIfExists();
+
+    /**
+     * Inject the field guesser.
+     *
+     * @param $fieldGuesser
+     */
+    public function setFieldGuesser($fieldGuesser);
+
 }

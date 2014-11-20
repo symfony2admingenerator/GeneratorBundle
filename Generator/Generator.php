@@ -8,6 +8,7 @@ use Admingenerator\GeneratorBundle\Validator\ValidatorInterface;
 use Admingenerator\GeneratorBundle\Builder\Generator as AdminGenerator;
 use Doctrine\Common\Cache as DoctrineCache;
 
+// TODO: remove container injection
 abstract class Generator extends ContainerAware implements GeneratorInterface
 {
     /**
@@ -53,6 +54,11 @@ abstract class Generator extends ContainerAware implements GeneratorInterface
     protected $templatesDirectories = array();
 
     /**
+     * @var bool
+     */
+    protected $overwriteIfExists = false;
+
+    /**
      * @param $root_dir
      * @param $cache_dir
      */
@@ -71,6 +77,14 @@ abstract class Generator extends ContainerAware implements GeneratorInterface
     {
         $this->cacheProvider = $cacheProvider;
         $this->cacheSuffix = $cacheSuffix;
+    }
+
+    /**
+     * Force overwrite files if exists mode.
+     */
+    public function forceOverwriteIfExists()
+    {
+        $this->overwriteIfExists = true;
     }
 
     /**
@@ -113,13 +127,13 @@ abstract class Generator extends ContainerAware implements GeneratorInterface
         return $this->base_generator_name;
     }
 
-   /**
-    * (non-PHPdoc)
-    * @see Generator/Admingenerator\GeneratorBundle\Generator.GeneratorInterface::getCachePath()
-    */
+    /**
+     * (non-PHPdoc)
+     * @see Generator/Admingenerator\GeneratorBundle\Generator.GeneratorInterface::getCachePath()
+     */
     public function getCachePath($namespace, $bundle_name)
     {
-       return $this->cache_dir.'/Admingenerated/'.str_replace('\\', DIRECTORY_SEPARATOR, $namespace).$bundle_name;
+        return $this->cache_dir.'/Admingenerated/'.str_replace('\\', DIRECTORY_SEPARATOR, $namespace).$bundle_name;
     }
 
     /**
@@ -164,7 +178,7 @@ abstract class Generator extends ContainerAware implements GeneratorInterface
      */
     public function needToOverwrite(AdminGenerator $generator)
     {
-        if ($this->container->getParameter('admingenerator.overwrite_if_exists')) {
+        if ($this->overwriteIfExists) {
             return true;
         }
 
@@ -178,9 +192,9 @@ abstract class Generator extends ContainerAware implements GeneratorInterface
 
         $finder = new Finder();
         $files = $finder->files()
-                        ->date('< '.date('Y-m-d H:i:s',$fileInfo->getMTime()))
-                        ->in($cacheDir)
-                        ->count();
+            ->date('< '.date('Y-m-d H:i:s',$fileInfo->getMTime()))
+            ->in($cacheDir)
+            ->count();
 
         if ($files > 0) {
             return true;

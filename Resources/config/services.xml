@@ -20,7 +20,7 @@
 
     <services>
         <!-- Twig -->        
-        <service id="twig.extension.admingenerator.array" class="Admingenerator\GeneratorBundle\Twig\Extension\ArrayExtension">
+        <service id="twig.extension.admingenerator.array" class="Admingenerator\GeneratorBundle\Twig\Extension\ArrayExtension" public="false">
             <tag name="twig.extension" />
         </service>
 
