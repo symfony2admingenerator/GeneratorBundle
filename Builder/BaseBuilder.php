@@ -87,33 +87,22 @@ abstract class BaseBuilder extends GenericBaseBuilder
         }
     }
 
-    /**
-     * (non-PHPdoc)
-     * @see Builder/Admingenerator\GeneratorBundle\Builder.BuilderInterface::getCode()
-     */
-    public function getCode()
+    protected function getTwigEnvironment()
     {
         $locator = new TemplateLocator(new FileLocator($this->getTemplateDirs()));
         $templateNameParser = new TemplateNameParser();
         $loader = new FilesystemLoader($locator, $templateNameParser);
-        $twig = new \Twig_Environment(
-            $loader,
-            array(
-                'autoescape' => false,
-                'strict_variables' => true,
-                'debug' => true,
-                'cache' => $this->getGenerator()->getTempDir(),
-            )
-        );
+        $twig = new \Twig_Environment($loader, array(
+            'autoescape' => false,
+            'strict_variables' => true,
+            'debug' => true,
+            'cache' => $this->getGenerator()->getTempDir(),
+        ));
 
-        $this->addTwigExtensions($twig, $loader);
-        $this->addTwigFilters($twig);
-        $template = $twig->loadTemplate($this->getTemplateName());
+        $this->loadTwigExtensions($twig);
+        $this->loadTwigFilters($twig);
 
-        $variables = $this->getVariables();
-        $variables['builder'] = $this;
-
-        return $template->render($variables);
+        return $twig;
     }
 
     /**

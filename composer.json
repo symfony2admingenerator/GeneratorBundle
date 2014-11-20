@@ -1,6 +1,6 @@
 {
     "name": "symfony2admingenerator/generator-bundle",
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "description": "Admingenerator for Symfony2 based on YAML configuration and Twig templating",
     "keywords": [
         "admin",
@@ -27,7 +27,7 @@
         "symfony2admingenerator/twig-generator": "~1.1",
         "jms/security-extra-bundle": ">= 1.5.0",
         "knplabs/knp-menu-bundle": ">1.0,<2.1",
-        "white-october/pagerfanta-bundle": "1.0.*@dev",
+        "white-october/pagerfanta-bundle": "~1.0",
         "twig/twig": ">= 1.9.0",
         "twig/extensions": "~1.0",
         "robloach/component-installer": "~0.0.11",
