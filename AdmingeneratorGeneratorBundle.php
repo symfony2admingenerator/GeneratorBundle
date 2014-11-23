@@ -2,6 +2,7 @@
 
 namespace Admingenerator\GeneratorBundle;
 
+use Admingenerator\GeneratorBundle\DependencyInjection\Compiler\TwigLoaderCompilerPass;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -37,6 +38,7 @@ class AdmingeneratorGeneratorBundle extends Bundle
 
         $container->addCompilerPass(new ValidatorCompilerPass());
         $container->addCompilerPass(new FormCompilerPass());
+        $container->addCompilerPass(new TwigLoaderCompilerPass());
     }
     
     /**
