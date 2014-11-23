@@ -67,8 +67,8 @@ action.object.show:
 action.batch.delete:
     label:    Удалять
     confirm:  Вы подтверждаете удаление выбранных элементов?
-    success:  Материалы были успешно удалены.
-    error:    Невозможно удалить материалы.
+    success:  Объекты были успешно удалены.
+    error:    Невозможно удалить объекты.
 
 # Custom actions
 action.custom:
