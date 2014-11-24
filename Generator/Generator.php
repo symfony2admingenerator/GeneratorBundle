@@ -90,9 +90,13 @@ abstract class Generator extends ContainerAware implements GeneratorInterface
     /**
      * @param $directory
      */
-    public function addTemplatesDirectory($directory)
+    public function addTemplatesDirectory($directory, $prepend = false)
     {
-        $this->templatesDirectories[] = $directory;
+        if ($prepend) {
+            array_unshift($this->templatesDirectories, $directory);
+        } else {
+            $this->templatesDirectories[] = $directory;
+        }
     }
 
     /**

@@ -32,4 +32,15 @@ interface GeneratorInterface
      */
     public function setFieldGuesser($fieldGuesser);
 
+    /**
+     * Add the $directory as a root directory for templates files.
+     * If $prepend is true, prepend the directory to the list so
+     * templates in that directory are prioritize.
+     *
+     * @param $directory
+     * @param bool $prepend
+     * @return mixed
+     */
+    public function addTemplatesDirectory($directory, $prepend = false);
+
 }
