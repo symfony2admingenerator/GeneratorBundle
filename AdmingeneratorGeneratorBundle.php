@@ -37,7 +37,6 @@ class AdmingeneratorGeneratorBundle extends Bundle
         parent::build($container);
 
         $container->addCompilerPass(new ValidatorCompilerPass());
-        $container->addCompilerPass(new FormCompilerPass());
         $container->addCompilerPass(new TwigLoaderCompilerPass());
     }
     

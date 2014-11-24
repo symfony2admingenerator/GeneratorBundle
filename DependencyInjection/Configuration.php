@@ -55,7 +55,7 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('twig')
                     ->addDefaultsIfNotSet()
                     ->children()
-                        ->booleanNode('use_form_resources')->defaultTrue()->end()
+
                         ->booleanNode('use_localized_date')->defaultFalse()->end()
                         ->scalarNode('date_format')->defaultValue('Y-m-d')->end()
                         ->scalarNode('datetime_format')->defaultValue('Y-m-d H:i:s')->end()
