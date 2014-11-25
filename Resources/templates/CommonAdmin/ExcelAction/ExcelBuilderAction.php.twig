@@ -8,6 +8,7 @@ namespace Admingenerated\{{ namespace_prefix }}{{ bundle_name }}\{{ builder.gene
 {{- block('csrf_protection_use') }}
 
 use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 /**
  * @author Bob van de Vijver
@@ -41,7 +42,16 @@ class ExcelController extends ListController
 
         // Create the Writer, Response and add header
         $writer = $phpexcel->createWriter($phpExcelObject, '{{ builder.filetype }}');
-        $response = $phpexcel->createStreamedResponse($writer);
+        $response = new StreamedResponse(
+            function () use ($writer) {
+                $tempFile = $this->get('kernel')->getRootDir().'/cache/' . 
+                    rand(0, getrandmax()) . rand(0, getrandmax()) . ".tmp";
+                $writer->save($tempFile);
+                readfile($tempFile);
+                unlink($tempFile);
+            },
+            200, array()
+        );    
         $response->headers->set('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; charset=utf-8');
         $response->headers->set('Content-Disposition', 'attachment;filename={{ builder.filename }}.xlsx');
 
