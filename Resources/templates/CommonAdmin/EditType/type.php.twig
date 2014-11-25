@@ -43,7 +43,7 @@ class {{ builder.YamlKey|ucfirst }}Type extends BaseType
      */
     protected function getOptions{{ column.name|classify|php_name }}(array $builderOptions = array())
     {
-        $optionsClass = '{{ namespace_prefix }}\{{ bundle_name }}\Form\Type\{{ builder.BaseGeneratorName }}\Options';
+        $optionsClass = '{{ builder.namespacePrefixWithSubfolder }}\{{ bundle_name }}\Form\Type\{{ builder.BaseGeneratorName }}\Options';
         $options = class_exists($optionsClass) ? new $optionsClass() : null;
 
         return $this->resolveOptions('{{ column.name }}', {{ column.formOptions|merge({
