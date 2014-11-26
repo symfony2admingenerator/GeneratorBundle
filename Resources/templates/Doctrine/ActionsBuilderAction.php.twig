@@ -55,8 +55,17 @@
     protected function executeObjectDelete(\{{ model }} ${{ builder.ModelClass }})
     {
         $em = $this->getDoctrine()->getManagerForClass('{{ model }}');
+        $cmf = $em->getMetadataFactory();
+        $class = $cmf->getMetadataFor('{{ model }}');
+        $isVersioned = $class->isVersioned;
+        if($isVersioned) {
+            $class->setVersioned(false); 
+        }
         $em->remove(${{ builder.ModelClass }});
         $em->flush();
+        if($isVersioned) {
+            $class->setVersioned(true);
+        }
         $em->clear();
     }
 
