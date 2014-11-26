@@ -1,0 +1,11 @@
+{
+    "name"        : "Symfony2AdmingenGeneratorBundle",
+    "version"     : "1.0.0",
+    "authors"     : [
+        "Stéphane Escandell <stephane.escandell@gmail.com>"
+    ],
+    "description" : "Assets for the admingenerator bundle based on AdminLTE template",
+    "dependencies": {
+        "adminlte" : "1.2.1"
+    }
+}
