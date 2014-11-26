@@ -25,7 +25,7 @@ list:
 nested.list:
     expand:     Показывать
     collapse:   Скрывать
-    loading:    Погрузка в прогрессе
+    loading:    Загрузка в процессе
     success:    Элемент был успешно перемещен.
     error:      Не удалось переместить элемент.
 
@@ -34,7 +34,7 @@ profile:
     welcome:  <b>Здравствуйте</b>, %username%!
     login:    Войти
     logout:   Выйти
-    exit:     Выход олицетворение режима
+    exit:     Выход из режима подмены
 
 # Generic actions
 action.generic:
@@ -56,16 +56,16 @@ action.object.edit:
                 для просмотра изменений в новой вкладке или отправить форму еще 
                 раз для изменения изменения!
 action.object.delete:
-    label:    Удалять
+    label:    Удалить
     confirm:  Вы действительно хотите удалить этот элемент?
-    success:  Элемент успешно удалены.
+    success:  Элемент успешно удален.
     error:    Элемент не может быть удален.
 action.object.show:
-    label:    Показывать
+    label:    Просмотр
 
 # Batch actions
 action.batch.delete:
-    label:    Удалять
+    label:    Удалить
     confirm:  Вы подтверждаете удаление выбранных элементов?
     success:  Объекты были успешно удалены.
     error:    Невозможно удалить объекты.
@@ -74,16 +74,16 @@ action.batch.delete:
 action.custom:
     title:    Вы уверены, что хотите выполнить действие %name%?
     success:  Действие %name% успешно выполнено.
-    error:    Не удалось выполнить %name% действиям.
-    confirm:  Подтверждать
-    cancel:   Отменить
+    error:    Не удалось выполнить действие %name%.
+    confirm:  Подтверждаю
+    cancel:   Отмена
 
 # Batch list
 batch.list:
     selected:       Выберите действие
     none.selected:  Необходимо выбрать не менее одного элемента.
     warning:        Не удалось завершить периодического действия из-за отсутствия параметров.
-    send:           Выполнять
+    send:           Выполнить
 
 # Layout
 dashboard:
