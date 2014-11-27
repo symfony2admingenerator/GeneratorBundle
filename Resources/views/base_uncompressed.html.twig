@@ -41,35 +41,41 @@
     {% include 'AdmingeneratorGeneratorBundle::header.twig' %}
 {% endblock header%}
 
-<div class="container-fluid">
-    {% block flashes %}
-        <div id="flashes" class="row-fluid hidden-print">
-            {% for type, flashMessages in app.session.flashbag.all() %}
-                {% set alert = type is sameas('error') ? 'danger' : type %}
-                {% for flashMessage in flashMessages %}
-                    <div class="alert alert-{{ alert }}">
-                        <button type="button" class="close" data-dismiss="alert">&times;</button>
-                        {{ flashMessage|raw }}
-                    </div>
-                {% endfor %}
-            {% endfor %}
-        </div><!--/.row -->
-    {% endblock %}
+{% block wrapper %}
+    {% block html_tag_wrapper %}
+    <div class="wrapper row-offcanvas row-offcanvas-left">
+    {% endblock html_tag_wrapper %}
+        {% block wrapper_inner %}
+            {% block sidebar %}
+                <aside class="left-side sidebar-offcanvas">
+                    {% include "AdmingeneratorGeneratorBundle:Sidebar:layout.html.twig" %}
+                </aside>
+            {% endblock sidebar %}
+            {# TODO: MENU #}
 
-    {% block body %}
-        <div class="row-fluid">
-        </div><!--/.row -->
-    {% endblock %}
+            <aside class="right-side">
+                <section class="content-header">
+                    <h1>
+                        Blank page
+                        <small>Control panel</small>
+                    </h1>
+                    <ol class="breadcrumb">
+                        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+                        <li class="active">Blank page</li>
+                    </ol>
+                </section>
 
-    {% block footer %}
-        <footer class="hidden-print">
-            <hr>
-            <p>{% block footer_text %}&copy;
-                Symfony2Admingenerator {{ ("now"|date('Y') > 2012) ? '2012 - ' ~ "now"|date('Y') : '2012' }}{% endblock %}</p>
-        </footer>
-    {% endblock %}
-</div>
-<!--/.container-fluid -->
+                {% block body %}
+                    {% block html_tag_body %}
+                    <section class="content">
+                    {% endblock html_tag_body %}
+                        {% block body_inner '' %}
+                    </section>
+                {% endblock %}
+            </aside>
+        {% endblock wrapper_inner %}
+    </div>
+{% endblock wrapper %}
 
 {% block javascripts %}
     <script type="text/javascript" src="{{ asset('components/bootstrap/js/bootstrap.min.js') }}"></script>

@@ -18,11 +18,11 @@
                     <ul class="dropdown-menu">
                         {% if app.user %}
                             {% block navbar_profile_authenticated %}
-                                {% include "AdmingeneratorGeneratorBundle:navbar:authenticated.html.twig" %}
+                                {% include "AdmingeneratorGeneratorBundle:Navbar:authenticated.html.twig" %}
                             {% endblock navbar_profile_authenticated %}
                         {% else %}
                             {% block navbar_profile_not_authenticated %}
-                                {% include "AdmingeneratorGeneratorBundle:navbar:not_authenticated.html.twig" %}
+                                {% include "AdmingeneratorGeneratorBundle:Navbar:not_authenticated.html.twig" %}
                             {% endblock navbar_profile_not_authenticated %}
                         {% endif %}
                     </ul>

@@ -1,0 +1,13 @@
+<section class="sidebar">
+    {% block sidebar_profile %}
+        {% if app.user %}
+            {% block sidebar_profile_authenticated %}
+                {% include "AdmingeneratorGeneratorBundle:Sidebar:authenticated.html.twig" %}
+            {% endblock sidebar_profile_authenticated %}
+        {% else %}
+            {% block sidebar_profile_not_authenticated %}
+                {% include "AdmingeneratorGeneratorBundle:Sidebar:not_authenticated.html.twig" %}
+            {% endblock sidebar_profile_authenticated %}
+        {% endif %}
+    {% endblock sidebar_profile %}
+</section>
