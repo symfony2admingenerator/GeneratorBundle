@@ -1,101 +1,71 @@
 <!DOCTYPE html>
 <html>
 <head>
-    {% block html_head_tag_inner %}
-    <meta charset="utf-8">
-    <title>{% block title %}Admin{% endblock %}</title>
-    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+    {% block head_content %}
+        <meta charset="utf-8">
+        <title>{% block title %}Admin{% endblock %}</title>
+        <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
 
-    {% block stylesheets %}
-        <link rel="stylesheet" href="{{ asset('components/bootstrap/css/bootstrap.min.css') }}" type="text/css" media="all"/>
-        <link rel="stylesheet" href="{{ asset('components/font-awesome/css/font-awesome.min.css') }}" type="text/css" media="all"/>
-        <link rel="stylesheet" href="{{ asset('components/onicons/css/iconicons.min.css') }}" type="text/css" media="all"/>
-        <link rel="stylesheet" href="{{ asset('components/adminlte/css/AdminLTE.css') }}" type="text/css" media="all"/>
-    {% endblock %}
+        {% block stylesheets %}
+            <link rel="stylesheet" href="{{ asset('components/bootstrap/css/bootstrap.min.css') }}" type="text/css" media="all"/>
+            <link rel="stylesheet" href="{{ asset('components/font-awesome/css/font-awesome.min.css') }}" type="text/css" media="all"/>
+            <link rel="stylesheet" href="{{ asset('components/onicons/css/iconicons.min.css') }}" type="text/css" media="all"/>
+            <link rel="stylesheet" href="{{ asset('components/adminlte/css/AdminLTE.css') }}" type="text/css" media="all"/>
+        {% endblock %}
 
-    {% block icons %}
-        <!-- Favicon and touch icons -->
-        <link rel="shortcut icon" href="{{ asset('bundles/admingeneratorgenerator/ico/favicon.ico') }}">
-        <link rel="apple-touch-icon-precomposed" sizes="144x144"
-              href="{{ asset('bundles/admingeneratorgenerator/ico/apple-touch-icon-144-precomposed.png') }}">
-        <link rel="apple-touch-icon-precomposed" sizes="114x114"
-              href="{{ asset('bundles/admingeneratorgenerator/ico/apple-touch-icon-114-precomposed.png') }}">
-        <link rel="apple-touch-icon-precomposed" sizes="72x72"
-              href="{{ asset('bundles/admingeneratorgenerator/ico/apple-touch-icon-72-precomposed.png') }}">
-        <link rel="apple-touch-icon-precomposed"
-              href="{{ asset('bundles/admingeneratorgenerator/ico/apple-touch-icon-57-precomposed.png') }}">
-    {% endblock %}
+        {% block icons %}
+            <!-- Favicon and touch icons -->
+            <link rel="shortcut icon" href="{{ asset('bundles/admingeneratorgenerator/ico/favicon.ico') }}">
+            <link rel="apple-touch-icon-precomposed" sizes="144x144"
+                  href="{{ asset('bundles/admingeneratorgenerator/ico/apple-touch-icon-144-precomposed.png') }}">
+            <link rel="apple-touch-icon-precomposed" sizes="114x114"
+                  href="{{ asset('bundles/admingeneratorgenerator/ico/apple-touch-icon-114-precomposed.png') }}">
+            <link rel="apple-touch-icon-precomposed" sizes="72x72"
+                  href="{{ asset('bundles/admingeneratorgenerator/ico/apple-touch-icon-72-precomposed.png') }}">
+            <link rel="apple-touch-icon-precomposed"
+                  href="{{ asset('bundles/admingeneratorgenerator/ico/apple-touch-icon-57-precomposed.png') }}">
+        {% endblock %}
 
-    {% block scripts_head %}
-    {% endblock %}
-    {% endblock html_head_tag_inner %}
+        {% block scripts_head '' %}
+    {% endblock head_content %}
 </head>
 
 
 {% block html_body_tag %}
 <body class="skin-blue">
 {% endblock html_body_tag %}
-{% block html_body_tag_inner %}
+{% block body_content %}
 
-{% block header %}
-    {% include 'AdmingeneratorGeneratorBundle::header.twig' %}
-{% endblock header%}
+    {% block header %}
+        {% include 'AdmingeneratorGeneratorBundle::header.twig' %}
+    {% endblock header%}
 
-{% block wrapper %}
-    {% block html_tag_wrapper %}
-    <div class="wrapper row-offcanvas row-offcanvas-left">
-    {% endblock html_tag_wrapper %}
-        {% block wrapper_inner %}
-            {% block sidebar %}
-                <aside class="left-side sidebar-offcanvas">
-                    {% include "AdmingeneratorGeneratorBundle:Sidebar:layout.html.twig" %}
-                </aside>
-            {% endblock sidebar %}
-            {# TODO: MENU #}
+    {% block wrapper %}
+        {% block html_tag_wrapper %}
+        <div class="wrapper row-offcanvas row-offcanvas-left">
+        {% endblock html_tag_wrapper %}
+            {% block wrapper_content %}
+                {% block sidebar %}
+                    <aside class="left-side sidebar-offcanvas">
+                        {% include "AdmingeneratorGeneratorBundle:Sidebar:layout.html.twig" %}
+                    </aside>
+                {% endblock sidebar %}
 
-            <aside class="right-side">
-                <section class="content-header">
-                    <h1>
-                        Blank page
-                        <small>Control panel</small>
-                    </h1>
-                    <ol class="breadcrumb">
-                        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                        <li class="active">Blank page</li>
-                    </ol>
-                </section>
+                {% block page %}
+                    <aside class="right-side">
+                        <section class="content">
+                            {% block page_content '' %}
+                        </section>
+                    </aside>
+                {% endblock page %}
+            {% endblock wrapper_content %}
+        </div>
+    {% endblock wrapper %}
 
-                {% block body %}
-                    {% block html_tag_body %}
-                    <section class="content">
-                    {% endblock html_tag_body %}
-                        {% block body_inner '' %}
-                    </section>
-                {% endblock %}
-            </aside>
-        {% endblock wrapper_inner %}
-    </div>
-{% endblock wrapper %}
+    {% block javascripts %}
+        {# TODO Javascript inclusion#}
+    {% endblock %}
 
-{% block javascripts %}
-    <script type="text/javascript" src="{{ asset('components/bootstrap/js/bootstrap.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/admingeneratorgenerator/js/iScroll/iScroll.js') }}"></script>
-    <script type="text/javascript"
-            src="{{ asset('bundles/admingeneratorgenerator/js/admingenerator/general.js') }}"></script>
-    <script type="text/javascript"
-            src="{{ asset('bundles/admingeneratorgenerator/js/admingenerator/tabs.js') }}"></script>
-    <script type="text/javascript"
-            src="{{ asset('bundles/admingeneratorgenerator/js/admingenerator/batch-actions.js') }}"></script>
-    <script type="text/javascript"
-            src="{{ asset('bundles/admingeneratorgenerator/js/admingenerator/generic-actions.js') }}"></script>
-    <script type="text/javascript"
-            src="{{ asset('bundles/admingeneratorgenerator/js/admingenerator/object-actions.js') }}"></script>
-    <script type="text/javascript"
-            src="{{ asset('bundles/admingeneratorgenerator/js/treeTable/jquery.treeTable-extended.js') }}"></script>
-    <script type="text/javascript"
-            src="{{ asset('bundles/admingeneratorgenerator/js/admingenerator/nestedset.js') }}"></script>
-{% endblock %}
-
-{% endblock html_body_tag_inner %}
+{% endblock body_content %}
 </body>
 </html>
