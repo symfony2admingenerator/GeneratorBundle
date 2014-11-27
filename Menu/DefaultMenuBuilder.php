@@ -9,7 +9,7 @@ class DefaultMenuBuilder extends AdmingeneratorMenuBuilder
 {
     protected $translation_domain = 'Admin';
     
-    public function navbarMenu(FactoryInterface $factory, array $options)
+    public function sidebarMenu(FactoryInterface $factory, array $options)
     {
         $menu = $factory->createItem('root');
         $menu->setChildrenAttributes(array('id' => 'main_navigation', 'class' => 'nav navbar-nav'));

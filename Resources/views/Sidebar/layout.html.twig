@@ -10,4 +10,7 @@
             {% endblock sidebar_profile_authenticated %}
         {% endif %}
     {% endblock sidebar_profile %}
+    {% block sidebar_menu %}
+        {{ knp_menu_render('AdmingeneratorGeneratorBundle:DefaultMenuBuilder:sidebarMenu') }}
+    {% endblock sidebar_menu %}
 </section>
