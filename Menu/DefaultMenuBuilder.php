@@ -12,7 +12,7 @@ class DefaultMenuBuilder extends AdmingeneratorMenuBuilder
     public function sidebarMenu(FactoryInterface $factory, array $options)
     {
         $menu = $factory->createItem('root');
-        $menu->setChildrenAttributes(array('id' => 'main_navigation', 'class' => 'nav navbar-nav'));
+        $menu->setChildrenAttributes(array('class' => 'sidebar-menu'));
         
         $overwrite = $this->addDropdown($menu, 'Replace this menu');
         
