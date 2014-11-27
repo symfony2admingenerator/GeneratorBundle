@@ -6,6 +6,6 @@
     ],
     "description" : "Assets for the admingenerator bundle based on AdminLTE template",
     "dependencies": {
-        "adminlte" : "1.2.1"
+        "adminlte" : "1.2.1-bower"
     }
 }

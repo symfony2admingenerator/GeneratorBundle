@@ -1,0 +1,26 @@
+{% if admingenerator_config('login_path') %}
+    {% block navbar_profile_not_authenticated_user_header%}
+        <li class="user-header bg-light-blue">
+            {% block navbar_profile_not_authenticated_user_header_inner %}
+                <img src="{{ asset('bundles/admingenerator/img/unauthenticated.png') }}" class="img-circle" alt="Unauthenticated user" />
+                <p>
+                    {{ 'profile.unauthenticated'|trans({}, 'Admingenerator') }}
+                </p>
+            {% endblock navbar_profile_not_authenticated_user_header_inner %}
+        </li>
+    {% endblock navbar_profile_not_authenticated_user_header %}
+
+    {% block navbar_profile_not_authenticated_user_body '' %}
+
+    {% block navbar_profile_not_authenticated_user_footer %}
+        <li class="user-footer">
+            {% block navbar_profile_not_authenticated_user_footer_inner %}
+                <div class="pull-right">
+                    <a href="{{ path(admingenerator_config('login_path')) }}" class="btn btn-default btn-flat">
+                        {{ 'profile.login'|trans({}, 'Admingenerator') }}
+                    </a>
+                </div>
+            {% endblock navbar_profile_not_authenticated_user_footer_inner %}
+        </li>
+    {% endblock navbar_profile_not_authenticated_user_footer %}
+{% endif %}

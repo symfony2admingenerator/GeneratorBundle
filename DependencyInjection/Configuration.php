@@ -45,7 +45,7 @@ class Configuration implements ConfigurationInterface
                 ->booleanNode('default_required')->defaultTrue()->end()
                 ->booleanNode('overwrite_if_exists')->defaultFalse()->end()
                 ->scalarNode('base_admin_template')
-                    ->defaultValue("AdmingeneratorGeneratorBundle::base_admin.html.twig")
+                    ->defaultValue("AdmingeneratorGeneratorBundle::base.html.twig")
                 ->end()
                 ->scalarNode('dashboard_welcome_path')->defaultNull()->end()
                 ->scalarNode('login_path')->defaultNull()->end()
