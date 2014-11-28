@@ -8,6 +8,7 @@
     {{ echo_endblock() }}
 {% endblock %}
 
+
 {% block list_thead_content %}
     <tr role="row" class="list-results-fields-header">
         {% if batch_actions|default is not empty %}
@@ -16,21 +17,7 @@
             </th>
         {% endif %}
         {% for column in builder.columns -%}
-            {{ echo_block('list_thead_column_' ~ (column.name|lower)) -}}
-            <th class="list-results-fields-header-column list-results-fields-header-column-{{ column.name|lower  }}{{ echo_if (column.isSortable) }} sorting{{ echo_if ("sortColumn == '" ~ column.sortOn ~ "' and sortOrder == 'ASC'") }}_asc{{ echo_elseif ("sortColumn == '" ~ column.sortOn ~ "' and sortOrder == 'DESC'") }}_desc{{ echo_endif () }}{{ echo_endif () }}">
-                {% if column.isSortable -%}
-                    {{ echo_if ("sortColumn == '" ~ column.sortOn ~ "' and sortOrder == 'ASC'") }}
-                        <a href="?sort={{ column.sortOn }}&order_by=desc" class="{{ block('sort_icon') }}">
-                    {{ echo_else() }}
-                        <a href="?sort={{ column.sortOn }}&order_by=asc" class="{{ block('sort_icon') }}">
-                    {{ echo_endif () }}
-                {%- endif -%}
-                        {{ echo_twig("'" ~ column.label|addslashes ~ "'|trans({}, '" ~ i18n_catalog|default("Admin") ~ "')") }}
-                {%- if column.isSortable -%}
-                    </a>
-                {% endif -%}
-            </th>
-            {{ echo_endblock() }}
+            {{ block('list_thead_content_column') }}
         {% endfor -%}
 
         {%- if object_actions|default is not empty %}
@@ -40,3 +27,22 @@
         {% endif -%}
     </tr>
 {% endblock list_thead_content %}
+
+
+{% block list_thead_content_column %}
+    {{ echo_block('list_thead_column_' ~ (column.name|lower)) -}}
+    <th class="list-results-fields-header-column list-results-fields-header-column-{{ column.name|lower  }}{{ echo_if (column.isSortable) }} sorting{{ echo_if ("sortColumn == '" ~ column.sortOn ~ "' and sortOrder == 'ASC'") }}_asc{{ echo_elseif ("sortColumn == '" ~ column.sortOn ~ "' and sortOrder == 'DESC'") }}_desc{{ echo_endif () }}{{ echo_endif () }}">
+        {% if column.isSortable -%}
+            {{ echo_if ("sortColumn == '" ~ column.sortOn ~ "' and sortOrder == 'ASC'") }}
+            <a href="?sort={{ column.sortOn }}&order_by=desc" class="{{ block('sort_icon') }}">
+            {{ echo_else() }}
+            <a href="?sort={{ column.sortOn }}&order_by=asc" class="{{ block('sort_icon') }}">
+            {{ echo_endif () }}
+        {%- endif -%}
+        {{ echo_twig("'" ~ column.label|addslashes ~ "'|trans({}, '" ~ i18n_catalog|default("Admin") ~ "')") }}
+        {%- if column.isSortable -%}
+            </a>
+        {% endif -%}
+    </th>
+    {{ echo_endblock() }}
+{% endblock %}

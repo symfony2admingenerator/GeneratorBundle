@@ -42,33 +42,3 @@
         {% if action.icon %}<i class="{% if action.icon is defined and action.icon|length > 0 %}fa {{ action.icon }}{% endif %}"></i> {% endif %}{{ echo_trans(action.label, {}, translationDomain) }}
     </option>
 {% endblock %}
-
-{% block form_batch_actions %}
-{{ echo_block("form_batch_actions") }}
-{% if batch_actions is defined and batch_actions|length > 0 %}
-    {% set actionPathName = builder.routePrefixWithSubfolder ~ '_' ~ bundle_name ~ ( builder.BaseGeneratorName ? "_" ~ builder.BaseGeneratorName : "" ) ~ '_batch' %}
-    <form id="form-list-{{ builder.ModelClass }}" method="post" action="{{ echo_path(actionPathName) }}">
-        <input type="hidden" value="{{ echo_twig_filter(actionPathName, 'csrf_token', true) }}" name="_csrf_token" />
-{% endif %}
-{{ echo_endblock() }}
-{% endblock %}
-    
-{% block endform_batch_actions %}
-{{ echo_block("endform_batch_actions") }}
-{% if batch_actions|default is not empty %}
-    </form>
-    
-    <script type="text/javascript">
-    jQuery(document).ready(function($) {
-        $("#form-list-{{ builder.ModelClass }}").agen$batchActions({
-            submitSelector:     '#batchActionSubmit',
-            actionsSelector:    '#batchActionSelector',
-            noneSelected:       '{{ echo_trans("batch.list.none.selected") }}',
-            selectAll:          '#batchActionSelectAll',
-            selectedItems:      '#batchActionsItemsContainer input[name="selected[]"]',
-        });
-    });
-    </script>
-{% endif %}
-{{ echo_endblock() }}
-{% endblock %}

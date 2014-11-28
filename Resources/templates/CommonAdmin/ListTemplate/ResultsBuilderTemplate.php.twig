@@ -1,10 +1,8 @@
 {% use '../CommonAdmin/ListTemplate/nbresults.php.twig' %}
+{% use '../CommonAdmin/ListTemplate/form.php.twig' %}
 {% use '../CommonAdmin/ListTemplate/thead.php.twig' %}
 {% use '../CommonAdmin/ListTemplate/tbody.php.twig' %}
 {% use '../CommonAdmin/ListTemplate/tfoot.php.twig' %}
-{% use '../CommonAdmin/ListTemplate/paginator.php.twig' %}
-{% use '../CommonAdmin/generic_actions.php.twig' %}
-{% use '../CommonAdmin/batch_actions.php.twig' %}
 
 {%- block list_results -%}
 
@@ -23,20 +21,20 @@
 <div class="col-md-12 list-results-container">
 {% endif %}
     <div class="box">
-        <div class="box-header list-nb-results">
+        <div class="box-header list-header list-nb-results">
             {{- block('list_nbresults') -}}
         </div>
-        <div class="box-body table-responsive no-padding list-results">
-            <table id="table-list-{{ builder.ModelClass|lower }}" class="table table-hover object-actions-{{ builder.ModelClass|lower }}">
-                {{ block('list_thead') }}
-                {#
-                    {{ block('form_batch_actions') }}
-                        {{ block('list_tbody') }}
-                        {{ block('list_tfoot') }}
-                    {{ block('endform_batch_actions') }}
-                #}
-            </table>
+        {{ block('form_batch_actions') }}
+            <div class="box-body table-responsive no-padding list-results">
+                <table id="table-list-{{ builder.ModelClass|lower }}" class="table table-hover object-actions-{{ builder.ModelClass|lower }}">
+                    {{ block('list_thead') }}
+                    {{ block('list_tbody') }}
+                </table>
+            </div>
+        <div class="box-footer list-footer">
+            {# {{ block('list_tfoot') }} #}
         </div>
+        {{ block('endform_batch_actions') }}
     </div>
 </div>
 {% endblock list_results %}
