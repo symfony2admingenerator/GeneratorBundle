@@ -1,4 +1,4 @@
-{% if admingenerator_config('login_path') %}
+{% if admingenerator_config('login_route') %}
     {% block navbar_profile_not_authenticated_user_header%}
         <li class="user-header bg-light-blue">
             {% block navbar_profile_not_authenticated_user_header_inner %}
@@ -16,7 +16,7 @@
         <li class="user-footer">
             {% block navbar_profile_not_authenticated_user_footer_inner %}
                 <div class="pull-right">
-                    <a href="{{ path(admingenerator_config('login_path')) }}" class="btn btn-default btn-flat">
+                    <a href="{{ path(admingenerator_config('login_route')) }}" class="btn btn-default btn-flat">
                         {{ 'profile.login'|trans({}, 'Admingenerator') }}
                     </a>
                 </div>
