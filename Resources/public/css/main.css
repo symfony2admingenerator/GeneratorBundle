@@ -1,0 +1,43 @@
+table.table {
+    clear: both;
+    margin-bottom: 6px !important;
+    max-width: none !important;
+}
+
+table.table thead .sorting,
+table.table thead .sorting_asc,
+table.table thead .sorting_desc,
+table.table thead .sorting_asc_disabled,
+table.table thead .sorting_desc_disabled {
+    cursor: pointer;
+    *cursor: hand;
+}
+
+table.table thead .sorting:after,
+table.table thead .sorting_asc:after,
+table.table thead .sorting_desc:after,
+table.table thead .sorting_asc_disabled:after,
+table.table thead .sorting_desc_disabled:after {
+    font-family: 'FontAwesome';
+}
+html[direction='ltr'] table.table thead .sorting:after,
+html[direction='ltr'] table.table thead .sorting_asc:after,
+html[direction='ltr'] table.table thead .sorting_desc:after,
+html[direction='ltr'] table.table thead .sorting_asc_disabled:after,
+html[direction='ltr'] table.table thead .sorting_desc_disabled:after {
+    text-align: right;
+    float: right;
+}
+html[direction='rtl'] table.table thead .sorting:after,
+html[direction='rtl'] table.table thead .sorting_asc:after,
+html[direction='rtl'] table.table thead .sorting_desc:after,
+html[direction='rtl'] table.table thead .sorting_asc_disabled:after,
+html[direction='rtl'] table.table thead .sorting_desc_disabled:after {
+    text-align: left;
+    float: left;
+}
+table.table thead .sorting:after { content: '\f0dc'; opacity: 0.2; }
+table.table thead .sorting_asc:after { content: '\f0d8'; }
+table.table thead .sorting_desc:after { content: '\f0d7'; }
+table.table thead .sorting_asc_disabled:after { content: '\f0d8'; opacity: 0.2; }
+table.table thead .sorting_desc_disabled:after { content: '\f0d7'; opacity: 0.2; }
