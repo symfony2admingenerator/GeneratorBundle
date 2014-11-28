@@ -2,7 +2,7 @@
 {% use '../CommonAdmin/ListTemplate/form.php.twig' %}
 {% use '../CommonAdmin/ListTemplate/thead.php.twig' %}
 {% use '../CommonAdmin/ListTemplate/tbody.php.twig' %}
-{% use '../CommonAdmin/ListTemplate/tfoot.php.twig' %}
+{% use '../CommonAdmin/ListTemplate/footer.php.twig' %}
 
 {%- block list_results -%}
 
@@ -32,7 +32,7 @@
                 </table>
             </div>
         <div class="box-footer list-footer">
-            {# {{ block('list_tfoot') }} #}
+            {{ block('list_footer') }}
         </div>
         {{ block('endform_batch_actions') }}
     </div>

@@ -30,6 +30,7 @@ class AdmingeneratorView implements ViewInterface
             'css_current_class'      => 'active',
 			'css_alignment_class'    => 'pagination-right',
 			'css_buttons_size_class' => 'pagination-sm',
+            'css_custom_class'       => ''
         ), $options);
 
         $currentPage = $pagerfanta->getCurrentPage();
@@ -59,14 +60,22 @@ class AdmingeneratorView implements ViewInterface
             if (3 == $startPage) {
                 $pages[] = array(2, 2);
             } elseif (2 != $startPage) {
-                $pages[] = sprintf('<li class="%s"><span class="%s">...</span></li>', $options['css_disabled_class'], $options['css_dots_class']);
+                $pages[] = sprintf(
+                    '<li class="%s"><span class="%s">...</span></li>',
+                    $options['css_disabled_class'],
+                    $options['css_dots_class']
+                );
             }
         }
 
         // pages
         for ($page = $startPage; $page <= $endPage; $page++) {
             if ($page == $currentPage) {
-                $pages[] = sprintf('<li class="%s"><a href="#" class="number">%s</a></li>', $options['css_current_class'], $page);
+                $pages[] = sprintf(
+                    '<li class="%s"><a href="#" class="number">%s</a></li>',
+                    $options['css_current_class'],
+                    $page
+                );
             } else {
                 $pages[] = array($page, $page);
             }
@@ -76,7 +85,11 @@ class AdmingeneratorView implements ViewInterface
         if ($pagerfanta->getNbPages() > $endPage) {
             if ($pagerfanta->getNbPages() > ($endPage + 1)) {
                 if ($pagerfanta->getNbPages() > ($endPage + 2)) {
-                    $pages[] = sprintf('<li class="%s"><span class="%s">...</span></li>', $options['css_disabled_class'], $options['css_dots_class']);
+                    $pages[] = sprintf(
+                        '<li class="%s"><span class="%s">...</span></li>',
+                        $options['css_disabled_class'],
+                        $options['css_dots_class']
+                    );
                 } else {
                     $pages[] = array($endPage + 1, $endPage + 1);
                 }
@@ -104,7 +117,12 @@ class AdmingeneratorView implements ViewInterface
             }
         }
 
-        return sprintf('<ul class="pagination %s %s">%s</ul>', $options['css_buttons_size_class'], $options['css_current_class'], $pagesHtml);
+        return sprintf(
+            '<ul class="pagination %s %s">%s</ul>',
+            $options['css_buttons_size_class'],
+            $options['css_custom_class'],
+            $pagesHtml
+        );
     }
 
     /**
