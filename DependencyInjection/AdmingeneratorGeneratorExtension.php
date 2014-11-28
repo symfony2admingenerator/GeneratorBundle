@@ -41,7 +41,7 @@ class AdmingeneratorGeneratorExtension extends Extension implements PrependExten
         $config = $this->processConfiguration($this->getConfiguration($configs, $container), $configs);
 
         $container->setParameter('admingenerator.base_admin_template', $config['base_admin_template']);
-        $container->setParameter('admingenerator.dashboard_welcome_path', $config['dashboard_welcome_path']);
+        $container->setParameter('admingenerator.dashboard_route', $config['dashboard_route']);
         $container->setParameter('admingenerator.guess_required', $config['guess_required']);
         $container->setParameter('admingenerator.default_required', $config['default_required']);
         $container->setParameter('admingenerator.login_path', $config['login_path']);

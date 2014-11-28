@@ -1,6 +1,6 @@
 <header class="header">
     {% block logo %}
-        {% set brand_path = (admingenerator_config('dashboard_welcome_path') is not null) ? path(admingenerator_config('dashboard_welcome_path')) : '#' %}
+        {% set brand_path = (admingenerator_config('dashboard_path') is not null) ? path(admingenerator_config('dashboard_path')) : '#' %}
         <a class="logo" href="{{ brand_path }}">
             {% block brand_text %}
                 {{ 'dashboard.brand'|trans({}, 'Admingenerator') }}

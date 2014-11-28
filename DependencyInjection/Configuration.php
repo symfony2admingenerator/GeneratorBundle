@@ -47,7 +47,7 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('base_admin_template')
                     ->defaultValue("AdmingeneratorGeneratorBundle::base.html.twig")
                 ->end()
-                ->scalarNode('dashboard_welcome_path')->defaultNull()->end()
+                ->scalarNode('dashboard_route')->defaultNull()->end()
                 ->scalarNode('login_path')->defaultNull()->end()
                 ->scalarNode('logout_path')->defaultNull()->end()
                 ->scalarNode('exit_path')->defaultNull()->end()
