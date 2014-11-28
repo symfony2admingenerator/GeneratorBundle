@@ -38,8 +38,6 @@ class ListBuilder extends BaseBuilder
 
     protected function findFilterColumns()
     {
-        $filterColumns = array();
-
         foreach ($this->getColumns() as $column) {
             if ($column->isFilterable()) {
                 $this->addFilterColumn($column);

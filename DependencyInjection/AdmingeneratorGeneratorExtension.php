@@ -44,9 +44,9 @@ class AdmingeneratorGeneratorExtension extends Extension implements PrependExten
         $container->setParameter('admingenerator.dashboard_route', $config['dashboard_route']);
         $container->setParameter('admingenerator.guess_required', $config['guess_required']);
         $container->setParameter('admingenerator.default_required', $config['default_required']);
-        $container->setParameter('admingenerator.login_path', $config['login_path']);
-        $container->setParameter('admingenerator.logout_path', $config['logout_path']);
-        $container->setParameter('admingenerator.exit_path', $config['exit_path']);
+        $container->setParameter('admingenerator.login_route', $config['login_route']);
+        $container->setParameter('admingenerator.logout_route', $config['logout_route']);
+        $container->setParameter('admingenerator.exit_route', $config['exit_route']);
         $container->setParameter('admingenerator.stylesheets', $config['stylesheets']);
         $container->setParameter('admingenerator.javascripts', $config['javascripts']);
 
