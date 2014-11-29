@@ -4,29 +4,28 @@
     {{ echo_block("list_footer") }}
         <div class="row">
             {{ echo_block("batch_actions_wrapper") }}
-                <div class="col-md-6 list-results-batchactions">
+                <div class="list-results-actions">
                     {#{% if batch_actions|default is not empty %}#}
                         {#<div id="batch_actions" class="pull-left btn-toolbar" role="toolbar">#}
                             {#{{ block('batch_actions') }}#}
                         {#</div>#}
                     {#{% endif -%}#}
-                </div>
-            {{ echo_endblock() }}
-            {{ echo_block("pagination_wrapper") }}
-                <div class="col-md-6 list-results-pagination">
-                    {{ block('list_paginator') }}
+                    {#{{ echo_block("generic_actions_wrapper") }}#}
+                        {#{% if actions|default is not empty %}#}
+                        {#<div id="generic_actions" class="pull-left btn-toolbar" role="toolbar">#}
+                        {#{{ block('generic_actions') -}}#}
+                        {#</div>#}
+                        {#{% endif -%}#}
+                    {#{{ echo_endblock() }}#}
                 </div>
             {{ echo_endblock() }}
         </div>
-
         <div class="row">
-            {#{{ echo_block("generic_actions_wrapper") }}#}
-                {#{% if actions|default is not empty %}#}
-                    {#<div id="generic_actions" class="pull-left btn-toolbar" role="toolbar">#}
-                        {#{{ block('generic_actions') -}}#}
-                    {#</div>#}
-                {#{% endif -%}#}
-            {#{{ echo_endblock() }}#}
+            {{ echo_block("pagination_wrapper") }}
+                <div class="list-results-pagination">
+                    {{ block('list_paginator') }}
+                </div>
+            {{ echo_endblock() }}
         </div>
     {{ echo_endblock() }}
 {% endblock %}
