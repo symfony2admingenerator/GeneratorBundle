@@ -1,12 +1,15 @@
 {% use '../CommonAdmin/ListTemplate/row.php.twig' %}
-{% use '../CommonAdmin/object_actions.php.twig' %}
 
 {% block list_row %}
-{{ echo_block('list_row') }}
-<tr class="list_trow">
-    {{- block('list_row_content') -}}
+    {{ echo_block('list_row') }}
+        <tr role="row" class="list-results-fields-row">
+            {{- block('list_row_content') -}}
 
-    {{- block('object_actions') }}
-</tr>
-{{ echo_endblock() }}
+            {%- if object_actions|default is not empty %}
+                {{ echo_block("list_row_actions") }}
+                    <td>actions</td>
+                {{ echo_endblock() }}
+            {% endif %}
+        </tr>
+    {{ echo_endblock() }}
 {% endblock list_row %}

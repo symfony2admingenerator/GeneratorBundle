@@ -4,7 +4,7 @@
             {{ echo_block("list_tbody_rows") }}
                 {{ echo_if (builder.ModelClass ~ "s is not empty") }}
                     {{ echo_for(builder.ModelClass, builder.ModelClass ~ "s" ) }}
-                        {# {{ echo_include(builder.namespacePrefixForTemplate ~ bundle_name ~ ':' ~ builder.BaseGeneratorName ~ 'List:row.html.twig') }} #}
+                        {{ echo_include(builder.namespacePrefixForTemplate ~ bundle_name ~ ':' ~ builder.BaseGeneratorName ~ 'List:row.html.twig') }}
                     {{ echo_endfor() }}
                 {{ echo_else() }}
                     <tr role="row" class="list-results-fields-row list-results-fields-row-noresults">
