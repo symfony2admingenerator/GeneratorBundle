@@ -6,8 +6,8 @@ boolean:
 
 # Pager
 pagerfanta:
-    previous:       Inapoi
-    next:           Urmatorul
+    previous:       <
+    next:           >
     view.perpage:   Arată
     num.elements:   %number% de elemente
 

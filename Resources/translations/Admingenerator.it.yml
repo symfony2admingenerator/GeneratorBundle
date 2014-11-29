@@ -6,8 +6,8 @@ boolean:
 
 # Pager
 pagerfanta:
-    previous:       Precedente
-    next:           Successivo
+    previous:       <
+    next:           >
     view.perpage:   Mostra
     num.elements:   %number% elementi
 

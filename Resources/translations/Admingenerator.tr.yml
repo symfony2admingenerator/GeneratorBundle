@@ -6,8 +6,8 @@ boolean:
 
 # Pager
 pagerfanta:
-    previous:       Önceki
-    next:           Sonraki
+    previous:       <
+    next:           >
     view.perpage:   Göster
     num.elements:   %number% element
 

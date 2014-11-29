@@ -6,8 +6,8 @@ boolean:
 
 # Pager
 pagerfanta:
-    previous:       Пред
-    next:           След
+    previous:       <
+    next:           >
     view.perpage:   Показать
     num.elements:   %number% элементов
 

@@ -6,8 +6,8 @@ boolean:
 
 # Pager
 pagerfanta:
-    previous:       Προηγούμενο
-    next:           Επόμενο
+    previous:       <
+    next:           >
     view.perpage:   Προβολή
     num.elements:   %number% στοιχείων
 

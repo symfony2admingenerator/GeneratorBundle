@@ -5,8 +5,8 @@ boolean:
     yes_or_no:  Так чи Ні
 # Pager
 pagerfanta:
-    previous:       Поп
-    next:           Наст
+    previous:       <
+    next:           >
     view.perpage:   Показати
     num.elements:   %number% елементів
 
