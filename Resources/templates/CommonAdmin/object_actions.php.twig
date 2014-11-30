@@ -1,10 +1,10 @@
 {% block object_actions %}
     {{ echo_block("object_actions") }}
-        {% if object_actions|default is not empty %}
-            {{ echo_if_granted(builder.ObjectActions|mapBy('credentials')|flatten|join(' or ')|default('denyAll'), builder.ModelClass) }}
+        {% if builder.objectActions|default is not empty %}
+            {{ echo_if_granted(builder.objectActions|mapBy('credentials')|flatten|join(' or ')|default('denyAll'), builder.ModelClass) }}
                 <div class="btn-group">
                 {{ echo_block('pre_object_actions') }}{{ echo_endblock() }}
-                {% for action in builder.ObjectActions %}
+                {% for action in builder.objectActions %}
                     {{ echo_block('object_action_' ~ action.twigName) }}
                         {% if action.credentials %}
                             {{ echo_if_granted(action.credentials, builder.ModelClass) }}

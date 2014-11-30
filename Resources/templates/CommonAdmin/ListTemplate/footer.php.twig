@@ -1,24 +1,25 @@
 {% use '../CommonAdmin/ListTemplate/paginator.php.twig' %}
+{% use '../CommonAdmin/generic_actions.php.twig' %}
 
 {% block list_footer %}
     {{ echo_block("list_footer") }}
         <div class="row">
-            {{ echo_block("batch_actions_wrapper") }}
-                <div class="list-results-actions">
-                    {#{% if batch_actions|default is not empty %}#}
-                        {#<div id="batch_actions" class="pull-left btn-toolbar" role="toolbar">#}
+            <div class="list-results-actions">
+                {{ echo_block("batch_actions_wrapper") }}
+                    {% if builder.batchActions|default is not empty %}
+                        <div class="list-results-actions-batch col-md-{{ builder.actions|default is empty ? '12' : '4' }}" role="batch-actions">
                             {#{{ block('batch_actions') }}#}
-                        {#</div>#}
-                    {#{% endif -%}#}
-                    {#{{ echo_block("generic_actions_wrapper") }}#}
-                        {#{% if actions|default is not empty %}#}
-                        {#<div id="generic_actions" class="pull-left btn-toolbar" role="toolbar">#}
-                        {#{{ block('generic_actions') -}}#}
-                        {#</div>#}
-                        {#{% endif -%}#}
-                    {#{{ echo_endblock() }}#}
-                </div>
-            {{ echo_endblock() }}
+                        </div>
+                    {% endif -%}
+                {{ echo_endblock() }}
+                {{ echo_block("generic_actions_wrapper") }}
+                    {% if builder.actions|default is not empty %}
+                        <div class="list-results-actions-generic col-md-{{ builder.batchActions|default is empty ? '12' : '8' }}" role="generic-actions">
+                            {{ block('generic_actions') -}}
+                        </div>
+                    {% endif -%}
+                {{ echo_endblock() }}
+            </div>
         </div>
         <div class="row">
             {{ echo_block("pagination_wrapper") }}

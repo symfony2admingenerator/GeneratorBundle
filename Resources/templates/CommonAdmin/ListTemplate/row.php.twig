@@ -3,7 +3,7 @@
 
 {% block list_row_content %}
     {{ echo_block("list_row_content") }}
-        {% if batch_actions|default is not empty %}
+        {% if builder.batchActions|default is not empty %}
             <td class="list-results-fields-row-column-batch">
                 <input type="checkbox" name="selected[]" class="list-results-fields-row-batch-selector" value="{{- echo_twig(builder.ModelClass ~ '.' ~ builder.getFieldGuesser().getModelPrimaryKeyName(model)) -}}" />
             </td>
@@ -22,7 +22,7 @@
             {% endif %}
         {% endfor %}
 
-        {%- if object_actions|default is not empty %}
+        {%- if builder.objectActions|default is not empty %}
             {{ echo_block("list_row_actions") }}
             <td class="list-results-fields-row-objectactions">
                 {{ block('object_actions') }}

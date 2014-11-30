@@ -17,7 +17,10 @@ class BaseBuilder extends GenericBaseBuilder
 {
     protected $columns = array();
 
-    protected $actions = array();
+    /**
+     * @var array
+     */
+    protected $actions = null;
 
     protected $objectActions = array();
 
@@ -305,7 +308,8 @@ class BaseBuilder extends GenericBaseBuilder
      */
     public function getActions()
     {
-        if (0 === count($this->actions)) {
+        if (null === $this->actions) {
+            $this->actions = array();
             $this->findActions();
         }
 

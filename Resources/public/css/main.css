@@ -42,4 +42,5 @@ table.table thead .sorting_desc:after { content: '\f0d7'; }
 table.table thead .sorting_asc_disabled:after { content: '\f0d8'; opacity: 0.2; }
 table.table thead .sorting_desc_disabled:after { content: '\f0d7'; opacity: 0.2; }
 
-.list-results-fields-row-objectactions a>span{display:none}
+.list-results-fields-row-objectactions a>span {display:none}
+.list-results-container .list-footer .row+.row {margin-top: 5px}
