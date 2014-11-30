@@ -11,18 +11,22 @@
 
 {{ echo_block("javascripts") }}
     {{- block('complementary_javascripts') -}}
-    {{- block('object_actions_script') -}}
 {{ echo_endblock() }}
 
 {{- block('site_title') -}}
 
-{{ echo_block("body") }}
+{{- block('page_title') -}}
 
-    {{- block('title') -}}
-
-    <div class="row-fluid">
-        {{- block('tabs') }}
-        
+{{ echo_block("page_content") }}
+    <div class="row">
+        {% if tabs|default is not empty %}
+            {{- block('tabs') }}
+                <div class="tab-content">
+        {% endif %}
         {{ echo_include(builder.namespacePrefixForTemplate ~ bundle_name ~ ':' ~ builder.BaseGeneratorName ~ (builder.yamlKey | capitalize) ~ ':form.html.twig') }}
+        {% if tabs|default is not empty %}
+                </div>
+            {{- block('end_tabs') }}
+        {% endif %}
     </div>	
 {{ echo_endblock() }}
