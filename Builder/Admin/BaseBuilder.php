@@ -15,15 +15,24 @@ use Admingenerator\GeneratorBundle\Generator\Action;
  */
 class BaseBuilder extends GenericBaseBuilder
 {
-    protected $columns = array();
+    /**
+     * @var array
+     */
+    protected $columns = null;
 
     /**
      * @var array
      */
     protected $actions = null;
 
-    protected $objectActions = array();
+    /**
+     * @var array
+     */
+    protected $objectActions = null;
 
+    /**
+     * @var string
+     */
     protected $columnClass = 'Column';
 
     public function getBaseAdminTemplate()
@@ -37,7 +46,8 @@ class BaseBuilder extends GenericBaseBuilder
      */
     public function getColumns()
     {
-        if (0 === count($this->columns)) {
+        if (null === $this->columns) {
+            $this->columns = array();
             $this->findColumns();
         }
 
@@ -375,7 +385,8 @@ class BaseBuilder extends GenericBaseBuilder
      */
     public function getObjectActions()
     {
-        if (0 === count($this->objectActions)) {
+        if (null === $this->objectActions) {
+            $this->objectActions = array();
             $this->findObjectActions();
         }
 

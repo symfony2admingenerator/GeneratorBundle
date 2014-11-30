@@ -44,3 +44,5 @@ table.table thead .sorting_desc_disabled:after { content: '\f0d7'; opacity: 0.2;
 
 .list-results-fields-row-objectactions a>span {display:none}
 .list-results-container .list-footer .row+.row {margin-top: 5px}
+.list-results-actions-batch .input-group-btn {left: 5px}
+.list-results-actions-batch .input-group-btn .btn {border-radius:4px}

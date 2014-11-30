@@ -5,36 +5,35 @@
 {% use '../CommonAdmin/ListTemplate/footer.php.twig' %}
 
 {%- block list_results -%}
-
-{% if builder.filterColumns is not empty %}
-    {% if builder.filterColumnGroups is not empty %}
-        {{ echo_set('filterColumnGroups', echo_twig_arr(builder.filterColumnGroups), false) }}
-        {{ echo_if('groups is empty or filterColumnGroups|intersect(groups) is not empty') }}
-<div class="col-md-9 list-results-container">
-        {{ echo_else() }}
-<div class="col-md-12 list-results-container">
-        {{ echo_endif() }}
+    {% if builder.getFilterColumns(true) is not empty %}
+        {% if builder.filterColumnGroups is not empty %}
+            {{ echo_set('filterColumnGroups', echo_twig_arr(builder.filterColumnGroups), false) }}
+            {{ echo_if('groups is empty or filterColumnGroups|intersect(groups) is not empty') }}
+    <div class="col-md-9 list-results-container">
+            {{ echo_else() }}
+    <div class="col-md-12 list-results-container no-filters">
+            {{ echo_endif() }}
+        {% else %}
+    <div class="col-md-9 list-results-container">
+        {% endif %}
     {% else %}
-<div class="col-md-9 list-results-container">
+    <div class="col-md-12 list-results-container no-filters">
     {% endif %}
-{% else %}
-<div class="col-md-12 list-results-container">
-{% endif %}
-    <div class="box">
-        <div class="box-header list-header list-nb-results">
-            {{- block('list_nbresults') -}}
-        </div>
-        {{ block('form_batch_actions') }}
-            <div class="box-body table-responsive no-padding list-results">
-                <table id="table-list-{{ builder.ModelClass|lower }}" class="table table-hover object-actions-{{ builder.ModelClass|lower }}">
-                    {{ block('list_thead') }}
-                    {{ block('list_tbody') }}
-                </table>
+        <div class="box">
+            <div class="box-header list-header list-nb-results">
+                {{- block('list_nbresults') -}}
             </div>
-        <div class="box-footer list-footer">
-            {{ block('list_footer') }}
+            {{ block('form_batch_actions') }}
+                <div class="box-body table-responsive no-padding list-results">
+                    <table id="table-list-{{ builder.ModelClass|lower }}" class="table table-hover object-actions-{{ builder.ModelClass|lower }}">
+                        {{ block('list_thead') }}
+                        {{ block('list_tbody') }}
+                    </table>
+                </div>
+            <div class="box-footer list-footer">
+                {{ block('list_footer') }}
+            </div>
+            {{ block('endform_batch_actions') }}
         </div>
-        {{ block('endform_batch_actions') }}
     </div>
-</div>
 {% endblock list_results %}
