@@ -38,7 +38,7 @@
         {%- if action.confirm %} data-confirm="{{ echo_trans(action.confirm, {}, translationDomain, 'html_attr') }}" {% endif -%}
         {%- if action.csrfProtected and not action.forceIntermediate %} data-csrf-token="{{ echo_path(actionRoute, actionParams, ['csrf_token']) }}" {% endif -%}>
             <i class="fa fa-fw {{ action.icon|default('fa-square-o') }}"></i>
-            {{ echo_trans(action.label, {}, translationDomain) }}
+            <span>{{ echo_trans(action.label, {}, translationDomain) }}</span>
     </a>
     {{ echo_endspaceless() }}
     {% endspaceless %}
