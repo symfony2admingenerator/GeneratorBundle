@@ -47,7 +47,8 @@ table.table thead .sorting_desc_disabled:after { content: '\f0d7'; opacity: 0.2;
 .list-results-actions-batch .input-group-btn {left: 5px}
 .list-results-actions-batch .input-group-btn .btn {border-radius:4px}
 
-.show-model-actions {
+.tab-content .show-model-actions,
+.form-model-actions {
     padding: 20px;
     margin-top: 20px;
     margin-bottom: 20px;
@@ -55,10 +56,11 @@ table.table thead .sorting_desc_disabled:after { content: '\f0d7'; opacity: 0.2;
     border-top: 1px solid #e5e5e5;
 }
 
-.show-model-actions:after, .show-model-actions:before {
+.tab-content .show-model-actions:after, .tab-content .show-model-actions:before,
+.form-model-actions:after, .form-model-actions:before {
     display: table;
     line-height: 0;
     content: ""
 }
 
-.show-model-actions:after{clear:both}
+.tab-content .show-model-actions:after, .form-model-actions:after {clear:both}

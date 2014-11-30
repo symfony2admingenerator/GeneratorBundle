@@ -29,11 +29,17 @@
             {% if tabs|default is not empty %}
                 {{- block('tabs') }}
                     <div class="tab-content">
+            {% else %}
+                <div class="box">
+                    <div class="box-body">
             {% endif %}
                         {{- block('show') -}}
             {% if tabs|default is not empty %}
                     </div>
                 {{- block('end_tabs') }}
+            {% else %}
+                    </div>
+                </div>
             {% endif %}
         </div>
 	    {% if sidebar|default is not empty %}

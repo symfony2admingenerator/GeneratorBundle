@@ -7,73 +7,76 @@
         {{ echo_block('show_object') }}
 
         {% for fieldsetName,fieldset in builder.fieldsets %}
-        {% set fieldsetColumns = builder.columnsFor(fieldset) %}
-        {% set fieldsetGroups = fieldsetColumns|mapBy('groups')|flatten %}
+            {% set fieldsetColumns = builder.columnsFor(fieldset) %}
+            {% set fieldsetGroups = fieldsetColumns|mapBy('groups')|flatten %}
 
-        {% if fieldsetGroups is not empty %}
-        {{ echo_set('fieldsetGroups', echo_twig_arr(fieldsetGroups), false) }}
-        {{ echo_if('groups is empty or fieldsetGroups|intersect(groups) is not empty') }}
-        {% endif %}
+            {% if fieldsetGroups is not empty %}
+                {{ echo_set('fieldsetGroups', echo_twig_arr(fieldsetGroups), false) }}
+                {{ echo_if('groups is empty or fieldsetGroups|intersect(groups) is not empty') }}
+            {% endif %}
 
-            <div class="show-model-tab-pane show-model-tab-pane-{{ fieldsetName|classify|replace({'.': '-'}) }} tab-pane">
-                {% if "NONE" != fieldsetName[:4] and "!" != fieldsetName[:1] %}
-                    <h2>{{ echo_trans(fieldsetName,{}, i18n_catalog is defined ? i18n_catalog : "Admin" ) }}</h2>
-                {% endif %}
-
-                {% for row in fieldset %}
-                    {% set rowColumns = builder.columnsFor(row) %}
-                    {% set rowGroups = rowColumns|mapBy('groups')|flatten %}
-
-                    {% if rowGroups is not empty %}
-                        {{ echo_set('rowGroups', echo_twig_arr(rowGroups), false) }}
-                        {{ echo_if('groups is empty or rowGroups|intersect(groups) is not empty') }}
+                <div class="show-model-tab-pane tab-pane-model-{{ fieldsetName|classify|replace({'.': '-'}) }} tab-pane">
+                    {% if "NONE" != fieldsetName[:4] and "!" != fieldsetName[:1] %}
+                        <h2>{{ echo_trans(fieldsetName,{}, i18n_catalog is defined ? i18n_catalog : "Admin" ) }}</h2>
                     {% endif %}
 
-                    {% for column in rowColumns %}
-                        <div class="row">
-                            {% if column.groups is not empty %}
-                                {{ echo_set('columnGroups', echo_twig_arr(column.groups), false) }}
-                                {{ echo_if('groups is empty or columnGroups|intersect(groups) is not empty') }}
-                            {% endif %}
+                    {% for row in fieldset %}
+                        {% set rowColumns = builder.columnsFor(row) %}
+                        {% set rowGroups = rowColumns|mapBy('groups')|flatten %}
 
-                            <div class="show-model-field-label show-model-field-label-{{ column.name|lower }} col-md-2 text-right">
-                                {{ echo_block('show_column_label_' ~ column.name) -}}
-                                    <strong>{{ echo_twig("'" ~ column.label|addslashes ~ "'|trans({}, '" ~ i18n_catalog|default("Admin") ~ "')") }}</strong>
-                                {{- echo_endblock() }}
+                        {% if rowGroups is not empty %}
+                            {{ echo_set('rowGroups', echo_twig_arr(rowGroups), false) }}
+                            {{ echo_if('groups is empty or rowGroups|intersect(groups) is not empty') }}
+                        {% endif %}
+
+                        {% for column in rowColumns %}
+                            <div class="row">
+                                {% if column.groups is not empty %}
+                                    {{ echo_set('columnGroups', echo_twig_arr(column.groups), false) }}
+                                    {{ echo_if('groups is empty or columnGroups|intersect(groups) is not empty') }}
+                                {% endif %}
+
+                                <div class="show-model-field-label show-model-field-label-{{ column.name|lower }} show-model-field-type-{{ column.formType|lower }} col-md-2 text-right">
+                                    {{ echo_block('show_column_label_' ~ column.name) -}}
+                                        <strong>{{ echo_twig("'" ~ column.label|addslashes ~ "'|trans({}, '" ~ i18n_catalog|default("Admin") ~ "')") }}</strong>
+                                    {{- echo_endblock() }}
+                                </div>
+
+                                <div class="show-model-field-content show-model-field-content-{{ column.name|lower }} show-model-field-type-{{ column.formType|lower }} col-md-10">
+                                    {{ block('show_column') }}
+                                </div>
+
+                                {% if column.groups is not empty %}
+                                    {{ echo_endif() }}
+                                {% endif %}
                             </div>
+                        {% endfor %}
 
-                            <div class="show-model-field-content show-model-field-content-{{ column.name|lower }} col-md-10">
-                                {{ block('show_column') }}
-                            </div>
-
-                            {% if column.groups is not empty %}
-                                {{ echo_endif() }}
-                            {% endif %}
-                        </div>
+                        {% if rowGroups is not empty %}
+                            {{ echo_endif() }}
+                        {% endif %}
                     {% endfor %}
+                </div>
 
-                    {% if rowGroups is not empty %}
-                        {{ echo_endif() }}
-                    {% endif %}
-                {% endfor %}
-            </div>
-
-        {% if fieldsetGroups is not empty %}
-        {{ echo_endif() }}
-        {% endif %}
+            {% if fieldsetGroups is not empty %}
+                {{ echo_endif() }}
+            {% endif %}
         {% endfor %}
 
         {{ echo_endblock() }}
-
-        {{ echo_block('show_actions') }}
-            <div class="show-model-actions">
-                <div class="show-model-actions-generic" role="generic-actions">
-                    {{ block("generic_actions") }}
-                </div>
-                <div class="show-model-actions-object" role="object-actions">
-                    {{ block('object_actions') }}
-                </div>
+        {% if tabs|default is empty %}
             </div>
-        {{ echo_endblock() }}
+            <div class="box-footer">
+        {% endif %}
+            {{ echo_block('show_actions') }}
+                <div class="show-model-actions">
+                    <div class="show-model-actions-generic" role="generic-actions">
+                        {{ block("generic_actions") }}
+                    </div>
+                    <div class="show-model-actions-object" role="object-actions">
+                        {{ block('object_actions') }}
+                    </div>
+                </div>
+            {{ echo_endblock() }}
     {{ echo_endblock() }}
 {% endblock %}
