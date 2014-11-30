@@ -61,6 +61,4 @@ table.table thead .sorting_desc_disabled:after { content: '\f0d7'; opacity: 0.2;
     content: ""
 }
 
-.show-model-actions:after{
-    clear: both;
-}
+.show-model-actions:after{clear:both}
