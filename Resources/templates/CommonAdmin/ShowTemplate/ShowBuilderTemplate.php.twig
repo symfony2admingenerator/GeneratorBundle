@@ -26,6 +26,7 @@
         {% else %}
         <div class="show-model show-model-{{ builder.modelClass|lower }} no-sidebar col-md-12">
         {% endif %}
+
             {% if tabs|default is not empty %}
                 {{- block('tabs') }}
                     <div class="tab-content">
@@ -33,15 +34,36 @@
                 <div class="box box-primary">
                     <div class="box-body">
             {% endif %}
-                        {{- block('show') -}}
+
+            {{- block('show') -}}
+
             {% if tabs|default is not empty %}
                     </div>
+            {% else %}
+                    </div>
+                    <div class="box-footer">
+            {% endif %}
+
+            {{ echo_block('show_actions') }}
+                <div class="show-model-actions row">
+                    <div class="show-model-actions-object col-md-6 btn-group" role="object-actions">
+                        {{ block('object_actions') }}
+                    </div>
+                    <div class="show-model-actions-generic col-md-6 text-right" role="generic-actions">
+                        {{ block("generic_actions") }}
+                    </div>
+                </div>
+            {{ echo_endblock() }}
+
+            {% if tabs|default is not empty %}
                 {{- block('end_tabs') }}
             {% else %}
                     </div>
                 </div>
             {% endif %}
         </div>
+
+
 	    {% if sidebar|default is not empty %}
             <div class="show-model-sidebar show-model-sidebar-{{ builder.modelClass|lower }} col-md-4">
                 {{- block('show_sidebar') -}}

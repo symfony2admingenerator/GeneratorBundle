@@ -1,27 +1,25 @@
 {% block generic_actions %}
     {{ echo_block("generic_actions") }}
             {% if builder.actions|default is not empty %}
-                <div class="pull-right">
-                    {{ echo_block('pre_generic_actions') }}{{ echo_endblock() }}
-                    {{ echo_if_granted(builder.actions|mapBy('credentials')|flatten|join(' or ')|default('denyAll')) }}
+                {{ echo_block('pre_generic_actions') }}{{ echo_endblock() }}
+                {{ echo_if_granted(builder.actions|mapBy('credentials')|flatten|join(' or ')|default('denyAll')) }}
 
-                    {% for action in builder.Actions %}
-                        {{ echo_block("generic_action_" ~ action.twigName) }}
-                        {% if action.credentials %}
-                            {{ echo_if_granted(action.credentials) }}
-                        {% endif %}
+                {% for action in builder.Actions %}
+                    {{ echo_block("generic_action_" ~ action.twigName) }}
+                    {% if action.credentials %}
+                        {{ echo_if_granted(action.credentials) }}
+                    {% endif %}
 
-                        {{ block('generic_action_block') }}
+                    {{ block('generic_action_block') }}
 
-                        {% if action.credentials %}
-                            {{ echo_endif() }}
-                        {% endif %}
-                        {{ echo_endblock() }}
-                    {% endfor %}
+                    {% if action.credentials %}
+                        {{ echo_endif() }}
+                    {% endif %}
+                    {{ echo_endblock() }}
+                {% endfor %}
 
-                    {{ echo_endif() }}
-                    {{ echo_block('post_generic_actions') }}{{ echo_endblock() }}
-                </div>
+                {{ echo_endif() }}
+                {{ echo_block('post_generic_actions') }}{{ echo_endblock() }}
             {% endif %}
     {{ echo_endblock() }}
 {% endblock %}

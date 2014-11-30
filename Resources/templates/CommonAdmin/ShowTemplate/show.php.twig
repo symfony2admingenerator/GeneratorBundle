@@ -3,9 +3,7 @@
 {% use '../CommonAdmin/ShowTemplate/column.php.twig' %}
 
 {% block show %}
-    {{ echo_block('show_wrapper') }}
-        {{ echo_block('show_object') }}
-
+    {{ echo_block('show_object') }}
         {% for fieldsetName,fieldset in builder.fieldsets %}
             {% set fieldsetColumns = builder.columnsFor(fieldset) %}
             {% set fieldsetGroups = fieldsetColumns|mapBy('groups')|flatten %}
@@ -62,21 +60,5 @@
                 {{ echo_endif() }}
             {% endif %}
         {% endfor %}
-
-        {{ echo_endblock() }}
-        {% if tabs|default is empty %}
-            </div>
-            <div class="box-footer">
-        {% endif %}
-            {{ echo_block('show_actions') }}
-                <div class="show-model-actions">
-                    <div class="show-model-actions-generic" role="generic-actions">
-                        {{ block("generic_actions") }}
-                    </div>
-                    <div class="show-model-actions-object" role="object-actions">
-                        {{ block('object_actions') }}
-                    </div>
-                </div>
-            {{ echo_endblock() }}
     {{ echo_endblock() }}
 {% endblock %}

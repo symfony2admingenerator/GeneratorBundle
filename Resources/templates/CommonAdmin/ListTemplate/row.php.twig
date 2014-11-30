@@ -25,7 +25,9 @@
         {%- if builder.objectActions|default is not empty %}
             {{ echo_block("list_row_actions") }}
             <td class="list-results-fields-row-objectactions">
-                {{ block('object_actions') }}
+                <div class="col-md-12 btn-group">
+                    {{ block('object_actions') }}
+                </div>
             </td>
             {{ echo_endblock() }}
         {% endif -%}

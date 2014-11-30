@@ -15,7 +15,7 @@
                 {{ echo_endblock() }}
                 {{ echo_block("generic_actions_wrapper") }}
                     {% if builder.actions|default is not empty %}
-                        <div class="list-results-actions-generic col-md-{{ builder.batchActions|default is empty ? '12' : '8' }}" role="generic-actions">
+                        <div class="list-results-actions-generic col-md-{{ builder.batchActions|default is empty ? '12' : '8' }} text-right" role="generic-actions">
                             {{ block('generic_actions') -}}
                         </div>
                     {% endif -%}
