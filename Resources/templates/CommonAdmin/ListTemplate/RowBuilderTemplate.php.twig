@@ -4,12 +4,6 @@
     {{ echo_block('list_row') }}
         <tr role="row" class="list-results-fields-row">
             {{- block('list_row_content') -}}
-
-            {%- if object_actions|default is not empty %}
-                {{ echo_block("list_row_actions") }}
-                    <td>actions</td>
-                {{ echo_endblock() }}
-            {% endif %}
         </tr>
     {{ echo_endblock() }}
 {% endblock list_row %}

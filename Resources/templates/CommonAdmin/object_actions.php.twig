@@ -1,51 +1,24 @@
 {% block object_actions %}
-{{ echo_block("object_actions") }}
-{% if object_actions|default is not empty %}
-    {% if builder.yamlKey is sameas('list') or builder.yamlKey is sameas('nested_list') %}
-    <td class="object_actions">
-    {% endif %}
-
-    {{ echo_if_granted(builder.ObjectActions|mapBy('credentials')|flatten|join(' or ')|default('denyAll'), builder.ModelClass) }}
-
-        <div class="btn-group{% if builder.yamlKey is not sameas('list') %} pull-right{% endif %}">
-        {{ echo_block('pre_object_actions') }}{{ echo_endblock() }}
-        {% for action in builder.ObjectActions %}
-            {{ echo_block('object_action_' ~ action.twigName) }}
-                {% if action.credentials %}
-                    {{ echo_if_granted(action.credentials, builder.ModelClass) }}
-                {% endif -%}
-
-                {{ block('object_action_block') }}
-            
-                {%- if action.credentials %}
-                    {{ echo_endif() }}
-                {% endif %}
-            {{ echo_endblock() }}
-        {% endfor %}
-        {{ echo_block('post_object_actions') }}{{ echo_endblock() }}
-        </div>
-
-    {{ echo_endif() }}
-
-    {% if builder.yamlKey is sameas('list') or builder.yamlKey is sameas('nested_list') %}
-    </td>
-    {% endif %}
-{% endif -%}
-{{ echo_endblock() }}
-{% endblock %}
-
-{% block object_actions_script %}
-    {{ echo_block("object_actions_script") }}
-    {% if object_actions|default is not empty %}
-    
-    <script type="text/javascript">
-    jQuery(document).ready(function($) {
-        $(".object-actions-{{ builder.ModelClass }}").agen$objectActions({
-            actionsSelector: '.object_actions a'
-        });
-    });
-    </script>
-    {% endif %}
+    {{ echo_block("object_actions") }}
+        {% if object_actions|default is not empty %}
+            {{ echo_if_granted(builder.ObjectActions|mapBy('credentials')|flatten|join(' or ')|default('denyAll'), builder.ModelClass) }}
+                <div class="btn-group">
+                {{ echo_block('pre_object_actions') }}{{ echo_endblock() }}
+                {% for action in builder.ObjectActions %}
+                    {{ echo_block('object_action_' ~ action.twigName) }}
+                        {% if action.credentials %}
+                            {{ echo_if_granted(action.credentials, builder.ModelClass) }}
+                        {% endif -%}
+                        {{ block('object_action_block') }}
+                        {%- if action.credentials %}
+                            {{ echo_endif() }}
+                        {% endif %}
+                    {{ echo_endblock() }}
+                {% endfor %}
+                {{ echo_block('post_object_actions') }}{{ echo_endblock() }}
+                </div>
+            {{ echo_endif() }}
+        {% endif -%}
     {{ echo_endblock() }}
 {% endblock %}
 
@@ -56,18 +29,32 @@
 
     {% spaceless %}
     {{ echo_spaceless() }}
-    <a  class="btn btn-default {% if builder.yamlKey is sameas('list') %}btn-xs {% endif %}{{ action.class|default('') }}" href="{{ echo_path(actionRoute, actionParams) }}"
-        data-original-title="{{ echo_trans(action.label, {}, translationDomain) }}"
+    <a  class="btn btn-default {% if builder.yamlKey is sameas('list') %}btn-xs {% endif %}{{ action.class|default('') }}"
+        href="{{ echo_path(actionRoute, actionParams) }}"
+        data-original-title="{{ echo_trans(action.label, {}, translationDomain, 'html_attr') }}"
         {% if builder.yamlKey is sameas('list') %}
-        rel="tooltip"
+            rel="tooltip"
         {% endif %}
-        {%- if action.confirm %} data-confirm="{{ echo_trans(action.confirm, {}, translationDomain) }}" {% endif -%}
+        {%- if action.confirm %} data-confirm="{{ echo_trans(action.confirm, {}, translationDomain, 'html_attr') }}" {% endif -%}
         {%- if action.csrfProtected and not action.forceIntermediate %} data-csrf-token="{{ echo_path(actionRoute, actionParams, ['csrf_token']) }}" {% endif -%}>
             <i class="fa fa-fw {{ action.icon|default('fa-square-o') }}"></i>
-            {% if builder.yamlKey is not sameas('list') %}
             {{ echo_trans(action.label, {}, translationDomain) }}
-            {% endif %}
     </a>
     {{ echo_endspaceless() }}
     {% endspaceless %}
+{% endblock %}
+
+{% block object_actions_script %}
+    {{ echo_block("object_actions_script") }}
+    {% if object_actions|default is not empty %}
+
+        <script type="text/javascript">
+            jQuery(document).ready(function($) {
+                $(".object-actions-{{ builder.ModelClass }}").agen$objectActions({
+                    actionsSelector: '.object_actions a'
+                });
+            });
+        </script>
+    {% endif %}
+    {{ echo_endblock() }}
 {% endblock %}

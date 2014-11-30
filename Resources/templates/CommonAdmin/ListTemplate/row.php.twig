@@ -1,4 +1,5 @@
 {% use '../CommonAdmin/ListTemplate/column.php.twig' %}
+{% use '../CommonAdmin/object_actions.php.twig' %}
 
 {% block list_row_content %}
     {{ echo_block("list_row_content") }}
@@ -7,6 +8,7 @@
                 <input type="checkbox" name="selected[]" class="list-results-fields-row-batch-selector" value="{{- echo_twig(builder.ModelClass ~ '.' ~ builder.getFieldGuesser().getModelPrimaryKeyName(model)) -}}" />
             </td>
         {% endif %}
+
         {% for column in builder.columns %}
             {% if column.groups|default is not empty %}
                 {{ echo_set('columnGroups', echo_twig_arr(column.groups), false) }}
@@ -19,5 +21,13 @@
                 {{ echo_endif() }}
             {% endif %}
         {% endfor %}
+
+        {%- if object_actions|default is not empty %}
+            {{ echo_block("list_row_actions") }}
+            <td class="list-results-fields-row-objectactions">
+                {{ block('object_actions') }}
+            </td>
+            {{ echo_endblock() }}
+        {% endif -%}
     {{ echo_endblock() }}
 {% endblock %}
