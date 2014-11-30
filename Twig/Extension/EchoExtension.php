@@ -55,10 +55,10 @@ class EchoExtension extends \Twig_Extension
             $transParameters="{";
 
             foreach ($parameters as $key => $value) {
-                $transParameters.= "'%".$key."%': '".$value."',";
+                $transParameters.= "'%".$key."%': '".str_replace("'", "\'", $value)."',";
             }
             foreach ($bag_parameters as $key => $value) {
-                $transParameters.= "'%".$key."%': ".$value.",";
+                $transParameters.= "'%".$key."%': ".str_replace("'", "\'", $value).",";
             }
 
             $transParameters.="}";
@@ -66,7 +66,7 @@ class EchoExtension extends \Twig_Extension
 
         return sprintf(
             '{{ "%s"|trans(%s, "%s")%s }}',
-            $str,
+            str_replace('"', '\"', $str),
             $transParameters,
             $catalog,
             $escape ? sprintf('|escape("%s")', $escape) : ''

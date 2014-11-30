@@ -39,6 +39,7 @@ class EchoExtensionTest extends BaseExtensionTest
         $tpls = array(
             'string' => '{{ echo_trans( "foo" ) }}',
             'variable_key' => '{{ echo_trans( name ) }}',
+            'quote_included' => '{{ echo_trans( "My awesome \"title\"") }}'
         );
 
         $returns = array(
@@ -50,6 +51,10 @@ class EchoExtensionTest extends BaseExtensionTest
                 '{{ "cedric"|trans({}, "Admingenerator") }}',
                 'trans return a good trans tag with variable as key'
              ),
+            'quote_included' => array(
+                '{{ "My awesome \"title\""|trans({}, "Admingenerator") }}',
+                'trans return a good trans tag with variable as key'
+            ),
         );
 
         $this->runTwigTests($tpls, $returns);
@@ -81,17 +86,22 @@ class EchoExtensionTest extends BaseExtensionTest
         $tpls = array(
             'string' => "{{ echo_trans('Display all <b>%foo% %bar%</b> results', { 'foo': 'foo', 'bar': 'bar' }) }}",
             'variable_key' => '{{ echo_trans(name, { \'foo\': \'foo\', \'bar\': \'bar\' }) }}',
+            'quote_in_param_value' => '{{ echo_trans(name, { \'foo\': \'foo\\\'s\', \'bar\': \'bar\' }) }}',
         );
 
         $returns = array(
             'string' => array(
                 '{{ "Display all <b>%foo% %bar%</b> results"|trans({\'%foo%\': \'foo\',\'%bar%\': \'bar\',}, "Admingenerator") }}',
                 'trans return a good trans tag with string elements'
-             ),
+            ),
             'variable_key' => array(
                 '{{ "cedric"|trans({\'%foo%\': \'foo\',\'%bar%\': \'bar\',}, "Admingenerator") }}',
                 'trans return a good trans tag with variable as key'
-             ),
+            ),
+            'quote_in_param_value' => array(
+                '{{ "cedric"|trans({\'%foo%\': \'foo\\\'s\',\'%bar%\': \'bar\',}, "Admingenerator") }}',
+                'trans return a good trans tag with variable as key'
+            ),
         );
 
         $this->runTwigTests($tpls, $returns);
