@@ -46,3 +46,21 @@ table.table thead .sorting_desc_disabled:after { content: '\f0d7'; opacity: 0.2;
 .list-results-container .list-footer .row+.row {margin-top: 5px}
 .list-results-actions-batch .input-group-btn {left: 5px}
 .list-results-actions-batch .input-group-btn .btn {border-radius:4px}
+
+.show-model-actions {
+    padding: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background-color: #f5f5f5;
+    border-top: 1px solid #e5e5e5;
+}
+
+.show-model-actions:after, .show-model-actions:before {
+    display: table;
+    line-height: 0;
+    content: ""
+}
+
+.show-model-actions:after{
+    clear: both;
+}

@@ -3,7 +3,7 @@
 {% use '../CommonAdmin/stylesheets.php.twig' %}
 {% use '../CommonAdmin/javascripts.php.twig' %}
 {% use '../CommonAdmin/title.php.twig' %}
-{#{% use '../CommonAdmin/tabs.php.twig' %}#}
+{% use '../CommonAdmin/tabs.php.twig' %}
 
 {{ echo_extends( builder.getBaseAdminTemplate ) }}
 
@@ -24,16 +24,17 @@
         {% if sidebar|default is not empty %}
         <div class="show-model show-model-{{ builder.modelClass|lower }} col-md-8">
         {% else %}
-        <div class="show-model show-model-{{ builder.modelClass|lower }} col-md-12">
+        <div class="show-model show-model-{{ builder.modelClass|lower }} no-sidebar col-md-12">
         {% endif %}
-        {#{{- block('tabs') }}#}
-        {#{% if tabs|default is not empty %}#}
-            {#<div class="tab-content">#}
-        {#{% endif %}#}
-            {{- block('show') -}}
-        {#{% if tabs|default is not empty %}#}
-            {#</div>#}
-        {#{% endif %}#}
+            {% if tabs|default is not empty %}
+                {{- block('tabs') }}
+                    <div class="tab-content">
+            {% endif %}
+                        {{- block('show') -}}
+            {% if tabs|default is not empty %}
+                    </div>
+                {{- block('end_tabs') }}
+            {% endif %}
         </div>
 	    {% if sidebar|default is not empty %}
             <div class="show-model-sidebar show-model-sidebar-{{ builder.modelClass|lower }} col-md-4">

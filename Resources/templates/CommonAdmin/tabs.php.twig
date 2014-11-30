@@ -1,33 +1,37 @@
 {% block tabs %}
-{{ echo_block("form_tabs") }}
-{% if tabs|default is not empty %}
-    
-    <ul id="form_tabs" class="form_tabs nav nav-tabs">
-        {% for name, tab in tabs %}
-            {% set tabColumns = builder.getColumnsFor(tab) %}
-            {% set tabGroups = tabColumns|mapBy('groups')|flatten %}
+    {% if tabs|default is not empty %}
+        <div class="nav-tabs-custom">
+            {{ echo_block("nav_tabs_wrapper") }}
+                <ul class="nav nav-tabs">
+                    {{ echo_block("nav_tabs") }}
+                        {% for name, tab in tabs %}
+                            {% set tabColumns = builder.getColumnsFor(tab) %}
+                            {% set tabGroups = tabColumns|mapBy('groups')|flatten %}
 
-            {% if tabGroups is not empty %}
-            {{ echo_set('tabGroups', echo_twig_arr(tabGroups), false) }}
-            {{ echo_if('groups is empty or tabGroups|intersect(groups) is not empty') }}
-            {% endif %}
-            <li>
-                <a data-toggle="tab" href="#"
-                   data-target="{%- for fieldsetName,fieldset in tab -%}{{ '.form_fieldset_'~fieldsetName|classify|replace({'.': '_'}) }}{%if not loop.last%},{% endif %}{% endfor %}">
-                    {{ echo_trans(name, {}, i18n_catalog|default("Admin") ) }}
-                </a>
-            </li>
-            {% if tabGroups is not empty %}
-            {{ echo_endif() }}
-            {% endif %}
-        {% endfor %}
-    </ul>
+                            {{ echo_block("nav_tabs"~name|classify|replace({'.': '_'})) }}
+                                {% if tabGroups is not empty %}
+                                {{ echo_set('tabGroups', echo_twig_arr(tabGroups), false) }}
+                                {{ echo_if('groups is empty or tabGroups|intersect(groups) is not empty') }}
+                                {% endif %}
+                                <li>
+                                    <a data-toggle="tab" href="#"
+                                       data-target="{%- for fieldsetName,fieldset in tab -%}{{ '.show-model-tab-pane-'~fieldsetName|classify|replace({'.': '-'}) }}{%if not loop.last%},{% endif %}{% endfor %}">
+                                        {{ echo_trans(name, {}, i18n_catalog|default("Admin") ) }}
+                                    </a>
+                                </li>
+                                {% if tabGroups is not empty %}
+                                {{ echo_endif() }}
+                                {% endif %}
+                            {{ echo_endblock() }}
+                        {% endfor %}
+                    {{ echo_endblock() }}
+                </ul>
+            {{ echo_endblock() }}
+    {% endif %}
+{% endblock %}
 
-    <script type="text/javascript">
-        jQuery(document).ready(function($) {
-            $('#form_tabs').agen$tabs();
-        });
-    </script>
-{% endif %}
-{{ echo_endblock() }}
+{% block end_tabs %}
+    {% if tabs|default is not empty %}
+        </div>
+    {% endif %}
 {% endblock %}
