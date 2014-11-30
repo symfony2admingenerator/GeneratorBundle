@@ -34,7 +34,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
             'guess_required' => true,
             'default_required' => true,
             'overwrite_if_exists' => false,
-            'base_admin_template' => 'AdmingeneratorGeneratorBundle::base_admin.html.twig',
+            'base_admin_template' => 'AdmingeneratorGeneratorBundle::base.html.twig',
             'dashboard_route' => null,
             'login_route' => null,
             'logout_route' => null,

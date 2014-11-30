@@ -41,9 +41,9 @@ class EchoExtension extends \Twig_Extension
      * @param string $catalog
      * @return string
      */
-    public function getEchoTrans($str, array $parameters = array(), $catalog = 'Admingenerator')
+    public function getEchoTrans($str, array $parameters = array(), $catalog = 'Admingenerator', $escape = null)
     {
-        $echo_parameters=null;
+        $transParameters='{}';
         $bag_parameters=array();
 
         if ($parameterBag = $this->getParameterBag($str)) {
@@ -52,19 +52,25 @@ class EchoExtension extends \Twig_Extension
         }
 
         if (!empty($parameters) || !empty($bag_parameters)) {
-            $echo_parameters="with {";
+            $transParameters="{";
 
             foreach ($parameters as $key => $value) {
-                $echo_parameters.= "'%".$key."%': '".$value."',";
+                $transParameters.= "'%".$key."%': '".$value."',";
             }
             foreach ($bag_parameters as $key => $value) {
-                $echo_parameters.= "'%".$key."%': ".$value.",";
+                $transParameters.= "'%".$key."%': ".$value.",";
             }
 
-            $echo_parameters.="} ";
+            $transParameters.="}";
         }
 
-        return '{% trans '.$echo_parameters.'from "'.$catalog.'" %}'.$str.'{% endtrans %}';
+        return sprintf(
+            '{{ "%s"|trans(%s, "%s")%s }}',
+            $str,
+            $transParameters,
+            $catalog,
+            $escape ? sprintf('|escape("%s")', $escape) : ''
+        );
     }
 
     /**
