@@ -5,7 +5,7 @@
 {% use '../CommonAdmin/ListTemplate/footer.php.twig' %}
 
 {%- block list_results -%}
-    {% if builder.getFilterColumns(true) is not empty %}
+    {% if builder.filtersMode != 'top' and builder.getFilterColumns(true) is not empty %}
         {% if builder.filterColumnGroups is not empty %}
             {{ echo_set('filterColumnGroups', echo_twig_arr(builder.filterColumnGroups), false) }}
             {{ echo_if('groups is empty or filterColumnGroups|intersect(groups) is not empty') }}

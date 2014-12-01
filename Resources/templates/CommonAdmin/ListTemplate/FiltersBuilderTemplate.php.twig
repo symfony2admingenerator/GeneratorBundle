@@ -5,10 +5,19 @@
             {{ echo_set('filterColumnGroups', echo_twig_arr(builder.filterColumnGroups), false) }}
             {{ echo_if('groups is empty or filterColumnGroups|intersect(groups) is not empty') }}
         {% endif %}
+        {% if builder.filtersMode == 'top' %}
+        <div class="col-md-12 list-filters-container">
+        {% else %}
         <div class="col-md-3 list-filters-container">
+        {% endif %}
             <div class="box">
                 <div class="box-header">
                     <h3 class="box-title">{{ echo_trans('list.filters') }}</h3>
+                    {% if builder.filtersMode == 'top' %}
+                        <div class="box-tools pull-right">
+                            <button class="btn btn-primary btn-xs" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        </div>
+                    {% endif %}
                 </div>
                 <form action="{{ echo_twig('filtersUrl') }}" method="post" {{ echo_twig("form_enctype(form)") }} role="form">
                     <div class="box-body">
