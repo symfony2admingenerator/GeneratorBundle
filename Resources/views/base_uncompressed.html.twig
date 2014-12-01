@@ -73,9 +73,13 @@
     {% endblock wrapper %}
 
     {% block javascripts %}
-        <script src="{{ asset("components/jquery/dist/jquery.min.js") }}" type="text/javascript"></script>
+        <script src="{{ asset("components/jquery/jquery.min.js") }}" type="text/javascript"></script>
         <script src="{{ asset("components/bootstrap/dist/js/bootstrap.min.js") }}" type="text/javascript"></script>
-        <script src="{{ asset("components/adminlte/js/app.js") }}" type="text/javascript"></script>
+        <script src="{{ asset("components/iCheck/icheck.min.js") }}" type="text/javascript"></script>
+        <script src="{{ asset("components/slimScroll/jquery.slimscroll.min.js") }}" type="text/javascript"></script>
+        <script src="{{ asset("components/jquery-resize/jquery.ba-resize.min.js") }}" type="text/javascript"></script>
+        <script src="{{ asset("bundles/admingeneratorgenerator/js/adminlte.js") }}" type="text/javascript"></script>
+        <script src="{{ asset("bundles/admingeneratorgenerator/js/main.js") }}" type="text/javascript"></script>
     {% endblock %}
 
 {% endblock body_content %}

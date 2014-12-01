@@ -6,7 +6,7 @@
         'components/bootstrap/dist/css/bootstrap.css'
         'components/font-awesome/css/font-awesome.css'
         'components/adminlte/css/AdminLTE.css'
-        'bundles/admingeneratorgenerator/css/main.css'
+        '@AdmingeneratorGeneratorBundle/Resources/public/css/main.css'
     %}
         <link rel="stylesheet" href="{{ asset_url }}" type="text/css" media="all" />
     {% endstylesheets %}
@@ -22,14 +22,18 @@
         <script type="text/javascript" src="{{ asset_url }}"></script>
     <![endif]-->
     {% endjavascripts %}
-{% endblock script_head %}
+{% endblock %}
 
 {% block javascripts %}
     {% javascripts package='admingenerator_js' filter='?uglifyjs2'
     output='assetic/js/compiled/admingenerator.min.js'
-        'components/jquery/dist/jquery.js'
+        'components/jquery/jquery.js'
         'components/bootstrap/dist/js/bootstrap.js'
-        'components/adminlte/js/app.js'
+        'components/iCheck/icheck.js'
+        'components/slimScroll/jquery.slimscroll.js'
+        'components/jquery-resize/jquery.ba-resize.js'
+        '@AdmingeneratorGeneratorBundle/Resources/public/js/adminlte.js'
+        '@AdmingeneratorGeneratorBundle/Resources/public/js/main.js'
     %}
         <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
