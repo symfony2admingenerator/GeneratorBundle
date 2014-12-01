@@ -30,7 +30,7 @@
                                         {{ echo_set('columnGroups', echo_twig_arr(column.groups), false) }}
                                         {{ echo_if('groups is empty or columnGroups|intersect(groups) is not empty') }}
                                     {% endif %}
-                                        <div class="{{ rowspan }} form-model-field form-model-field-{{ column.name }} form-model-type-{{ column.formType|lower }}">
+                                        <div class="{{ rowspan }} form-model-field form-model-field-{{ column.name }} form-model-type-{{ column.formType|lower }} form-group">
                                             {{ echo_block("form_" ~ (column.name|lower)) }}
                                                 {{ echo_twig("form_row(form['" ~ column.name ~ "'])") }}
                                             {{ echo_endblock() }}

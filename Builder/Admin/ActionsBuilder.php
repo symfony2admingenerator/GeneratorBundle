@@ -13,7 +13,7 @@ class ActionsBuilder extends BaseBuilder
     /**
      * @var array
      */
-    protected $batch_actions  = array();
+    protected $batchActions  = null;
 
     /**
      * (non-PHPdoc)
@@ -30,6 +30,10 @@ class ActionsBuilder extends BaseBuilder
      */
     public function getVariables()
     {
+        if (!$this->variables->count()) {
+            return array();
+        }
+
         // If credentials are not globally defined,
         // check if an action have credentials
         if (null === $this->getVariable('credentials')) {
@@ -51,11 +55,12 @@ class ActionsBuilder extends BaseBuilder
      */
     public function getBatchActions()
     {
-        if (0 === count($this->batch_actions)) {
+        if (null === $this->batchActions) {
+            $this->batchActions = array();
             $this->findBatchActions();
         }
 
-        return $this->batch_actions;
+        return $this->batchActions;
     }
 
     protected function setUserBatchActionConfiguration(Action $action)
@@ -83,7 +88,7 @@ class ActionsBuilder extends BaseBuilder
 
     protected function addBatchAction(Action $action)
     {
-        $this->batch_actions[$action->getName()] = $action;
+        $this->batchActions[$action->getName()] = $action;
     }
 
     protected function findBatchActions()
@@ -95,7 +100,7 @@ class ActionsBuilder extends BaseBuilder
             if(!$action) {
                 $action = new Action($actionName);
             }
-            
+
             if ($globalCredentials = $this->getGenerator()->getFromYaml('params.credentials')) {
                 // If generator is globally protected by credentials
                 // batch actions are also protected
