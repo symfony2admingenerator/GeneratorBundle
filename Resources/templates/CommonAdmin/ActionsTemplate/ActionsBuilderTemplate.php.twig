@@ -25,6 +25,8 @@
 
 {% for action in builder.ObjectActions %}    
     {{ echo_block('form_' ~ action.name|lower) }}
-        {{- block('form') -}}
+        <div class="action-model action-model-{{ builder.modelClass }} action-action-{{ action.name|lower }} col-md-12">
+            {{- block('form') -}}
+        </div>
     {{ echo_endblock() }}
 {% endfor %}
