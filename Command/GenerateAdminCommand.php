@@ -12,7 +12,10 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Sensio\Bundle\GeneratorBundle\Command\Validators;
-use Sensio\Bundle\GeneratorBundle\Command\Helper\DialogHelper;
+use Sensio\Bundle\GeneratorBundle\Command\Helper\QuestionHelper;
+use Symfony\Component\Console\Question\Question;
+use Symfony\Component\Console\Question\ConfirmationQuestion;
+use Symfony\Component\Console\Question\ChoiceQuestion;
 
 class GenerateAdminCommand extends GenerateBundleCommand
 {
@@ -56,48 +59,43 @@ EOT
     }
     protected function interact(InputInterface $input, OutputInterface $output)
     {
-        $dialog = $this->getDialogHelper();
-        $dialog->writeSection($output, 'Welcome to the Symfony2 admin generator');
+        $questionHelper = $this->getQuestionHelper();
+        $questionHelper->writeSection($output, 'Welcome to the Symfony2 admin generator');
         $output->writeln('<comment>Create an admingenerator bundle with generate:bundle</comment>');
 
-        $generator = $dialog->askAndValidate($output,
-          $dialog->getQuestion('Generator to use (doctrine, doctrine_odm, propel)', $input->getOption('generator')),
-          function ($generator) {
-            if (!in_array($generator, array('doctrine','doctrine_odm','propel'))) {
-              throw new \RuntimeException('Generator to use have to be doctrine, doctrine_odm or propel');
-            }
 
-            return $generator;
-          }, false, $input->getOption('generator')
+        $generator = $input->getOption('generator');
+        $question = new ChoiceQuestion(
+            'Generator to use (doctrine, doctrine_odm, propel)',
+            array('doctrine','doctrine_odm','propel'),
+            0
         );
-
+        $question->setErrorMessage('Generator to use have to be doctrine, doctrine_odm or propel.');
+        $generator = $questionHelper->ask($input, $output, $question);
         $input->setOption('generator', $generator);
 
         // Model name
-        $modelName = $dialog->askAndValidate($output,
-          $dialog->getQuestion('Model name', $input->getOption('model-name')),
-          function($modelName) {
-            if (empty($modelName) || preg_match('#[^a-zA-Z0-9]#', $modelName)) {
+        $modelName = $input->getOption('model-name');
+        $question = new Question($questionHelper->getQuestion('Model name', $modelName), $modelName);
+        $question->setValidator(function ($answer) {
+            if (empty($answer) || preg_match('#[^a-zA-Z0-9]#', $answer)) {
               throw new \RuntimeException('Model name should not contain any special characters nor spaces.');
             }
-
-            return $modelName;
-          }, false, $input->getOption('model-name')
-        );
+            return $answer;
+        });
+        $modelName = $questionHelper->ask($input, $output, $question);
         $input->setOption('model-name', $modelName);
 
         // prefix
-        $prefix = $dialog->askAndValidate($output,
-          $dialog->getQuestion('Prefix of yaml', $input->getOption('prefix')),
-          function ($prefix) {
-            if (!preg_match('/([a-z]+)/i', $prefix)) {
-              throw new \RuntimeException('Prefix have to be a simple word');
-            }
-
-            return $prefix;
-          }, false, $input->getOption('prefix')
-        );
-
+        $prefix = $input->getOption('prefix');
+        $question = new Question($questionHelper->getQuestion('Prefix of yaml', $prefix), $prefix);
+        $question->setValidator(function ($prefix) { 
+            if (!preg_match('/([a-z]+)/i', $prefix)) { 
+                throw new \RuntimeException('Prefix have to be a simple word'); 
+            } 
+            return $prefix; 
+        });
+        $prefix = $questionHelper->ask($input, $output, $question);
         $input->setOption('prefix', $prefix);
 
         parent::interact($input, $output);
@@ -112,10 +110,11 @@ EOT
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $dialog = $this->getDialogHelper();
+        $questionHelper = $this->getQuestionHelper();
 
         if ($input->isInteractive()) {
-            if (!$dialog->askConfirmation($output, $dialog->getQuestion('Do you confirm generation', 'yes', '?'), true)) {
+            $question = new ConfirmationQuestion('Do you confirm generation ?', true);
+            if (!$questionHelper->ask($input, $output, $question)) {
                 $output->writeln('<error>Command aborted</error>');
 
                 return 1;
@@ -137,7 +136,7 @@ EOT
         $format = Validators::validateFormat($input->getOption('format'));
         $structure = $input->getOption('structure');
 
-        $dialog->writeSection($output, 'Bundle generation');
+        $questionHelper->writeSection($output, 'Bundle generation');
 
         if (!$this->getContainer()->get('filesystem')->isAbsolutePath($dir)) {
             $dir = getcwd().'/'.$dir;
@@ -155,18 +154,18 @@ EOT
         $output->writeln('Generating the bundle code: <info>OK</info>');
 
         $errors = array();
-        $runner = $dialog->getRunner($output, $errors);
+        $runner = $questionHelper->getRunner($output, $errors);
 
         // check that the namespace is already autoloaded
         $runner($this->checkAutoloader($output, $namespace, $bundle, $dir));
 
         // register the bundle in the Kernel class
-        $runner($this->updateKernel($dialog, $input, $output, $this->getContainer()->get('kernel'), $namespace, $bundle));
+        $runner($this->updateKernel($questionHelper, $input, $output, $this->getContainer()->get('kernel'), $namespace, $bundle));
 
         // routing
-        $runner($this->updateRouting($dialog, $input, $output, $bundle, $format));
+        $runner($this->updateRouting($questionHelper, $input, $output, $bundle, $format));
 
-        $dialog->writeGeneratorSummary($output, $errors);
+        $questionHelper->writeGeneratorSummary($output, $errors);
     }
 
     protected function createGenerator()
@@ -174,11 +173,12 @@ EOT
         return new BundleGenerator($this->getContainer()->get('filesystem'), __DIR__.'/../Resources/skeleton/bundle');
     }
 
-    protected function updateRouting(DialogHelper $dialog, InputInterface $input, OutputInterface $output, $bundle, $format)
+    protected function updateRouting(QuestionHelper $questionHelper, InputInterface $input, OutputInterface $output, $bundle, $format)                                                         
     {
         $auto = true;
-        if ($input->isInteractive()) {
-            $auto = $dialog->askConfirmation($output, $dialog->getQuestion('Confirm automatic update of the Routing', 'yes', '?'), true);
+        if ($input->isInteractive()) { 
+            $question = new ConfirmationQuestion('Confirm automatic update of the Routing ?', true);
+            $auto = $questionHelper->ask($input, $output, $question);
         }
 
         $output->write('Importing the bundle routing resource: ');
