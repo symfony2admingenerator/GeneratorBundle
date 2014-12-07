@@ -49,6 +49,7 @@
             // TODO: add post-submit trigger
         }
     };
+
     // Force first tab to be displayed
     $('.nav-tabs *[data-toggle="tab"]:first').click();
 
