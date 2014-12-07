@@ -10,6 +10,7 @@
                     {% if builder.batchActions|default is not empty %}
                         <div class="list-results-actions-batch col-md-{{ builder.actions|default is empty ? '12' : '4' }}" role="batch-actions">
                             {{ block('batch_actions') }}
+                            {{ block('batch_actions_script') }}
                         </div>
                     {% endif -%}
                 {{ echo_endblock() }}
@@ -17,6 +18,7 @@
                     {% if builder.actions|default is not empty %}
                         <div class="list-results-actions-generic col-md-{{ builder.batchActions|default is empty ? '12' : '8' }} text-right" role="generic-actions">
                             {{ block('generic_actions') -}}
+                            {{ block('generic_actions_script') }}
                         </div>
                     {% endif -%}
                 {{ echo_endblock() }}

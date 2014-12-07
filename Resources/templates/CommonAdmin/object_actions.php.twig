@@ -41,3 +41,17 @@
     {{ echo_endspaceless() }}
     {% endspaceless %}
 {% endblock %}
+
+{% block object_actions_script %}
+    {{ echo_block('object_actions_script_container') }}
+    <script type="application/javascript">
+        {{ echo_block('object_actions_script_inner') }}
+        window.S2A = window.S2A || {};
+        window.S2A.singleActionsAdminOptions = {
+            containerSelector: 'section.content',
+            buttonSelector: '.object-action'
+        };
+        {{ echo_endblock() }}
+    </script>
+    {{ echo_endblock() }}
+{% endblock %}

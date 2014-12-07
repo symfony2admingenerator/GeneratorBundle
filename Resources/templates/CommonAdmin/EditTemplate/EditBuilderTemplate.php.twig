@@ -52,9 +52,11 @@
                     <div class="form-model-actions row">
                         <div class="form-model-actions-object col-md-6 btn-group" role="object-actions">
                             {{ block('object_actions') }}
+                            {{ block('object_actions_script') }}
                         </div>
                         <div class="form-model-actions-generic col-md-6 text-right" role="generic-actions">
-                            {{ block("generic_actions") }}
+                            {{ block('generic_actions') }}
+                            {{ block('generic_actions_script') }}
                         </div>
                     </div>
                 {{ echo_endblock() }}

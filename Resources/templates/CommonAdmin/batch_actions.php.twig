@@ -38,3 +38,21 @@
             {{ echo_trans(action.label, {}, translationDomain) }}
     </option>
 {% endblock %}
+
+{% block batch_actions_script %}
+    {{ echo_block('batch_actions_script_container') }}
+    <script type="application/javascript">
+        {{ echo_block('batch_actions_script_inner') }}
+        window.S2A = window.S2A || {};
+        window.S2A.batchActionsAdminOptions = {
+            containerSelector: '.form-list-batch',
+            actionSelector: 'select[name=action]',
+            toggleSelector: 'input[name=batch_select_all]',
+            elementSelector: '.list-results-fields-row-batch-selector',
+            noActionValue: 'none',
+            noElementsSelectedMessage: '{{ echo_trans("batch.list.none.selected", {}, 'Admingenerator', 'js') }}'
+        };
+        {{ echo_endblock() }}
+    </script>
+    {{ echo_endblock() }}
+{% endblock %}

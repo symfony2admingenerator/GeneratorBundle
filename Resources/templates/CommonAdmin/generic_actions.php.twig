@@ -42,3 +42,17 @@
         </a>
     {% endif %}
 {% endblock %}
+
+{% block generic_actions_script %}
+    {{ echo_block('generic_actions_script_container') }}
+    <script type="application/javascript">
+        {{ echo_block('generic_actions_script_inner') }}
+        window.S2A = window.S2A || {};
+        window.S2A.genericActionsAdminOptions = {
+            containerSelector: 'section.content',
+            buttonSelector: '.generic-action'
+        };
+        {{ echo_endblock() }}
+    </script>
+    {{ echo_endblock() }}
+{% endblock %}

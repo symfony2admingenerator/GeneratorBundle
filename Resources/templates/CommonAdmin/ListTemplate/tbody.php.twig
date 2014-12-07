@@ -1,3 +1,5 @@
+{% use '../CommonAdmin/object_actions.php.twig' %}
+
 {% block list_tbody %}
     {{ echo_block("list_tbody") }}
         <tbody>
@@ -14,4 +16,5 @@
             {{ echo_endblock() }}
         </tbody>
     {{ echo_endblock() }}
+    {{ block('object_actions_script') }}
 {% endblock %}
