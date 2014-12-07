@@ -9,7 +9,7 @@
 
     S2A.actionsManager.prototype = {
         clickHandler: function(evt){
-            var $elt = $(evt.target);
+            var $elt = $(evt.currentTarget);
 
             if (!this.isConfirmed($elt)) {
                 evt.preventDefault();
