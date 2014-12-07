@@ -27,7 +27,7 @@
 
     {% spaceless %}
     {{ echo_spaceless() }}
-    <a  class="btn btn-default {% if builder.yamlKey is sameas('list') %}btn-xs {% endif %}{{ action.class|default('') }}"
+    <a  class="object-action btn btn-default {% if builder.yamlKey is sameas('list') %}btn-xs {% endif %}{{ action.class|default('') }}"
         href="{{ echo_path(actionRoute, actionParams) }}"
         data-original-title="{{ echo_trans(action.label, {}, translationDomain, 'html_attr') }}"
         {% if builder.yamlKey is sameas('list') %}
