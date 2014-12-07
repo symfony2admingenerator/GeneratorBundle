@@ -41,18 +41,3 @@
     {{ echo_endspaceless() }}
     {% endspaceless %}
 {% endblock %}
-
-{% block object_actions_script %}
-    {{ echo_block("object_actions_script") }}
-    {% if object_actions|default is not empty %}
-
-        <script type="text/javascript">
-            jQuery(document).ready(function($) {
-                $(".object-actions-{{ builder.ModelClass }}").agen$objectActions({
-                    actionsSelector: '.object_actions a'
-                });
-            });
-        </script>
-    {% endif %}
-    {{ echo_endblock() }}
-{% endblock %}
