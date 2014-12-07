@@ -19,6 +19,8 @@
             <legend><span>{{ echo_trans(fieldsetName,{}, i18n_catalog is defined ? i18n_catalog : "Admin" ) }}</span></legend>
             {% endif %}
 
+            {{ echo_block('show_fieldset_' ~ fieldsetName|classify|replace({'.': '_'}) ) }}
+
             {% for row in fieldset %}
             {% set rowColumns = builder.columnsFor(row) %}
             {% set rowGroups = rowColumns|mapBy('groups')|flatten %}
@@ -56,6 +58,9 @@
             {{ echo_endif() }}
             {% endif %}
             {% endfor %}
+            
+            {{ echo_endblock() }}
+            
         </fieldset>
 
     {% if fieldsetGroups is not empty %}
