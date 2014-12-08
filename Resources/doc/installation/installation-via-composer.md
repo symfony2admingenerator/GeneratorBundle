@@ -7,13 +7,7 @@
 
 ### 1 Add Admingenerator to your `composer.json`:
 
-```json
-"require": {
-    "symfony2admingenerator/generator-bundle": "dev-master"
-},
-```
-
-Then run `php composer.phar update` command.
+`composer require symfony2admingenerator/generator-bundle`
 
 > **Note:** If you're getting **no matching package found** error then you must also add `"minimum-stability": "dev"` to your **composer.json** file.
     
@@ -81,7 +75,7 @@ In order to properly install and configure UglifyCSS and UglifyJS follow [this a
 
 ### 4. Install assets
 
-The GeneratorBundle requires `NodeJS` and `bower` package to download its assets dependencies (jQuery, Twitter Bootstrap and so on).
+The GeneratorBundle requires [NodeJS](http://nodejs.org/) and [bower](http://bower.io/) package to download its assets dependencies (jQuery, Twitter Bootstrap and so on).
 Make sure `bower` is available through your PATH environment variable, then run the following command:
 
 `php app/console admin:assets-install`
