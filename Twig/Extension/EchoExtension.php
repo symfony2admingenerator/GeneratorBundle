@@ -69,7 +69,7 @@ class EchoExtension extends \Twig_Extension
             str_replace('"', '\"', $str),
             $transParameters,
             $catalog,
-            $escape ? sprintf('|escape("%s")', $escape) : ''
+            $escape ? sprintf('|escape("%s")', $escape) : '|raw'
         );
     }
 

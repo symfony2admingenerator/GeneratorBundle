@@ -7,7 +7,7 @@ boolean:
 # Pager
 pagerfanta:
     previous: <
-    next:     >
+    next:           ">"
     view.perpage:   نمایش
     num.elements:   %number% عناصر
 

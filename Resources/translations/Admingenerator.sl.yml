@@ -7,7 +7,7 @@ boolean:
 # Pager
 pagerfanta:
     previous:       <
-    next:           >
+    next:           ">"
     view.perpage:   Prikazal
     num.elements:   %number% elementov
 
