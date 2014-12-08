@@ -44,15 +44,15 @@ class EchoExtensionTest extends BaseExtensionTest
 
         $returns = array(
             'string' => array(
-                '{{ "foo"|trans({}, "Admingenerator") }}',
+                '{{ "foo"|trans({}, "Admingenerator")|raw }}',
                 'trans return a good trans tag with string elements'
              ),
             'variable_key' => array(
-                '{{ "cedric"|trans({}, "Admingenerator") }}',
+                '{{ "cedric"|trans({}, "Admingenerator")|raw }}',
                 'trans return a good trans tag with variable as key'
              ),
             'quote_included' => array(
-                '{{ "My awesome \"title\""|trans({}, "Admingenerator") }}',
+                '{{ "My awesome \"title\""|trans({}, "Admingenerator")|raw }}',
                 'trans return a good trans tag with variable as key'
             ),
         );
@@ -91,15 +91,15 @@ class EchoExtensionTest extends BaseExtensionTest
 
         $returns = array(
             'string' => array(
-                '{{ "Display all <b>%foo% %bar%</b> results"|trans({\'%foo%\': \'foo\',\'%bar%\': \'bar\',}, "Admingenerator") }}',
+                '{{ "Display all <b>%foo% %bar%</b> results"|trans({\'%foo%\': \'foo\',\'%bar%\': \'bar\',}, "Admingenerator")|raw }}',
                 'trans return a good trans tag with string elements'
             ),
             'variable_key' => array(
-                '{{ "cedric"|trans({\'%foo%\': \'foo\',\'%bar%\': \'bar\',}, "Admingenerator") }}',
+                '{{ "cedric"|trans({\'%foo%\': \'foo\',\'%bar%\': \'bar\',}, "Admingenerator")|raw }}',
                 'trans return a good trans tag with variable as key'
             ),
             'quote_in_param_value' => array(
-                '{{ "cedric"|trans({\'%foo%\': \'foo\\\'s\',\'%bar%\': \'bar\',}, "Admingenerator") }}',
+                '{{ "cedric"|trans({\'%foo%\': \'foo\\\'s\',\'%bar%\': \'bar\',}, "Admingenerator")|raw }}',
                 'trans return a good trans tag with variable as key'
             ),
         );
@@ -119,23 +119,23 @@ class EchoExtensionTest extends BaseExtensionTest
 
         $returns = array(
             'string_bc' => array(
-                '{{ "You\'re editing %Book.title% written by %Book.author.name%!"|trans({\'%Book.title%\': Book.title,\'%Book.author.name%\': Book.author.name,}, "Admingenerator") }}',
+                '{{ "You\'re editing %Book.title% written by %Book.author.name%!"|trans({\'%Book.title%\': Book.title,\'%Book.author.name%\': Book.author.name,}, "Admingenerator")|raw }}',
                 'trans return a good trans tag with string elements'
             ),
             'string_with_full_param_bag' => array(
-                '{{ "You\'re editing %book% written by %author%!"|trans({\'%book%\': Book.title,\'%author%\': Book.author.name,}, "Admingenerator") }}',
+                '{{ "You\'re editing %book% written by %author%!"|trans({\'%book%\': Book.title,\'%author%\': Book.author.name,}, "Admingenerator")|raw }}',
                 'trans return a good trans tag with string elements'
             ),
             'string_with_abbrev_param_bag' => array(
-                '{{ "You\'re editing %Book.title% written by %Book.author.name%!"|trans({\'%Book.title%\': Book.title,\'%Book.author.name%\': Book.author.name,}, "Admingenerator") }}',
+                '{{ "You\'re editing %Book.title% written by %Book.author.name%!"|trans({\'%Book.title%\': Book.title,\'%Book.author.name%\': Book.author.name,}, "Admingenerator")|raw }}',
                 'trans return a good trans tag with string elements'
             ),
             'string_with_full_param_bag_and_params' => array(
-                '{{ "You\'re editing %book% written by %foo%!"|trans({\'%foo%\': \'foo\',\'%book%\': Book.title,}, "Admingenerator") }}',
+                '{{ "You\'re editing %book% written by %foo%!"|trans({\'%foo%\': \'foo\',\'%book%\': Book.title,}, "Admingenerator")|raw }}',
                 'trans return a good trans tag with string elements'
             ),
             'string_with_abbrev_param_bag_and_params' => array(
-                '{{ "You\'re editing %Book.title% written by %foo%!"|trans({\'%foo%\': \'foo\',\'%Book.title%\': Book.title,}, "Admingenerator") }}',
+                '{{ "You\'re editing %Book.title% written by %foo%!"|trans({\'%foo%\': \'foo\',\'%Book.title%\': Book.title,}, "Admingenerator")|raw }}',
                 'trans return a good trans tag with string elements'
             ),
         );
