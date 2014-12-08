@@ -68,3 +68,5 @@ table.table thead .sorting_desc_disabled:after { content: '\f0d7'; opacity: 0.2;
     border-bottom-right-radius: 3px;
     border-bottom-left-radius: 3px;
 }
+
+.btn-group .tooltip+.btn{margin-left:-1px}
