@@ -37,11 +37,13 @@ Don't miss any updates from **Symfony2 Admin Generator**! Join Twitter today and
 By default, this Bundle uses the [AdminLTE](http://almsaeedstudio.com/AdminLTE/) templates. See its [documentation](http://almsaeedstudio.com/) to create your own widget and customize the
 interface.
 
+![Preview of dashboard](https://github.com/symfony2admingenerator/GeneratorBundle/raw/master/Resources/preview/dashboard-adminlte-preview.png)
+
 ![Preview of list](https://github.com/symfony2admingenerator/GeneratorBundle/raw/master/Resources/preview/list-preview.png)
 
-![Preview of edit](https://github.com/symfony2admingenerator/GeneratorBundle/raw/master/Resources/preview/edit-preview.png)
+![Preview of nested list](https://github.com/symfony2admingenerator/GeneratorBundle/raw/master/Resources/preview/nestedlist-preview.png)
 
-![Preview of dashboard](https://github.com/symfony2admingenerator/GeneratorBundle/raw/master/Resources/preview/dashboard-adminlte-preview.png)
+![Preview of edit](https://github.com/symfony2admingenerator/GeneratorBundle/raw/master/Resources/preview/edit-preview.png)
 
 # Important note
 
