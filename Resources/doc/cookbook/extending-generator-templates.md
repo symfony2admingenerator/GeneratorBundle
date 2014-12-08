@@ -19,4 +19,4 @@ Without this directory, the specified template directory will not be used for ex
 
 3. Be free to extend/overwrite any template in the Resources/templates dir of the AdminGenerator!
 
-Please note that your own templates might need adjustment when new releases of the AdminGenerator arrive. So if anything breaks after a update and you're using custom templates, please check those first!
+Please note that your own templates might need adjustment when new releases of the AdminGenerator arrive. So if anything breaks after an update and you're using custom templates, please check those first!

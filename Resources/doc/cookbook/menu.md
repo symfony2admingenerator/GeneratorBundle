@@ -52,7 +52,7 @@ When you have your builder class ready, simply overwrite the **menu** block to r
 {% block menu %}{{ knp_menu_render('AcmeDemoBundle:MyBuilder:myMenu') }}{% endblock %}
 ```
 
-The menu block is defined in `Resources\base_admin_navbar.html.twig`, which is included by the **base_admin_template** (`Resources\base_admin.html.twig`). To overwrite the menu block, you should:
+The menu block is defined in `Resources\Navbar\layout.html.twig`, which is included by the **base** template (`Resources\base.html.twig`). To overwrite the menu block, you should:
 
 * set your own **base_admin** template
 
@@ -64,32 +64,32 @@ admingenerator_generator:
     ...
 ```
 
-* include your own **base_admin_navbar** template in your **base_admin** template
+* include your own **admin_navbar** template in your **base_admin** template
 
 ```html+django
 {# AcmeDemoBundle::base_admin.html.twig #}
 
-{% extends 'AdmingeneratorGeneratorBundle::base_admin_assetic_less.html.twig' %}
+{% extends 'AdmingeneratorGeneratorBundle::base_uncompressed.html.twig' %}
 {# OR #}
-{% extends 'AdmingeneratorGeneratorBundle::base_admin.html.twig' %}
+{% extends 'AdmingeneratorGeneratorBundle::base.html.twig' %}
 
 {% block navbar %}
-    {% include 'AcmeDemoBundle::base_admin_navbar.html.twig' %}
+    {% include 'AcmeDemoBundle::admin_navbar.html.twig' %}
 {% endblock navbar %}
 ```
 
 
-* overwrite the **menu** block in your **base_admin_navbar** template, which extends the original admingenerator **base_admin_navbar**
+* overwrite the **menu** block in your **admin_navbar** template, which extends the original admingenerator **Navbar\layout**
 
 ```html+django
-{# AcmeDemoBundle::base_admin_navbar.html.twig #}
+{# AcmeDemoBundle::admin_navbar.html.twig #}
 
-{% extends 'AdmingeneratorGeneratorBundle::base_admin_navbar.html.twig' %}
+{% extends 'AdmingeneratorGeneratorBundle:Navbar:layout.html.twig' %}
 
 {% block menu %}{{ knp_menu_render('AcmeDemoBundle:MyBuilder:myMenu') }}{% endblock %}
 ```
 
-> **Note**: your **base_admin** and **base_admin_navbar** template must extend the original admingenerator templates.
+> **Note**: your **base_admin** and **admin_navbar** template must extend the original admingenerator templates.
 
 ### 3. Example
 
@@ -114,9 +114,6 @@ public function navbarMenu(FactoryInterface $factory, array $options)
     // add links to $dropdown
     $this->addLinkRoute($dropdown, 'Subitem 3.1', 'Your_RouteName');
     $this->addLinkURI($dropdown, 'Subitem 3.2', 'http://www.google.com');
-    
-    // add divider to $dropdown
-    $this->addDivider($dropdown);
 
     // add more links to $dropdown
     $this->addLinkRoute($dropdown, 'Subitem 3.3', 'Your_RouteName');
