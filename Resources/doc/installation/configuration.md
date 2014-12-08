@@ -15,7 +15,7 @@ _TODO_
 
 By default, for each request matching an Admingenerated controller, the `ControllerListener` will iterate over
 the filesystem to find which right generator.yml and the right `Generator` have to be used to build generated
-files. This process could take some time. Thanks to this configuration, you can precise a cache provider to bypass
+files. This process could take some time. Thanks to this configuration, you can define a cache provider to bypass
 this process once all files are generated. The service name defined here need to extend the class
 `Doctrine\Common\Cache\CacheProvider`.
 
@@ -24,7 +24,7 @@ Example:
 ```yaml
 services:
     global_cache.provider:
-        class: %doctrine.orm.cache.apc.class%
+        class: %doctrine.orm.cache.apc.class% # This class comes from Doctrine, you can create your own
         public: false
         calls:
             - [ setNamespace, [ 'my_namespace' ] ]
@@ -174,16 +174,68 @@ admingenerator_generator:
             BOOLEAN_EMU:  checkbox 
     filter_types:
         doctrine_orm:
-            text:          text
+            datetime:      datetime
+            vardatetime:   datetime
+            datetimetz:    datetime
+            date:          date
+            time:          time
+            decimal:       number
+            float:         number
+            integer:       number
+            bigint:        number
+            smallint:      number
+            string:        text
+            entity:        model
+            collection:    collection
+            array:         text
             boolean:       choice
-            collection:    entity
         doctrine_odm:
-            hash:          text
+            datetime:      datetime
+            timestamp:     datetime
+            vardatetime:   datetime
+            datetimetz:    datetime
+            date:          date
+            time:          time
+            decimal:       number
+            float:         number
+            int:           number
+            integer:       number
+            int_id:        number
+            bigint:        number
+            smallint:      number
+            id:            text
+            custom_id:     text
+            string:        text
             text:          text
+            document:      model
+            collection:    collection
+            hash:          text
             boolean:       choice
-            collection:    document
         propel:
+            TIMESTAMP:     datetime
+            BU_TIMESTAMP:  datetime
+            DATE:          date
+            BU_DATE:       date
+            TIME:          time
+            FLOAT:         number
+            REAL:          number
+            DOUBLE:        number
+            DECIMAL:       number
+            TINYINT:       number
+            SMALLINT:      number
+            INTEGER:       number
+            BIGINT:        number
+            NUMERIC:       number
+            CHAR:          text
+            VARCHAR:       text
+            LONGVARCHAR:   text
+            BLOB:          text
+            CLOB:          text
+            CLOB_EMU:      text
+            model:         model
+            collection:    collection
+            PHP_ARRAY:     text
+            ENUM:          text
             BOOLEAN:       choice
             BOOLEAN_EMU:   choice
-            collection:    model
 ```
