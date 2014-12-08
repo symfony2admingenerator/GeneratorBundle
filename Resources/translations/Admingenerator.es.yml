@@ -95,3 +95,6 @@ batch.list:
 dashboard:
     homepage:   Página principal
     brand:      Tablero de instrumentos
+
+admingenerator:
+    dashboard: Tablero de instrumentos

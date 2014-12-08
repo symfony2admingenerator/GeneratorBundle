@@ -87,3 +87,6 @@ batch.list:
 dashboard:
     homepage:   Домівка
     brand:      Панель керування
+
+admingenerator:
+    dashboard: Панель керування

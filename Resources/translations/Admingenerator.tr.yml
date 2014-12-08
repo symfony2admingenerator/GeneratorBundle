@@ -82,3 +82,6 @@ batch.list:
 dashboard:
     homepage:   Anasayfa
     brand:      Kontrol paneli
+
+admingenerator:
+    dashboard: Kontrol paneli

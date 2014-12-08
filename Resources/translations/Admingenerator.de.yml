@@ -91,3 +91,6 @@ batch.list:
 dashboard:
     homepage:   Startseite
     brand:      Übersicht
+
+admingenerator:
+    dashboard: Übersicht

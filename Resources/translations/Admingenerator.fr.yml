@@ -92,3 +92,6 @@ batch.list:
 dashboard:
     homepage:   Accueil
     brand:      Tableau de bord
+
+admingenerator:
+    dashboard: Tableau de bord

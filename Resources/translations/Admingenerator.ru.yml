@@ -89,3 +89,6 @@ batch.list:
 dashboard:
     homepage:   Главная
     brand:      Панель мониторинга
+
+admingenerator:
+    dashboard: Панель мониторинга

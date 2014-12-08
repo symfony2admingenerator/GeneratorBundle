@@ -88,3 +88,6 @@ batch.list:
 dashboard:
     homepage:   ホームへ
     brand:      ダッシュボード
+
+admingenerator:
+    dashboard: ダッシュボード

@@ -89,3 +89,6 @@ batch.list:
 dashboard:
     homepage:   Homepage
     brand:      Dashboard
+
+admingenerator:
+    dashboard: Dashboard

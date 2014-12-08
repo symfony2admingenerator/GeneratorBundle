@@ -89,3 +89,6 @@ batch.list:
 dashboard:
     homepage:   خانه
     brand:      داشبورد
+
+admingenerator:
+    dashboard: داشبورد

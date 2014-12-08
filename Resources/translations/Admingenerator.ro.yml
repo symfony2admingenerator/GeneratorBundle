@@ -90,3 +90,6 @@ batch.list:
 dashboard:
     homepage:   Acasă
     brand:      Tabloul de bord
+
+admingenerator:
+    dashboard: Tabloul de bord

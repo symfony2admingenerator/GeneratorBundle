@@ -88,3 +88,6 @@ batch.list:
 dashboard:
     homepage:   Αρχική Σελίδα
     brand:      Ταμπλό
+
+admingenerator:
+    dashboard: Ταμπλό

@@ -93,3 +93,6 @@ batch.list:
 dashboard:
     homepage:   Inizio pagina
     brand:      Cruscotto
+
+admingenerator:
+    dashboard: Cruscotto

@@ -89,3 +89,6 @@ batch.list:
 dashboard:
     homepage:   Domača stran
     brand:      Nadzorne plošče
+
+admingenerator:
+    dashboard: Nadzorne plošče
