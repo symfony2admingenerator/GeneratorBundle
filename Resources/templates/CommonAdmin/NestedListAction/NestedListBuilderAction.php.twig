@@ -1,6 +1,4 @@
 {% use '../CommonAdmin/NestedListAction/index.php.twig' %}
-{% use '../CommonAdmin/ListAction/filters.php.twig' %}
-{% use '../CommonAdmin/ListAction/scopes.php.twig' %}
 {% use '../CommonAdmin/security_action.php.twig' %}
 {% use '../CommonAdmin/csrf_protection.php.twig' %}
 <?php
@@ -25,10 +23,6 @@ use Pagerfanta\Adapter\DoctrineORMAdapter as PagerAdapter;
 class ListController extends BaseController
 {
     {{- block('index') -}}
-
-    {{- block('filters') -}}
-
-    {{- block('scopes') -}}
 
     {{- block('csrf_generate_token') -}}
 
@@ -58,20 +52,6 @@ class ListController extends BaseController
     }
     {% endblock %}
 
-    {% block processFilters -%}
-    protected function processFilters($query)
-    {
-        // ORM JOB
-    }
-    {% endblock %}
-
-    {% block processScopes -%}
-    protected function processScopes($query)
-    {
-        // ORM JOB
-    }
-    {% endblock %}
-
     {% block nested_moveAction %}
     public function nested_moveAction($dragged, $action, $dropped)
     {
@@ -80,9 +60,4 @@ class ListController extends BaseController
     {% endblock %}
 
     {{ block('csrf_check_token') }}
-
-    protected function getFilterForm()
-    {
-        return $this->createForm($this->getFiltersType(), $this->getFilters());
-    }
 }

@@ -1,13 +1,9 @@
 {% extends '../CommonAdmin/NestedListAction/NestedListBuilderAction.php.twig' %}
+
 {% block getQuery -%}
     protected function getQuery()
     {
         $query = $this->buildQuery();
-
-        $this->processFilters($query);
-        {% if scopes is defined %}
-        $this->processScopes($query);
-        {% endif %}
 
         return $query;
     }
@@ -28,52 +24,6 @@
     {
         $query->leftJoin($table);
     }
-{% endblock %}
-
-{% block processFilters -%}
-    protected function processFilters($query)
-    {
-        $filterObject = $this->getFilters();
-
-        $queryFilter = $this->get('admingenerator.queryfilter.propel');
-        $queryFilter->setQuery($query);
-
-        {% for filter in builder.filterColumns %}
-
-        if (isset($filterObject['{{ filter.name }}']) && null !== $filterObject['{{ filter.name }}']) {
-            $queryFilter->add{{ filter.dbType|lower|classify }}Filter("{{ filter.filterOn }}", $filterObject['{{ filter.name }}']);
-        }
-        {% endfor %}
-
-    }
-{% endblock %}
-
-{% block processScopes -%}
-    {% if scopes is defined %}
-    protected function processScopes($query)
-    {
-        $scopes = $this->getScopes();
-
-        {% for groupName, group in scopes -%}
-            {%- for scopeName, params in group %}
-
-        if (isset($scopes['{{ groupName }}']) && $scopes['{{ groupName }}'] == '{{ scopeName }}') {
-            {% if params["filters"] is defined -%}
-                {%- for filter, filterParams in params["filters"] -%}
-                {%- if filter|is_numeric -%}
-                $query->{{ filterParams }}();
-                {%- else -%}
-                $query->{{ filter }}({{ filterParams|as_php }});
-                {%- endif -%}
-                {%- endfor -%}
-            {%- endif %}
-
-        }
-            {% endfor -%}
-        {%- endfor %}
-
-    }
-    {% endif %}
 {% endblock %}
 
 {% block nested_moveAction -%}

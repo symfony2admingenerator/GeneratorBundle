@@ -8,12 +8,8 @@ use {{ builder.namespacePrefixWithSubfolder }}\{{ bundle_name }}\Form\Type\{{ bu
     {
         {{ block('security_action') }}
 
-        $form = $this->getFilterForm();
-
         return $this->render('{{ builder.namespacePrefixForTemplate }}{{ bundle_name }}:{{ builder.BaseGeneratorName }}List:index.html.twig', $this->getAdditionalRenderParameters() + array(
-            '{{ builder.ModelClass }}s'   => $this->getTree(),
-            'form'                        => $form->createView(),
-            'scopes'                      => $this->getScopes(),
+            '{{ builder.ModelClass }}s' => $this->getTree(),
         ));
     }
 {% endblock %}

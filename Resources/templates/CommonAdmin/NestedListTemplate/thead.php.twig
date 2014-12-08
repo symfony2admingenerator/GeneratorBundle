@@ -1,28 +1,45 @@
 {% block list_thead %}
-{{ echo_block("list_thead") }}
-<thead>
-    <tr class="list_thead">
-        {% if batch_actions is defined and batch_actions|length > 0 %}
-            <th class="list_thead_batch_action">
-                <input type="checkbox" name="batchAll" />
+    {{ echo_block("list_thead") }}
+    <thead>
+        {{ echo_block("list_thead_inner") }}
+            {{ block('list_thead_content')}}
+        {{ echo_endblock() }}
+    </thead>
+    {{ echo_endblock() }}
+{% endblock %}
+
+
+{% block list_thead_content %}
+    <tr role="row" class="list-results-fields-header">
+        {% if batch_actions|default is not empty %}
+            <th class="list-results-fields-header-batch">
+                <input id="batch_select_all" type="checkbox" name="batch_select_all" />
             </th>
         {% endif %}
         {% for column in builder.columns -%}
-        {% if column.credentials %}
-              {{ echo_if_granted(column.credentials) }}
-        {% endif %}
-        <th class="list_thead_column">
-           {{ echo_twig("'" ~ column.label|addslashes ~ "'|trans({}, '" ~ i18n_catalog|default("Admin") ~ "')") }}
-        </th>
-        {% if column.credentials %}
-            {{ echo_endif () }}
-        {% endif %}
+            {{ block('list_thead_content_column') }}
         {% endfor -%}
 
-        {%- if object_actions|length > 0 -%}
-            <th class="actions">{{ echo_trans('list.header.actions') }}</th>
+        {%- if object_actions|default is not empty %}
+        {{ echo_block("list_thead_actions") }}
+            <th class="list-results-fields-header-objectactions">{{ echo_trans('list.header.actions') }}</th>
+        {{ echo_endblock() }}
         {% endif -%}
     </tr>
-</thead>
-{{ echo_endblock() }}
+{% endblock list_thead_content %}
+
+
+{% block list_thead_content_column %}
+    {{ echo_block('list_thead_column_' ~ (column.name|lower)) -}}
+    {% if column.groups|default is not empty %}
+        {{ echo_set('columnGroups', echo_twig_arr(column.groups), false) }}
+        {{ echo_if('groups is empty or columnGroups|intersect(groups) is not empty') }}
+    {% endif %}
+    <th class="list-results-fields-header-column list-results-fields-header-column-{{ column.name|lower  }}">
+        {{ echo_twig("'" ~ column.label|addslashes ~ "'|trans({}, '" ~ i18n_catalog|default("Admin") ~ "')") }}
+    </th>
+    {% if column.groups|default is not empty %}
+        {{ echo_endif() }}
+    {% endif %}
+    {{ echo_endblock() }}
 {% endblock %}

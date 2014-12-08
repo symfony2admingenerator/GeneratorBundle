@@ -125,6 +125,16 @@
         }
     };
 
+    S2A.nestedListManager = function(options){
+        this.options = $.extend({}, {
+                tableSelector: 'table'
+            },
+            options
+        );
+
+        $(this.options.tableSelector).treetable({expendable: true});
+    };
+
     // Force first tab to be displayed
     $('.nav-tabs *[data-toggle="tab"]:first').click();
 
@@ -139,5 +149,9 @@
     // Batch actions
     if (S2A.hasOwnProperty('batchActionsAdminOptions')) {
         new S2A.batchActionsManager(S2A.batchActionsAdminOptions);
+    }
+    // Nested list
+    if (S2A.hasOwnProperty('nestedTreeAdminOptions')) {
+        new S2A.nestedListManager(S2A.nestedTreeAdminOptions);
     }
 })(window, jQuery);

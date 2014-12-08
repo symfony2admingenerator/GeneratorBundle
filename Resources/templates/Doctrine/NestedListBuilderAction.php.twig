@@ -4,11 +4,6 @@
     {
         $query = $this->buildQuery();
 
-        $this->processFilters($query);
-        {% if scopes is defined %}
-        $this->processScopes($query);
-        {% endif %}
-
         return $query;
     }
 
@@ -30,80 +25,10 @@
     }
 {% endblock %}
 
-{% block getFilterForm -%}
-    protected function getFilterForm()
-    {
-        $filters = $this->getFilters();
-
-        {%- for filter in builder.filters.display -%}
-            {%- if 'entity' == builder.getFieldGuesser().getDbType(model, filter) or 'collection' == builder.getFieldGuesser().getDbType(model, filter) -%}
-
-        if (isset($filters['{{ filter }}'])) {
-            $this->getDoctrine()->getManagerForClass('{{ model }}')->getUnitOfWork()->registerManaged($filters['{{ filter }}'], array('{{ builder.getFieldGuesser().getModelPrimaryKeyName(filterModel) }}' => $filters['{{ filter }}']->get{{ builder.getFieldGuesser().getModelPrimaryKeyName(filterModel)|capitalize }}()), array());
-        }
-
-            {%- endif %}
-
-        {% endfor -%}
-
-        $type = new FiltersType();
-        $type->setSecurityContext($this->get('security.context'));
-
-        return $this->createForm($type, $filters);
-    }
-{% endblock %}
-
 {% block addJoinFor -%}
     protected function addJoinFor($table, $query)
     {
         $query->leftJoin('q.'.$table, $table);
-    }
-{% endblock %}
-
-{% block processFilters -%}
-    protected function processFilters($query)
-    {
-        $filterObject = $this->getFilters();
-
-        $queryFilter = $this->get('admingenerator.queryfilter.doctrine');
-        $queryFilter->setQuery($query);
-
-        {% for filter in builder.filterColumns %}
-            if (isset($filterObject['{{ filter.name }}']) && null !== $filterObject['{{ filter.name }}']) {
-                $queryFilter->add{{ filter.dbType|classify }}Filter("{{ filter.filterOn }}", $filterObject['{{ filter.name }}']);
-            }
-        {% endfor %}
-
-    }
-{% endblock %}
-{% block processScopes -%}
-    protected function processScopes($query)
-    {
-    {% if scopes is defined %}
-        $scopes = $this->getScopes();
-
-        $queryFilter = $this->get('admingenerator.queryfilter.doctrine');
-        $queryFilter->setQuery($query);
-
-
-        {% for groupName, group in scopes -%}
-            {%- for scopeName, params in group %}
-
-        if (isset($scopes['{{ groupName }}']) && $scopes['{{ groupName }}'] == '{{ scopeName }}') {
-            {% if params["filters"] is defined -%}
-                {%- for filter, filterParams in params["filters"] -%}
-                {%- if filter|is_numeric -%}
-                $this->scope{{ filterParams|classify }}($queryFilter);
-                {%- else -%}
-                $queryFilter->addDefaultFilter("{{ filter }}", {{ filterParams|as_php }});
-                {%- endif -%}
-                {%- endfor -%}
-            {%- endif %}
-
-        }
-            {% endfor -%}
-        {%- endfor %}
-    {%- endif %}
     }
 {% endblock %}
 
