@@ -71,6 +71,6 @@ class AssetsInstallCommand extends ContainerAwareCommand
         $parentWebDir = dirname($this->getContainer()->getParameter('kernel.root_dir'));
         $relativePathComputer = new RelativePathComputer($bowerFileDirectory);
 
-        return $relativePathComputer->computeToParent($parentWebDir) . 'web' . DIRECTORY_SEPARATOR . 'components';
+        return $relativePathComputer->computeToParent($parentWebDir) . 'web' . DIRECTORY_SEPARATOR . 'admin' . DIRECTORY_SEPARATOR . 'components';
     }
 }

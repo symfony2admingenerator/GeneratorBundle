@@ -5,21 +5,11 @@
 
 [back-to-index]: https://github.com/symfony2admingenerator/GeneratorBundle/blob/master/Resources/doc/documentation.md#1-installation
 
-### 1. Download files
-
-#### 1.1 Add Admingenerator to your `composer.json`:
+### 1 Add Admingenerator to your `composer.json`:
 
 ```json
 "require": {
     "symfony2admingenerator/generator-bundle": "dev-master"
-},
-```
-
-### 1.2 Configure components dir in your `composer.json`:
-
-```json
-"config": {
-    "component-dir": "web/components" 
 },
 ```
 
@@ -33,7 +23,6 @@ Admingenerator has a dependency on:
  
  * KnpMenuBundle
  * WhiteOctoberPagerfantaBundle
- * FormBundle
  * JMSSecurityExtraBundle
 
 > **Note:** there are also some optional dependencies, each is described in corresponding feature`s doc. This guide describes only the minimal-setup. 
@@ -49,7 +38,6 @@ public function registerBundles()
         new JMS\AopBundle\JMSAopBundle(),
         new JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
         new JMS\DiExtraBundle\JMSDiExtraBundle($this),
-        new Admingenerator\FormBundle\AdmingeneratorFormBundle(),
         new Admingenerator\GeneratorBundle\AdmingeneratorGeneratorBundle(),
         new Knp\Bundle\MenuBundle\KnpMenuBundle(),
         new WhiteOctober\PagerfantaBundle\WhiteOctoberPagerfantaBundle(),
@@ -79,13 +67,13 @@ admingenerator_generator:
     use_doctrine_odm:     false
     
     # choose and uncomment only one
-#    base_admin_template: AdmingeneratorGeneratorBundle::base_admin.html.twig
-#    base_admin_template: AdmingeneratorGeneratorBundle::base_admin_assetic_less.html.twig
+#    base_admin_template: AdmingeneratorGeneratorBundle::base.html.twig
+#    base_admin_template: AdmingeneratorGeneratorBundle::base_uncompressed.html.twig
 ```
 
 ### (Optional) Configure Assetic to use UglifyCSS and UglifyJS
 
-By default, the `base_admin.html.twig` uses UglifyCSS and UglifyJS to minify assets and combine them into one file (less HTTP requests).
+By default, the `base.html.twig` uses UglifyCSS and UglifyJS to minify assets and combine them into one file (less HTTP requests).
 
 In order to properly install and configure UglifyCSS and UglifyJS follow [this article](http://symfony.com/doc/current/cookbook/assetic/uglifyjs.html)
 
@@ -93,11 +81,12 @@ In order to properly install and configure UglifyCSS and UglifyJS follow [this a
 
 ### 4. Install assets
 
-To install assets in your web directory run:
+The GeneratorBundle requires `NodeJS` and `bower` package to download its assets dependencies (jQuery, Twitter Bootstrap and so on).
+Make sure `bower` is available through your PATH environment variable, then run the following command:
 
-`php app/console assets:install web --symlink`
+`php app/console admin:assets-install`
 
-> **Note:** We recommend installing assets with `--symlink` option, however you may skip this option if you wish to hard copy assets.
+Assets will be downloaded to the `admin` directory into the root `web` directory. 
 
 ### (Optional) Dump assets
 

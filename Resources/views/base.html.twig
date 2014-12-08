@@ -3,10 +3,10 @@
 {% block stylesheets %}
     {% stylesheets package='admingenerator_css' filter='cssrewrite,?uglifycss'
         output='assetic/css/compiled/admingenerator.min.css'
-        'components/bootstrap/dist/css/bootstrap.css'
-        'components/font-awesome/css/font-awesome.css'
-        'components/iCheck/skins/minimal/_all.css'
-        'components/adminlte/css/AdminLTE.css'
+        'admin/components/bootstrap/dist/css/bootstrap.css'
+        'admin/components/font-awesome/css/font-awesome.css'
+        'admin/components/iCheck/skins/minimal/_all.css'
+        'admin/components/adminlte/css/AdminLTE.css'
         '@AdmingeneratorGeneratorBundle/Resources/public/css/main.css'
     %}
         <link rel="stylesheet" href="{{ asset_url }}" type="text/css" media="all" />
@@ -16,8 +16,8 @@
 {% block scripts_head %}
     {% javascripts package='admingenerator_js' filter='?uglifyjs2'
     output='assetic/js/compiled/ie9.min.js'
-        'components/html5shiv/dist/html5shiv.min.js'
-        'components/respond/dest/respond.min.js'
+        'admin/components/html5shiv/dist/html5shiv.min.js'
+        'admin/components/respond/dest/respond.min.js'
     %}
     <!--[if lt IE 9]>
         <script type="text/javascript" src="{{ asset_url }}"></script>
@@ -28,11 +28,11 @@
 {% block javascripts %}
     {% javascripts package='admingenerator_js' filter='?uglifyjs2'
     output='assetic/js/compiled/admingenerator.min.js'
-        'components/jquery/jquery.js'
-        'components/bootstrap/dist/js/bootstrap.js'
-        'components/iCheck/icheck.js'
-        'components/slimScroll/jquery.slimscroll.js'
-        'components/jquery-resize/jquery.ba-resize.js'
+        'admin/components/jquery/jquery.js'
+        'admin/components/bootstrap/dist/js/bootstrap.js'
+        'admin/components/iCheck/icheck.js'
+        'admin/components/slimScroll/jquery.slimscroll.js'
+        'admin/components/jquery-resize/jquery.ba-resize.js'
         '@AdmingeneratorGeneratorBundle/Resources/public/js/adminlte.js'
         '@AdmingeneratorGeneratorBundle/Resources/public/js/main.js'
     %}
