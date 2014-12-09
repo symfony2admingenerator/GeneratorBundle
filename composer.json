@@ -29,13 +29,7 @@
         "knplabs/knp-menu-bundle": ">1.0,<2.1",
         "white-october/pagerfanta-bundle": "~1.0",
         "twig/twig": ">= 1.9.0",
-        "twig/extensions": "~1.0",
-        "robloach/component-installer": "~0.0.11",
-        "afarkas/html5shiv": "~3.7",
-        "components/jquery": "1.9.1",
-        "components/jqueryui": "1.11.0",
-        "components/bootstrap": "~3.0",
-        "components/font-awesome": "~4.0"
+        "twig/extensions": "~1.0"
     },
     "require-dev": {
         "doctrine/orm": ">=2.2.3,<2.5-dev",
