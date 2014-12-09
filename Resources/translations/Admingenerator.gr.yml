@@ -13,8 +13,9 @@ pagerfanta:
 
 # List
 list:
-    filter:         Φίλτρο
-    reset:          Επαναφορά
+    button:
+        filter:         Φίλτρο
+        reset:          Επαναφορά
     no.results:     Δεν υπάρχουν αποτελέσματα
     display:
         range:      Εμφανίζονται <b role="results-range-start">%start%</b> - <b role="results-range-end">%end%</b> από <b role="results-count">%count%</b> τα αποτελέσματα.

@@ -13,8 +13,9 @@ pagerfanta:
 
 # List
 list:
-    filter:         絞り込み
-    reset:          リセット
+    button:
+        filter:         絞り込み
+        reset:          リセット
     no.results:     結果がありません
     display:
         range:      <b role="results-count">%count%</b> 件中 <b role="results-range-start">%start%</b> - <b role="results-range-end">%end%</b> 件目を表示中

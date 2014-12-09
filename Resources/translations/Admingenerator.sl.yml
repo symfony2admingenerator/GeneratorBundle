@@ -13,8 +13,9 @@ pagerfanta:
 
 # List
 list:
-    filter:         Filter
-    reset:          Počisti
+    button:
+        filter:         Filter
+        reset:          Počisti
     no.results:     Ni rezultatov.
     display:
         range:      Prikazani rezultati <b role="results-range-start">%start%</b> - <b role="results-range-end">%end%</b> od <b role="results-count">%count%</b>.

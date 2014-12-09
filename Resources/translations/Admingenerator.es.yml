@@ -13,8 +13,9 @@ pagerfanta:
 
 # List
 list:
-    filter:         Filtro
-    reset:          Reajustar
+    button:
+        filter:         Filtro
+        reset:          Reajustar
     no.results:     No existen resultados.
     filters:        Filtros
     display:

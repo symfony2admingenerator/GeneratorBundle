@@ -13,8 +13,9 @@ pagerfanta:
 
 # List
 list:
-    filter:         Filtern
-    reset:          Zurücksetzen
+    button:
+        filter:         Filtern
+        reset:          Zurücksetzen
     no.results:     Keine Einträge vorhanden.
     display:
         range:      Zeige <b role="results-range-start">%start%</b> bis <b role="results-range-end">%end%</b> von <b role="results-count">%count%</b> Datensätze.

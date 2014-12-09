@@ -13,8 +13,9 @@ pagerfanta:
 
 # List
 list:
-    filter:         Filtru
-    reset:          Resetați
+    button:
+        filter:         Filtru
+        reset:          Resetați
     no.results:     Exista intrari
     display:
         range:      Rezultate <b role="results-range-start">%start%</b> - <b role="results-range-end">%end%</b> de  <b role="results-count">%count%</b> înregistrarea(e).

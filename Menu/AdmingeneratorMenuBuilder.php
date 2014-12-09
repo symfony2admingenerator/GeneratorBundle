@@ -9,7 +9,7 @@ class AdmingeneratorMenuBuilder extends ContainerAware
 {
     protected $dividers = array();
     
-    protected $translation_domain = 'Admin';
+    protected $translation_domain = 'Admingenerator';
 
     /**
      * Creates link to uri element and adds it to menu

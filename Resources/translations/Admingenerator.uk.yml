@@ -12,8 +12,9 @@ pagerfanta:
 
 # List
 list:
-    filter:         Фільтрувати
-    reset:          Скинути
+    button:
+        filter:         Фільтрувати
+        reset:          Скинути
     no.results:     Немає записів.
     display:
         range:      Відображені <b role="results-range-start">%start%</b> - <b role="results-range-end">%end%</b> з <b role="results-count">%count%</b> записи(ів).

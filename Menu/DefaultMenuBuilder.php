@@ -7,8 +7,6 @@ use Knp\Menu\FactoryInterface;
 
 class DefaultMenuBuilder extends AdmingeneratorMenuBuilder
 {
-    protected $translation_domain = 'Admin';
-    
     public function sidebarMenu(FactoryInterface $factory, array $options)
     {
         $menu = $factory->createItem('root');
