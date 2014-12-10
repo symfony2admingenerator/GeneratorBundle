@@ -4,8 +4,8 @@
         <div class="row">
             <div class="list-scopes" role="scopes">
                 {% for groupName, group in scopes %}
-                    {{ echo_block("list_scopes_"~(groupName|lower)) }}
-                    <div class="list-scopes-group list-scopes-{{ groupName|lower }} btn-group">
+                    {{ echo_block("list_scopes_"~(groupName|classify|replace({'.': '_'})|lower)) }}
+                    <div class="list-scopes-group list-scopes-{{ groupName|classify|replace({'.': '-'})|lower }} btn-group">
                         {% for scopeName, params in group %}
                         <a class="{{ 'btn btn-sm ' ~ params.class|default('btn-default') }} {{ echo_twig("scopes['" ~ groupName ~ "'] == '" ~ scopeName ~ "' ? 'active': 'inactive'") }}"
                            href="{{ echo_path(
