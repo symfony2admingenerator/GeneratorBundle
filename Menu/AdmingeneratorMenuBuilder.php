@@ -46,10 +46,23 @@ class AdmingeneratorMenuBuilder extends ContainerAware
         $item->setExtra('translation_domain', $this->translation_domain);
 
         if ($item->getUri() == $this->container->get('request')->getRequestUri()) {
-            $item->setAttribute('class', 'active');
+            $this->setActive($item);
         }
 
         return $item;
+    }
+
+    /**
+     * Set active class to current item and all its parents (so it is automatically opened)
+     * 
+     * @param ItemInterface $item
+     */
+    protected function setActive(ItemInterface $item = null)
+    {
+        if ($item) {
+            $this->setActive($item->getParent());
+            $item->setAttribute('class', $item->getAttribute('class', '') . ' active');
+        }
     }
 
     /**
