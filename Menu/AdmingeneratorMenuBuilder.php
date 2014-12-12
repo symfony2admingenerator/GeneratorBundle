@@ -24,7 +24,7 @@ class AdmingeneratorMenuBuilder extends ContainerAware
         $item = $menu->addChild($label, array('uri' => $uri));
         $item->setExtra('translation_domain', $this->translation_domain);
 
-        if ($item->getUri() == $this->container->get('request')->getRequestUri()) {
+        if ($this->isCurrentUri($item->getUri())) {
             $item->setAttribute('class', 'active');
         }
 
@@ -45,7 +45,7 @@ class AdmingeneratorMenuBuilder extends ContainerAware
         $item = $menu->addChild($label, array('route' => $route, 'routeParameters' => $routeParameters));
         $item->setExtra('translation_domain', $this->translation_domain);
 
-        if ($item->getUri() == $this->container->get('request')->getRequestUri()) {
+        if ($this->isCurrentUri($item->getUri())) {
             $this->setActive($item);
         }
 
@@ -81,5 +81,14 @@ class AdmingeneratorMenuBuilder extends ContainerAware
         $item->setExtra('caret', $caret);
 
         return $item;
+    }
+
+    /**
+     * @param $uri
+     * @return bool
+     */
+    protected function isCurrentUri($uri)
+    {
+        return $this->container->get('request')->getBaseUrl().$this->container->get('request')->getPathInfo() === $uri;
     }
 }
