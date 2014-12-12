@@ -9,12 +9,12 @@
         {% if builder.filterColumnGroups is not empty %}
             {{ echo_set('filterColumnGroups', echo_twig_arr(builder.filterColumnGroups), false) }}
             {{ echo_if('groups is empty or filterColumnGroups|intersect(groups) is not empty') }}
-    <div class="col-md-9 list-results-container">
+    <div class="col-md-9 col-sd-12 list-results-container pull-left">
             {{ echo_else() }}
     <div class="col-md-12 list-results-container no-filters">
             {{ echo_endif() }}
         {% else %}
-    <div class="col-md-9 list-results-container">
+    <div class="col-md-9 col-xs-12 list-results-container pull-left">
         {% endif %}
     {% else %}
     <div class="col-md-12 list-results-container no-filters">

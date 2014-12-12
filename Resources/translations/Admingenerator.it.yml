@@ -13,6 +13,7 @@ pagerfanta:
 
 # List
 list:
+    filters: Filtras
     button:
         filter:         Filtra
         reset:          Pulisci

@@ -70,3 +70,5 @@ table.table thead .sorting_desc_disabled:after { content: '\f0d7'; opacity: 0.2;
 }
 
 .btn-group .tooltip+.btn{margin-left:-1px}
+
+.list-scopes {padding-bottom:5px}

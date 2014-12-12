@@ -13,6 +13,7 @@ pagerfanta:
 
 # List
 list:
+    filters: مرشحات
     button:
         filter:         فیلتر
         reset:          مجدد سازی

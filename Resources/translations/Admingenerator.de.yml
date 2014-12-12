@@ -13,6 +13,7 @@ pagerfanta:
 
 # List
 list:
+    filters: Filter
     button:
         filter:         Filtern
         reset:          Zurücksetzen
