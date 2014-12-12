@@ -49,6 +49,10 @@ abstract class BaseQueryFilter implements QueryFilterInterface
 
     protected function formatDate($date, $format)
     {
+        if ($date === null) {
+            return false;
+        }
+        
         if (!($date instanceof \DateTime)) {
             $date = new \DateTime($date);
         }
