@@ -63,7 +63,6 @@ class ScriptHandler
     protected static function getOptions(CommandEvent $event)
     {
         $options = $event->getComposer()->getPackage()->getExtra();
-        $options['symfony-assets-install'] = getenv('SYMFONY_ASSETS_INSTALL') ?: $options['symfony-assets-install'];
         $options['process-timeout'] = $event->getComposer()->getConfig()->get('process-timeout');
         return $options;
     }
