@@ -8,7 +8,15 @@ namespace Admingenerator\GeneratorBundle\Builder\Admin;
  */
 class NestedListBuilder extends ListBuilder
 {
+    /**
+     * @var array
+     */
     protected $treeConfiguration = array();
+
+    /**
+     * @var mixed
+     */
+    protected $indentationColumnIndex = null;
 
     /**
      * (non-PHPdoc)
@@ -36,6 +44,26 @@ class NestedListBuilder extends ListBuilder
         }
 
         return $this->treeConfiguration;
+    }
+
+    /**
+     * Get the indentation field that should be used.
+     * No validity is made uppon the field name.
+     *
+     * @return mixed
+     */
+    public function getIndentationColumnIndex()
+    {
+        if (null === $this->indentationColumnIndex) {
+            $field = $this->getGenerator()->getFromYaml('builders.nested_list.indentation.field');
+            if (!$field) {
+                return $this->indentationColumnIndex = 0;
+            }
+
+            $this->indentationColumnIndex = array_search($field, array_keys($this->getColumns()));
+        }
+
+        return $this->indentationColumnIndex;
     }
 
     /**

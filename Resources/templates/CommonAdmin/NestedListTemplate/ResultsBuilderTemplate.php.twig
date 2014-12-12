@@ -36,7 +36,8 @@
             labels: {
                 expand: '{{ echo_trans('nested.list.expand') }}',
                 collapse: '{{ echo_trans('nested.list.collapse') }}'
-            }
+            },
+            columnIndex: {{ builder.indentationColumnIndex }}
         };
         {{ echo_endblock() }}
     </script>
