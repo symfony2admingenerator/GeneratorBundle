@@ -9,7 +9,7 @@
 
 {% block list_paginator_perpage %}
     {{ echo_block("list_paginator_perpage") }}
-        {{ echo_if( builder.ModelClass ~ "s.haveToPaginate or "~ builder.ModelClass ~ "s.maxPerPage is not sameas(10)") }}
+        {{ echo_if( builder.ModelClass ~ "s.haveToPaginate or "~ builder.ModelClass ~ "s.maxPerPage is not sameas(perPageChoices|first)") }}
             <div class="btn-group pull-right">
                 <div class="btn btn-sm btn-default btn-reset">{{ echo_trans('pagerfanta.view.perpage') }}</div>
                 <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
@@ -33,6 +33,8 @@
 
 {% block list_paginator_pages %}
     {{ echo_block('list_paginator_pages') }}
-        {{ echo_twig("pagerfanta(" ~ builder.ModelClass ~ "s, 'admingenerator', {css_custom_class: 'no-margin pull-right'})") }}
+        {{ echo_if( builder.ModelClass ~ "s.haveToPaginate") }}
+            {{ echo_twig("pagerfanta(" ~ builder.ModelClass ~ "s, 'admingenerator', {css_custom_class: 'no-margin pull-right'})") }}
+        {{ echo_endif() }}
     {{ echo_endblock() }}
 {% endblock %}
