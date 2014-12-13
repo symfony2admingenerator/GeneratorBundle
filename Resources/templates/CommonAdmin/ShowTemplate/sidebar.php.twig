@@ -5,12 +5,20 @@
                 {{ echo_if_granted(widget.credentials, builder.ModelClass) }}
             {% endif %}
             <div class="row">
-                <h2>{{ echo_trans(name,{}, i18n_catalog|default("Admin") ) }}</h2>
-                {% if widget.partial %}
-                    {{ echo_include(widget.partial) }}
-                {% elseif widget.render %}
-                    {{ echo_render(widget.render is iterable ?  widget.render.controller : widget.render, widget.render is iterable ? widget.render.params : {}) }}
-                {% endif %}
+                <div class="col-md-12 sidebar-widget-{{ name|classify|replace({'.': '-'})|lower }}"
+                    <div class="box box-primary">
+                        <div class="box-header">
+                            <h3 class="box-title">{{ echo_trans(name,{}, i18n_catalog|default("Admin") ) }}</h3>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        {% if widget.partial %}
+                            {{ echo_include(widget.partial) }}
+                        {% elseif widget.render %}
+                            {{ echo_render(widget.render is iterable ?  widget.render.controller : widget.render, widget.render is iterable ? widget.render.params : {}) }}
+                        {% endif %}
+                    </div>
+                </div>
             </div>
             {% if widget.credentials|default is not empty %}
                 {{ echo_endif () }}
