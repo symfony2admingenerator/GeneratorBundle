@@ -1,3 +1,5 @@
+{% use 'AdmingeneratorGeneratorBundle::flash.html.twig' %}
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -66,6 +68,7 @@
                             </section>
                         {% endblock page_header %}
                         <section class="content">
+                            {{ block('flash_messages') }}
                             {% block page_content '' %}
                         </section>
                     </aside>
