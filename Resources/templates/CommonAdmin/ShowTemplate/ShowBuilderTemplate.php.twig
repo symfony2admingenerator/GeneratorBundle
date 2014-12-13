@@ -22,9 +22,9 @@
 {{- block('page_title') -}}
 
 {{ echo_block("page_content") }}
-	<div class="row">
+    <div class="row">
         {% if sidebar|default is not empty %}
-        <div class="show-model show-model-{{ builder.modelClass|lower }} col-md-8">
+        <div class="show-model show-model-{{ builder.modelClass|lower }} col-md-8 col-xs-12">
         {% else %}
         <div class="show-model show-model-{{ builder.modelClass|lower }} no-sidebar col-md-12">
         {% endif %}
@@ -68,10 +68,10 @@
         </div>
 
 
-	    {% if sidebar|default is not empty %}
-            <div class="show-model-sidebar show-model-sidebar-{{ builder.modelClass|lower }} col-md-4">
+        {% if sidebar|default is not empty %}
+            <div class="show-model-sidebar show-model-sidebar-{{ builder.modelClass|lower }} col-md-4 col-xs-12">
                 {{- block('show_sidebar') -}}
             </div>
-	    {% endif %}
+        {% endif %}
     </div>
 {{ echo_endblock() }}
