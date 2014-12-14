@@ -39,7 +39,7 @@
         $this->setScopes($scopes);
 
         $filters = array();
-        foreach ($this->getScopes() as $scopeGroupName => $scopeName) {
+        foreach ($scopes as $scopeGroupName => $scopeName) {
             $filters += $this->getScopeFilters($scopeGroupName);
         }
         $this->setFilters($filters);
@@ -48,7 +48,15 @@
 
     protected function getScopes()
     {
-        return $this->get('session')->get($this->getSessionPrefix().'List\Scopes', $this->getDefaultScopes());
+        if (! $scopes = $this->get('session')->get($this->getSessionPrefix().'List\Scopes')) {
+            $scopes = $this->getDefaultScopes();
+            $this->setScopes($scopes);
+            foreach ($scopes as $groupName => $scopeName) {
+                $this->setScope($groupName, $scopeName);
+            }
+        }
+
+        return $scopes;
     }
 
     protected function getDefaultScopes()
@@ -60,7 +68,7 @@
         $scopes['{{ groupName|classify|lower }}'] = '';
 
         {% for scopeName, params in group -%}
-            {%- if params["default"] is defined %}
+            {%- if params["default"] is defined and params["default"] %}
             $scopes['{{ groupName|classify|lower }}'] = '{{ scopeName|classify|lower }}';
             {% endif -%}
         {%- endfor -%}
@@ -94,6 +102,7 @@
         $filters = array();
 
         {% for groupName, group in scopes -%}
+            if ('{{ groupName|classify|lower }}' === $groupName) {
             {%- for scopeName, params in group %}
                 if ('{{ scopeName|classify|lower }}' === $scope) {
                 {% if params["filters"] is defined -%}
@@ -106,6 +115,7 @@
 
                 }
             {% endfor -%}
+            }
         {%- endfor %}
 
         return $filters;
