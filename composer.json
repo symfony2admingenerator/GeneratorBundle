@@ -41,10 +41,9 @@
         "symfony2admingenerator/user-bundle": "FOSUserBundle integration for Admingenerator",
         "liuggio/excelbundle": "(version >= 2.0) Allows the usage of the Excel export."
     },
-    "target-dir": "Admingenerator/GeneratorBundle",
     "autoload": {
-        "psr-0": {
-            "Admingenerator\\GeneratorBundle": ""
+        "psr-4": {
+            "Admingenerator\\GeneratorBundle\\": ""
         }
     },
     "extra": {
