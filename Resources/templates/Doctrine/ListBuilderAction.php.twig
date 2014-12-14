@@ -147,56 +147,6 @@
     {% endfor %}
 {% endblock %}
 
-{% block processScopes -%}
-    protected function processScopes($query)
-    {
-    {% if scopes is defined %}
-        $scopes = $this->getScopes();
-
-        $queryFilter = $this->getQueryFilter();
-        $queryFilter->setQuery($query);
-
-
-        {% for groupName, group in scopes -%}
-            {%- for scopeName, params in group %}
-
-        if (isset($scopes['{{ groupName|classify|lower }}']) && $scopes['{{ groupName|classify|lower }}'] == '{{ scopeName|classify|lower }}') {
-            {% if params["filters"] is defined -%}
-                {%- for filter, filterParams in params["filters"] -%}
-                {%- if filter|is_numeric -%}
-                $this->scope{{ filterParams|classify }}($queryFilter);
-                {%- endif -%}
-                {%- endfor -%}
-            {%- endif %}
-
-        }
-            {% endfor -%}
-        {%- endfor %}
-    {%- endif %}
-    }
-
-    {% if scopes is defined %}
-    {% for groupName, group in scopes -%}
-        {%- for scopeName, params in group %}
-            {% if params["filters"] is defined -%}
-            {%- for filter, filterParams in params["filters"] -%}
-                {%- if filter|is_numeric -%}
-    /**
-     * Add the filters to the query for {{ groupName }} => {{ scopeName }}
-     *
-     * @param queryFilter the queryFilter
-     */
-    protected function scope{{ filterParams|classify }}($queryFilter)
-    {
-    }
-
-                {%- endif -%}
-            {%- endfor -%}
-            {%- endif -%}
-        {% endfor -%}
-    {%- endfor -%}
-    {%- endif %}
-{% endblock %}
 
 {% block getQueryFilter %}
     /**
