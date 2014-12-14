@@ -84,11 +84,11 @@ admingenerator_generator:
     use_doctrine_odm: false
     use_propel: false
     overwrite_if_exists: false
-    base_admin_template: AdmingeneratorGeneratorBundle::base_admin.html.twig
-    dashboard_welcome_path: ~
-    login_path: ~
-    logout_path: ~
-    exit_path: ~
+    base_admin_template: AdmingeneratorGeneratorBundle::base.html.twig
+    dashboard_route: ~
+    login_route: ~
+    logout_route: ~
+    exit_route: ~
     generator_cache: ~
     ## Twig and Templates
     twig:

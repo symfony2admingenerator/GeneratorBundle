@@ -91,9 +91,9 @@ If you're useing assetic for asset management dump your assets by running:
 ### 5. Specify routes
 
 #### Dashboard route (Optional)
-By default brand text ("Dashboard") is disabled. To link it with your Dashboard add `dashboard_welcome_path` under `admingenerator_generator` in your `app/config/config.yml`:
+By default brand text ("Dashboard") is disabled. To link it with your Dashboard add `dashboard_route` under `admingenerator_generator` in your `app/config/config.yml`:
 
 ```yaml
 admingenerator_generator:
-    dashboard_welcome_path:     MyDashboard_path
+    dashboard_route:     MyDashboard_path
 ```
