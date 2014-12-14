@@ -1,0 +1,31 @@
+{% block navbar_profile_authenticated_user_header%}
+    <li class="user-header bg-light-blue">
+        {% block navbar_profile_authenticated_user_header_inner %}
+            <img src="{{ asset('bundles/admingenerator/img/avatar5.png') }}" class="img-circle" alt="Authenticated user" />
+            <p>
+                {{ app.user }}
+            </p>
+        {% endblock navbar_profile_authenticated_user_header_inner %}
+    </li>
+{% endblock navbar_profile_authenticated_user_header %}
+
+{% block navbar_profile_authenticated_user_body '' %}
+
+{% block navbar_profile_authenticated_user_footer %}
+    <li class="user-footer">
+        {% block navbar_profile_authenticated_user_footer_inner %}
+            {% if admingenerator_config('logout_route') is not null %}
+                {% if admingenerator_config('exit_route') is not null and is_granted('ROLE_PREVIOUS_ADMIN') %}
+                    <div class="pull-right">
+                        <a href="{{ path(admingenerator_config('exit_route')) ~ '?_switch_user=_exit' }}" class="btn btn-default btn-flat">{{ 'profile.exit'|trans({}, 'Admingenerator') }}</a>
+                    </div>
+                {% endif %}
+                <div class="pull-right">
+                    <a href="{{ path(admingenerator_config('logout_route')) }}" class="btn btn-default btn-flat">
+                        {{ 'profile.logout'|trans({}, 'Admingenerator') }}
+                    </a>
+                </div>
+            {% endif %}
+        {% endblock navbar_profile_authenticated_user_footer_inner %}
+    </li>
+{% endblock navbar_profile_authenticated_user_footer %}

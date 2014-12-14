@@ -1,18 +1,21 @@
 {% block form %}
-<form action="{{ echo_twig('path(actionRoute, actionParams)') }}" method="post" class="admin_form">
-    <input type="hidden" name="_csrf_token" value="{{ echo_twig('path(actionRoute, actionParams)|csrf_token') }}"/>
-
-    {{ echo_block('form_fields_' ~ action.name) }}
-    {{ echo_endblock() }}
-
-    <div id="actions-buttons" class="form-group form-actions hidden-print">
-        <div class="btn-toolbar actions-bar" role="toolbar">
-        {{ echo_block('form_actions_' ~ action.name) }}
-            {{ block("form_actions") }}
-        {{ echo_endblock() }}
-        </div>
+    <div class="box box-primary">
+        <form action="{{ echo_twig('path(actionRoute, actionParams)') }}" method="post" class="form-model-action form-model-action-{{ action.name|lower }}">
+            <div class="box-body">
+                <input type="hidden" name="_csrf_token" value="{{ echo_twig('path(actionRoute, actionParams)|csrf_token') }}"/>
+                {{ echo_block('form_fields_' ~ action.name) }}{{ echo_endblock() }}
+            </div>
+            <div class="box-footer">
+                <div class="form-group form-action-actions-generic">
+                    <div class="btn-toolbar actions-bar" role="toolbar">
+                        {{ echo_block('form_actions_' ~ action.name) }}
+                        {{ block("form_actions") }}
+                        {{ echo_endblock() }}
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
-</form>
 {% endblock %}
 
 {% block form_actions %}

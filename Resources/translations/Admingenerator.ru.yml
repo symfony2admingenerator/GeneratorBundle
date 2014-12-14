@@ -6,15 +6,17 @@ boolean:
 
 # Pager
 pagerfanta:
-    previous:       Пред
-    next:           След
+    previous:       <
+    next:           ">"
     view.perpage:   Показать
     num.elements:   %number% элементов
 
 # List
 list:
-    filter:         Фильтровать
-    reset:          Сбросить
+    filters: Filters
+    button:
+        filter:         Фильтровать
+        reset:          Сбросить
     no.results:     Нет записей.
     display:
         range:      Показаны <b role="results-range-start">%start%</b> - <b role="results-range-end">%end%</b> из <b role="results-count">%count%</b> записи(ей).
@@ -89,3 +91,6 @@ batch.list:
 dashboard:
     homepage:   Главная
     brand:      Панель мониторинга
+
+admingenerator:
+    dashboard: Панель мониторинга

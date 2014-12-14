@@ -32,12 +32,12 @@ and open a ticket on github.
 ## 1. Installation
 
 1. [Installation via composer][installation-1]
-2. [Configuration][installation-4]
+2. [Configuration][installation-2]
 
 [go up][go-up]
 
 [installation-1]: https://github.com/symfony2admingenerator/GeneratorBundle/blob/master/Resources/doc/installation/installation-via-composer.md
-[installation-4]: https://github.com/symfony2admingenerator/GeneratorBundle/blob/master/Resources/doc/installation/configuration.md
+[installation-2]: https://github.com/symfony2admingenerator/GeneratorBundle/blob/master/Resources/doc/installation/configuration.md
 
 ## 2. Support and Contribution
 
@@ -107,9 +107,8 @@ List of supported features for each model manager:
 4. [How to use a2lixTranslationFormBundle with AdmingeneratorGeneratorBundle][cookbook-4]
 5. [Command Line][cookbook-5]
 6. [Form types][cookbook-6]
-7. [Changeing web directory][cookbook-7]
-8. [Extending generator templates][cookbook-8]
-9. [Creating custom view types][cookbook-9]
+7. [Extending generator templates][cookbook-7]
+8. [Creating custom view types][cookbook-8]
 
 [go up][go-up]
 
@@ -119,9 +118,8 @@ List of supported features for each model manager:
 [cookbook-4]: https://github.com/symfony2admingenerator/AdmingeneratorGeneratorBundle/blob/master/Resources/doc/cookbook/a2lixTranslationFormBundle-integration.md
 [cookbook-5]: https://github.com/symfony2admingenerator/AdmingeneratorGeneratorBundle/blob/master/Resources/doc/cookbook/commandLine.md
 [cookbook-6]: https://github.com/symfony2admingenerator/AdmingeneratorGeneratorBundle/blob/master/Resources/doc/cookbook/formTypes.md
-[cookbook-7]: https://github.com/symfony2admingenerator/AdmingeneratorGeneratorBundle/blob/master/Resources/doc/cookbook/changeing-web-directory.md
-[cookbook-8]: https://github.com/symfony2admingenerator/AdmingeneratorGeneratorBundle/blob/master/Resources/doc/cookbook/extending-generator-templates.md
-[cookbook-9]: https://github.com/symfony2admingenerator/AdmingeneratorGeneratorBundle/blob/master/Resources/doc/cookbook/custom-view-types.md
+[cookbook-7]: https://github.com/symfony2admingenerator/AdmingeneratorGeneratorBundle/blob/master/Resources/doc/cookbook/extending-generator-templates.md
+[cookbook-8]: https://github.com/symfony2admingenerator/AdmingeneratorGeneratorBundle/blob/master/Resources/doc/cookbook/custom-view-types.md
 
 ## 8. Security
 

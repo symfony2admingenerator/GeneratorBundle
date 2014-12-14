@@ -1,0 +1,13 @@
+<header class="header">
+    {% block logo %}
+        {% set brand_path = (admingenerator_config('dashboard_route') is not null) ? path(admingenerator_config('dashboard_route')) : '#' %}
+        <a class="logo" href="{{ brand_path }}">
+            {% block brand_text %}
+                {{ 'dashboard.brand'|trans({}, 'Admingenerator') }}
+            {% endblock %}
+        </a>
+    {% endblock %}
+    {% block navbar %}
+        {% include "AdmingeneratorGeneratorBundle:Navbar:layout.html.twig" %}
+    {% endblock navbar %}
+</header>

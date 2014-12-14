@@ -6,15 +6,17 @@ boolean:
 
 # Pager
 pagerfanta:
-    previous:       Precedente
-    next:           Successivo
+    previous:       <
+    next:           ">"
     view.perpage:   Mostra
     num.elements:   %number% elementi
 
 # List
 list:
-    filter:         Filtra
-    reset:          Pulisci
+    filters: Filtras
+    button:
+        filter:         Filtra
+        reset:          Pulisci
     no.results:     Nessun risultato.
     display:
         range:      Mostra i risultati da <b role="results-range-start">%start%</b> a <b role="results-range-end">%end%</b> di <b role="results-count">%count%</b>.
@@ -93,3 +95,6 @@ batch.list:
 dashboard:
     homepage:   Inizio pagina
     brand:      Cruscotto
+
+admingenerator:
+    dashboard: Cruscotto

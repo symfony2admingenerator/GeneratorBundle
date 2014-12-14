@@ -6,15 +6,17 @@ boolean:
 
 # Pager
 pagerfanta:
-    previous:       Προηγούμενο
-    next:           Επόμενο
+    previous:       <
+    next:           ">"
     view.perpage:   Προβολή
     num.elements:   %number% στοιχείων
 
 # List
 list:
-    filter:         Φίλτρο
-    reset:          Επαναφορά
+    filters: Filters
+    button:
+        filter:         Φίλτρο
+        reset:          Επαναφορά
     no.results:     Δεν υπάρχουν αποτελέσματα
     display:
         range:      Εμφανίζονται <b role="results-range-start">%start%</b> - <b role="results-range-end">%end%</b> από <b role="results-count">%count%</b> τα αποτελέσματα.
@@ -89,3 +91,6 @@ batch.list:
 dashboard:
     homepage:   Αρχική Σελίδα
     brand:      Ταμπλό
+
+admingenerator:
+    dashboard: Ταμπλό

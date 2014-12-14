@@ -1,7 +1,8 @@
 {% extends 'knp_menu.html.twig' %}
+
 {% block label %}
-    {% if item.getExtra('icon') is defined %}<i class="{{ item.getExtra('icon') }}"></i>{% endif %}
+    {% if item.getExtra('icon') is defined and item.getExtra('icon') is not empty %}<i class="{{ item.getExtra('icon') }}"></i>{% endif %}
     {% set labelText = item.label|trans(item.getExtra('translation_params', {}), item.getExtra('translation_domain', 'messages')) %}
-    {% if options.allow_safe_labels and item.getExtra('safe_label', false) %}{{ labelText|raw }}{% else %}{{ labelText }}{% endif %}
-    {% if item.getExtra('caret') %}<b class="caret"></b>{% endif %}
+    <span>{% if options.allow_safe_labels and item.getExtra('safe_label', false) %}{{ labelText|raw }}{% else %}{{ labelText }}{% endif %}</span>
+    {% if item.getExtra('caret') %}<i class="fa fa-angle-left pull-right"></i>{% endif %}
 {% endblock %}

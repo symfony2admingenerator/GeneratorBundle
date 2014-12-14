@@ -9,23 +9,7 @@ class AdmingeneratorMenuBuilder extends ContainerAware
 {
     protected $dividers = array();
     
-    protected $translation_domain = 'Admin';
-
-    /**
-     * Creates header element and adds it to menu
-     * 
-     * @param \Knp\Menu\ItemInterface $menu
-     * @param string $label Header label
-     * @return ItemInterface Header element
-     */
-    protected function addHeader(ItemInterface $menu, $label)
-    {
-        $item = $menu->addChild($label);
-        $item->setAttribute('class', 'dropdown-header');
-        $item->setExtra('translation_domain', $this->translation_domain);
-
-        return $item;
-    }
+    protected $translation_domain = 'Admingenerator';
 
     /**
      * Creates link to uri element and adds it to menu
@@ -40,7 +24,7 @@ class AdmingeneratorMenuBuilder extends ContainerAware
         $item = $menu->addChild($label, array('uri' => $uri));
         $item->setExtra('translation_domain', $this->translation_domain);
 
-        if ($item->getUri() == $this->container->get('request')->getRequestUri()) {
+        if ($this->isCurrentUri($item->getUri())) {
             $item->setAttribute('class', 'active');
         }
 
@@ -61,11 +45,24 @@ class AdmingeneratorMenuBuilder extends ContainerAware
         $item = $menu->addChild($label, array('route' => $route, 'routeParameters' => $routeParameters));
         $item->setExtra('translation_domain', $this->translation_domain);
 
-        if ($item->getUri() == $this->container->get('request')->getRequestUri()) {
-            $item->setAttribute('class', 'active');
+        if ($this->isCurrentUri($item->getUri())) {
+            $this->setActive($item);
         }
 
         return $item;
+    }
+
+    /**
+     * Set active class to current item and all its parents (so it is automatically opened)
+     * 
+     * @param ItemInterface $item
+     */
+    protected function setActive(ItemInterface $item = null)
+    {
+        if ($item) {
+            $this->setActive($item->getParent());
+            $item->setAttribute('class', $item->getAttribute('class', '') . ' active');
+        }
     }
 
     /**
@@ -79,32 +76,19 @@ class AdmingeneratorMenuBuilder extends ContainerAware
     protected function addDropdown(ItemInterface $menu, $label, $caret = true)
     {
         $item = $this->addLinkURI($menu, $label, '#');
-        $item->setLinkAttributes(array('class' => 'dropdown-toggle', 'data-toggle' => 'dropdown'));
-        $item->setChildrenAttributes(array('class' => 'dropdown-menu'));
-        $item->setAttributes(array('class' => 'dropdown'));
+        $item->setChildrenAttributes(array('class' => 'treeview-menu'));
+        $item->setAttributes(array('class' => 'treeview'));
         $item->setExtra('caret', $caret);
 
         return $item;
     }
 
     /**
-     * Creates divider element and adds it to menu
-     * 
-     * @param \Knp\Menu\ItemInterface $menu
-     * @return ItemInterface Divider element
+     * @param $uri
+     * @return bool
      */
-    protected function addDivider(ItemInterface $menu)
+    protected function isCurrentUri($uri)
     {
-        do {
-            $name = 'divider'.mt_rand();
-        } while (in_array($name, $this->dividers));
-
-        $this->dividers[] = $name;
-
-        $item = $menu->addChild($name, array());
-        $item->setLabel('');
-        $item->setAttribute('class', 'divider');
-
-        return $item;
+        return $this->container->get('request')->getBaseUrl().$this->container->get('request')->getPathInfo() === $uri;
     }
 }

@@ -6,15 +6,17 @@ boolean:
 
 # Pager
 pagerfanta:
-    previous:       Nazaj
-    next:           Naprej
+    previous:       <
+    next:           ">"
     view.perpage:   Prikazal
     num.elements:   %number% elementov
 
 # List
 list:
-    filter:         Filter
-    reset:          Počisti
+    filters: Filters
+    button:
+        filter:         Filter
+        reset:          Počisti
     no.results:     Ni rezultatov.
     display:
         range:      Prikazani rezultati <b role="results-range-start">%start%</b> - <b role="results-range-end">%end%</b> od <b role="results-count">%count%</b>.
@@ -89,3 +91,6 @@ batch.list:
 dashboard:
     homepage:   Domača stran
     brand:      Nadzorne plošče
+
+admingenerator:
+    dashboard: Nadzorne plošče

@@ -6,15 +6,17 @@ boolean:
 
 # Pager
 pagerfanta:
-    previous:       Inapoi
-    next:           Urmatorul
+    previous:       <
+    next:           ">"
     view.perpage:   Arată
     num.elements:   %number% de elemente
 
 # List
 list:
-    filter:         Filtru
-    reset:          Resetați
+    filters: Filters
+    button:
+        filter:         Filtru
+        reset:          Resetați
     no.results:     Exista intrari
     display:
         range:      Rezultate <b role="results-range-start">%start%</b> - <b role="results-range-end">%end%</b> de  <b role="results-count">%count%</b> înregistrarea(e).
@@ -90,3 +92,6 @@ batch.list:
 dashboard:
     homepage:   Acasă
     brand:      Tabloul de bord
+
+admingenerator:
+    dashboard: Tabloul de bord

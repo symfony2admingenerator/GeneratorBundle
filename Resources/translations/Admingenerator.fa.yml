@@ -6,15 +6,17 @@ boolean:
 
 # Pager
 pagerfanta:
-    previous: قبلی
-    next:     بعدی
+    previous: <
+    next:           ">"
     view.perpage:   نمایش
     num.elements:   %number% عناصر
 
 # List
 list:
-    filter:         فیلتر
-    reset:          مجدد سازی
+    filters: مرشحات
+    button:
+        filter:         فیلتر
+        reset:          مجدد سازی
     no.results:     موردی پیدا نشد.
     display:
         range:      نمایش <b role="results-range-start">%start%</b> - <b role="results-range-end">%end%</b> از <b role="results-count">%count%</b> نتیجه.
@@ -89,3 +91,6 @@ batch.list:
 dashboard:
     homepage:   خانه
     brand:      داشبورد
+
+admingenerator:
+    dashboard: داشبورد

@@ -1,74 +1,58 @@
 {% block batch_actions %}
-{{ echo_block("batch_actions") }}
-{% if builder.BatchActions|default is not empty %}
-
-    {{ echo_if_granted(builder.BatchActions|mapBy('credentials')|flatten|join(' or ')|default('denyAll')) }}
-
-    <div id="batchActionToolbar" class="btn-toolbar">
-        <div class="input-group btn-group">
-            <div class="input-group-btn">
-                <button id="batchActionSubmit" type="submit" name="batch" class="btn btn-warning" title="{{ echo_trans('batch.list.send') }}">
-                    <i class="fa fa-cogs"></i>
-                </button>
-            </div>
-            <select id="batchActionSelector" name="action" class="form-control">
-                <option selected="selected" value="none">{{ echo_trans('batch.list.selected') }}</option>
-                {% for action in builder.BatchActions %}
-                    {{ echo_block('batch_action_' ~ action.twigName) }}
-                    {% if action.credentials %}
-                        {{ echo_if_granted(action.credentials) }}
-                    {% endif %}
-
-                    {{ block('batch_action_block') }}
-
-                    {% if action.credentials %}
-                        {{ echo_endif() }}
-                    {% endif %}
-                    {{ echo_endblock() }}
-                {% endfor %}
-            </select>
-        </div>
-    </div>
-
-    {{ echo_endif() }}
-
-{% endif %}
-{{ echo_endblock() }}
+    {{ echo_block("batch_actions") }}
+        {% if builder.BatchActions|default is not empty %}
+            {{ echo_if_granted(builder.BatchActions|mapBy('credentials')|flatten|join(' or ')|default('denyAll')) }}
+                <div class="input-group">
+                    <select name="action" class="form-control">
+                        <option selected="selected" value="none">{{ echo_trans('batch.list.selected') }}</option>
+                        {% for action in builder.BatchActions %}
+                            {{ echo_block('batch_action_' ~ action.twigName) }}
+                            {% if action.credentials %}
+                                {{ echo_if_granted(action.credentials) }}
+                            {% endif %}
+                                {{ block('batch_action_block') }}
+                            {% if action.credentials %}
+                                {{ echo_endif() }}
+                            {% endif %}
+                            {{ echo_endblock() }}
+                        {% endfor %}
+                    </select>
+                    <span class="input-group-btn">
+                        <button type="submit" name="batch" class="btn btn-warning" title="{{ echo_trans('batch.list.send', {}, "Admingenerator", 'html_attr') }}">
+                            {{ echo_trans('batch.list.send') }}
+                        </button>
+                    </span>
+                </div>
+            {{ echo_endif() }}
+        {% endif %}
+    {{ echo_endblock() }}
 {% endblock %}
 
 {% block batch_action_block %}
     {% set translationDomain = action.type is sameas('custom') ? i18n_catalog|default("Admin") : 'Admingenerator' %}
-    <option value="{{ action.name }}" {%- if action.confirm %} data-confirm='{{ echo_trans(action.confirm, {}, translationDomain) }}' {% endif -%}>
-        {% if action.icon %}<i class="{% if action.icon is defined and action.icon|length > 0 %}fa {{ action.icon }}{% endif %}"></i> {% endif %}{{ echo_trans(action.label, {}, translationDomain) }}
+    <option
+        value="{{ action.name }}"
+        {%- if action.confirm %} data-confirm="{{ echo_trans(action.confirm, {}, translationDomain, 'html_attr') }}" {% endif -%}
+        >
+            {% if action.icon %}<i class="{% if action.icon is defined and action.icon|length > 0 %}fa {{ action.icon }}{% endif %}"></i> {% endif %}
+            {{ echo_trans(action.label, {}, translationDomain) }}
     </option>
 {% endblock %}
 
-{% block form_batch_actions %}
-{{ echo_block("form_batch_actions") }}
-{% if batch_actions is defined and batch_actions|length > 0 %}
-    {% set actionPathName = builder.routePrefixWithSubfolder ~ '_' ~ bundle_name ~ ( builder.BaseGeneratorName ? "_" ~ builder.BaseGeneratorName : "" ) ~ '_batch' %}
-    <form id="form-list-{{ builder.ModelClass }}" method="post" action="{{ echo_path(actionPathName) }}">
-        <input type="hidden" value="{{ echo_twig_filter(actionPathName, 'csrf_token', true) }}" name="_csrf_token" />
-{% endif %}
-{{ echo_endblock() }}
-{% endblock %}
-    
-{% block endform_batch_actions %}
-{{ echo_block("endform_batch_actions") }}
-{% if batch_actions|default is not empty %}
-    </form>
-    
-    <script type="text/javascript">
-    jQuery(document).ready(function($) {
-        $("#form-list-{{ builder.ModelClass }}").agen$batchActions({
-            submitSelector:     '#batchActionSubmit',
-            actionsSelector:    '#batchActionSelector',
-            noneSelected:       '{{ echo_trans("batch.list.none.selected") }}',
-            selectAll:          '#batchActionSelectAll',
-            selectedItems:      '#batchActionsItemsContainer input[name="selected[]"]',
-        });
-    });
+{% block batch_actions_script %}
+    {{ echo_block('batch_actions_script_container') }}
+    <script type="application/javascript">
+        {{ echo_block('batch_actions_script_inner') }}
+        window.S2A = window.S2A || {};
+        window.S2A.batchActionsAdminOptions = {
+            containerSelector: '.form-list-batch',
+            actionSelector: 'select[name=action]',
+            toggleSelector: 'input[name=batch_select_all]',
+            elementSelector: '.list-results-fields-row-batch-selector',
+            noActionValue: 'none',
+            noElementsSelectedMessage: '{{ echo_trans("batch.list.none.selected", {}, 'Admingenerator', 'js') }}'
+        };
+        {{ echo_endblock() }}
     </script>
-{% endif %}
-{{ echo_endblock() }}
+    {{ echo_endblock() }}
 {% endblock %}

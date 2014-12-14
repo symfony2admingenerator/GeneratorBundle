@@ -1,18 +1,18 @@
 {% block list_nbresults %}
-{{ echo_block("list_nbresults") }}
-<div class="list_nbresults">
-	{{ echo_block("list_nbresults_text") }}
-	    {{ echo_set("count",  builder.ModelClass ~ "s.nbResults", false ) }}
-	    {{ echo_set("start",  "( " ~ builder.ModelClass ~ "s.currentPage - 1 ) * " ~ builder.ModelClass ~ "s.maxPerPage + 1", false ) }}
-	    {{ echo_set("end",  "start + " ~ builder.ModelClass ~ "s.maxPerPage - 1", false ) }}
-	    {{ echo_set("end", "end > count ? count : end", false) }}
+    {{ echo_block("list_nbresults") }}
+        <h3 class="box-title">
+            {{ echo_block("list_nbresults_text") }}
+                {{ echo_set("count",  builder.ModelClass ~ "s.nbResults", false ) }}
+                {{ echo_set("start",  "( " ~ builder.ModelClass ~ "s.currentPage - 1 ) * " ~ builder.ModelClass ~ "s.maxPerPage + 1", false ) }}
+                {{ echo_set("end",  "start + " ~ builder.ModelClass ~ "s.maxPerPage - 1", false ) }}
+                {{ echo_set("end", "end > count ? count : end", false) }}
 
-	    {{ echo_if ( builder.ModelClass ~ "s.haveToPaginate") }}
-	    {{ echo_trans("list.display.range|{ start, end, count }|") }}
-	    {{ echo_elseif (" count > 0 ") }}
-	    {{ echo_trans("list.display.all|{ count }|") }}
-	    {{ echo_endif () }}
-	{{ echo_endblock() }}
-</div>
-{{ echo_endblock() }}
+                {{ echo_if ( builder.ModelClass ~ "s.haveToPaginate") }}
+                {{ echo_trans("list.display.range|{ start, end, count }|") }}
+                {{ echo_elseif (" count > 0 ") }}
+                {{ echo_trans("list.display.all|{ count }|") }}
+                {{ echo_endif () }}
+            {{ echo_endblock() }}
+        </h3>
+    {{ echo_endblock() }}
 {% endblock %}

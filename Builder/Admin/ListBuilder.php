@@ -13,11 +13,21 @@ use Admingenerator\GeneratorBundle\Generator\Action;
  */
 class ListBuilder extends BaseBuilder
 {
-    protected $batch_actions = array();
+    /**
+     * @var array
+     */
+    protected $batchActions = null;
 
-    protected $scope_columns = array();
+    /**
+     * @var array
+     */
+    protected $scopeColumns = null;
 
-    protected $filter_columns = array();
+    /**
+     * @var array
+     */
+    protected $filterColumns = null;
+
 
     /**
      * (non-PHPdoc)
@@ -28,18 +38,20 @@ class ListBuilder extends BaseBuilder
         return 'list';
     }
 
+
+
     public function getFilterColumns()
     {
-        if (0 === count($this->filter_columns)) {
+        if (null === $this->filterColumns) {
+            $this->filterColumns = array();
             $this->findFilterColumns();
         }
-        return $this->filter_columns;
+
+        return $this->filterColumns;
     }
 
     protected function findFilterColumns()
     {
-        $filterColumns = array();
-
         foreach ($this->getColumns() as $column) {
             if ($column->isFilterable()) {
                 $this->addFilterColumn($column);
@@ -49,7 +61,7 @@ class ListBuilder extends BaseBuilder
 
     protected function addFilterColumn(Column $column)
     {
-        $this->filter_columns[$column->getName()] = $column;
+        $this->filterColumns[$column->getName()] = $column;
     }
 
     public function getFilterColumnGroups()
@@ -76,11 +88,12 @@ class ListBuilder extends BaseBuilder
      */
     public function getScopeColumns()
     {
-        if (0 === count($this->scope_columns)) {
+        if (null === $this->scopeColumns) {
+            $this->scopeColumns = array();
             $this->findScopeColumns();
         }
 
-        return $this->scope_columns;
+        return $this->scopeColumns;
     }
 
     protected function findScopeColumns()
@@ -117,7 +130,7 @@ class ListBuilder extends BaseBuilder
 
     protected function addScopeColumn(Column $column)
     {
-        $this->scope_columns[$column->getName()] = $column;
+        $this->scopeColumns[$column->getName()] = $column;
     }
 
     /**
@@ -126,11 +139,12 @@ class ListBuilder extends BaseBuilder
      */
     public function getBatchActions()
     {
-        if (0 === count($this->batch_actions)) {
+        if (null === $this->batchActions) {
+            $this->batchActions = array();
             $this->findBatchActions();
         }
 
-        return $this->batch_actions;
+        return $this->batchActions;
     }
 
     protected function setUserBatchActionConfiguration(Action $action)
@@ -159,7 +173,7 @@ class ListBuilder extends BaseBuilder
 
     protected function addBatchAction(Action $action)
     {
-        $this->batch_actions[$action->getName()] = $action;
+        $this->batchActions[$action->getName()] = $action;
     }
 
     protected function findBatchActions()

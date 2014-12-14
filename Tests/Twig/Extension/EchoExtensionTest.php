@@ -39,17 +39,43 @@ class EchoExtensionTest extends BaseExtensionTest
         $tpls = array(
             'string' => '{{ echo_trans( "foo" ) }}',
             'variable_key' => '{{ echo_trans( name ) }}',
+            'quote_included' => '{{ echo_trans( "My awesome \"title\"") }}'
         );
 
         $returns = array(
             'string' => array(
-                '{% trans from "Admingenerator" %}foo{% endtrans %}',
+                '{{ "foo"|trans({}, "Admingenerator")|raw }}',
                 'trans return a good trans tag with string elements'
              ),
             'variable_key' => array(
-                '{% trans from "Admingenerator" %}cedric{% endtrans %}',
+                '{{ "cedric"|trans({}, "Admingenerator")|raw }}',
                 'trans return a good trans tag with variable as key'
              ),
+            'quote_included' => array(
+                '{{ "My awesome \"title\""|trans({}, "Admingenerator")|raw }}',
+                'trans return a good trans tag with variable as key'
+            ),
+        );
+
+        $this->runTwigTests($tpls, $returns);
+    }
+
+    public function testGetEchoTransWithEscape()
+    {
+        $tpls = array(
+            'string' => '{{ echo_trans( "foo", {}, "Admingenerator", "html_attr" ) }}',
+            'variable_key' => '{{ echo_trans( name, {}, "Admingenerator", "html_attr" ) }}',
+        );
+
+        $returns = array(
+            'string' => array(
+                '{{ "foo"|trans({}, "Admingenerator")|escape("html_attr") }}',
+                'trans return a good trans tag with string elements'
+            ),
+            'variable_key' => array(
+                '{{ "cedric"|trans({}, "Admingenerator")|escape("html_attr") }}',
+                'trans return a good trans tag with variable as key'
+            ),
         );
 
         $this->runTwigTests($tpls, $returns);
@@ -58,19 +84,24 @@ class EchoExtensionTest extends BaseExtensionTest
     public function testGetEchoTransWithParameters()
     {
         $tpls = array(
-            'string' => "{{ echo_trans('Display all <b>%foo% %bar%</b> results',{ 'foo': 'foo', 'bar': 'bar' }) }}",
-            'variable_key' => '{{ echo_trans( name,{ \'foo\': \'foo\', \'bar\': \'bar\' } ) }}',
+            'string' => "{{ echo_trans('Display all <b>%foo% %bar%</b> results', { 'foo': 'foo', 'bar': 'bar' }) }}",
+            'variable_key' => '{{ echo_trans(name, { \'foo\': \'foo\', \'bar\': \'bar\' }) }}',
+            'quote_in_param_value' => '{{ echo_trans(name, { \'foo\': \'foo\\\'s\', \'bar\': \'bar\' }) }}',
         );
 
         $returns = array(
             'string' => array(
-                '{% trans with {\'%foo%\': \'foo\',\'%bar%\': \'bar\',} from "Admingenerator" %}Display all <b>%foo% %bar%</b> results{% endtrans %}',
+                '{{ "Display all <b>%foo% %bar%</b> results"|trans({\'%foo%\': \'foo\',\'%bar%\': \'bar\',}, "Admingenerator")|raw }}',
                 'trans return a good trans tag with string elements'
-             ),
+            ),
             'variable_key' => array(
-                '{% trans with {\'%foo%\': \'foo\',\'%bar%\': \'bar\',} from "Admingenerator" %}cedric{% endtrans %}',
+                '{{ "cedric"|trans({\'%foo%\': \'foo\',\'%bar%\': \'bar\',}, "Admingenerator")|raw }}',
                 'trans return a good trans tag with variable as key'
-             ),
+            ),
+            'quote_in_param_value' => array(
+                '{{ "cedric"|trans({\'%foo%\': \'foo\\\'s\',\'%bar%\': \'bar\',}, "Admingenerator")|raw }}',
+                'trans return a good trans tag with variable as key'
+            ),
         );
 
         $this->runTwigTests($tpls, $returns);
@@ -88,23 +119,23 @@ class EchoExtensionTest extends BaseExtensionTest
 
         $returns = array(
             'string_bc' => array(
-                '{% trans with {\'%Book.title%\': Book.title,\'%Book.author.name%\': Book.author.name,} from "Admingenerator" %}You\'re editing %Book.title% written by %Book.author.name%!{% endtrans %}',
+                '{{ "You\'re editing %Book.title% written by %Book.author.name%!"|trans({\'%Book.title%\': Book.title,\'%Book.author.name%\': Book.author.name,}, "Admingenerator")|raw }}',
                 'trans return a good trans tag with string elements'
             ),
             'string_with_full_param_bag' => array(
-                '{% trans with {\'%book%\': Book.title,\'%author%\': Book.author.name,} from "Admingenerator" %}You\'re editing %book% written by %author%!{% endtrans %}',
+                '{{ "You\'re editing %book% written by %author%!"|trans({\'%book%\': Book.title,\'%author%\': Book.author.name,}, "Admingenerator")|raw }}',
                 'trans return a good trans tag with string elements'
             ),
             'string_with_abbrev_param_bag' => array(
-                '{% trans with {\'%Book.title%\': Book.title,\'%Book.author.name%\': Book.author.name,} from "Admingenerator" %}You\'re editing %Book.title% written by %Book.author.name%!{% endtrans %}',
+                '{{ "You\'re editing %Book.title% written by %Book.author.name%!"|trans({\'%Book.title%\': Book.title,\'%Book.author.name%\': Book.author.name,}, "Admingenerator")|raw }}',
                 'trans return a good trans tag with string elements'
             ),
             'string_with_full_param_bag_and_params' => array(
-                '{% trans with {\'%foo%\': \'foo\',\'%book%\': Book.title,} from "Admingenerator" %}You\'re editing %book% written by %foo%!{% endtrans %}',
+                '{{ "You\'re editing %book% written by %foo%!"|trans({\'%foo%\': \'foo\',\'%book%\': Book.title,}, "Admingenerator")|raw }}',
                 'trans return a good trans tag with string elements'
             ),
             'string_with_abbrev_param_bag_and_params' => array(
-                '{% trans with {\'%foo%\': \'foo\',\'%Book.title%\': Book.title,} from "Admingenerator" %}You\'re editing %Book.title% written by %foo%!{% endtrans %}',
+                '{{ "You\'re editing %Book.title% written by %foo%!"|trans({\'%foo%\': \'foo\',\'%Book.title%\': Book.title,}, "Admingenerator")|raw }}',
                 'trans return a good trans tag with string elements'
             ),
         );

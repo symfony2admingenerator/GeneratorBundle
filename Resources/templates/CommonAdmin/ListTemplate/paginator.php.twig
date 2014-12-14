@@ -1,29 +1,40 @@
-{% block list_paginator_perpage %}
-{{ echo_block("list_paginator_perpage") }}
-    {{ echo_if( builder.ModelClass ~ "s.haveToPaginate or "~ builder.ModelClass ~ "s.maxPerPage is not sameas(10)") }}
-    <div class="btn-group input-group dropup">
-        <div class="btn btn-sm btn-default btn-reset">{{ echo_trans('pagerfanta.view.perpage') }}</div>
-        <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
-            {{ echo_twig('"pagerfanta.num.elements"|trans({"%number%": '~ builder.ModelClass ~ 's.maxPerPage}, "Admingenerator")') }} <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu  dropdown-menu-right" role="menu">
-            {{ echo_for('perPage', 'perPageChoices') }}
-            <li>
-                {{ echo_block("list_paginator_perpage_link") }}
-                    <a href="{{ echo_path(builder.routePrefixWithSubfolder ~ '_' ~ bundle_name ~ ( builder.BaseGeneratorName ? "_" ~ builder.BaseGeneratorName : "" ) ~ '_list', '{perPage: perPage}') }}">
-                        {{ echo_twig('"pagerfanta.num.elements"|trans({"%number%": perPage}, "Admingenerator")') }}
-                    </a>
-                {{ echo_endblock() }}
-            </li>
-            {{ echo_endfor() }}
-        </ul>
+{% block list_paginator %}
+    <div class="list-results-pagination-pages col-md-8">
+        {{ block('list_paginator_pages') }}
     </div>
-    {{ echo_endif() }}
-{{ echo_endblock() }}
+    <div class="list-results-pagination-perpage col-md-4">
+        {{ block('list_paginator_perpage') }}
+    </div>
+{% endblock %}
+
+{% block list_paginator_perpage %}
+    {{ echo_block("list_paginator_perpage") }}
+        {{ echo_if( builder.ModelClass ~ "s.haveToPaginate or "~ builder.ModelClass ~ "s.maxPerPage is not sameas(perPageChoices|first)") }}
+            <div class="btn-group pull-right">
+                <div class="btn btn-sm btn-default btn-reset">{{ echo_trans('pagerfanta.view.perpage') }}</div>
+                <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
+                    {{ echo_twig('"pagerfanta.num.elements"|trans({"%number%": '~ builder.ModelClass ~ 's.maxPerPage}, "Admingenerator")') }} <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu  dropdown-menu-right" role="perpage">
+                    {{ echo_for('perPage', 'perPageChoices') }}
+                    <li>
+                        {{ echo_block("list_paginator_perpage_link") }}
+                            <a href="{{ echo_path(builder.routePrefixWithSubfolder ~ '_' ~ bundle_name ~ ( builder.BaseGeneratorName ? "_" ~ builder.BaseGeneratorName : "" ) ~ '_list', '{perPage: perPage}') }}">
+                                {{ echo_twig('"pagerfanta.num.elements"|trans({"%number%": perPage}, "Admingenerator")') }}
+                            </a>
+                        {{ echo_endblock() }}
+                    </li>
+                    {{ echo_endfor() }}
+                </ul>
+            </div>
+        {{ echo_endif() }}
+    {{ echo_endblock() }}
 {% endblock %}
 
 {% block list_paginator_pages %}
     {{ echo_block('list_paginator_pages') }}
-        {{ echo_twig("pagerfanta(" ~ builder.ModelClass ~ "s, 'admingenerator')") }}
+        {{ echo_if( builder.ModelClass ~ "s.haveToPaginate") }}
+            {{ echo_twig("pagerfanta(" ~ builder.ModelClass ~ "s, 'admingenerator', {css_custom_class: 'no-margin pull-right'})") }}
+        {{ echo_endif() }}
     {{ echo_endblock() }}
 {% endblock %}

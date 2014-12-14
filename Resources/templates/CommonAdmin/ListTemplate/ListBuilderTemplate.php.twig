@@ -11,16 +11,18 @@
 
 {{ echo_block("javascripts") }}
     {{- block('complementary_javascripts') -}}
-    
-    <script type="text/javascript" src="{{ echo_twig("asset('bundles/admingeneratorgenerator/js/admingenerator/list.js')") }}"></script>
 {{ echo_endblock() }}
 
 {{- block('site_title') -}}
 
-{{ echo_block("body") }}
-    {{- block('title') -}}
+{{- block('page_title') -}}
 
-    {{- block('list_scopes') -}}
-
-    {{ echo_include(builder.namespacePrefixForTemplate ~ bundle_name ~ ':' ~ builder.BaseGeneratorName ~ 'List:results.html.twig') }}
+{{ echo_block("page_content") }}
+    <div class="row">
+        {{- block('list_scopes') -}}
+    </div>
+    <div class="row">
+        {{ echo_include(builder.namespacePrefixForTemplate ~ bundle_name ~ ':' ~ builder.BaseGeneratorName ~ 'List:filters.html.twig') }}
+        {{ echo_include(builder.namespacePrefixForTemplate ~ bundle_name ~ ':' ~ builder.BaseGeneratorName ~ 'List:results.html.twig') }}
+    </div>
 {{ echo_endblock() }}

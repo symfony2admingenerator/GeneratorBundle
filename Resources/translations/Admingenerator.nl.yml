@@ -6,15 +6,17 @@ boolean:
 
 # Pager
 pagerfanta:
-    previous:       Vorige
-    next:           Volgende
+    previous:       <
+    next:           ">"
     view.perpage:   Weergeven
     num.elements:   %number% elementen
 
 # List
 list:
-    filter:         Filter
-    reset:          Reset
+    filters: Filters
+    button:
+        filter:         Filter
+        reset:          Reset
     no.results:     Er zijn geen resultaten.
     display:
         range:      Geef <b role="results-range-start">%start%</b> - <b role="results-range-end">%end%</b> of <b role="results-count">%count%</b> resultaten weer.
@@ -88,3 +90,6 @@ batch.list:
 dashboard:
     homepage:   Homepage
     brand:      Dashboard
+
+admingenerator:
+    dashboard: Dashboard

@@ -5,15 +5,17 @@ boolean:
     yes_or_no:  Так чи Ні
 # Pager
 pagerfanta:
-    previous:       Поп
-    next:           Наст
+    previous:       <
+    next:           ">"
     view.perpage:   Показати
     num.elements:   %number% елементів
 
 # List
 list:
-    filter:         Фільтрувати
-    reset:          Скинути
+    filters: Filters
+    button:
+        filter:         Фільтрувати
+        reset:          Скинути
     no.results:     Немає записів.
     display:
         range:      Відображені <b role="results-range-start">%start%</b> - <b role="results-range-end">%end%</b> з <b role="results-count">%count%</b> записи(ів).
@@ -87,3 +89,6 @@ batch.list:
 dashboard:
     homepage:   Домівка
     brand:      Панель керування
+
+admingenerator:
+    dashboard: Панель керування

@@ -26,7 +26,7 @@
 
 {% block form_row %}
 {% spaceless %}
-    <div class="form-group {{ name }}{% if errors|length > 0 %} has-error{% endif %}">
+    <div class="form-group form-field-{{ name }}{% if errors|length > 0 %} has-error{% endif %}">
         {{ form_label(form) }}
         {{ form_widget(form) }}
         {% if not compound %}
@@ -95,9 +95,9 @@
     {%- if required %} required="required"{% endif -%}
     {%- if max_length %} maxlength="{{ max_length }}"{% endif -%}
     {%- if pattern %} pattern="{{ pattern }}"{% endif -%}
-	
+
 	{% set attr = attr|merge({'class': (attr.class|default('') ~ ' form-control')|trim}) %}
-	
+
     {%- for attrname, attrvalue in attr -%}
         {{- " " -}}
         {%- if attrname in ['placeholder', 'title'] -%}

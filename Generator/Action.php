@@ -57,7 +57,7 @@ class Action
 
     public function getTwigName()
     {
-        return str_replace('-', '_', $this->name);
+        return strtolower(str_replace('-', '_', $this->name));
     }
 
     public function getType()

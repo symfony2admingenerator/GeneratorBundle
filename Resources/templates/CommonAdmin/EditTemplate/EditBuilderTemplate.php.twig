@@ -2,6 +2,8 @@
 {% use '../CommonAdmin/stylesheets.php.twig' %}
 {% use '../CommonAdmin/javascripts.php.twig' %}
 {% use '../CommonAdmin/tabs.php.twig' %}
+{% use '../CommonAdmin/generic_actions.php.twig' %}
+{% use '../CommonAdmin/object_actions.php.twig' %}
 
 {{ echo_extends( builder.getBaseAdminTemplate ) }}
 
@@ -11,18 +13,63 @@
 
 {{ echo_block("javascripts") }}
     {{- block('complementary_javascripts') -}}
-    {{- block('object_actions_script') -}}
 {{ echo_endblock() }}
 
 {{- block('site_title') -}}
 
-{{ echo_block("body") }}
+{{- block('page_title') -}}
 
-    {{- block('title') -}}
+{{ echo_block("page_content") }}
+    <div class="row">
+        <div class="form-model form-model-{{ builder.modelClass|lower }} col-md-12">
+            {{ echo_if(builder.ModelClass ~ "." ~ builder.getFieldGuesser().getModelPrimaryKeyName(model)) }}
+            <form class="form-model-update"
+                  action="{{ echo_twig('updateUrl') }}"
+            {{ echo_else() }}
+            <form class="form-model-new"
+                  action="{{ echo_twig('createUrl') }}"
+                    {{ echo_endif() }}
+                  method="post" {{ echo_twig("form_enctype(form)") }} role="form">
 
-    <div class="row-fluid">
-        {{- block('tabs') }}
-        
-        {{ echo_include(builder.namespacePrefixForTemplate ~ bundle_name ~ ':' ~ builder.BaseGeneratorName ~ (builder.yamlKey | capitalize) ~ ':form.html.twig') }}
+                {% if tabs|default is not empty %}
+                    {{- block('tabs') }}
+                        <div class="tab-content form-model-content">
+                {% else %}
+                    <div class="box box-primary">
+                        <div class="box-body form-model-content">
+                {% endif %}
+
+                {{ echo_include(builder.namespacePrefixForTemplate ~ bundle_name ~ ':' ~ builder.BaseGeneratorName ~ (builder.yamlKey | capitalize) ~ ':form.html.twig') }}
+
+                {% if tabs|default is not empty %}
+                        </div>
+                {% else %}
+                        </div>
+                        <div class="box-footer">
+                {% endif %}
+
+                {{ echo_block("form_actions") }}
+                    <div class="form-model-actions row">
+                        <div class="form-model-actions-object col-md-6 btn-group" role="object-actions">
+                            {{ block('object_actions') }}
+                            {{ block('object_actions_script') }}
+                        </div>
+                        <div class="form-model-actions-generic col-md-6 text-right" role="generic-actions">
+                            {{ block('generic_actions') }}
+                            {{ block('generic_actions_script') }}
+                        </div>
+                    </div>
+                {{ echo_endblock() }}
+
+                {% if tabs|default is not empty %}
+                    {{- block('end_tabs') }}
+                {% else %}
+                        </div>
+                    </div>
+                {% endif %}
+
+
+            </form>
+        </div>
     </div>	
 {{ echo_endblock() }}

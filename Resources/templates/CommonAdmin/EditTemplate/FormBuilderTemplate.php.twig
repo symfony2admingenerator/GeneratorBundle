@@ -1,38 +1,10 @@
 {% use "../CommonAdmin/EditTemplate/fieldsets.php.twig" %}
-{% use '../CommonAdmin/generic_actions.php.twig' %}
-{% use '../CommonAdmin/object_actions.php.twig' %}
+
 
 {% block form %}
-    {{ echo_block('form') }}
-    <form class="admin_form"
-        {{ echo_if(builder.ModelClass ~ "." ~ builder.getFieldGuesser().getModelPrimaryKeyName(model)) }}
-            action="{{ echo_twig('updateUrl') }}"
-        {{ echo_else() }}
-            action="{{ echo_twig('createUrl') }}"
-        {{ echo_endif() }}
-        method="post" {{ echo_twig("form_enctype(form)") }} role="form">
-
+    {{ echo_block('form_fields') }}
         {{ echo_twig("form_errors(form)") }}
-        {% if tabs is defined and tabs|length > 0 %}
-        <div class="tab-content">
-        {% endif %}
-
         {{- block('form_fieldsets') }}
-
-        {% if tabs is defined and tabs|length > 0 %}
-        </div>
-        {% endif %}
-
         {{ echo_twig("form_rest(form)") }}
-
-        {{ echo_block("form_buttons") }}
-        <div id="edit-actions" class="form-group form-actions hidden-print">
-            <div class="btn-toolbar" role="toolbar">
-                {{ block("generic_actions") }}
-                {{ block('object_actions') }}
-            </div>
-        </div>
-        {{ echo_endblock() }}
-    </form>
     {{ echo_endblock() }}
 {% endblock %}

@@ -6,15 +6,17 @@ boolean:
 
 # Pager
 pagerfanta:
-    previous:       Anterior
-    next:           Siguiente
+    previous:       <
+    next:           ">"
     view.perpage:   Mostrar
     num.elements:   %number% elementos
 
 # List
 list:
-    filter:         Filtro
-    reset:          Reajustar
+    filters: Filtros
+    button:
+        filter:         Filtro
+        reset:          Reajustar
     no.results:     No existen resultados.
     filters:        Filtros
     display:
@@ -95,3 +97,6 @@ batch.list:
 dashboard:
     homepage:   Página principal
     brand:      Tablero de instrumentos
+
+admingenerator:
+    dashboard: Tablero de instrumentos

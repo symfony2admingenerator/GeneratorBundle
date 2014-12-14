@@ -1,8 +1,6 @@
-{% block title %}
-    {{ echo_block("page_title") }}
-        <header>
-            <h1>{% if title|default is not empty %}{{ echo_trans(title, {}, i18n_catalog|default("Admin") ) }}{% endif %}</h1>
-        </header>
+{% block page_title %}
+    {{ echo_block("page_header_content") }}
+        <h1>{% if title|default is not empty %}{{ echo_trans(title, {}, i18n_catalog|default("Admin") ) }}{% endif %}</h1>
     {{ echo_endblock() }}
 {% endblock %}
 

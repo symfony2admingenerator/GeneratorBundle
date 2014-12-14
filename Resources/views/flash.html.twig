@@ -1,0 +1,27 @@
+{% block flash_message_success %}
+    <div class="alert alert-dismissable alert-success fade in">
+        <i class="fa fa-check"></i>
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        {{ flashMessage|raw }}
+    </div>
+{% endblock %}
+
+{% block flash_message_error %}
+    <div class="alert alert-dismissable alert-dange fade in">
+        <i class="fa fa-ban"></i>
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        {{ flashMessage|raw }}
+    </div>
+{% endblock %}
+
+{% block flash_messages %}
+    <div class="row flash-container">
+        <div class="col-md-offset-3 col-md-6 flash-inner">
+        {% for type, flashMessages in app.session.flashbag.all() %}
+            {% for flashMessage in flashMessages %}
+                {{ block('flash_message_' ~ type) }}
+            {% endfor %}
+        {% endfor %}
+        </div>
+    </div>
+{% endblock %}

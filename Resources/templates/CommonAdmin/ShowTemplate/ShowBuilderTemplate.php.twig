@@ -4,6 +4,7 @@
 {% use '../CommonAdmin/javascripts.php.twig' %}
 {% use '../CommonAdmin/title.php.twig' %}
 {% use '../CommonAdmin/tabs.php.twig' %}
+{% use '../CommonAdmin/generic_actions.php.twig' %}
 {% use '../CommonAdmin/object_actions.php.twig' %}
 
 {{ echo_extends( builder.getBaseAdminTemplate ) }}
@@ -14,33 +15,63 @@
 
 {{ echo_block("javascripts") }}
     {{- block('complementary_javascripts') -}}
-    {{- block('object_actions_script') -}}
 {{ echo_endblock() }}
 
 {{- block('site_title') -}}
 
-{{ echo_block("body") }}
-    {{- block('title') -}}
+{{- block('page_title') -}}
 
-    <div class="container-fluid">
-	<div class="row">
-            {% if sidebar|default is not empty %}
-            <div class="col-md-8">
-            {% endif %}
+{{ echo_block("page_content") }}
+    <div class="row">
+        {% if sidebar|default is not empty %}
+        <div class="show-model show-model-{{ builder.modelClass|lower }} col-md-8 col-xs-12">
+        {% else %}
+        <div class="show-model show-model-{{ builder.modelClass|lower }} no-sidebar col-md-12">
+        {% endif %}
+
+            {% if tabs|default is not empty %}
                 {{- block('tabs') }}
-                {% if tabs|default is not empty %}
-                <div class="tab-content">
-                {% endif %}
-	                {{- block('show') -}}
-                {% if tabs|default is not empty %}
+                    <div class="tab-content">
+            {% else %}
+                <div class="box box-primary">
+                    <div class="box-body">
+            {% endif %}
+
+            {{- block('show') -}}
+
+            {% if tabs|default is not empty %}
+                    </div>
+            {% else %}
+                    </div>
+                    <div class="box-footer">
+            {% endif %}
+
+            {{ echo_block('show_actions') }}
+                <div class="show-model-actions row">
+                    <div class="show-model-actions-object col-md-6 btn-group" role="object-actions">
+                        {{ block('object_actions') }}
+                        {{ block('object_actions_script') }}
+                    </div>
+                    <div class="show-model-actions-generic col-md-6 text-right" role="generic-actions">
+                        {{ block('generic_actions') }}
+                        {{ block('generic_actions_script') }}
+                    </div>
                 </div>
-                {% endif %}
-	    {% if sidebar|default is not empty %}
-            </div>
-            <div class="col-md-4">
+            {{ echo_endblock() }}
+
+            {% if tabs|default is not empty %}
+                {{- block('end_tabs') }}
+            {% else %}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+
+
+        {% if sidebar|default is not empty %}
+            <div class="show-model-sidebar show-model-sidebar-{{ builder.modelClass|lower }} col-md-4 col-xs-12">
                 {{- block('show_sidebar') -}}
             </div>
-	    {% endif %}
-	</div>
+        {% endif %}
     </div>
 {{ echo_endblock() }}

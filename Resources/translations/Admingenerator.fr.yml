@@ -6,15 +6,17 @@ boolean:
 
 # Pager
 pagerfanta:
-    previous: Précédent
-    next:     Suivant
+    previous: <
+    next:           ">"
     view.perpage:   Montrer
     num.elements:   %number% éléments
 
 # List
 list:
-    filter:         Filtrer
-    reset:          Réinitialiser
+    filters: Filtres
+    button:
+        filter:         Filtrer
+        reset:          Réinitialiser
     no.results:     Aucun résultat
     display:
         range:      Résultats <b role="results-range-start">%start%</b> à <b role="results-range-end">%end%</b> sur <b role="results-count">%count%</b>.
@@ -92,3 +94,6 @@ batch.list:
 dashboard:
     homepage:   Accueil
     brand:      Tableau de bord
+
+admingenerator:
+    dashboard: Tableau de bord

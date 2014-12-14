@@ -28,17 +28,22 @@ Don't miss any updates from **Symfony2 Admin Generator**! Join Twitter today and
 * **New/Edit featues:** fieldsets, tabbable, cool widgets for *collection, file upload, date and entity* fields
 * Translated into DE, **EN (default)**, ES, FA, FR, GR, IT, JA, NL, PL, PT, RO, RU, SL, TR, UK (you can easily contribute to add your own)
 * Credentials for actions
-* Easy coolumn display management with column groups
-* Complete admin design based on [twitter bootstrap](http://twitter.github.com/bootstrap/) *(see next section)*
+* Easy column display management with column groups
+* Complete admin design based on [AdminLTE](https://github.com/almasaeed2010/AdminLTE) *(see next section)*
 * ... and more!
 
 ## This bundle in pictures
 
+By default, this Bundle uses the [AdminLTE](http://almsaeedstudio.com/AdminLTE/) templates. See its [documentation](http://almsaeedstudio.com/) to create your own widget and customize the
+interface.
+
+![Preview of dashboard](https://github.com/symfony2admingenerator/GeneratorBundle/raw/master/Resources/preview/dashboard-adminlte-preview.png)
+
 ![Preview of list](https://github.com/symfony2admingenerator/GeneratorBundle/raw/master/Resources/preview/list-preview.png)
 
-![Preview of edit](https://github.com/symfony2admingenerator/GeneratorBundle/raw/master/Resources/preview/edit-preview.png)
+![Preview of nested list](https://github.com/symfony2admingenerator/GeneratorBundle/raw/master/Resources/preview/nestedlist-preview.png)
 
-![Preview of dashboard](https://github.com/symfony2admingenerator/GeneratorBundle/raw/master/Resources/preview/dashboard-welcome-preview.png)
+![Preview of edit](https://github.com/symfony2admingenerator/GeneratorBundle/raw/master/Resources/preview/edit-preview.png)
 
 # Important note
 
@@ -59,7 +64,7 @@ The documentation for this bundle is located in `Resources/doc` directory. Start
 
 ## Support
 
-If you're haveing trouble or you found an error feel free to open a github ticket, but first please read [submitting issues](https://github.com/symfony2admingenerator/GeneratorBundle/blob/master/Resources/doc/support-and-contribution/submitting-issues.md).
+If you're having trouble or you found an error feel free to open a github ticket, but first please read [submitting issues](https://github.com/symfony2admingenerator/GeneratorBundle/blob/master/Resources/doc/support-and-contribution/submitting-issues.md).
 
 ## Sensio Connect
 

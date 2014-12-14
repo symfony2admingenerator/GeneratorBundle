@@ -1,0 +1,20 @@
+{
+    "name"        : "Symfony2AdmingenGeneratorBundle",
+    "version"     : "1.0.0",
+    "authors"     : [
+        "Stéphane Escandell <stephane.escandell@gmail.com>"
+    ],
+    "description" : "Assets for the admingenerator bundle based on AdminLTE template",
+    "dependencies": {
+        "adminlte": "1.2.1-bower",
+        "jquery": "~1",
+        "bootstrap": "~3",
+        "font-awesome": "~4",
+        "iCheck": "~1",
+        "slimScroll": "~1",
+        "jquery-resize": "v1.1",
+        "html5shiv": "~3",
+        "respond": "~1",
+        "jquery-treetable": "~3"
+    }
+}
