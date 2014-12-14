@@ -3,6 +3,7 @@
     {
         if ($this->get('request')->get('reset')) {
             $this->setFilters(array());
+            $this->setScopes(array());
 
             return new RedirectResponse($this->getListUrl());
         }

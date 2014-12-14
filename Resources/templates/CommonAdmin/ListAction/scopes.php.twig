@@ -19,7 +19,11 @@
      */
     protected function setScopes($scopes)
     {
-        $this->get('session')->set($this->getSessionPrefix().'List\Scopes', $scopes);
+        if (!$scopes) {
+            $this->get('session')->remove($this->getSessionPrefix().'List\Scopes');
+        } else {
+            $this->get('session')->set($this->getSessionPrefix().'List\Scopes', $scopes);
+        }
     }
 
     /**
@@ -31,8 +35,15 @@
     protected function setScope($groupName, $scopeName)
     {
         $scopes = $this->getScopes();
-        $scopes[$groupName] = $scopeName;
+        $scopes[strtolower($groupName)] = strtolower($scopeName);
         $this->setScopes($scopes);
+
+        $filters = array();
+        foreach ($this->getScopes() as $scopeGroupName => $scopeName) {
+            $filters += $this->getScopeFilters($scopeGroupName);
+        }
+        $this->setFilters($filters);
+
     }
 
     protected function getScopes()
@@ -46,11 +57,11 @@
 
         {% if scopes is defined -%}
         {%- for groupName, group in scopes %}
-        $scopes['{{ groupName }}'] = '';
+        $scopes['{{ groupName|classify|lower }}'] = '';
 
         {% for scopeName, params in group -%}
             {%- if params["default"] is defined %}
-            $scopes['{{ groupName }}'] = '{{ scopeName }}';
+            $scopes['{{ groupName|classify|lower }}'] = '{{ scopeName|classify|lower }}';
             {% endif -%}
         {%- endfor -%}
         {%- endfor -%}
@@ -64,8 +75,39 @@
     */
     protected function getScope($groupName)
     {
+        $groupName = strtolower($groupName);
         $scopes = $this->getScopes();
 
         return isset($scopes[$groupName]) ? $scopes[$groupName] : null ;
+    }
+
+    /**
+     * @return array the filters for the $groupName scope
+     */
+    protected function getScopeFilters($groupName)
+    {
+        if (!$scope = $this->getScope($groupName)) {
+            return array();
+        }
+
+        $groupName = strtolower($groupName);
+        $filters = array();
+
+        {% for groupName, group in scopes -%}
+            {%- for scopeName, params in group %}
+                if ('{{ scopeName|classify|lower }}' === $scope) {
+                {% if params["filters"] is defined -%}
+                    {%- for filter, filterParams in params["filters"] -%}
+                        {%- if not filter|is_numeric -%}
+                            $filters['{{ filter }}'] = '{{ filterParams }}';
+                        {%- endif -%}
+                    {%- endfor -%}
+                {%- endif %}
+
+                }
+            {% endfor -%}
+        {%- endfor %}
+
+        return $filters;
     }
 {% endblock %}

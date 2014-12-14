@@ -53,8 +53,8 @@
 
         $this->processQuery($query);
         $this->processSort($query);
-        $this->processFilters($query);
         $this->processScopes($query);
+        $this->processFilters($query);
 
         return $query->getQuery();
     }
@@ -160,13 +160,11 @@
         {% for groupName, group in scopes -%}
             {%- for scopeName, params in group %}
 
-        if (isset($scopes['{{ groupName }}']) && $scopes['{{ groupName }}'] == '{{ scopeName }}') {
+        if (isset($scopes['{{ groupName|classify|lower }}']) && $scopes['{{ groupName|classify|lower }}'] == '{{ scopeName|classify|lower }}') {
             {% if params["filters"] is defined -%}
                 {%- for filter, filterParams in params["filters"] -%}
                 {%- if filter|is_numeric -%}
                 $this->scope{{ filterParams|classify }}($queryFilter);
-                {%- else -%}
-                $queryFilter->addDefaultFilter('{{ filter }}', {{ filterParams|as_php }});
                 {%- endif -%}
                 {%- endfor -%}
             {%- endif %}
