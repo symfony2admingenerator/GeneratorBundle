@@ -22,6 +22,8 @@
         }
 
         if (isset($filters)) {
+            // Remove activated scopes
+            $this->setScopes(array());
             $this->setFilters($filters);
         }
 
