@@ -1,12 +1,6 @@
 {% block scopes %}
     public function scopesAction()
     {
-        if ($this->get('request')->get('reset')) {
-            $this->setScopes(array());
-
-            return new RedirectResponse($this->getListUrl());
-        }
-
         $this->setScope($this->get('request')->get('group'), $this->get('request')->get('scope'));
 
         return new RedirectResponse($this->getListUrl());
@@ -14,12 +8,14 @@
 
     /**
      * Store in the session service the current scopes
+     * If $scopes is null, simply remove any informations about scopes
+     * (so in next request, defaults one will be used).
      *
-     * @param array the scopes
+     * @param null|array the scopes
      */
     protected function setScopes($scopes)
     {
-        if (!$scopes) {
+        if (null === $scopes) {
             $this->get('session')->remove($this->getSessionPrefix().'List\Scopes');
         } else {
             $this->get('session')->set($this->getSessionPrefix().'List\Scopes', $scopes);
@@ -153,10 +149,10 @@
                     {%- for filter, filterParams in params["filters"] -%}
                         {%- if filter|is_numeric -%}
                             /**
-                            * Add the filters to the query for {{ groupName }} => {{ scopeName }}
-                            *
-                            * @param queryFilter the queryFilter
-                            */
+                             * Add the filters to the query for {{ groupName }} => {{ scopeName }}
+                             *
+                             * @param queryFilter the queryFilter
+                             */
                             protected function scope{{ filterParams|classify }}($queryFilter)
                             {
                             }

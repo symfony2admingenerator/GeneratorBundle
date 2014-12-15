@@ -3,7 +3,8 @@
     {
         if ($this->get('request')->get('reset')) {
             $this->setFilters(array());
-            $this->setScopes(array());
+            // Remove scopes and re-apply default ones
+            $this->setScopes(null);
 
             return new RedirectResponse($this->getListUrl());
         }
@@ -22,7 +23,7 @@
         }
 
         if (isset($filters)) {
-            // Remove activated scopes
+            // Set no active scope
             $this->setScopes(array());
             $this->setFilters($filters);
         }
