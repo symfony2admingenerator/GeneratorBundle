@@ -8,7 +8,6 @@
 
 {% block column_default %}
     {{ echo_block('list_td_column_' ~ column.name) -}}
-        {{ echo_if(builder.ModelClass ~ '.' ~ column.getter ~ ' is defined') }}
         {%- if column.customView != null and builder.variable('custom_blocks') != null -%}
             {{- echo_use(builder.variable('custom_blocks')) -}}
             {{- echo_set('field_value', builder.ModelClass ~ '.' ~ column.getter, false) -}}
@@ -28,8 +27,5 @@
         {%- else -%}
             {{- echo_twig(builder.ModelClass ~ '.' ~ column.getter) -}}
         {%- endif -%}
-        {{- echo_else() }}
-            {{- block('column_undefined') -}}
-        {{- echo_endif() }}
     {{- echo_endblock() }}
 {% endblock %}
