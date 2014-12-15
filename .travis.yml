@@ -9,6 +9,8 @@ env:
     - SYMFONY_VERSION=origin/2.2
     - SYMFONY_VERSION=origin/2.3
 
+script: phpunit --coverage-clover=coverage.clover
+
 before_script:
     - composer self-update 
     - composer install --dev
