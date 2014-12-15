@@ -52,7 +52,10 @@ class ListBuilder extends BaseBuilder
 
     protected function findFilterColumns()
     {
-        foreach ($this->getAllFields() as $column) {
+        foreach ($this->getAllFields() as $columnName) {
+            $column = $this->createColumn($columnName, true);
+            $this->setUserColumnConfiguration($column);
+            
             if ($column->isFilterable()) {
                 $this->addFilterColumn($column);
             }
