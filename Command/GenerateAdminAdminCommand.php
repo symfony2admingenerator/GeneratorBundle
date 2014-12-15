@@ -231,7 +231,7 @@ EOT
 
         if ($input->isInteractive()) {
 
-            $question = new ConfirmationQuestion('Do you confirm generation ?', true);
+            $question = new ConfirmationQuestion('Do you confirm generation?', true);
             if (!$questionHelper->ask($input, $output, $question)) {
                 $output->writeln('<error>Command aborted</error>');
 
@@ -288,7 +288,7 @@ EOT
     {
         $auto = true;
         if ($input->isInteractive()) {
-            $question = new ConfirmationQuestion('Confirm automatic update of the Routing ?', true);
+            $question = new ConfirmationQuestion('Confirm automatic update of the Routing?', true);
             $auto = $questionHelper->ask($input, $output, $question);
         }
 
