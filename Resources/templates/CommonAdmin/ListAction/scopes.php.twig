@@ -44,7 +44,7 @@
 
     protected function getScopes()
     {
-        if (!$scopes = $this->get('session')->get($this->getSessionPrefix().'List\Scopes')) {
+        if (null === $scopes = $this->get('session')->get($this->getSessionPrefix().'List\Scopes')) {
             $scopes = $this->getDefaultScopes();
             $this->setScopes($scopes);
             foreach ($scopes as $groupName => $scopeName) {
