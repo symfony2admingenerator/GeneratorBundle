@@ -130,7 +130,7 @@ class BaseBuilder extends GenericBaseBuilder
                 $column,
                 'formOptions',
                 $this->getFieldGuesser()->getFormOptions(
-                    $column->getFormType(),
+                    ($this->getYamlKey() === 'list') ? $column->getFilterType() : $column->getFormType(),
                     $column->getDbType(),
                     $columnName
                 )
