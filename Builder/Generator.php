@@ -6,7 +6,6 @@ namespace Admingenerator\GeneratorBundle\Builder;
  * @author Cedric LOMBARDOT
  */
 use Symfony\Component\DependencyInjection\ContainerInterface;
-
 use Symfony\Component\Yaml\Yaml;
 use TwigGenerator\Builder\Generator as TwigGeneratorGenerator;
 use TwigGenerator\Builder\BuilderInterface;
@@ -36,7 +35,7 @@ class Generator extends TwigGeneratorGenerator
     /**
      * Init a new generator and automatically define the base of tempDir
      *
-     * @param Filepath $cacheDir
+     * @param string $cacheDir
      * @param Filepath $yaml
      */
     public function __construct($cacheDir, $yaml)
@@ -87,8 +86,8 @@ class Generator extends TwigGeneratorGenerator
      *     from builder, configuration is a merge between builder configuration
      *     and global configuration
      *
-     * @param array $global
-     * @param array $builder
+     * @param  array $global
+     * @param  array $builder
      * @return array
      */
     protected function mergeParameters(array $global, array $builder)
@@ -145,8 +144,8 @@ class Generator extends TwigGeneratorGenerator
     /**
      * Merge configuration on a single level
      *
-     * @param array $global
-     * @param array $builder
+     * @param  array $global
+     * @param  array $builder
      * @return array
      */
     protected function mergeConfiguration(array $global, array $builder)
@@ -175,7 +174,7 @@ class Generator extends TwigGeneratorGenerator
      * Recursively replaces Base array values with Replacement array values
      * while keeping indexes of Replacement array
      *
-     * @param array $base Base array
+     * @param array $base        Base array
      * @param array $replacement Replacement array
      */
     protected function recursiveReplace($base, $replacement)
@@ -191,6 +190,7 @@ class Generator extends TwigGeneratorGenerator
                     ;
                 }
             }
+
             return $array;
         };
 
@@ -274,7 +274,7 @@ class Generator extends TwigGeneratorGenerator
         if (array_key_exists('batch_actions', $params) && is_array($params['batch_actions'])) {
             foreach ($params['batch_actions'] as $name => $config) {
                 $baseKey = 'batch_actions.'.$name;
-                
+
                 if (is_array($config) && array_key_exists('route', $config) && $config['route'] === 'inject_batch_defaults') {
                     $params['batch_actions'][$name] = $this->recursiveReplace($params['batch_actions'][$name], array(
                         'route'         => $routeBase.'_batch',
@@ -301,6 +301,9 @@ class Generator extends TwigGeneratorGenerator
         return $this->columnClass;
     }
 
+    /**
+     * @param string $columnClass
+     */
     public function setColumnClass($columnClass)
     {
         return $this->columnClass = $columnClass;
@@ -320,7 +323,7 @@ class Generator extends TwigGeneratorGenerator
     }
 
     /**
-     * @param $yaml_path string with point for levels
+     * @param string $yaml_path string with point for levels
      */
     public function getFromYaml($yaml_path, $default = null)
     {
@@ -346,6 +349,9 @@ class Generator extends TwigGeneratorGenerator
         return $this->fieldGuesser;
     }
 
+    /**
+     * @param string $baseController
+     */
     public function setBaseController($baseController)
     {
         $this->baseController = $baseController;
@@ -356,6 +362,9 @@ class Generator extends TwigGeneratorGenerator
         return $this->baseController;
     }
 
+    /**
+     * @param string $base_generator_name
+     */
     public function setBaseGeneratorName($base_generator_name)
     {
         $this->base_generator_name = $base_generator_name;

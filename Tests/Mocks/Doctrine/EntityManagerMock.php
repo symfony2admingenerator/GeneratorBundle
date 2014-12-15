@@ -21,8 +21,6 @@
 
 namespace Admingenerator\GeneratorBundle\Tests\Mocks\Doctrine;
 
-use Doctrine\ORM\Proxy\ProxyFactory;
-
 /**
  * Special EntityManager mock used for testing purposes.
  */
@@ -66,10 +64,9 @@ class EntityManagerMock extends \Doctrine\ORM\EntityManager
      * Mock factory method to create an EntityManager.
      *
      * @param  unknown_type               $conn
-     * @param  unknown_type               $name
-     * @param  Doctrine_Configuration     $config
-     * @param  Doctrine_EventManager      $eventManager
-     * @return Doctrine\ORM\EntityManager
+     * @param  \Doctrine\ORM\Configuration     $config
+     * @param  \Doctrine\Common\EventManager      $eventManager
+     * @return EntityManagerMock
      */
     public static function create($conn, \Doctrine\ORM\Configuration $config = null,
             \Doctrine\Common\EventManager $eventManager = null)

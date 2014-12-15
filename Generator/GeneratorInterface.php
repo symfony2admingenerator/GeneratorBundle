@@ -17,11 +17,13 @@ interface GeneratorInterface
 
     /**
      * Run builders & create files in cache
+     * @return void
      */
     public function build();
 
     /**
      * Force generator to overwrite files if exist.
+     * @return void
      */
     public function forceOverwriteIfExists();
 

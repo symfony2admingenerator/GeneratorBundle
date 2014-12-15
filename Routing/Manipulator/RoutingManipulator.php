@@ -8,7 +8,6 @@ namespace Admingenerator\GeneratorBundle\Routing\Manipulator;
  * @author Fabien Potencier <fabien@symfony.com>
  */
 use Sensio\Bundle\GeneratorBundle\Manipulator\Manipulator;
-
 use Symfony\Component\DependencyInjection\Container;
 
 class RoutingManipulator extends Manipulator

@@ -3,7 +3,6 @@
 namespace Admingenerator\GeneratorBundle\Guesser;
 
 use Admingenerator\GeneratorBundle\Exception\NotImplementedException;
-
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\Mapping\ClassMetadataInfo;
 use Symfony\Component\DependencyInjection\ContainerAware;
@@ -49,10 +48,10 @@ class DoctrineORMFieldGuesser extends ContainerAware
 
     /**
      * Find out the database type for given model field path.
-     * 
-     * @param  string $model        The starting model.
-     * @param  string $fieldPath    The field path.
-     * @return string               The leaf field's primary key.
+     *
+     * @param  string $model     The starting model.
+     * @param  string $fieldPath The field path.
+     * @return string The leaf field's primary key.
      */
     public function getDbType($model, $fieldPath)
     {
@@ -137,12 +136,12 @@ class DoctrineORMFieldGuesser extends ContainerAware
     public function getFilterType($dbType, $columnName)
     {
         $filterTypes = $this->container->getParameter('admingenerator.doctrine_filter_types');
-        
+
         if (array_key_exists($dbType, $filterTypes)) {
             return $filterTypes[$dbType];
         } elseif ('virtual' === $dbType) {
             return 'virtual_filter';
-        }  else {
+        } else {
            throw new NotImplementedException(
                'The dbType "'.$dbType.'" is not yet implemented '
                .'(column "'.$columnName.'" in "'.self::$current_class.'")'
@@ -155,8 +154,8 @@ class DoctrineORMFieldGuesser extends ContainerAware
         if ('virtual' === $dbType) {
             return array();
         }
-        
-        if ('boolean' == $dbType && 
+
+        if ('boolean' == $dbType &&
             (preg_match("#^choice#i", $formType) || preg_match("#choice$#i", $formType))) {
             return array(
                 'choices' => array(
@@ -207,7 +206,7 @@ class DoctrineORMFieldGuesser extends ContainerAware
             'required' => $this->isRequired($columnName)
         );
     }
-    
+
     protected function isRequired($fieldName)
     {
         if (!isset($this->guessRequired) || !isset($this->defaultRequired)) {
@@ -234,7 +233,7 @@ class DoctrineORMFieldGuesser extends ContainerAware
 
     /**
      * Find the pk name for given class
-     * 
+     *
      * @param  string $class The class name.
      * @return string Primary key field name.
      */
@@ -245,10 +244,10 @@ class DoctrineORMFieldGuesser extends ContainerAware
 
     /**
      * Find out the primary key for given model field path.
-     * 
-     * @param  string $model        The starting model.
-     * @param  string $fieldPath    The field path.
-     * @return string               The leaf field's primary key.
+     *
+     * @param  string $model     The starting model.
+     * @param  string $fieldPath The field path.
+     * @return string The leaf field's primary key.
      */
     public function getPrimaryKeyFor($model, $fieldPath)
     {
@@ -260,6 +259,7 @@ class DoctrineORMFieldGuesser extends ContainerAware
 
         if ($metadata->hasAssociation($field)) {
             $class = $metadata->getAssociationTargetClass($field);
+
             return $this->getModelPrimaryKeyName($class);
         } else {
             // if the leaf node is not an association
@@ -269,10 +269,10 @@ class DoctrineORMFieldGuesser extends ContainerAware
 
     /**
      * Resolve field path for given model to class and field name.
-     * 
-     * @param  string $model        The starting model.
-     * @param  string $fieldPath    The field path.
-     * @return array                An array containing field and class information.
+     *
+     * @param  string $model     The starting model.
+     * @param  string $fieldPath The field path.
+     * @return array  An array containing field and class information.
      */
     private function resolveRelatedField($model, $fieldPath)
     {
@@ -289,7 +289,7 @@ class DoctrineORMFieldGuesser extends ContainerAware
 
             $class = $metadata->getAssociationTargetClass($part);
         }
-        
+
         return array(
             'field' => $field,
             'class' => $class

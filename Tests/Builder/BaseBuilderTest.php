@@ -3,7 +3,6 @@
 namespace Admingenerator\GeneratorBundle\Tests\Builder;
 
 use Admingenerator\GeneratorBundle\Builder\Admin\BaseBuilder;
-
 use Admingenerator\GeneratorBundle\Tests\TestCase;
 
 class BaseBuilderTest extends TestCase

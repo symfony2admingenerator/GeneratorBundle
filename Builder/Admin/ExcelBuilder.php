@@ -2,9 +2,6 @@
 
 namespace Admingenerator\GeneratorBundle\Builder\Admin;
 
-use Admingenerator\GeneratorBundle\Generator\Column;
-use Admingenerator\GeneratorBundle\Generator\Action;
-
 /**
  * This builder generates php for list actions
  *

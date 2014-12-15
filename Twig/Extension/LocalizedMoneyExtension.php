@@ -23,7 +23,7 @@ class LocalizedMoneyExtension extends \Twig_Extension
      * @param string $currency This can be any 3 letter ISO 4217 code. You
      * can also set this to false to hide the currency symbol.
      *
-     * @param string $precision For some reason, if you need some precision
+     * @param integer $precision For some reason, if you need some precision
      * other than 2 decimal places, you can modify this value. You probably
      * won't need to do this unless, for example, you want to round to the
      * nearest dollar (set the precision to 0).
@@ -34,7 +34,7 @@ class LocalizedMoneyExtension extends \Twig_Extension
      * this to true, numbers will be grouped with a comma or period (depending
      * on your locale): 12345.123 would display as 12,345.123.
      *
-     * @param string $divisor If, for some reason, you need to divide your
+     * @param integer $divisor If, for some reason, you need to divide your
      * starting value by a number before rendering it to the user, you can use
      * the divisor option.
      *

@@ -4,26 +4,20 @@ namespace Admingenerator\GeneratorBundle\Generator;
 
 use Admingenerator\GeneratorBundle\Builder\Generator as AdminGenerator;
 use Admingenerator\GeneratorBundle\Exception\CantGenerateException;
-
 use Admingenerator\GeneratorBundle\Builder\Doctrine\ListBuilderAction;
 use Admingenerator\GeneratorBundle\Builder\Doctrine\ListBuilderTemplate;
 use Admingenerator\GeneratorBundle\Builder\Doctrine\NestedListBuilderAction;
 use Admingenerator\GeneratorBundle\Builder\Doctrine\NestedListBuilderTemplate;
 use Admingenerator\GeneratorBundle\Builder\Doctrine\FiltersBuilderType;
-
 use Admingenerator\GeneratorBundle\Builder\Doctrine\ExcelBuilderAction;
-
 use Admingenerator\GeneratorBundle\Builder\Doctrine\EditBuilderAction;
 use Admingenerator\GeneratorBundle\Builder\Doctrine\EditBuilderTemplate;
 use Admingenerator\GeneratorBundle\Builder\Doctrine\EditBuilderType;
-
 use Admingenerator\GeneratorBundle\Builder\Doctrine\NewBuilderAction;
 use Admingenerator\GeneratorBundle\Builder\Doctrine\NewBuilderTemplate;
 use Admingenerator\GeneratorBundle\Builder\Doctrine\NewBuilderType;
-
 use Admingenerator\GeneratorBundle\Builder\Doctrine\ShowBuilderAction;
 use Admingenerator\GeneratorBundle\Builder\Doctrine\ShowBuilderTemplate;
-
 use Admingenerator\GeneratorBundle\Builder\Doctrine\ActionsBuilderAction;
 use Admingenerator\GeneratorBundle\Builder\Doctrine\ActionsBuilderTemplate;
 

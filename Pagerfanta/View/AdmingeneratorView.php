@@ -28,8 +28,8 @@ class AdmingeneratorView implements ViewInterface
             'css_disabled_class'     => 'disabled',
             'css_dots_class'         => 'dots',
             'css_current_class'      => 'active',
-			'css_alignment_class'    => 'pagination-right',
-			'css_buttons_size_class' => 'pagination-sm',
+            'css_alignment_class'    => 'pagination-right',
+            'css_buttons_size_class' => 'pagination-sm',
             'css_custom_class'       => ''
         ), $options);
 
@@ -52,7 +52,7 @@ class AdmingeneratorView implements ViewInterface
         // previous
         if ($pagerfanta->hasPreviousPage()) {
             $pages[] = array($pagerfanta->getPreviousPage(), $options['previous_message']);
-        }   
+        }
 
         // first
         if ($startPage > 1) {

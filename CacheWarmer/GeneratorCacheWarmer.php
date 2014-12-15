@@ -3,12 +3,9 @@
 namespace Admingenerator\GeneratorBundle\CacheWarmer;
 
 use Symfony\Component\Yaml\Yaml;
-
 use Symfony\Component\HttpKernel\CacheWarmer\CacheWarmerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-
 use Admingenerator\GeneratorBundle\Exception\GeneratedModelClassNotFoundException;
-use Admingenerator\GeneratorBundle\ClassLoader\AdmingeneratedClassLoader;
 
 /**
  * Generate all admingenerated bundle on warmup

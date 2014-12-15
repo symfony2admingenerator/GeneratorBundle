@@ -40,14 +40,14 @@ class AdmingeneratorGeneratorBundle extends Bundle
         $container->addCompilerPass(new FormCompilerPass());
         $container->addCompilerPass(new TwigLoaderCompilerPass());
     }
-    
+
     /**
      * @return \Admingenerator\GeneratorBundle\DependencyInjection\AdmingeneratorGeneratorExtension
      */
     public function getContainerExtension()
     {
         $this->extension = new DependencyInjection\AdmingeneratorGeneratorExtension();
-        
+
         return $this->extension;
     }
 

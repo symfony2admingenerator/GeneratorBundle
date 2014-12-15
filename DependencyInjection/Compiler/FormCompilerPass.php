@@ -21,7 +21,6 @@ class FormCompilerPass implements CompilerPassInterface
                 // Insert right after form_div_layout.html.twig if exists
                 array_splice($resources, ++$key, 0, array('bootstrap_3_layout.html.twig'));
 
-
                 $container->setParameter('twig.form.resources', $resources);
             }
         }

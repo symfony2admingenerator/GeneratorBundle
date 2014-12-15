@@ -24,7 +24,7 @@ class RelativePathComputer
     /**
      * Retrieve relative path from reference to $dir
      *
-     * @param $dir
+     * @param string $dir
      * @return string
      */
     public function computeToParent($dir)
