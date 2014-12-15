@@ -60,9 +60,8 @@ EOT
     protected function interact(InputInterface $input, OutputInterface $output)
     {
         $questionHelper = $this->getQuestionHelper();
-        $questionHelper->writeSection($output, 'Welcome to the Symfony2 admin generator');
+        $questionHelper->writeSection($output, 'Welcome to the Symfony2Admingenerator');
         $output->writeln('<comment>Create an admingenerator bundle with generate:bundle</comment>');
-
 
         $generator = $input->getOption('generator');
         $question = new ChoiceQuestion(
