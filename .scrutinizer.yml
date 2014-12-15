@@ -1,4 +1,10 @@
+checks:
+    php:
+        code_rating: true
+        duplication: true
 tools:
+    # use travis code coverage report
+    external_code_coverage: true
     # php cs fixer
     php_cs_fixer:
         extensions:
