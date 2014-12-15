@@ -84,7 +84,7 @@ class Configuration implements ConfigurationInterface
                                 ->scalarNode('datetime')->defaultValue('datetime')->end()
                                 ->scalarNode('vardatetime')->defaultValue('datetime')->end()
                                 ->scalarNode('datetimetz')->defaultValue('datetime')->end()
-                                ->scalarNode('date')->defaultValue('datetime')->end()
+                                ->scalarNode('date')->defaultValue('date')->end()
                                 // time types
                                 ->scalarNode('time')->defaultValue('time')->end()
                                 // number types
@@ -115,7 +115,7 @@ class Configuration implements ConfigurationInterface
                                 ->scalarNode('timestamp')->defaultValue('datetime')->end()
                                 ->scalarNode('vardatetime')->defaultValue('datetime')->end()
                                 ->scalarNode('datetimetz')->defaultValue('datetime')->end()
-                                ->scalarNode('date')->defaultValue('datetime')->end()
+                                ->scalarNode('date')->defaultValue('date')->end()
                                 // time types
                                 ->scalarNode('time')->defaultValue('time')->end()
                                 // number types
