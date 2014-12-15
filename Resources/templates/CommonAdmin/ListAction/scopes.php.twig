@@ -97,6 +97,7 @@
         $groupName = strtolower($groupName);
         $filters = array();
 
+        {% if scopes is defined -%}
         {% for groupName, group in scopes -%}
             if ('{{ groupName|classify|lower }}' === $groupName) {
             {%- for scopeName, params in group %}
@@ -113,6 +114,7 @@
             {% endfor -%}
             }
         {%- endfor %}
+        {%- endif %}
 
         return $filters;
     }
