@@ -18,9 +18,7 @@
 {{- block('page_title') -}}
 
 {{ echo_block("page_content") }}
-    <div class="row">
-        {{- block('list_scopes') -}}
-    </div>
+    {{- block('list_scopes') -}}
     <div class="row">
         {{ echo_include(builder.namespacePrefixForTemplate ~ bundle_name ~ ':' ~ builder.BaseGeneratorName ~ 'List:filters.html.twig') }}
         {{ echo_include(builder.namespacePrefixForTemplate ~ bundle_name ~ ':' ~ builder.BaseGeneratorName ~ 'List:results.html.twig') }}

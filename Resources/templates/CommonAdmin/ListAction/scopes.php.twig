@@ -1,12 +1,6 @@
 {% block scopes %}
     public function scopesAction()
     {
-        if ($this->get('request')->get('reset')) {
-            $this->setScopes(array());
-
-            return new RedirectResponse($this->getListUrl());
-        }
-
         $this->setScope($this->get('request')->get('group'), $this->get('request')->get('scope'));
 
         return new RedirectResponse($this->getListUrl());
@@ -14,12 +8,18 @@
 
     /**
      * Store in the session service the current scopes
+     * If $scopes is null, simply remove any informations about scopes
+     * (so in next request, defaults one will be used).
      *
-     * @param array the scopes
+     * @param null|array the scopes
      */
     protected function setScopes($scopes)
     {
-        $this->get('session')->set($this->getSessionPrefix().'List\Scopes', $scopes);
+        if (null === $scopes) {
+            $this->get('session')->remove($this->getSessionPrefix().'List\Scopes');
+        } else {
+            $this->get('session')->set($this->getSessionPrefix().'List\Scopes', $scopes);
+        }
     }
 
     /**
@@ -31,13 +31,28 @@
     protected function setScope($groupName, $scopeName)
     {
         $scopes = $this->getScopes();
-        $scopes[$groupName] = $scopeName;
+        $scopes[strtolower($groupName)] = strtolower($scopeName);
         $this->setScopes($scopes);
+
+        $filters = array();
+        foreach ($scopes as $scopeGroupName => $scopeName) {
+            $filters += $this->getScopeFilters($scopeGroupName);
+        }
+        $this->setFilters($filters);
+
     }
 
     protected function getScopes()
     {
-        return $this->get('session')->get($this->getSessionPrefix().'List\Scopes', $this->getDefaultScopes());
+        if (null === $scopes = $this->get('session')->get($this->getSessionPrefix().'List\Scopes')) {
+            $scopes = $this->getDefaultScopes();
+            $this->setScopes($scopes);
+            foreach ($scopes as $groupName => $scopeName) {
+                $this->setScope($groupName, $scopeName);
+            }
+        }
+
+        return $scopes;
     }
 
     protected function getDefaultScopes()
@@ -46,11 +61,11 @@
 
         {% if scopes is defined -%}
         {%- for groupName, group in scopes %}
-        $scopes['{{ groupName }}'] = '';
+        $scopes['{{ groupName|classify|lower }}'] = '';
 
         {% for scopeName, params in group -%}
-            {%- if params["default"] is defined %}
-            $scopes['{{ groupName }}'] = '{{ scopeName }}';
+            {%- if params["default"] is defined and params["default"] %}
+            $scopes['{{ groupName|classify|lower }}'] = '{{ scopeName|classify|lower }}';
             {% endif -%}
         {%- endfor -%}
         {%- endfor -%}
@@ -64,8 +79,87 @@
     */
     protected function getScope($groupName)
     {
+        $groupName = strtolower($groupName);
         $scopes = $this->getScopes();
 
         return isset($scopes[$groupName]) ? $scopes[$groupName] : null ;
     }
+
+    /**
+     * @return array the filters for the $groupName scope
+     */
+    protected function getScopeFilters($groupName)
+    {
+        if (!$scope = $this->getScope($groupName)) {
+            return array();
+        }
+
+        $groupName = strtolower($groupName);
+        $filters = array();
+
+        {% for groupName, group in scopes -%}
+            if ('{{ groupName|classify|lower }}' === $groupName) {
+            {%- for scopeName, params in group %}
+                if ('{{ scopeName|classify|lower }}' === $scope) {
+                {% if params["filters"] is defined -%}
+                    {%- for filter, filterParams in params["filters"] -%}
+                        {%- if not filter|is_numeric -%}
+                            $filters['{{ filter }}'] = '{{ filterParams }}';
+                        {%- endif -%}
+                    {%- endfor -%}
+                {%- endif %}
+
+                }
+            {% endfor -%}
+            }
+        {%- endfor %}
+
+        return $filters;
+    }
+
+    protected function processScopes($query)
+    {
+    {% if scopes is defined -%}
+        $scopes = $this->getScopes();
+
+        $queryFilter = $this->getQueryFilter();
+        $queryFilter->setQuery($query);
+
+
+        {% for groupName, group in scopes -%}
+            {%- for scopeName, params in group %}
+                if (isset($scopes['{{ groupName|classify|lower }}']) && $scopes['{{ groupName|classify|lower }}'] == '{{ scopeName|classify|lower }}') {
+                {% if params["filters"] is defined -%}
+                    {%- for filter, filterParams in params["filters"] -%}
+                        {%- if filter|is_numeric -%}
+                            $this->scope{{ filterParams|classify }}($queryFilter);
+                        {%- endif -%}
+                    {%- endfor -%}
+                {%- endif %}
+                }
+            {% endfor -%}
+        {%- endfor -%}
+    {%- endif %}
+    }
+
+    {% if scopes is defined -%}
+        {% for groupName, group in scopes -%}
+            {%- for scopeName, params in group %}
+                {% if params["filters"] is defined -%}
+                    {%- for filter, filterParams in params["filters"] -%}
+                        {%- if filter|is_numeric -%}
+                            /**
+                             * Add the filters to the query for {{ groupName }} => {{ scopeName }}
+                             *
+                             * @param queryFilter the queryFilter
+                             */
+                            protected function scope{{ filterParams|classify }}($queryFilter)
+                            {
+                            }
+                        {%- endif -%}
+                    {%- endfor -%}
+                {%- endif -%}
+            {% endfor -%}
+        {%- endfor -%}
+    {%- endif %}
 {% endblock %}

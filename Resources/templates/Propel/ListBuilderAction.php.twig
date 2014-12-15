@@ -86,33 +86,6 @@ use Pagerfanta\Adapter\PropelAdapter as PagerAdapter;
     {% endfor %}
 {% endblock %}
 
-{% block processScopes -%}
-    protected function processScopes($query)
-    {
-    {% if scopes is defined %}
-        $scopes = $this->getScopes();
-
-        {% for groupName, group in scopes -%}
-            {%- for scopeName, params in group %}
-
-        if (isset($scopes['{{ groupName }}']) && $scopes['{{ groupName }}'] == '{{ scopeName }}') {
-            {% if params["filters"] is defined -%}
-                {%- for filter, filterParams in params["filters"] -%}
-                {%- if filter|is_numeric -%}
-                $query->{{ filterParams }}();
-                {%- else -%}
-                $query->{{ filter }}({{ filterParams|as_php }});
-                {%- endif -%}
-                {%- endfor -%}
-            {%- endif %}
-
-        }
-            {% endfor -%}
-        {%- endfor %}
-    {% endif %}
-    }
-{% endblock %}
-
 {% block getQueryFilter %}
     /**
      * @return \Admingenerator\GeneratorBundle\QueryFilter\QueryFilterInterface

@@ -132,13 +132,6 @@ class ListController extends BaseController
     }
     {% endblock %}
 
-    {% block processScopes -%}
-    protected function processScopes($query)
-    {
-        // ORM JOB
-    }
-    {% endblock %}
-
     protected function getFiltersType()
     {
         $type = new FiltersType();

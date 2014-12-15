@@ -12,6 +12,9 @@ use {{ builder.namespacePrefixWithSubfolder }}\{{ bundle_name }}\Form\Type\{{ bu
 
         $this->parseRequestForPager();
 
+        // Scopes have to be processed before the filter form is initialized
+        // so default scopes are synchronized with filters.
+        $scopes = $this->getScopes();
         $form = $this->getFilterForm();
 
         return $this->render('{{ builder.namespacePrefixForTemplate }}{{ bundle_name }}:{{ builder.BaseGeneratorName }}List:index.html.twig', $this->getAdditionalRenderParameters() + array(
@@ -20,7 +23,7 @@ use {{ builder.namespacePrefixWithSubfolder }}\{{ bundle_name }}\Form\Type\{{ bu
             'form'                      => $form->createView(),
             'sortColumn'                => $this->getSortColumn(),
             'sortOrder'                 => $this->getSortOrder(),
-            'scopes'                    => $this->getScopes(),
+            'scopes'                    => $scopes,
             'groups'                    => $this->getGroups(),
             'perPageChoices'            => $this->getPerPageChoices(),
         ));
