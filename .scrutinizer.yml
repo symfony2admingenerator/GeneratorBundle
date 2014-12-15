@@ -4,7 +4,9 @@ checks:
         duplication: true
 tools:
     # use travis code coverage report
-    external_code_coverage: true
+    external_code_coverage:
+        timeout: 300
+        runs: 1
     # php cs fixer
     php_cs_fixer:
         extensions:
