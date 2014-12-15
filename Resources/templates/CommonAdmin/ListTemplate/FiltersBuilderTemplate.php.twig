@@ -28,10 +28,10 @@
                                 {{ echo_set('columnGroups', echo_twig_arr(column.groups), false) }}
                                 {{ echo_if('groups is empty or columnGroups|intersect(groups) is not empty') }}
                             {% endif %}
-                            <div class="form-group list-filters-field-{{ column.name|lower }} list-filters-type-{{ column.filterType|lower }}">
+                            <div class="list-filters-field-{{ column.name|lower }} list-filters-type-{{ column.filterType|lower }}">
                                 {{ echo_block("list_filters_field_" ~ (column.name|lower) ~ "_content" ) }}
                                 {{ echo_twig("form_label(form['" ~ column.name ~ "'], '" ~ builder.FilterColumns[column.name].label|addslashes ~ "'|trans({}, '" ~ i18n_catalog|default("Admin") ~ "'))") }}
-                                {{ echo_twig("form_widget(form['" ~ column.name ~ "'], {'attr':{'class': 'form-control input-sm'}})") }}
+                                {{ echo_twig("form_widget(form['" ~ column.name ~ "'])") }}
                                 {{ echo_twig("form_errors(form['" ~ column.name ~ "'], {'attr': {'class': 'form-control-feedback'}})") }}
                                 {{ echo_endblock() }}
                             </div>

@@ -14,20 +14,13 @@ class FormCompilerPass implements CompilerPassInterface
     {
         if (($twigConfiguration = $container->getParameter('admingenerator.twig')) !== false) {
             $resources = $container->getParameter('twig.form.resources');
-            $alreadyIn = in_array('AdmingeneratorGeneratorBundle:Form:fields.html.twig', $resources);
-            
+            $alreadyIn = in_array('bootstrap_3_layout.html.twig', $resources);
+
             if ($twigConfiguration['use_form_resources'] && !$alreadyIn) {
-                $formTemplates = array(
-                    'AdmingeneratorGeneratorBundle:Form:fields.html.twig',
-                );
-                
-                if (($key = array_search('form_div_layout.html.twig', $resources)) !== false) {
-                    // Insert right after form_div_layout.html.twig if exists
-                    array_splice($resources, ++$key, 0, $formTemplates);
-                } else {
-                    // Put it in first position
-                    array_unshift($resources, $formTemplates);
-                }
+                $key = array_search('form_div_layout.html.twig', $resources) ?: 0;
+                // Insert right after form_div_layout.html.twig if exists
+                array_splice($resources, ++$key, 0, array('bootstrap_3_layout.html.twig'));
+
 
                 $container->setParameter('twig.form.resources', $resources);
             }
