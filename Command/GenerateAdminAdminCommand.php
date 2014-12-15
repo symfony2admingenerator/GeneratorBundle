@@ -12,7 +12,10 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Sensio\Bundle\GeneratorBundle\Command\Validators;
-use Sensio\Bundle\GeneratorBundle\Command\Helper\DialogHelper;
+use Sensio\Bundle\GeneratorBundle\Command\Helper\QuestionHelper;
+use Symfony\Component\Console\Question\Question;
+use Symfony\Component\Console\Question\ConfirmationQuestion;
+use Symfony\Component\Console\Question\ChoiceQuestion;
 
 class GenerateAdminAdminCommand extends GenerateBundleCommand
 {
@@ -40,68 +43,179 @@ EOT
     }
     protected function interact(InputInterface $input, OutputInterface $output)
     {
-        $dialog = $this->getDialogHelper();
-        $dialog->writeSection($output, 'Welcome to the Symfony2 admin generator');
+        $questionHelper = $this->getQuestionHelper();
+        $questionHelper->writeSection($output, 'Welcome to the Symfony2Admingenerator');
         $output->writeln('<comment>Create controllers for a generator module</comment>');
 
-        $generator = $dialog->askAndValidate($output,
-          $dialog->getQuestion('Generator to use (doctrine, doctrine_odm, propel)', $input->getOption('generator')),
-          function ($generator) {
-            if (!in_array($generator, array('doctrine','doctrine_odm','propel'))) {
-              throw new \RuntimeException('Generator to use have to be doctrine, doctrine_odm or propel');
-            }
-
-            return $generator;
-          }, false, $input->getOption('generator')
+        $generator = $input->getOption('generator');
+        $question = new ChoiceQuestion(
+            'Generator to use (doctrine, doctrine_odm, propel)',
+            array('doctrine','doctrine_odm','propel'),
+            0
         );
+        $question->setErrorMessage('Generator to use have to be doctrine, doctrine_odm or propel.');
+        $generator = $questionHelper->ask($input, $output, $question);
         $input->setOption('generator', $generator);
 
-        $namespace = $dialog->askAndValidate($output,
-          $dialog->getQuestion('Bundle namespace', $input->getOption('namespace')),
-          array('Sensio\Bundle\GeneratorBundle\Command\Validators', 'validateBundleNamespace'),
-          false, $input->getOption('namespace')
-        );
-        $input->setOption('namespace', $namespace);
+
+        $namespace = null;
+        try {
+            // validate the namespace option (if any) but don't require the vendor namespace
+            $namespace = $input->getOption('namespace') ? Validators::validateBundleNamespace($input->getOption('namespace'), false) : null;
+        } catch (\Exception $error) {
+            $output->writeln($questionHelper->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
+        }
+
+        if (null === $namespace) {
+            $output->writeln(array(
+                '',
+                'Your application code must be written in <comment>bundles</comment>. This command helps',
+                'you generate them easily.',
+                '',
+                'Each bundle is hosted under a namespace (like <comment>Acme/Bundle/BlogBundle</comment>).',
+                'The namespace should begin with a "vendor" name like your company name, your',
+                'project name, or your client name, followed by one or more optional category',
+                'sub-namespaces, and it should end with the bundle name itself',
+                '(which must have <comment>Bundle</comment> as a suffix).',
+                '',
+                'See http://symfony.com/doc/current/cookbook/bundles/best_practices.html#index-1 for more',
+                'details on bundle naming conventions.',
+                '',
+                'Use <comment>/</comment> instead of <comment>\\ </comment> for the namespace delimiter to avoid any problem.',
+                '',
+            ));
+
+            $acceptedNamespace = false;
+            while (!$acceptedNamespace) {
+                $question = new Question($questionHelper->getQuestion('Bundle namespace', $input->getOption('namespace')), $input->getOption('namespace'));
+                $question->setValidator(function ($answer) {
+                        return Validators::validateBundleNamespace($answer, false);
+
+                });
+                $namespace = $questionHelper->ask($input, $output, $question);
+
+                // mark as accepted, unless they want to try again below
+                $acceptedNamespace = true;
+
+                // see if there is a vendor namespace. If not, this could be accidental
+                if (false === strpos($namespace, '\\')) {
+                    // language is (almost) duplicated in Validators
+                    $msg = array();
+                    $msg[] = '';
+                    $msg[] = sprintf('The namespace sometimes contain a vendor namespace (e.g. <info>VendorName/BlogBundle</info> instead of simply <info>%s</info>).', $namespace, $namespace);
+                    $msg[] = 'If you\'ve *did* type a vendor namespace, try using a forward slash <info>/</info> (<info>Acme/BlogBundle</info>)?';
+                    $msg[] = '';
+                    $output->writeln($msg);
+
+                    $question = new ConfirmationQuestion($questionHelper->getQuestion(
+                        sprintf('Keep <comment>%s</comment> as the bundle namespace (choose no to try again)?', $namespace),
+                        'yes'
+                    ), true);
+                    $acceptedNamespace = $questionHelper->ask($input, $output, $question);
+                }
+            }
+            $input->setOption('namespace', $namespace);
+        }
+
 
         // Model name
-        $modelName = $dialog->askAndValidate($output,
-          $dialog->getQuestion('Model name', $input->getOption('model-name')),
-          function($modelName) {
-            if (empty($modelName) || preg_match('#[^a-zA-Z0-9]#', $modelName)) {
+        $modelName = $input->getOption('model-name');
+        $question = new Question($questionHelper->getQuestion('Model name', $modelName), $modelName);
+        $question->setValidator(function ($answer) {
+            if (empty($answer) || preg_match('#[^a-zA-Z0-9]#', $answer)) {
               throw new \RuntimeException('Model name should not contain any special characters nor spaces.');
             }
-
-            return $modelName;
-          }, false, $input->getOption('model-name')
-        );
+            return $answer;
+        });
+        $modelName = $questionHelper->ask($input, $output, $question);
         $input->setOption('model-name', $modelName);
 
+
         // bundle name
-        $bundle = $input->getOption('bundle-name') ?: strtr($namespace, array('\\Bundle\\' => '', '\\' => ''));
-        $output->writeln(array(
-            '',
-            'In your code, a bundle is often referenced by its name. It can be the',
-            'concatenation of all namespace parts but it\'s really up to you to come',
-            'up with a unique name (a good practice is to start with the vendor name).',
-            'Based on the namespace, we suggest <comment>'.$bundle.'</comment>.',
-            '',
-        ));
-        $bundle = $dialog->askAndValidate($output, $dialog->getQuestion('Bundle name', $bundle), array('Sensio\Bundle\GeneratorBundle\Command\Validators', 'validateBundleName'), false, $bundle);
-        $input->setOption('bundle-name', $bundle);
+        $bundle = null;
+        try {
+            $bundle = $input->getOption('bundle-name') ? Validators::validateBundleName($input->getOption('bundle-name')) : null;
+        } catch (\Exception $error) {
+            $output->writeln($questionHelper->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
+        }
+
+        if (null === $bundle) {
+            $bundle = strtr($namespace, array('\\Bundle\\' => '', '\\' => ''));
+
+            $output->writeln(array(
+                '',
+                'In your code, a bundle is often referenced by its name. It can be the',
+                'concatenation of all namespace parts but it\'s really up to you to come',
+                'up with a unique name (a good practice is to start with the vendor name).',
+                'Based on the namespace, we suggest <comment>'.$bundle.'</comment>.',
+                '',
+            ));
+            $question = new Question($questionHelper->getQuestion('Bundle name', $bundle), $bundle);
+            $question->setValidator(
+                 array('Sensio\Bundle\GeneratorBundle\Command\Validators', 'validateBundleName')
+            );
+            $bundle = $questionHelper->ask($input, $output, $question);
+            $input->setOption('bundle-name', $bundle);
+        }
 
         // target dir
-        $dir = $input->getOption('dir') ?: dirname(realpath($this->getContainer()->getParameter('kernel.root_dir'))).'/src';
-        $output->writeln(array(
-            '',
-            'The bundle can be generated anywhere. The suggested default directory uses',
-            'the standard conventions.',
-            '',
-        ));
-        $dir = $dialog->askAndValidate($output, $dialog->getQuestion('Target directory', $dir), function ($dir) use ($bundle, $namespace) { return Validators::validateTargetDir($dir, $bundle, $namespace); }, false, $dir);
-        $input->setOption('dir', $dir);
+        $dir = null;
+        try {
+            $dir = $input->getOption('dir') ? Validators::validateTargetDir($input->getOption('dir'), $bundle, $namespace) : null;
+        } catch (\Exception $error) {
+            $output->writeln($questionHelper->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
+        }
+
+        if (null === $dir) {
+            $dir = dirname($this->getContainer()->getParameter('kernel.root_dir')).'/src';
+
+            $output->writeln(array(
+                '',
+                'The bundle can be generated anywhere. The suggested default directory uses',
+                'the standard conventions.',
+                '',
+            ));
+            $question = new Question($questionHelper->getQuestion('Target directory', $dir), $dir);
+            $question->setValidator(function ($dir) use ($bundle, $namespace) {
+                    return Validators::validateTargetDir($dir, $bundle, $namespace);
+            });
+            $dir = $questionHelper->ask($input, $output, $question);
+            $input->setOption('dir', $dir);
+        }
+
+        // format
+        $format = null;
+        try {
+            $format = $input->getOption('format') ? Validators::validateFormat($input->getOption('format')) : null;
+        } catch (\Exception $error) {
+            $output->writeln($questionHelper->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
+        }
+
+        if (null === $format) {
+            $output->writeln(array(
+                '',
+                'Determine the format to use for the generated configuration.',
+                '',
+            ));
+            $question = new Question($questionHelper->getQuestion('Configuration format (yml, xml, php, or annotation)', $input->getOption('format')), $input->getOption('format'));
+            $question->setValidator(
+                array('Sensio\Bundle\GeneratorBundle\Command\Validators', 'validateFormat')
+            );
+            $format = $questionHelper->ask($input, $output, $question);
+            $input->setOption('format', $format);
+        }
+
 
         // prefix
-        $prefix = $dialog->askAndValidate($output, $dialog->getQuestion('Prefix of yaml', $input->getOption('prefix')),  function ($prefix) { if (!preg_match('/([a-z]+)/i', $prefix)) { throw new \RuntimeException('Prefix have to be a simple word'); } return $prefix; } , false, $input->getOption('prefix'));
+        $prefix = $input->getOption('prefix');
+        $question = new Question($questionHelper->getQuestion('Prefix of yaml', $prefix), $prefix);
+        $question->setValidator(function ($prefix) { 
+            if (!preg_match('/([a-z]+)/i', $prefix)) { 
+                throw new \RuntimeException('Prefix have to be a simple word'); 
+            } 
+            return $prefix; 
+        });
+        $prefix = $questionHelper->ask($input, $output, $question);
         $input->setOption('prefix', $prefix);
     }
 
@@ -113,10 +227,12 @@ EOT
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $dialog = $this->getDialogHelper();
+        $questionHelper = $this->getQuestionHelper();
 
         if ($input->isInteractive()) {
-            if (!$dialog->askConfirmation($output, $dialog->getQuestion('Do you confirm generation', 'yes', '?'), true)) {
+
+            $question = new ConfirmationQuestion('Do you confirm generation?', true);
+            if (!$questionHelper->ask($input, $output, $question)) {
                 $output->writeln('<error>Command aborted</error>');
 
                 return 1;
@@ -138,7 +254,7 @@ EOT
         $dir = $input->getOption('dir').'/';
         $structure = $input->getOption('structure');
 
-        $dialog->writeSection($output, 'Bundle generation');
+        $questionHelper->writeSection($output, 'Bundle generation');
 
         if (!$this->getContainer()->get('filesystem')->isAbsolutePath($dir)) {
             $dir = getcwd().'/'.$dir;
@@ -155,12 +271,12 @@ EOT
         $output->writeln('Generating the bundle code: <info>OK</info>');
 
         $errors = array();
-        $runner = $dialog->getRunner($output, $errors);
+        $runner = $questionHelper->getRunner($output, $errors);
 
         // routing
-        $runner($this->updateRouting($dialog, $input, $output, $bundle, $format));
+        $runner($this->updateRouting($questionHelper, $input, $output, $bundle, $format));
 
-        $dialog->writeGeneratorSummary($output, $errors);
+        $questionHelper->writeGeneratorSummary($output, $errors);
     }
 
     protected function createGenerator()
@@ -168,11 +284,12 @@ EOT
         return new BundleGenerator($this->getContainer()->get('filesystem'), __DIR__.'/../Resources/skeleton/bundle');
     }
 
-    protected function updateRouting(DialogHelper $dialog, InputInterface $input, OutputInterface $output, $bundle, $format)
+    protected function updateRouting(QuestionHelper $questionHelper, InputInterface $input, OutputInterface $output, $bundle, $format)                                                         
     {
         $auto = true;
         if ($input->isInteractive()) {
-            $auto = $dialog->askConfirmation($output, $dialog->getQuestion('Confirm automatic update of the Routing', 'yes', '?'), true);
+            $question = new ConfirmationQuestion('Confirm automatic update of the Routing?', true);
+            $auto = $questionHelper->ask($input, $output, $question);
         }
 
         $output->write('Importing the bundle routing resource: ');
