@@ -27,9 +27,7 @@ abstract class BaseBuilder extends GenericBaseBuilder
     /**
      * Set files to generate
      *
-     * @param array $templatesToGenerate
-     *                                   key:   template file
-     *                                   value: output file name
+     * @param array $templatesToGenerate (key => template file; value => output file name)
      */
     public function setTemplatesToGenerate(array $templatesToGenerate)
     {
