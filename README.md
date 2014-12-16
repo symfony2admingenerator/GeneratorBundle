@@ -18,8 +18,8 @@ Quickly create powerful backend for your project. Save your time useing default 
 * configure all options in one YAML file
 * supports popular model managers: **Doctrine ORM**, **Doctrine ODM** and **Propel**
 * override any part of the controller or template
-* translated into DE, **EN (default)**, ES, FA, FR, GR, IT, JA, NL, PL, PT, RO, RU, SL, TR, UK
-* admin design based on [AdminLTE](https://github.com/almasaeed2010/AdminLTE) *(see "This bundle in pictures" section below)*
+* translated into DE, EL, **EN (default)**, ES, FA, FR, GR, IT, JA, NL, PL, PT, RO, RU, SL, TR, UK
+* admin design based on [AdminLTE](https://github.com/almasaeed2010/AdminLTE), see *"This bundle in pictures"*  [section below](README.md#this-bundle-in-pictures)
 
 ## Features:
 
