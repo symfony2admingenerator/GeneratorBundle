@@ -1,11 +1,20 @@
 # AdminGenerator [![knpbundles.com](http://knpbundles.com/symfony2admingenerator/GeneratorBundle/badge-short)](http://knpbundles.com/symfony2admingenerator/GeneratorBundle) [![SensioLabsInsight](https://insight.sensiolabs.com/projects/e8ee4e4c-d8fb-4354-96c3-8971dce11201/small.png)](https://insight.sensiolabs.com/projects/e8ee4e4c-d8fb-4354-96c3-8971dce11201)
 
-![project status](http://stillmaintained.com/cedriclombardot/AdmingeneratorGeneratorBundle.png) [![Build Status](https://scrutinizer-ci.com/g/symfony2admingenerator/GeneratorBundle/badges/build.png?b=master)](https://scrutinizer-ci.com/g/symfony2admingenerator/GeneratorBundle/build-status/master) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/symfony2admingenerator/GeneratorBundle/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/symfony2admingenerator/GeneratorBundle/?branch=master) [![Code Coverage](https://scrutinizer-ci.com/g/symfony2admingenerator/GeneratorBundle/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/symfony2admingenerator/GeneratorBundle/?branch=master)
-[![PHP Dependency Status](https://www.versioneye.com/user/projects/548f1209dd709d811f0001c3/badge.svg?style=flat)](https://www.versioneye.com/user/projects/548f1209dd709d811f0001c3) [![JS Dependency Status](https://www.versioneye.com/user/projects/548f1202dd709d6dbd000118/badge.svg?style=flat)](https://www.versioneye.com/user/projects/548f1202dd709d6dbd000118) 
+![project status](http://stillmaintained.com/cedriclombardot/AdmingeneratorGeneratorBundle.png)
+[![Build Status](https://scrutinizer-ci.com/g/symfony2admingenerator/GeneratorBundle/badges/build.png?b=master)](https://scrutinizer-ci.com/g/symfony2admingenerator/GeneratorBundle/build-status/master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/symfony2admingenerator/GeneratorBundle/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/symfony2admingenerator/GeneratorBundle/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/symfony2admingenerator/GeneratorBundle/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/symfony2admingenerator/GeneratorBundle/?branch=master)
 
-[![Latest Stable Version](https://poser.pugx.org/symfony2admingenerator/generator-bundle/v/stable.png)](https://packagist.org/packages/symfony2admingenerator/generator-bundle) [![Total Downloads](https://poser.pugx.org/symfony2admingenerator/generator-bundle/downloads.png)](https://packagist.org/packages/symfony2admingenerator/generator-bundle) [![License](https://poser.pugx.org/symfony2admingenerator/generator-bundle/license.png)](https://packagist.org/packages/symfony2admingenerator/generator-bundle)
+[![PHP Dependency Status](https://www.versioneye.com/user/projects/548f1209dd709d811f0001c3/badge.svg?style=flat)](https://www.versioneye.com/user/projects/548f1209dd709d811f0001c3)
+[![JS Dependency Status](https://www.versioneye.com/user/projects/548f1202dd709d6dbd000118/badge.svg?style=flat)](https://www.versioneye.com/user/projects/548f1202dd709d6dbd000118) 
 
-[![Gitter Join Chat](http://img.shields.io/badge/Gitter-join%20chat-1dce73.svg)](https://gitter.im/symfony2admingenerator/GeneratorBundle?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![Follow @sf2admgen](http://img.shields.io/badge/Twitter-follow-55acee.svg)](https://twitter.com/intent/follow?screen_name=sf2admgen) [![SensioConnect join the club](http://img.shields.io/badge/SensioConnect-join%20the%20club-82e83e.svg)](https://connect.sensiolabs.com/c/symfony2admingenerator/apply-membership)
+[![Latest Stable Version](https://poser.pugx.org/symfony2admingenerator/generator-bundle/v/stable.png)](https://packagist.org/packages/symfony2admingenerator/generator-bundle)
+[![Total Downloads](https://poser.pugx.org/symfony2admingenerator/generator-bundle/downloads.png)](https://packagist.org/packages/symfony2admingenerator/generator-bundle)
+[![License](https://poser.pugx.org/symfony2admingenerator/generator-bundle/license.png)](https://packagist.org/packages/symfony2admingenerator/generator-bundle)
+
+[![Gitter Join Chat](http://img.shields.io/badge/Gitter-join%20chat-1dce73.svg)](https://gitter.im/symfony2admingenerator/GeneratorBundle?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Follow @sf2admgen](http://img.shields.io/badge/Twitter-follow-55acee.svg)](https://twitter.com/intent/follow?screen_name=sf2admgen)
+[![SensioConnect join the club](http://img.shields.io/badge/SensioConnect-join%20the%20club-82e83e.svg)](https://connect.sensiolabs.com/c/symfony2admingenerator/apply-membership)
 
 ## Description:
 
