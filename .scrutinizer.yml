@@ -5,7 +5,7 @@ checks:
 tools:
     # use travis code coverage report
     external_code_coverage:
-        timeout: 300
+        timeout: 3600
         runs: 1
     # php cs fixer
     php_cs_fixer:
