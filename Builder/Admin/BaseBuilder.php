@@ -40,6 +40,11 @@ class BaseBuilder extends GenericBaseBuilder
         return $this->getGenerator()->getBaseAdminTemplate();
     }
 
+    public function getDefaultActionAfterSave()
+    {
+        return $this->getGenerator()->getDefaultActionAfterSave();
+    }
+    
     /**
      * Return a list of columns from list.display
      * @return array
