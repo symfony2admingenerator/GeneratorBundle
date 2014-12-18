@@ -63,6 +63,16 @@ class NewController extends BaseController
     }
 
     /**
+     * Get show URL
+     *
+     * @return string
+     */
+    protected function getShowUrl($pk)
+    {
+        return $this->generateUrl("{{ builder.routePrefixWithSubfolder }}_{{ bundle_name }}{{ builder.BaseGeneratorName ? "_" ~ builder.BaseGeneratorName : "" }}_show", array('pk' => $pk) );
+    }    
+
+    /**
      * Get additional parameters for rendering.
      *
      * @param \{{ model }} ${{ builder.ModelClass }}
