@@ -56,6 +56,16 @@ abstract class BaseBuilder extends GenericBaseBuilder
     }
 
     /**
+     * Retrieve default action after save name.
+     *
+     * @return string
+     */
+    public function getDefaultActionAfterSave()
+    {
+        return $this->getGenerator()->getDefaultActionAfterSave();
+    }
+
+    /**
      * Check if builder must generate multiple files
      * based on templatesToGenerate property.
      *
