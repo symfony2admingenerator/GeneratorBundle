@@ -28,7 +28,6 @@ class ListBuilder extends BaseBuilder
      */
     protected $filterColumns = null;
 
-
     /**
      * (non-PHPdoc)
      * @see Admingenerator\GeneratorBundle\Builder.BaseBuilder::getYamlKey()
@@ -37,8 +36,6 @@ class ListBuilder extends BaseBuilder
     {
         return 'list';
     }
-
-
 
     public function getFilterColumns()
     {
@@ -55,7 +52,7 @@ class ListBuilder extends BaseBuilder
         foreach ($this->getAllFields() as $columnName) {
             $column = $this->createColumn($columnName, true);
             $this->setUserColumnConfiguration($column);
-            
+
             if ($column->isFilterable()) {
                 $this->addFilterColumn($column);
             }
@@ -70,7 +67,7 @@ class ListBuilder extends BaseBuilder
     public function getFilterColumnGroups()
     {
         $groups = array();
-        
+
         foreach ($this->getFilterColumns() as $column) {
             $groups = array_merge($groups, $column->getGroups());
         }
@@ -185,7 +182,7 @@ class ListBuilder extends BaseBuilder
 
         foreach ($batchActions as $actionName => $actionParams) {
             $action = $this->findBatchAction($actionName);
-            
+
             if (!$action) {
                 $action = new Action($actionName);
             }

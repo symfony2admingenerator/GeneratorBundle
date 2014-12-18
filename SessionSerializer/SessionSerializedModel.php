@@ -11,6 +11,9 @@ class SessionSerializedModel
 
     protected $pk;
 
+    /**
+     * @param string $class
+     */
     public function __construct($class, $pk)
     {
         $this->class = $class;

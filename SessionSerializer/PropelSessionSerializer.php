@@ -18,6 +18,9 @@ class PropelSessionSerializer implements SessionSerializerInterface
         }
     }
 
+    /**
+     * @param string $class
+     */
     private function getMetadataFor($class)
     {
         if (!array_key_exists($class, $this->metadatas)) {

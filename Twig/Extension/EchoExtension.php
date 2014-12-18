@@ -37,8 +37,8 @@ class EchoExtension extends \Twig_Extension
      * for catalog $catalog.
      *
      * @param $str
-     * @param array $parameters
-     * @param string $catalog
+     * @param  array  $parameters
+     * @param  string $catalog
      * @return string
      */
     public function getEchoTrans($str, array $parameters = array(), $catalog = 'Admingenerator', $escape = null)
@@ -77,8 +77,8 @@ class EchoExtension extends \Twig_Extension
      * Print "echo tag with path call" to the path $path with params $params.
      *
      * @param $path
-     * @param array $params
-     * @param array|string $filters
+     * @param  array        $params
+     * @param  array|string $filters
      * @return string
      */
     public function getEchoPath($path, $params = null, $filters = null)
@@ -114,7 +114,7 @@ class EchoExtension extends \Twig_Extension
      * If $modelName is not null, append the $modelName to the function call.
      *
      * @param $credentials
-     * @param null $modelName
+     * @param  null   $modelName
      * @return string
      */
     public function getEchoIfGranted($credentials, $modelName = null)
@@ -131,7 +131,7 @@ class EchoExtension extends \Twig_Extension
      * with $params parameters.
      *
      * @param $controller
-     * @param array $params
+     * @param  array  $params
      * @return string
      */
     public function getEchoRender($controller, array $params = array())
@@ -146,7 +146,7 @@ class EchoExtension extends \Twig_Extension
      *
      * eg type option for collection type
      *
-     * @param string $options the string as php
+     * @param string $options  the string as php
      * @param string $formType the form type
      *
      * @return string the new options
@@ -155,7 +155,6 @@ class EchoExtension extends \Twig_Extension
     {
         // Transforms PHP call into PHP (simple copy/paste)
         $options = preg_replace("/'__php\((.+?)\)'/i", '$1', $options, -1, $count);
-
 
         // Converts 'type' => '\My\Fully\QualifiedType' into 'type' => new \My\Fully\QualifiedType()
         // (mainly used in collections
@@ -211,8 +210,8 @@ class EchoExtension extends \Twig_Extension
      * Reads parameters from subject and removes parameter bag from string.
      *
      * @return array
-     *   [string] -> string for echo trans
-     *   [params] -> parameters for echo trans
+     *               [string] -> string for echo trans
+     *               [params] -> parameters for echo trans
      *
      * @return false if subject did not match any of following patterns
      *

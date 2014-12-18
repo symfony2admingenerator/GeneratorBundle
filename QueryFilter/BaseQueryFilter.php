@@ -47,12 +47,15 @@ abstract class BaseQueryFilter implements QueryFilterInterface
         }
     }
 
+    /**
+     * @param string $format
+     */
     protected function formatDate($date, $format)
     {
         if ($date === null) {
             return false;
         }
-        
+
         if (!($date instanceof \DateTime)) {
             $date = new \DateTime($date);
         }

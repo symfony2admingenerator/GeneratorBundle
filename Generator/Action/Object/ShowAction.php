@@ -18,7 +18,7 @@ class ShowAction extends Action
 
         $this->setIcon('fa-eye');
         $this->setLabel('action.object.show.label');
-        
+
         $this->setRoute($builder->getBaseActionsRoute().'_show');
 
         $this->setParams(array(

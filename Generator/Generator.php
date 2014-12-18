@@ -70,7 +70,7 @@ abstract class Generator extends ContainerAware implements GeneratorInterface
     }
 
     /**
-     * @param Doctrine\Common\Cache\CacheProvider $cacheProvider
+     * @param DoctrineCache\CacheProvider $cacheProvider
      * @param string $cacheSuffix
      */
     public function setCacheProvider(DoctrineCache\CacheProvider $cacheProvider, $cacheSuffix = 'default')

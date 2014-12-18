@@ -29,6 +29,10 @@ class DoctrineQueryFilter extends BaseQueryFilter
         $this->query->setParameter($field, '%'.$value.'%');
     }
 
+    /**
+     * @param string $field
+     * @param string $value
+     */
     public function addTextFilter($field, $value)
     {
         $this->addStringFilter($field, $value);

@@ -29,6 +29,9 @@ class DoctrineODMSessionSerializer implements SessionSerializerInterface
         return $this->managers[$class];
     }
 
+    /**
+     * @param string $class
+     */
     private function getMetadataFor($class)
     {
         if (!array_key_exists($class, $this->metadatas)) {

@@ -3,7 +3,6 @@
 namespace Admingenerator\GeneratorBundle\Tests\ClassLoader;
 
 use Admingenerator\GeneratorBundle\Tests\TestCase;
-
 use Admingenerator\GeneratorBundle\ClassLoader\AdmingeneratedClassLoader;
 
 class AdmingeneratedClassLoaderTest extends TestCase

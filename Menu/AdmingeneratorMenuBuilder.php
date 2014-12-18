@@ -16,7 +16,7 @@ class AdmingeneratorMenuBuilder extends ContainerAware
      * 
      * @param \Knp\Menu\ItemInterface $menu
      * @param string $label Link label
-     * @param string $route Link uri
+     * @param string $uri
      * @return ItemInterface Link element
      */
     protected function addLinkURI(ItemInterface $menu, $label, $uri)
@@ -84,7 +84,7 @@ class AdmingeneratorMenuBuilder extends ContainerAware
     }
 
     /**
-     * @param $uri
+     * @param string $uri
      * @return bool
      */
     protected function isCurrentUri($uri)

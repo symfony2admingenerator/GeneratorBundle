@@ -7,6 +7,9 @@ use Admingenerator\GeneratorBundle\Generator\Generator;
 
 class BaseValidator
 {
+    /**
+     * @param string $yaml_path
+     */
     protected function getFromYaml(Generator $generator, $yaml_path, $default = null)
     {
         $search_in = Yaml::parse($generator->getGeneratorYml());

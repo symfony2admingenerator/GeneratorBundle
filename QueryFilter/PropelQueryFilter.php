@@ -2,7 +2,7 @@
 
 namespace Admingenerator\GeneratorBundle\QueryFilter;
 
-use  Doctrine\Common\Util\Inflector;
+use Doctrine\Common\Util\Inflector;
 
 class PropelQueryFilter extends BaseQueryFilter
 {
@@ -76,8 +76,8 @@ class PropelQueryFilter extends BaseQueryFilter
     public function addTimestampFilter($field, $value)
     {
         return $this->addDateFilter($field, $value);
-    }    
-             
+    }
+
     public function addNullFilter($field, $value = null)
     {
         $this->query->filterBy($field, null, \Criteria::EQUAL);

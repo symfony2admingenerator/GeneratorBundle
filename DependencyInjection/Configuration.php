@@ -16,7 +16,7 @@ class Configuration implements ConfigurationInterface
      * @var string
      */
     protected $rootName;
-    
+
     /**
      * @param string $rootName
      */
@@ -24,7 +24,7 @@ class Configuration implements ConfigurationInterface
     {
         $this->rootName = $rootName;
     }
-    
+
     /**
      * Generates the configuration tree builder.
      *

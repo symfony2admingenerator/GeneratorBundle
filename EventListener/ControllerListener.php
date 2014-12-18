@@ -21,7 +21,7 @@ class ControllerListener
      * @var DoctrineCache\CacheProvider
      */
     protected $cacheProvider;
-    
+
     /**
      * @var string
      */
@@ -36,7 +36,7 @@ class ControllerListener
 
     /**
      * @param DoctrineCache\CacheProvider $cacheProvider
-     * @param string $cacheSuffix
+     * @param string                      $cacheSuffix
      */
     public function setCacheProvider(DoctrineCache\CacheProvider $cacheProvider = null, $cacheSuffix = 'default')
     {
@@ -77,6 +77,9 @@ class ControllerListener
         }
     }
 
+    /**
+     * @param string $generatorYaml
+     */
     protected function getGenerator($generatorYaml)
     {
         if (!$generatorName = $this->cacheProvider->fetch($this->getCacheKey($generatorYaml.'_generator'))) {
@@ -106,7 +109,7 @@ class ControllerListener
     }
 
     /**
-     * @param string $controller
+     * @param  string                     $controller
      * @throws NotAdminGeneratedException
      * @return string
      */
@@ -131,7 +134,7 @@ class ControllerListener
 
     /**
      * @TODO: Find objects in vendor dirs
-     * @param string $controller
+     * @param  string                     $controller
      * @throws NotAdminGeneratedException
      */
     protected function findGeneratorYml($controller)
@@ -166,7 +169,7 @@ class ControllerListener
     }
 
     /**
-     * @param string $key
+     * @param  string $key
      * @return string
      */
     protected function getCacheKey($key)

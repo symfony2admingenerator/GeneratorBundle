@@ -8,6 +8,7 @@ interface QueryFilterInterface
      * @param object $query the query object interface depend of the ORM
      *
      * @api
+     * @return void
      */
     public function setQuery($query);
 
@@ -26,6 +27,7 @@ interface QueryFilterInterface
      * @param string $value the search value
      *
      * @api
+     * @return void
      */
     public function addDefaultFilter($field, $value);
 

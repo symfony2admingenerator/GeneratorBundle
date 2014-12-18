@@ -65,6 +65,9 @@ class Action
         return $this->type;
     }
 
+    /**
+     * @param string $label
+     */
     public function setLabel($label)
     {
         $this->label = $label;
@@ -79,6 +82,9 @@ class Action
         return $this->humanize($this->getName());
     }
 
+    /**
+     * @param string $icon
+     */
     public function setIcon($icon)
     {
         $this->icon = $icon;
@@ -89,6 +95,9 @@ class Action
         return $this->icon;
     }
 
+    /**
+     * @param string $class
+     */
     public function setClass($class)
     {
         $this->class = $class;
@@ -99,6 +108,9 @@ class Action
         return $this->class;
     }
 
+    /**
+     * @param string $route
+     */
     public function setRoute($route)
     {
         $this->route = $route;
@@ -109,6 +121,9 @@ class Action
         return $this->route;
     }
 
+    /**
+     * @param boolean $submit
+     */
     public function setSubmit($submit)
     {
         $this->submit = (bool) $submit;
@@ -124,6 +139,9 @@ class Action
         return ucfirst(str_replace('_', ' ', $text));
     }
 
+    /**
+     * @param string $confirm_message
+     */
     public function setConfirm($confirm_message)
     {
         $this->confirm_message = $confirm_message;
@@ -134,6 +152,9 @@ class Action
         return $this->confirm_message;
     }
 
+    /**
+     * @param boolean $csrf_protected
+     */
     public function setCsrfProtected($csrf_protected)
     {
         $this->csrf_protected = $csrf_protected;

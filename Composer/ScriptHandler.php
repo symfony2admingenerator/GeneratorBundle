@@ -36,15 +36,25 @@ class ScriptHandler
         static::executeCommand($event, $consoleDir, 'admin:assets-install');
     }
 
+    /**
+     * @param string $configName
+     * @param string $actionName
+     */
     protected static function hasDirectory(CommandEvent $event, $configName, $path, $actionName)
     {
         if (!is_dir($path)) {
             $event->getIO()->write(sprintf('The %s (%s) specified in composer.json was not found in %s, can not %s.', $configName, $path, getcwd(), $actionName));
+
             return false;
         }
+
         return true;
     }
 
+    /**
+     * @param string $consoleDir
+     * @param string $cmd
+     */
     protected static function executeCommand(CommandEvent $event, $consoleDir, $cmd, $timeout = 300)
     {
         $php = escapeshellarg(self::getPhp(false));
@@ -64,6 +74,7 @@ class ScriptHandler
     {
         $options = $event->getComposer()->getPackage()->getExtra();
         $options['process-timeout'] = $event->getComposer()->getConfig()->get('process-timeout');
+
         return $options;
     }
 
@@ -73,6 +84,7 @@ class ScriptHandler
         if (!$phpPath = $phpFinder->find($includeArgs)) {
             throw new \RuntimeException('The php executable could not be found, add it to your PATH environment variable and try again');
         }
+
         return $phpPath;
     }
 
@@ -86,6 +98,7 @@ class ScriptHandler
         if (false !== $ini = php_ini_loaded_file()) {
             $arguments[] = '--php-ini='.$ini;
         }
+
         return $arguments;
     }
 
@@ -104,11 +117,13 @@ class ScriptHandler
             if (!self::hasDirectory($event, 'symfony-bin-dir', $options['symfony-bin-dir'], $actionName)) {
                 return;
             }
+
             return $options['symfony-bin-dir'];
         }
         if (!self::hasDirectory($event, 'symfony-app-dir', $options['symfony-app-dir'], 'execute command')) {
             return;
         }
+
         return $options['symfony-app-dir'];
     }
 

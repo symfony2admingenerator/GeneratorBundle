@@ -29,14 +29,14 @@ class Column
     protected $dbType;
 
     /**
-     * If set, formats field for scopes and filters. The formatting is a simple 
+     * If set, formats field for scopes and filters. The formatting is a simple
      * sprintf with one string argument (field name).
      *
      * Example:
      *    for field:  "createdAt"
      *    dbFormat:   "DATE(%s)""
      *    the output will be "DATE(createdAt)"
-     *    
+     *
      * If undefined, the field will not be formatted.
      *
      * Since the functions may vary in diffrent Database types, Admingenerator does not,
@@ -45,11 +45,11 @@ class Column
      * Note: this feature was created mainly for Date/DateTime fields.
      */
     protected $dbFormat;
-    
+
     protected $customView = null;
 
     protected $formType;
-    
+
     protected $filterType;
 
     protected $formOptions = array();
@@ -74,6 +74,9 @@ class Column
     /* Used for more verbose error messages */
     protected $debug = array();
 
+    /**
+     * @param boolean $debug
+     */
     public function __construct($name, $debug)
     {
         $this->name     = $name;
@@ -296,12 +299,12 @@ class Column
     {
         return $this->sortType;
     }
-    
+
     public function getCustomView()
     {
         return $this->customView;
     }
-    
+
     public function setCustomView($customView)
     {
         $this->customView = $customView;

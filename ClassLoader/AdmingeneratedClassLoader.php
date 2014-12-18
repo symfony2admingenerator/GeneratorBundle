@@ -47,6 +47,9 @@ class AdmingeneratedClassLoader
         }
     }
 
+    /**
+     * @param string $class
+     */
     protected function generateEmptyController($class)
     {
         $generator = new EmptyGenerator($this->base_path);
