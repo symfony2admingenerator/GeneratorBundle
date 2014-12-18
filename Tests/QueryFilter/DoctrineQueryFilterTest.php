@@ -3,7 +3,6 @@
 namespace Admingenerator\GeneratorBundle\Tests\QueryFilter;
 
 use Admingenerator\GeneratorBundle\Tests\TestCase;
-
 use Admingenerator\GeneratorBundle\QueryFilter\DoctrineQueryFilter;
 
 class QueryFilterTest extends TestCase
@@ -65,7 +64,7 @@ class QueryFilterTest extends TestCase
     /**
      * Creates an EntityManager for testing purposes.
      *
-     * @return Doctrine\ORM\EntityManager
+     * @return \Admingenerator\GeneratorBundle\Tests\Mocks\Doctrine\EntityManagerMock
      */
     protected function _getTestEntityManager($conn = null, $conf = null, $eventManager = null)
     {

@@ -18,7 +18,7 @@ class EditAction extends Action
 
         $this->setIcon('fa-edit');
         $this->setLabel('action.object.edit.label');
-        
+
         $this->setRoute($builder->getBaseActionsRoute().'_edit');
 
         $this->setParams(array(

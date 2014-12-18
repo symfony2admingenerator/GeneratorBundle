@@ -27,9 +27,7 @@ abstract class BaseBuilder extends GenericBaseBuilder
     /**
      * Set files to generate
      *
-     * @param array $templatesToGenerate
-     *     key:   template file
-     *     value: output file name
+     * @param array $templatesToGenerate (key => template file; value => output file name)
      */
     public function setTemplatesToGenerate(array $templatesToGenerate)
     {
@@ -131,6 +129,7 @@ abstract class BaseBuilder extends GenericBaseBuilder
     /**
      * (non-PHPdoc)
      * @see Builder/Admingenerator\GeneratorBundle\Builder.BuilderInterface::hasVariable()
+     * @param string $key
      */
     public function hasVariable($key)
     {

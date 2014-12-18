@@ -3,11 +3,8 @@
 namespace Admingenerator\GeneratorBundle\Command;
 
 use Admingenerator\GeneratorBundle\Routing\Manipulator\RoutingManipulator;
-
 use Admingenerator\GeneratorBundle\Generator\BundleGenerator;
-
 use Sensio\Bundle\GeneratorBundle\Command\GenerateBundleCommand;
-
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -172,6 +169,9 @@ EOT
         return new BundleGenerator($this->getContainer()->get('filesystem'), __DIR__.'/../Resources/skeleton/bundle');
     }
 
+    /**
+     * @param string $format
+     */
     protected function updateRouting(QuestionHelper $questionHelper, InputInterface $input, OutputInterface $output, $bundle, $format)                                                         
     {
         $auto = true;

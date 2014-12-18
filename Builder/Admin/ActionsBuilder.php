@@ -97,7 +97,7 @@ class ActionsBuilder extends BaseBuilder
 
         foreach ($batchActions as $actionName => $actionParams) {
             $action = $this->findBatchAction($actionName);
-            if(!$action) {
+            if (!$action) {
                 $action = new Action($actionName);
             }
 

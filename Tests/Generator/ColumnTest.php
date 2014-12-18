@@ -3,9 +3,7 @@
 namespace Admingenerator\GeneratorBundle\Tests\Generator;
 
 use Doctrine\Common\Util\Inflector;
-
 use Admingenerator\GeneratorBundle\Tests\TestCase;
-
 use Admingenerator\GeneratorBundle\Generator\Column;
 
 class ColumnTest extends TestCase
@@ -81,6 +79,9 @@ class ColumnTest extends TestCase
         $this->assertEquals(array(1900, 1905, 1910, 1915), $options['years']);
     }
 
+    /**
+     * @param string $method
+     */
     protected function checkColumn($from_to_array, $method)
     {
         foreach ($from_to_array as $from => $to) {

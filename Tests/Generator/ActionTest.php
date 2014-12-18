@@ -3,7 +3,6 @@
 namespace Admingenerator\GeneratorBundle\Tests\Generator;
 
 use Admingenerator\GeneratorBundle\Tests\TestCase;
-
 use Admingenerator\GeneratorBundle\Generator\Action;
 
 class ActionTest extends TestCase
@@ -29,6 +28,9 @@ class ActionTest extends TestCase
         $this->checkAction($from_to_array, 'getLabel');
     }
 
+    /**
+     * @param string $method
+     */
     protected function checkAction($from_to_array, $method)
     {
         foreach ($from_to_array as $from => $to) {

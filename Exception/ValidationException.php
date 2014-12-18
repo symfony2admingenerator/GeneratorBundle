@@ -28,7 +28,7 @@ class ValidationException extends \LogicException
 
     /**
      * Validate and set errors.
-     * 
+     *
      * @param ConstraintViolation[] $errors An array of ConstraintViolation instances.
      */
     public function setErrors($errors = array())

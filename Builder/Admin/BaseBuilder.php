@@ -86,7 +86,7 @@ class BaseBuilder extends GenericBaseBuilder
      * 
      * @param  string   $columnName The name of the column.
      * @param  boolean  $withForms  If true, add column form configuration.
-     * @return Admingenerator\GeneratorBundle\Generator\Column
+     * @return Column
      */
     protected function createColumn($columnName, $withForms = false)
     {
@@ -159,6 +159,9 @@ class BaseBuilder extends GenericBaseBuilder
         return $this->columnClass = $columnClass;
     }
 
+    /**
+     * @param string $optionName
+     */
     protected function getFieldOption(Column $column, $optionName, $default = null)
     {
         $options = $this->getVariable(

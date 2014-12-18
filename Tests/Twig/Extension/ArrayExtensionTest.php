@@ -21,7 +21,6 @@ class ArrayExtensionTest extends \PHPUnit_Framework_TestCase
         $this->extension = new ArrayExtension();
     }
 
-
     public function testMapByWithNumericKey()
     {
         $source = array(
@@ -93,7 +92,6 @@ class ArrayExtensionTest extends \PHPUnit_Framework_TestCase
     {
         $this->extension->mapBy(array(new TestObject()), 'dontExists');
     }
-
 
     public function testFlattenWithFlatArrays()
     {

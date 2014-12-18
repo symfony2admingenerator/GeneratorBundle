@@ -3,7 +3,6 @@
 namespace Admingenerator\GeneratorBundle\Generator;
 
 use Sensio\Bundle\GeneratorBundle\Generator\Generator as BaseBundleGenerator;
-
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
@@ -42,6 +41,9 @@ class BundleGenerator extends BaseBundleGenerator
 
     protected $forms = array('New', 'Filters', 'Edit');
 
+    /**
+     * @param string $skeletonDir
+     */
     public function __construct(Filesystem $filesystem, $skeletonDir)
     {
         $this->filesystem = $filesystem;
@@ -61,6 +63,10 @@ class BundleGenerator extends BaseBundleGenerator
         $this->prefix = $prefix;
     }
 
+    /**
+     * @param string $namespace
+     * @param string $format
+     */
     public function generate($namespace, $bundle, $dir, $format, $structure, $generator, $modelName)
     {
         $dir .= '/'.strtr($namespace, '\\', '/');
@@ -147,6 +153,10 @@ class BundleGenerator extends BaseBundleGenerator
         );
     }
 
+    /**
+     * @param string $template
+     * @param string $target
+     */
     protected function renderGeneratedFile($template, $target, array $parameters)
     {
         if (method_exists($this, 'setSkeletonDirs')) {
@@ -156,6 +166,9 @@ class BundleGenerator extends BaseBundleGenerator
         }
     }
 
+    /**
+     * @param string $oldname
+     */
     protected function copyPreviousFile($oldname)
     {
         if (file_exists($oldname)) {

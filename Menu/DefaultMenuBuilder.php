@@ -2,7 +2,6 @@
 
 namespace Admingenerator\GeneratorBundle\Menu;
 
-use Admingenerator\GeneratorBundle\Menu\AdmingeneratorMenuBuilder;
 use Knp\Menu\FactoryInterface;
 
 class DefaultMenuBuilder extends AdmingeneratorMenuBuilder
@@ -17,7 +16,7 @@ class DefaultMenuBuilder extends AdmingeneratorMenuBuilder
                 ->addLinkRoute($menu, 'admingenerator.dashboard', $dashboardRoute)
                 ->setExtra('icon', 'fa fa-dashboard');
         }
-        
+
         $overwrite = $this->addDropdown($menu, 'Replace this menu');
 
         $this->addLinkURI(
@@ -33,7 +32,7 @@ class DefaultMenuBuilder extends AdmingeneratorMenuBuilder
             'https://github.com/symfony2admingenerator/AdmingeneratorGeneratorBundle'.
             '/blob/master/Resources/views/base_admin_navbar.html.twig'
         )->setExtra('icon', 'fa  fa-code-fork');
-        
+
         return $menu;
     }
 }

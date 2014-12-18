@@ -51,8 +51,8 @@ class AssetsInstallCommand extends ContainerAwareCommand
         $process->setTimeout(300);
         $process->setWorkingDirectory($bowerFileLocation);
         $output->writeln($formatter->formatSection('Bower', sprintf('Fetching vendors using the <info>%s</info> mode.', $input->getOption('mode'))));
-        $process->run(function($type, $buffer) use ($output, $formatter){
-            if(Process::ERR == $type) {
+        $process->run(function ($type, $buffer) use ($output, $formatter) {
+            if (Process::ERR == $type) {
                 $output->write($formatter->formatBlock($buffer, 'error'));
             } else {
                 $output->write($formatter->formatSection('Bower', $buffer, 'info' ));
@@ -63,7 +63,7 @@ class AssetsInstallCommand extends ContainerAwareCommand
     /**
      * Compute relative path from $bowerFileDirectory to the web directory
      *
-     * @param $bowerFileDirectory
+     * @param string $bowerFileDirectory
      * @return string
      */
     private function computeTargetDirectory($bowerFileDirectory)

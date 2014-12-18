@@ -4,7 +4,6 @@ namespace Admingenerator\GeneratorBundle\Routing;
 
 use Symfony\Component\Config\Loader\FileLoader;
 use Symfony\Component\Config\Resource\FileResource;
-use Symfony\Component\Config\Exception\FileLoaderLoadException;
 use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Finder\Finder;
@@ -153,6 +152,9 @@ class RoutingLoader extends FileLoader
         return 'admingenerator' == $type;
     }
 
+    /**
+     * @return string
+     */
     protected function getControllerFolder($resource)
     {
         preg_match('#.+/.+Bundle/Controller?/(.*?)/?$#', $resource, $matches);
@@ -182,6 +184,9 @@ class RoutingLoader extends FileLoader
         return null;
     }
 
+    /**
+     * @return string
+     */
     protected function getBundleNameFromResource($resource)
     {
         preg_match('#.+/(.+Bundle)/Controller?/(.*?)/?$#', $resource, $matches);
@@ -204,6 +209,9 @@ class RoutingLoader extends FileLoader
         }
     }
 
+    /**
+     * @return string
+     */
     protected function getGeneratorFilePath($resource)
     {
         // Find the *-generator.yml
@@ -219,7 +227,7 @@ class RoutingLoader extends FileLoader
     }
 
     /**
-     * @param $yaml_path string with point for levels
+     * @param string $yaml_path string with point for levels
      */
     public function getFromYaml($yaml_path, $default = null)
     {

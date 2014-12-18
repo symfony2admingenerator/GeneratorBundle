@@ -3,7 +3,6 @@
 namespace Admingenerator\GeneratorBundle\Guesser;
 
 use Admingenerator\GeneratorBundle\Exception\NotImplementedException;
-
 use Doctrine\Common\Util\Inflector;
 use Symfony\Component\DependencyInjection\ContainerAware;
 
@@ -39,10 +38,10 @@ class PropelORMFieldGuesser extends ContainerAware
 
     /**
      * Find out the database type for given model field path.
-     * 
-     * @param  string $model        The starting model.
-     * @param  string $fieldPath    The field path.
-     * @return string               The leaf field's primary key.
+     *
+     * @param  string $model     The starting model.
+     * @param  string $fieldPath The field path.
+     * @return string The leaf field's primary key.
      */
     public function getDbType($model, $fieldPath)
     {
@@ -51,13 +50,13 @@ class PropelORMFieldGuesser extends ContainerAware
         $field = $resolved['field'];
 
         $relation = $this->getRelation($field, $class);
-        
+
         if ($relation) {
             return \RelationMap::MANY_TO_ONE === $relation->getType() ? 'model' : 'collection';
         }
 
         $column = $this->getColumn($class, $field);
-        
+
         return $column ? $column->getType() : 'virtual';
     }
 
@@ -94,7 +93,7 @@ class PropelORMFieldGuesser extends ContainerAware
             \PropelColumnTypes::CLOB,
             \PropelColumnTypes::CLOB_EMU,
         );
-        
+
         $numericTypes = array(
             \PropelColumnTypes::FLOAT,
             \PropelColumnTypes::REAL,
@@ -106,15 +105,15 @@ class PropelORMFieldGuesser extends ContainerAware
             \PropelColumnTypes::BIGINT,
             \PropelColumnTypes::NUMERIC,
         );
-        
+
         if (in_array($dbType, $alphabeticTypes)) {
             return 'alphabetic';
         }
-        
+
         if (in_array($dbType, $numericTypes)) {
             return 'numeric';
         }
-        
+
         return 'default';
     }
 
@@ -122,17 +121,17 @@ class PropelORMFieldGuesser extends ContainerAware
     {
         $config = $this->container->getParameter('admingenerator.propel_form_types');
         $formTypes = array();
-        
+
         foreach ($config as $key => $value) {
             // if config is all uppercase use it to retrieve \PropelColumnTypes
             // constant, otherwise use it literally
             if ($key === strtoupper($key)) {
                 $key = constant('\PropelColumnTypes::'.$key);
             }
-            
+
             $formTypes[$key] = $value;
         }
-        
+
         if (array_key_exists($dbType, $formTypes)) {
             return $formTypes[$dbType];
         } elseif ('virtual' === $dbType) {
@@ -149,22 +148,22 @@ class PropelORMFieldGuesser extends ContainerAware
     {
         $config = $this->container->getParameter('admingenerator.propel_filter_types');
         $filterTypes = array();
-        
+
         foreach ($config as $key => $value) {
             // if config is all uppercase use it to retrieve \PropelColumnTypes
             // constant, otherwise use it literally
             if ($key === strtoupper($key)) {
                 $key = constant('\PropelColumnTypes::'.$key);
             }
-            
+
             $filterTypes[$key] = $value;
         }
-        
+
         if (array_key_exists($dbType, $filterTypes)) {
             return $filterTypes[$dbType];
         } elseif ('virtual' === $dbType) {
             return 'virtual_filter';
-        }  else {
+        } else {
            throw new NotImplementedException(
                'The dbType "'.$dbType.'" is not yet implemented '
                .'(column "'.$columnName.'" in "'.self::$current_class.'")'
@@ -236,7 +235,7 @@ class PropelORMFieldGuesser extends ContainerAware
         if (!$this->guessRequired) {
             return $this->defaultRequired;
         }
-        
+
         $column = $this->getColumn(self::$current_class, $fieldName);
 
         return $column ? $column->isNotNull() : false;
@@ -334,10 +333,10 @@ class PropelORMFieldGuesser extends ContainerAware
 
     /**
      * Find out the primary key for given model field path.
-     * 
-     * @param  string $model        The starting model.
-     * @param  string $fieldPath    The field path.
-     * @return string               The leaf field's primary key.
+     *
+     * @param  string $model     The starting model.
+     * @param  string $fieldPath The field path.
+     * @return string The leaf field's primary key.
      */
     public function getPrimaryKeyFor($model, $fieldPath)
     {
@@ -347,6 +346,7 @@ class PropelORMFieldGuesser extends ContainerAware
 
         if (!$relation = $this->getRelation($field, $class)) {
             $class = $relation->getName();
+
             return $this->getModelPrimaryKeyName($class);
         } else {
             // if the leaf node is not an association
@@ -356,10 +356,10 @@ class PropelORMFieldGuesser extends ContainerAware
 
     /**
      * Resolve field path for given model to class and field name.
-     * 
-     * @param  string $model        The starting model.
-     * @param  string $fieldPath    The field path.
-     * @return array                An array containing field and class information.
+     *
+     * @param  string $model     The starting model.
+     * @param  string $fieldPath The field path.
+     * @return array  An array containing field and class information.
      */
     private function resolveRelatedField($model, $fieldPath)
     {
@@ -374,7 +374,7 @@ class PropelORMFieldGuesser extends ContainerAware
 
             $class = $relation->getName();
         }
-        
+
         return array(
             'field' => $field,
             'class' => $class

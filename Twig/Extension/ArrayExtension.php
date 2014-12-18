@@ -2,7 +2,6 @@
 
 namespace Admingenerator\GeneratorBundle\Twig\Extension;
 
-
 /**
  * @author Piotr Gołębiewski <loostro@gmail.com>
  * @author Stéphane Escandell
@@ -25,15 +24,15 @@ class ArrayExtension extends \Twig_Extension
      * Map collection by key. For objects, return the property, use
      * get method or is method, if avaliable.
      *
-     * @param  array  $input Array of arrays or objects.
-     * @param  string $key   Key to map by.
+     * @param  array                     $input Array of arrays or objects.
+     * @param  string                    $key   Key to map by.
      * @throws \InvalidArgumentException If array item is not an array or object.
-     * @throws \LogicException If array item could not be mapped by given key.
-     * @return array Mapped array.
+     * @throws \LogicException           If array item could not be mapped by given key.
+     * @return array                     Mapped array.
      */
     public function mapBy(array $input, $key)
     {
-        return array_map(function($item) use ($key) {
+        return array_map(function ($item) use ($key) {
             if (is_array($item)) {
                 if (!array_key_exists($key, $item)) {
                     throw new \LogicException("Could not map item by key \"$key\". Array key does not exist.");
@@ -82,6 +81,7 @@ class ArrayExtension extends \Twig_Extension
         $it = new \RecursiveIteratorIterator(
             new \RecursiveArrayIterator($input)
         );
+
         return iterator_to_array($it, false);
     }
 
