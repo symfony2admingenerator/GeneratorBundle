@@ -397,6 +397,7 @@ class Generator extends TwigGeneratorGenerator
 
     public function getDefaultActionAfterSave()
     {
-        return $this->getContainer()->getParameter('admingenerator.default_action_after_save');
+        return $this->getContainer()
+            ->getParameter('admingenerator.default_action_after_save');
     }
 }
