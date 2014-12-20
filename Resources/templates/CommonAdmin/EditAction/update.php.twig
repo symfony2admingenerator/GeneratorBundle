@@ -32,11 +32,20 @@
 
                 $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans("{{ messages.success|default("action.object.edit.success") }}", array(), 'Admingenerator') );
 
-                if ($this->get('request')->request->has('save-and-add')) {
+                {% set defaultActionAfterSave = builder.getDefaultActionAfterSave %}
+                $actionAfterSave = "{{ actionAfterSave|default(defaultActionAfterSave) }}";
+                if ($this->get('request')->request->has('save-and-add') || in_array($actionAfterSave,array('add','new'))) {
                     return new RedirectResponse($this->getNewUrl());
-                } else if ($this->get('request')->request->has('save-and-list')) {
+                } else if ($this->get('request')->request->has('save-and-list') || ('list' == $actionAfterSave)) {
                     return new RedirectResponse($this->getListUrl());
+                } else if ($this->get('request')->request->has('save-and-show') || ('show' == $actionAfterSave)) {
+                    return new RedirectResponse($this->getShowUrl($pk));
                 } else {
+                    if (('edit' != $actionAfterSave) && 
+                        method_exists($this,'get{{ builder.actionAfterSave|default(defaultActionAfterSave)|title }}Url')) {
+                        return new RedirectResponse(call_user_func(array($this, 'get{{ builder.actionAfterSave|default(defaultActionAfterSave)|title }}Url'), $pk));
+
+                    }
                     return new RedirectResponse($this->getEditUrl($pk));
                 }
             {% if concurrency_lock -%}
