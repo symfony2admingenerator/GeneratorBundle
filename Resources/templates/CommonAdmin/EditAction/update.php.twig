@@ -34,7 +34,7 @@
 
                 {% set defaultActionAfterSave = builder.getDefaultActionAfterSave %}
                 $actionAfterSave = "{{ actionAfterSave|default(defaultActionAfterSave) }}";
-                if ($this->get('request')->request->has('save-and-add') || in_array($actionAfterSave,array('add','new'))) {
+                if ($this->get('request')->request->has('save-and-add') || ('new' == $actionAfterSave)) {
                     return new RedirectResponse($this->getNewUrl());
                 } else if ($this->get('request')->request->has('save-and-list') || ('list' == $actionAfterSave)) {
                     return new RedirectResponse($this->getListUrl());
