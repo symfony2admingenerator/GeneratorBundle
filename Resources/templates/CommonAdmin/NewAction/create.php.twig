@@ -24,7 +24,7 @@
                 {% set defaultActionAfterSave = builder.getDefaultActionAfterSave %}
                 $actionAfterSave = "{{ actionAfterSave|default(defaultActionAfterSave) }}";
                 $pk = ${{ builder.ModelClass }}->get{{ builder.getFieldGuesser().getModelPrimaryKeyName(model)|classify }}();
-                if ($this->get('request')->request->has('save-and-add') || ('new' = $actionAfterSave)) {
+                if ($this->get('request')->request->has('save-and-add') || ('new' == $actionAfterSave)) {
                     return new RedirectResponse($this->getNewUrl());
                 } else if ($this->get('request')->request->has('save-and-list') || ('list' == $actionAfterSave)) {
                     return new RedirectResponse($this->getListUrl());
