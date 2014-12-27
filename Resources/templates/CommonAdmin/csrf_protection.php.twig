@@ -27,6 +27,6 @@ $this->isGeneratedCsrfTokenValid($intention);
 
 {% block csrf_action_check_batch_token %}
 // Check CSRF token for batch action
-$intention = '{{ namespace_prefix }}_{{ bundle_name ~ (builder.BaseGeneratorName ? '_' ~ builder.BaseGeneratorName :'')}}_batch';
+$intention = '{{ builder.routePrefixWithSubfolder }}_{{ bundle_name ~ (builder.BaseGeneratorName ? '_' ~ builder.BaseGeneratorName :'')}}_batch';
 $this->isGeneratedCsrfTokenValid($intention);
 {% endblock %}
