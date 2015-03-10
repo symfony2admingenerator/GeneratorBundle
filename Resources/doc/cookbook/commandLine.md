@@ -5,33 +5,25 @@
 
 [back-to-index]: https://github.com/symfony2admingenerator/AdmingeneratorGeneratorBundle/blob/master/Resources/doc/documentation.md#7-cookbook
 
-There are two ways to create an admin using console.
+This bundle sole purpose is to speed up the process of generateing a fully featured backend for your models.
+To get you start, use one of the following commands, depending on wheather your model already exists:
 
-## 1. Add an admin on an existing bundle
+## 1. Generate admin in an existing bundle
 
-Imagine you created a bundle before, using symfony standard commands.
-
-[(how to create a bundle?)][symfony-1]
-
-[symfony-1]: http://symfony.com/doc/2.0/book/page_creation.html
-
-now you should generate an admin for this bundle.
-use this command to generate an admin on an existing bundle :
+If you have already [created][symfony-1] a bundle and added some models, use this command:
 
 ``` bash
 $ php app/console admin:generate-admin
 ```
 
-Answer all questions step by step and admingenerator will generate your admin according to your answers.
+The interactive dialog will guide you step-by-step. Anwser all questions and confirm generation.
 
-##### here is an example:
+## 2. Generate a bundle and admin
 
-![i18n 
-form](https://raw.github.com/symfony2admingenerator/AdmingeneratorGeneratorBundle/master/Resources/doc/cookbook/images/console-example.png))
+To generate the whole bundle structure along with admin use command:
 
+``` bash
+$ php app/console admin:generate-bundle
+```
 
-Now you have your admin.
-
-## 2. Generating a bundle using admingenerator
-
-(writing ...)
+The interactive dialog will guide you step-by-step. Anwser all questions and confirm generation.
