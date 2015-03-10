@@ -22,6 +22,7 @@ abstract class BaseBuilder extends GenericBaseBuilder
         $this->variables = new ParameterBag(array());
         $this->twigFilters[] = '\\Doctrine\\Common\\Util\\Inflector::classify';
         $this->twigExtensions[] = '\\Admingenerator\\GeneratorBundle\\Twig\\Extension\\EchoExtension';
+        $this->twigExtensions[] = '\\Admingenerator\\GeneratorBundle\\Twig\\Extension\\ArrayExtension';
     }
 
     /**
