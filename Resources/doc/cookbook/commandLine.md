@@ -5,8 +5,8 @@
 
 [back-to-index]: https://github.com/symfony2admingenerator/AdmingeneratorGeneratorBundle/blob/master/Resources/doc/documentation.md#7-cookbook
 
-This bundle sole purpose is to speed up the process of generateing a fully featured backend for your models.
-To get you start, use one of the following commands, depending on wheather your model already exists:
+This bundle sole purpose is to speed up the process of generating a fully featured backend for your models.
+To get you started, use one of the following commands, depending on whether your model already exists:
 
 ## 1. Generate admin in an existing bundle
 
