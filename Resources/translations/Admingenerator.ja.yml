@@ -37,6 +37,7 @@ profile:
     login:    ログイン
     logout:   ログアウト
     exit:     偽装モードを終了
+    unauthenticated: ログインしていません
 
 # Generic actions
 action.generic:

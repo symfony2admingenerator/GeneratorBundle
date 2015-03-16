@@ -29,6 +29,7 @@ profile:
     login:    Giriş
     logout:   Çıkış
     exit:     Kimliğe bürünme modundan çıkın
+    unauthenticated: Oturum açık değil
 
 # Generic actions
 action.generic:

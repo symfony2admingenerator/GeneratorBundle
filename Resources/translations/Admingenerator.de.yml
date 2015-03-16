@@ -37,6 +37,7 @@ profile:
     login:    Anmelden
     logout:   Abmelden
     exit:     Identitätswechselmodus verlassen
+    unauthenticated: Nicht angemeldet
 
 # Generic actions
 action.generic:

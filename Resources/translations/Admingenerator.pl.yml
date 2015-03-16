@@ -37,6 +37,7 @@ profile:
     login:    Zaloguj
     logout:   Wyloguj
     exit:     Wyjście z trybu personifikacji
+    unauthenticated: Niezalogowany
 
 # Generic actions
 action.generic:

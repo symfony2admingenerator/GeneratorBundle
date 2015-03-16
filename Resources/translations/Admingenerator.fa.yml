@@ -37,6 +37,7 @@ profile:
     login:    ورود
     logout:   خروج
     exit:     خروج از حالت جعل هویت
+    unauthenticated: عضو وارد نشده اید
 
 # Generic actions
 action.generic:
