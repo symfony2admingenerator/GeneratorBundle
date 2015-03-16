@@ -37,6 +37,7 @@ profile:
     login:    Inloggen
     logout:   Uitloggen
     exit:     Verlaat impersonatie mode
+    unauthenticated: Niet ingelogd
 
 # Generic actions
 action.generic:

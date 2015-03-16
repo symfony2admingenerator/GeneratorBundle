@@ -37,6 +37,7 @@ profile:
     login:    Intrare
     logout:   Iesire
     exit:     Ieșiți din personificare a regimului
+    unauthenticated: Nu autentificat
 
 # Generic actions
 action.generic:

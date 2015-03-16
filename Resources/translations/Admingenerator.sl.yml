@@ -37,6 +37,7 @@ profile:
     login:    Prijava
     logout:   Odjava
     exit:     Izhod iz lažnem
+    unauthenticated: Ni prijavljen
 
 # Generic actions
 action.generic:

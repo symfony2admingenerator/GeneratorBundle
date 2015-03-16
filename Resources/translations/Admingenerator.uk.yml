@@ -36,6 +36,7 @@ profile:
     login:    Увійти
     logout:   Вийти
     exit:     Вихід уособлення режиму
+    unauthenticated: Ви не увійшли в
 
 # Generic actions
 action.generic:

@@ -37,6 +37,7 @@ profile:
     login:    Login
     logout:   Log out
     exit:     Exit impersonation mode
+    unauthenticated: Unauthenticated
 
 # Generic actions
 action.generic:

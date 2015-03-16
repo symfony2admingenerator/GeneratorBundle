@@ -37,6 +37,7 @@ profile:
     login:    Войти
     logout:   Выйти
     exit:     Выход из режима подмены
+    unauthenticated: Вы не вошли в
 
 # Generic actions
 action.generic:

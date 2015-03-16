@@ -37,6 +37,7 @@ profile:
     login:    Iniciar sessão
     logout:   Sair
     exit:     Sair do modo de representação
+    unauthenticated: Não está logado
 
 # Generic actions
 action.generic:

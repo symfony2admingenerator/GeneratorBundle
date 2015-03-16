@@ -37,6 +37,7 @@ profile:
     login:    Connexion
     logout:   Déconnexion
     exit:     Revenir sur mon compte
+    unauthenticated: Non connecté
 
 # Generic actions
 action.generic:

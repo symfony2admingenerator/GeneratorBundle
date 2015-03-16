@@ -38,6 +38,7 @@ profile:
     login:    Iniciar sesión
     logout:   Cerrar sesión
     exit:     Salga del modo de suplantación
+    unauthenticated: No ha iniciado sesión
 
 # Generic actions
 action.generic:

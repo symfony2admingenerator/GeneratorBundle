@@ -37,6 +37,7 @@ profile:
     login:    Σύνδεση
     logout:   Αποσύνδεση
     exit:     Έξοδο απο λειτουργία εκπροσώπησης
+    unauthenticated: δεν έχετε συνδεθεί
 
 # Generic actions
 action.generic:
