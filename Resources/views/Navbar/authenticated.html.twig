@@ -1,7 +1,7 @@
 {% block navbar_profile_authenticated_user_header%}
     <li class="user-header bg-light-blue">
         {% block navbar_profile_authenticated_user_header_inner %}
-            <img src="{% block navbar_profile_avatar_path asset('bundles/admingeneratorgenerator/img/unauthenticated.png') %}" class="img-circle" alt="Authenticated user" />
+            <img src="{% include "AdmingeneratorGeneratorBundle:Navbar:avatar_source.html.twig" %}" class="img-circle" alt="Authenticated user" />
             <p>
                 {{ app.user }}
             </p>
