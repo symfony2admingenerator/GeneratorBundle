@@ -8,7 +8,7 @@
 To customize the avatars simply create directories:
 
 * `app/Resources/AdmingeneratorGeneratorBundle/views/Navbar`
-* `app/Resources/AdmingeneratorGeneratorBundle/views/Sidebar`\
+* `app/Resources/AdmingeneratorGeneratorBundle/views/Sidebar`
 
 And create `avatar_source.html.twig` files in each directory.
 
