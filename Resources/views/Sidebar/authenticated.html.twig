@@ -1,6 +1,6 @@
 <div class="user-panel">
     <div class="pull-left image">
-        <img src="{{ asset('bundles/admingenerator/img/avatar5.png') }}" class="img-circle" alt="Authenticated user" />
+        <img src="{% block sidebar_profile_avatar_path asset('bundles/admingeneratorgenerator/img/unauthenticated.png') %}" class="img-circle" alt="Authenticated user" />
     </div>
     <div class="pull-left info">
         <p>{{ app.user }}</p>
