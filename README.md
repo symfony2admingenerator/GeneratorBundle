@@ -74,7 +74,7 @@ By default, this Bundle uses the [AdminLTE](http://almsaeedstudio.com/AdminLTE/)
 
 ![Preview of edit](https://github.com/symfony2admingenerator/GeneratorBundle/raw/master/Resources/preview/edit-preview.png)
 
-# Important note
+# Important notes
 
 Documentation is currently being rewritten. Old documentation can be found in:
 
