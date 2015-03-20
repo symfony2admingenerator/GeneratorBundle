@@ -17,3 +17,11 @@ script: phpunit --coverage-clover=coverage.clover
 after_script:
   - wget https://scrutinizer-ci.com/ocular.phar
   - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
+
+notifications:
+  webhooks:
+    urls:
+      - https://webhooks.gitter.im/e/64a455d3354c06acfc92
+    on_success: change
+    on_failure: always
+    on_start: false
