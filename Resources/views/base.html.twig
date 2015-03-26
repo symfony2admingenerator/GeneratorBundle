@@ -16,9 +16,16 @@
 
 {% block scripts_head %}
     {% javascripts package='admingenerator_js' filter='?uglifyjs2'
+    output='assetic/js/compiled/jquery.min.js'
+        'admin/components/jquery/dist/jquery.js'
+    %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+    {% javascripts package='admingenerator_js' filter='?uglifyjs2'
     output='assetic/js/compiled/ie9.min.js'
-        'admin/components/html5shiv/dist/html5shiv.min.js'
-        'admin/components/respond/dest/respond.min.js'
+        'admin/components/html5shiv/dist/html5shiv.js'
+        'admin/components/respond/dest/respond.src.js'
     %}
     <!--[if lt IE 9]>
         <script type="text/javascript" src="{{ asset_url }}"></script>
