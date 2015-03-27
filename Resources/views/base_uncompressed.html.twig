@@ -50,52 +50,50 @@
     <body class="skin-blue sidebar-mini">
 {% endblock html_body_tag %}
 
-{% block html_tag_wrapper %}
-    <div class="wrapper">
-{% endblock html_tag_wrapper %}
-
 {% block body_content %}
+    {% block html_tag_wrapper %}
+        <div class="wrapper">
+    {% endblock html_tag_wrapper %}
 
-{% block header %}
-    {% include 'AdmingeneratorGeneratorBundle::header.html.twig' %}
-{% endblock header%}
+    {% block wrapper_content %}
+        {% block header %}
+            {% include 'AdmingeneratorGeneratorBundle::header.html.twig' %}
+        {% endblock header%}
 
-{% block content %}
-    {% block sidebar %}
-        <aside class="main-sidebar sidebar-offcanvas">
-            {% include "AdmingeneratorGeneratorBundle:Sidebar:layout.html.twig" %}
-        </aside>
-    {% endblock sidebar %}
+        {% block sidebar %}
+            <aside class="main-sidebar sidebar-offcanvas">
+                {% include "AdmingeneratorGeneratorBundle:Sidebar:layout.html.twig" %}
+            </aside>
+        {% endblock sidebar %}
 
-    {% block page %}
-        <aside class="content-wrapper">
-            {% block page_header %}
-            <section class="content-header">
-                {% block page_header_content '' %}
-            </section>
-            {% endblock page_header %}
-            <section class="content">
-                {{ block('flash_messages') }}
-                {% block page_content '' %}
-            </section>
-        </aside>
-    {% endblock page %}
+        {% block page %}
+            <aside class="content-wrapper">
+                {% block page_header %}
+                <section class="content-header">
+                    {% block page_header_content '' %}
+                </section>
+                {% endblock page_header %}
+                <section class="content">
+                    {{ block('flash_messages') }}
+                    {% block page_content '' %}
+                </section>
+            </aside>
+        {% endblock page %}
+    {% endblock wrapper_content %}
 
-{% endblock wrapper_content %}
+        {# Wrapper end #}
+        </div>
 
-    {# Wrapper end #}
-    </div>
-
-{% block javascripts %}
-    <script src="{{ asset("admin/components/bootstrap/dist/js/bootstrap.min.js") }}" type="text/javascript"></script>
-    <script src="{{ asset("admin/components/iCheck/icheck.min.js") }}" type="text/javascript"></script>
-    <script src="{{ asset("admin/components/slimScroll/jquery.slimscroll.min.js") }}" type="text/javascript"></script>
-    <script src="{{ asset("admin/components/jquery-resize/jquery.ba-resize.min.js") }}" type="text/javascript"></script>
-    <script src="{{ asset("admin/components/jquery-treetable/jquery.treetable.js") }}" type="text/javascript"></script>
-{#<script src="{{ asset("bundles/admingeneratorgenerator/js/adminlte.js") }}" type="text/javascript"></script>#}
-    <script src="{{ asset("/admin/components/admin-lte/dist/js/app.js") }}" type="text/javascript"></script>
-    <script src="{{ asset("bundles/admingeneratorgenerator/js/main.js") }}" type="text/javascript"></script>
-{% endblock %}
+    {% block javascripts %}
+        <script src="{{ asset("admin/components/bootstrap/dist/js/bootstrap.min.js") }}" type="text/javascript"></script>
+        <script src="{{ asset("admin/components/iCheck/icheck.min.js") }}" type="text/javascript"></script>
+        <script src="{{ asset("admin/components/slimScroll/jquery.slimscroll.min.js") }}" type="text/javascript"></script>
+        <script src="{{ asset("admin/components/jquery-resize/jquery.ba-resize.min.js") }}" type="text/javascript"></script>
+        <script src="{{ asset("admin/components/jquery-treetable/jquery.treetable.js") }}" type="text/javascript"></script>
+    {#<script src="{{ asset("bundles/admingeneratorgenerator/js/adminlte.js") }}" type="text/javascript"></script>#}
+        <script src="{{ asset("/admin/components/admin-lte/dist/js/app.js") }}" type="text/javascript"></script>
+        <script src="{{ asset("bundles/admingeneratorgenerator/js/main.js") }}" type="text/javascript"></script>
+    {% endblock %}
 
 {% endblock body_content %}
 </body>
