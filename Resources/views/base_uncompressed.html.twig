@@ -17,7 +17,7 @@
     {# Admin LTE #}
     <link rel="stylesheet" href="{{ asset('admin/components/admin-lte/dist/css/AdminLTE.css') }}" type="text/css" media="all"/>
     <link rel="stylesheet" href="{{ asset('admin/components/admin-lte/dist/css/skins/_all-skins.css') }}" type="text/css" media="all"/>
-    <link href="http://code.ionicframework.com/ionicons/2.0.0/css/ionicons.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="{{ asset('admin/components/ionicons/css/ionicons.css') }}" type="text/css" media="all"/>
 
     <link rel="stylesheet" href="{{ asset('bundles/admingeneratorgenerator/css/main.css') }}" type="text/css" media="all"/>
     {% endblock %}
@@ -36,10 +36,10 @@
     {% endblock %}
 
     {% block javascripts_head %}
-        <script src="{{ asset("admin/components/jquery/dist/jquery.min.js") }}" type="text/javascript"></script>
+        <script src="{{ asset("admin/components/jquery/dist/jquery.js") }}" type="text/javascript"></script>
         <!--[if lt IE 9]>
-        <script src="{{ asset('admin/components/html5shiv/dist/html5shiv.min.js') }}"></script>
-        <script src="{{ asset('admin/components/respond/dest/respond.min.js') }}"></script>
+        <script src="{{ asset('admin/components/html5shiv/dist/html5shiv.js') }}"></script>
+        <script src="{{ asset('admin/components/respond/dest/respond.js') }}"></script>
         <![endif]-->
     {% endblock javascripts_head %}
     {% endblock head_content %}
@@ -85,12 +85,11 @@
         </div>
 
     {% block javascripts %}
-        <script src="{{ asset("admin/components/bootstrap/dist/js/bootstrap.min.js") }}" type="text/javascript"></script>
-        <script src="{{ asset("admin/components/iCheck/icheck.min.js") }}" type="text/javascript"></script>
-        <script src="{{ asset("admin/components/slimScroll/jquery.slimscroll.min.js") }}" type="text/javascript"></script>
-        <script src="{{ asset("admin/components/jquery-resize/jquery.ba-resize.min.js") }}" type="text/javascript"></script>
+        <script src="{{ asset("admin/components/bootstrap/dist/js/bootstrap.js") }}" type="text/javascript"></script>
+        <script src="{{ asset("admin/components/iCheck/icheck.js") }}" type="text/javascript"></script>
+        <script src="{{ asset("admin/components/slimScroll/jquery.slimscroll.js") }}" type="text/javascript"></script>
+        <script src="{{ asset("admin/components/jquery-resize/jquery.ba-resize.js") }}" type="text/javascript"></script>
         <script src="{{ asset("admin/components/jquery-treetable/jquery.treetable.js") }}" type="text/javascript"></script>
-    {#<script src="{{ asset("bundles/admingeneratorgenerator/js/adminlte.js") }}" type="text/javascript"></script>#}
         <script src="{{ asset("/admin/components/admin-lte/dist/js/app.js") }}" type="text/javascript"></script>
         <script src="{{ asset("bundles/admingeneratorgenerator/js/main.js") }}" type="text/javascript"></script>
     {% endblock %}
