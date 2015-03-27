@@ -8,85 +8,94 @@
         <title>{% block title %}Admin{% endblock %}</title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
 
-        {% block stylesheets %}
-            <link rel="stylesheet" href="{{ asset('admin/components/bootstrap/dist/css/bootstrap.min.css') }}" type="text/css" media="all"/>
-            <link rel="stylesheet" href="{{ asset('admin/components/font-awesome/css/font-awesome.min.css') }}" type="text/css" media="all"/>
-            <link rel="stylesheet" href="{{ asset('admin/components/iCheck/skins/minimal/_all.css') }}" type="text/css" media="all"/>
-            <link rel="stylesheet" href="{{ asset('admin/components/jquery-treetable/css/jquery.treetable.css') }}" type="text/css" media="all"/>
-            <link rel="stylesheet" href="{{ asset('admin/components/adminlte/css/AdminLTE.css') }}" type="text/css" media="all"/>
-            <link rel="stylesheet" href="{{ asset('bundles/admingeneratorgenerator/css/main.css') }}" type="text/css" media="all"/>
-        {% endblock %}
+    {% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('admin/components/bootstrap/dist/css/bootstrap.min.css') }}" type="text/css" media="all"/>
+    <link rel="stylesheet" href="{{ asset('admin/components/font-awesome/css/font-awesome.min.css') }}" type="text/css" media="all"/>
+    <link rel="stylesheet" href="{{ asset('admin/components/iCheck/skins/minimal/_all.css') }}" type="text/css" media="all"/>
+    <link rel="stylesheet" href="{{ asset('admin/components/jquery-treetable/css/jquery.treetable.css') }}" type="text/css" media="all"/>
 
-        {% block icons %}
-            <!-- Favicon and touch icons -->
-            <link rel="shortcut icon" href="{{ asset('bundles/admingeneratorgenerator/ico/favicon.ico') }}">
-            <link rel="apple-touch-icon-precomposed" sizes="144x144"
-                  href="{{ asset('bundles/admingeneratorgenerator/ico/apple-touch-icon-144-precomposed.png') }}">
-            <link rel="apple-touch-icon-precomposed" sizes="114x114"
-                  href="{{ asset('bundles/admingeneratorgenerator/ico/apple-touch-icon-114-precomposed.png') }}">
-            <link rel="apple-touch-icon-precomposed" sizes="72x72"
-                  href="{{ asset('bundles/admingeneratorgenerator/ico/apple-touch-icon-72-precomposed.png') }}">
-            <link rel="apple-touch-icon-precomposed"
-                  href="{{ asset('bundles/admingeneratorgenerator/ico/apple-touch-icon-57-precomposed.png') }}">
-        {% endblock %}
+    {# Admin LTE #}
+    <link rel="stylesheet" href="{{ asset('admin/components/admin-lte/dist/css/AdminLTE.css') }}" type="text/css" media="all"/>
+    <link rel="stylesheet" href="{{ asset('admin/components/admin-lte/dist/css/skins/_all-skins.css') }}" type="text/css" media="all"/>
+    <link href="http://code.ionicframework.com/ionicons/2.0.0/css/ionicons.min.css" rel="stylesheet" type="text/css" />
 
-        {% block javascripts_head %}
-            <script src="{{ asset("admin/components/jquery/dist/jquery.min.js") }}" type="text/javascript"></script>
-            <!--[if lt IE 9]>
-                <script src="{{ asset('admin/components/html5shiv/dist/html5shiv.min.js') }}"></script>
-                <script src="{{ asset('admin/components/respond/dest/respond.min.js') }}"></script>
-            <![endif]-->
-        {% endblock javascripts_head %}
+    <link rel="stylesheet" href="{{ asset('bundles/admingeneratorgenerator/css/main.css') }}" type="text/css" media="all"/>
+    {% endblock %}
+
+    {% block icons %}
+        <!-- Favicon and touch icons -->
+    <link rel="shortcut icon" href="{{ asset('bundles/admingeneratorgenerator/ico/favicon.ico') }}">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144"
+          href="{{ asset('bundles/admingeneratorgenerator/ico/apple-touch-icon-144-precomposed.png') }}">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114"
+          href="{{ asset('bundles/admingeneratorgenerator/ico/apple-touch-icon-114-precomposed.png') }}">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72"
+          href="{{ asset('bundles/admingeneratorgenerator/ico/apple-touch-icon-72-precomposed.png') }}">
+    <link rel="apple-touch-icon-precomposed"
+          href="{{ asset('bundles/admingeneratorgenerator/ico/apple-touch-icon-57-precomposed.png') }}">
+    {% endblock %}
+
+    {% block javascripts_head %}
+        <script src="{{ asset("admin/components/jquery/dist/jquery.min.js") }}" type="text/javascript"></script>
+        <!--[if lt IE 9]>
+        <script src="{{ asset('admin/components/html5shiv/dist/html5shiv.min.js') }}"></script>
+        <script src="{{ asset('admin/components/respond/dest/respond.min.js') }}"></script>
+        <![endif]-->
+    {% endblock javascripts_head %}
     {% endblock head_content %}
 </head>
 
 
 {% block html_body_tag %}
-<body class="skin-blue">
+    <body class="skin-blue sidebar-mini">
 {% endblock html_body_tag %}
+
+{% block html_tag_wrapper %}
+    <div class="wrapper">
+{% endblock html_tag_wrapper %}
+
 {% block body_content %}
 
-    {% block header %}
-        {% include 'AdmingeneratorGeneratorBundle::header.html.twig' %}
-    {% endblock header%}
+{% block header %}
+    {% include 'AdmingeneratorGeneratorBundle::header.html.twig' %}
+{% endblock header%}
 
-    {% block wrapper %}
-        {% block html_tag_wrapper %}
-        <div class="wrapper row-offcanvas row-offcanvas-left">
-        {% endblock html_tag_wrapper %}
-            {% block wrapper_content %}
-                {% block sidebar %}
-                    <aside class="left-side sidebar-offcanvas">
-                        {% include "AdmingeneratorGeneratorBundle:Sidebar:layout.html.twig" %}
-                    </aside>
-                {% endblock sidebar %}
+{% block content %}
+    {% block sidebar %}
+        <aside class="main-sidebar sidebar-offcanvas">
+            {% include "AdmingeneratorGeneratorBundle:Sidebar:layout.html.twig" %}
+        </aside>
+    {% endblock sidebar %}
 
-                {% block page %}
-                    <aside class="right-side">
-                        {% block page_header %}
-                            <section class="content-header">
-                                {% block page_header_content '' %}
-                            </section>
-                        {% endblock page_header %}
-                        <section class="content">
-                            {{ block('flash_messages') }}
-                            {% block page_content '' %}
-                        </section>
-                    </aside>
-                {% endblock page %}
-            {% endblock wrapper_content %}
-        </div>
-    {% endblock wrapper %}
+    {% block page %}
+        <aside class="content-wrapper">
+            {% block page_header %}
+            <section class="content-header">
+                {% block page_header_content '' %}
+            </section>
+            {% endblock page_header %}
+            <section class="content">
+                {{ block('flash_messages') }}
+                {% block page_content '' %}
+            </section>
+        </aside>
+    {% endblock page %}
 
-    {% block javascripts %}
-        <script src="{{ asset("admin/components/bootstrap/dist/js/bootstrap.min.js") }}" type="text/javascript"></script>
-        <script src="{{ asset("admin/components/iCheck/icheck.min.js") }}" type="text/javascript"></script>
-        <script src="{{ asset("admin/components/slimScroll/jquery.slimscroll.min.js") }}" type="text/javascript"></script>
-        <script src="{{ asset("admin/components/jquery-resize/jquery.ba-resize.min.js") }}" type="text/javascript"></script>
-        <script src="{{ asset("admin/components/jquery-treetable/jquery.treetable.js") }}" type="text/javascript"></script>
-        <script src="{{ asset("bundles/admingeneratorgenerator/js/adminlte.js") }}" type="text/javascript"></script>
-        <script src="{{ asset("bundles/admingeneratorgenerator/js/main.js") }}" type="text/javascript"></script>
-    {% endblock %}
+{% endblock wrapper_content %}
+
+    {# Wrapper end #}
+    </div>
+
+{% block javascripts %}
+    <script src="{{ asset("admin/components/bootstrap/dist/js/bootstrap.min.js") }}" type="text/javascript"></script>
+    <script src="{{ asset("admin/components/iCheck/icheck.min.js") }}" type="text/javascript"></script>
+    <script src="{{ asset("admin/components/slimScroll/jquery.slimscroll.min.js") }}" type="text/javascript"></script>
+    <script src="{{ asset("admin/components/jquery-resize/jquery.ba-resize.min.js") }}" type="text/javascript"></script>
+    <script src="{{ asset("admin/components/jquery-treetable/jquery.treetable.js") }}" type="text/javascript"></script>
+{#<script src="{{ asset("bundles/admingeneratorgenerator/js/adminlte.js") }}" type="text/javascript"></script>#}
+    <script src="{{ asset("/admin/components/admin-lte/dist/js/app.js") }}" type="text/javascript"></script>
+    <script src="{{ asset("bundles/admingeneratorgenerator/js/main.js") }}" type="text/javascript"></script>
+{% endblock %}
 
 {% endblock body_content %}
 </body>
