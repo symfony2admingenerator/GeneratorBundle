@@ -13,8 +13,14 @@ use Symfony\Component\Security\Core\SecurityContextInterface;
  */
 abstract class BaseType extends AbstractType
 {
+    /**
+     * @var SecurityContextInterface
+     */
     protected $securityContext;
 
+    /**
+     * @var array
+     */
     protected $groups = array();
 
     public function setSecurityContext(SecurityContextInterface $securityContext)
@@ -42,7 +48,7 @@ abstract class BaseType extends AbstractType
      */
     protected function checkGroups(array $groups)
     {
-        if (count($this->groups) === 0 || count($groups) === 0) {
+        if (count($groups) === 0) {
             return true;
         }
 
@@ -77,16 +83,20 @@ abstract class BaseType extends AbstractType
     {
         $getter = 'get'.ucfirst($name).'Options';
 
-        if ($optionsClass && method_exists($optionsClass, 'setSecurityContext')) {
-            $optionsClass->setSecurityContext($this->securityContext);
+        if ($optionsClass) {
+            if (method_exists($optionsClass, 'setSecurityContext')) {
+                $optionsClass->setSecurityContext($this->securityContext);
+            }
+
+            if (method_exists($optionsClass, $getter)) {
+                // merge options from options class
+                $fieldOptions = $optionsClass->$getter($fieldOptions, $builderOptions);
+            }
         }
 
-        if ($optionsClass && method_exists($this, $getter)) {
+        if (method_exists($this, $getter)) {
             // merge options from form type class
             $fieldOptions = $this->$getter($fieldOptions, $builderOptions);
-        } else if ($optionsClass && method_exists($optionsClass, $getter)) {
-            // merge options from options class
-            $fieldOptions = $optionsClass->$getter($fieldOptions, $builderOptions);
         }
         
         // Pass on securityContext to collection types

@@ -20,6 +20,14 @@
 
         if ($this->getRequest()->getMethod() == "GET") {
             $filters = $this->getRequest()->query->all();
+
+            {% for filter,column in builder.filterColumns %}
+                {% if column.filtersGroups %}
+                    if (isset($filters['{{ column.name }}']) && !$this->checkGroups({{ column.filtersGroups|as_php }})) {
+                        unset($filters['{{ column.name }}']);
+                    }
+                {% endif %}
+            {% endfor %}
         }
 
         if (isset($filters)) {
@@ -32,7 +40,7 @@
     }
 
     {% block setFilters -%}
-    protected function setFilters($filters)
+    protected function setFilters(array $filters)
     {
         $this->get('session')->set($this->getSessionPrefix().'List\Filters', $filters);
     }

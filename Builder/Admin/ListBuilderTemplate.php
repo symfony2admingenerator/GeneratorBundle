@@ -14,6 +14,11 @@ class ListBuilderTemplate extends ListBuilder
     protected $filtersMode = null;
 
     /**
+     * @var string
+     */
+    protected $defaultFiltersVisibility = null;
+
+    /**
      * Retrieve the filters mode parameter defined into the
      * YAML generator file under the list builder
      *
@@ -26,6 +31,15 @@ class ListBuilderTemplate extends ListBuilder
         }
 
         return $this->filtersMode;
+    }
+
+    public function getDefaultFiltersVisibility()
+    {
+        if (null === $this->defaultFiltersVisibility) {
+            $this->defaultFiltersVisibility = $this->getGenerator()->getFromYaml('builders.list.params.defaultFiltersVisibility', 'expanded');
+        }
+
+        return $this->defaultFiltersVisibility;
     }
 
     /**

@@ -12,7 +12,7 @@
         {% for column in builder.columns %}
             {% if column.groups|default is not empty %}
                 {{ echo_set('columnGroups', echo_twig_arr(column.groups), false) }}
-                {{ echo_if('groups is empty or columnGroups|intersect(groups) is not empty') }}
+                {{ echo_if('columnGroups|intersect(groups) is not empty') }}
             {% endif %}
             <td class="list-results-fields-row-{{ column.dbType|lower }} list-results-fields-row-column-{{ column.name|lower }}">
                 {{- block('column_default') -}}

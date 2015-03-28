@@ -5,7 +5,7 @@
 
         {% if fieldsetGroups is not empty %}
             {{ echo_set('fieldsetGroups', echo_twig_arr(fieldsetGroups), false) }}
-            {{ echo_if('groups is empty or fieldsetGroups|intersect(groups) is not empty') }}
+            {{ echo_if('fieldsetGroups|intersect(groups) is not empty') }}
         {% endif %}
 
             {{ echo_block("form_fieldset_" ~ fieldsetName|classify|replace({'.': '_'})) }}
@@ -21,14 +21,14 @@
 
                         {% if rowGroups is not empty %}
                             {{ echo_set('rowGroups', echo_twig_arr(rowGroups), false) }}
-                            {{ echo_if('groups is empty or rowGroups|intersect(groups) is not empty') }}
+                            {{ echo_if('rowGroups|intersect(groups) is not empty') }}
                         {% endif %}
 
                             <div class="row">
                                 {% for column in rowColumns %}
                                     {% if column.groups is not empty %}
                                         {{ echo_set('columnGroups', echo_twig_arr(column.groups), false) }}
-                                        {{ echo_if('groups is empty or columnGroups|intersect(groups) is not empty') }}
+                                        {{ echo_if('columnGroups|intersect(groups) is not empty') }}
                                     {% endif %}
                                         {{ echo_block("form_col_" ~ (column.name|lower)) }}
                                         <div class="{{ rowspan }} form-model-field form-model-field-{{ column.name }} form-model-type-{{ column.formType|lower }}">

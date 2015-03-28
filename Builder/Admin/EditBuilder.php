@@ -7,6 +7,7 @@ namespace Admingenerator\GeneratorBundle\Builder\Admin;
  *
  * @author cedric Lombardot
  * @author Piotr Gołębiewski <loostro@gmail.com>
+ * @author Stéphane Escandell <stephane.escandell@gmail.com>
  */
 class EditBuilder extends BaseBuilder
 {
@@ -17,16 +18,5 @@ class EditBuilder extends BaseBuilder
     public function getYamlKey()
     {
         return 'edit';
-    }
-
-    protected function findColumns()
-    {
-        foreach ($this->getDisplayColumns() as $columnName) {
-            $column = $this->createColumn($columnName, true);
-
-            //Set the user parameters
-            $this->setUserColumnConfiguration($column);
-            $this->addColumn($column);
-        }
     }
 }

@@ -9,8 +9,10 @@ use Pagerfanta\Adapter\PropelAdapter as PagerAdapter;
 
         $this->processQuery($query);
         $this->processSort($query);
-        $this->processFilters($query);
-        $this->processScopes($query);
+
+        $queryFilter = $this->getQueryFilter($query);
+        $this->processFilters($queryFilter);
+        $this->processScopes($queryFilter);
 
         return $query;
     }
@@ -41,38 +43,34 @@ use Pagerfanta\Adapter\PropelAdapter as PagerAdapter;
     {
         $filters = $this->getFilters();
         {# Don't we should handle "relations" for Propel too? #}
-        return $this->createForm($this->getFiltersType(), $this->getFilters());
+        return $this->createForm($this->getFiltersType(), $filters, array_merge(
+            $this->getFiltersOptions(),
+            array('groups' => $this->getGroups())
+        ));
     }
 {% endblock %}
 
 {% block addJoinFor -%}
     protected function addJoinFor($table, $query)
     {
+        {# TODO: Not sure this is the good way to proceed. Shouldn't we use the useXXXXQuery method? #}
         $query->leftJoin($table);
     }
 {% endblock %}
 
 {% block processFilters -%}
-    protected function processFilters($query)
+    protected function processFilters($queryFilter)
     {
         $filterObject = $this->getFilters();
 
-        $queryFilter = $this->getQueryFilter();
-        $queryFilter->setQuery($query);
-
     {% for filter,column in builder.filterColumns %}
         if (isset($filterObject['{{ column.name }}']) && null !== $filterObject['{{ column.name }}']) {
-        {% if column.filterOn|split('.')|length > 1 %}
             $this->filter{{ filter|classify }}($queryFilter, $filterObject['{{ column.name }}']);
-        {% else %}
-            $queryFilter->add{{ column.dbType|lower|classify }}Filter('{{ column.filterOn }}', $filterObject['{{ column.name }}']);
-        {% endif %}
         }
     {% endfor %}
     }
 
     {% for filter,column in builder.filterColumns %}
-    {% if column.filterOn|split('.')|length > 1 %}
     /**
      * Add the filters to the query for {{ filter }}
      *
@@ -81,8 +79,8 @@ use Pagerfanta\Adapter\PropelAdapter as PagerAdapter;
      */
     protected function filter{{ filter|classify }}($queryFilter, $value)
     {
+        $queryFilter->add{{ builder.fieldGuesser().dbType(model, column.filterOn)|lower|classify }}Filter('{{ column.filterOn }}', $filterObject['{{ column.name }}']);
     }
-    {% endif %}
     {% endfor %}
 {% endblock %}
 
@@ -90,8 +88,10 @@ use Pagerfanta\Adapter\PropelAdapter as PagerAdapter;
     /**
      * @return \Admingenerator\GeneratorBundle\QueryFilter\QueryFilterInterface
      */
-    protected function getQueryFilter()
+    protected function getQueryFilter($query)
     {
-        return $this->get('admingenerator.queryfilter.propel');
+        $queryFilterClass = $this->container->getParameter('admingenerator.queryfilter.propel.class');
+
+        return new $queryFilterClass($query);
     }
 {% endblock %}

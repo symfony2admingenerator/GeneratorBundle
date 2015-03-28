@@ -4,22 +4,28 @@ namespace Admingenerator\GeneratorBundle\QueryFilter;
 
 class DoctrineQueryFilter extends BaseQueryFilter
 {
+    protected $joins = array();
+
     public function addDefaultFilter($field, $value)
     {
+        list($tableAlias, $filteredField) = $this->addTablePathToField($field);
+
         if (!is_array($value)) {
-            $this->query->andWhere(sprintf('q.%s = :%s',$field, $field));
-            $this->query->setParameter($field, $value);
+            $this->query->andWhere(sprintf('%s.%s = :%s', $tableAlias, $filteredField, $tableAlias.'_'.$filteredField));
+            $this->query->setParameter($tableAlias.'_'.$filteredField, $value);
         } elseif (count($value) > 0) {
-            $this->query->andWhere(sprintf('q.%s IN (:%s)',$field, $field ));
-            $this->query->setParameter($field , $value);
+            $this->query->andWhere(sprintf('%s.%s IN (:%s)', $tableAlias, $filteredField, $tableAlias.'_'.$filteredField));
+            $this->query->setParameter($tableAlias.'_'.$filteredField , $value);
         }
     }
 
     public function addBooleanFilter($field, $value)
     {
         if ("" !== $value) {
-            $this->query->andWhere(sprintf('q.%s = :%s',$field, $field));
-            $this->query->setParameter($field, !!$value);
+            list($tableAlias, $filteredField) = $this->addTablePathToField($field);
+
+            $this->query->andWhere(sprintf('%s.%s = :%s', $tableAlias, $filteredField, $tableAlias.'_'.$filteredField));
+            $this->query->setParameter($tableAlias.'_'.$filteredField, !!$value);
         }
     }
 
@@ -29,8 +35,10 @@ class DoctrineQueryFilter extends BaseQueryFilter
      */
     public function addStringFilter($field, $value)
     {
-        $this->query->andWhere(sprintf('q.%s LIKE :%s',$field, $field));
-        $this->query->setParameter($field, '%'.$value.'%');
+        list($tableAlias, $filteredField) = $this->addTablePathToField($field);
+
+        $this->query->andWhere(sprintf('%s.%s LIKE :%s', $tableAlias, $filteredField, $tableAlias.'_'.$filteredField));
+        $this->query->setParameter($tableAlias.'_'.$filteredField, '%'.$value.'%');
     }
 
     /**
@@ -44,45 +52,41 @@ class DoctrineQueryFilter extends BaseQueryFilter
 
     public function addCollectionFilter($field, $value)
     {
+        list($tableAlias, $filteredField) = $this->addTablePathToField($field);
+
         if (!is_array($value)) {
             $value = array($value->getId());
         }
 
-        if (strstr($field, '.')) {
-            list($table, $field) = explode('.', $field);
-        } else {
-            $table = $field;
-            $field = 'id';
-        }
-
-        $this->query->leftJoin('q.'.$table, $table);
         $this->query->groupBy('q');
-        $this->query->andWhere(sprintf('%s.%s IN (:%s)',$table, $field, $table.'_'.$field));
-        $this->query->setParameter($table.'_'.$field, $value);
+        $this->query->andWhere(sprintf('%s.%s IN (:%s)', $tableAlias, $filteredField, $tableAlias.'_'.$filteredField));
+        $this->query->setParameter($tableAlias.'_'.$filteredField, $value);
 
     }
 
     public function addDateFilter($field, $value, $format = 'Y-m-d')
     {
+        list($tableAlias, $filteredField) = $this->addTablePathToField($field);
+
         if (is_array($value)) {
             if (array_key_exists('from', $value)) {
                 if (false !== $from = $this->formatDate($value['from'], $format)) {
-                    $this->query->andWhere(sprintf('q.%s >= :%s_from',$field, $field ));
-                    $this->query->setParameter($field.'_from' , $from);
+                    $this->query->andWhere(sprintf('%s.%s >= :%s_from', $tableAlias, $filteredField, $tableAlias.'_'.$filteredField));
+                    $this->query->setParameter($tableAlias.'_'.$filteredField.'_from' , $from);
                 }
             }
 
             if (array_key_exists('to', $value)) {
                 if (false !== $to = $this->formatDate($value['to'], $format)) {
-                    $this->query->andWhere(sprintf('q.%s <= :%s_to',$field, $field ));
-                    $this->query->setParameter($field.'_to' , $to);
+                    $this->query->andWhere(sprintf('%s.%s <= :%s_to',$tableAlias, $filteredField, $tableAlias.'_'.$filteredField));
+                    $this->query->setParameter($tableAlias.'_'.$filteredField.'_to' , $to);
                 }
             }
 
         } else {
             if (false !== $date = $this->formatDate($value, $format)) {
-                $this->query->andWhere(sprintf('q.%s = :%s',$field, $field ));
-                $this->query->setParameter($field, $date);
+                $this->query->andWhere(sprintf('s.%s = :%s', $tableAlias, $filteredField, $tableAlias.'_'.$filteredField));
+                $this->query->setParameter($tableAlias.'_'.$filteredField, $date);
             }
         }
     }
@@ -94,11 +98,37 @@ class DoctrineQueryFilter extends BaseQueryFilter
 
     public function addNullFilter($field, $value = null)
     {
-        $this->query->andWhere(sprintf('q.%s IS NULL', $field));
+        list($tableAlias, $filteredField) = $this->addTablePathToField($field);
+
+        $this->query->andWhere(sprintf('%s.%s IS NULL', $tableAlias, $filteredField));
     }
 
     public function addNotNullFilter($field, $value = null)
     {
-        $this->query->andWhere(sprintf('q.%s IS NOT NULL', $field));
+        list($tableAlias, $filteredField) = $this->addTablePathToField($field);
+
+        $this->query->andWhere(sprintf('%s.%s IS NOT NULL', $tableAlias, $filteredField));
+    }
+
+    protected function addTablePathToField($field)
+    {
+        if (!strpos($field, '.')) {
+            return array('q', $field);
+        }
+
+        $fieldParts = explode('.', $field);
+        $filteredField = array_pop($fieldParts);
+        $parentTableAlias = 'q';
+
+        foreach ($fieldParts as $field) {
+            $joinAlias = $field . '_table_filter_join';
+            if (!in_array($joinAlias, $this->joins)) {
+                $this->query->join($parentTableAlias . '.' . $field, $joinAlias);
+                $this->joins[] = $joinAlias;
+            }
+            $parentTableAlias = $joinAlias;
+        }
+
+        return array($parentTableAlias, $filteredField);
     }
 }

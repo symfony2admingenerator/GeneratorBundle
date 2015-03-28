@@ -32,10 +32,6 @@
             </call>
         </service>
 
-        <service id="admingenerator.queryfilter.propel"
-            class="%admingenerator.queryfilter.propel.class%">
-        </service>
-
         <service id="admingenerator.sessionserializer.propel" class="%admingenerator.sessionserializer.propel.class%">
         </service>
         

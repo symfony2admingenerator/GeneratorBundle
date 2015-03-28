@@ -141,7 +141,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
                     'bigint' => 'number',
                     'smallint' => 'number',
                     'string' => 'text',
-                    'entity' => 'model',
+                    'entity' => 'entity',
                     'array' => 'text',
                 ),
                 'doctrine_odm' => array(

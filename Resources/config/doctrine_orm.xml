@@ -33,10 +33,6 @@
             </call>
         </service>
 
-        <service id="admingenerator.queryfilter.doctrine"
-            class="%admingenerator.queryfilter.doctrine.class%">
-        </service>
-
         <service id="admingenerator.sessionserializer.doctrine" class="%admingenerator.sessionserializer.doctrine.class%">
             <argument type="service" id="doctrine"></argument>
         </service>

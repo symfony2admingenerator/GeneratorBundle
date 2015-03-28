@@ -33,7 +33,7 @@
     {{ echo_block('list_thead_column_' ~ (column.name|lower)) -}}
     {% if column.groups|default is not empty %}
         {{ echo_set('columnGroups', echo_twig_arr(column.groups), false) }}
-        {{ echo_if('groups is empty or columnGroups|intersect(groups) is not empty') }}
+        {{ echo_if('columnGroups|intersect(groups) is not empty') }}
     {% endif %}
     <th class="list-results-fields-header-column list-results-fields-header-column-{{ column.name|lower  }}{{ echo_if (column.isSortable) }} sorting{{ echo_if ("sortColumn == '" ~ column.sortOn ~ "' and sortOrder == 'ASC'") }}_asc{{ echo_elseif ("sortColumn == '" ~ column.sortOn ~ "' and sortOrder == 'DESC'") }}_desc{{ echo_endif () }}{{ echo_endif () }}">
         {% if column.isSortable -%}

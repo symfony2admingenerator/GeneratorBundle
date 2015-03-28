@@ -17,7 +17,7 @@ class {{ builder.YamlKey|ucfirst }}Type extends BaseType
         $this->groups = $options['groups'];
         
     {% for column in builder.columns %}
-        if ($this->isDisplayed{{ column.name|classify|php_name }}()) {
+        if ($this->canDisplay{{ column.name|classify|php_name }}()) {
             $builder->add('{{ column.name }}', $this->getType{{ column.name|classify|php_name }}(), $this->getOptions{{ column.name|classify|php_name }}($options));
         }
 
@@ -57,7 +57,7 @@ class {{ builder.YamlKey|ucfirst }}Type extends BaseType
      *
      * @return boolean
      */
-    protected function isDisplayed{{ column.name|classify|php_name }}()
+    protected function canDisplay{{ column.name|classify|php_name }}()
     {
         return $this->checkGroups({{ column.groups|as_php }});
     }

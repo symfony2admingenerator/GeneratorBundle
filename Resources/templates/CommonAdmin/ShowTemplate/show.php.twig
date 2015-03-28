@@ -8,7 +8,7 @@
 
             {% if fieldsetGroups is not empty %}
                 {{ echo_set('fieldsetGroups', echo_twig_arr(fieldsetGroups), false) }}
-                {{ echo_if('groups is empty or fieldsetGroups|intersect(groups) is not empty') }}
+                {{ echo_if('fieldsetGroups|intersect(groups) is not empty') }}
             {% endif %}
 
                 <div class="show-model-tab-pane tab-pane-model-{{ fieldsetName|classify|replace({'.': '-'}) }} tab-pane">
@@ -22,14 +22,14 @@
 
                         {% if rowGroups is not empty %}
                             {{ echo_set('rowGroups', echo_twig_arr(rowGroups), false) }}
-                            {{ echo_if('groups is empty or rowGroups|intersect(groups) is not empty') }}
+                            {{ echo_if('rowGroups|intersect(groups) is not empty') }}
                         {% endif %}
 
                         {% for column in rowColumns %}
                             <div class="row">
                                 {% if column.groups is not empty %}
                                     {{ echo_set('columnGroups', echo_twig_arr(column.groups), false) }}
-                                    {{ echo_if('groups is empty or columnGroups|intersect(groups) is not empty') }}
+                                    {{ echo_if('columnGroups|intersect(groups) is not empty') }}
                                 {% endif %}
 
                                 <div class="show-model-field-label show-model-field-label-{{ column.name|lower }} show-model-field-type-{{ column.formType|lower }} col-md-2 text-right">

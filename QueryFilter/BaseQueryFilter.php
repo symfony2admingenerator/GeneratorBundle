@@ -7,10 +7,9 @@ abstract class BaseQueryFilter implements QueryFilterInterface
     protected $query;
 
     /**
-     * (non-PHPdoc)
-     * @see GeneratorBundle\QueryFilter.QueryFilterInterface::setQuery()
+     * @param $query
      */
-    public function setQuery($query)
+    public function __construct($query)
     {
         $this->query = $query;
     }

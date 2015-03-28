@@ -6,14 +6,20 @@ use Doctrine\Common\Util\Inflector;
 
 class PropelQueryFilter extends BaseQueryFilter
 {
+    /**
+     * @var array
+     */
+    protected $joins = array();
 
     public function addDefaultFilter($field, $value)
     {
+        list($query, $filteredField) = $this->addTablePathToField($field);
+
         if (!is_array($value)) {
-            $method = 'filterBy'.Inflector::classify($field);
-            $this->query->$method($value);
+            $method = 'filterBy'.Inflector::classify($filteredField);
+            $query->$method($value);
         } elseif (count($value) > 0) {
-            $this->query->filterBy($field, $value, \Criteria::IN);
+            $query->filterBy($filteredField, $value, \Criteria::IN);
         }
     }
 
@@ -31,25 +37,21 @@ class PropelQueryFilter extends BaseQueryFilter
 
     public function addCollectionFilter($field, $value)
     {
+        list($query, $filteredField) = $this->addTablePathToField($field);
+
         if (!is_array($value)) {
             $value = array($value->getId());
         }
 
-        if (strstr($field, '.')) {
-            list($table, $field) = explode('.', $field);
-        } else {
-            $table = $field;
-            $field = 'id';
-        }
-
-        $subquery = call_user_func_array(array($this->query, 'use'.$table.'Query'), array($table, \Criteria::INNER_JOIN));
-        $subquery->filterBy($field, $value, \Criteria::IN)
-                 ->endUse()
-                 ->groupById();
+        $query->filterBy($filteredField, $value, \Criteria::IN)
+              ->endUse()
+              ->groupById();
     }
 
     public function addDateFilter($field, $value, $format = 'Y-m-d')
     {
+        list($query, $filteredField) = $this->addTablePathToField($field);
+
         if (is_array($value)) {
             $filters = array();
 
@@ -62,13 +64,13 @@ class PropelQueryFilter extends BaseQueryFilter
             }
 
             if (count($filters) > 0) {
-                $method = 'filterBy'.Inflector::classify($field);
-                $this->query->$method($filters);
+                $method = 'filterBy'.Inflector::classify($filteredField);
+                $query->$method($filters);
             }
 
         } else {
             if (false !== $date = $this->formatDate($value, $format)) {
-                $this->query->filterBy($field, $date);
+                $query->filterBy($filteredField, $date);
             }
         }
     }
@@ -80,11 +82,36 @@ class PropelQueryFilter extends BaseQueryFilter
 
     public function addNullFilter($field, $value = null)
     {
-        $this->query->filterBy($field, null, \Criteria::EQUAL);
+        list($query, $filteredField) = $this->addTablePathToField($field);
+
+        $query->filterBy($filteredField, null, \Criteria::EQUAL);
     }
 
     public function addNotNullFilter($field, $value = null)
     {
-        $this->query->filterBy($field, null, \Criteria::NOT_EQUAL);
+        list($query, $filteredField) = $this->addTablePathToField($field);
+
+        $query->filterBy($filteredField, null, \Criteria::NOT_EQUAL);
+    }
+
+    protected function addTablePathToField($field)
+    {
+        if (!strpos($field, '.')) {
+            return array($this->query, $field);
+        }
+
+        $fieldParts = explode('.', $field);
+        $filteredField = array_pop($fieldParts);
+        $parentQuery = $this->query;
+
+        foreach ($fieldParts as $field) {
+            $joinAlias = $field . '_table_filter_join';
+            if (!array_key_exists($joinAlias, $this->joins)) {
+                $this->joins[$joinAlias] = call_user_func_array(array($parentQuery, 'use'.$field.'Query'), array($field, \Criteria::INNER_JOIN));
+            }
+            $parentQuery = $this->joins[$joinAlias];
+        }
+
+        return array($parentQuery, $filteredField);
     }
 }
