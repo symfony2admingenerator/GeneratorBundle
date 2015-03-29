@@ -2,19 +2,24 @@
 
 {% block stylesheets %}
     {% stylesheets package='admingenerator_css' filter='cssrewrite,?uglifycss'
-        output='assetic/css/compiled/admingenerator.min.css'
+        output='assetic/css/compiled/admingenerator.css'
         'admin/components/bootstrap/dist/css/bootstrap.css'
         'admin/components/font-awesome/css/font-awesome.css'
         'admin/components/iCheck/skins/minimal/_all.css'
         'admin/components/jquery-treetable/css/jquery.treetable.css'
-        'admin/components/adminlte/css/AdminLTE.css'
+
+        'admin/components/admin-lte/dist/css/AdminLTE.css'
+        'admin/components/admin-lte/dist/css/skins/_all-skins.css'
+        'admin/components/ionicons/css/ionicons.css'
+        'admin/components/iCheck/skins/square/blue.css'
+
         '@AdmingeneratorGeneratorBundle/Resources/public/css/main.css'
     %}
         <link rel="stylesheet" href="{{ asset_url }}" type="text/css" media="all" />
     {% endstylesheets %}
 {% endblock %}
 
-{% block scripts_head %}
+{% block javascripts_head %}
     {% javascripts package='admingenerator_js' filter='?uglifyjs2'
     output='assetic/js/compiled/jquery.min.js'
         'admin/components/jquery/dist/jquery.js'
@@ -41,7 +46,8 @@
         'admin/components/slimScroll/jquery.slimscroll.js'
         'admin/components/jquery-resize/jquery.ba-resize.js'
         'admin/components/jquery-treetable/jquery.treetable.js'
-        '@AdmingeneratorGeneratorBundle/Resources/public/js/adminlte.js'
+        'admin/components/admin-lte/dist/js/app.js'
+
         '@AdmingeneratorGeneratorBundle/Resources/public/js/main.js'
     %}
         <script type="text/javascript" src="{{ asset_url }}"></script>

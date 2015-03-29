@@ -6,7 +6,8 @@
     ],
     "description" : "Assets for the admingenerator bundle based on AdminLTE template",
     "dependencies": {
-        "adminlte": "1.2.1-bower",
+        "admin-lte": "~2",
+        "ionicons": "~2",
         "jquery": "~1",
         "bootstrap": "~3",
         "font-awesome": "~4",

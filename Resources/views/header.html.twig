@@ -1,4 +1,4 @@
-<header class="header">
+<header class="main-header">
     {% block logo %}
         {% set brand_path = (admingenerator_config('dashboard_route') is not null) ? path(admingenerator_config('dashboard_route')) : '#' %}
         <a class="logo" href="{{ brand_path }}">
