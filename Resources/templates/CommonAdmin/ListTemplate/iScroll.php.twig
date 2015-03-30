@@ -1,0 +1,16 @@
+{% block iScroll_init %}
+{{ echo_block("list_iscroll_init") }}
+<script type="text/javascript">
+    $(document).ready(function(){
+        // enable iScroll for list table
+        var listTable = new IScroll('.list-table-wrapper', {
+            scrollX: true,
+            scrollY: false,
+            mouseWheel: false,
+            scrollbars: true
+        });
+        $(document).on('touchmove', function(e) { e.preventDefault(); }, false);
+    });
+</script>
+{{ echo_endblock() }}
+{% endblock iScroll_init %}
