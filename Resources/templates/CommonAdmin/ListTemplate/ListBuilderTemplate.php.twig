@@ -1,4 +1,5 @@
 {% use '../CommonAdmin/ListTemplate/scopes.php.twig' %}
+{% use '../CommonAdmin/ListTemplate/iScroll.php.twig' %}
 {% use '../CommonAdmin/stylesheets.php.twig' %}
 {% use '../CommonAdmin/javascripts.php.twig' %}
 {% use '../CommonAdmin/title.php.twig' %}
@@ -12,7 +13,7 @@
 {{ echo_block("javascripts") }}
     {{- block('complementary_javascripts') -}}
     
-    <script type="text/javascript" src="{{ echo_twig("asset('bundles/admingeneratorgenerator/js/admingenerator/list.js')") }}"></script>
+    {{- block('iScroll_init') -}}
 {{ echo_endblock() }}
 
 {{- block('site_title') -}}
