@@ -9,29 +9,10 @@ tools:
         runs: 1
     # php cs fixer
     php_cs_fixer:
-        extensions:
-            - php
-        command:              php-cs-fixer
-        enabled:              true
-        filter:
-            paths:                []
-            excluded_paths:       []
-        config:
-            level:                all
-            fixers:               []   
+        config: { level: all } 
     # sensiolabs security checker
     sensiolabs_security_checker: true
     # php code sniffer
     php_code_sniffer:
-        extensions:
-            - php
-        command:              phpcs
-        enabled:              true
-        filter:
-            paths:                []
-            excluded_paths:       []
         config:
-            standard:             PSR2
-            sniffs:               []
-            tab_width:            ~
-            encoding:             ~
+            standard: "PSR2"
