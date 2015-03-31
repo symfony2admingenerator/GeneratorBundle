@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Templating\Loader\TemplateLocator;
 use Symfony\Bundle\TwigBundle\Loader\FilesystemLoader;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use TwigGenerator\Builder\BaseBuilder as GenericBaseBuilder;
+use TwigGenerator\Builder\Generator as GenericBaseGenerator;
 
 abstract class BaseBuilder extends GenericBaseBuilder
 {
@@ -178,8 +179,15 @@ abstract class BaseBuilder extends GenericBaseBuilder
     /**
      * {@inheritDoc}
      */
-    public function setGenerator(Generator $generator)
+    public function setGenerator(GenericBaseGenerator $generator)
     {
+        if (!$generator instanceof Generator) {
+            throw new \LogicException(
+                '$generator must be an instance of Admingenerator\GeneratorBundle\Builder\Generator, '
+               .'other instances are not supported.'
+            );
+        }
+        
         $this->generator = $generator;
     }
     
