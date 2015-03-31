@@ -12,6 +12,11 @@ use TwigGenerator\Builder\BaseBuilder as GenericBaseBuilder;
 abstract class BaseBuilder extends GenericBaseBuilder
 {
     /**
+     * @var Admingenerator\GeneratorBundle\Builder\Generator The generator.
+     */
+    protected $generator;
+    
+    /**
      * @var array
      */
     protected $templatesToGenerate = array();
@@ -168,5 +173,21 @@ abstract class BaseBuilder extends GenericBaseBuilder
     public function getModelClass()
     {
         return $this->getSimpleClassName($this->getVariable('model'));
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public function setGenerator(Generator $generator)
+    {
+        $this->generator = $generator;
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public function getGenerator()
+    {
+        return $this->generator;
     }
 }
