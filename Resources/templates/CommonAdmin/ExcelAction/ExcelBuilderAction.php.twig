@@ -111,7 +111,7 @@ class ExcelController extends ListController
             $getter = 'get'.ucfirst($getter);
             $value = method_exists($data, $getter) ? $data->$getter() : null;
 
-            $formatedValue = $this->format{{ name|classify }}($value);
+            $formatedValue = $this->format{{ name|classify|php_name }}($value);
 
             // Convert DateTime object to given format
             if ($formatedValue instanceof \DateTime){
@@ -140,7 +140,7 @@ class ExcelController extends ListController
      * @param mixed The value
      * @return mixed The formated value
      */
-    protected function format{{ name|classify }}($value)
+    protected function format{{ name|classify|php_name }}($value)
     {
         return $value;
     }
