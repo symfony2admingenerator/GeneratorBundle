@@ -13,11 +13,6 @@ use TwigGenerator\Builder\Generator as GenericBaseGenerator;
 abstract class BaseBuilder extends GenericBaseBuilder
 {
     /**
-     * @var Admingenerator\GeneratorBundle\Builder\Generator The generator.
-     */
-    protected $generator;
-    
-    /**
      * @var array
      */
     protected $templatesToGenerate = array();
@@ -189,13 +184,5 @@ abstract class BaseBuilder extends GenericBaseBuilder
         }
         
         $this->generator = $generator;
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    public function getGenerator()
-    {
-        return $this->generator;
     }
 }
