@@ -18,7 +18,7 @@ abstract class BaseBuilder extends GenericBaseBuilder
     protected $templatesToGenerate = array();
     
     /**
-     * @var Symfony\Component\HttpFoundation\ParameterBag
+     * @var \Symfony\Component\HttpFoundation\ParameterBag
      */
     protected $variables;
 
