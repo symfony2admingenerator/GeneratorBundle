@@ -36,7 +36,7 @@ profile:
     welcome:  <b>Welkom</b>, %username%!
     login:    Inloggen
     logout:   Uitloggen
-    exit:     Verlaat impersonatie mode
+    exit:     Verlaat impersonatie modus
     unauthenticated: Niet ingelogd
 
 # Generic actions
@@ -46,7 +46,7 @@ action.generic:
     save:   Opslaan
     save-and-add:   Opslaan en naar toevoegen
     save-and-list:  Opslaan en naar lijst
-    excel:  Exceleren naar Excel
+    excel:  Exporteren naar Excel
 
 # Object actions
 action.object.edit:
@@ -94,3 +94,4 @@ dashboard:
 
 admingenerator:
     dashboard: Dashboard
+    
