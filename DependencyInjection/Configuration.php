@@ -79,6 +79,7 @@ class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->children()
                         ->arrayNode('doctrine_orm')
+                        ->prototype('array')
                             ->addDefaultsIfNotSet()
                             ->children()
                                 // datetime types
@@ -109,6 +110,7 @@ class Configuration implements ConfigurationInterface
                             ->end()
                         ->end()
                         ->arrayNode('doctrine_odm')
+                        ->prototype('array')
                             ->addDefaultsIfNotSet()
                             ->children()
                                 // datetime types
@@ -144,6 +146,7 @@ class Configuration implements ConfigurationInterface
                             ->end()
                         ->end()
                         ->arrayNode('propel')
+                        ->prototype('array')
                             ->addDefaultsIfNotSet()
                             ->children()
                                 // datetime types
@@ -191,6 +194,7 @@ class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->children()
                         ->arrayNode('doctrine_orm')
+                        ->prototype('array')
                             ->addDefaultsIfNotSet()
                             ->children()
                                 // datetime types
@@ -221,6 +225,7 @@ class Configuration implements ConfigurationInterface
                             ->end()
                         ->end()
                         ->arrayNode('doctrine_odm')
+                        ->prototype('array')
                             ->addDefaultsIfNotSet()
                             ->children()
                                 // datetime types
@@ -256,6 +261,7 @@ class Configuration implements ConfigurationInterface
                             ->end()
                         ->end()
                         ->arrayNode('propel')
+                        ->prototype('array')
                             ->addDefaultsIfNotSet()
                             ->children()
                                 // datetime types
