@@ -13,6 +13,143 @@ use Admingenerator\GeneratorBundle\Exception\ModelManagerNotSelectedException;
 
 class AdmingeneratorGeneratorExtension extends Extension implements PrependExtensionInterface
 {
+  private $defaultFormTypes = array(
+      'doctrine_orm' => array(
+          'datetime' => 'datetime',
+          'vardatetime' => 'datetime',
+          'datetimetz' => 'datetime',
+          'date' => 'date',
+          'time' => 'time',
+          'decimal' => 'number',
+          'float' => 'number',
+          'integer' => 'integer',
+          'bigint' => 'integer',
+          'smallint' => 'integer',
+          'string' => 'text',
+          'text' => 'textarea',
+          'entity' => 'entity',
+          'collection' => 'collection',
+          'array' => 'collection',
+          'boolean' => 'checkbox'),
+      'doctrine_odm' => array(
+          'datetime' => 'datetime',
+          'timestamp' => 'datetime',
+          'vardatetime' => 'datetime',
+          'datetimetz' => 'datetime',
+          'date' => 'date',
+          'time' => 'time',
+          'decimal' => 'number',
+          'float' => 'number',
+          'int' => 'integer',
+          'integer' => 'integer',
+          'int_id' => 'integer',
+          'bigint' => 'integer',
+          'smallint' => 'integer',
+          'id' => 'text',
+          'custom_id' => 'text',
+          'string' => 'text',
+          'text' => 'textarea',
+          'document' => 'document',
+          'collection' => 'collection',
+          'hash' => 'collection',
+          'boolean' => 'checkbox'),
+      'propel' => array(
+          'TIMESTAMP' => 'datetime',
+          'BU_TIMESTAMP' => 'datetime',
+          'DATE' => 'date',
+          'BU_DATE' => 'date',
+          'TIME' => 'time',
+          'FLOAT' => 'number',
+          'REAL' => 'number',
+          'DOUBLE' => 'number',
+          'DECIMAL' => 'number',
+          'TINYINT' => 'integer',
+          'SMALLINT' => 'integer',
+          'INTEGER' => 'integer',
+          'BIGINT' => 'integer',
+          'NUMERIC' => 'integer',
+          'CHAR' => 'text',
+          'VARCHAR' => 'text',
+          'LONGVARCHAR' => 'textarea',
+          'BLOB' => 'textarea',
+          'CLOB' => 'textarea',
+          'CLOB_EMU' => 'textarea',
+          'model' => 'model',
+          'collection' => 'collection',
+          'PHP_ARRAY' => 'collection',
+          'ENUM' => 'choice',
+          'BOOLEAN' => 'checkbox',
+          'BOOLEAN_EMU' => 'checkbox'
+      ));
+
+    private $defaultFilterTypes = array(
+      'doctrine_orm' => array(
+          'datetime' => 'datetime',
+          'vardatetime' => 'datetime',
+          'datetimetz' => 'datetime',
+          'date' => 'date',
+          'time' => 'time',
+          'decimal' => 'number',
+          'float' => 'number',
+          'integer' => 'number',
+          'bigint' => 'number',
+          'smallint' => 'number',
+          'string' => 'text',
+          'text' => 'text',
+          'entity' => 'model',
+          'collection' => 'collection',
+          'array' => 'text',
+          'boolean' => 'choice'),
+      'doctrine_odm' => array(
+          'datetime' => 'datetime',
+          'timestamp' => 'datetime',
+          'vardatetime' => 'datetime',
+          'datetimetz' => 'datetime',
+          'date' => 'date',
+          'time' => 'time',
+          'decimal' => 'number',
+          'float' => 'number',
+          'int' => 'number',
+          'integer' => 'number',
+          'int_id' => 'number',
+          'bigint' => 'number',
+          'smallint' => 'number',
+          'id' => 'text',
+          'custom_id' => 'text',
+          'string' => 'text',
+          'text' => 'text',
+          'document' => 'model',
+          'collection' => 'collection',
+          'hash' => 'text',
+          'boolean' => 'choice'),
+      'propel' => array(
+          'TIMESTAMP' => 'datetime',
+          'BU_TIMESTAMP' => 'datetime',
+          'DATE' => 'date',
+          'BU_DATE' => 'date',
+          'TIME' => 'time',
+          'FLOAT' => 'number',
+          'REAL' => 'number',
+          'DOUBLE' => 'number',
+          'DECIMAL' => 'number',
+          'TINYINT' => 'number',
+          'SMALLINT' => 'number',
+          'INTEGER' => 'number',
+          'BIGINT' => 'number',
+          'NUMERIC' => 'number',
+          'CHAR' => 'text',
+          'VARCHAR' => 'text',
+          'LONGVARCHAR' => 'text',
+          'BLOB' => 'text',
+          'CLOB' => 'text',
+          'CLOB_EMU' => 'text',
+          'model' => 'model',
+          'collection' => 'collection',
+          'PHP_ARRAY' => 'text',
+          'ENUM' => 'text',
+          'BOOLEAN' => 'choice',
+          'BOOLEAN_EMU' => 'choice'
+      ));
     /**
      * Prepend KnpMenuBundle config
      */
@@ -88,8 +225,8 @@ class AdmingeneratorGeneratorExtension extends Extension implements PrependExten
 
             }
 
-            $formTypes = $config['form_types']['doctrine_orm'];
-            $filterTypes = $config['filter_types']['doctrine_orm'];
+            $formTypes = array_merge($this->defaultFormTypes['doctrine_orm'], $config['form_types']['doctrine_orm']);
+            $filterTypes = array_merge($this->defaultFilterTypes['doctrine_orm'], $config['filter_types']['doctrine_orm']);
             $container->setParameter('admingenerator.doctrine_form_types', $formTypes);
             $container->setParameter('admingenerator.doctrine_filter_types', $filterTypes);
         }
@@ -103,8 +240,8 @@ class AdmingeneratorGeneratorExtension extends Extension implements PrependExten
                     ->addMethodCall('forceOverwriteIfExists');
             }
 
-            $formTypes = $config['form_types']['doctrine_odm'];
-            $filterTypes = $config['filter_types']['doctrine_odm'];
+            $formTypes = array_merge($this->defaultFormTypes['doctrine_odm'], $config['form_types']['doctrine_odm']);
+            $filterTypes = array_merge($this->defaultFilterTypes['doctrine_odm'], $config['filter_types']['doctrine_odm']);
             $container->setParameter('admingenerator.doctrineodm_form_types', $formTypes);
             $container->setParameter('admingenerator.doctrineodm_filter_types', $filterTypes);
         }
@@ -118,8 +255,8 @@ class AdmingeneratorGeneratorExtension extends Extension implements PrependExten
                     ->addMethodCall('forceOverwriteIfExists');
             }
 
-            $formTypes = $config['form_types']['propel'];
-            $filterTypes = $config['filter_types']['propel'];
+            $formTypes = array_merge($this->defaultFormTypes['propel'], $config['form_types']['propel']);
+            $filterTypes = array_merge($this->defaultFilterTypes['propel'], $config['filter_types']['propel']);
             $container->setParameter('admingenerator.propel_form_types', $formTypes);
             $container->setParameter('admingenerator.propel_filter_types', $filterTypes);
         }
