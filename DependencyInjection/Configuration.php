@@ -79,7 +79,6 @@ class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->children()
                         ->arrayNode('doctrine_orm')
-                            ->addDefaultsIfNotSet()
                             ->useAttributeAsKey('name')
                             ->prototype('scalar')->end()
                             ->defaultValue(array(
@@ -111,7 +110,6 @@ class Configuration implements ConfigurationInterface
                             ))
                         ->end()
                         ->arrayNode('doctrine_odm')
-                            ->addDefaultsIfNotSet()
                             ->useAttributeAsKey('name')
                             ->prototype('scalar')->end()
                             ->defaultValue(array(
@@ -148,7 +146,6 @@ class Configuration implements ConfigurationInterface
                             ))
                         ->end()
                         ->arrayNode('propel')
-                            ->addDefaultsIfNotSet()
                             ->useAttributeAsKey('name')
                             ->prototype('scalar')->end()
                             ->defaultValue(array(
@@ -197,7 +194,6 @@ class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->children()
                         ->arrayNode('doctrine_orm')
-                            ->addDefaultsIfNotSet()
                             ->useAttributeAsKey('name')
                             ->prototype('scalar')->end()
                             ->defaultValue(array(
@@ -229,7 +225,6 @@ class Configuration implements ConfigurationInterface
                             ))
                         ->end()
                         ->arrayNode('doctrine_odm')
-                            ->addDefaultsIfNotSet()
                             ->useAttributeAsKey('name')
                             ->prototype('scalar')->end()
                             ->defaultValue(array(
@@ -266,7 +261,6 @@ class Configuration implements ConfigurationInterface
                             ))
                         ->end()
                         ->arrayNode('propel')
-                            ->addDefaultsIfNotSet()
                             ->useAttributeAsKey('name')
                             ->prototype('scalar')->end()
                             ->defaultValue(array(
