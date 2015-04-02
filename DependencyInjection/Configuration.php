@@ -24,6 +24,206 @@ class Configuration implements ConfigurationInterface
     {
         $this->rootName = $rootName;
     }
+    
+    private $defaultFormTypes = array(
+      'doctrine_orm' => array(
+        // datetime types
+        'datetime'      => 'datetime',
+        'vardatetime'   => 'datetime',
+        'datetimetz'    => 'datetime',
+        'date'          => 'date',
+        // time types
+        'time'          => 'time',
+        // number types
+        'decimal'       => 'number',
+        'float'         => 'number',
+        // integer types
+        'integer'       => 'integer',
+        'bigint'        => 'integer',
+        'smallint'      => 'integer',
+        // text types
+        'string'        => 'text',
+        // textarea types
+        'text'          => 'textarea',
+        // association types
+        'entity'        => 'entity',
+        'collection'    => 'collection',
+        // array types
+        'array'         => 'collection',
+        // boolean types
+        'boolean'       => 'checkbox',
+      ),
+      'doctrine_odm' => array(
+        // datetime types
+        'datetime'      => 'datetime',
+        'timestamp'     => 'datetime',
+        'vardatetime'   => 'datetime',
+        'datetimetz'    => 'datetime',
+        'date'          => 'date',
+        // time types
+        'time'          => 'time',
+        // number types
+        'decimal'       => 'number',
+        'float'         => 'number',
+        // integer types
+        'int'           => 'integer',
+        'integer'       => 'integer',
+        'int_id'        => 'integer',
+        'bigint'        => 'integer',
+        'smallint'      => 'integer',
+        // text types
+        'id'            => 'text',
+        'custom_id'     => 'text',
+        'string'        => 'text',
+        // textarea types
+        'text'          => 'textarea',
+        // association types
+        'document'      => 'document',
+        'collection'    => 'collection',
+        // hash types
+        'hash'          => 'collection',
+        // boolean types
+        'boolean'       => 'checkbox',
+      ),
+      'propel' => array(
+        // datetime types
+        'TIMESTAMP'     => 'datetime',
+        'BU_TIMESTAMP'  => 'datetime',
+        // date types
+        'DATE'          => 'date',
+        'BU_DATE'       => 'date',
+        // time types
+        'TIME'          => 'time',
+        // number types
+        'FLOAT'         => 'number',
+        'REAL'          => 'number',
+        'DOUBLE'        => 'number',
+        'DECIMAL'       => 'number',
+        // integer types
+        'TINYINT'       => 'integer',
+        'SMALLINT'      => 'integer',
+        'INTEGER'       => 'integer',
+        'BIGINT'        => 'integer',
+        'NUMERIC'       => 'integer',
+        // text types
+        'CHAR'          => 'text',
+        'VARCHAR'       => 'text',
+        // textarea types
+        'LONGVARCHAR'   => 'textarea',
+        'BLOB'          => 'textarea',
+        'CLOB'          => 'textarea',
+        'CLOB_EMU'      => 'textarea',
+        // association types
+        'model'         => 'model',
+        'collection'    => 'collection',
+        // array types
+        'PHP_ARRAY'     => 'collection',
+        // choice types
+        'ENUM'          => 'choice',
+        // boolean types
+        'BOOLEAN'       => 'checkbox',
+        'BOOLEAN_EMU'   => 'checkbox',
+      ));
+
+    private $defaultFilterTypes = array(
+      'doctrine_orm' => array(
+        // datetime types
+        'datetime'      => 'datetime',
+        'vardatetime'   => 'datetime',
+        'datetimetz'    => 'datetime',
+        'date'          => 'date',
+        // time types
+        'time'          => 'time',
+        // number types
+        'decimal'       => 'number',
+        'float'         => 'number',
+        // integer types
+        'integer'       => 'number',
+        'bigint'        => 'number',
+        'smallint'      => 'number',
+        // text types
+        'string'        => 'text',
+        // textarea types
+        'text'          => 'text',
+        // association types
+        'entity'        => 'model',
+        'collection'    => 'collection',
+        // array types
+        'array'         => 'text',
+        // boolean types
+        'boolean'       => 'choice',
+      ),
+      'doctrine_odm' => array(
+        // datetime types
+        'datetime'      => 'datetime',
+        'timestamp'     => 'datetime',
+        'vardatetime'   => 'datetime',
+        'datetimetz'    => 'datetime',
+        'date'          => 'date',
+        // time types
+        'time'          => 'time',
+        // number types
+        'decimal'       => 'number',
+        'float'         => 'number',
+        // integer types
+        'int'           => 'number',
+        'integer'       => 'number',
+        'int_id'        => 'number',
+        'bigint'        => 'number',
+        'smallint'      => 'number',
+        // text types
+        'id'            => 'text',
+        'custom_id'     => 'text',
+        'string'        => 'text',
+        // textarea types
+        'text'          => 'text',
+        // association types
+        'document'      => 'model',
+        'collection'    => 'collection',
+        // hash types
+        'hash'          => 'text',
+        // boolean types
+        'boolean'       => 'choice',
+      ),
+      'propel' => array(
+        // datetime types
+        'TIMESTAMP'     => 'datetime',
+        'BU_TIMESTAMP'  => 'datetime',
+        // date types
+        'DATE'          => 'date',
+        'BU_DATE'       => 'date',
+        // time types
+        'TIME'          => 'time',
+        // number types
+        'FLOAT'         => 'number',
+        'REAL'          => 'number',
+        'DOUBLE'        => 'number',
+        'DECIMAL'       => 'number',
+        // integer types
+        'TINYINT'       => 'number',
+        'SMALLINT'      => 'number',
+        'INTEGER'       => 'number',
+        'BIGINT'        => 'number',
+        'NUMERIC'       => 'number',
+        // text types
+        'CHAR'          => 'text',
+        'VARCHAR'       => 'text',
+        // textarea types
+        'LONGVARCHAR'   => 'text',
+        'BLOB'          => 'text',
+        'CLOB'          => 'text',
+        'CLOB_EMU'      => 'text',
+        // association types
+        'model'         => 'model',
+        'collection'    => 'collection',
+        // array types
+        'PHP_ARRAY'     => 'text',
+        // choice types
+        'ENUM'          => 'text',
+        // boolean types
+        'BOOLEAN'       => 'choice',
+        'BOOLEAN_EMU'   => 'choice',
+      ));
 
     /**
      * Generates the configuration tree builder.
@@ -79,110 +279,36 @@ class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->children()
                         ->arrayNode('doctrine_orm')
-                            ->addDefaultsIfNotSet()
-                            ->children()
-                                // datetime types
-                                ->scalarNode('datetime')->defaultValue('datetime')->end()
-                                ->scalarNode('vardatetime')->defaultValue('datetime')->end()
-                                ->scalarNode('datetimetz')->defaultValue('datetime')->end()
-                                ->scalarNode('date')->defaultValue('date')->end()
-                                // time types
-                                ->scalarNode('time')->defaultValue('time')->end()
-                                // number types
-                                ->scalarNode('decimal')->defaultValue('number')->end()
-                                ->scalarNode('float')->defaultValue('number')->end()
-                                // integer types
-                                ->scalarNode('integer')->defaultValue('integer')->end()
-                                ->scalarNode('bigint')->defaultValue('integer')->end()
-                                ->scalarNode('smallint')->defaultValue('integer')->end()
-                                // text types
-                                ->scalarNode('string')->defaultValue('text')->end()
-                                // textarea types
-                                ->scalarNode('text')->defaultValue('textarea')->end()
-                                // association types
-                                ->scalarNode('entity')->defaultValue('entity')->end()
-                                ->scalarNode('collection')->defaultValue('collection')->end()
-                                // array types
-                                ->scalarNode('array')->defaultValue('collection')->end()
-                                // boolean types
-                                ->scalarNode('boolean')->defaultValue('checkbox')->end()
+                            ->useAttributeAsKey('name')
+                            ->prototype('scalar')->end()
+                            ->defaultValue($this->defaultFormTypes['doctrine_orm'])
+                            ->validate()
+                            ->ifNotInArray(array_keys($this->defaultFormTypes['doctrine_orm']))
+                                ->then(function($v) {
+                                    return array_merge($this->defaultFormTypes['doctrine_orm'], $v);
+                                })
                             ->end()
                         ->end()
                         ->arrayNode('doctrine_odm')
-                            ->addDefaultsIfNotSet()
-                            ->children()
-                                // datetime types
-                                ->scalarNode('datetime')->defaultValue('datetime')->end()
-                                ->scalarNode('timestamp')->defaultValue('datetime')->end()
-                                ->scalarNode('vardatetime')->defaultValue('datetime')->end()
-                                ->scalarNode('datetimetz')->defaultValue('datetime')->end()
-                                ->scalarNode('date')->defaultValue('date')->end()
-                                // time types
-                                ->scalarNode('time')->defaultValue('time')->end()
-                                // number types
-                                ->scalarNode('decimal')->defaultValue('number')->end()
-                                ->scalarNode('float')->defaultValue('number')->end()
-                                // integer types
-                                ->scalarNode('int')->defaultValue('integer')->end()
-                                ->scalarNode('integer')->defaultValue('integer')->end()
-                                ->scalarNode('int_id')->defaultValue('integer')->end()
-                                ->scalarNode('bigint')->defaultValue('integer')->end()
-                                ->scalarNode('smallint')->defaultValue('integer')->end()
-                                // text types
-                                ->scalarNode('id')->defaultValue('text')->end()
-                                ->scalarNode('custom_id')->defaultValue('text')->end()
-                                ->scalarNode('string')->defaultValue('text')->end()
-                                // textarea types
-                                ->scalarNode('text')->defaultValue('textarea')->end()
-                                // association types
-                                ->scalarNode('document')->defaultValue('document')->end()
-                                ->scalarNode('collection')->defaultValue('collection')->end()
-                                // hash types
-                                ->scalarNode('hash')->defaultValue('collection')->end()
-                                // boolean types
-                                ->scalarNode('boolean')->defaultValue('checkbox')->end()
+                            ->useAttributeAsKey('name')
+                            ->prototype('scalar')->end()
+                            ->defaultValue($this->defaultFormTypes['doctrine_odm'])
+                            ->validate()
+                            ->ifNotInArray(array_values($this->defaultFormTypes['doctrine_odm']))
+                                ->then(function ($v){
+                                    return array_merge($this->defaultFormTypes['doctrine_odm'], $v);
+                                })
                             ->end()
                         ->end()
                         ->arrayNode('propel')
-                            ->addDefaultsIfNotSet()
-                            ->children()
-                                // datetime types
-                                ->scalarNode('TIMESTAMP')->defaultValue('datetime')->end()
-                                ->scalarNode('BU_TIMESTAMP')->defaultValue('datetime')->end()
-                                // date types
-                                ->scalarNode('DATE')->defaultValue('date')->end()
-                                ->scalarNode('BU_DATE')->defaultValue('date')->end()
-                                // time types
-                                ->scalarNode('TIME')->defaultValue('time')->end()
-                                // number types
-                                ->scalarNode('FLOAT')->defaultValue('number')->end()
-                                ->scalarNode('REAL')->defaultValue('number')->end()
-                                ->scalarNode('DOUBLE')->defaultValue('number')->end()
-                                ->scalarNode('DECIMAL')->defaultValue('number')->end()
-                                // integer types
-                                ->scalarNode('TINYINT')->defaultValue('integer')->end()
-                                ->scalarNode('SMALLINT')->defaultValue('integer')->end()
-                                ->scalarNode('INTEGER')->defaultValue('integer')->end()
-                                ->scalarNode('BIGINT')->defaultValue('integer')->end()
-                                ->scalarNode('NUMERIC')->defaultValue('integer')->end()
-                                // text types
-                                ->scalarNode('CHAR')->defaultValue('text')->end()
-                                ->scalarNode('VARCHAR')->defaultValue('text')->end()
-                                // textarea types
-                                ->scalarNode('LONGVARCHAR')->defaultValue('textarea')->end()
-                                ->scalarNode('BLOB')->defaultValue('textarea')->end()
-                                ->scalarNode('CLOB')->defaultValue('textarea')->end()
-                                ->scalarNode('CLOB_EMU')->defaultValue('textarea')->end()
-                                // association types
-                                ->scalarNode('model')->defaultValue('model')->end()
-                                ->scalarNode('collection')->defaultValue('collection')->end()
-                                // array types
-                                ->scalarNode('PHP_ARRAY')->defaultValue('collection')->end()
-                                // choice types
-                                ->scalarNode('ENUM')->defaultValue('choice')->end()
-                                // boolean types
-                                ->scalarNode('BOOLEAN')->defaultValue('checkbox')->end()
-                                ->scalarNode('BOOLEAN_EMU')->defaultValue('checkbox')->end()
+                            ->useAttributeAsKey('name')
+                            ->prototype('scalar')->end()
+                            ->defaultValue($this->defaultFormTypes['propel'])
+                            ->validate()
+                            ->ifNotInArray(array_values($this->defaultFormTypes['propel']))
+                                ->then(function ($v){
+                                    return array_merge($this->defaultFormTypes['propel'], $v);
+                                })
                             ->end()
                         ->end()
                     ->end()
@@ -191,110 +317,36 @@ class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->children()
                         ->arrayNode('doctrine_orm')
-                            ->addDefaultsIfNotSet()
-                            ->children()
-                                // datetime types
-                                ->scalarNode('datetime')->defaultValue('datetime')->end()
-                                ->scalarNode('vardatetime')->defaultValue('datetime')->end()
-                                ->scalarNode('datetimetz')->defaultValue('datetime')->end()
-                                ->scalarNode('date')->defaultValue('date')->end()
-                                // time types
-                                ->scalarNode('time')->defaultValue('time')->end()
-                                // number types
-                                ->scalarNode('decimal')->defaultValue('number')->end()
-                                ->scalarNode('float')->defaultValue('number')->end()
-                                // integer types
-                                ->scalarNode('integer')->defaultValue('number')->end()
-                                ->scalarNode('bigint')->defaultValue('number')->end()
-                                ->scalarNode('smallint')->defaultValue('number')->end()
-                                // text types
-                                ->scalarNode('string')->defaultValue('text')->end()
-                                // textarea types
-                                ->scalarNode('text')->defaultValue('text')->end()
-                                // association types
-                                ->scalarNode('entity')->defaultValue('model')->end()
-                                ->scalarNode('collection')->defaultValue('collection')->end()
-                                // array types
-                                ->scalarNode('array')->defaultValue('text')->end()
-                                // boolean types
-                                ->scalarNode('boolean')->defaultValue('choice')->end()
+                            ->useAttributeAsKey('name')
+                            ->prototype('scalar')->end()
+                            ->defaultValue($this->defaultFilterTypes['doctrine_orm'])
+                            ->validate()
+                            ->ifNotInArray(array_values($this->defaultFilterTypes['doctrine_orm']))
+                                ->then(function ($v){
+                                    return array_merge($this->defaultFilterTypes['doctrine_orm'], $v);
+                                })
                             ->end()
                         ->end()
                         ->arrayNode('doctrine_odm')
-                            ->addDefaultsIfNotSet()
-                            ->children()
-                                // datetime types
-                                ->scalarNode('datetime')->defaultValue('datetime')->end()
-                                ->scalarNode('timestamp')->defaultValue('datetime')->end()
-                                ->scalarNode('vardatetime')->defaultValue('datetime')->end()
-                                ->scalarNode('datetimetz')->defaultValue('datetime')->end()
-                                ->scalarNode('date')->defaultValue('date')->end()
-                                // time types
-                                ->scalarNode('time')->defaultValue('time')->end()
-                                // number types
-                                ->scalarNode('decimal')->defaultValue('number')->end()
-                                ->scalarNode('float')->defaultValue('number')->end()
-                                // integer types
-                                ->scalarNode('int')->defaultValue('number')->end()
-                                ->scalarNode('integer')->defaultValue('number')->end()
-                                ->scalarNode('int_id')->defaultValue('number')->end()
-                                ->scalarNode('bigint')->defaultValue('number')->end()
-                                ->scalarNode('smallint')->defaultValue('number')->end()
-                                // text types
-                                ->scalarNode('id')->defaultValue('text')->end()
-                                ->scalarNode('custom_id')->defaultValue('text')->end()
-                                ->scalarNode('string')->defaultValue('text')->end()
-                                // textarea types
-                                ->scalarNode('text')->defaultValue('text')->end()
-                                // association types
-                                ->scalarNode('document')->defaultValue('model')->end()
-                                ->scalarNode('collection')->defaultValue('collection')->end()
-                                // hash types
-                                ->scalarNode('hash')->defaultValue('text')->end()
-                                // boolean types
-                                ->scalarNode('boolean')->defaultValue('choice')->end()
+                            ->useAttributeAsKey('name')
+                            ->prototype('scalar')->end()
+                            ->defaultValue($this->defaultFilterTypes['doctrine_odm'])
+                            ->validate()
+                            ->ifNotInArray(array_keys($this->defaultFilterTypes['doctrine_odm']))
+                                ->then(function ($v){
+                                    return array_merge($this->defaultFilterTypes['doctrine_odm'], $v);
+                                })
                             ->end()
                         ->end()
                         ->arrayNode('propel')
-                            ->addDefaultsIfNotSet()
-                            ->children()
-                                // datetime types
-                                ->scalarNode('TIMESTAMP')->defaultValue('datetime')->end()
-                                ->scalarNode('BU_TIMESTAMP')->defaultValue('datetime')->end()
-                                // date types
-                                ->scalarNode('DATE')->defaultValue('date')->end()
-                                ->scalarNode('BU_DATE')->defaultValue('date')->end()
-                                // time types
-                                ->scalarNode('TIME')->defaultValue('time')->end()
-                                // number types
-                                ->scalarNode('FLOAT')->defaultValue('number')->end()
-                                ->scalarNode('REAL')->defaultValue('number')->end()
-                                ->scalarNode('DOUBLE')->defaultValue('number')->end()
-                                ->scalarNode('DECIMAL')->defaultValue('number')->end()
-                                // integer types
-                                ->scalarNode('TINYINT')->defaultValue('number')->end()
-                                ->scalarNode('SMALLINT')->defaultValue('number')->end()
-                                ->scalarNode('INTEGER')->defaultValue('number')->end()
-                                ->scalarNode('BIGINT')->defaultValue('number')->end()
-                                ->scalarNode('NUMERIC')->defaultValue('number')->end()
-                                // text types
-                                ->scalarNode('CHAR')->defaultValue('text')->end()
-                                ->scalarNode('VARCHAR')->defaultValue('text')->end()
-                                // textarea types
-                                ->scalarNode('LONGVARCHAR')->defaultValue('text')->end()
-                                ->scalarNode('BLOB')->defaultValue('text')->end()
-                                ->scalarNode('CLOB')->defaultValue('text')->end()
-                                ->scalarNode('CLOB_EMU')->defaultValue('text')->end()
-                                // association types
-                                ->scalarNode('model')->defaultValue('model')->end()
-                                ->scalarNode('collection')->defaultValue('collection')->end()
-                                // array types
-                                ->scalarNode('PHP_ARRAY')->defaultValue('text')->end()
-                                // choice types
-                                ->scalarNode('ENUM')->defaultValue('text')->end()
-                                // boolean types
-                                ->scalarNode('BOOLEAN')->defaultValue('choice')->end()
-                                ->scalarNode('BOOLEAN_EMU')->defaultValue('choice')->end()
+                            ->useAttributeAsKey('name')
+                            ->prototype('scalar')->end()
+                            ->defaultValue($this->defaultFilterTypes['propel'])
+                            ->validate()
+                            ->ifNotInArray(array_values($this->defaultFilterTypes['propel']))
+                                ->then(function ($v){
+                                    return array_merge($this->defaultFilterTypes['propel'], $v);
+                                })
                             ->end()
                         ->end()
                     ->end()
