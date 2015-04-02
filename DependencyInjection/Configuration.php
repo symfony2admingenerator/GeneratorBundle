@@ -79,116 +79,116 @@ class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->children()
                         ->arrayNode('doctrine_orm')
-                            ->prototype('array')
-                                ->addDefaultsIfNotSet()
-                                ->children()
-                                    // datetime types
-                                    ->scalarNode('datetime')->defaultValue('datetime')->end()
-                                    ->scalarNode('vardatetime')->defaultValue('datetime')->end()
-                                    ->scalarNode('datetimetz')->defaultValue('datetime')->end()
-                                    ->scalarNode('date')->defaultValue('date')->end()
-                                    // time types
-                                    ->scalarNode('time')->defaultValue('time')->end()
-                                    // number types
-                                    ->scalarNode('decimal')->defaultValue('number')->end()
-                                    ->scalarNode('float')->defaultValue('number')->end()
-                                    // integer types
-                                    ->scalarNode('integer')->defaultValue('integer')->end()
-                                    ->scalarNode('bigint')->defaultValue('integer')->end()
-                                    ->scalarNode('smallint')->defaultValue('integer')->end()
-                                    // text types
-                                    ->scalarNode('string')->defaultValue('text')->end()
-                                    // textarea types
-                                    ->scalarNode('text')->defaultValue('textarea')->end()
-                                    // association types
-                                    ->scalarNode('entity')->defaultValue('entity')->end()
-                                    ->scalarNode('collection')->defaultValue('collection')->end()
-                                    // array types
-                                    ->scalarNode('array')->defaultValue('collection')->end()
-                                    // boolean types
-                                    ->scalarNode('boolean')->defaultValue('checkbox')->end()
-                                ->end()
+                            ->addDefaultsIfNotSet()
+                            ->useAttributeAsKey('name')
+                            ->prototype('scalar')->end()
+                            ->children()
+                                // datetime types
+                                ->scalarNode('datetime')->defaultValue('datetime')->end()
+                                ->scalarNode('vardatetime')->defaultValue('datetime')->end()
+                                ->scalarNode('datetimetz')->defaultValue('datetime')->end()
+                                ->scalarNode('date')->defaultValue('date')->end()
+                                // time types
+                                ->scalarNode('time')->defaultValue('time')->end()
+                                // number types
+                                ->scalarNode('decimal')->defaultValue('number')->end()
+                                ->scalarNode('float')->defaultValue('number')->end()
+                                // integer types
+                                ->scalarNode('integer')->defaultValue('integer')->end()
+                                ->scalarNode('bigint')->defaultValue('integer')->end()
+                                ->scalarNode('smallint')->defaultValue('integer')->end()
+                                // text types
+                                ->scalarNode('string')->defaultValue('text')->end()
+                                // textarea types
+                                ->scalarNode('text')->defaultValue('textarea')->end()
+                                // association types
+                                ->scalarNode('entity')->defaultValue('entity')->end()
+                                ->scalarNode('collection')->defaultValue('collection')->end()
+                                // array types
+                                ->scalarNode('array')->defaultValue('collection')->end()
+                                // boolean types
+                                ->scalarNode('boolean')->defaultValue('checkbox')->end()
                             ->end()
                         ->end()
                         ->arrayNode('doctrine_odm')
-                            ->prototype('array')
-                                ->addDefaultsIfNotSet()
-                                ->children()
-                                    // datetime types
-                                    ->scalarNode('datetime')->defaultValue('datetime')->end()
-                                    ->scalarNode('timestamp')->defaultValue('datetime')->end()
-                                    ->scalarNode('vardatetime')->defaultValue('datetime')->end()
-                                    ->scalarNode('datetimetz')->defaultValue('datetime')->end()
-                                    ->scalarNode('date')->defaultValue('date')->end()
-                                    // time types
-                                    ->scalarNode('time')->defaultValue('time')->end()
-                                    // number types
-                                    ->scalarNode('decimal')->defaultValue('number')->end()
-                                    ->scalarNode('float')->defaultValue('number')->end()
-                                    // integer types
-                                    ->scalarNode('int')->defaultValue('integer')->end()
-                                    ->scalarNode('integer')->defaultValue('integer')->end()
-                                    ->scalarNode('int_id')->defaultValue('integer')->end()
-                                    ->scalarNode('bigint')->defaultValue('integer')->end()
-                                    ->scalarNode('smallint')->defaultValue('integer')->end()
-                                    // text types
-                                    ->scalarNode('id')->defaultValue('text')->end()
-                                    ->scalarNode('custom_id')->defaultValue('text')->end()
-                                    ->scalarNode('string')->defaultValue('text')->end()
-                                    // textarea types
-                                    ->scalarNode('text')->defaultValue('textarea')->end()
-                                    // association types
-                                    ->scalarNode('document')->defaultValue('document')->end()
-                                    ->scalarNode('collection')->defaultValue('collection')->end()
-                                    // hash types
-                                    ->scalarNode('hash')->defaultValue('collection')->end()
-                                    // boolean types
-                                    ->scalarNode('boolean')->defaultValue('checkbox')->end()
-                                ->end()
+                            ->addDefaultsIfNotSet()
+                            ->useAttributeAsKey('name')
+                            ->prototype('scalar')->end()
+                            ->children()
+                                // datetime types
+                                ->scalarNode('datetime')->defaultValue('datetime')->end()
+                                ->scalarNode('timestamp')->defaultValue('datetime')->end()
+                                ->scalarNode('vardatetime')->defaultValue('datetime')->end()
+                                ->scalarNode('datetimetz')->defaultValue('datetime')->end()
+                                ->scalarNode('date')->defaultValue('date')->end()
+                                // time types
+                                ->scalarNode('time')->defaultValue('time')->end()
+                                // number types
+                                ->scalarNode('decimal')->defaultValue('number')->end()
+                                ->scalarNode('float')->defaultValue('number')->end()
+                                // integer types
+                                ->scalarNode('int')->defaultValue('integer')->end()
+                                ->scalarNode('integer')->defaultValue('integer')->end()
+                                ->scalarNode('int_id')->defaultValue('integer')->end()
+                                ->scalarNode('bigint')->defaultValue('integer')->end()
+                                ->scalarNode('smallint')->defaultValue('integer')->end()
+                                // text types
+                                ->scalarNode('id')->defaultValue('text')->end()
+                                ->scalarNode('custom_id')->defaultValue('text')->end()
+                                ->scalarNode('string')->defaultValue('text')->end()
+                                // textarea types
+                                ->scalarNode('text')->defaultValue('textarea')->end()
+                                // association types
+                                ->scalarNode('document')->defaultValue('document')->end()
+                                ->scalarNode('collection')->defaultValue('collection')->end()
+                                // hash types
+                                ->scalarNode('hash')->defaultValue('collection')->end()
+                                // boolean types
+                                ->scalarNode('boolean')->defaultValue('checkbox')->end()
                             ->end()
                         ->end()
                         ->arrayNode('propel')
-                            ->prototype('array')
-                                ->addDefaultsIfNotSet()
-                                ->children()
-                                    // datetime types
-                                    ->scalarNode('TIMESTAMP')->defaultValue('datetime')->end()
-                                    ->scalarNode('BU_TIMESTAMP')->defaultValue('datetime')->end()
-                                    // date types
-                                    ->scalarNode('DATE')->defaultValue('date')->end()
-                                    ->scalarNode('BU_DATE')->defaultValue('date')->end()
-                                    // time types
-                                    ->scalarNode('TIME')->defaultValue('time')->end()
-                                    // number types
-                                    ->scalarNode('FLOAT')->defaultValue('number')->end()
-                                    ->scalarNode('REAL')->defaultValue('number')->end()
-                                    ->scalarNode('DOUBLE')->defaultValue('number')->end()
-                                    ->scalarNode('DECIMAL')->defaultValue('number')->end()
-                                    // integer types
-                                    ->scalarNode('TINYINT')->defaultValue('integer')->end()
-                                    ->scalarNode('SMALLINT')->defaultValue('integer')->end()
-                                    ->scalarNode('INTEGER')->defaultValue('integer')->end()
-                                    ->scalarNode('BIGINT')->defaultValue('integer')->end()
-                                    ->scalarNode('NUMERIC')->defaultValue('integer')->end()
-                                    // text types
-                                    ->scalarNode('CHAR')->defaultValue('text')->end()
-                                    ->scalarNode('VARCHAR')->defaultValue('text')->end()
-                                    // textarea types
-                                    ->scalarNode('LONGVARCHAR')->defaultValue('textarea')->end()
-                                    ->scalarNode('BLOB')->defaultValue('textarea')->end()
-                                    ->scalarNode('CLOB')->defaultValue('textarea')->end()
-                                    ->scalarNode('CLOB_EMU')->defaultValue('textarea')->end()
-                                    // association types
-                                    ->scalarNode('model')->defaultValue('model')->end()
-                                    ->scalarNode('collection')->defaultValue('collection')->end()
-                                    // array types
-                                    ->scalarNode('PHP_ARRAY')->defaultValue('collection')->end()
-                                    // choice types
-                                    ->scalarNode('ENUM')->defaultValue('choice')->end()
-                                    // boolean types
-                                    ->scalarNode('BOOLEAN')->defaultValue('checkbox')->end()
-                                    ->scalarNode('BOOLEAN_EMU')->defaultValue('checkbox')->end()
-                                ->end()
+                            ->addDefaultsIfNotSet()
+                            ->useAttributeAsKey('name')
+                            ->prototype('scalar')->end()
+                            ->children()
+                                // datetime types
+                                ->scalarNode('TIMESTAMP')->defaultValue('datetime')->end()
+                                ->scalarNode('BU_TIMESTAMP')->defaultValue('datetime')->end()
+                                // date types
+                                ->scalarNode('DATE')->defaultValue('date')->end()
+                                ->scalarNode('BU_DATE')->defaultValue('date')->end()
+                                // time types
+                                ->scalarNode('TIME')->defaultValue('time')->end()
+                                // number types
+                                ->scalarNode('FLOAT')->defaultValue('number')->end()
+                                ->scalarNode('REAL')->defaultValue('number')->end()
+                                ->scalarNode('DOUBLE')->defaultValue('number')->end()
+                                ->scalarNode('DECIMAL')->defaultValue('number')->end()
+                                // integer types
+                                ->scalarNode('TINYINT')->defaultValue('integer')->end()
+                                ->scalarNode('SMALLINT')->defaultValue('integer')->end()
+                                ->scalarNode('INTEGER')->defaultValue('integer')->end()
+                                ->scalarNode('BIGINT')->defaultValue('integer')->end()
+                                ->scalarNode('NUMERIC')->defaultValue('integer')->end()
+                                // text types
+                                ->scalarNode('CHAR')->defaultValue('text')->end()
+                                ->scalarNode('VARCHAR')->defaultValue('text')->end()
+                                // textarea types
+                                ->scalarNode('LONGVARCHAR')->defaultValue('textarea')->end()
+                                ->scalarNode('BLOB')->defaultValue('textarea')->end()
+                                ->scalarNode('CLOB')->defaultValue('textarea')->end()
+                                ->scalarNode('CLOB_EMU')->defaultValue('textarea')->end()
+                                // association types
+                                ->scalarNode('model')->defaultValue('model')->end()
+                                ->scalarNode('collection')->defaultValue('collection')->end()
+                                // array types
+                                ->scalarNode('PHP_ARRAY')->defaultValue('collection')->end()
+                                // choice types
+                                ->scalarNode('ENUM')->defaultValue('choice')->end()
+                                // boolean types
+                                ->scalarNode('BOOLEAN')->defaultValue('checkbox')->end()
+                                ->scalarNode('BOOLEAN_EMU')->defaultValue('checkbox')->end()
                             ->end()
                         ->end()
                     ->end()
@@ -197,116 +197,116 @@ class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->children()
                         ->arrayNode('doctrine_orm')
-                            ->prototype('array')
-                                ->addDefaultsIfNotSet()
-                                    ->children()
-                                    // datetime types
-                                    ->scalarNode('datetime')->defaultValue('datetime')->end()
-                                    ->scalarNode('vardatetime')->defaultValue('datetime')->end()
-                                    ->scalarNode('datetimetz')->defaultValue('datetime')->end()
-                                    ->scalarNode('date')->defaultValue('date')->end()
-                                    // time types
-                                    ->scalarNode('time')->defaultValue('time')->end()
-                                    // number types
-                                    ->scalarNode('decimal')->defaultValue('number')->end()
-                                    ->scalarNode('float')->defaultValue('number')->end()
-                                    // integer types
-                                    ->scalarNode('integer')->defaultValue('number')->end()
-                                    ->scalarNode('bigint')->defaultValue('number')->end()
-                                    ->scalarNode('smallint')->defaultValue('number')->end()
-                                    // text types
-                                    ->scalarNode('string')->defaultValue('text')->end()
-                                    // textarea types
-                                    ->scalarNode('text')->defaultValue('text')->end()
-                                    // association types
-                                    ->scalarNode('entity')->defaultValue('model')->end()
-                                    ->scalarNode('collection')->defaultValue('collection')->end()
-                                    // array types
-                                    ->scalarNode('array')->defaultValue('text')->end()
-                                    // boolean types
-                                    ->scalarNode('boolean')->defaultValue('choice')->end()
-                                ->end()
+                            ->addDefaultsIfNotSet()
+                            ->useAttributeAsKey('name')
+                            ->prototype('scalar')->end()
+                                ->children()
+                                // datetime types
+                                ->scalarNode('datetime')->defaultValue('datetime')->end()
+                                ->scalarNode('vardatetime')->defaultValue('datetime')->end()
+                                ->scalarNode('datetimetz')->defaultValue('datetime')->end()
+                                ->scalarNode('date')->defaultValue('date')->end()
+                                // time types
+                                ->scalarNode('time')->defaultValue('time')->end()
+                                // number types
+                                ->scalarNode('decimal')->defaultValue('number')->end()
+                                ->scalarNode('float')->defaultValue('number')->end()
+                                // integer types
+                                ->scalarNode('integer')->defaultValue('number')->end()
+                                ->scalarNode('bigint')->defaultValue('number')->end()
+                                ->scalarNode('smallint')->defaultValue('number')->end()
+                                // text types
+                                ->scalarNode('string')->defaultValue('text')->end()
+                                // textarea types
+                                ->scalarNode('text')->defaultValue('text')->end()
+                                // association types
+                                ->scalarNode('entity')->defaultValue('model')->end()
+                                ->scalarNode('collection')->defaultValue('collection')->end()
+                                // array types
+                                ->scalarNode('array')->defaultValue('text')->end()
+                                // boolean types
+                                ->scalarNode('boolean')->defaultValue('choice')->end()
                             ->end()
                         ->end()
                         ->arrayNode('doctrine_odm')
-                            ->prototype('array')
-                                ->addDefaultsIfNotSet()
-                                ->children()
-                                    // datetime types
-                                    ->scalarNode('datetime')->defaultValue('datetime')->end()
-                                    ->scalarNode('timestamp')->defaultValue('datetime')->end()
-                                    ->scalarNode('vardatetime')->defaultValue('datetime')->end()
-                                    ->scalarNode('datetimetz')->defaultValue('datetime')->end()
-                                    ->scalarNode('date')->defaultValue('date')->end()
-                                    // time types
-                                    ->scalarNode('time')->defaultValue('time')->end()
-                                    // number types
-                                    ->scalarNode('decimal')->defaultValue('number')->end()
-                                    ->scalarNode('float')->defaultValue('number')->end()
-                                    // integer types
-                                    ->scalarNode('int')->defaultValue('number')->end()
-                                    ->scalarNode('integer')->defaultValue('number')->end()
-                                    ->scalarNode('int_id')->defaultValue('number')->end()
-                                    ->scalarNode('bigint')->defaultValue('number')->end()
-                                    ->scalarNode('smallint')->defaultValue('number')->end()
-                                    // text types
-                                    ->scalarNode('id')->defaultValue('text')->end()
-                                    ->scalarNode('custom_id')->defaultValue('text')->end()
-                                    ->scalarNode('string')->defaultValue('text')->end()
-                                    // textarea types
-                                    ->scalarNode('text')->defaultValue('text')->end()
-                                    // association types
-                                    ->scalarNode('document')->defaultValue('model')->end()
-                                    ->scalarNode('collection')->defaultValue('collection')->end()
-                                    // hash types
-                                    ->scalarNode('hash')->defaultValue('text')->end()
-                                    // boolean types
-                                    ->scalarNode('boolean')->defaultValue('choice')->end()
-                                ->end()
+                            ->addDefaultsIfNotSet()
+                            ->useAttributeAsKey('name')
+                            ->prototype('scalar')->end()
+                            ->children()
+                                // datetime types
+                                ->scalarNode('datetime')->defaultValue('datetime')->end()
+                                ->scalarNode('timestamp')->defaultValue('datetime')->end()
+                                ->scalarNode('vardatetime')->defaultValue('datetime')->end()
+                                ->scalarNode('datetimetz')->defaultValue('datetime')->end()
+                                ->scalarNode('date')->defaultValue('date')->end()
+                                // time types
+                                ->scalarNode('time')->defaultValue('time')->end()
+                                // number types
+                                ->scalarNode('decimal')->defaultValue('number')->end()
+                                ->scalarNode('float')->defaultValue('number')->end()
+                                // integer types
+                                ->scalarNode('int')->defaultValue('number')->end()
+                                ->scalarNode('integer')->defaultValue('number')->end()
+                                ->scalarNode('int_id')->defaultValue('number')->end()
+                                ->scalarNode('bigint')->defaultValue('number')->end()
+                                ->scalarNode('smallint')->defaultValue('number')->end()
+                                // text types
+                                ->scalarNode('id')->defaultValue('text')->end()
+                                ->scalarNode('custom_id')->defaultValue('text')->end()
+                                ->scalarNode('string')->defaultValue('text')->end()
+                                // textarea types
+                                ->scalarNode('text')->defaultValue('text')->end()
+                                // association types
+                                ->scalarNode('document')->defaultValue('model')->end()
+                                ->scalarNode('collection')->defaultValue('collection')->end()
+                                // hash types
+                                ->scalarNode('hash')->defaultValue('text')->end()
+                                // boolean types
+                                ->scalarNode('boolean')->defaultValue('choice')->end()
                             ->end()
                         ->end()
                         ->arrayNode('propel')
-                            ->prototype('array')
-                                ->addDefaultsIfNotSet()
-                                ->children()
-                                    // datetime types
-                                    ->scalarNode('TIMESTAMP')->defaultValue('datetime')->end()
-                                    ->scalarNode('BU_TIMESTAMP')->defaultValue('datetime')->end()
-                                    // date types
-                                    ->scalarNode('DATE')->defaultValue('date')->end()
-                                    ->scalarNode('BU_DATE')->defaultValue('date')->end()
-                                    // time types
-                                    ->scalarNode('TIME')->defaultValue('time')->end()
-                                    // number types
-                                    ->scalarNode('FLOAT')->defaultValue('number')->end()
-                                    ->scalarNode('REAL')->defaultValue('number')->end()
-                                    ->scalarNode('DOUBLE')->defaultValue('number')->end()
-                                    ->scalarNode('DECIMAL')->defaultValue('number')->end()
-                                    // integer types
-                                    ->scalarNode('TINYINT')->defaultValue('number')->end()
-                                    ->scalarNode('SMALLINT')->defaultValue('number')->end()
-                                    ->scalarNode('INTEGER')->defaultValue('number')->end()
-                                    ->scalarNode('BIGINT')->defaultValue('number')->end()
-                                    ->scalarNode('NUMERIC')->defaultValue('number')->end()
-                                    // text types
-                                    ->scalarNode('CHAR')->defaultValue('text')->end()
-                                    ->scalarNode('VARCHAR')->defaultValue('text')->end()
-                                    // textarea types
-                                    ->scalarNode('LONGVARCHAR')->defaultValue('text')->end()
-                                    ->scalarNode('BLOB')->defaultValue('text')->end()
-                                    ->scalarNode('CLOB')->defaultValue('text')->end()
-                                    ->scalarNode('CLOB_EMU')->defaultValue('text')->end()
-                                    // association types
-                                    ->scalarNode('model')->defaultValue('model')->end()
-                                    ->scalarNode('collection')->defaultValue('collection')->end()
-                                    // array types
-                                    ->scalarNode('PHP_ARRAY')->defaultValue('text')->end()
-                                    // choice types
-                                    ->scalarNode('ENUM')->defaultValue('text')->end()
-                                    // boolean types
-                                    ->scalarNode('BOOLEAN')->defaultValue('choice')->end()
-                                    ->scalarNode('BOOLEAN_EMU')->defaultValue('choice')->end()
-                                ->end()
+                            ->addDefaultsIfNotSet()
+                            ->useAttributeAsKey('name')
+                            ->prototype('scalar')->end()
+                            ->children()
+                                // datetime types
+                                ->scalarNode('TIMESTAMP')->defaultValue('datetime')->end()
+                                ->scalarNode('BU_TIMESTAMP')->defaultValue('datetime')->end()
+                                // date types
+                                ->scalarNode('DATE')->defaultValue('date')->end()
+                                ->scalarNode('BU_DATE')->defaultValue('date')->end()
+                                // time types
+                                ->scalarNode('TIME')->defaultValue('time')->end()
+                                // number types
+                                ->scalarNode('FLOAT')->defaultValue('number')->end()
+                                ->scalarNode('REAL')->defaultValue('number')->end()
+                                ->scalarNode('DOUBLE')->defaultValue('number')->end()
+                                ->scalarNode('DECIMAL')->defaultValue('number')->end()
+                                // integer types
+                                ->scalarNode('TINYINT')->defaultValue('number')->end()
+                                ->scalarNode('SMALLINT')->defaultValue('number')->end()
+                                ->scalarNode('INTEGER')->defaultValue('number')->end()
+                                ->scalarNode('BIGINT')->defaultValue('number')->end()
+                                ->scalarNode('NUMERIC')->defaultValue('number')->end()
+                                // text types
+                                ->scalarNode('CHAR')->defaultValue('text')->end()
+                                ->scalarNode('VARCHAR')->defaultValue('text')->end()
+                                // textarea types
+                                ->scalarNode('LONGVARCHAR')->defaultValue('text')->end()
+                                ->scalarNode('BLOB')->defaultValue('text')->end()
+                                ->scalarNode('CLOB')->defaultValue('text')->end()
+                                ->scalarNode('CLOB_EMU')->defaultValue('text')->end()
+                                // association types
+                                ->scalarNode('model')->defaultValue('model')->end()
+                                ->scalarNode('collection')->defaultValue('collection')->end()
+                                // array types
+                                ->scalarNode('PHP_ARRAY')->defaultValue('text')->end()
+                                // choice types
+                                ->scalarNode('ENUM')->defaultValue('text')->end()
+                                // boolean types
+                                ->scalarNode('BOOLEAN')->defaultValue('choice')->end()
+                                ->scalarNode('BOOLEAN_EMU')->defaultValue('choice')->end()
                             ->end()
                         ->end()
                     ->end()
