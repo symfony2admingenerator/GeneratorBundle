@@ -79,8 +79,7 @@ class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->children()
                         ->arrayNode('doctrine_orm')
-                            ->prototype('array')
-                            ->end()
+                            ->prototype('scalar')->end()
                             ->addDefaultsIfNotSet()
                             ->children()
                                 // datetime types
@@ -111,8 +110,7 @@ class Configuration implements ConfigurationInterface
                             ->end()
                         ->end()
                         ->arrayNode('doctrine_odm')
-                            ->prototype('array')
-                            ->end()
+                            ->prototype('scalar')->end()
                             ->addDefaultsIfNotSet()
                             ->children()
                                 // datetime types
@@ -148,8 +146,7 @@ class Configuration implements ConfigurationInterface
                             ->end()
                         ->end()
                         ->arrayNode('propel')
-                            ->prototype('array')
-                            ->end()
+                            ->prototype('scalar')->end()
                             ->addDefaultsIfNotSet()
                             ->children()
                                 // datetime types
@@ -197,8 +194,7 @@ class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->children()
                         ->arrayNode('doctrine_orm')
-                            ->prototype('array')
-                            ->end()
+                            ->prototype('scalar')->end()
                             ->addDefaultsIfNotSet()
                             ->children()
                                 // datetime types
@@ -229,8 +225,7 @@ class Configuration implements ConfigurationInterface
                             ->end()
                         ->end()
                         ->arrayNode('doctrine_odm')
-                            ->prototype('array')
-                            ->end()
+                            ->prototype('scalar')->end()
                             ->addDefaultsIfNotSet()
                             ->children()
                                 // datetime types
@@ -266,8 +261,7 @@ class Configuration implements ConfigurationInterface
                             ->end()
                         ->end()
                         ->arrayNode('propel')
-                            ->prototype('array')
-                            ->end()
+                            ->prototype('scalar')->end()
                             ->addDefaultsIfNotSet()
                             ->children()
                                 // datetime types
