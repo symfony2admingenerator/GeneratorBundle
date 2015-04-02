@@ -27,140 +27,202 @@ class Configuration implements ConfigurationInterface
     
     private $defaultFormTypes = array(
       'doctrine_orm' => array(
-          'datetime' => 'datetime',
-          'vardatetime' => 'datetime',
-          'datetimetz' => 'datetime',
-          'date' => 'date',
-          'time' => 'time',
-          'decimal' => 'number',
-          'float' => 'number',
-          'integer' => 'integer',
-          'bigint' => 'integer',
-          'smallint' => 'integer',
-          'string' => 'text',
-          'text' => 'textarea',
-          'entity' => 'entity',
-          'collection' => 'collection',
-          'array' => 'collection',
-          'boolean' => 'checkbox'),
+        // datetime types
+        'datetime'      => 'datetime',
+        'vardatetime'   => 'datetime',
+        'datetimetz'    => 'datetime',
+        'date'          => 'date',
+        // time types
+        'time'          => 'time',
+        // number types
+        'decimal'       => 'number',
+        'float'         => 'number',
+        // integer types
+        'integer'       => 'integer',
+        'bigint'        => 'integer',
+        'smallint'      => 'integer',
+        // text types
+        'string'        => 'text',
+        // textarea types
+        'text'          => 'textarea',
+        // association types
+        'entity'        => 'entity',
+        'collection'    => 'collection',
+        // array types
+        'array'         => 'collection',
+        // boolean types
+        'boolean'       => 'checkbox',
+      ),
       'doctrine_odm' => array(
-          'datetime' => 'datetime',
-          'timestamp' => 'datetime',
-          'vardatetime' => 'datetime',
-          'datetimetz' => 'datetime',
-          'date' => 'date',
-          'time' => 'time',
-          'decimal' => 'number',
-          'float' => 'number',
-          'int' => 'integer',
-          'integer' => 'integer',
-          'int_id' => 'integer',
-          'bigint' => 'integer',
-          'smallint' => 'integer',
-          'id' => 'text',
-          'custom_id' => 'text',
-          'string' => 'text',
-          'text' => 'textarea',
-          'document' => 'document',
-          'collection' => 'collection',
-          'hash' => 'collection',
-          'boolean' => 'checkbox'),
+        // datetime types
+        'datetime'      => 'datetime',
+        'timestamp'     => 'datetime',
+        'vardatetime'   => 'datetime',
+        'datetimetz'    => 'datetime',
+        'date'          => 'date',
+        // time types
+        'time'          => 'time',
+        // number types
+        'decimal'       => 'number',
+        'float'         => 'number',
+        // integer types
+        'int'           => 'integer',
+        'integer'       => 'integer',
+        'int_id'        => 'integer',
+        'bigint'        => 'integer',
+        'smallint'      => 'integer',
+        // text types
+        'id'            => 'text',
+        'custom_id'     => 'text',
+        'string'        => 'text',
+        // textarea types
+        'text'          => 'textarea',
+        // association types
+        'document'      => 'document',
+        'collection'    => 'collection',
+        // hash types
+        'hash'          => 'collection',
+        // boolean types
+        'boolean'       => 'checkbox',
+      ),
       'propel' => array(
-          'TIMESTAMP' => 'datetime',
-          'BU_TIMESTAMP' => 'datetime',
-          'DATE' => 'date',
-          'BU_DATE' => 'date',
-          'TIME' => 'time',
-          'FLOAT' => 'number',
-          'REAL' => 'number',
-          'DOUBLE' => 'number',
-          'DECIMAL' => 'number',
-          'TINYINT' => 'integer',
-          'SMALLINT' => 'integer',
-          'INTEGER' => 'integer',
-          'BIGINT' => 'integer',
-          'NUMERIC' => 'integer',
-          'CHAR' => 'text',
-          'VARCHAR' => 'text',
-          'LONGVARCHAR' => 'textarea',
-          'BLOB' => 'textarea',
-          'CLOB' => 'textarea',
-          'CLOB_EMU' => 'textarea',
-          'model' => 'model',
-          'collection' => 'collection',
-          'PHP_ARRAY' => 'collection',
-          'ENUM' => 'choice',
-          'BOOLEAN' => 'checkbox',
-          'BOOLEAN_EMU' => 'checkbox'
+        // datetime types
+        'TIMESTAMP'     => 'datetime',
+        'BU_TIMESTAMP'  => 'datetime',
+        // date types
+        'DATE'          => 'date',
+        'BU_DATE'       => 'date',
+        // time types
+        'TIME'          => 'time',
+        // number types
+        'FLOAT'         => 'number',
+        'REAL'          => 'number',
+        'DOUBLE'        => 'number',
+        'DECIMAL'       => 'number',
+        // integer types
+        'TINYINT'       => 'integer',
+        'SMALLINT'      => 'integer',
+        'INTEGER'       => 'integer',
+        'BIGINT'        => 'integer',
+        'NUMERIC'       => 'integer',
+        // text types
+        'CHAR'          => 'text',
+        'VARCHAR'       => 'text',
+        // textarea types
+        'LONGVARCHAR'   => 'textarea',
+        'BLOB'          => 'textarea',
+        'CLOB'          => 'textarea',
+        'CLOB_EMU'      => 'textarea',
+        // association types
+        'model'         => 'model',
+        'collection'    => 'collection',
+        // array types
+        'PHP_ARRAY'     => 'collection',
+        // choice types
+        'ENUM'          => 'choice',
+        // boolean types
+        'BOOLEAN'       => 'checkbox',
+        'BOOLEAN_EMU'   => 'checkbox',
       ));
 
     private $defaultFilterTypes = array(
       'doctrine_orm' => array(
-          'datetime' => 'datetime',
-          'vardatetime' => 'datetime',
-          'datetimetz' => 'datetime',
-          'date' => 'date',
-          'time' => 'time',
-          'decimal' => 'number',
-          'float' => 'number',
-          'integer' => 'number',
-          'bigint' => 'number',
-          'smallint' => 'number',
-          'string' => 'text',
-          'text' => 'text',
-          'entity' => 'model',
-          'collection' => 'collection',
-          'array' => 'text',
-          'boolean' => 'choice'),
+        // datetime types
+        'datetime'      => 'datetime',
+        'vardatetime'   => 'datetime',
+        'datetimetz'    => 'datetime',
+        'date'          => 'date',
+        // time types
+        'time'          => 'time',
+        // number types
+        'decimal'       => 'number',
+        'float'         => 'number',
+        // integer types
+        'integer'       => 'number',
+        'bigint'        => 'number',
+        'smallint'      => 'number',
+        // text types
+        'string'        => 'text',
+        // textarea types
+        'text'          => 'text',
+        // association types
+        'entity'        => 'model',
+        'collection'    => 'collection',
+        // array types
+        'array'         => 'text',
+        // boolean types
+        'boolean'       => 'choice',
+      ),
       'doctrine_odm' => array(
-          'datetime' => 'datetime',
-          'timestamp' => 'datetime',
-          'vardatetime' => 'datetime',
-          'datetimetz' => 'datetime',
-          'date' => 'date',
-          'time' => 'time',
-          'decimal' => 'number',
-          'float' => 'number',
-          'int' => 'number',
-          'integer' => 'number',
-          'int_id' => 'number',
-          'bigint' => 'number',
-          'smallint' => 'number',
-          'id' => 'text',
-          'custom_id' => 'text',
-          'string' => 'text',
-          'text' => 'text',
-          'document' => 'model',
-          'collection' => 'collection',
-          'hash' => 'text',
-          'boolean' => 'choice'),
+        // datetime types
+        'datetime'      => 'datetime',
+        'timestamp'     => 'datetime',
+        'vardatetime'   => 'datetime',
+        'datetimetz'    => 'datetime',
+        'date'          => 'date',
+        // time types
+        'time'          => 'time',
+        // number types
+        'decimal'       => 'number',
+        'float'         => 'number',
+        // integer types
+        'int'           => 'number',
+        'integer'       => 'number',
+        'int_id'        => 'number',
+        'bigint'        => 'number',
+        'smallint'      => 'number',
+        // text types
+        'id'            => 'text',
+        'custom_id'     => 'text',
+        'string'        => 'text',
+        // textarea types
+        'text'          => 'text',
+        // association types
+        'document'      => 'model',
+        'collection'    => 'collection',
+        // hash types
+        'hash'          => 'text',
+        // boolean types
+        'boolean'       => 'choice',
+      ),
       'propel' => array(
-          'TIMESTAMP' => 'datetime',
-          'BU_TIMESTAMP' => 'datetime',
-          'DATE' => 'date',
-          'BU_DATE' => 'date',
-          'TIME' => 'time',
-          'FLOAT' => 'number',
-          'REAL' => 'number',
-          'DOUBLE' => 'number',
-          'DECIMAL' => 'number',
-          'TINYINT' => 'number',
-          'SMALLINT' => 'number',
-          'INTEGER' => 'number',
-          'BIGINT' => 'number',
-          'NUMERIC' => 'number',
-          'CHAR' => 'text',
-          'VARCHAR' => 'text',
-          'LONGVARCHAR' => 'text',
-          'BLOB' => 'text',
-          'CLOB' => 'text',
-          'CLOB_EMU' => 'text',
-          'model' => 'model',
-          'collection' => 'collection',
-          'PHP_ARRAY' => 'text',
-          'ENUM' => 'text',
-          'BOOLEAN' => 'choice',
-          'BOOLEAN_EMU' => 'choice'
+        // datetime types
+        'TIMESTAMP'     => 'datetime',
+        'BU_TIMESTAMP'  => 'datetime',
+        // date types
+        'DATE'          => 'date',
+        'BU_DATE'       => 'date',
+        // time types
+        'TIME'          => 'time',
+        // number types
+        'FLOAT'         => 'number',
+        'REAL'          => 'number',
+        'DOUBLE'        => 'number',
+        'DECIMAL'       => 'number',
+        // integer types
+        'TINYINT'       => 'number',
+        'SMALLINT'      => 'number',
+        'INTEGER'       => 'number',
+        'BIGINT'        => 'number',
+        'NUMERIC'       => 'number',
+        // text types
+        'CHAR'          => 'text',
+        'VARCHAR'       => 'text',
+        // textarea types
+        'LONGVARCHAR'   => 'text',
+        'BLOB'          => 'text',
+        'CLOB'          => 'text',
+        'CLOB_EMU'      => 'text',
+        // association types
+        'model'         => 'model',
+        'collection'    => 'collection',
+        // array types
+        'PHP_ARRAY'     => 'text',
+        // choice types
+        'ENUM'          => 'text',
+        // boolean types
+        'BOOLEAN'       => 'choice',
+        'BOOLEAN_EMU'   => 'choice',
       ));
 
     /**
@@ -219,33 +281,7 @@ class Configuration implements ConfigurationInterface
                         ->arrayNode('doctrine_orm')
                             ->useAttributeAsKey('name')
                             ->prototype('scalar')->end()
-                            ->defaultValue(array(
-                                // datetime types
-                                'datetime'      => 'datetime',
-                                'vardatetime'   => 'datetime',
-                                'datetimetz'    => 'datetime',
-                                'date'          => 'date',
-                                // time types
-                                'time'          => 'time',
-                                // number types
-                                'decimal'       => 'number',
-                                'float'         => 'number',
-                                // integer types
-                                'integer'       => 'integer',
-                                'bigint'        => 'integer',
-                                'smallint'      => 'integer',
-                                // text types
-                                'string'        => 'text',
-                                // textarea types
-                                'text'          => 'textarea',
-                                // association types
-                                'entity'        => 'entity',
-                                'collection'    => 'collection',
-                                // array types
-                                'array'         => 'collection',
-                                // boolean types
-                                'boolean'       => 'checkbox',
-                            ))
+                            ->defaultValue($this->defaultFormTypes['doctrine_orm'])
                             ->validate()
                             ->ifNotInArray(array_keys($this->defaultFormTypes['doctrine_orm']))
                                 ->then(function($v) {
@@ -256,87 +292,18 @@ class Configuration implements ConfigurationInterface
                         ->arrayNode('doctrine_odm')
                             ->useAttributeAsKey('name')
                             ->prototype('scalar')->end()
-                            ->defaultValue(array(
-                                // datetime types
-                                'datetime'      => 'datetime',
-                                'timestamp'     => 'datetime',
-                                'vardatetime'   => 'datetime',
-                                'datetimetz'    => 'datetime',
-                                'date'          => 'date',
-                                // time types
-                                'time'          => 'time',
-                                // number types
-                                'decimal'       => 'number',
-                                'float'         => 'number',
-                                // integer types
-                                'int'           => 'integer',
-                                'integer'       => 'integer',
-                                'int_id'        => 'integer',
-                                'bigint'        => 'integer',
-                                'smallint'      => 'integer',
-                                // text types
-                                'id'            => 'text',
-                                'custom_id'     => 'text',
-                                'string'        => 'text',
-                                // textarea types
-                                'text'          => 'textarea',
-                                // association types
-                                'document'      => 'document',
-                                'collection'    => 'collection',
-                                // hash types
-                                'hash'          => 'collection',
-                                // boolean types
-                                'boolean'       => 'checkbox',
-                            ))
+                            ->defaultValue($this->defaultFormTypes['doctrine_odm'])
                             ->validate()
                             ->ifNotInArray(array_values($this->defaultFormTypes['doctrine_odm']))
                                 ->then(function ($v){
-                                    return array_merge($this->defaultFormTypes['doctrine_odm']);
+                                    return array_merge($this->defaultFormTypes['doctrine_odm'], $v);
                                 })
                             ->end()
                         ->end()
                         ->arrayNode('propel')
                             ->useAttributeAsKey('name')
                             ->prototype('scalar')->end()
-                            ->defaultValue(array(
-                                // datetime types
-                                'TIMESTAMP'     => 'datetime',
-                                'BU_TIMESTAMP'  => 'datetime',
-                                // date types
-                                'DATE'          => 'date',
-                                'BU_DATE'       => 'date',
-                                // time types
-                                'TIME'          => 'time',
-                                // number types
-                                'FLOAT'         => 'number',
-                                'REAL'          => 'number',
-                                'DOUBLE'        => 'number',
-                                'DECIMAL'       => 'number',
-                                // integer types
-                                'TINYINT'       => 'integer',
-                                'SMALLINT'      => 'integer',
-                                'INTEGER'       => 'integer',
-                                'BIGINT'        => 'integer',
-                                'NUMERIC'       => 'integer',
-                                // text types
-                                'CHAR'          => 'text',
-                                'VARCHAR'       => 'text',
-                                // textarea types
-                                'LONGVARCHAR'   => 'textarea',
-                                'BLOB'          => 'textarea',
-                                'CLOB'          => 'textarea',
-                                'CLOB_EMU'      => 'textarea',
-                                // association types
-                                'model'         => 'model',
-                                'collection'    => 'collection',
-                                // array types
-                                'PHP_ARRAY'     => 'collection',
-                                // choice types
-                                'ENUM'          => 'choice',
-                                // boolean types
-                                'BOOLEAN'       => 'checkbox',
-                                'BOOLEAN_EMU'   => 'checkbox',
-                            ))
+                            ->defaultValue($this->defaultFormTypes['propel'])
                             ->validate()
                             ->ifNotInArray(array_values($this->defaultFormTypes['propel']))
                                 ->then(function ($v){
@@ -352,33 +319,7 @@ class Configuration implements ConfigurationInterface
                         ->arrayNode('doctrine_orm')
                             ->useAttributeAsKey('name')
                             ->prototype('scalar')->end()
-                            ->defaultValue(array(
-                                // datetime types
-                                'datetime'      => 'datetime',
-                                'vardatetime'   => 'datetime',
-                                'datetimetz'    => 'datetime',
-                                'date'          => 'date',
-                                // time types
-                                'time'          => 'time',
-                                // number types
-                                'decimal'       => 'number',
-                                'float'         => 'number',
-                                // integer types
-                                'integer'       => 'number',
-                                'bigint'        => 'number',
-                                'smallint'      => 'number',
-                                // text types
-                                'string'        => 'text',
-                                // textarea types
-                                'text'          => 'text',
-                                // association types
-                                'entity'        => 'model',
-                                'collection'    => 'collection',
-                                // array types
-                                'array'         => 'text',
-                                // boolean types
-                                'boolean'       => 'choice',
-                            ))
+                            ->defaultValue($this->defaultFilterTypes['doctrine_orm'])
                             ->validate()
                             ->ifNotInArray(array_values($this->defaultFilterTypes['doctrine_orm']))
                                 ->then(function ($v){
@@ -389,38 +330,7 @@ class Configuration implements ConfigurationInterface
                         ->arrayNode('doctrine_odm')
                             ->useAttributeAsKey('name')
                             ->prototype('scalar')->end()
-                            ->defaultValue(array(
-                                // datetime types
-                                'datetime'      => 'datetime',
-                                'timestamp'     => 'datetime',
-                                'vardatetime'   => 'datetime',
-                                'datetimetz'    => 'datetime',
-                                'date'          => 'date',
-                                // time types
-                                'time'          => 'time',
-                                // number types
-                                'decimal'       => 'number',
-                                'float'         => 'number',
-                                // integer types
-                                'int'           => 'number',
-                                'integer'       => 'number',
-                                'int_id'        => 'number',
-                                'bigint'        => 'number',
-                                'smallint'      => 'number',
-                                // text types
-                                'id'            => 'text',
-                                'custom_id'     => 'text',
-                                'string'        => 'text',
-                                // textarea types
-                                'text'          => 'text',
-                                // association types
-                                'document'      => 'model',
-                                'collection'    => 'collection',
-                                // hash types
-                                'hash'          => 'text',
-                                // boolean types
-                                'boolean'       => 'choice',
-                            ))
+                            ->defaultValue($this->defaultFilterTypes['doctrine_odm'])
                             ->validate()
                             ->ifNotInArray(array_keys($this->defaultFilterTypes['doctrine_odm']))
                                 ->then(function ($v){
@@ -431,45 +341,7 @@ class Configuration implements ConfigurationInterface
                         ->arrayNode('propel')
                             ->useAttributeAsKey('name')
                             ->prototype('scalar')->end()
-                            ->defaultValue(array(
-                                // datetime types
-                                'TIMESTAMP'     => 'datetime',
-                                'BU_TIMESTAMP'  => 'datetime',
-                                // date types
-                                'DATE'          => 'date',
-                                'BU_DATE'       => 'date',
-                                // time types
-                                'TIME'          => 'time',
-                                // number types
-                                'FLOAT'         => 'number',
-                                'REAL'          => 'number',
-                                'DOUBLE'        => 'number',
-                                'DECIMAL'       => 'number',
-                                // integer types
-                                'TINYINT'       => 'number',
-                                'SMALLINT'      => 'number',
-                                'INTEGER'       => 'number',
-                                'BIGINT'        => 'number',
-                                'NUMERIC'       => 'number',
-                                // text types
-                                'CHAR'          => 'text',
-                                'VARCHAR'       => 'text',
-                                // textarea types
-                                'LONGVARCHAR'   => 'text',
-                                'BLOB'          => 'text',
-                                'CLOB'          => 'text',
-                                'CLOB_EMU'      => 'text',
-                                // association types
-                                'model'         => 'model',
-                                'collection'    => 'collection',
-                                // array types
-                                'PHP_ARRAY'     => 'text',
-                                // choice types
-                                'ENUM'          => 'text',
-                                // boolean types
-                                'BOOLEAN'       => 'choice',
-                                'BOOLEAN_EMU'   => 'choice',
-                            ))
+                            ->defaultValue($this->defaultFilterTypes['propel'])
                             ->validate()
                             ->ifNotInArray(array_values($this->defaultFilterTypes['propel']))
                                 ->then(function ($v){
