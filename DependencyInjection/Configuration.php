@@ -79,7 +79,8 @@ class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->children()
                         ->arrayNode('doctrine_orm')
-                            ->addDefaultsIfNotSet()
+                            ->useAttributeAsKey('name')
+                            ->prototype('scalar')->end()
                             ->children()
                                 // datetime types
                                 ->scalarNode('datetime')->defaultValue('datetime')->end()
@@ -107,11 +108,10 @@ class Configuration implements ConfigurationInterface
                                 // boolean types
                                 ->scalarNode('boolean')->defaultValue('checkbox')->end()
                             ->end()
-                            ->useAttributeAsKey('name')
-                            ->prototype('scalar')->end()
                         ->end()
                         ->arrayNode('doctrine_odm')
-                            ->addDefaultsIfNotSet()
+                            ->useAttributeAsKey('name')
+                            ->prototype('scalar')->end()
                             ->children()
                                 // datetime types
                                 ->scalarNode('datetime')->defaultValue('datetime')->end()
@@ -144,11 +144,10 @@ class Configuration implements ConfigurationInterface
                                 // boolean types
                                 ->scalarNode('boolean')->defaultValue('checkbox')->end()
                             ->end()
-                            ->useAttributeAsKey('name')
-                            ->prototype('scalar')->end()
                         ->end()
                         ->arrayNode('propel')
-                            ->addDefaultsIfNotSet()
+                            ->useAttributeAsKey('name')
+                            ->prototype('scalar')->end()
                             ->children()
                                 // datetime types
                                 ->scalarNode('TIMESTAMP')->defaultValue('datetime')->end()
@@ -188,8 +187,6 @@ class Configuration implements ConfigurationInterface
                                 ->scalarNode('BOOLEAN')->defaultValue('checkbox')->end()
                                 ->scalarNode('BOOLEAN_EMU')->defaultValue('checkbox')->end()
                             ->end()
-                            ->useAttributeAsKey('name')
-                            ->prototype('scalar')->end()
                         ->end()
                     ->end()
                 ->end()
@@ -197,7 +194,8 @@ class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->children()
                         ->arrayNode('doctrine_orm')
-                            ->addDefaultsIfNotSet()
+                            ->useAttributeAsKey('name')
+                            ->prototype('scalar')->end()
                             ->children()
                                 // datetime types
                                 ->scalarNode('datetime')->defaultValue('datetime')->end()
@@ -225,11 +223,10 @@ class Configuration implements ConfigurationInterface
                                 // boolean types
                                 ->scalarNode('boolean')->defaultValue('choice')->end()
                             ->end()
-                            ->useAttributeAsKey('name')
-                            ->prototype('scalar')->end()
                         ->end()
                         ->arrayNode('doctrine_odm')
-                            ->addDefaultsIfNotSet()
+                            ->useAttributeAsKey('name')
+                            ->prototype('scalar')->end()
                             ->children()
                                 // datetime types
                                 ->scalarNode('datetime')->defaultValue('datetime')->end()
@@ -262,11 +259,10 @@ class Configuration implements ConfigurationInterface
                                 // boolean types
                                 ->scalarNode('boolean')->defaultValue('choice')->end()
                             ->end()
-                            ->useAttributeAsKey('name')
-                            ->prototype('scalar')->end()
                         ->end()
                         ->arrayNode('propel')
-                            ->addDefaultsIfNotSet()
+                            ->useAttributeAsKey('name')
+                            ->prototype('scalar')->end()
                             ->children()
                                 // datetime types
                                 ->scalarNode('TIMESTAMP')->defaultValue('datetime')->end()
@@ -306,8 +302,6 @@ class Configuration implements ConfigurationInterface
                                 ->scalarNode('BOOLEAN')->defaultValue('choice')->end()
                                 ->scalarNode('BOOLEAN_EMU')->defaultValue('choice')->end()
                             ->end()
-                            ->useAttributeAsKey('name')
-                            ->prototype('scalar')->end()
                         ->end()
                     ->end()
                 ->end()
