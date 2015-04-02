@@ -84,30 +84,30 @@ class Configuration implements ConfigurationInterface
                             ->prototype('scalar')->end()
                             ->defaultValue(array(
                                 // datetime types
-                                'datetime'      => 'datetime'
-                                'vardatetime'   => 'datetime'
-                                'datetimetz'    => 'datetime'
-                                'date'          => 'date'
+                                'datetime'      => 'datetime',
+                                'vardatetime'   => 'datetime',
+                                'datetimetz'    => 'datetime',
+                                'date'          => 'date',
                                 // time types
-                                'time'          => 'time'
+                                'time'          => 'time',
                                 // number types
-                                'decimal'       => 'number'
-                                'float'         => 'number'
+                                'decimal'       => 'number',
+                                'float'         => 'number',
                                 // integer types
-                                'integer'       => 'integer'
-                                'bigint'        => 'integer'
-                                'smallint'      => 'integer'
+                                'integer'       => 'integer',
+                                'bigint'        => 'integer',
+                                'smallint'      => 'integer',
                                 // text types
-                                'string'        => 'text'
+                                'string'        => 'text',
                                 // textarea types
-                                'text'          => 'textarea'
+                                'text'          => 'textarea',
                                 // association types
-                                'entity'        => 'entity'
-                                'collection'    => 'collection'
+                                'entity'        => 'entity',
+                                'collection'    => 'collection',
                                 // array types
-                                'array'         => 'collection'
+                                'array'         => 'collection',
                                 // boolean types
-                                'boolean'       => 'checkbox'
+                                'boolean'       => 'checkbox',
                             ))
                         ->end()
                         ->arrayNode('doctrine_odm')
@@ -116,35 +116,35 @@ class Configuration implements ConfigurationInterface
                             ->prototype('scalar')->end()
                             ->defaultValue(array(
                                 // datetime types
-                                'datetime'      => 'datetime'
-                                'timestamp'     => 'datetime'
-                                'vardatetime'   => 'datetime'
-                                'datetimetz'    => 'datetime'
-                                'date'          => 'date'
+                                'datetime'      => 'datetime',
+                                'timestamp'     => 'datetime',
+                                'vardatetime'   => 'datetime',
+                                'datetimetz'    => 'datetime',
+                                'date'          => 'date',
                                 // time types
-                                'time'          => 'time'
+                                'time'          => 'time',
                                 // number types
-                                'decimal'       => 'number'
-                                'float'         => 'number'
+                                'decimal'       => 'number',
+                                'float'         => 'number',
                                 // integer types
-                                'int'           => 'integer'
-                                'integer'       => 'integer'
-                                'int_id'        => 'integer'
-                                'bigint'        => 'integer'
-                                'smallint'      => 'integer'
+                                'int'           => 'integer',
+                                'integer'       => 'integer',
+                                'int_id'        => 'integer',
+                                'bigint'        => 'integer',
+                                'smallint'      => 'integer',
                                 // text types
-                                'id'            => 'text'
-                                'custom_id'     => 'text'
-                                'string'        => 'text'
+                                'id'            => 'text',
+                                'custom_id'     => 'text',
+                                'string'        => 'text',
                                 // textarea types
-                                'text'          => 'textarea'
+                                'text'          => 'textarea',
                                 // association types
-                                'document'      => 'document'
-                                'collection'    => 'collection'
+                                'document'      => 'document',
+                                'collection'    => 'collection',
                                 // hash types
-                                'hash'          => 'collection'
+                                'hash'          => 'collection',
                                 // boolean types
-                                'boolean'       => 'checkbox'
+                                'boolean'       => 'checkbox',
                             ))
                         ->end()
                         ->arrayNode('propel')
@@ -153,42 +153,42 @@ class Configuration implements ConfigurationInterface
                             ->prototype('scalar')->end()
                             ->defaultValue(array(
                                 // datetime types
-                                'TIMESTAMP'     => 'datetime'
-                                'BU_TIMESTAMP'  => 'datetime'
+                                'TIMESTAMP'     => 'datetime',
+                                'BU_TIMESTAMP'  => 'datetime',
                                 // date types
-                                'DATE'          => 'date'
-                                'BU_DATE'       => 'date'
+                                'DATE'          => 'date',
+                                'BU_DATE'       => 'date',
                                 // time types
-                                'TIME'          => 'time'
+                                'TIME'          => 'time',
                                 // number types
-                                'FLOAT'         => 'number'
-                                'REAL'          => 'number'
-                                'DOUBLE'        => 'number'
-                                'DECIMAL'       => 'number'
+                                'FLOAT'         => 'number',
+                                'REAL'          => 'number',
+                                'DOUBLE'        => 'number',
+                                'DECIMAL'       => 'number',
                                 // integer types
-                                'TINYINT'       => 'integer'
-                                'SMALLINT'      => 'integer'
-                                'INTEGER'       => 'integer'
-                                'BIGINT'        => 'integer'
-                                'NUMERIC'       => 'integer'
+                                'TINYINT'       => 'integer',
+                                'SMALLINT'      => 'integer',
+                                'INTEGER'       => 'integer',
+                                'BIGINT'        => 'integer',
+                                'NUMERIC'       => 'integer',
                                 // text types
-                                'CHAR'          => 'text'
-                                'VARCHAR'       => 'text'
+                                'CHAR'          => 'text',
+                                'VARCHAR'       => 'text',
                                 // textarea types
-                                'LONGVARCHAR'   => 'textarea'
-                                'BLOB'          => 'textarea'
-                                'CLOB'          => 'textarea'
-                                'CLOB_EMU'      => 'textarea'
+                                'LONGVARCHAR'   => 'textarea',
+                                'BLOB'          => 'textarea',
+                                'CLOB'          => 'textarea',
+                                'CLOB_EMU'      => 'textarea',
                                 // association types
-                                'model'         => 'model'
-                                'collection'    => 'collection'
+                                'model'         => 'model',
+                                'collection'    => 'collection',
                                 // array types
-                                'PHP_ARRAY'     => 'collection'
+                                'PHP_ARRAY'     => 'collection',
                                 // choice types
-                                'ENUM'          => 'choice'
+                                'ENUM'          => 'choice',
                                 // boolean types
-                                'BOOLEAN'       => 'checkbox'
-                                'BOOLEAN_EMU'   => 'checkbox'
+                                'BOOLEAN'       => 'checkbox',
+                                'BOOLEAN_EMU'   => 'checkbox',
                             ))
                         ->end()
                     ->end()
@@ -202,30 +202,30 @@ class Configuration implements ConfigurationInterface
                             ->prototype('scalar')->end()
                             ->defaultValue(array(
                                 // datetime types
-                                'datetime'      => 'datetime'
-                                'vardatetime'   => 'datetime'
-                                'datetimetz'    => 'datetime'
-                                'date'          => 'date'
+                                'datetime'      => 'datetime',
+                                'vardatetime'   => 'datetime',
+                                'datetimetz'    => 'datetime',
+                                'date'          => 'date',
                                 // time types
-                                'time'          => 'time'
+                                'time'          => 'time',
                                 // number types
-                                'decimal'       => 'number'
-                                'float'         => 'number'
+                                'decimal'       => 'number',
+                                'float'         => 'number',
                                 // integer types
-                                'integer'       => 'number'
-                                'bigint'        => 'number'
-                                'smallint'      => 'number'
+                                'integer'       => 'number',
+                                'bigint'        => 'number',
+                                'smallint'      => 'number',
                                 // text types
-                                'string'        => 'text'
+                                'string'        => 'text',
                                 // textarea types
-                                'text'          => 'text'
+                                'text'          => 'text',
                                 // association types
-                                'entity'        => 'model'
-                                'collection'    => 'collection'
+                                'entity'        => 'model',
+                                'collection'    => 'collection',
                                 // array types
-                                'array'         => 'text'
+                                'array'         => 'text',
                                 // boolean types
-                                'boolean'       => 'choice'
+                                'boolean'       => 'choice',
                             ))
                         ->end()
                         ->arrayNode('doctrine_odm')
@@ -234,35 +234,35 @@ class Configuration implements ConfigurationInterface
                             ->prototype('scalar')->end()
                             ->defaultValue(array(
                                 // datetime types
-                                'datetime'      => 'datetime'
-                                'timestamp'     => 'datetime'
-                                'vardatetime'   => 'datetime'
-                                'datetimetz'    => 'datetime'
-                                'date'          => 'date'
+                                'datetime'      => 'datetime',
+                                'timestamp'     => 'datetime',
+                                'vardatetime'   => 'datetime',
+                                'datetimetz'    => 'datetime',
+                                'date'          => 'date',
                                 // time types
-                                'time'          => 'time'
+                                'time'          => 'time',
                                 // number types
-                                'decimal'       => 'number'
-                                'float'         => 'number'
+                                'decimal'       => 'number',
+                                'float'         => 'number',
                                 // integer types
-                                'int'           => 'number'
-                                'integer'       => 'number'
-                                'int_id'        => 'number'
-                                'bigint'        => 'number'
-                                'smallint'      => 'number'
+                                'int'           => 'number',
+                                'integer'       => 'number',
+                                'int_id'        => 'number',
+                                'bigint'        => 'number',
+                                'smallint'      => 'number',
                                 // text types
-                                'id'            => 'text'
-                                'custom_id'     => 'text'
-                                'string'        => 'text'
+                                'id'            => 'text',
+                                'custom_id'     => 'text',
+                                'string'        => 'text',
                                 // textarea types
-                                'text'          => 'text'
+                                'text'          => 'text',
                                 // association types
-                                'document'      => 'model'
-                                'collection'    => 'collection'
+                                'document'      => 'model',
+                                'collection'    => 'collection',
                                 // hash types
-                                'hash'          => 'text'
+                                'hash'          => 'text',
                                 // boolean types
-                                'boolean'       => 'choice'
+                                'boolean'       => 'choice',
                             ))
                         ->end()
                         ->arrayNode('propel')
@@ -271,42 +271,42 @@ class Configuration implements ConfigurationInterface
                             ->prototype('scalar')->end()
                             ->defaultValue(array(
                                 // datetime types
-                                'TIMESTAMP'     => 'datetime'
-                                'BU_TIMESTAMP'  => 'datetime'
+                                'TIMESTAMP'     => 'datetime',
+                                'BU_TIMESTAMP'  => 'datetime',
                                 // date types
-                                'DATE'          => 'date'
-                                'BU_DATE'       => 'date'
+                                'DATE'          => 'date',
+                                'BU_DATE'       => 'date',
                                 // time types
-                                'TIME'          => 'time'
+                                'TIME'          => 'time',
                                 // number types
-                                'FLOAT'         => 'number'
-                                'REAL'          => 'number'
-                                'DOUBLE'        => 'number'
-                                'DECIMAL'       => 'number'
+                                'FLOAT'         => 'number',
+                                'REAL'          => 'number',
+                                'DOUBLE'        => 'number',
+                                'DECIMAL'       => 'number',
                                 // integer types
-                                'TINYINT'       => 'number'
-                                'SMALLINT'      => 'number'
-                                'INTEGER'       => 'number'
-                                'BIGINT'        => 'number'
-                                'NUMERIC'       => 'number'
+                                'TINYINT'       => 'number',
+                                'SMALLINT'      => 'number',
+                                'INTEGER'       => 'number',
+                                'BIGINT'        => 'number',
+                                'NUMERIC'       => 'number',
                                 // text types
-                                'CHAR'          => 'text'
-                                'VARCHAR'       => 'text'
+                                'CHAR'          => 'text',
+                                'VARCHAR'       => 'text',
                                 // textarea types
-                                'LONGVARCHAR'   => 'text'
-                                'BLOB'          => 'text'
-                                'CLOB'          => 'text'
-                                'CLOB_EMU'      => 'text'
+                                'LONGVARCHAR'   => 'text',
+                                'BLOB'          => 'text',
+                                'CLOB'          => 'text',
+                                'CLOB_EMU'      => 'text',
                                 // association types
-                                'model'         => 'model'
-                                'collection'    => 'collection'
+                                'model'         => 'model',
+                                'collection'    => 'collection',
                                 // array types
-                                'PHP_ARRAY'     => 'text'
+                                'PHP_ARRAY'     => 'text',
                                 // choice types
-                                'ENUM'          => 'text'
+                                'ENUM'          => 'text',
                                 // boolean types
-                                'BOOLEAN'       => 'choice'
-                                'BOOLEAN_EMU'   => 'choice'
+                                'BOOLEAN'       => 'choice',
+                                'BOOLEAN_EMU'   => 'choice',
                             ))
                         ->end()
                     ->end()
