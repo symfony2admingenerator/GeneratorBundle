@@ -43,7 +43,7 @@ class EntityManagerMock extends \Doctrine\ORM\EntityManager
     /**
      * Sets a (mock) UnitOfWork that will be returned when getUnitOfWork() is called.
      *
-     * @param <type> $uow
+     * @param \Doctrine\ORM\UnitOfWork $uow
      */
     public function setUnitOfWork($uow)
     {
