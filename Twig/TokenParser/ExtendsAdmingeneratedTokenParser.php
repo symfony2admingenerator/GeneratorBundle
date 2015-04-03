@@ -2,7 +2,7 @@
 
 namespace Admingenerator\GeneratorBundle\Twig\TokenParser;
 
-class ExtendsAdmingeneratedTokenParser  extends \Twig_TokenParser
+class ExtendsAdmingeneratedTokenParser extends \Twig_TokenParser
 {
 
     /**
@@ -22,7 +22,7 @@ class ExtendsAdmingeneratedTokenParser  extends \Twig_TokenParser
 
         $path = "Admingenerated/$bundle/Resources/views/$folder/$file";
 
-        $value = $this->parser->getExpressionParser()->parseExpression();
+        $this->parser->getExpressionParser()->parseExpression();
 
         $this->parser->setParent(new \Twig_Node_Expression_Constant($path,$token->getLine()));
         $this->parser->getStream()->expect(\Twig_Token::BLOCK_END_TYPE);
