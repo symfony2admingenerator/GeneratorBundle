@@ -23,6 +23,10 @@ class DoctrineQueryFilter extends BaseQueryFilter
         }
     }
 
+    /**
+     * @param string $field
+     * @param string $value
+     */
     public function addStringFilter($field, $value)
     {
         $this->query->andWhere(sprintf('q.%s LIKE :%s',$field, $field));
