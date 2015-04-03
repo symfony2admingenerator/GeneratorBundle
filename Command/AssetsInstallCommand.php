@@ -66,6 +66,8 @@ class AssetsInstallCommand extends ContainerAwareCommand
                 $output->write($formatter->formatSection('Bower', $buffer, 'info' ));
             }
         });
+        
+        return $process->getExitCode();
     }
 
     /**
