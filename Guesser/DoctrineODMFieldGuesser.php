@@ -55,6 +55,21 @@ class DoctrineODMFieldGuesser extends ContainerAware
         return $fields;
     }
 
+    public function getAllAssociations($class)
+    {
+        $associations = array();
+
+        $metadata = $this->getMetadatas($class);
+
+        foreach ($metadata->fieldMappings as $fieldName => $fieldMetadatas) {
+            if (!$metadata->hasField($fieldName)) {
+                $associations[] = $fieldName;
+            }
+        }
+
+        return $associations;
+    }
+
     /**
      * Find out the database type for given model field path.
      *
