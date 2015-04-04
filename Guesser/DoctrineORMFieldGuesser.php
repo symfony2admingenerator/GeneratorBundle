@@ -37,6 +37,7 @@ class DoctrineORMFieldGuesser extends ContainerAware
         if (!$this->doctrine->getManagerForClass(self::$current_class)->getConfiguration()->getMetadataDriverImpl()->isTransient($class)) {
             $this->metadata[self::$current_class] = $this->doctrine->getManagerForClass(self::$current_class)->getClassMetadata($class);
         }
+        
         return $this->metadata[self::$current_class];
     }
 
