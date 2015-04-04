@@ -46,6 +46,11 @@ class DoctrineORMFieldGuesser extends ContainerAware
         return $this->getMetadatas($class)->getFieldNames();
     }
 
+    public function getAllAssociations($class)
+    {
+        return $this->getMetadatas($class)->getAssociationNames();
+    }
+
     /**
      * Find out the database type for given model field path.
      *

@@ -36,6 +36,14 @@ class PropelORMFieldGuesser extends ContainerAware
         return $return;
     }
 
+   /**
+    * TODO: write correct fuction for retrieving association columns
+    */
+    public function getAllAssociations($class)
+    {
+        return array();
+    }
+
     /**
      * Find out the database type for given model field path.
      *

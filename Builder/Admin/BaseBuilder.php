@@ -237,13 +237,23 @@ class BaseBuilder extends GenericBaseBuilder
     }
 
     /**
-     * Retrieve all columns
+     * Retrieve all field columns
      *
      * @return array
      */
     protected function getAllFields()
     {
         return $this->getFieldGuesser()->getAllFields($this->getVariable('model'));
+    }
+
+    /**
+     * Retrieve all association columns
+     *
+     * @return array
+     */
+    protected function getAllAssociations()
+    {
+        return $this->getFieldGuesser()->getAllAssociations($this->getVariable('model'));
     }
 
     /**
