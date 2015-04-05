@@ -229,7 +229,10 @@ class DoctrineORMFieldGuesser extends ContainerAware
                 'allow_add'     => true,
                 'allow_delete'  => true,
                 'by_reference'  => false,
-                'data_class'    => $mapping['targetEntity']
+                'type' => 'entity',
+                'options' => array(
+                    'class' => $mapping['targetEntity']
+                )
             );
         }
 

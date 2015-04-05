@@ -255,10 +255,16 @@ class PropelORMFieldGuesser extends ContainerAware
         }
 
         if (preg_match("#^collection#i", $formType) || preg_match("#collection$#i", $formType)) {
+            $relation = $this->getRelation($columnName, $class);
+
             return array(
                 'allow_add'     => true,
                 'allow_delete'  => true,
                 'by_reference'  => false,
+                'type' => 'entity',
+                'options' => array(
+                    'class' => \RelationMap::MANY_TO_ONE === $relation->getType() ? $relation->getForeignTable()->getClassname() : $relation->getLocalTable()->getClassname()
+                )
             );
         }
 

@@ -189,10 +189,16 @@ class DoctrineODMFieldGuesser extends ContainerAware
         }
 
         if (preg_match("#^collection#i", $formType) || preg_match("#collection$#i", $formType)) {
+            $mapping = $this->getMetadatas($class)->getFieldMapping($columnName);
+
             return array(
                 'allow_add'     => true,
                 'allow_delete'  => true,
                 'by_reference'  => false,
+                'type' => 'entity',
+                'options' => array(
+                    'class' => $mapping['targetEntity']
+                )
             );
         }
 
