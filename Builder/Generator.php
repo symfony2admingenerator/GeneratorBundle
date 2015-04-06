@@ -70,9 +70,6 @@ class Generator extends TwigGeneratorGenerator
             $this->getFromYaml(sprintf('builders.%s.params', $builder->getYamlKey()), array())
         );
 
-        // TODO: fix this or remove
-        //$params = $this->applyActionsCredentialDefaults($params);
-
         $builder->setVariables($params);
         $builder->setColumnClass($this->getColumnClass());
     }
