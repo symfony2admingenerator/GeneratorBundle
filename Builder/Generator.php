@@ -15,7 +15,7 @@ class Generator extends TwigGeneratorGenerator
     const TEMP_DIR_PREFIX = 'Admingenerator';
 
     /**
-     * @var file $yaml the yaml
+     * @var array $yaml The yaml array.
      */
     protected $yaml;
 
