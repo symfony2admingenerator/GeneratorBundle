@@ -19,6 +19,10 @@ class DoctrineQueryFilter extends BaseQueryFilter
         }
     }
 
+    /**
+     * @param string $field
+     * @param boolean $value
+     */
     public function addBooleanFilter($field, $value)
     {
         if ("" !== $value) {
