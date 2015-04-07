@@ -16,6 +16,6 @@ class EmptyBuilderAction extends BaseBuilder
     {
         $reflClass = new \ReflectionClass($this);
 
-        return array(realpath(dirname($reflClass->getFileName().'/../../Resources/templates'));
+        return array(realpath(dirname($reflClass->getFileName()).'/../../Resources/templates'));
     }
 }
