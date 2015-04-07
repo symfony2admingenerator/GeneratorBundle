@@ -252,6 +252,9 @@ class Column
         return $this->filterOn = $filterOn;
     }
 
+    /**
+     * @param string $text
+     */
     private function humanize($text)
     {
         return ucfirst(str_replace('_', ' ', $text));
