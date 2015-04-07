@@ -44,7 +44,6 @@ EOT
         $questionHelper->writeSection($output, 'Welcome to the Symfony2Admingenerator');
         $output->writeln('<comment>Create controllers for a generator module</comment>');
 
-        $generator = $input->getOption('generator');
         $question = new ChoiceQuestion(
             'Generator to use (doctrine, doctrine_odm, propel)',
             array('doctrine','doctrine_odm','propel'),
@@ -53,7 +52,6 @@ EOT
         $question->setErrorMessage('Generator to use have to be doctrine, doctrine_odm or propel.');
         $generator = $questionHelper->ask($input, $output, $question);
         $input->setOption('generator', $generator);
-
 
         $namespace = null;
         try {
@@ -87,7 +85,6 @@ EOT
                 $question = new Question($questionHelper->getQuestion('Bundle namespace', $input->getOption('namespace')), $input->getOption('namespace'));
                 $question->setValidator(function ($answer) {
                         return Validators::validateBundleNamespace($answer, false);
-
                 });
                 $namespace = $questionHelper->ask($input, $output, $question);
 
@@ -114,7 +111,6 @@ EOT
             $input->setOption('namespace', $namespace);
         }
 
-
         // Model name
         $modelName = $input->getOption('model-name');
         $question = new Question($questionHelper->getQuestion('Model name', $modelName), $modelName);
@@ -126,7 +122,6 @@ EOT
         });
         $modelName = $questionHelper->ask($input, $output, $question);
         $input->setOption('model-name', $modelName);
-
 
         // bundle name
         $bundle = null;
@@ -201,7 +196,6 @@ EOT
             $format = $questionHelper->ask($input, $output, $question);
             $input->setOption('format', $format);
         }
-
 
         // prefix
         $prefix = $input->getOption('prefix');

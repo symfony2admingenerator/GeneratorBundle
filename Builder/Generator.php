@@ -15,7 +15,7 @@ class Generator extends TwigGeneratorGenerator
     const TEMP_DIR_PREFIX = 'Admingenerator';
 
     /**
-     * @var file $yaml the yaml
+     * @var array $yaml The yaml array.
      */
     protected $yaml;
 
@@ -69,9 +69,6 @@ class Generator extends TwigGeneratorGenerator
             $params,
             $this->getFromYaml(sprintf('builders.%s.params', $builder->getYamlKey()), array())
         );
-
-        // TODO: fix this or remove
-        //$params = $this->applyActionsCredentialDefaults($params);
 
         $builder->setVariables($params);
         $builder->setColumnClass($this->getColumnClass());
