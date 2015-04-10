@@ -25,28 +25,28 @@ class QueryFilterTest extends TestCase
     {
         $this->queryFilter->addStringFilter('title', 'test');
 
-        $this->assertEquals('SELECT q FROM Admingenerator\GeneratorBundle\Tests\QueryFilter\Entity\Movie q WHERE q.title LIKE :title', $this->queryFilter->getQuery()->getDql());
+        $this->assertEquals('SELECT q FROM Admingenerator\GeneratorBundle\Tests\QueryFilter\Entity\Movie q WHERE q.title LIKE :title_0', $this->queryFilter->getQuery()->getDql());
     }
 
     public function testAddTextFilter()
     {
         $this->queryFilter->addTextFilter('desc', 'test');
 
-        $this->assertEquals('SELECT q FROM Admingenerator\GeneratorBundle\Tests\QueryFilter\Entity\Movie q WHERE q.desc LIKE :desc', $this->queryFilter->getQuery()->getDql());
+        $this->assertEquals('SELECT q FROM Admingenerator\GeneratorBundle\Tests\QueryFilter\Entity\Movie q WHERE q.desc LIKE :desc_0', $this->queryFilter->getQuery()->getDql());
     }
 
     public function testAddDefaultFilter()
     {
         $this->queryFilter->addDefaultFilter('title', 'test');
 
-        $this->assertEquals('SELECT q FROM Admingenerator\GeneratorBundle\Tests\QueryFilter\Entity\Movie q WHERE q.title = :title', $this->queryFilter->getQuery()->getDql());
+        $this->assertEquals('SELECT q FROM Admingenerator\GeneratorBundle\Tests\QueryFilter\Entity\Movie q WHERE q.title = :title_0', $this->queryFilter->getQuery()->getDql());
     }
 
     public function testCall()
     {
         $this->queryFilter->addFooFilter('title', 'test');
 
-        $this->assertEquals('SELECT q FROM Admingenerator\GeneratorBundle\Tests\QueryFilter\Entity\Movie q WHERE q.title = :title', $this->queryFilter->getQuery()->getDql());
+        $this->assertEquals('SELECT q FROM Admingenerator\GeneratorBundle\Tests\QueryFilter\Entity\Movie q WHERE q.title = :title_0', $this->queryFilter->getQuery()->getDql());
     }
 
     protected function initQueryFilter()
