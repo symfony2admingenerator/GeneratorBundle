@@ -200,11 +200,11 @@ EOT
         // prefix
         $prefix = $input->getOption('prefix');
         $question = new Question($questionHelper->getQuestion('Prefix of yaml', $prefix), $prefix);
-        $question->setValidator(function ($prefix) { 
-            if (!preg_match('/([a-z]+)/i', $prefix)) { 
-                throw new \RuntimeException('Prefix have to be a simple word'); 
-            } 
-            return $prefix; 
+        $question->setValidator(function ($prefix) {
+            if (!preg_match('/([a-z]+)/i', $prefix)) {
+                throw new \RuntimeException('Prefix have to be a simple word');
+            }
+            return $prefix;
         });
         $prefix = $questionHelper->ask($input, $output, $question);
         $input->setOption('prefix', $prefix);
@@ -272,13 +272,18 @@ EOT
 
     protected function createGenerator()
     {
-        return new BundleGenerator($this->getContainer()->get('filesystem'), __DIR__.'/../Resources/skeleton/bundle');
+        $reflClass = new \ReflectionClass($this);
+
+        return new BundleGenerator(
+            $this->getContainer()->get('filesystem'),
+            dirname($reflClass->getFileName()).'/../Resources/skeleton/bundle'
+        );
     }
 
     /**
      * @param string $format
      */
-    protected function updateRouting(QuestionHelper $questionHelper, InputInterface $input, OutputInterface $output, $bundle, $format)                                                         
+    protected function updateRouting(QuestionHelper $questionHelper, InputInterface $input, OutputInterface $output, $bundle, $format)
     {
         $auto = true;
         if ($input->isInteractive()) {

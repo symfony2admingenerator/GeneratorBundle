@@ -313,8 +313,10 @@ class Generator extends TwigGeneratorGenerator
      */
     protected function setYamlConfig(array $yaml)
     {
+        $reflClass = new \ReflectionClass($this);
+
         $this->yaml = array_replace_recursive(
-            Yaml::parse(__DIR__.'/../Resources/config/default.yml'),
+            Yaml::parse(dirname($reflClass->getFileName()).'/../Resources/config/default.yml'),
             $yaml
         );
     }

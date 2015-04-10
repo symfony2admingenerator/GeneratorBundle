@@ -14,6 +14,8 @@ class EmptyBuilderAction extends BaseBuilder
      */
     public function getTemplateDirs()
     {
-        return array(realpath(dirname(__FILE__).'/../../Resources/templates'));
+        $reflClass = new \ReflectionClass($this);
+
+        return array(realpath(dirname($reflClass->getFileName()).'/../../Resources/templates'));
     }
 }

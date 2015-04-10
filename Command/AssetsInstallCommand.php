@@ -40,7 +40,8 @@ class AssetsInstallCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $bowerFileLocation = dirname(dirname(__FILE__));
+        $reflClass = new \ReflectionClass($this);
+        $bowerFileLocation = dirname($reflClass->getFileName());
         $targetDir = $this->computeTargetDirectory($bowerFileLocation);
         $formatter = $this->getHelperSet()->get('formatter');
 
@@ -66,7 +67,7 @@ class AssetsInstallCommand extends ContainerAwareCommand
                 $output->write($formatter->formatSection('Bower', $buffer, 'info' ));
             }
         });
-        
+
         return $process->getExitCode();
     }
 
