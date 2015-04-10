@@ -5,6 +5,13 @@ namespace Admingenerator\GeneratorBundle\QueryFilter;
 interface QueryFilterInterface
 {
     /**
+     * @param string $field Field name
+     *
+     * @api
+     */
+    public function getParamName($field);
+    
+    /**
      * @return the query object interface depend of the ORM
      *
      * @api
