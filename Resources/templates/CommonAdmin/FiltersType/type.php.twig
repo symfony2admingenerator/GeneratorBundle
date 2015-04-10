@@ -15,53 +15,54 @@ class FiltersType extends BaseType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->groups = $options['groups'];
-        
+
     {% for column in builder.filterColumns %}
-        if ($this->isDisplayed{{ column.name|classify|php_name }}()) {
+        if ($this->canDisplay{{ column.name|classify|php_name }}()) {
             $builder->add('{{ column.name }}', $this->getType{{ column.name|classify|php_name }}(), $this->getOptions{{ column.name|classify|php_name }}($options));
         }
     {% endfor %}
     }
 
-{% for column in builder.filterColumns %}
-    /**
-     * Get form type for {{ column.name }} field.
-     *
-     * @return string|FormTypeInterface Field form type.
-     */
-    protected function getType{{ column.name|classify|php_name }}()
-    {
-        return $this->inject({{ column.filterType|as_php|convert_as_form(column.filterType) }});
-    }
+    {% for column in builder.filterColumns %}
+        /**
+        * Get form type for {{ column.name }} field.
+        *
+        * @return string|FormTypeInterface Field form type.
+        */
+        protected function getType{{ column.name|classify|php_name }}()
+        {
+        return $this->inject('{{ column.filterType }}');
+        }
 
-    /**
-     * Get options for {{ column.name }} field.
-     *
-     * @param  array $builderOptions The builder options.
-     * @return array Field options.
-     */
-    protected function getOptions{{ column.name|classify|php_name }}(array $builderOptions = array())
-    {
-        $optionsClass = '{{ namespace_prefix }}\{{ bundle_name }}\Form\Type\{{ builder.BaseGeneratorName }}\Options';
-        $options = class_exists($optionsClass) ? new $optionsClass() : null;
+        /**
+        * Get options for {{ column.name }} field.
+        *
+        * @param  array $builderOptions The builder options.
+        * @return array Field options.
+        */
+        protected function getOptions{{ column.name|classify|php_name }}(array $builderOptions = array())
+        {
+            $optionsClass = '{{ namespace_prefix }}\{{ bundle_name }}\Form\Type\{{ builder.BaseGeneratorName }}\Options';
+            $options = class_exists($optionsClass) ? new $optionsClass() : null;
 
-        return $this->resolveOptions('{{ column.name }}', {{ column.formOptions|merge({
-            'label': column.label,
-            'translation_domain': i18n_catalog|default('Admin'),
-            'required': false
-        })|as_php|convert_as_form(column.formType) }}, $builderOptions, $options);
-    }
+            return $this->resolveOptions('{{ column.name }}', {{ {
+                    'label': column.label,
+                    'translation_domain': i18n_catalog|default('Admin'),
+                    'required': false
+                }|merge(column.formOptions)|as_php|convert_as_form(column.formType) }}, $builderOptions, $options
+            );
+        }
 
-    /**
-     * Check groups for {{ column.name }} field.
-     *
-     * @return boolean
-     */
-    protected function isDisplayed{{ column.name|classify|php_name }}()
-    {
-        return $this->checkGroups({{ column.groups|as_php }});
-    }
-{% endfor %}
+        /**
+        * Check filters groups for {{ column.name }} field.
+        *
+        * @return boolean
+        */
+        protected function canDisplay{{ column.name|classify|php_name }}()
+        {
+            return $this->checkGroups({{ column.filtersGroups|as_php }});
+        }
+    {% endfor %}
 
     public function getName()
     {

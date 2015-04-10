@@ -3,30 +3,31 @@
     {% if builder.filterColumns is not empty %}
         {% if builder.filterColumnGroups is not empty %}
             {{ echo_set('filterColumnGroups', echo_twig_arr(builder.filterColumnGroups), false) }}
-            {{ echo_if('groups is empty or filterColumnGroups|intersect(groups) is not empty') }}
+            {{ echo_if('filterColumnGroups|intersect(groups) is not empty') }}
         {% endif %}
         {% if builder.filtersMode == 'top' %}
         <div class="col-md-12 list-filters-container">
+            <div class="box box-primary{% if builder.defaultFiltersVisibility == 'collapsed' %} collapsed-box{% endif %}">
         {% else %}
         <div class="col-md-3 col-xs-12 list-filters-container pull-right">
+            <div class="box box-primary{% if builder.defaultFiltersVisibility == 'collapsed' %} slided-box{% endif %}">
         {% endif %}
-            <div class="box box-primary">
                 <div class="box-header">
                     <h3 class="box-title">{{ echo_trans('list.filters') }}</h3>
                     {% if builder.filtersMode == 'top' %}
                         <div class="box-tools pull-right">
-                            <button class="btn btn-primary btn-xs" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                            <button class="btn btn-primary btn-xs" data-widget="collapse"><i class="fa fa-{% if builder.defaultFiltersVisibility == 'collapsed' %}plus{% else %}minus{% endif %}"></i></button>
                         </div>
                     {% endif %}
                 </div>
                 <form action="{{ echo_twig('filtersUrl') }}" method="post" {{ echo_twig("form_enctype(form)") }} role="form">
-                    <div class="box-body">
+                    <div class="box-body"{% if builder.filtersMode == 'top' and builder.defaultFiltersVisibility == 'collapsed' %} style="display: none;"{% endif %}>
                         {{ echo_twig("form_errors(form)") }}
                         {% for column in builder.filterColumns %}
                             {{ echo_block("list_filters_field_" ~ (column.name|lower)) }}
-                            {% if column.groups is not empty %}
-                                {{ echo_set('columnGroups', echo_twig_arr(column.groups), false) }}
-                                {{ echo_if('groups is empty or columnGroups|intersect(groups) is not empty') }}
+                            {% if column.filtersGroups is not empty %}
+                                {{ echo_set('columnFiltersGroups', echo_twig_arr(column.filtersGroups), false) }}
+                                {{ echo_if('columnFiltersGroups|intersect(groups) is not empty') }}
                             {% endif %}
                             <div class="list-filters-field-{{ column.name|lower }} list-filters-type-{{ column.filterType|lower }}">
                                 {{ echo_block("list_filters_field_" ~ (column.name|lower) ~ "_content" ) }}
@@ -35,7 +36,7 @@
                                 {{ echo_twig("form_errors(form['" ~ column.name ~ "'], {'attr': {'class': 'form-control-feedback'}})") }}
                                 {{ echo_endblock() }}
                             </div>
-                            {% if column.groups is not empty %}
+                            {% if column.filtersGroups is not empty %}
                                 {{ echo_endif () }}
                             {% endif %}
                             {{ echo_endblock() }}
@@ -44,8 +45,10 @@
                     </div>
                     <div class="box-footer">
                         <div class="btn-toolbar">
-                            <button type="submit" class="btn btn-sm btn-default pull-right" name="reset" value="true"><i class="fa fa-refresh"></i> {{ echo_trans('list.button.reset') }}</button>
-                            <button type="submit" class="btn btn-sm btn-primary pull-right"><i class="fa fa-search"></i> {{ echo_trans('list.button.filter') }}</button>
+                            <div class="pull-right">
+                                <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-search"></i> {{ echo_trans('list.button.filter') }}</button>
+                                <button type="submit" class="btn btn-sm btn-default" name="reset" value="true"><i class="fa fa-refresh"></i> {{ echo_trans('list.button.reset') }}</button>
+                            </div>
                         </div>
                     </div>
                 </form>

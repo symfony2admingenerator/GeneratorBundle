@@ -34,6 +34,14 @@ class Movie
     protected $is_published;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Producer")
+     * @JoinColumn(name="producer_id", referencedColumnName="id")
+     *
+     * @var Producer
+     */
+    protected $producer;
+
+    /**
      * Get id
      *
      * @return integer
@@ -101,5 +109,25 @@ class Movie
     public function getIsPublished()
     {
         return $this->is_published;
+    }
+
+    /**
+     * @param Producer $producer
+     *
+     * @return Movie
+     */
+    public function setProducer(Producer $producer)
+    {
+        $this->producer = $producer;
+
+        return $this;
+    }
+
+    /**
+     * @return Producer
+     */
+    public function getProducer()
+    {
+        return $this->producer;
     }
 }

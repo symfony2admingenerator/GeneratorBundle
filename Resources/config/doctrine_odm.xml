@@ -33,10 +33,6 @@
             </call>
         </service>
 
-        <service id="admingenerator.queryfilter.doctrine_odm"
-            class="%admingenerator.queryfilter.doctrine_odm.class%">
-        </service>
-
         <service id="admingenerator.sessionserializer.doctrine_odm" class="%admingenerator.sessionserializer.doctrine_odm.class%">
             <argument type="service" id="doctrine.odm.mongodb.document_manager"></argument>
         </service>

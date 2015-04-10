@@ -12,6 +12,7 @@ use Admingenerator\GeneratorBundle\Generator\Action;
  *
  * @author cedric Lombardot
  * @author Piotr Gołębiewski <loostro@gmail.com>
+ * @author Stéphane Escandell <stephane.escandell@gmail.com>
  */
 class BaseBuilder extends GenericBaseBuilder
 {
@@ -65,7 +66,6 @@ class BaseBuilder extends GenericBaseBuilder
             $column = $this->createColumn($columnName, true);
 
             //Set the user parameters
-            $this->setUserColumnConfiguration($column);
             $this->addColumn($column);
         }
     }
@@ -96,6 +96,9 @@ class BaseBuilder extends GenericBaseBuilder
             'generator' => $this->getBaseGeneratorName()
         ));
 
+        //Set the user parameters
+        $this->setUserColumnConfiguration($column);
+
         $column->setDbType($this->getFieldOption(
             $column,
             'dbType',
@@ -107,43 +110,79 @@ class BaseBuilder extends GenericBaseBuilder
 
         $column->setSortType($this->getFieldGuesser()->getSortType($column->getDbType()));
 
+        $column->setPrimaryKey($this->getFieldOption(
+            $column,
+            'primaryKey',
+            $this->getFieldGuesser()->getPrimaryKeyFor(
+                $this->getVariable('model'),
+                $columnName
+            )
+        ));
+
         if ($withForms) {
             $column->setFormType($this->getFieldOption(
                 $column,
                 'formType',
                 $this->getFieldGuesser()->getFormType(
                     $column->getDbType(),
+                    $this->getVariable('model'),
                     $columnName
                 )
             ));
+
+            // We don't use $column->getDbType because filtered column
+            // might be on a field from an association. So we need to
+            // resolve the filtered field dbType (and not the column
+            // one).
+            $filteredFieldDbType = $this->getFieldGuesser()->getDbType(
+                $this->getVariable('model'),
+                $column->getFilterOn()
+            );
 
             $column->setFilterType($this->getFieldOption(
                 $column,
                 'filterType',
                 $this->getFieldGuesser()->getFilterType(
-                    $column->getDbType(),
-                    $columnName
-                )
-            ));
-
-            $column->setFormOptions($this->getFieldOption(
-                $column,
-                'formOptions',
-                $this->getFieldGuesser()->getFormOptions(
-                    ($this->getYamlKey() === 'list') ? $column->getFilterType() : $column->getFormType(),
-                    $column->getDbType(),
-                    $columnName
-                )
-            ));
-
-            $column->setPrimaryKey($this->getFieldOption(
-                $column,
-                'primaryKey',
-                $this->getFieldGuesser()->getPrimaryKeyFor(
+                    $filteredFieldDbType,
                     $this->getVariable('model'),
-                    $columnName
+                    $column->getFilterOn()
                 )
             ));
+
+            if ($this->getYamlKey() === 'list') {
+                // Filters
+                $column->setFormOptions($this->getFieldOption(
+                    $column,
+                    'formOptions',
+                    $this->getFieldGuesser()->getFormOptions(
+                        $column->getFilterType(),
+                        $filteredFieldDbType,
+                        $this->getVariable('model'),
+                        $column->getFilterOn()
+                    )
+                ));
+            } else {
+                $column->setFormOptions($this->getFieldOption(
+                    $column,
+                    'formOptions',
+                    $this->getFieldGuesser()->getFormOptions(
+                        $column->getFormType(),
+                        $column->getDbType(),
+                        $this->getVariable('model'),
+                        $columnName
+                    )
+                ));
+            }
+
+            $fieldOptions = $this->getVariable(
+                sprintf('fields[%s]', $column->getName()),
+                array(),
+                true
+            );
+
+            if (array_key_exists('addFormOptions', $fieldOptions)) {
+                $column->setAddFormOptions($fieldOptions['addFormOptions']);
+            }
         }
 
         return $column;

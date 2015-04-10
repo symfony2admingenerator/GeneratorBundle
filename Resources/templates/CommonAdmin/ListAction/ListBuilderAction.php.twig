@@ -89,6 +89,21 @@ class ListController extends BaseController
     }
 
     /**
+     * Checks if groups intersect.
+     *
+     * @param array $groups   Groups.
+     * @return boolean
+     */
+    protected function checkGroups(array $groups)
+    {
+        if (count($groups) === 0) {
+            return true;
+        }
+
+        return count(array_intersect($this->getGroups(), $groups)) > 0;
+    }
+
+    /**
      * This function is for your convinience. Overwrite it if you need to
      * process the query.
      */
@@ -126,7 +141,7 @@ class ListController extends BaseController
     {% endblock %}
 
     {% block processFilters -%}
-    protected function processFilters($query)
+    protected function processFilters($queryFilter)
     {
         // ORM JOB
     }
@@ -140,8 +155,19 @@ class ListController extends BaseController
         return $type;
     }
 
+   /**
+    * Get optional form filter options.
+    *
+    * @param
+    * @return array
+    */
+    protected function getFiltersOptions()
+    {
+        return array();
+    }
+
     {% block getQueryFilter -%}
-    protected function getQueryFilter()
+    protected function getQueryFilter($query)
     {
         // ORM JOB
     }

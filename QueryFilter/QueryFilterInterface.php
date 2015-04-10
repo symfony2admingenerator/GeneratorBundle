@@ -5,14 +5,6 @@ namespace Admingenerator\GeneratorBundle\QueryFilter;
 interface QueryFilterInterface
 {
     /**
-     * @param object $query the query object interface depend of the ORM
-     *
-     * @api
-     * @return void
-     */
-    public function setQuery($query);
-
-    /**
      * @return the query object interface depend of the ORM
      *
      * @api

@@ -5,11 +5,11 @@
      *
      * @param array the filters
      */
-    protected function setFilters($filters)
+    protected function setFilters(array $filters)
     {
         {%- for filter,column in builder.filterColumns -%}
-            {%- if 'entity' == builder.getFieldGuesser().getDbType(model, filter) or 'collection' == builder.getFieldGuesser().getDbType(model, filter) -%}
-            {% set filterModel = builder.getFieldGuesser().getModelType(model, filter) %}
+            {%- if 'entity' == builder.getFieldGuesser().getDbType(model, column.filterOn) or 'collection' == builder.getFieldGuesser().getDbType(model, column.filterOn) -%}
+            {% set filterModel = builder.getFieldGuesser().getModelType(model, column.filterOn) %}
         if (isset($filters['{{ filter }}'])) {
                 $filters['{{ filter }}'] = array (
                     '{{ builder.getFieldGuesser().getModelPrimaryKeyName(filterModel) }}' => $filters['{{ filter }}']->get{{ builder.getFieldGuesser().getModelPrimaryKeyName(filterModel)|capitalize }}(),
@@ -32,8 +32,8 @@
         $filters = $this->get('session')->get($this->getSessionPrefix().'List\Filters', array());
 
         {%- for filter,column in builder.filterColumns -%}
-            {%- if 'entity' == builder.getFieldGuesser().getDbType(model, filter) or 'collection' == builder.getFieldGuesser().getDbType(model, filter) -%}
-            {% set filterModel = builder.getFieldGuesser().getModelType(model, filter) %}
+            {%- if 'entity' == builder.getFieldGuesser().getDbType(model, column.filterOn) or 'collection' == builder.getFieldGuesser().getDbType(model, column.filterOn) -%}
+            {% set filterModel = builder.getFieldGuesser().getModelType(model, column.filterOn) %}
         if (isset($filters['{{ filter }}'])) {
                 $filters['{{ filter }}'] = $this->getDoctrine()
                 ->getManagerForClass($filters['{{ filter }}']['entityName'])
@@ -53,8 +53,10 @@
 
         $this->processQuery($query);
         $this->processSort($query);
-        $this->processScopes($query);
-        $this->processFilters($query);
+
+        $queryFilter = $this->getQueryFilter($query);
+        $this->processScopes($queryFilter);
+        $this->processFilters($queryFilter);
 
         return $query->getQuery();
     }
@@ -89,8 +91,8 @@
         $filters = $this->getFilters();
 
         {%- for filter,column in builder.filterColumns -%}
-            {%- if 'entity' == builder.getFieldGuesser().getDbType(model, filter) or 'collection' == builder.getFieldGuesser().getDbType(model, filter) -%}
-            {% set filterModel = builder.getFieldGuesser().getModelType(model, filter) %}
+            {%- if 'entity' == builder.getFieldGuesser().getDbType(model, column.filterOn) or 'collection' == builder.getFieldGuesser().getDbType(model, column.filterOn) -%}
+            {% set filterModel = builder.getFieldGuesser().getModelType(model, column.filterOn) %}
               if (isset($filters['{{ filter }}'])) {
                   $this->getDoctrine()
                   ->getManagerForClass(get_class($filters['{{ filter }}']))
@@ -102,7 +104,10 @@
 
         {% endfor -%}
 
-        return $this->createForm($this->getFiltersType(), $filters);
+        return $this->createForm($this->getFiltersType(), $filters, array_merge(
+            $this->getFiltersOptions(),
+            array('groups' => $this->getGroups())
+        ));
     }
 {% endblock %}
 
@@ -114,36 +119,28 @@
 {% endblock %}
 
 {% block processFilters -%}
-    protected function processFilters($query)
+    protected function processFilters($queryFilter)
     {
         $filterObject = $this->getFilters();
 
-        $queryFilter = $this->getQueryFilter();
-        $queryFilter->setQuery($query);
-
     {% for filter,column in builder.filterColumns %}
         if (isset($filterObject['{{ column.name }}']) && null !== $filterObject['{{ column.name }}']) {
-        {% if column.filterOn|split('.')|length > 1 %}
             $this->filter{{ filter|classify }}($queryFilter, $filterObject['{{ column.name }}']);
-        {% else %}
-            $queryFilter->add{{ column.dbType|classify }}Filter('{{ column.filterOn }}', $filterObject['{{ column.name }}']);
-        {% endif %}
         }
     {% endfor %}
     }
 
     {% for filter,column in builder.filterColumns %}
-    {% if column.filterOn|split('.')|length > 1 %}
     /**
-     * Add the filters to the query for {{ filter }}
+     * Add filters to the query for {{ filter }}
      *
      * @param queryFilter The queryFilter
      * @param mixed The value
      */
     protected function filter{{ filter|classify }}($queryFilter, $value)
     {
+        $queryFilter->add{{ builder.fieldGuesser().dbType(model, column.filterOn)|classify }}Filter('{{ column.filterOn }}', $value);
     }
-    {% endif %}
     {% endfor %}
 {% endblock %}
 
@@ -152,8 +149,10 @@
     /**
      * @return \Admingenerator\GeneratorBundle\QueryFilter\QueryFilterInterface
      */
-    protected function getQueryFilter()
+    protected function getQueryFilter($query)
     {
-        return $this->get('admingenerator.queryfilter.doctrine');
+        $queryFilterClass = $this->container->getParameter('admingenerator.queryfilter.doctrine.class');
+
+        return new $queryFilterClass($query);
     }
 {% endblock %}

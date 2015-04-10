@@ -146,7 +146,7 @@ class Configuration implements ConfigurationInterface
         // textarea types
         'text'          => 'text',
         // association types
-        'entity'        => 'model',
+        'entity'        => 'entity',
         'collection'    => 'collection',
         // array types
         'array'         => 'text',

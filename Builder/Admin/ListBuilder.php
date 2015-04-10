@@ -10,6 +10,7 @@ use Admingenerator\GeneratorBundle\Generator\Action;
  *
  * @author cedric Lombardot
  * @author Piotr Gołębiewski <loostro@gmail.com>
+ * @author Stéphane Escandell <stephane.escandell@gmail.com>
  */
 class ListBuilder extends BaseBuilder
 {
@@ -49,11 +50,17 @@ class ListBuilder extends BaseBuilder
 
     protected function findFilterColumns()
     {
-        foreach ($this->getAllFields() as $columnName) {
-            $column = $this->createColumn($columnName, true);
-            $this->setUserColumnConfiguration($column);
+        $columnsName = $this->getVariable('filters');
+        $fromFilterConfiguration = true;
+        if (null === $columnsName) {
+            $fromFilterConfiguration = false;
+            $columnsName = $this->getAllFields();
+        }
 
-            if ($column->isFilterable()) {
+        foreach ($columnsName as $columnName) {
+            $column = $this->createColumn($columnName, true);
+
+            if ($fromFilterConfiguration || $column->isFilterable()) {
                 $this->addFilterColumn($column);
             }
         }
@@ -69,7 +76,13 @@ class ListBuilder extends BaseBuilder
         $groups = array();
 
         foreach ($this->getFilterColumns() as $column) {
-            $groups = array_merge($groups, $column->getGroups());
+            $columnGroups = $column->getFiltersGroups();
+            // If one column has no Group constraint, we always
+            // have to display the filter panel
+            if (empty($columnGroups)) {
+                return array();
+            }
+            $groups = array_merge($groups, $columnGroups);
         }
 
         return $groups;
@@ -102,7 +115,6 @@ class ListBuilder extends BaseBuilder
             $column = $this->createColumn($columnName, true);
 
             // Set the user parameters
-            $this->setUserColumnConfiguration($column);
             $this->addScopeColumn($column);
         }
     }

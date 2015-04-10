@@ -119,14 +119,10 @@
         return $filters;
     }
 
-    protected function processScopes($query)
+    protected function processScopes($queryFilter)
     {
     {% if scopes is defined -%}
         $scopes = $this->getScopes();
-
-        $queryFilter = $this->getQueryFilter();
-        $queryFilter->setQuery($query);
-
 
         {% for groupName, group in scopes -%}
             {%- for scopeName, params in group %}

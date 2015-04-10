@@ -8,23 +8,34 @@ use Symfony\Component\DependencyInjection\ContainerAware;
 
 class PropelORMFieldGuesser extends ContainerAware
 {
+    /**
+     * @var boolean
+     */
     private $guessRequired;
 
+    /**
+     * @var boolean
+     */
     private $defaultRequired;
 
+    /**
+     * @var array
+     */
     private $cache = array();
 
-    private static $current_class;
-
-    protected function getMetadatas($class = null)
+    /**
+     * @param $class
+     * @return mixed
+     */
+    protected function getMetadatas($class)
     {
-        if ($class) {
-            self::$current_class = $class;
-        }
-
-        return $this->getTable(self::$current_class);
+        return $this->getTable($class);
     }
 
+    /**
+     * @param $class
+     * @return array
+     */
     public function getAllFields($class)
     {
         $return = array();
@@ -60,7 +71,12 @@ class PropelORMFieldGuesser extends ContainerAware
         return $column ? $column->getType() : 'virtual';
     }
 
-    protected function getRelation($fieldName, $class = null)
+    /**
+     * @param $fieldName
+     * @param $class
+     * @return bool
+     */
+    protected function getRelation($fieldName, $class)
     {
         $table = $this->getMetadatas($class);
         $relName = Inflector::classify($fieldName);
@@ -74,6 +90,11 @@ class PropelORMFieldGuesser extends ContainerAware
         return false;
     }
 
+    /**
+     * @param $class
+     * @param $fieldName
+     * @return mixed
+     */
     public function getPhpName($class, $fieldName)
     {
         $column = $this->getColumn($class, $fieldName);
@@ -83,6 +104,10 @@ class PropelORMFieldGuesser extends ContainerAware
         }
     }
 
+    /**
+     * @param $dbType
+     * @return string
+     */
     public function getSortType($dbType)
     {
         $alphabeticTypes = array(
@@ -117,7 +142,13 @@ class PropelORMFieldGuesser extends ContainerAware
         return 'default';
     }
 
-    public function getFormType($dbType, $columnName)
+    /**
+     * @param $dbType
+     * @param $class: for debug only
+     * @param $columnName: for debug only
+     * @return string
+     */
+    public function getFormType($dbType, $class, $columnName)
     {
         $config = $this->container->getParameter('admingenerator.propel_form_types');
         $formTypes = array();
@@ -139,12 +170,17 @@ class PropelORMFieldGuesser extends ContainerAware
         } else {
             throw new NotImplementedException(
                 'The dbType "'.$dbType.'" is not yet implemented '
-                .'(column "'.$columnName.'" in "'.self::$current_class.'")'
+                .'(column "'.$columnName.'" in "'.$class.'")'
             );
         }
     }
 
-    public function getFilterType($dbType, $columnName)
+    /**
+     * @param $dbType
+     * @param $columnName
+     * @return string
+     */
+    public function getFilterType($dbType, $class, $columnName)
     {
         $config = $this->container->getParameter('admingenerator.propel_filter_types');
         $filterTypes = array();
@@ -161,71 +197,90 @@ class PropelORMFieldGuesser extends ContainerAware
 
         if (array_key_exists($dbType, $filterTypes)) {
             return $filterTypes[$dbType];
-        } elseif ('virtual' === $dbType) {
+        }
+
+        if ('virtual' === $dbType) {
             return 'virtual_filter';
-        } else {
-           throw new NotImplementedException(
-               'The dbType "'.$dbType.'" is not yet implemented '
-               .'(column "'.$columnName.'" in "'.self::$current_class.'")'
-           );
-       }
+        }
+
+        throw new NotImplementedException(
+            'The dbType "'.$dbType.'" is not yet implemented '
+            .'(column "'.$columnName.'" in "'.$class.'")'
+        );
     }
 
-    public function getFormOptions($formType, $dbType, $columnName)
+    /**
+     * @param $formType
+     * @param $dbType
+     * @param $columnName
+     * @return array
+     */
+    public function getFormOptions($formType, $dbType, $model, $fieldPath)
     {
         if ('virtual' === $dbType) {
             return array();
         }
 
+        $resolved = $this->resolveRelatedField($model, $fieldPath);
+        $class = $resolved['class'];
+        $columnName = $resolved['field'];
+
         if ((\PropelColumnTypes::BOOLEAN == $dbType || \PropelColumnTypes::BOOLEAN_EMU == $dbType) &&
             (preg_match("#^choice#i", $formType) || preg_match("#choice$#i", $formType))) {
             return array(
                 'choices' => array(
-                   0 => $this->container->get('translator')->trans('boolean.no', array(), 'Admingenerator'),
-                   1 => $this->container->get('translator')->trans('boolean.yes', array(), 'Admingenerator')
+                   0 => 'boolean.no',
+                   1 => 'boolean.yes'
                 ),
-                'empty_value' => $this->container->get('translator')->trans('boolean.yes_or_no', array(), 'Admingenerator')
+                'empty_value' => 'boolean.yes_or_no',
+                'translation_domain' => 'Admingenerator'
             );
         }
 
         if (preg_match("#^model#i", $formType) || preg_match("#model$#i", $formType)) {
-            $relation = $this->getRelation($columnName);
+            $relation = $this->getRelation($columnName, $class);
             if ($relation) {
                 if (\RelationMap::MANY_TO_ONE === $relation->getType()) {
                     return array(
                         'class'     => $relation->getForeignTable()->getClassname(),
                         'multiple'  => false,
                     );
-                } else {
-                    return array(
-                        'class'     => $relation->getLocalTable()->getClassname(),
-                        'multiple'  => false,
-                    );
                 }
+
+                return array(
+                    'class'     => $relation->getLocalTable()->getClassname(),
+                    'multiple'  => false,
+                );
             }
         }
 
         if (preg_match("#^collection#i", $formType) || preg_match("#collection$#i", $formType)) {
+            $relation = $this->getRelation($columnName, $class);
+
             return array(
                 'allow_add'     => true,
                 'allow_delete'  => true,
                 'by_reference'  => false,
+                'type' => 'entity',
+                'options' => array(
+                    'class' => \RelationMap::MANY_TO_ONE === $relation->getType() ? $relation->getForeignTable()->getClassname() : $relation->getLocalTable()->getClassname()
+                )
             );
         }
 
         if (\PropelColumnTypes::ENUM == $dbType) {
-            $valueSet = $this->getMetadatas()->getColumn($columnName)->getValueSet();
+            $valueSet = $this->getMetadatas($class)->getColumn($class, $columnName)->getValueSet();
 
             return array(
-                'required' => $this->isRequired($columnName),
+                'required' => $this->isRequired($class, $columnName),
                 'choices'  => array_combine($valueSet, $valueSet),
             );
         }
 
-        return array('required' => $this->isRequired($columnName));
+        return array('required' => $this->isRequired($class, $columnName));
     }
 
-    protected function isRequired($fieldName)
+    protected function isRequired($class, $fieldName)
     {
         if (!isset($this->guessRequired) || !isset($this->defaultRequired)) {
             $this->guessRequired = $this->container->getParameter('admingenerator.guess_required');
@@ -236,50 +291,9 @@ class PropelORMFieldGuesser extends ContainerAware
             return $this->defaultRequired;
         }
 
-        $column = $this->getColumn(self::$current_class, $fieldName);
+        $column = $this->getColumn($class, $fieldName);
 
         return $column ? $column->isNotNull() : false;
-    }
-
-    public function getFilterOptions($formType, $dbType, $ColumnName)
-    {
-        $options = array('required' => false);
-
-        if (\PropelColumnTypes::BOOLEAN == $dbType || \PropelColumnTypes::BOOLEAN_EMU == $dbType) {
-            $options['choices'] = array(
-               0 => $this->container->get('translator')
-                        ->trans('boolean.no', array(), 'Admingenerator'),
-               1 => $this->container->get('translator')
-                        ->trans('boolean.yes', array(), 'Admingenerator')
-            );
-            $options['empty_value'] = $this->container->get('translator')
-                ->trans('boolean.yes_or_no', array(), 'Admingenerator');
-        }
-
-        if (\PropelColumnTypes::ENUM == $dbType) {
-            $valueSet = $this->getMetadatas()->getColumn($ColumnName)->getValueSet();
-
-            return array(
-                'required' => false,
-                'choices'  => array_combine($valueSet, $valueSet),
-            );
-        }
-
-        if (preg_match("#^model#i", $formType) || preg_match("#model$#i", $formType)) {
-            return array_merge(
-                $this->getFormOptions($formType, $dbType, $ColumnName),
-                $options
-            );
-        }
-
-        if (preg_match("#^collection#i", $formType) || preg_match("#collection$#i", $formType)) {
-            return array_merge(
-                $this->getFormOptions($formType, $dbType, $ColumnName),
-                $options
-            );
-        }
-
-        return $options;
     }
 
     /**
