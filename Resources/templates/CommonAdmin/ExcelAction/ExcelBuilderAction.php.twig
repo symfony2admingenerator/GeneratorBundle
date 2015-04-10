@@ -99,7 +99,7 @@ class ExcelController extends ListController
         {% set colNum = 0 %}
         foreach($results as $rowData) {
             {% for name,column in builder.columns %}
-            $data = $this->getValueForCell('{{ builder_column.getter }}', $rowData);
+            $data = $this->getValueForCell('{{ column.getter }}', $rowData);
             $formatedValue = $this->format{{ name|classify|php_name }}($data);
 
             // Convert DateTime object to given format
