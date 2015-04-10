@@ -74,7 +74,7 @@ class PropelORMFieldGuesser extends ContainerAware
     /**
      * @param $fieldName
      * @param $class
-     * @return bool
+     * @return mixed The relation object or false.
      */
     protected function getRelation($fieldName, $class)
     {
