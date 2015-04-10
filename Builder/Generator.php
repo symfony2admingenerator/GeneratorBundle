@@ -19,13 +19,35 @@ class Generator extends TwigGeneratorGenerator
      */
     protected $yaml;
 
+    /**
+     * @var string $baseController The base controller.
+     */
     protected $baseController;
-
+  
+    /**
+     * @var string $columnClass The column class.
+     */
     protected $columnClass = 'Admingenerator\GeneratorBundle\Generator\Column';
+    
+    /**
+     * @var string $baseAdminTemplate The base admin template.
+     */
+    protected $baseAdminTemplate = 'AdmingeneratoroldThemeBundle::base.html.twig';
 
-    protected $base_admin_template = 'AdmingeneratoroldThemeBundle::base.html.twig';
-
-    protected $base_generator_name;
+    /**
+     * @var string $baseGeneratorName The base generator name.
+     */
+    protected $baseGeneratorName;
+    
+    /**
+     * @var array $twigParams Twig configuration params.
+     */
+    protected $twigParams;
+    
+    /**
+     * @var string $defaultActionAfterSave The default action after save.
+     */
+    protected $defaultActionAfterSave;
 
     /**
      * @var ContainerInterface
@@ -46,12 +68,12 @@ class Generator extends TwigGeneratorGenerator
 
     public function getBaseAdminTemplate()
     {
-        return $this->base_admin_template;
+        return $this->baseAdminTemplate;
     }
 
-    public function setBaseAdminTemplate($base_admin_template)
+    public function setBaseAdminTemplate($baseAdminTemplate)
     {
-        return $this->base_admin_template = $base_admin_template;
+        return $this->baseAdminTemplate = $baseAdminTemplate;
     }
 
     /**
@@ -293,17 +315,20 @@ class Generator extends TwigGeneratorGenerator
         return $params;
     }
 
-    protected function getColumnClass()
-    {
-        return $this->columnClass;
-    }
-
     /**
      * @param string $columnClass
      */
     public function setColumnClass($columnClass)
     {
         return $this->columnClass = $columnClass;
+    }
+
+    /**
+     * @return string The column class.
+     */
+    protected function getColumnClass()
+    {
+        return $this->columnClass;
     }
 
     /**
@@ -354,47 +379,67 @@ class Generator extends TwigGeneratorGenerator
         $this->baseController = $baseController;
     }
 
+    /**
+     * @return string Base controller.
+     */
     public function getBaseController()
     {
         return $this->baseController;
     }
 
     /**
-     * @param string $base_generator_name
+     * @param string $baseGeneratorName
      */
-    public function setBaseGeneratorName($base_generator_name)
+    public function setBaseGeneratorName($baseGeneratorName)
     {
-        $this->base_generator_name = $base_generator_name;
+        $this->baseGeneratorName = $baseGeneratorName;
     }
 
+    /**
+     * @return string Base generator name.
+     */
     public function getBaseGeneratorName()
     {
-        return $this->base_generator_name;
+        return $this->baseGeneratorName;
     }
 
+    /**
+     * @return string Generated controller directory.
+     */
     public function getGeneratedControllerFolder()
     {
-        return 'Base'.$this->base_generator_name.'Controller';
+        return 'Base'.$this->baseGeneratorName.'Controller';
     }
 
-    public function setContainer(ContainerInterface $container)
+    /**
+     * @param string $action
+     */
+    public function setDefaultActionAfterSave($action)
     {
-        return $this->container = $container;
+        $this->defaultActionAfterSave = $action;
     }
 
-    public function getContainer()
-    {
-        return $this->container;
-    }
-
-    public function getTwigParams()
-    {
-        return $this->getContainer()->getParameter('admingenerator.twig');
-    }
-
+    /**
+     * @return string
+     */
     public function getDefaultActionAfterSave()
     {
-        return $this->getContainer()
-            ->getParameter('admingenerator.default_action_after_save');
+        return $this->defaultActionAfterSave;
+    }
+    
+    /**
+     * @param array $twigParams
+     */
+    public function setTwigParams(array $twigParams)
+    {
+        $this->twigParams = $twigParams;
+    }
+
+    /**
+     * @return array
+     */
+    public function getTwigParams()
+    {
+        return $this->twigParams;
     }
 }
