@@ -4,6 +4,20 @@ namespace Admingenerator\GeneratorBundle\QueryFilter;
 
 class DoctrineQueryFilter extends BaseQueryFilter
 {
+    /**
+     * @var integer
+     */
+    protected $paramNumber = 0;
+
+    /**
+     * @param string $field Table field name.
+     * @return string Param key unique name.
+     */
+    public function getParamName($field)
+    {
+        return $field.'_'.$this->paramNumber++;
+    }
+    
     public function addDefaultFilter($field, $value)
     {
         $paramName = $this->getParamName($field);
