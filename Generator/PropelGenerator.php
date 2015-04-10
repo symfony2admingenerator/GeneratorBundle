@@ -33,7 +33,8 @@ class PropelGenerator extends Generator
 
         $generator = new AdminGenerator($this->cache_dir, $this->getGeneratorYml());
 
-        $generator->setContainer($this->container);
+        $generator->setTwigParams($this->twigParams);
+        $generator->setDefaultActionAfterSave($this->defaultActionAfterSave);
         $generator->setBaseAdminTemplate(
             $generator->getFromYaml(
                 'base_admin_template',
@@ -124,7 +125,8 @@ class PropelGenerator extends Generator
         }
 
         $embedGenerator = new AdminGenerator($this->cache_dir, $yaml_file);
-        $embedGenerator->setContainer($this->container);
+        $embedGenerator->setTwigParams($this->twigParams);
+        $embedGenerator->setDefaultActionAfterSave($this->defaultActionAfterSave);
         $embedGenerator->setBaseAdminTemplate(
             $embedGenerator->getFromYaml(
                 'base_admin_template',
