@@ -23,9 +23,11 @@
             class="%admingenerator.propel.class%">
             <argument type="string">%kernel.root_dir%</argument>
             <argument type="string">%kernel.cache_dir%</argument>
-            <!-- @TODO: Remove container injection -->
-            <call method="setContainer">
-                <argument type="service" id="service_container" />
+            <call method="setTwigParams">
+                <argument type="expression">parameter('admingenerator.twig')</argument>
+            </call>
+            <call method="setDefaultActionAfterSave">
+                <argument type="expression">parameter('admingenerator.default_action_after_save')</argument>
             </call>
             <call method="setFieldGuesser">
                 <argument type="service" id="admingenerator.fieldguesser.propel" />
