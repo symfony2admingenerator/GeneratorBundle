@@ -229,4 +229,20 @@ abstract class Generator implements GeneratorInterface
             $validator->validate($this);
         }
     }
+
+    /**
+     * @param string $action
+     */
+    public function setDefaultActionAfterSave($action)
+    {
+        $this->defaultActionAfterSave = $action;
+    }
+    
+    /**
+     * @param array $twigParams
+     */
+    public function setTwigParams(array $twigParams)
+    {
+        $this->twigParams = $twigParams;
+    }
 }
