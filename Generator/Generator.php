@@ -3,13 +3,11 @@
 namespace Admingenerator\GeneratorBundle\Generator;
 
 use Symfony\Component\Finder\Finder;
-use Symfony\Component\DependencyInjection\ContainerAware;
 use Admingenerator\GeneratorBundle\Validator\ValidatorInterface;
 use Admingenerator\GeneratorBundle\Builder\Generator as AdminGenerator;
 use Doctrine\Common\Cache as DoctrineCache;
 
-// TODO: remove container injection
-abstract class Generator extends ContainerAware implements GeneratorInterface
+abstract class Generator implements GeneratorInterface
 {
     /**
      * @var string
@@ -25,13 +23,23 @@ abstract class Generator extends ContainerAware implements GeneratorInterface
      * @var string
      */
     protected $generator_yaml;
+    
+    /**
+     * @var array $twigParams Twig configuration params.
+     */
+    protected $twigParams;
+    
+    /**
+     * @var string $defaultActionAfterSave The default action after save.
+     */
+    protected $defaultActionAfterSave;
 
     protected $fieldGuesser;
 
     /**
      * @var string
      */
-    protected $base_generator_name;
+    protected $baseGeneratorName;
 
     /**
      * @var array
@@ -112,11 +120,11 @@ abstract class Generator extends ContainerAware implements GeneratorInterface
     }
 
     /**
-     * @param $base_generator_name
+     * @param $baseGeneratorName
      */
-    public function setBaseGeneratorName($base_generator_name)
+    public function setBaseGeneratorName($baseGeneratorName)
     {
-        $this->base_generator_name = $base_generator_name;
+        $this->baseGeneratorName = $baseGeneratorName;
     }
 
     /**
@@ -124,7 +132,7 @@ abstract class Generator extends ContainerAware implements GeneratorInterface
      */
     protected function getBaseGeneratorName()
     {
-        return $this->base_generator_name;
+        return $this->baseGeneratorName;
     }
 
     /**
