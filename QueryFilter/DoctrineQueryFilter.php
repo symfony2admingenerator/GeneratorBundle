@@ -11,11 +11,13 @@ class DoctrineQueryFilter extends BaseQueryFilter
         list($tableAlias, $filteredField) = $this->addTablePathToField($field);
 
         if (!is_array($value)) {
-            $this->query->andWhere(sprintf('%s.%s = :%s', $tableAlias, $filteredField, $tableAlias.'_'.$filteredField));
-            $this->query->setParameter($tableAlias.'_'.$filteredField, $value);
+            $paramName = $this->getParamName($tableAlias.'_'.$filteredField);
+            $this->query->andWhere(sprintf('%s.%s = :%s', $tableAlias, $filteredField, $paramName));
+            $this->query->setParameter($paramName, $value);
         } elseif (count($value) > 0) {
-            $this->query->andWhere(sprintf('%s.%s IN (:%s)', $tableAlias, $filteredField, $tableAlias.'_'.$filteredField));
-            $this->query->setParameter($tableAlias.'_'.$filteredField , $value);
+            $paramName = $this->getParamName($tableAlias.'_'.$filteredField);
+            $this->query->andWhere(sprintf('%s.%s IN (:%s)', $tableAlias, $filteredField, $paramName));
+            $this->query->setParameter($paramName, $value);
         }
     }
 
@@ -28,8 +30,9 @@ class DoctrineQueryFilter extends BaseQueryFilter
         if ("" !== $value) {
             list($tableAlias, $filteredField) = $this->addTablePathToField($field);
 
-            $this->query->andWhere(sprintf('%s.%s = :%s', $tableAlias, $filteredField, $tableAlias.'_'.$filteredField));
-            $this->query->setParameter($tableAlias.'_'.$filteredField, !!$value);
+            $paramName = $this->getParamName($tableAlias.'_'.$filteredField);
+            $this->query->andWhere(sprintf('%s.%s = :%s', $tableAlias, $filteredField, $paramName));
+            $this->query->setParameter($paramName, !!$value);
         }
     }
 
@@ -41,8 +44,9 @@ class DoctrineQueryFilter extends BaseQueryFilter
     {
         list($tableAlias, $filteredField) = $this->addTablePathToField($field);
 
-        $this->query->andWhere(sprintf('%s.%s LIKE :%s', $tableAlias, $filteredField, $tableAlias.'_'.$filteredField));
-        $this->query->setParameter($tableAlias.'_'.$filteredField, '%'.$value.'%');
+        $paramName = $this->getParamName($tableAlias.'_'.$filteredField);
+        $this->query->andWhere(sprintf('%s.%s LIKE :%s', $tableAlias, $filteredField, $paramName));
+        $this->query->setParameter($paramName, '%'.$value.'%');
     }
 
     /**
@@ -62,9 +66,10 @@ class DoctrineQueryFilter extends BaseQueryFilter
             $value = array($value->getId());
         }
 
+        $paramName = $this->getParamName($tableAlias.'_'.$filteredField);
         $this->query->groupBy('q');
-        $this->query->andWhere(sprintf('%s.%s IN (:%s)', $tableAlias, $filteredField, $tableAlias.'_'.$filteredField));
-        $this->query->setParameter($tableAlias.'_'.$filteredField, $value);
+        $this->query->andWhere(sprintf('%s.%s IN (:%s)', $tableAlias, $filteredField, $paramName));
+        $this->query->setParameter($paramName, $value);
 
     }
 
@@ -75,22 +80,25 @@ class DoctrineQueryFilter extends BaseQueryFilter
         if (is_array($value)) {
             if (array_key_exists('from', $value)) {
                 if (false !== $from = $this->formatDate($value['from'], $format)) {
-                    $this->query->andWhere(sprintf('%s.%s >= :%s_from', $tableAlias, $filteredField, $tableAlias.'_'.$filteredField));
-                    $this->query->setParameter($tableAlias.'_'.$filteredField.'_from' , $from);
+                    $paramName = $this->getParamName($tableAlias.'_'.$filteredField.'_from');
+                    $this->query->andWhere(sprintf('%s.%s >= :%s_from', $tableAlias, $filteredField, $paramName));
+                    $this->query->setParameter($paramName, $from);
                 }
             }
 
             if (array_key_exists('to', $value)) {
                 if (false !== $to = $this->formatDate($value['to'], $format)) {
-                    $this->query->andWhere(sprintf('%s.%s <= :%s_to',$tableAlias, $filteredField, $tableAlias.'_'.$filteredField));
-                    $this->query->setParameter($tableAlias.'_'.$filteredField.'_to' , $to);
+                    $paramName = $this->getParamName($tableAlias.'_'.$filteredField.'_to');
+                    $this->query->andWhere(sprintf('%s.%s <= :%s_to',$tableAlias, $filteredField, $paramName));
+                    $this->query->setParameter($paramName, $to);
                 }
             }
 
         } else {
             if (false !== $date = $this->formatDate($value, $format)) {
-                $this->query->andWhere(sprintf('s.%s = :%s', $tableAlias, $filteredField, $tableAlias.'_'.$filteredField));
-                $this->query->setParameter($tableAlias.'_'.$filteredField, $date);
+                $paramName = $this->getParamName($tableAlias.'_'.$filteredField);
+                $this->query->andWhere(sprintf('s.%s = :%s', $tableAlias, $filteredField, $paramName));
+                $this->query->setParameter($paramName, $date);
             }
         }
     }
