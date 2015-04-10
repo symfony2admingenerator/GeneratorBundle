@@ -6,17 +6,6 @@ abstract class BaseQueryFilter implements QueryFilterInterface
 {
     protected $query;
 
-    protected $paramNumber = 0;
-
-    /**
-     * (non-PHPdoc)
-     * @see GeneratorBundle\QueryFilter.QueryFilterInterface::getParamName()
-     */
-    public function getParamName($field)
-    {
-        return $field.'_'.$this->paramNumber++;
-    }
-
     /**
      * (non-PHPdoc)
      * @see GeneratorBundle\QueryFilter.QueryFilterInterface::setQuery()
