@@ -10,7 +10,7 @@ abstract class BaseQueryFilter implements QueryFilterInterface
 
     /**
      * (non-PHPdoc)
-     * @see GeneratorBundle\QueryFilter.QueryFilterInterface::getParamName($field)
+     * @see GeneratorBundle\QueryFilter.QueryFilterInterface::getParamName()
      */
     public function getParamName($field)
     {
