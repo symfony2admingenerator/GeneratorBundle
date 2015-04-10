@@ -4,8 +4,14 @@ namespace Admingenerator\GeneratorBundle\QueryFilter;
 
 class DoctrineQueryFilter extends BaseQueryFilter
 {
+    /**
+     * @var array
+     */
     protected $joins = array();
 
+    /**
+     * @var integer
+     */
     protected $paramNumber = 0;
 
     /**
