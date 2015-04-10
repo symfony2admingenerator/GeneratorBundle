@@ -6,27 +6,32 @@ class DoctrineQueryFilter extends BaseQueryFilter
 {
     public function addDefaultFilter($field, $value)
     {
+        $paramName = $this->getParamName($field);
         if (!is_array($value)) {
-            $this->query->andWhere(sprintf('q.%s = :%s',$field, $field));
-            $this->query->setParameter($field, $value);
+            $this->query->andWhere(sprintf('q.%s = :%s', $field, $paramName));
+            $this->query->setParameter($paramName, $value);
         } elseif (count($value) > 0) {
-            $this->query->andWhere(sprintf('q.%s IN (:%s)',$field, $field ));
-            $this->query->setParameter($field , $value);
+            $this->query->andWhere(sprintf('q.%s IN (:%s)', $field, $paramName));
+            $this->query->setParameter($paramName, $value);
         }
     }
 
     public function addBooleanFilter($field, $value)
     {
+        $paramName = $this->getParamName($field);
+
         if ("" !== $value) {
-            $this->query->andWhere(sprintf('q.%s = :%s',$field, $field));
-            $this->query->setParameter($field, !!$value);
+            $this->query->andWhere(sprintf('q.%s = :%s', $field, $paramName));
+            $this->query->setParameter($paramName, !!$value);
         }
     }
 
     public function addStringFilter($field, $value)
     {
-        $this->query->andWhere(sprintf('q.%s LIKE :%s',$field, $field));
-        $this->query->setParameter($field, '%'.$value.'%');
+        $paramName = $this->getParamName($field);
+
+        $this->query->andWhere(sprintf('q.%s LIKE :%s', $field, $paramName));
+        $this->query->setParameter($paramName, '%'.$value.'%');
     }
 
     public function addTextFilter($field, $value)
@@ -47,10 +52,12 @@ class DoctrineQueryFilter extends BaseQueryFilter
             $field = 'id';
         }
 
+        $paramName = $this->getParamName($table.'_'.$field);
+
         $this->query->leftJoin('q.'.$table, $table);
         $this->query->groupBy('q');
-        $this->query->andWhere(sprintf('%s.%s IN (:%s)',$table, $field, $table.'_'.$field));
-        $this->query->setParameter($table.'_'.$field, $value);
+        $this->query->andWhere(sprintf('%s.%s IN (:%s)',$table, $field, $paramName));
+        $this->query->setParameter($paramName, $value);
 
     }
 
@@ -59,22 +66,25 @@ class DoctrineQueryFilter extends BaseQueryFilter
         if (is_array($value)) {
             if (array_key_exists('from', $value)) {
                 if (false !== $from = $this->formatDate($value['from'], $format)) {
-                    $this->query->andWhere(sprintf('q.%s >= :%s_from',$field, $field ));
-                    $this->query->setParameter($field.'_from' , $from);
+                    $paramName = $this->getParamName($field.'_from');
+                    $this->query->andWhere(sprintf('q.%s >= :%s_from', $field, $paramName));
+                    $this->query->setParameter($paramName, $from);
                 }
             }
 
             if (array_key_exists('to', $value)) {
                 if (false !== $to = $this->formatDate($value['to'], $format)) {
-                    $this->query->andWhere(sprintf('q.%s <= :%s_to',$field, $field ));
-                    $this->query->setParameter($field.'_to' , $to);
+                    $paramName = $this->getParamName($field.'_to');
+                    $this->query->andWhere(sprintf('q.%s <= :%s_to', $field, $paramName));
+                    $this->query->setParameter($paramName, $to);
                 }
             }
 
         } else {
             if (false !== $date = $this->formatDate($value, $format)) {
-                $this->query->andWhere(sprintf('q.%s = :%s',$field, $field ));
-                $this->query->setParameter($field, $date);
+                $paramName = $this->getParamName($field);
+                $this->query->andWhere(sprintf('q.%s = :%s', $field, $paramName));
+                $this->query->setParameter($paramName, $date);
             }
         }
     }
