@@ -6,6 +6,17 @@ class DoctrineQueryFilter extends BaseQueryFilter
 {
     protected $joins = array();
 
+    protected $paramNumber = 0;
+
+    /**
+     * @param string $field Table field name.
+     * @return string Parameter name with unique key.
+     */
+    public function getParamName($field)
+    {
+        return $field.'_'.$this->paramNumber++;
+    }
+
     public function addDefaultFilter($field, $value)
     {
         list($tableAlias, $filteredField) = $this->addTablePathToField($field);
