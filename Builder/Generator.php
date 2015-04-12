@@ -46,7 +46,7 @@ class Generator extends TwigGeneratorGenerator
     protected $bundleConfig;
 
     /**
-     * @var Symfony\Component\Routing\RouterInterface
+     * @var \Symfony\Component\Routing\RouterInterface
      */
     protected $router;
 
@@ -431,16 +431,16 @@ class Generator extends TwigGeneratorGenerator
     }
 
     /**
-     * @param Symfony\Component\Routing\RouterInterface $router
+     * @param \Symfony\Component\Routing\RouterInterface $router
      * @return void
      */
-    public function setRouter(Symfony\Component\Routing\RouterInterface $router)
+    public function setRouter(RouterInterface $router)
     {
         $this->router = $router;
     }
 
     /**
-     * @return Symfony\Component\Routing\RouterInterface $router
+     * @return \Symfony\Component\Routing\RouterInterface $router
      */
     public function getRouter()
     {

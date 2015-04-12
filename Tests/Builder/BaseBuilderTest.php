@@ -11,7 +11,6 @@ class BaseBuilderTest extends TestCase
     {
         $builder = new BaseBuilder();
         $this->assertEquals('BaseBuilder', $builder->getSimpleClassName(), 'getSimpleClassName remove the namespaced part of get_class');
-
         $this->assertEquals('Bar', $builder->getSimpleClassName('\\Foo\\Bar'), 'getSimpleClassName remove the namespaced part of get_class');
     }
 
