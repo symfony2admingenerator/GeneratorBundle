@@ -42,10 +42,8 @@ class DoctrineGenerator extends Generator
         );
         $generator->setFieldGuesser($this->getFieldGuesser());
         $generator->setMustOverwriteIfExists($this->needToOverwrite($generator));
-        if ($this->container->has('twig')) {
-            $generator->setTwigExtensions($this->container->get('twig')->getExtensions());
-            $generator->setTwigFilters($this->container->get('twig')->getFilters());
-        }
+        $generator->setTwigExtensions($this->twig->getExtensions());
+        $generator->setTwigFilters($this->twig->getFilters());
         $generator->setTemplateDirs($this->templatesDirectories);
         $generator->setBaseController(
             'Admingenerator\GeneratorBundle\Controller\Doctrine\BaseController'
