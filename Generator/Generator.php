@@ -7,6 +7,7 @@ use Symfony\Component\Routing\RouterInterface;
 use Admingenerator\GeneratorBundle\Validator\ValidatorInterface;
 use Admingenerator\GeneratorBundle\Builder\Generator as AdminGenerator;
 use Doctrine\Common\Cache as DoctrineCache;
+use Twig_Environment as TwigEnvironment;
 
 abstract class Generator implements GeneratorInterface
 {
@@ -69,6 +70,11 @@ abstract class Generator implements GeneratorInterface
      * @var RouterInterface
      */
     protected $router;
+    
+    /**
+     * @var TwigEnvironment
+     */
+    protected $twig;
 
     /**
      * @param $root_dir
@@ -268,5 +274,14 @@ abstract class Generator implements GeneratorInterface
     public function setRouter(RouterInterface $router)
     {
         $this->router = $router;
+    }
+    
+    /**
+     * @param TwigEnvironment $twig
+     * @return void
+     */
+    public function setTwig(TwigEnvironment $twig)
+    {
+        $this->twig = $twig;
     }
 }

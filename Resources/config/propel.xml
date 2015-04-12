@@ -32,6 +32,9 @@
             <call method="setRouter">
                 <argument type="service" id="router" />
             </call>
+            <call method="setTwig">
+                <argument type="service" id="twig" />
+            </call>
         </service>
 
         <service id="admingenerator.sessionserializer.propel" class="%admingenerator.sessionserializer.propel.class%">

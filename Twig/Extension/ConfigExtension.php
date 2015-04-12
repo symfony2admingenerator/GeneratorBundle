@@ -2,24 +2,22 @@
 
 namespace Admingenerator\GeneratorBundle\Twig\Extension;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
-
 /**
  * @author Piotr Gołębiewski <loostro@gmail.com>
  */
 class ConfigExtension extends \Twig_Extension
 {
     /**
-     * @var ContainerInterface
+     * @var array
      */
-    protected $container;
+    protected $bundleConfig;
 
     /**
-     * @param ContainerInterface $container
+     * @param array $bundleConfig
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(array $bundleConfig)
     {
-        $this->container = $container;
+        $this->bundleConfig = $bundleConfig;
     }
 
     /**
@@ -35,12 +33,20 @@ class ConfigExtension extends \Twig_Extension
     /**
      * Returns admingenerator parameter
      *
-     * @param  string $name
-     * @return string Parameter value
+     * @param  string   $name
+     * @return string   Parameter value
      */
     public function getAdmingeneratorConfig($name)
     {
-        return $this->container->getParameter('admingenerator.'.$name);
+        $search_in = $this->bundleConfig;
+        $path = explode('.', $name);
+        foreach ($path as $key) {
+            if (!isset($search_in[$key])) {
+                throw new \InvalidArgumentException('Unknown parameter "admingenerator.'+$name+'".');
+            }
+            $search_in = $search_in[$key];
+        }
+        return $search_in;
     }
 
     /**
