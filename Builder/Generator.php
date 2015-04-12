@@ -4,11 +4,12 @@ namespace Admingenerator\GeneratorBundle\Builder;
 
 /**
  * @author Cedric LOMBARDOT
+ * @author Piotr Gołębiewski <loostro@gmail.com>
  */
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Yaml\Yaml;
 use TwigGenerator\Builder\Generator as TwigGeneratorGenerator;
 use TwigGenerator\Builder\BuilderInterface;
+use Symfony\Component\Routing\RouterInterface;
 
 class Generator extends TwigGeneratorGenerator
 {
@@ -19,18 +20,35 @@ class Generator extends TwigGeneratorGenerator
      */
     protected $yaml;
 
+    /**
+     * @var string $baseController The base controller.
+     */
     protected $baseController;
 
+    /**
+     * @var string $columnClass The column class.
+     */
     protected $columnClass = 'Admingenerator\GeneratorBundle\Generator\Column';
 
-    protected $base_admin_template = 'AdmingeneratoroldThemeBundle::base.html.twig';
-
-    protected $base_generator_name;
+    /**
+     * @var string $baseAdminTemplate The base admin template.
+     */
+    protected $baseAdminTemplate = 'AdmingeneratoroldThemeBundle::base.html.twig';
 
     /**
-     * @var ContainerInterface
+     * @var string $baseGeneratorName The base generator name.
      */
-    protected $container;
+    protected $baseGeneratorName;
+
+    /**
+     * @var array $bundleConfig Generator bundle config.
+     */
+    protected $bundleConfig;
+
+    /**
+     * @var \Symfony\Component\Routing\RouterInterface
+     */
+    protected $router;
 
     /**
      * Init a new generator and automatically define the base of tempDir
@@ -44,19 +62,28 @@ class Generator extends TwigGeneratorGenerator
         $this->setYamlConfig(Yaml::parse($yaml));
     }
 
+    /**
+     * @return string The base admin template.
+     */
     public function getBaseAdminTemplate()
     {
-        return $this->base_admin_template;
+        return $this->baseAdminTemplate;
     }
 
-    public function setBaseAdminTemplate($base_admin_template)
+    /**
+     * @param string $baseAdminTemplate The base admin template.
+     * @return void
+     */
+    public function setBaseAdminTemplate($baseAdminTemplate)
     {
-        return $this->base_admin_template = $base_admin_template;
+        $this->baseAdminTemplate = $baseAdminTemplate;
     }
 
     /**
      * Add a builder
      * @param BuilderInterface $builder
+     *
+     * @return void
      */
     public function addBuilder(BuilderInterface $builder)
     {
@@ -85,6 +112,7 @@ class Generator extends TwigGeneratorGenerator
      *
      * @param  array $global
      * @param  array $builder
+     *
      * @return array
      */
     protected function mergeParameters(array $global, array $builder)
@@ -143,6 +171,7 @@ class Generator extends TwigGeneratorGenerator
      *
      * @param  array $global
      * @param  array $builder
+     *
      * @return array
      */
     protected function mergeConfiguration(array $global, array $builder)
@@ -173,6 +202,8 @@ class Generator extends TwigGeneratorGenerator
      *
      * @param array $base        Base array
      * @param array $replacement Replacement array
+     *
+     * @return array
      */
     protected function recursiveReplace($base, $replacement)
     {
@@ -200,6 +231,8 @@ class Generator extends TwigGeneratorGenerator
      * This must be executed after $this->mergeParameters() as it will
      * replace null parameter with empty arrays and $this->mergeParameters()
      * treats null as "use global config".
+     *
+     * @return array
      */
     protected function applyActionsCredentialDefaults(array $params)
     {
@@ -233,6 +266,8 @@ class Generator extends TwigGeneratorGenerator
 
     /**
      * Inject default batch and object actions settings
+     *
+     * @return array
      */
     protected function applyActionsBuilderDefaults(array $params)
     {
@@ -293,23 +328,28 @@ class Generator extends TwigGeneratorGenerator
         return $params;
     }
 
+    /**
+     * @param string $columnClass
+     * @return void
+     */
+    public function setColumnClass($columnClass)
+    {
+        $this->columnClass = $columnClass;
+    }
+
+    /**
+     * @return string The column class.
+     */
     protected function getColumnClass()
     {
         return $this->columnClass;
     }
 
     /**
-     * @param string $columnClass
-     */
-    public function setColumnClass($columnClass)
-    {
-        return $this->columnClass = $columnClass;
-    }
-
-    /**
      * Set the yaml to pass all the vars to the builders
      *
      * @param Yaml $yaml
+     * @return void
      */
     protected function setYamlConfig(array $yaml)
     {
@@ -320,27 +360,31 @@ class Generator extends TwigGeneratorGenerator
     }
 
     /**
-     * @param string $yaml_path string with point for levels
+     * @param string    $yamlPath   Path string with point for levels.
+     * @param mixed     $default    Value to default to, path key not found.
+     * @return mixed
      */
-    public function getFromYaml($yaml_path, $default = null)
+    public function getFromYaml($yamlPath, $default = null)
     {
-        $search_in = $this->yaml;
-        $yaml_path = explode('.', $yaml_path);
-        foreach ($yaml_path as $key) {
-            if (!isset($search_in[$key])) {
-                return $default;
-            }
-            $search_in = $search_in[$key];
-        }
-
-        return $search_in;
+        return $this->getFromArray(
+            $this->yaml,
+            $yamlPath,
+            $default
+        );
     }
 
+    /**
+     * @param object $fieldGuesser The fieldguesser.
+     * @return void
+     */
     public function setFieldGuesser($fieldGuesser)
     {
-        return $this->fieldGuesser = $fieldGuesser;
+        $this->fieldGuesser = $fieldGuesser;
     }
 
+    /**
+     * @return object The fieldguesser.
+     */
     public function getFieldGuesser()
     {
         return $this->fieldGuesser;
@@ -354,47 +398,102 @@ class Generator extends TwigGeneratorGenerator
         $this->baseController = $baseController;
     }
 
+    /**
+     * @return string Base controller.
+     */
     public function getBaseController()
     {
         return $this->baseController;
     }
 
     /**
-     * @param string $base_generator_name
+     * @param string $baseGeneratorName
      */
-    public function setBaseGeneratorName($base_generator_name)
+    public function setBaseGeneratorName($baseGeneratorName)
     {
-        $this->base_generator_name = $base_generator_name;
+        $this->baseGeneratorName = $baseGeneratorName;
     }
 
+    /**
+     * @return string Base generator name.
+     */
     public function getBaseGeneratorName()
     {
-        return $this->base_generator_name;
+        return $this->baseGeneratorName;
     }
 
+    /**
+     * @return string Generated controller directory.
+     */
     public function getGeneratedControllerFolder()
     {
-        return 'Base'.$this->base_generator_name.'Controller';
+        return 'Base'.$this->baseGeneratorName.'Controller';
     }
 
-    public function setContainer(ContainerInterface $container)
+    /**
+     * @param \Symfony\Component\Routing\RouterInterface $router
+     * @return void
+     */
+    public function setRouter(RouterInterface $router)
     {
-        return $this->container = $container;
+        $this->router = $router;
     }
 
-    public function getContainer()
+    /**
+     * @return \Symfony\Component\Routing\RouterInterface $router
+     */
+    public function getRouter()
     {
-        return $this->container;
+        return $this->router;
     }
 
-    public function getTwigParams()
+    /**
+     * @param array $bundleConfig
+     */
+    public function setBundleConfig(array $bundleConfig)
     {
-        return $this->getContainer()->getParameter('admingenerator.twig');
+        $this->bundleConfig = $bundleConfig;
     }
 
-    public function getDefaultActionAfterSave()
+    /**
+     * @return array
+     */
+    public function getBundleConfig()
     {
-        return $this->getContainer()
-            ->getParameter('admingenerator.default_action_after_save');
+        return $this->bundleConfig;
+    }
+
+    /**
+     * @param string    $configPath Path string with point for levels.
+     * @param mixed     $default    Value to default to, path key not found.
+     * @return mixed
+     */
+    public function getFromBundleConfig($configPath, $default = null)
+    {
+        return $this->getFromArray(
+            $this->bundleConfig,
+            $configPath,
+            $default
+        );
+    }
+
+    /**
+     * @param array     $array      The array to traverse.
+     * @param string    $path       Path string with point for levels.
+     * @param mixed     $default    Value to default to, path key not found.
+     * @return mixed
+     */
+    protected function getFromArray($array, $path, $default = null)
+    {
+        $search_in = $array;
+        $path = explode('.', $path);
+        foreach ($path as $key) {
+            if (!isset($search_in[$key])) {
+                return $default;
+            }
+            $search_in = $search_in[$key];
+        }
+
+        return $search_in;
     }
 }

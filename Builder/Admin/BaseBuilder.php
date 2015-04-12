@@ -73,7 +73,7 @@ class BaseBuilder extends GenericBaseBuilder
     public function getColumnGroups()
     {
         $groups = array();
-        
+
         foreach ($this->getColumns() as $column) {
             $groups = array_merge($groups, $column->getGroups());
         }
@@ -83,7 +83,7 @@ class BaseBuilder extends GenericBaseBuilder
 
     /**
      * Creates new column instance
-     * 
+     *
      * @param  string   $columnName The name of the column.
      * @param  boolean  $withForms  If true, add column form configuration.
      * @return Column
@@ -337,7 +337,7 @@ class BaseBuilder extends GenericBaseBuilder
 
     /**
      * Get columns for tab, fieldset, row or field
-     * 
+     *
      * @param  mixed $input
      * @return array Array of columns.
      */
@@ -346,7 +346,7 @@ class BaseBuilder extends GenericBaseBuilder
         if (!is_array($input)) {
             $input = array($input);
         }
-        
+
         $it = new \RecursiveIteratorIterator(new \RecursiveArrayIterator($input));
 
         $fieldsNames = iterator_to_array($it, false);
@@ -586,8 +586,7 @@ class BaseBuilder extends GenericBaseBuilder
 
         // From config.yml
         $stylesheets = $parse_stylesheets(
-            $this->getGenerator()->getContainer()
-                 ->getParameter('admingenerator.stylesheets', array()), array()
+            $this->getGenerator()->getFromBundleConfig('stylesheets', array()), array()
         );
 
         // From generator.yml
@@ -623,8 +622,7 @@ class BaseBuilder extends GenericBaseBuilder
                 } elseif (isset($js['route'])) {
                     $js = array(
                         'path'  => $self->getGenerator()
-                                        ->getContainer()
-                                        ->get('router')
+                                        ->getRouter()
                                         ->generate($js['route'], $js['routeparams'])
                     );
                 }
@@ -637,8 +635,7 @@ class BaseBuilder extends GenericBaseBuilder
 
         // From config.yml
         $javascripts = $parse_javascripts(
-            $this->getGenerator()->getContainer()
-                 ->getParameter('admingenerator.javascripts', array()), array()
+            $this->getGenerator()->getFromBundleConfig('javascripts', array()), array()
         );
 
         // From generator.yml

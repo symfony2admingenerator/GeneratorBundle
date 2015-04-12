@@ -16,12 +16,12 @@ abstract class BaseBuilder extends GenericBaseBuilder
      * @var \Admingenerator\GeneratorBundle\Builder\Generator    The generator.
      */
     protected $generator;
-    
+
     /**
      * @var array
      */
     protected $templatesToGenerate = array();
-    
+
     /**
      * @var \Symfony\Component\HttpFoundation\ParameterBag
      */
@@ -65,16 +65,6 @@ abstract class BaseBuilder extends GenericBaseBuilder
     public function getTemplatesToGenerate()
     {
         return $this->templatesToGenerate;
-    }
-
-    /**
-     * Retrieve default action after save name.
-     *
-     * @return string
-     */
-    public function getDefaultActionAfterSave()
-    {
-        return $this->getGenerator()->getDefaultActionAfterSave();
     }
 
     /**
@@ -175,7 +165,7 @@ abstract class BaseBuilder extends GenericBaseBuilder
     {
         return $this->getSimpleClassName($this->getVariable('model'));
     }
-    
+
     /**
      * Set the generator.
      *
@@ -189,10 +179,10 @@ abstract class BaseBuilder extends GenericBaseBuilder
                .'other instances are not supported.'
             );
         }
-        
+
         $this->generator = $generator;
     }
-    
+
     /**
      * Return the generator.
      *

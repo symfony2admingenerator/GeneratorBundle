@@ -3,13 +3,12 @@
 namespace Admingenerator\GeneratorBundle\Generator;
 
 use Symfony\Component\Finder\Finder;
-use Symfony\Component\DependencyInjection\ContainerAware;
+use Symfony\Component\Routing\RouterInterface;
 use Admingenerator\GeneratorBundle\Validator\ValidatorInterface;
 use Admingenerator\GeneratorBundle\Builder\Generator as AdminGenerator;
 use Doctrine\Common\Cache as DoctrineCache;
 
-// TODO: remove container injection
-abstract class Generator extends ContainerAware implements GeneratorInterface
+abstract class Generator implements GeneratorInterface
 {
     /**
      * @var string
@@ -26,12 +25,20 @@ abstract class Generator extends ContainerAware implements GeneratorInterface
      */
     protected $generator_yaml;
 
+    /**
+     * @var array $bundleConfig Generator bundle config.
+     */
+    protected $bundleConfig;
+
+    /**
+     * @var object $fieldGuesser The fieldguesser.
+     */
     protected $fieldGuesser;
 
     /**
      * @var string
      */
-    protected $base_generator_name;
+    protected $baseGeneratorName;
 
     /**
      * @var array
@@ -59,6 +66,11 @@ abstract class Generator extends ContainerAware implements GeneratorInterface
     protected $overwriteIfExists = false;
 
     /**
+     * @var RouterInterface
+     */
+    protected $router;
+
+    /**
      * @param $root_dir
      * @param $cache_dir
      */
@@ -72,6 +84,7 @@ abstract class Generator extends ContainerAware implements GeneratorInterface
     /**
      * @param DoctrineCache\CacheProvider $cacheProvider
      * @param string $cacheSuffix
+     * @return void
      */
     public function setCacheProvider(DoctrineCache\CacheProvider $cacheProvider, $cacheSuffix = 'default')
     {
@@ -81,6 +94,7 @@ abstract class Generator extends ContainerAware implements GeneratorInterface
 
     /**
      * Force overwrite files if exists mode.
+     * @return void
      */
     public function forceOverwriteIfExists()
     {
@@ -89,6 +103,7 @@ abstract class Generator extends ContainerAware implements GeneratorInterface
 
     /**
      * @param $directory
+     * @return void
      */
     public function addTemplatesDirectory($directory)
     {
@@ -97,6 +112,7 @@ abstract class Generator extends ContainerAware implements GeneratorInterface
 
     /**
      * @param $yaml_file
+     * @return void
      */
     public function setGeneratorYml($yaml_file)
     {
@@ -112,11 +128,12 @@ abstract class Generator extends ContainerAware implements GeneratorInterface
     }
 
     /**
-     * @param $base_generator_name
+     * @param $baseGeneratorName
+     * @return void
      */
-    public function setBaseGeneratorName($base_generator_name)
+    public function setBaseGeneratorName($baseGeneratorName)
     {
-        $this->base_generator_name = $base_generator_name;
+        $this->baseGeneratorName = $baseGeneratorName;
     }
 
     /**
@@ -124,7 +141,7 @@ abstract class Generator extends ContainerAware implements GeneratorInterface
      */
     protected function getBaseGeneratorName()
     {
-        return $this->base_generator_name;
+        return $this->baseGeneratorName;
     }
 
     /**
@@ -163,11 +180,18 @@ abstract class Generator extends ContainerAware implements GeneratorInterface
         return sprintf('admingen_isbuilt_%s_%s', $this->getBaseGeneratorName(), $this->cacheSuffix);
     }
 
+    /**
+     * @param object $fieldGuesser The fieldguesser.
+     * @return void
+     */
     public function setFieldGuesser($fieldGuesser)
     {
-        return $this->fieldGuesser = $fieldGuesser;
+        $this->fieldGuesser = $fieldGuesser;
     }
 
+    /**
+     * @return object The fieldguesser.
+     */
     public function getFieldGuesser()
     {
         return $this->fieldGuesser;
@@ -210,15 +234,39 @@ abstract class Generator extends ContainerAware implements GeneratorInterface
         return false;
     }
 
+    /**
+     * @return void
+     */
     public function addValidator(ValidatorInterface $validator)
     {
         $this->validators[] = $validator;
     }
 
+    /**
+     * @return void
+     */
     public function validateYaml()
     {
         foreach ($this->validators as $validator) {
             $validator->validate($this);
         }
+    }
+
+    /**
+     * @param array $bundleConfig
+     * @return void
+     */
+    public function setBundleConfig(array $bundleConfig)
+    {
+        $this->bundleConfig = $bundleConfig;
+    }
+
+    /**
+     * @param \Symfony\Component\Routing\RouterInterface $router
+     * @return void
+     */
+    public function setRouter(RouterInterface $router)
+    {
+        $this->router = $router;
     }
 }

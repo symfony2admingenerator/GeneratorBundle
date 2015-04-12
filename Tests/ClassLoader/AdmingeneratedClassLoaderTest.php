@@ -21,7 +21,11 @@ class AdmingeneratedClassLoaderTest extends TestCase
     public function getLoadClassTests()
     {
         return array(
-            array('\\Admingenerated\\AdmingeneratorDemoBundle\\BaseController\\ListController', 'Admingenerated\\AdmingeneratorDemoBundle\\BaseController\\ListController',   '->loadClass() loads admingenerated class'),
+            array(
+                '\\Admingenerated\\AdmingeneratorDemoBundle\\BaseController\\ListController',
+                'Admingenerated\\AdmingeneratorDemoBundle\\BaseController\\ListController',
+                '->loadClass() loads admingenerated class'
+            ),
         );
     }
 }

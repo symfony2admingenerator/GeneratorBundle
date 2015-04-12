@@ -30,11 +30,12 @@ class DoctrineODMGenerator extends Generator
         $this->validateYaml();
 
         $generator = new AdminGenerator($this->cache_dir, $this->getGeneratorYml());
-        $generator->setContainer($this->container);
+        $generator->setBundleConfig($this->bundleConfig);
+        $generator->setRouter($this->router);
         $generator->setBaseAdminTemplate(
             $generator->getFromYaml(
                 'base_admin_template',
-                $this->container->getParameter('admingenerator.base_admin_template')
+                $generator->getFromBundleConfig('base_admin_template')
             )
         );
         $generator->setFieldGuesser($this->getFieldGuesser());
@@ -117,11 +118,12 @@ class DoctrineODMGenerator extends Generator
         }
 
         $embedGenerator = new AdminGenerator($this->cache_dir, $yaml_file);
-        $embedGenerator->setContainer($this->container);
+        $embedGenerator->setBundleConfig($this->bundleConfig);
+        $embedGenerator->setRouter($this->router);
         $embedGenerator->setBaseAdminTemplate(
             $embedGenerator->getFromYaml(
                 'base_admin_template',
-                $this->container->getParameter('admingenerator.base_admin_template')
+                $embedGenerator->getFromBundleConfig('base_admin_template')
             )
         );
         $embedGenerator->setFieldGuesser($this->getFieldGuesser());
