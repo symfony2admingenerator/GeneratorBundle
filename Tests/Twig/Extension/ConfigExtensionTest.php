@@ -26,7 +26,7 @@ class ConfigExtensionTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->extension = new ConfigExtension($this->$exampleConfig);
+        $this->extension = new ConfigExtension($this->exampleConfig);
     }
 
     public function testGetAdmingeneratorConfig()
