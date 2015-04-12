@@ -262,7 +262,7 @@ abstract class Generator implements GeneratorInterface
     }
 
     /**
-     * @param RouterInterface $router
+     * @param \Symfony\Component\Routing\RouterInterface $router
      * @return void
      */
     public function setRouter(RouterInterface $router)
