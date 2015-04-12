@@ -66,7 +66,7 @@ abstract class Generator implements GeneratorInterface
     protected $overwriteIfExists = false;
 
     /**
-     * @var Symfony\Component\Routing\RouterInterface
+     * @var RouterInterface
      */
     protected $router;
 
@@ -262,10 +262,10 @@ abstract class Generator implements GeneratorInterface
     }
 
     /**
-     * @param Symfony\Component\Routing\RouterInterface $router
+     * @param RouterInterface $router
      * @return void
      */
-    public function setRouter(Symfony\Component\Routing\RouterInterface $router)
+    public function setRouter(RouterInterface $router)
     {
         $this->router = $router;
     }
