@@ -33,6 +33,9 @@
             <call method="setRouter">
                 <argument type="service" id="router" />
             </call>
+            <call method="setTwig">
+                <argument type="service" id="twig" />
+            </call>
         </service>
 
         <service id="admingenerator.sessionserializer.doctrine" class="%admingenerator.sessionserializer.doctrine.class%">
