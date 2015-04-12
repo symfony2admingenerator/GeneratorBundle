@@ -3,6 +3,7 @@
 namespace Admingenerator\GeneratorBundle\Generator;
 
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\Routing\RouterInterface;
 use Admingenerator\GeneratorBundle\Validator\ValidatorInterface;
 use Admingenerator\GeneratorBundle\Builder\Generator as AdminGenerator;
 use Doctrine\Common\Cache as DoctrineCache;
@@ -23,17 +24,15 @@ abstract class Generator implements GeneratorInterface
      * @var string
      */
     protected $generator_yaml;
-    
-    /**
-     * @var array $twigParams Twig configuration params.
-     */
-    protected $twigParams;
-    
-    /**
-     * @var string $defaultActionAfterSave The default action after save.
-     */
-    protected $defaultActionAfterSave;
 
+    /**
+     * @var array $bundleConfig Generator bundle config.
+     */
+    protected $bundleConfig;
+
+    /**
+     * @var object $fieldGuesser The fieldguesser.
+     */
     protected $fieldGuesser;
 
     /**
@@ -67,6 +66,11 @@ abstract class Generator implements GeneratorInterface
     protected $overwriteIfExists = false;
 
     /**
+     * @var Symfony\Component\Routing\RouterInterface
+     */
+    protected $router;
+
+    /**
      * @param $root_dir
      * @param $cache_dir
      */
@@ -80,6 +84,7 @@ abstract class Generator implements GeneratorInterface
     /**
      * @param DoctrineCache\CacheProvider $cacheProvider
      * @param string $cacheSuffix
+     * @return void
      */
     public function setCacheProvider(DoctrineCache\CacheProvider $cacheProvider, $cacheSuffix = 'default')
     {
@@ -89,6 +94,7 @@ abstract class Generator implements GeneratorInterface
 
     /**
      * Force overwrite files if exists mode.
+     * @return void
      */
     public function forceOverwriteIfExists()
     {
@@ -97,6 +103,7 @@ abstract class Generator implements GeneratorInterface
 
     /**
      * @param $directory
+     * @return void
      */
     public function addTemplatesDirectory($directory)
     {
@@ -105,6 +112,7 @@ abstract class Generator implements GeneratorInterface
 
     /**
      * @param $yaml_file
+     * @return void
      */
     public function setGeneratorYml($yaml_file)
     {
@@ -121,6 +129,7 @@ abstract class Generator implements GeneratorInterface
 
     /**
      * @param $baseGeneratorName
+     * @return void
      */
     public function setBaseGeneratorName($baseGeneratorName)
     {
@@ -171,11 +180,18 @@ abstract class Generator implements GeneratorInterface
         return sprintf('admingen_isbuilt_%s_%s', $this->getBaseGeneratorName(), $this->cacheSuffix);
     }
 
+    /**
+     * @param object $fieldGuesser The fieldguesser.
+     * @return void
+     */
     public function setFieldGuesser($fieldGuesser)
     {
-        return $this->fieldGuesser = $fieldGuesser;
+        $this->fieldGuesser = $fieldGuesser;
     }
 
+    /**
+     * @return object The fieldguesser.
+     */
     public function getFieldGuesser()
     {
         return $this->fieldGuesser;
@@ -218,11 +234,17 @@ abstract class Generator implements GeneratorInterface
         return false;
     }
 
+    /**
+     * @return void
+     */
     public function addValidator(ValidatorInterface $validator)
     {
         $this->validators[] = $validator;
     }
 
+    /**
+     * @return void
+     */
     public function validateYaml()
     {
         foreach ($this->validators as $validator) {
@@ -231,18 +253,20 @@ abstract class Generator implements GeneratorInterface
     }
 
     /**
-     * @param string $action
+     * @param array $bundleConfig
+     * @return void
      */
-    public function setDefaultActionAfterSave($action)
+    public function setBundleConfig(array $bundleConfig)
     {
-        $this->defaultActionAfterSave = $action;
+        $this->bundleConfig = $bundleConfig;
     }
-    
+
     /**
-     * @param array $twigParams
+     * @param Symfony\Component\Routing\RouterInterface $router
+     * @return void
      */
-    public function setTwigParams(array $twigParams)
+    public function setRouter(Symfony\Component\Routing\RouterInterface $router)
     {
-        $this->twigParams = $twigParams;
+        $this->router = $router;
     }
 }
