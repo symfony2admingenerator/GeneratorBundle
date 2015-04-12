@@ -69,6 +69,16 @@ abstract class Generator implements GeneratorInterface
      * @var RouterInterface
      */
     protected $router;
+    
+    /**
+     * @var array
+     */
+    protected $twigExtensions;
+    
+    /**
+     * @var array
+     */
+    protected $twigFilters;
 
     /**
      * @param $root_dir
@@ -268,5 +278,23 @@ abstract class Generator implements GeneratorInterface
     public function setRouter(RouterInterface $router)
     {
         $this->router = $router;
+    }
+    
+    /**
+     * @param array $twigExtensions Twig extensions
+     * @return void
+     */
+    public function setTwigExtensions($twigExtensions)
+    {
+        $this->twigExtensions = $twigExtensions;
+    }
+    
+    /**
+     * @param array $twigFilters Twig filters
+     * @return void
+     */
+    public function setTwigFilters($twigFilters)
+    {
+        $this->twigFilters = $twigFilters;
     }
 }
