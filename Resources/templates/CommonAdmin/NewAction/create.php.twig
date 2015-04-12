@@ -21,7 +21,7 @@
 
                 $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans("{{ messages.success|default("action.object.edit.success") }}", array(), 'Admingenerator') );
 
-                {% set defaultActionAfterSave = builder.getDefaultActionAfterSave %}
+                {% set defaultActionAfterSave = builder.generator.bundleConfig.default_action_after_save %}
                 $actionAfterSave = "{{ actionAfterSave|default(defaultActionAfterSave) }}";
                 $pk = ${{ builder.ModelClass }}->get{{ builder.getFieldGuesser().getModelPrimaryKeyName(model)|classify }}();
                 if ($this->get('request')->request->has('save-and-add') || ('new' == $actionAfterSave)) {
@@ -31,7 +31,7 @@
                 } else if ($this->get('request')->request->has('save-and-show') || ('show' == $actionAfterSave)) {
                     return new RedirectResponse($this->getShowUrl($pk));
                 } else {
-                    if (('edit' != $actionAfterSave) && 
+                    if (('edit' != $actionAfterSave) &&
                         method_exists($this,'get{{ builder.actionAfterSave|default(defaultActionAfterSave)|title }}Url')) {
                         return new RedirectResponse(call_user_func(array($this, 'get{{ builder.actionAfterSave|default(defaultActionAfterSave)|title }}Url'), $pk));
 
