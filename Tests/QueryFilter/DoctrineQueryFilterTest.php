@@ -24,28 +24,28 @@ class QueryFilterTest extends TestCase
     {
         $this->queryFilter->addStringFilter('title', 'test');
 
-        $this->assertEquals('SELECT q FROM Admingenerator\GeneratorBundle\Tests\QueryFilter\Entity\Movie q WHERE q.title LIKE :q_title', $this->queryFilter->getQuery()->getDql());
+        $this->assertEquals('SELECT q FROM Admingenerator\GeneratorBundle\Tests\QueryFilter\Entity\Movie q WHERE q.title LIKE :q_title_0', $this->queryFilter->getQuery()->getDql());
     }
 
     public function testAddTextFilter()
     {
         $this->queryFilter->addTextFilter('desc', 'test');
 
-        $this->assertEquals('SELECT q FROM Admingenerator\GeneratorBundle\Tests\QueryFilter\Entity\Movie q WHERE q.desc LIKE :q_desc', $this->queryFilter->getQuery()->getDql());
+        $this->assertEquals('SELECT q FROM Admingenerator\GeneratorBundle\Tests\QueryFilter\Entity\Movie q WHERE q.desc LIKE :q_desc_0', $this->queryFilter->getQuery()->getDql());
     }
 
     public function testAddDefaultFilter()
     {
         $this->queryFilter->addDefaultFilter('title', 'test');
 
-        $this->assertEquals('SELECT q FROM Admingenerator\GeneratorBundle\Tests\QueryFilter\Entity\Movie q WHERE q.title = :q_title', $this->queryFilter->getQuery()->getDql());
+        $this->assertEquals('SELECT q FROM Admingenerator\GeneratorBundle\Tests\QueryFilter\Entity\Movie q WHERE q.title = :q_title_0', $this->queryFilter->getQuery()->getDql());
     }
 
     public function testFilterOnAssociation()
     {
         $this->queryFilter->addTextFilter('producer.name', 'test');
 
-        $this->assertEquals('SELECT q FROM Admingenerator\GeneratorBundle\Tests\QueryFilter\Entity\Movie q INNER JOIN q.producer producer_table_filter_join WHERE producer_table_filter_join.name LIKE :producer_table_filter_join_name', $this->queryFilter->getQuery()->getDql());
+        $this->assertEquals('SELECT q FROM Admingenerator\GeneratorBundle\Tests\QueryFilter\Entity\Movie q INNER JOIN q.producer producer_table_filter_join WHERE producer_table_filter_join.name LIKE :producer_table_filter_join_name_0', $this->queryFilter->getQuery()->getDql());
     }
 
     public function testMultipleFiltersOnAssociation()
@@ -53,14 +53,14 @@ class QueryFilterTest extends TestCase
         $this->queryFilter->addTextFilter('producer.name', 'test');
         $this->queryFilter->addBooleanFilter('producer.published', true);
 
-        $this->assertEquals('SELECT q FROM Admingenerator\GeneratorBundle\Tests\QueryFilter\Entity\Movie q INNER JOIN q.producer producer_table_filter_join WHERE producer_table_filter_join.name LIKE :producer_table_filter_join_name AND producer_table_filter_join.published = :producer_table_filter_join_published', $this->queryFilter->getQuery()->getDql());
+        $this->assertEquals('SELECT q FROM Admingenerator\GeneratorBundle\Tests\QueryFilter\Entity\Movie q INNER JOIN q.producer producer_table_filter_join WHERE producer_table_filter_join.name LIKE :producer_table_filter_join_name_0 AND producer_table_filter_join.published = :producer_table_filter_join_published_1', $this->queryFilter->getQuery()->getDql());
     }
 
     public function testCall()
     {
         $this->queryFilter->addFooFilter('title', 'test');
 
-        $this->assertEquals('SELECT q FROM Admingenerator\GeneratorBundle\Tests\QueryFilter\Entity\Movie q WHERE q.title = :q_title', $this->queryFilter->getQuery()->getDql());
+        $this->assertEquals('SELECT q FROM Admingenerator\GeneratorBundle\Tests\QueryFilter\Entity\Movie q WHERE q.title = :q_title_0', $this->queryFilter->getQuery()->getDql());
     }
 
     protected function initQueryFilter()
