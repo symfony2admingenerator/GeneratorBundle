@@ -40,6 +40,8 @@ class DoctrineODMGenerator extends Generator
         );
         $generator->setFieldGuesser($this->getFieldGuesser());
         $generator->setMustOverwriteIfExists($this->needToOverwrite($generator));
+        $generator->setTwigExtensions($this->twig->getExtensions());
+        $generator->setTwigFilters($this->twig->getFilters());
         $generator->setTemplateDirs($this->templatesDirectories);
         $generator->setBaseController(
             'Admingenerator\GeneratorBundle\Controller\DoctrineODM\BaseController'
@@ -128,6 +130,8 @@ class DoctrineODMGenerator extends Generator
         );
         $embedGenerator->setFieldGuesser($this->getFieldGuesser());
         $embedGenerator->setMustOverwriteIfExists($this->needToOverwrite($embedGenerator));
+        $embedGenerator->setTwigExtensions($this->twig->getExtensions());
+        $embedGenerator->setTwigFilters($this->twig->getFilters());
         $embedGenerator->setTemplateDirs($this->templatesDirectories);
 
         $embedGenerator->addBuilder(new EditBuilderType());
