@@ -70,6 +70,7 @@ table.table thead .sorting_desc_disabled:after { content: '\f0d7'; opacity: 0.2;
 }
 
 .btn-group .tooltip+.btn{margin-left:-1px}
-.scopes-group {padding-bottom:5px}
+.scopes-group {padding-bottom:5px; display: inline-block;}
+.scopes-group + .scopes-group {padding-left: 5px;}
 
 .skin-blue .sidebar .user-panel > .info {max-width: 155px;}
