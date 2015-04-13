@@ -3,8 +3,8 @@
     {% if scopes|default is not empty %}
         {% for groupName, group in scopes %}
             {{ echo_block("list_scopes_"~(groupName|classify|replace({'.': '_'})|lower)) }}
-            <div class="row scopes-group scopes-group-{{ groupName|classify|replace({'.': '-'})|lower }}" role="scopes">
-                <div class="col-md-12 scopes-list btn-group">
+            <div class="scopes-group scopes-group-{{ groupName|classify|replace({'.': '-'})|lower }}" role="scopes">
+                <div class="scopes-list btn-group">
                     {% for scopeName, params in group %}
                     <a class="{{ 'btn btn-sm ' ~ params.class|default('btn-default') }} {{ echo_twig("(scopes['" ~ (groupName|classify|lower) ~ "'] is defined and scopes['" ~ (groupName|classify|lower) ~ "'] == '" ~ (scopeName|classify|lower) ~ "') ? 'active': 'inactive'") }}"
                        href="{{ echo_path(
