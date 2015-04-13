@@ -1,22 +1,22 @@
 # Boolean filter
 boolean:
-    yes:        Tak
-    no:         Nie
-    yes_or_no:  Tak lub Nie
+    yes:            Tak
+    no:             Nie
+    yes_or_no:      Tak lub Nie
 
 # Pager
 pagerfanta:
-    previous:       <
+    previous:       "<"
     next:           ">"
     view.perpage:   Wyświetl po
     num.elements:   %number% elementów
 
 # List
 list:
-    filters: Filters
+    filters:        Filtry
     button:
-        filter:         Filtruj
-        reset:          Resetuj
+        filter:     Filtruj
+        reset:      Resetuj
     no.results:     Brak wyników.
     display:
         range:      Wyświetlanie <b role="results-range-start">%start%</b> - <b role="results-range-end">%end%</b> z <b role="results-count">%count%</b> rezultatów.
@@ -25,61 +25,61 @@ list:
 
 # Nested List
 nested.list:
-    expand:     Pokaż
-    collapse:   Ukryj
-    loading:    Wczytywanie
-    success:    Element przeniesiono.
-    error:      Element nie mógł zostać przeniesiony.
+    expand:         Pokaż
+    collapse:       Ukryj
+    loading:        Wczytywanie
+    success:        Element przeniesiono.
+    error:          Element nie mógł zostać przeniesiony.
 
 # Profile
 profile:
-    welcome:  <b>Witaj</b>, %username%!
-    login:    Zaloguj
-    logout:   Wyloguj
-    exit:     Wyjście z trybu personifikacji
+    welcome:        <b>Witaj</b>, %username%!
+    login:          Zaloguj
+    logout:         Wyloguj
+    exit:           Wyjście z trybu personifikacji
     unauthenticated: Niezalogowany
 
 # Generic actions
 action.generic:
-    list:   Lista
-    new:    Nowy
-    save:   Zapisz
+    list:           Lista
+    new:            Nowy
+    save:           Zapisz
     save-and-add:   Zapisz i Nowy
     save-and-list:  Zapisz i Lista
-    excel:  Eksportuj
+    excel:          Eksportuj
 
 # Object actions
 action.object.edit:
-    label:    Edytuj
-    success:  Zapisano zmiany.
-    error:    Zmiany nie mogły zostać zapisane. Sprawdź błędy i spróbuj ponownie.
+    label:          Edytuj
+    success:        Zapisano zmiany.
+    error:          Zmiany nie mogły zostać zapisane. Sprawdź błędy i spróbuj ponownie.
     locked:   |
-                Przepraszam, ale ktoś inny już zmienił ten obiekt.<br />
+                Niestety, ale ktoś inny już zmienił ten obiekt.<br />
                 <a href="%path%" target="_blank">Kliknij tutaj</a>, aby 
                 zobaczyć zmiany na nowej zakładce lub wyślij formularz ponownie,
-                aby zastosować twoje zmiany!
+                aby zastosować Twoje zmiany!
 action.object.delete:
-    label:    Usuń
-    confirm:  Czy potwierdzasz usunięcie elementu?
-    success:  Usunięto wskazany element.
-    error:    Element nie mógł zostać usunięty.
+    label:          Usuń
+    confirm:        Czy potwierdzasz usunięcie elementu?
+    success:        Usunięto wskazany element.
+    error:          Element nie mógł zostać usunięty.
 action.object.show:
-    label:    Pokaż
+    label:          Pokaż
 
 # Batch actions
 action.batch.delete:
-    label:    Usuń
-    confirm:  Czy potwierdzasz usunięcie wszystkich zaznaczonych elementów?
-    success:  Usunięto wskazane elementy.
-    error:    Zaznaczone elementy nie mogły zostać usunięte.
+    label:          Usuń
+    confirm:        Czy potwierdzasz usunięcie wszystkich zaznaczonych elementów?
+    success:        Usunięto wskazane elementy.
+    error:          Zaznaczone elementy nie mogły zostać usunięte.
 
 # Custom actions
 action.custom:
-    title:    Czy na pewno chcesz wykonać akcję %name%?
-    success:  Akcja %name% zakończona sukcesem.
-    error:    Nie można było ukończyć akcji %name%.
-    confirm:  Potwierdź
-    cancel:   Anuluj
+    title:          Czy na pewno chcesz wykonać akcję %name%?
+    success:        Akcja %name% zakończona sukcesem.
+    error:          Nie można było ukończyć akcji %name%.
+    confirm:        Potwierdź
+    cancel:         Anuluj
 
 # Batch list
 batch.list:
@@ -90,8 +90,8 @@ batch.list:
 
 # Layout
 dashboard:
-    homepage:   Strona Główna
-    brand:      Pulpit
+    homepage:       Strona Główna
+    brand:          Pulpit
 
 admingenerator:
     dashboard: Pulpit
