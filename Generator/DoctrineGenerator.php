@@ -137,6 +137,8 @@ class DoctrineGenerator extends Generator
         );
         $embedGenerator->setFieldGuesser($this->getFieldGuesser());
         $embedGenerator->setMustOverwriteIfExists($this->needToOverwrite($embedGenerator));
+        $embedGenerator->setTwigExtensions($this->twig->getExtensions());
+        $embedGenerator->setTwigFilters($this->twig->getFilters());
         $embedGenerator->setTemplateDirs($this->templatesDirectories);
 
         $embedGenerator->addBuilder(new EditBuilderType());
