@@ -36,7 +36,6 @@ public function registerBundles()
         new WhiteOctober\PagerfantaBundle\WhiteOctoberPagerfantaBundle(),
     );
 }
-?>
 ```
 
 You also need to configure the JMS Security Extra Bundle:
