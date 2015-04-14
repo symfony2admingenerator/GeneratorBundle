@@ -63,7 +63,7 @@ admingenerator_generator:
 #    base_admin_template: AdmingeneratorGeneratorBundle::base_uncompressed.html.twig
 ```
 
-### (Optional) Configure Assetic to use UglifyCSS and UglifyJS
+### (optional) Configure Assetic to use UglifyCSS and UglifyJS
 
 By default, the `base.html.twig` uses UglifyCSS and UglifyJS to minify assets and combine them into one file (less HTTP requests).
 
