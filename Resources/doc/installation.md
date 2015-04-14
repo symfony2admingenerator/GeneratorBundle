@@ -4,9 +4,12 @@
 [go back to Table of contents][back-to-index]
 
 
-### 1. Add Admin Generator to your `composer.json`:
+### 1. Update `composer.json`:
+
+Run following commands:
 
 `composer require symfony2admingenerator/generator-bundle`
+`composer update symfony2admingenerator/generator-bundle`.
 
 > **Note:** If you're getting **no matching package found** error then you must also add `"minimum-stability": "dev"` to your **composer.json** file.
     
