@@ -84,7 +84,7 @@ Make sure `bower` is available through your PATH environment variable, then run 
 
 Assets will be downloaded to the `admin` directory into the root `web` directory. 
 
-### (Optional) Dump assets
+### (optional) Dump assets
 
 If you're useing assetic for asset management dump your assets by running:
 
