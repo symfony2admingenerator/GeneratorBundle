@@ -8,9 +8,9 @@
 
 Run following commands:
 
-`composer require symfony2admingenerator/generator-bundle`
+* `composer require symfony2admingenerator/generator-bundle`
 
-`composer update symfony2admingenerator/generator-bundle`
+* `composer update symfony2admingenerator/generator-bundle`
 
 > **Note:** If you're getting **no matching package found** error then you must also add `"minimum-stability": "dev"` to your **composer.json** file.
     
