@@ -4,7 +4,7 @@
 [go back to Table of contents][back-to-index]
 
 
-### 1. Add Admingenerator to your `composer.json`:
+### 1. Add Admin Generator to your `composer.json`:
 
 `composer require symfony2admingenerator/generator-bundle`
 
