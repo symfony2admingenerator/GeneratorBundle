@@ -117,8 +117,7 @@ class DoctrineGenerator extends Generator
             $generator_path   = $yaml_path;
         }
 
-        $kernel = $this->container->get('kernel');
-        $yaml_file = $kernel->locateResource('@'.$namespace_prefix.$bundle_name.'/Resources/config/'.$generator_path);
+        $yaml_file = $this->kernel->locateResource('@'.$namespace_prefix.$bundle_name.'/Resources/config/'.$generator_path);
 
         if (!file_exists($yaml_file)) {
             throw new CantGenerateException(
