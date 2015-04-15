@@ -35,6 +35,9 @@
             <call method="setTwig">
                 <argument type="service" id="twig" />
             </call>
+            <call method="setKernel">
+                <argument type="service" id="kernel" />
+            </call>
         </service>
 
         <service id="admingenerator.sessionserializer.propel" class="%admingenerator.sessionserializer.propel.class%">
