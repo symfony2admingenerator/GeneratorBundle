@@ -55,7 +55,17 @@ class ListController extends BaseController
      */
     protected function getListUrl()
     {
-        return $this->generateUrl("{{ builder.routePrefixWithSubfolder ~ '_' ~ bundle_name ~ (builder.BaseGeneratorName ? '_' ~ builder.BaseGeneratorName : '') ~ '_list' }}");
+        return $this->generateUrl($this->getListRoute());
+    }
+
+    /**
+     * Get list index route
+     *
+     * @return string
+     */
+    protected function getListRoute()
+    {
+        return "{{ builder.routePrefixWithSubfolder ~ '_' ~ bundle_name ~ (builder.BaseGeneratorName ? '_' ~ builder.BaseGeneratorName : '') ~ '_list' }}";
     }
 
     /**
@@ -65,7 +75,17 @@ class ListController extends BaseController
      */
     protected function getFiltersUrl()
     {
-        return $this->generateUrl("{{ builder.routePrefixWithSubfolder ~ '_' ~ bundle_name ~ (builder.BaseGeneratorName ? '_' ~ builder.BaseGeneratorName : '') ~ '_filters' }}");
+        return $this->generateUrl($this->getFiltersRoute());
+    }
+
+    /**
+     * Get list filters route
+     *
+     * @return string
+     */
+    protected function getFiltersRoute()
+    {
+        return "{{ builder.routePrefixWithSubfolder ~ '_' ~ bundle_name ~ (builder.BaseGeneratorName ? '_' ~ builder.BaseGeneratorName : '') ~ '_filters' }}";
     }
 
     /**
