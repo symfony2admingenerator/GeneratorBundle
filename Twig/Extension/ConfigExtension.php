@@ -41,7 +41,7 @@ class ConfigExtension extends \Twig_Extension
         $search_in = $this->bundleConfig;
         $path = explode('.', $name);
         foreach ($path as $key) {
-            if (!isset($search_in[$key])) {
+            if (!array_key_exists($key, $search_in)) {
                 throw new \InvalidArgumentException('Unknown parameter "admingenerator.'+$name+'".');
             }
             $search_in = $search_in[$key];
