@@ -4,7 +4,7 @@ namespace Admingenerator\GeneratorBundle\Generator;
 
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\HttpKernel\HttpKernelInterface;
+use Symfony\Component\HttpKernel\KernelInterface;
 use Admingenerator\GeneratorBundle\Validator\ValidatorInterface;
 use Admingenerator\GeneratorBundle\Builder\Generator as AdminGenerator;
 use Doctrine\Common\Cache as DoctrineCache;
@@ -78,7 +78,7 @@ abstract class Generator implements GeneratorInterface
     protected $twig;
 
     /**
-     * @var HttpKernelInterface
+     * @var KernelInterface
      */
     protected $kernel;
 
@@ -292,10 +292,10 @@ abstract class Generator implements GeneratorInterface
     }
     
     /**
-     * @param HttpKernelInterface $kernel
+     * @param KernelInterface $kernel
      * @return void
      */
-    public function setKernel(HttpKernelInterface $kernel)
+    public function setKernel(KernelInterface $kernel)
     {
         $this->kernel = $kernel;
     }
