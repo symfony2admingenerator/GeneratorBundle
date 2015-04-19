@@ -49,7 +49,6 @@ class AdmingeneratorGeneratorExtension extends Extension implements PrependExten
         $container->setParameter('admingenerator.stylesheets', $config['stylesheets']);
         $container->setParameter('admingenerator.javascripts', $config['javascripts']);
         $container->setParameter('admingenerator.default_action_after_save', $config['default_action_after_save']);
-        $container->setParameter('admingenerator.excel_tmp_dir', $config['excel_tmp_dir']);
 
         $this->processModelManagerConfiguration($config, $container);
         $this->processTwigConfiguration($config['twig'], $container);
