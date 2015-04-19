@@ -252,6 +252,7 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('logout_route')->defaultNull()->end()
                 ->scalarNode('exit_route')->defaultNull()->end()
                 ->scalarNode('generator_cache')->defaultNull()->end()
+                ->scalarNode('excel_tmp_dir')->defaultValue('%kernel.root_dir%/cache')->end()
                 ->scalarNode('default_action_after_save')->defaultValue('edit')->end()
                 ->arrayNode('twig')
                     ->addDefaultsIfNotSet()
