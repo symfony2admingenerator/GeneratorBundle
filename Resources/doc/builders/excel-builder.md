@@ -22,3 +22,7 @@ The Excel builder provides an Excel export of the list view. The export uses the
 ### 3. Header titles in Excel
 
 The header titles are fully customizable just as every other block. Just use the `fields` key directly under the builder. This even works for associated fields like `person.fullname`.
+
+### 4. Configuration
+
+The `admingenerator.excel_tmp_dir` parameter defaults to `%kernel.root_dir%/cache` and will be used as a path to store temporary files.
