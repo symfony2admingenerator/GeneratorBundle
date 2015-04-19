@@ -45,7 +45,7 @@ class ExcelController extends ListController
         $writer = $phpexcel->createWriter($phpExcelObject, '{{ builder.filetype }}');
         $response = new StreamedResponse(
             function () use ($writer) {
-                $tempFile = '{{ builder.generator.bundleConfig.excel_tmp_dir }}/' . 
+                $tempFile = $this->get('kernel')->getCacheDir().'/' . 
                     rand(0, getrandmax()) . rand(0, getrandmax()) . ".tmp";
                 $writer->save($tempFile);
                 readfile($tempFile);
