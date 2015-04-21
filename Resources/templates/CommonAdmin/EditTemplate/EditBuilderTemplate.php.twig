@@ -23,13 +23,20 @@
     <div class="row">
         <div class="form-model form-model-{{ builder.modelClass|lower }} col-md-12">
             {{ echo_if(builder.ModelClass ~ "." ~ builder.getFieldGuesser().getModelPrimaryKeyName(model)) }}
-            <form class="form-model-update"
-                  action="{{ echo_twig('updateUrl') }}"
+                {{ echo_set("attr", "{'class': 'form-model-update', 'action': updateUrl}|merge(form.vars.attr|default({}))", false) }}
             {{ echo_else() }}
-            <form class="form-model-new"
-                  action="{{ echo_twig('createUrl') }}"
-                    {{ echo_endif() }}
-                  method="post" {{ echo_twig("form_enctype(form)") }} role="form">
+                {{ echo_set("attr", "{'class': 'form-model-new', 'action': createUrl}|merge(form.vars.attr|default({}))", false) }}
+            {{ echo_endif() }}
+            <form
+            {{ echo_for('attrvalue', 'attr', 'attrname') }}
+                {{ echo_twig('" "') }}
+                {{ echo_if('attrvalue is sameas(true)') }}
+                    {{- echo_twig('attrname') }}="{{ echo_twig('attrname') }}"
+                {{ echo_elseif('attrvalue is not sameas(false)') }}
+                    {{ echo_twig('attrname') }}="{{ echo_twig('attrvalue') }}"
+                {{ echo_endif() }}
+            {{ echo_endfor() }}
+                method="post" {{ echo_twig("form_enctype(form)") }} role="form">
 
                 {% if tabs|default is not empty %}
                     {{- block('tabs') }}
