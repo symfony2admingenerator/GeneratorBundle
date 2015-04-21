@@ -20,7 +20,7 @@
                         </div>
                     {% endif %}
                 </div>
-                <form action="{{ echo_twig('filtersUrl') }}" method="post" {{ echo_twig("form_enctype(form)") }} role="form">
+                <form action="{{ echo_twig('filtersUrl') }}" method="post" {{ echo_twig("form_enctype(form)") }} role="form" novalidate="novalidate">
                     <div class="box-body"{% if builder.filtersMode == 'top' and builder.defaultFiltersVisibility == 'collapsed' %} style="display: none;"{% endif %}>
                         {{ echo_twig("form_errors(form)") }}
                         {% for column in builder.filterColumns %}
