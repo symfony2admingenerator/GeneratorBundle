@@ -46,10 +46,10 @@ class {{ builder.YamlKey|ucfirst }}Type extends BaseType
         $optionsClass = '{{ builder.namespacePrefixWithSubfolder }}\{{ bundle_name }}\Form\Type\{{ builder.BaseGeneratorName }}\Options';
         $options = class_exists($optionsClass) ? new $optionsClass() : null;
 
-        return $this->resolveOptions('{{ column.name }}', {{ column.formOptions|merge({
+        return $this->resolveOptions('{{ column.name }}', {{ ({
             'label': column.label,
             'translation_domain': i18n_catalog|default('Admin')
-        })|as_php|convert_as_form(column.formType) }}, $builderOptions, $options);
+        })|merge(column.formOptions)|as_php|convert_as_form(column.formType) }}, $builderOptions, $options);
     }
 
     /**
