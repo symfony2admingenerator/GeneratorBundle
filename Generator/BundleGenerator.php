@@ -85,7 +85,13 @@ class BundleGenerator extends BaseBundleGenerator
                 break;
         }
 
-        list( $namespace_prefix, $bundle_name) = explode('\\', $namespace, 2);
+        if (FALSE === strpos($namespace, '\\')) {
+            $bundle_name = $namespace;
+            $namespace_prefix = null;
+        } else {
+            list( $namespace_prefix, $bundle_name) = explode('\\', $namespace, 2);
+        }
+
         $parameters = array(
             'namespace'        => $namespace,
             'bundle'           => $bundle,
