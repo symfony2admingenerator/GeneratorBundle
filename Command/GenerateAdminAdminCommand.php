@@ -236,7 +236,7 @@ EOT
             }
         }
 
-        $namespace = Validators::validateBundleNamespace($input->getOption('namespace'));
+        $namespace = Validators::validateBundleNamespace($input->getOption('namespace'), false);
         if (!$bundle = $input->getOption('bundle-name')) {
             $bundle = strtr($namespace, array('\\' => ''));
         }
