@@ -13,7 +13,7 @@ pagerfanta:
 
 # List
 list:
-    filters: Filters
+    filters:          Фильтры
     button:
         filter:         Фильтровать
         reset:          Сбросить
