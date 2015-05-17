@@ -137,6 +137,15 @@
 
     // Force first tab to be displayed
     $('.nav-tabs *[data-toggle="tab"]:first').click();
+    
+    // Display number of errors on tabs
+	$('.nav.nav-tabs li').each(function(i){
+        $(this).find('a span.label-danger').remove();
+        var invalid_items = $('fieldset'+$(this).find('a:first').data('target')).find('.has-error');
+        if (invalid_items.length > 0) {
+            $(this).find('a:first').append('<span class="label label-danger">'+invalid_items.length+'</span>');
+        }
+    });
 
     // Object actions
     if (S2A.hasOwnProperty('singleActionsAdminOptions')) {
