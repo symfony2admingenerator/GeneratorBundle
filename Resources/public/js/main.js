@@ -146,6 +146,9 @@
             $(this).find('a:first').append('<span class="label label-danger">'+invalid_items.length+'</span>');
         }
     });
+	
+    // Display object actions tooltips
+    $('a.object-action[data-toggle="tooltip"]').tooltip(); 
 
     // Object actions
     if (S2A.hasOwnProperty('singleActionsAdminOptions')) {
