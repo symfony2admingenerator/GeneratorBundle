@@ -29,9 +29,9 @@
         {{ echo_spaceless() }}
         <a  class="object-action btn btn-default {% if builder.yamlKey is sameas('list') or builder.yamlKey is sameas('nested_list') %}btn-xs {% endif %}{{ action.class|default('') }}"
             href="{{ echo_path(actionRoute, actionParams) }}"
-            data-original-title="{{ echo_trans(action.label, {}, translationDomain, 'html_attr') }}"
+            title="{{ echo_trans(action.label, {}, translationDomain, 'html_attr') }}"
                 {% if builder.yamlKey is sameas('list') or builder.yamlKey is sameas('nested_list') %}
-                    rel="tooltip"
+                    data-toggle="tooltip"
                 {% endif %}
                 {%- if action.confirm %} data-confirm="{{ echo_trans(action.confirm, {}, translationDomain, 'html_attr') }}" {% endif -%}
                 {%- if action.csrfProtected and not action.forceIntermediate %} data-csrf-token="{{ echo_path(actionRoute, actionParams, ['csrf_token']) }}" {% endif -%}>
