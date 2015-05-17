@@ -12,6 +12,7 @@
         $this->preBindRequest(${{ builder.ModelClass }});
         $form = $this->getNewForm(${{ builder.ModelClass }});
         $form->handleRequest($this->get('request'));
+        $this->postBindRequest(${{ builder.ModelClass }});
 
         if ($form->isSubmitted() && $form->isValid()) {
             try {
@@ -76,6 +77,15 @@
      * @param \{{ model }} ${{ builder.ModelClass }} your \{{ model }} object
      */
     public function preBindRequest(\{{ model }} ${{ builder.ModelClass }})
+    {
+    }
+
+    /**
+     * This method is here to make your life better, so overwrite  it
+     *
+     * @param \{{ model }} ${{ builder.ModelClass }} your \{{ model }} object
+     */
+    public function postBindRequest(\{{ model }} ${{ builder.ModelClass }})
     {
     }
 
