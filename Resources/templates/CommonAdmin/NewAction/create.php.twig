@@ -12,7 +12,7 @@
         $this->preBindRequest(${{ builder.ModelClass }});
         $form = $this->getNewForm(${{ builder.ModelClass }});
         $form->handleRequest($this->get('request'));
-        $this->postBindRequest(${{ builder.ModelClass }});
+        $this->postBindRequest($form, ${{ builder.ModelClass }});
 
         if ($form->isSubmitted() && $form->isValid()) {
             try {
@@ -83,9 +83,10 @@
     /**
      * This method is here to make your life better, so overwrite  it
      *
+     * @param \Symfony\Component\Form\Form $form the valid form
      * @param \{{ model }} ${{ builder.ModelClass }} your \{{ model }} object
      */
-    public function postBindRequest(\{{ model }} ${{ builder.ModelClass }})
+    public function postBindRequest(\Symfony\Component\Form\Form $form, \{{ model }} ${{ builder.ModelClass }})
     {
     }
 
