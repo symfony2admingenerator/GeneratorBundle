@@ -77,9 +77,8 @@
             if (!strstr($this->getSortColumn(), '.')) { //direct column
                 $query->orderBy('q.'.$this->getSortColumn(), $this->getSortOrder());
             } else {
-                list($table, $column) = explode('.', $this->getSortColumn(), 2);
-                $this->addJoinFor($table, $query);
-                $query->orderBy($this->getSortColumn(), $this->getSortOrder());
+                $finalColumn = $this->addJoinFor($this->getSortColumn(), $query, false);
+                $query->orderBy($finalColumn, $this->getSortOrder());
             }
         }
     }
@@ -112,9 +111,21 @@
 {% endblock %}
 
 {% block addJoinFor -%}
-    protected function addJoinFor($table, $query)
+    protected function addJoinFor($table, $query, $currentObject = true)
     {
-        $query->leftJoin('q.'.$table, $table);
+        if($currentObject){
+            $query->leftJoin('q.'.$table, $table);
+        } else {
+            $tables = explode('.', $table);
+            $previousTable = 'q';
+            foreach(array_slice($tables, 0, -1) as $table)
+            {
+                $query->leftJoin(implode('.', array($previousTable, $table)), $table);
+                $previousTable = $table;
+            }
+            return $table . '.' . end($tables);
+        }
+        return NULL;
     }
 {% endblock %}
 
