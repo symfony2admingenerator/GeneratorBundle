@@ -43,7 +43,7 @@
                         {% endfor %}
                         {{ echo_twig("form_rest(form)") }}
                     </div>
-                    <div class="box-footer">
+                    <div class="box-footer"{% if builder.filtersMode == 'top' and builder.defaultFiltersVisibility == 'collapsed' %} style="display: none;"{% endif %}>
                         <div class="btn-toolbar">
                             <div class="pull-right">
                                 <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-search"></i> {{ echo_trans('list.button.filter') }}</button>
