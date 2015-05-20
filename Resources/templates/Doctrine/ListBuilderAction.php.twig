@@ -113,13 +113,12 @@
 {% block addJoinFor -%}
     protected function addJoinFor($table, $query, $currentObject = true)
     {
-        if($currentObject){
+        if ($currentObject) {
             $query->leftJoin('q.'.$table, $table);
         } else {
             $tables = explode('.', $table);
             $previousTable = 'q';
-            foreach(array_slice($tables, 0, -1) as $table)
-            {
+            foreach (array_slice($tables, 0, -1) as $table) {
                 $query->leftJoin(implode('.', array($previousTable, $table)), $table);
                 $previousTable = $table;
             }
