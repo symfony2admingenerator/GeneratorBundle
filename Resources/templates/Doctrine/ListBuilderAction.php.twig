@@ -119,12 +119,12 @@
             $tables = explode('.', $table);
             $previousTable = 'q';
             foreach (array_slice($tables, 0, -1) as $table) {
-                $query->leftJoin(implode('.', array($previousTable, $table)), $table);
-                $previousTable = $table;
+                $query->leftJoin(implode('.', array($previousTable, $table)), 'sort_' . $table);
+                $previousTable = 'sort_' . $table;
             }
-            return $table . '.' . end($tables);
+            return 'sort_' . $table . '.' . end($tables);
         }
-        return NULL;
+        return null;
     }
 {% endblock %}
 
