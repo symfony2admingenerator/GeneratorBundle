@@ -1,5 +1,6 @@
 {% block form_fieldsets %}
-    {% set gridClass = builder.variable('grid_class') %}
+    {% set gridClass = builder.variable('grid_class') | default('col-md-4') %}
+
     {% for fieldsetName,fieldset in builder.fieldsets %}
         {% set fieldsetColumns = builder.columnsFor(fieldset) %}
         {% set fieldsetGroups = fieldsetColumns|mapBy('groups')|flatten %}
@@ -16,7 +17,7 @@
                     {% endif %}
 
                     {% for rowName,row in fieldset %}
-                        {% set rowspan = gridClass ? gridClass : 'col-md-4' %}
+                        {% set rowspan = rowName|is_numeric ? gridClass : rowName %}
                         {% set rowColumns = builder.columnsFor(row) %}
                         {% set rowGroups = rowColumns|mapBy('groups')|flatten %}
 
