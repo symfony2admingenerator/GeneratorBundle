@@ -139,6 +139,7 @@ class RoutingLoader extends FileLoader
                 }
 
                 $route = new Route($datas['pattern'], $datas['defaults'], $datas['requirements']);
+                $route_name = ltrim($route_name, '_'); // fix routes in AppBundle without vendor
                 $collection->add($route_name, $route);
                 $collection->addResource(new FileResource($controllerName));
             }
