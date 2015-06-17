@@ -56,7 +56,7 @@
                     $this->get('translator')->trans(
                         "{{ messages.locked|default("action.object.edit.locked") }}",
                         array(
-                            '%path%' => $this->generateUrl("{{ builder.routePrefixWithSubfolder }}_{{ bundle_name }}{{ builder.BaseGeneratorName ? "_" ~ builder.BaseGeneratorName : "" }}_show", array('pk' => $pk) )
+                            '%path%' => $this->generateUrl("{{ builder.baseActionsRoute }}_show", array('pk' => $pk) )
                         ),
                         'Admingenerator'
                     )

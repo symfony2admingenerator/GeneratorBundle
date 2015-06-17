@@ -40,7 +40,7 @@
                     array('%name%' => '{{ action.name }}'),
                     '{{ action.options.i18n|default('Admingenerator') }}'
                 ),
-                "actionRoute" => "{{ builder.routePrefixWithSubfolder ~ '_' ~ bundle_name ~ (builder.BaseGeneratorName ? "_" ~ builder.BaseGeneratorName : "") ~ '_object' }}",
+                "actionRoute" => "{{ builder.objectActionsRoute }}",
                 "actionParams" => array("pk" => $pk, "action" => "delete")
             )
         );
@@ -80,7 +80,7 @@
             )
         );
 
-        return new RedirectResponse($this->generateUrl("{{ builder.routePrefixWithSubfolder }}_{{ bundle_name }}{{ builder.BaseGeneratorName ? "_" ~ builder.BaseGeneratorName : "" }}_list"));
+        return new RedirectResponse($this->generateUrl("{{ builder.baseActionsRoute }}_list"));
     }
 
 {% endblock %}
@@ -106,7 +106,7 @@
             )
         );
 
-        return new RedirectResponse($this->generateUrl("{{ builder.routePrefixWithSubfolder }}_{{ bundle_name }}{{ builder.BaseGeneratorName ? "_" ~ builder.BaseGeneratorName : "" }}_list"));
+        return new RedirectResponse($this->generateUrl("{{ builder.baseActionsRoute }}_list"));
     }
 
 {% endblock %}

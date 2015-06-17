@@ -7,8 +7,7 @@
                 <div class="scopes-list btn-group">
                     {% for scopeName, params in group %}
                     <a class="{{ 'btn btn-sm ' ~ params.class|default('btn-default') }} {{ echo_twig("(scopes['" ~ (groupName|classify|lower) ~ "'] is defined and scopes['" ~ (groupName|classify|lower) ~ "'] == '" ~ (scopeName|classify|lower) ~ "') ? 'active': 'inactive'") }}"
-                       href="{{ echo_path(
-                           builder.routePrefixWithSubfolder ~ '_' ~ bundle_name ~ ( builder.BaseGeneratorName ? "_" ~ builder.BaseGeneratorName : "" ) ~ '_scopes',
+                       href="{{ echo_path( builder.baseActionsRoute ~ '_scopes',
                            "{ 'group': '" ~  (groupName|classify|lower) ~ "', 'scope': '" ~ (scopeName|classify|lower) ~ "' }") }}
                        ">
                         {%- if params.icon is defined %}<i class="fa {{ params.icon }}"></i> {% endif -%}
