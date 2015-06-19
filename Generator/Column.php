@@ -135,6 +135,11 @@ class Column
      */
     protected $filtersGroups = false;
 
+    /**
+     * @var string
+     */
+    protected $gridClass = '';
+
     /* Used for more verbose error messages */
     protected $debug = array();
 
@@ -399,6 +404,16 @@ class Column
         }
 
         return $this->filtersGroups;
+    }
+
+    public function setGridClass($gridClass)
+    {
+        $this->gridClass = $gridClass;
+    }
+
+    public function getGridClass()
+    {
+        return $this->gridClass;
     }
 
     protected function parseOption($option)
