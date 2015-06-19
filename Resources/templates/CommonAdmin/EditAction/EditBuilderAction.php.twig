@@ -67,7 +67,7 @@ class EditController extends BaseController
      */
     protected function getEditUrl($pk)
     {
-        return $this->generateUrl("{{ baseActionsRoute }}_edit", array('pk' => $pk) );
+        return $this->generateUrl("{{ builder.baseActionsRoute }}_edit", array('pk' => $pk) );
     }
 
     /**
@@ -77,7 +77,7 @@ class EditController extends BaseController
      */
     protected function getShowUrl($pk)
     {
-        return $this->generateUrl("{{ baseActionsRoute }}_show", array('pk' => $pk) );
+        return $this->generateUrl("{{ builder.baseActionsRoute }}_show", array('pk' => $pk) );
     }
     
     /**
@@ -87,7 +87,7 @@ class EditController extends BaseController
      */
     protected function getUpdateUrl($pk)
     {
-        return $this->generateUrl("{{ baseActionsRoute }}_update", array('pk' => $pk) );
+        return $this->generateUrl("{{ builder.baseActionsRoute }}_update", array('pk' => $pk) );
     }
 
     /**
