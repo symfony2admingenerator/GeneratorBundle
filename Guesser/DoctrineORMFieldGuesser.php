@@ -193,6 +193,13 @@ class DoctrineORMFieldGuesser extends ContainerAware
                 'translation_domain' => 'Admingenerator'
             );
         }
+        
+        if ('boolean' == $dbType &&
+            (preg_match("#^checkbox#i", $formType) || preg_match("#checkbox#i", $formType))) {
+            return array(
+                'required' => false,
+            );
+        }
 
         if ('number' === $formType) {
             $mapping = $this->getMetadatas($class)->getFieldMapping($columnName);

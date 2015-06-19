@@ -178,6 +178,13 @@ class DoctrineODMFieldGuesser extends ContainerAware
                 'translation_domain' => 'Admingenerator'
             );
         }
+        
+        if ('boolean' == $dbType &&
+            (preg_match("#^checkbox#i", $formType) || preg_match("#checkbox#i", $formType))) {
+            return array(
+                'required' => false,
+            );
+        }
 
         if (preg_match("#^document#i", $formType) || preg_match("#document$#i", $formType)) {
             $mapping = $this->getMetadatas($class)->getFieldMapping($columnName);
