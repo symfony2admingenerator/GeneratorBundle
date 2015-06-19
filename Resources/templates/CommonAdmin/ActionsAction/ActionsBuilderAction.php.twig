@@ -50,7 +50,7 @@ class ActionsController extends BaseController
                 )
             );
 
-            return new RedirectResponse($this->generateUrl("{{ builder.routePrefixWithSubfolder }}_{{ bundle_name }}{{ builder.BaseGeneratorName ? "_" ~ builder.BaseGeneratorName : "" }}_list"));
+            return new RedirectResponse($this->generateUrl("{{ builder.baseActionsRoute }}_list"));
         }
 
         $methodName = 'attemptBatch'.ucfirst(strtolower($this->cleanMethodName($action)));

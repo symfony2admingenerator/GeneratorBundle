@@ -65,7 +65,7 @@ class ListController extends BaseController
      */
     protected function getListRoute()
     {
-        return "{{ builder.routePrefixWithSubfolder ~ '_' ~ bundle_name ~ (builder.BaseGeneratorName ? '_' ~ builder.BaseGeneratorName : '') ~ '_list' }}";
+        return "{{ builder.baseActionsRoute ~ '_list' }}";
     }
 
     /**
@@ -85,7 +85,7 @@ class ListController extends BaseController
      */
     protected function getFiltersRoute()
     {
-        return "{{ builder.routePrefixWithSubfolder ~ '_' ~ bundle_name ~ (builder.BaseGeneratorName ? '_' ~ builder.BaseGeneratorName : '') ~ '_filters' }}";
+        return "{{ builder.baseActionsRoute ~ '_filters' }}";
     }
 
     /**

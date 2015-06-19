@@ -23,7 +23,7 @@
             {{ block('endform_batch_actions') }}
         </div>
     </div>
-    {# {% set admingeneratorNestedRoute=builder.routePrefixWithSubfolder ~ "_" ~ bundle_name ~ ( builder.BaseGeneratorName ? "_" ~ builder.BaseGeneratorName : "" ) ~ "_nested_move" %} #}
+    {# {% set admingeneratorNestedRoute=builder.baseActionsRoute ~ "_nested_move" %} #}
     {{ echo_block('nested_tree_script_container') }}
     <script type="application/javascript">
         {{ echo_block('nested_tree_script_inner') }}

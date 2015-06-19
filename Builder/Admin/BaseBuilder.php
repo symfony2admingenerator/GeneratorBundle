@@ -8,7 +8,7 @@ use Admingenerator\GeneratorBundle\Generator\Column;
 use Admingenerator\GeneratorBundle\Generator\Action;
 
 /**
- * Base builder generating php for actions
+ * Base builder generating php for actions.
  *
  * @author cedric Lombardot
  * @author Piotr Gołębiewski <loostro@gmail.com>
@@ -42,7 +42,8 @@ class BaseBuilder extends GenericBaseBuilder
     }
 
     /**
-     * Return a list of columns from list.display
+     * Return a list of columns from list.display.
+     *
      * @return array
      */
     public function getColumns()
@@ -82,18 +83,19 @@ class BaseBuilder extends GenericBaseBuilder
     }
 
     /**
-     * Creates new column instance
+     * Creates new column instance.
      *
-     * @param  string   $columnName The name of the column.
-     * @param  boolean  $withForms  If true, add column form configuration.
+     * @param string $columnName The name of the column.
+     * @param bool   $withForms  If true, add column form configuration.
+     *
      * @return Column
      */
     protected function createColumn($columnName, $withForms = false)
     {
         $column = new $this->columnClass($columnName, array(
             /* used for more verbose error messages */
-            'builder'   => $this->getYamlKey(),
-            'generator' => $this->getBaseGeneratorName()
+            'builder' => $this->getYamlKey(),
+            'generator' => $this->getBaseGeneratorName(),
         ));
 
         //Set the user parameters
@@ -230,7 +232,6 @@ class BaseBuilder extends GenericBaseBuilder
         return $this->getGenerator()->getFieldGuesser();
     }
 
-
     /**
      * @return array Display column names
      */
@@ -276,7 +277,7 @@ class BaseBuilder extends GenericBaseBuilder
     }
 
     /**
-     * Retrieve all columns
+     * Retrieve all columns.
      *
      * @return array
      */
@@ -336,9 +337,10 @@ class BaseBuilder extends GenericBaseBuilder
     }
 
     /**
-     * Get columns for tab, fieldset, row or field
+     * Get columns for tab, fieldset, row or field.
      *
-     * @param  mixed $input
+     * @param mixed $input
+     *
      * @return array Array of columns.
      */
     public function getColumnsFor($input)
@@ -355,7 +357,8 @@ class BaseBuilder extends GenericBaseBuilder
     }
 
     /**
-     * Return a list of action from list.actions
+     * Return a list of action from list.actions.
+     *
      * @return array
      */
     public function getActions()
@@ -422,7 +425,8 @@ class BaseBuilder extends GenericBaseBuilder
     }
 
     /**
-     * Return a list of action from list.object_actions
+     * Return a list of action from list.object_actions.
+     *
      * @return array
      */
     public function getObjectActions()
@@ -438,12 +442,14 @@ class BaseBuilder extends GenericBaseBuilder
     protected function setUserObjectActionConfiguration(Action $action)
     {
         $builderOptions = $this->getVariable(
-                sprintf('object_actions[%s]', $action->getName()),
-                array(), true
+            sprintf('object_actions[%s]', $action->getName()),
+            array(),
+            true
         );
 
         $globalOptions = $this->getGenerator()->getFromYaml(
-                'params.object_actions.'.$action->getName(), array()
+            'params.object_actions.'.$action->getName(),
+            array()
         );
 
         if (null !== $builderOptions) {
@@ -468,7 +474,7 @@ class BaseBuilder extends GenericBaseBuilder
 
         foreach ($objectActions as $actionName => $actionParams) {
             $action = $this->findObjectAction($actionName);
-            if(!$action) {
+            if (!$action) {
                 $action = new Action($actionName);
             }
 
@@ -486,7 +492,7 @@ class BaseBuilder extends GenericBaseBuilder
     public function findGenericAction($actionName)
     {
         $class = 'Admingenerator\\GeneratorBundle\\Generator\\Action\\Generic\\'
-                .Container::camelize(str_replace('-', '_', $actionName) . 'Action');
+                .Container::camelize(str_replace('-', '_', $actionName).'Action');
 
         return (class_exists($class)) ? new $class($actionName, $this) : false;
     }
@@ -494,7 +500,7 @@ class BaseBuilder extends GenericBaseBuilder
     public function findObjectAction($actionName)
     {
         $class = 'Admingenerator\\GeneratorBundle\\Generator\\Action\\Object\\'
-                .Container::camelize(str_replace('-', '_', $actionName) . 'Action');
+                .Container::camelize(str_replace('-', '_', $actionName).'Action');
 
         return (class_exists($class)) ? new $class($actionName, $this) : false;
     }
@@ -502,7 +508,7 @@ class BaseBuilder extends GenericBaseBuilder
     public function findBatchAction($actionName)
     {
         $class = 'Admingenerator\\GeneratorBundle\\Generator\\Action\\Batch\\'
-                .Container::camelize(str_replace('-', '_', $actionName) . 'Action');
+                .Container::camelize(str_replace('-', '_', $actionName).'Action');
 
         return (class_exists($class)) ? new $class($actionName, $this) : false;
     }
@@ -520,8 +526,7 @@ class BaseBuilder extends GenericBaseBuilder
 
     public function getRoutePrefixWithSubfolder()
     {
-        return str_replace('\\', '_',
-	       ($this->getVariable('namespace_prefix') . (($this->hasVariable('subfolder')) ? '_' . $this->getVariable('subfolder') : '')));
+        return str_replace('\\', '_', $this->getNamespacePrefixWithSubfolder());
     }
 
     public function getNamespacePrefixForTemplate()
@@ -531,13 +536,16 @@ class BaseBuilder extends GenericBaseBuilder
 
     public function getBaseActionsRoute()
     {
-        return str_replace(
-            '\\',
-            '_',
-            $this->getVariable('namespace_prefix')
-            . (($this->hasVariable('subfolder')) ? '_' . $this->getVariable('subfolder') : '')
-            .'_'.$this->getVariable('bundle_name')
-            .'_'.$this->getBaseGeneratorName()
+        return ltrim(
+            str_replace(
+                '\\',
+                '_',
+                $this->getVariable('namespace_prefix')
+                .(($this->hasVariable('subfolder')) ? '_'.$this->getVariable('subfolder') : '')
+                .'_'.$this->getVariable('bundle_name')
+                .'_'.$this->getBaseGeneratorName()
+            ),
+            '_' // fix routes in AppBundle without vendor
         );
     }
 
@@ -547,7 +555,7 @@ class BaseBuilder extends GenericBaseBuilder
     }
 
     /**
-     * Get the PK column name
+     * Get the PK column name.
      *
      * @return string parameter
      */
@@ -557,7 +565,7 @@ class BaseBuilder extends GenericBaseBuilder
     }
 
     /**
-     * Allow to add complementary strylesheets
+     * Allow to add complementary strylesheets.
      *
      *
      * param:
@@ -573,7 +581,7 @@ class BaseBuilder extends GenericBaseBuilder
             foreach ($params as $css) {
                 if (is_string($css)) {
                     $css = array(
-                        'path'  => $css,
+                        'path' => $css,
                         'media' => 'all',
                     );
                 }
@@ -598,7 +606,7 @@ class BaseBuilder extends GenericBaseBuilder
     }
 
     /**
-     * Allow to add complementary javascripts
+     * Allow to add complementary javascripts.
      *
      *
      * param:
@@ -614,16 +622,15 @@ class BaseBuilder extends GenericBaseBuilder
         $self = $this;
         $parse_javascripts = function ($params, $javascripts) use ($self) {
             foreach ($params as $js) {
-
                 if (is_string($js)) {
                     $js = array(
-                        'path'  => $js,
+                        'path' => $js,
                     );
                 } elseif (isset($js['route'])) {
                     $js = array(
-                        'path'  => $self->getGenerator()
+                        'path' => $self->getGenerator()
                                         ->getRouter()
-                                        ->generate($js['route'], $js['routeparams'])
+                                        ->generate($js['route'], $js['routeparams']),
                     );
                 }
 
