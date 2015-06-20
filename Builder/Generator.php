@@ -59,7 +59,7 @@ class Generator extends TwigGeneratorGenerator
     public function __construct($cacheDir, $yaml)
     {
         parent::__construct($cacheDir);
-        $this->setYamlConfig(Yaml::parse($yaml));
+        $this->setYamlConfig(Yaml::parse(file_get_contents($yaml)));
     }
 
     /**
@@ -354,7 +354,7 @@ class Generator extends TwigGeneratorGenerator
     protected function setYamlConfig(array $yaml)
     {
         $this->yaml = array_replace_recursive(
-            Yaml::parse(__DIR__.'/../Resources/config/default.yml'),
+            Yaml::parse(file_get_contents(__DIR__.'/../Resources/config/default.yml')),
             $yaml
         );
     }

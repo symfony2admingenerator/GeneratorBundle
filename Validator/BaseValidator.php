@@ -12,7 +12,7 @@ class BaseValidator
      */
     protected function getFromYaml(Generator $generator, $yaml_path, $default = null)
     {
-        $search_in = Yaml::parse($generator->getGeneratorYml());
+        $search_in = Yaml::parse(file_get_contents($generator->getGeneratorYml()));
 
         $yaml_path = explode('.',$yaml_path);
         foreach ($yaml_path as $key) {

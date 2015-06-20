@@ -95,7 +95,7 @@ class RoutingLoader extends FileLoader
         $collection = new RouteCollection();
 
         $resource = str_replace('\\', '/', $resource);
-        $this->yaml = Yaml::parse($this->getGeneratorFilePath($resource));
+        $this->yaml = Yaml::parse(file_get_contents($this->getGeneratorFilePath($resource)));
 
         $namespace = $this->getNamespaceFromResource($resource);
         $fullBundleName = $this->getFullBundleNameFromResource($resource);
