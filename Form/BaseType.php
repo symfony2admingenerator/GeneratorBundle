@@ -4,7 +4,7 @@ namespace Admingenerator\GeneratorBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Symfony\Component\Security\Core\SecurityContextInterface;
+use Symfony\Component\Security\Core\AuthorizationCheckerInterface;
 
 /**
  * Base class for new and edit forms.
@@ -14,18 +14,21 @@ use Symfony\Component\Security\Core\SecurityContextInterface;
 abstract class BaseType extends AbstractType
 {
     /**
-     * @var SecurityContextInterface
+     * @var AuthorizationCheckerInterface
      */
-    protected $securityContext;
+    protected $authorizationChecker;
 
     /**
      * @var array
      */
     protected $groups = array();
 
-    public function setSecurityContext(SecurityContextInterface $securityContext)
+    /**
+     * @param AuthorizationCheckerInterface $authorizationChecker
+     */
+    public function setAuthorizationChecker(AuthorizationCheckerInterface $authorizationChecker)
     {
-        $this->securityContext = $securityContext;
+        $this->authorizationChecker = $authorizationChecker;
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
@@ -63,8 +66,8 @@ abstract class BaseType extends AbstractType
      */
     protected function inject($formType)
     {
-        if (is_object($formType) && method_exists($formType, 'setSecurityContext')) {
-            $formType->setSecurityContext($this->securityContext);
+        if (is_object($formType) && method_exists($formType, 'setAuthorizationChecker')) {
+            $formType->setAuthorizationChecker($this->authorizationChecker);
         }
 
         return $formType;
@@ -84,8 +87,8 @@ abstract class BaseType extends AbstractType
         $getter = 'get'.ucfirst($name).'Options';
 
         if ($optionsClass) {
-            if (method_exists($optionsClass, 'setSecurityContext')) {
-                $optionsClass->setSecurityContext($this->securityContext);
+            if (method_exists($optionsClass, 'setAuthorizationChecker')) {
+                $optionsClass->setAuthorizationChecker($this->authorizationChecker);
             }
 
             if (method_exists($optionsClass, $getter)) {
