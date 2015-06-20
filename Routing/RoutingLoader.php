@@ -11,76 +11,80 @@ use Symfony\Component\Yaml\Yaml;
 
 class RoutingLoader extends FileLoader
 {
-    // Assoc beetween a controller and is route path
+    // Assoc beetween a controller and its route path
     //@todo make an object for this
     protected $actions = array(
         'list' => array(
                     'pattern'      => '/',
                     'defaults'     => array(),
                     'requirements' => array(),
+                    'methods'      => array('GET'),
                 ),
         'excel'=> array(
                     'pattern'      => '/excel',
                     'defaults'     => array(),
                     'requirements' => array(),
+                    'methods'      => array('GET'),
                     'controller'   => 'excel',
                 ),
         'edit' => array(
                     'pattern'      => '/{pk}/edit',
                     'defaults'     => array(),
                     'requirements' => array(),
+                    'methods'      => array('GET'),
                 ),
         'update' => array(
                     'pattern'      => '/{pk}/update',
                     'defaults'     => array(),
-                    'requirements' => array(
-                        '_method' => 'POST'
-                    ),
+                    'requirements' => array(),
+                    'methods'      => array('POST'),
                     'controller'   => 'edit',
                 ),
         'show' => array(
                     'pattern'      => '/{pk}/show',
                     'defaults'     => array(),
                     'requirements' => array(),
+                    'methods'      => array('GET'),
                 ),
         'object' => array(
                     'pattern'      => '/{pk}/{action}',
                     'defaults'     => array(),
                     'requirements' => array(),
+                    'methods'      => array('GET', 'POST'),
                     'controller'   => 'actions',
                 ),
         'batch' => array(
                     'pattern'      => '/batch',
                     'defaults'     => array(),
-                    'requirements' => array(
-                        '_method' => 'POST'
-                    ),
+                    'requirements' => array(),
+                    'methods'      => array('POST'),
                     'controller'   => 'actions',
                 ),
         'new' => array(
                     'pattern'      => '/new',
                     'defaults'     => array(),
                     'requirements' => array(),
-                    'methods'      => array(),
+                    'methods'      => array('GET'),
                 ),
         'create' => array(
                     'pattern'      => '/create',
                     'defaults'     => array(),
-                    'requirements' => array(
-                        '_method' => 'POST'
-                    ),
+                    'requirements' => array(),
+                    'methods'      => array('POST'),
                     'controller'   => 'new',
                 ),
         'filters' => array(
                     'pattern'      => '/filter',
                     'defaults'     => array(),
                     'requirements' => array(),
+                    'methods'      => array('POST', 'GET'),
                     'controller'   => 'list',
                 ),
         'scopes' => array(
                     'pattern'      => '/scope/{group}/{scope}',
                     'defaults'     => array(),
                     'requirements' => array(),
+                    'methods'      => array('POST', 'GET'),
                     'controller'   => 'list',
                 ),
     );
@@ -139,6 +143,7 @@ class RoutingLoader extends FileLoader
                 }
 
                 $route = new Route($datas['pattern'], $datas['defaults'], $datas['requirements']);
+                $route->setMethods($datas['methods']);
                 $route_name = ltrim($route_name, '_'); // fix routes in AppBundle without vendor
                 $collection->add($route_name, $route);
                 $collection->addResource(new FileResource($controllerName));
@@ -175,11 +180,7 @@ class RoutingLoader extends FileLoader
         $file = $finder->current();
 
         if ($file) {
-            if (PHP_VERSION_ID >= 50306) {
-                return $file->getBasename('.' . $file->getExtension());
-            }
-
-            return $file->getBasename('.' . pathinfo($file->getFilename(), PATHINFO_EXTENSION));
+            return $file->getBasename('.' . $file->getExtension());
         }
 
         return null;
