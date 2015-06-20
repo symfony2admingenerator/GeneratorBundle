@@ -12,7 +12,7 @@ use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
     protected function isGeneratedCsrfTokenValid($intention)
     {
         $token = $this->getRequest()->request->get('_csrf_token');
-        if (!$this->get('form.csrf_provider')->isCsrfTokenValid($intention, $token)) {
+        if (!$this->isCsrfTokenValid($intention, $token)) {
             throw new InvalidCsrfTokenException();
         }
     }
