@@ -47,7 +47,7 @@ class EditController extends BaseController
      */
     protected function getListUrl()
     {
-        return $this->generateUrl("{{ builder.routePrefixWithSubfolder ~ '_' ~ bundle_name ~ (builder.BaseGeneratorName ? '_' ~ builder.BaseGeneratorName : '') ~ '_list' }}");
+        return $this->generateUrl("{{ builder.baseActionsRoute ~ '_list' }}");
     }
 
     /**
@@ -57,7 +57,7 @@ class EditController extends BaseController
      */
     protected function getNewUrl()
     {
-        return $this->generateUrl("{{ builder.routePrefixWithSubfolder }}_{{ bundle_name }}{{ builder.BaseGeneratorName ? "_" ~ builder.BaseGeneratorName : "" }}_new" );
+        return $this->generateUrl("{{ builder.baseActionsRoute }}_new" );
     }
 
     /**
@@ -67,7 +67,7 @@ class EditController extends BaseController
      */
     protected function getEditUrl($pk)
     {
-        return $this->generateUrl("{{ builder.routePrefixWithSubfolder }}_{{ bundle_name }}{{ builder.BaseGeneratorName ? "_" ~ builder.BaseGeneratorName : "" }}_edit", array('pk' => $pk) );
+        return $this->generateUrl("{{ builder.baseActionsRoute }}_edit", array('pk' => $pk) );
     }
 
     /**
@@ -77,7 +77,7 @@ class EditController extends BaseController
      */
     protected function getShowUrl($pk)
     {
-        return $this->generateUrl("{{ builder.routePrefixWithSubfolder }}_{{ bundle_name }}{{ builder.BaseGeneratorName ? "_" ~ builder.BaseGeneratorName : "" }}_show", array('pk' => $pk) );
+        return $this->generateUrl("{{ builder.baseActionsRoute }}_show", array('pk' => $pk) );
     }
     
     /**
@@ -87,7 +87,7 @@ class EditController extends BaseController
      */
     protected function getUpdateUrl($pk)
     {
-        return $this->generateUrl("{{ builder.routePrefixWithSubfolder }}_{{ bundle_name }}{{ builder.BaseGeneratorName ? "_" ~ builder.BaseGeneratorName : "" }}_update", array('pk' => $pk) );
+        return $this->generateUrl("{{ builder.baseActionsRoute }}_update", array('pk' => $pk) );
     }
 
     /**

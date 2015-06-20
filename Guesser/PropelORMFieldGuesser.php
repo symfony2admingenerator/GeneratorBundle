@@ -263,6 +263,14 @@ class PropelORMFieldGuesser extends ContainerAware
             );
         }
 
+        if (!$filter &&
+            (\PropelColumnTypes::BOOLEAN == $dbType || \PropelColumnTypes::BOOLEAN_EMU == $dbType) &&
+            (preg_match("#^checkbox#i", $type) || preg_match("#checkbox#i", $type))) {
+            return array(
+                'required' => false
+            );
+        }
+
         if (preg_match("#^model#i", $type) || preg_match("#model$#i", $type)) {
             $relation = $this->getRelation($columnName, $class);
             if ($relation) {

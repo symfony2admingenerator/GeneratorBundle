@@ -25,7 +25,7 @@
 {% endblock %}
 
 {% block generic_action_block %}
-    {% set actionRoute = action.route ? action.route : (builder.routePrefixWithSubfolder ~ '_' ~ bundle_name ~ ( builder.BaseGeneratorName ? "_" ~ builder.BaseGeneratorName : "" ) ~ '_' ~ action.name) %}
+    {% set actionRoute = action.route ? action.route : builder.baseActionsRoute ~ '_' ~ action.name %}
     {% set actionParams = action.params ? echo_twig_assoc(action.params) : "{}" %}
     {% set translationDomain = action.type is sameas('custom') ? i18n_catalog|default("Admin") : 'Admingenerator' %}
 

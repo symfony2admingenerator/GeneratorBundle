@@ -46,7 +46,7 @@
                     array('%name%' => '{{ action.name }}'),
                     '{{ action.options.title|default is empty ? "Admingenerator" : i18n_catalog|default("Admin") }}'
                 ),
-                "actionRoute" => "{{ builder.routePrefixWithSubfolder ~ '_' ~ bundle_name ~ (builder.BaseGeneratorName ? "_" ~ builder.BaseGeneratorName : "") ~ '_object' }}",
+                "actionRoute" => "{{ builder.objectActionsRoute }}",
                 "actionParams" => array("pk" => $pk, "action" => "{{ action.name }}")
             )
         );
@@ -87,7 +87,7 @@
             )
         );
 
-        return new RedirectResponse($this->generateUrl("{{ builder.routePrefixWithSubfolder }}_{{ bundle_name }}{{ builder.BaseGeneratorName ? "_" ~ builder.BaseGeneratorName : "" }}_list"));
+        return new RedirectResponse($this->generateUrl("{{ builder.baseActionsRoute }}_list"));
     }
 
 {% endblock %}
@@ -114,7 +114,7 @@
 
         $this->get('session')->getFlashBag()->add('error', $header.' '.$errors);
 
-        return new RedirectResponse($this->generateUrl("{{ builder.routePrefixWithSubfolder }}_{{ bundle_name }}{{ builder.BaseGeneratorName ? "_" ~ builder.BaseGeneratorName : "" }}_list"));
+        return new RedirectResponse($this->generateUrl("{{ builder.baseActionsRoute }}_list"));
     }
 
 {% endblock %}

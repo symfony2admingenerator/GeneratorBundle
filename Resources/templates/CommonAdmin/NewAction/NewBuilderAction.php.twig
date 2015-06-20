@@ -29,7 +29,7 @@ class NewController extends BaseController
      */
     protected function getListUrl()
     {
-        return $this->generateUrl("{{ builder.routePrefixWithSubfolder ~ '_' ~ bundle_name ~ (builder.BaseGeneratorName ? '_' ~ builder.BaseGeneratorName : '') ~ '_list' }}");
+        return $this->generateUrl("{{ builder.baseActionsRoute ~ '_list' }}");
     }
 
     /**
@@ -39,7 +39,7 @@ class NewController extends BaseController
      */
     protected function getNewUrl()
     {
-        return $this->generateUrl("{{ builder.routePrefixWithSubfolder }}_{{ bundle_name }}{{ builder.BaseGeneratorName ? "_" ~ builder.BaseGeneratorName : "" }}_new" );
+        return $this->generateUrl("{{ builder.baseActionsRoute }}_new" );
     }
 
     /**
@@ -49,7 +49,7 @@ class NewController extends BaseController
      */
     protected function getCreateUrl()
     {
-        return $this->generateUrl("{{ builder.routePrefixWithSubfolder }}_{{ bundle_name }}{{ builder.BaseGeneratorName ? "_" ~ builder.BaseGeneratorName : "" }}_create" );
+        return $this->generateUrl("{{ builder.baseActionsRoute }}_create" );
     }
 
     /**
@@ -59,7 +59,7 @@ class NewController extends BaseController
      */
     protected function getEditUrl($pk)
     {
-        return $this->generateUrl("{{ builder.routePrefixWithSubfolder }}_{{ bundle_name }}{{ builder.BaseGeneratorName ? "_" ~ builder.BaseGeneratorName : "" }}_edit", array('pk' => $pk) );
+        return $this->generateUrl("{{ builder.baseActionsRoute }}_edit", array('pk' => $pk) );
     }
 
     /**
@@ -69,7 +69,7 @@ class NewController extends BaseController
      */
     protected function getShowUrl($pk)
     {
-        return $this->generateUrl("{{ builder.routePrefixWithSubfolder }}_{{ bundle_name }}{{ builder.BaseGeneratorName ? "_" ~ builder.BaseGeneratorName : "" }}_show", array('pk' => $pk) );
+        return $this->generateUrl("{{ builder.baseActionsRoute }}_show", array('pk' => $pk) );
     }    
 
     /**
