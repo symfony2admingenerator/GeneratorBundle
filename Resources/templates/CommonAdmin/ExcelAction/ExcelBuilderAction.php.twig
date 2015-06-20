@@ -9,6 +9,7 @@ namespace Admingenerated\{{ namespace_prefix }}{{ bundle_name }}\{{ builder.gene
 
 use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 use Symfony\Component\HttpFoundation\StreamedResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 
 /**
@@ -20,8 +21,9 @@ class ExcelController extends ListController
      * Generates the Excel object and send a streamed response
      * @return \Symfony\Component\HttpFoundation\StreamedResponse
      */
-    public function excelAction()
+    public function excelAction(Request $request)
     {
+        $this->request = $request;
         {{ block('security_action') }}
         
         // Create the PHPExcel object with some standard values

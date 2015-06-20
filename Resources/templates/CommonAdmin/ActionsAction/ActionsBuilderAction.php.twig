@@ -12,6 +12,7 @@ use {{ builder.generator.baseController }} as BaseController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Admingenerator\GeneratorBundle\Exception\ValidationException;
+use Symfony\Component\HttpFoundation\Request;
 
 {{ block('csrf_protection_use') }}
 
@@ -22,8 +23,9 @@ class ActionsController extends BaseController
     /**
      * Call custom object action based on $action parameter
      */
-    public function objectAction($pk, $action)
+    public function objectAction(Request $request, $pk, $action)
     {
+        $this->request = $request;
         $methodName = 'attemptObject'.ucfirst(strtolower($this->cleanMethodName($action)));
         if (!method_exists($this, $methodName)) {
             throw new NotFoundHttpException(sprintf('Undefined "%s" method. Does object action "%s" exist in your generator file?', $methodName, $action));
@@ -35,9 +37,9 @@ class ActionsController extends BaseController
     /**
      * Call custom batch action based on $action parameter
      */
-    public function batchAction()
+    public function batchAction(Request $request)
     {
-        $request = $this->getRequest();
+        $this->request = $request;
         $action = $request->get('action');
         $selected = $request->get('selected');
 

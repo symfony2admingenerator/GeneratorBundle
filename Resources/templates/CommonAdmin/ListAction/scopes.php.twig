@@ -1,7 +1,8 @@
 {% block scopes %}
-    public function scopesAction()
+    public function scopesAction(Request $request)
     {
-        $this->setScope($this->getRequest()->get('group'), $this->getRequest()->get('scope'));
+        $this->request = $request;
+        $this->setScope($this->request->get('group'), $this->request->get('scope'));
 
         return new RedirectResponse($this->getListUrl());
     }

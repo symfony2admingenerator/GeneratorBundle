@@ -3,6 +3,7 @@
 namespace Admingenerator\GeneratorBundle\Controller\DoctrineODM;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * A base controller for DoctrineODM
@@ -12,6 +13,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  */
 abstract class BaseController extends Controller
 {
+    /**
+     * @var Request
+     */
+    protected $request;
+
     /**
      * @return \Doctrine\Bundle\MongoDBBundle\ManagerRegistry
      */

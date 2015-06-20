@@ -4,8 +4,9 @@ use {{ builder.namespacePrefixWithSubfolder }}\{{ bundle_name }}\Form\Type\{{ bu
 {% endblock %}
 {% block index %}
 
-    public function indexAction()
+    public function indexAction(Request $request)
     {
+        $this->request = $request
         {{ block('security_action') }}
 
         return $this->render('{{ builder.namespacePrefixForTemplate }}{{ bundle_name }}:{{ builder.BaseGeneratorName }}List:index.html.twig', $this->getAdditionalRenderParameters() + array(

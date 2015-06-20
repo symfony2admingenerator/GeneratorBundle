@@ -1,7 +1,8 @@
 {% block filters %}
-    public function filtersAction()
+    public function filtersAction(Request $request)
     {
-        if ($this->getRequest()->get('reset')) {
+        $this->request = $request;
+        if ($this->request->get('reset')) {
             $this->setFilters(array());
             // Remove scopes and re-apply default ones
             $this->setScopes(null);
@@ -9,17 +10,17 @@
             return new RedirectResponse($this->getListUrl());
         }
 
-        if ($this->getRequest()->getMethod() == "POST") {
+        if ($this->request->getMethod() == "POST") {
             $form = $this->getFilterForm();
-            $form->handleRequest($this->getRequest());
+            $form->handleRequest($this->request);
 
             if ($form->isValid()) {
                 $filters = $form->getViewData();
             }
         }
 
-        if ($this->getRequest()->getMethod() == "GET") {
-            $filters = $this->getRequest()->query->all();
+        if ('GET' == $this->request->getMethod()) {
+            $filters = $this->request->query->all();
 
             {% for filter,column in builder.filterColumns %}
                 {% if column.filtersGroups %}

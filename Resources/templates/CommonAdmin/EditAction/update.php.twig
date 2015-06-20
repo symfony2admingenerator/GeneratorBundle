@@ -5,8 +5,9 @@
 
 {% block update %}
 
-    public function updateAction($pk)
+    public function updateAction(Request $request, $pk)
     {
+        $this->request = $request;
         ${{ builder.ModelClass }} = $this->getObject($pk);
 
         {{ block('security_action_with_object') }}
@@ -17,7 +18,6 @@
 
         $this->preBindRequest(${{ builder.ModelClass }});
         $form = $this->getEditForm(${{ builder.ModelClass }});
-        $request = $this->getRequest();
 
         $form->handleRequest($request);
         $this->postBindRequest($form, ${{ builder.ModelClass }});
