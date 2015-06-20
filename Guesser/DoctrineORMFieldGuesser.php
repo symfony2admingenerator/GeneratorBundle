@@ -174,6 +174,33 @@ class DoctrineORMFieldGuesser extends ContainerAware
      */
     public function getFormOptions($formType, $dbType, $model, $fieldPath)
     {
+        return $this->getOptions($formType, $dbType, $model, $fieldPath, false);
+    }
+
+    /**
+     * @param $filterType
+     * @param $dbType
+     * @param $model
+     * @param $fieldPath
+     * @return array
+     * @throws \Exception
+     */
+    public function getFilterOptions($filterType, $dbType, $model, $fieldPath)
+    {
+        return $this->getOptions($filterType, $dbType, $model, $fieldPath, true);
+    }
+
+    /**
+     * @param      $type
+     * @param      $dbType
+     * @param      $model
+     * @param      $fieldPath
+     * @param bool $filter
+     * @return array
+     * @throws \Exception
+     */
+    protected function getOptions($type, $dbType, $model, $fieldPath, $filter = false)
+    {
         if ('virtual' === $dbType) {
             return array();
         }
@@ -183,7 +210,7 @@ class DoctrineORMFieldGuesser extends ContainerAware
         $columnName = $resolved['field'];
 
         if ('boolean' == $dbType &&
-            (preg_match("#^choice#i", $formType) || preg_match("#choice$#i", $formType))) {
+            (preg_match("#^choice#i", $type) || preg_match("#choice$#i", $type))) {
             return array(
                 'choices' => array(
                     0 => 'boolean.no',
@@ -194,7 +221,7 @@ class DoctrineORMFieldGuesser extends ContainerAware
             );
         }
 
-        if ('number' === $formType) {
+        if ('number' === $type) {
             $mapping = $this->getMetadatas($class)->getFieldMapping($columnName);
 
             if (isset($mapping['scale'])) {
@@ -207,22 +234,22 @@ class DoctrineORMFieldGuesser extends ContainerAware
 
             return array(
                 'precision' => isset($precision) ? $precision : '',
-                'required'  => $this->isRequired($class, $columnName)
+                'required'  => $filter ? false : $this->isRequired($class, $columnName)
             );
         }
 
-        if (preg_match("#^entity#i", $formType) || preg_match("#entity$#i", $formType)) {
+        if (preg_match("#^entity#i", $type) || preg_match("#entity$#i", $type)) {
             $mapping = $this->getMetadatas($class)->getAssociationMapping($columnName);
 
             return array(
                 'multiple'      => ($mapping['type'] === ClassMetadataInfo::MANY_TO_MANY || $mapping['type'] === ClassMetadataInfo::ONE_TO_MANY),
                 'em'            => $this->getObjectManagerName($mapping['targetEntity']),
                 'class'         => $mapping['targetEntity'],
-                'required'      => $this->isRequired($class, $columnName),
+                'required'      => $filter ? false : $this->isRequired($class, $columnName),
             );
         }
 
-        if (preg_match("#^collection#i", $formType) || preg_match("#collection$#i", $formType)) {
+        if (preg_match("#^collection#i", $type) || preg_match("#collection$#i", $type)) {
             $mapping = $this->getMetadatas($class)->getAssociationMapping($columnName);
 
             return array(

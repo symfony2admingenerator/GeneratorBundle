@@ -151,14 +151,18 @@ class BaseBuilder extends GenericBaseBuilder
 
             if ($this->getYamlKey() === 'list') {
                 // Filters
-                $column->setFormOptions($this->getFieldOption(
+                $column->setFilterOptions($this->getFieldOption(
                     $column,
-                    'formOptions',
-                    $this->getFieldGuesser()->getFormOptions(
-                        $column->getFilterType(),
-                        $filteredFieldDbType,
-                        $this->getVariable('model'),
-                        $column->getFilterOn()
+                    'filterOptions',
+                    $this->getFieldOption(
+                        $column,
+                        'formOptions',
+                        $this->getFieldGuesser()->getFilterOptions(
+                            $column->getFilterType(),
+                            $filteredFieldDbType,
+                            $this->getVariable('model'),
+                            $column->getFilterOn()
+                        )
                     )
                 ));
             } else {

@@ -49,6 +49,8 @@ class ColumnTest extends TestCase
             'dbType' => 'text',
             'formType' => 'choices',
             'formOptions' => array('foo' => 'bar'),
+            'filterType' => 'choice',
+            'filterOptions' => array('bar' => 'foo'),
         );
 
         $column = new Column("test", false);
@@ -57,6 +59,17 @@ class ColumnTest extends TestCase
             $column->setProperty($option, $value);
             $this->assertEquals($value, call_user_func_array(array($column, 'get'.Inflector::classify($option)), array()));
         }
+    }
+
+    public function testSetAddFilterOptionsPhpFunction()
+    {
+        $column = new Column("test", false);
+
+        $column->setAddFilterOptions(array('years' => array('.range' => array('from' => 1900, 'to' => 1915, 'step' => 5))));
+
+        $options = $column->getFilterOptions();
+
+        $this->assertEquals(array(1900, 1905, 1910, 1915), $options['years']);
     }
 
     public function testSetAddFormOptionsPhpFunction()

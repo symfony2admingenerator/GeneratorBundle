@@ -49,7 +49,7 @@ class FiltersType extends BaseType
                     'label': column.label,
                     'translation_domain': i18n_catalog|default('Admin'),
                     'required': false
-                }|merge(column.filterOptions ? column.filterOptions : column.formOptions)|as_php|convert_as_form(column.filterType) }}, $builderOptions, $options
+                }|merge(column.filterOptions)|as_php|convert_as_form(column.filterType) }}, $builderOptions, $options
             );
         }
 
