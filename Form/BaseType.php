@@ -3,7 +3,7 @@
 namespace Admingenerator\GeneratorBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
@@ -31,16 +31,14 @@ abstract class BaseType extends AbstractType
         $this->authorizationChecker = $authorizationChecker;
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'groups' => array(),
             'cascade_validation' => true
         ));
 
-        $resolver->setAllowedTypes(array(
-            'groups' => 'array',
-        ));
+        $resolver->setAllowedTypes('groups', array('array'));
     }
 
     /**
