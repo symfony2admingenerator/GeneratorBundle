@@ -11,7 +11,7 @@
 
         if ($this->getRequest()->getMethod() == "POST") {
             $form = $this->getFilterForm();
-            $form->bind($this->getRequest());
+            $form->handleRequest($this->getRequest());
 
             if ($form->isValid()) {
                 $filters = $form->getViewData();
