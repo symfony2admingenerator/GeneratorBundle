@@ -59,11 +59,16 @@ class DoctrineQueryFilter extends BaseQueryFilter
      */
     public function addStringFilter($field, $value)
     {
+
         list($tableAlias, $filteredField) = $this->addTablePathToField($field);
 
         $paramName = $this->getParamName($tableAlias.'_'.$filteredField);
         $this->query->andWhere(sprintf('%s.%s LIKE :%s', $tableAlias, $filteredField, $paramName));
-        $this->query->setParameter($paramName, '%'.$value.'%');
+        if ($value === '') {
+            $this->query->setParameter($paramName, '');
+        } else {
+            $this->query->setParameter($paramName, '%' . $value . '%');
+        }
     }
 
     /**
