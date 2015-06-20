@@ -37,8 +37,9 @@ class ActionsController extends BaseController
      */
     public function batchAction()
     {
-        $action = $this->get('request')->get('action');
-        $selected = $this->get('request')->get('selected');
+        $request = $this->getRequest();
+        $action = $request->get('action');
+        $selected = $request->get('selected');
 
         if (!$selected || !$action) {
             $this->get('session')->getFlashBag()->add(

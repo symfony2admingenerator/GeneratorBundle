@@ -5,16 +5,16 @@
      */
     protected function parseRequestForPager()
     {
-        if ($this->get('request')->query->get('page')) {
-            $this->setPage($this->get('request')->query->get('page'));
+        if ($this->getRequest()->query->get('page')) {
+            $this->setPage($this->getRequest()->query->get('page'));
         }
 
-        if ($this->get('request')->query->get('perPage')) {
-            $this->setPerPage($this->get('request')->query->get('perPage'));
+        if ($this->getRequest()->query->get('perPage')) {
+            $this->setPerPage($this->getRequest()->query->get('perPage'));
         }
 
-        if ($this->get('request')->query->get('sort')) {
-            $this->setSort($this->get('request')->query->get('sort'), $this->get('request')->query->get('order_by','ASC'));
+        if ($this->getRequest()->query->get('sort')) {
+            $this->setSort($this->getRequest()->query->get('sort'), $this->getRequest()->query->get('order_by','ASC'));
         }
     }
 
