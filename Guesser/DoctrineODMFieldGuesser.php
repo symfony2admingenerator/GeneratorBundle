@@ -212,7 +212,7 @@ class DoctrineODMFieldGuesser extends ContainerAware
         }
         
         if ('boolean' == $dbType &&
-            (preg_match("#^checkbox#i", $formType) || preg_match("#checkbox#i", $formType))) {
+            (preg_match("#^checkbox#i", $type) || preg_match("#checkbox#i", $type))) {
             return array(
                 'required' => false,
             );
