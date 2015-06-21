@@ -64,7 +64,7 @@
      * @param \Symfony\Component\Form\Form $form the valid form
      * @param \{{ model }} ${{ builder.ModelClass }} your \{{ model }} object
      */
-    public function onException(\Exception $exception, \Symfony\Component\Form\Form $form, \{{ model }} ${{ builder.ModelClass }})
+    protected function onException(\Exception $exception, \Symfony\Component\Form\Form $form, \{{ model }} ${{ builder.ModelClass }})
     {
         if ($this->container->getParameter('kernel.debug')) {
             throw $exception;
@@ -76,7 +76,7 @@
      *
      * @param \{{ model }} ${{ builder.ModelClass }} your \{{ model }} object
      */
-    public function preBindRequest(\{{ model }} ${{ builder.ModelClass }})
+    protected function preBindRequest(\{{ model }} ${{ builder.ModelClass }})
     {
     }
 
@@ -86,7 +86,7 @@
      * @param \Symfony\Component\Form\Form $form the valid form
      * @param \{{ model }} ${{ builder.ModelClass }} your \{{ model }} object
      */
-    public function postBindRequest(\Symfony\Component\Form\Form $form, \{{ model }} ${{ builder.ModelClass }})
+    protected function postBindRequest(\Symfony\Component\Form\Form $form, \{{ model }} ${{ builder.ModelClass }})
     {
     }
 
@@ -96,7 +96,7 @@
      * @param \Symfony\Component\Form\Form $form the valid form
      * @param \{{ model }} ${{ builder.ModelClass }} your \{{ model }} object
      */
-    public function preSave(\Symfony\Component\Form\Form $form, \{{ model }} ${{ builder.ModelClass }})
+    protected function preSave(\Symfony\Component\Form\Form $form, \{{ model }} ${{ builder.ModelClass }})
     {
     }
 
@@ -106,7 +106,7 @@
      * @param \Symfony\Component\Form\Form $form the valid form
      * @param \{{ model }} ${{ builder.ModelClass }} your \{{ model }} object
      */
-    public function postSave(\Symfony\Component\Form\Form $form, \{{ model }} ${{ builder.ModelClass }})
+    protected function postSave(\Symfony\Component\Form\Form $form, \{{ model }} ${{ builder.ModelClass }})
     {
     }
 {% endblock %}
