@@ -149,8 +149,8 @@ class Column
     protected $debug = array();
 
     /**
-     * @param string  $name
-     * @param boolean $debug
+     * @param string $name
+     * @param array  $debug
      */
     public function __construct($name, $debug)
     {
