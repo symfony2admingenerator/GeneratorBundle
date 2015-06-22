@@ -130,8 +130,8 @@ class ExcelController extends ListController
         
         // Retrieve relations
         while (($pos = strpos($field, '.')) > 0) {
-            $field = substr($field, $pos + 1);
             $data = $accessor->getValue($data, substr($field, 0, $pos));
+            $field = substr($field, $pos + 1);
         }
         
         $data = $accessor->getValue($data, $field);
