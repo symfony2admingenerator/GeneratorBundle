@@ -192,6 +192,8 @@ class BaseBuilder extends GenericBaseBuilder
 
             if (array_key_exists('addFilterOptions', $fieldOptions)) {
                 $column->setAddFilterOptions($fieldOptions['addFilterOptions']);
+            } elseif (array_key_exists('addFormOptions', $fieldOptions)) {
+                $column->setAddFilterOptions($fieldOptions['addFormOptions']);
             }
         }
 
