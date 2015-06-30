@@ -110,6 +110,8 @@ class BaseBuilder extends GenericBaseBuilder
             )
         ));
 
+        $column->setManyToMany($this->getFieldGuesser()->getManyToMany($this->getVariable('model'), $columnName));
+
         $column->setSortType($this->getFieldGuesser()->getSortType($column->getDbType()));
 
         $column->setPrimaryKey($this->getFieldOption(
