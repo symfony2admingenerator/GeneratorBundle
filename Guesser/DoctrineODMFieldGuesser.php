@@ -38,6 +38,12 @@ class DoctrineODMFieldGuesser extends ContainerAware
         return array_merge($this->getMetadatas($class)->getFieldNames(), $this->getMetadatas($class)->getAssociationNames());
     }
 
+    public function getManyToMany($model, $fieldPath)
+    {
+        $resolved = $this->resolveRelatedField($model, $fieldPath);
+        return !$this->getMetadatas($resolved['class'])->isAssociationWithSingleJoinColumn($resolved['field']);
+    }
+
     /**
      * Find out the database type for given model field path.
      *

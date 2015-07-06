@@ -148,6 +148,8 @@ class Column
     /* Used for more verbose error messages */
     protected $debug = array();
 
+    protected $manyToMany = false;
+
     /**
      * @param string $name
      * @param array  $debug
@@ -436,6 +438,16 @@ class Column
     public function getGridClass()
     {
         return $this->gridClass;
+    }
+
+    public function setManyToMany($manyToMany)
+    {
+        $this->manyToMany = $manyToMany;
+    }
+
+    public function getManyToMany()
+    {
+        return $this->manyToMany;
     }
 
     protected function parseOption($option)

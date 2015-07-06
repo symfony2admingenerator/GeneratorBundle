@@ -80,17 +80,24 @@ class DoctrineQueryFilter extends BaseQueryFilter
         $this->addStringFilter($field, $value);
     }
 
-    public function addCollectionFilter($field, $value)
+    public function addCollectionFilter($field, $value, $manyToMany = false)
     {
         list($tableAlias, $filteredField) = $this->addTablePathToField($field);
-
         if (!is_array($value)) {
             $value = array($value->getId());
         }
 
         $paramName = $this->getParamName($tableAlias.'_'.$filteredField);
+
+        if ($manyToMany) {
+            if (!in_array($filteredField, $this->joins)) {
+                $this->query->join($tableAlias . '.' . $filteredField, $filteredField . '_table_filter_join');
+            }
+            $this->query->andWhere(sprintf('%s.%s IN (:%s)', $filteredField . '_table_filter_join', 'id', $paramName));
+        } else {
+            $this->query->andWhere(sprintf('%s.%s IN (:%s)', $tableAlias, $filteredField, $paramName));
+        }
         $this->query->groupBy('q');
-        $this->query->andWhere(sprintf('%s.%s IN (:%s)', $tableAlias, $filteredField, $paramName));
         $this->query->setParameter($paramName, $value);
 
     }

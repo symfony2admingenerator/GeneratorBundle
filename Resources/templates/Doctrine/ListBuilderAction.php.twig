@@ -149,7 +149,7 @@
      */
     protected function filter{{ filter|classify }}($queryFilter, $value)
     {
-        $queryFilter->add{{ builder.fieldGuesser().dbType(model, column.filterOn)|classify }}Filter('{{ column.filterOn }}', $value);
+        $queryFilter->add{{ builder.fieldGuesser().dbType(model, column.filterOn)|classify }}Filter('{{ column.filterOn }}', $value{{ column.manyToMany ? ', ' ~ column.manyToMany : '' }});
     }
     {% endfor %}
 {% endblock %}

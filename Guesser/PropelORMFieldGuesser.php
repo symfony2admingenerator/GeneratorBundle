@@ -47,6 +47,16 @@ class PropelORMFieldGuesser extends ContainerAware
         return $return;
     }
 
+    public function getManyToMany($model, $fieldPath)
+    {
+        $resolved = $this->resolveRelatedField($model, $fieldPath);
+        $relation = $this->getRelation($resolved['field'], $resolved['class']);
+
+        if ($relation) {
+          return \RelationMap::MANY_TO_MANY === $relation->getType();
+        }
+    }
+
     /**
      * Find out the database type for given model field path.
      *
