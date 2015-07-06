@@ -49,6 +49,8 @@ class ColumnTest extends TestCase
             'dbType' => 'text',
             'formType' => 'choices',
             'formOptions' => array('foo' => 'bar'),
+            'filterType' => 'choice',
+            'filterOptions' => array('bar' => 'foo'),
         );
 
         $column = new Column("test", false);
@@ -59,15 +61,25 @@ class ColumnTest extends TestCase
         }
     }
 
-    public function testSetAddFormOptionsPhpFunction()
+    public function testSetAddFormFilterOptionsPhpFunction()
     {
         $column = new Column("test", false);
 
-        $column->setAddFormOptions(array('years' => array('.range' => array('from' => 1900, 'to' => 1915, 'step'=> 5 ))));
+        $addOptions = array('years' => array('.range' => array('from' => 1900, 'to' => 1915, 'step' => 5)));
+
+        $column->setAddFormOptions($addOptions);
 
         $options = $column->getFormOptions();
 
-        $this->assertEquals(array(1900, 1905, 1910, 1915), $options['years']);
+        $testOptions = array(1900, 1905, 1910, 1915);
+
+        $this->assertEquals($testOptions, $options['years']);
+
+        $column->setAddFilterOptions($addOptions);
+
+        $options = $column->getFilterOptions();
+
+        $this->assertEquals($testOptions, $options['years']);
     }
 
     public function testFiltersGroups()

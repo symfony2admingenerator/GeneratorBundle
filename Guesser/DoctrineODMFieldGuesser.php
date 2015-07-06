@@ -157,7 +157,39 @@ class DoctrineODMFieldGuesser extends ContainerAware
         );
     }
 
+    /**
+     * @param $formType
+     * @param $dbType
+     * @param $model
+     * @param $fieldPath
+     * @return array
+     */
     public function getFormOptions($formType, $dbType, $model, $fieldPath)
+    {
+        return $this->getOptions($formType, $dbType, $model, $fieldPath, false);
+    }
+
+    /**
+     * @param $filterType
+     * @param $dbType
+     * @param $model
+     * @param $fieldPath
+     * @return array
+     */
+    public function getFilterOptions($filterType, $dbType, $model, $fieldPath)
+    {
+        return $this->getOptions($filterType, $dbType, $model, $fieldPath, true);
+    }
+
+    /**
+     * @param      $type
+     * @param      $dbType
+     * @param      $model
+     * @param      $fieldPath
+     * @param bool $filter
+     * @return array
+     */
+    protected function getOptions($type, $dbType, $model, $fieldPath, $filter = false)
     {
         if ('virtual' === $dbType) {
             return array();
@@ -168,7 +200,7 @@ class DoctrineODMFieldGuesser extends ContainerAware
         $columnName = $resolved['field'];
 
         if ('boolean' == $dbType &&
-            (preg_match("#^choice#i", $formType) || preg_match("#choice$#i", $formType))) {
+            (preg_match("#^choice#i", $type) || preg_match("#choice$#i", $type))) {
             return array(
                 'choices' => array(
                    0 => 'boolean.no',
@@ -180,13 +212,13 @@ class DoctrineODMFieldGuesser extends ContainerAware
         }
         
         if ('boolean' == $dbType &&
-            (preg_match("#^checkbox#i", $formType) || preg_match("#checkbox#i", $formType))) {
+            (preg_match("#^checkbox#i", $type) || preg_match("#checkbox#i", $type))) {
             return array(
                 'required' => false,
             );
         }
 
-        if (preg_match("#^document#i", $formType) || preg_match("#document$#i", $formType)) {
+        if (preg_match("#^document#i", $type) || preg_match("#document$#i", $type)) {
             $mapping = $this->getMetadatas($class)->getFieldMapping($columnName);
 
             return array(
@@ -195,7 +227,7 @@ class DoctrineODMFieldGuesser extends ContainerAware
             );
         }
 
-        if (preg_match("#^collection#i", $formType) || preg_match("#collection$#i", $formType)) {
+        if (preg_match("#^collection#i", $type) || preg_match("#collection$#i", $type)) {
             $mapping = $this->getMetadatas($class)->getFieldMapping($columnName);
 
             return array(
@@ -218,7 +250,7 @@ class DoctrineODMFieldGuesser extends ContainerAware
             );
         }
 
-        return array('required' => $this->isRequired($class, $columnName));
+        return array('required' => $filter ? false : $this->isRequired($class, $columnName));
     }
 
     protected function isRequired($class, $fieldName)

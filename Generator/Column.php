@@ -89,6 +89,11 @@ class Column
     protected $formOptions = array();
 
     /**
+     * @var array
+     */
+    protected $filterOptions = array();
+
+    /**
      * @var string
      */
     protected $getter;
@@ -144,8 +149,8 @@ class Column
     protected $debug = array();
 
     /**
-     * @param string  $name
-     * @param boolean $debug
+     * @param string $name
+     * @param array  $debug
      */
     public function __construct($name, $debug)
     {
@@ -315,6 +320,16 @@ class Column
         return $this->filterType;
     }
 
+    public function setFilterOptions($filterOptions)
+    {
+        $this->filterOptions = $filterOptions;
+    }
+
+    public function getFilterOptions()
+    {
+        return $this->filterOptions;
+    }
+
     public function setLocalizedDateFormat($localizedDateFormat)
     {
         $this->localizedDateFormat = $localizedDateFormat;
@@ -339,6 +354,13 @@ class Column
     {
         foreach ($additionalOptions as $name => $option) {
             $this->formOptions[$name] = $this->parseOption($option);
+        }
+    }
+
+    public function setAddFilterOptions(array $additionalOptions = array())
+    {
+        foreach ($additionalOptions as $name => $option) {
+           $this->filterOptions[$name] = $this->parseOption($option);
         }
     }
 

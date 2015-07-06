@@ -212,10 +212,36 @@ class PropelORMFieldGuesser extends ContainerAware
     /**
      * @param $formType
      * @param $dbType
-     * @param $columnName
+     * @param $model
+     * @param $fieldPath
      * @return array
      */
     public function getFormOptions($formType, $dbType, $model, $fieldPath)
+    {
+        return $this->getOptions($formType, $dbType, $model, $fieldPath, false);
+    }
+
+    /**
+     * @param $filterType
+     * @param $dbType
+     * @param $model
+     * @param $fieldPath
+     * @return array
+     */
+    public function getFilterOptions($filterType, $dbType, $model, $fieldPath)
+    {
+        return $this->getOptions($filterType, $dbType, $model, $fieldPath, true);
+    }
+
+    /**
+     * @param      $type
+     * @param      $dbType
+     * @param      $model
+     * @param      $fieldPath
+     * @param bool $filter
+     * @return array
+     */
+    protected function getOptions($type, $dbType, $model, $fieldPath, $filter = false)
     {
         if ('virtual' === $dbType) {
             return array();
@@ -226,7 +252,7 @@ class PropelORMFieldGuesser extends ContainerAware
         $columnName = $resolved['field'];
 
         if ((\PropelColumnTypes::BOOLEAN == $dbType || \PropelColumnTypes::BOOLEAN_EMU == $dbType) &&
-            (preg_match("#^choice#i", $formType) || preg_match("#choice$#i", $formType))) {
+            (preg_match("#^choice#i", $type) || preg_match("#choice$#i", $type))) {
             return array(
                 'choices' => array(
                    0 => 'boolean.no',
@@ -237,14 +263,15 @@ class PropelORMFieldGuesser extends ContainerAware
             );
         }
 
-        if ((\PropelColumnTypes::BOOLEAN == $dbType || \PropelColumnTypes::BOOLEAN_EMU == $dbType) &&
-            (preg_match("#^checkbox#i", $formType) || preg_match("#checkbox#i", $formType))) {
+        if (!$filter &&
+            (\PropelColumnTypes::BOOLEAN == $dbType || \PropelColumnTypes::BOOLEAN_EMU == $dbType) &&
+            (preg_match("#^checkbox#i", $type) || preg_match("#checkbox#i", $type))) {
             return array(
                 'required' => false
             );
         }
 
-        if (preg_match("#^model#i", $formType) || preg_match("#model$#i", $formType)) {
+        if (preg_match("#^model#i", $type) || preg_match("#model$#i", $type)) {
             $relation = $this->getRelation($columnName, $class);
             if ($relation) {
                 if (\RelationMap::MANY_TO_ONE === $relation->getType()) {
@@ -261,7 +288,7 @@ class PropelORMFieldGuesser extends ContainerAware
             }
         }
 
-        if (preg_match("#^collection#i", $formType) || preg_match("#collection$#i", $formType)) {
+        if (preg_match("#^collection#i", $type) || preg_match("#collection$#i", $type)) {
             $relation = $this->getRelation($columnName, $class);
 
             return array(
@@ -279,12 +306,12 @@ class PropelORMFieldGuesser extends ContainerAware
             $valueSet = $this->getMetadatas($class)->getColumn($class, $columnName)->getValueSet();
 
             return array(
-                'required' => $this->isRequired($class, $columnName),
+                'required' => $filter ? false : $this->isRequired($class, $columnName),
                 'choices'  => array_combine($valueSet, $valueSet),
             );
         }
 
-        return array('required' => $this->isRequired($class, $columnName));
+        return array('required' => $filter ? false : $this->isRequired($class, $columnName));
     }
 
     protected function isRequired($class, $fieldName)
