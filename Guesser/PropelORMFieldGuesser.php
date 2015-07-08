@@ -53,7 +53,7 @@ class PropelORMFieldGuesser extends ContainerAware
         $relation = $this->getRelation($resolved['field'], $resolved['class']);
 
         if ($relation) {
-          return \RelationMap::MANY_TO_MANY === $relation->getType();
+            return \RelationMap::MANY_TO_MANY === $relation->getType();
         }
     }
 
@@ -313,7 +313,7 @@ class PropelORMFieldGuesser extends ContainerAware
         }
 
         if (\PropelColumnTypes::ENUM == $dbType) {
-            $valueSet = $this->getMetadatas($class)->getColumn($class, $columnName)->getValueSet();
+            $valueSet = $this->getMetadatas($class)->getColumn($columnName)->getValueSet();
 
             return array(
                 'required' => $filter ? false : $this->isRequired($class, $columnName),
