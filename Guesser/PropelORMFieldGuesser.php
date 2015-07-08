@@ -53,7 +53,7 @@ class PropelORMFieldGuesser extends ContainerAware
         $relation = $this->getRelation($resolved['field'], $resolved['class']);
 
         if ($relation) {
-          return \RelationMap::MANY_TO_MANY === $relation->getType();
+            return \RelationMap::MANY_TO_MANY === $relation->getType();
         }
     }
 
