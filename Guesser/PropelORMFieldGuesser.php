@@ -313,7 +313,7 @@ class PropelORMFieldGuesser extends ContainerAware
         }
 
         if (\PropelColumnTypes::ENUM == $dbType) {
-            $valueSet = $this->getMetadatas($class)->getColumn($class, $columnName)->getValueSet();
+            $valueSet = $this->getMetadatas($class)->getColumn($columnName)->getValueSet();
 
             return array(
                 'required' => $filter ? false : $this->isRequired($class, $columnName),
