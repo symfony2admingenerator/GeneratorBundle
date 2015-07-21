@@ -126,7 +126,7 @@ class DoctrineQueryFilter extends BaseQueryFilter
         } else {
             if (false !== $date = $this->formatDate($value, $format)) {
                 $paramName = $this->getParamName($tableAlias.'_'.$filteredField);
-                $this->query->andWhere(sprintf('s.%s = :%s', $tableAlias, $filteredField, $paramName));
+                $this->query->andWhere(sprintf('%s.%s = :%s', $tableAlias, $filteredField, $paramName));
                 $this->query->setParameter($paramName, $date);
             }
         }
