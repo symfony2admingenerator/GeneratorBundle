@@ -110,7 +110,7 @@ class DoctrineQueryFilter extends BaseQueryFilter
             if (array_key_exists('from', $value)) {
                 if (false !== $from = $this->formatDate($value['from'], $format)) {
                     $paramName = $this->getParamName($tableAlias.'_'.$filteredField.'_from');
-                    $this->query->andWhere(sprintf('%s.%s >= :%s_from', $tableAlias, $filteredField, $paramName));
+                    $this->query->andWhere(sprintf('%s.%s >= :%s', $tableAlias, $filteredField, $paramName));
                     $this->query->setParameter($paramName, $from);
                 }
             }
@@ -118,7 +118,7 @@ class DoctrineQueryFilter extends BaseQueryFilter
             if (array_key_exists('to', $value)) {
                 if (false !== $to = $this->formatDate($value['to'], $format)) {
                     $paramName = $this->getParamName($tableAlias.'_'.$filteredField.'_to');
-                    $this->query->andWhere(sprintf('%s.%s <= :%s_to',$tableAlias, $filteredField, $paramName));
+                    $this->query->andWhere(sprintf('%s.%s <= :%s',$tableAlias, $filteredField, $paramName));
                     $this->query->setParameter($paramName, $to);
                 }
             }
