@@ -32,7 +32,7 @@
 
                 <div class="{{ classPrefix }}-header">
                     {% if builder.filtersMode == 'modal' %}
-            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">{{ echo_trans('list.button.close') }}</span></button>
                     {% endif %}
                     <h3 class="{{ classPrefix }}-title" id="s2a_modal_filter_label">{{ echo_trans('list.filters') }}</h3>
                     {% if builder.filtersMode == 'top' %}
@@ -67,7 +67,7 @@
                     <div class="{{ classPrefix }}-footer"{% if builder.filtersMode == 'top' and builder.defaultFiltersVisibility == 'collapsed' %} style="display: none;"{% endif %}>
                         <div class="btn-toolbar">
                             <div class="pull-left">
-                                    <button type="button" class="btn btn-sm btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+                                    <button type="button" class="btn btn-sm btn-default" data-dismiss="modal"><i class="fa fa-times"></i> {{ echo_trans('list.button.close') }}</button>
                             </div>
                             <div class="pull-right">
                                 <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-search"></i> {{ echo_trans('list.button.filter') }}</button>
