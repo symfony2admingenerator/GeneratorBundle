@@ -5,7 +5,7 @@
 {% use '../CommonAdmin/ListTemplate/footer.php.twig' %}
 
 {%- block list_results -%}
-    {% if builder.filtersMode != 'top' and builder.getFilterColumns(true) is not empty %}
+    {% if builder.filtersMode != 'top' and builder.filtersMode != 'modal' and builder.getFilterColumns(true) is not empty %}
         {% if builder.filterColumnGroups is not empty %}
             {{ echo_set('filterColumnGroups', echo_twig_arr(builder.filterColumnGroups), false) }}
             {{ echo_if('groups is empty or filterColumnGroups|intersect(groups) is not empty') }}
@@ -22,6 +22,16 @@
         <div class="box box-primary">
             <div class="box-header list-header list-nb-results">
                 {{- block('list_nbresults') -}}
+{% if builder.filtersMode == 'modal' %}
+                <div class="box-tools pull-right">          
+                  <button class="btn btn-text btn-sm btn-primary" data-toggle="modal" data-target="#s2a_modal_filter_dialog">
+                    <i class="fa fa-filter"></i> {{ echo_trans('list.filters') }}
+                </button>
+                  <a href="{{ echo_twig('filtersUrl') }}?reset=all" class="btn btn-sm btn-default">
+                    <i class="fa fa-refresh"></i> {{ echo_trans('list.button.reset') }}
+                  </a>                    
+                </div><!-- /.box-tools -->
+{% endif %}
             </div>
             {{ block('form_batch_actions') }}
                 <div class="box-body table-responsive no-padding list-results">
