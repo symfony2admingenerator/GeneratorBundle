@@ -7,20 +7,23 @@
         {% endif %}
         {% if builder.filtersMode == 'top' %}
         <div class="col-md-12 list-filters-container">
-            <div class="box box-primary{% if builder.defaultFiltersVisibility == 'collapsed' %} collapsed-box{% endif %}">
         {% else %}
         <div class="col-md-3 col-xs-12 list-filters-container pull-right">
-            <div class="box box-primary{% if builder.defaultFiltersVisibility == 'collapsed' %} slided-box{% endif %}">
         {% endif %}
-                <div class="box-header">
-                    <h3 class="box-title">{{ echo_trans('list.filters') }}</h3>
-                    {% if builder.filtersMode == 'top' %}
-                        <div class="box-tools pull-right">
-                            <button class="btn btn-primary btn-xs" data-widget="collapse"><i class="fa fa-{% if builder.defaultFiltersVisibility == 'collapsed' %}plus{% else %}minus{% endif %}"></i></button>
-                        </div>
-                    {% endif %}
-                </div>
-                <form action="{{ echo_twig('filtersUrl') }}" method="post" {{ echo_twig("form_enctype(form)") }} role="form" novalidate="novalidate">
+            <form action="{{ echo_twig('filtersUrl') }}" method="post" {{ echo_twig("form_enctype(form)") }} role="form" novalidate="novalidate">
+        {% if builder.filtersMode == 'top' %}
+                <div class="box box-primary{% if builder.defaultFiltersVisibility == 'collapsed' %} collapsed-box{% endif %}">
+        {% else %}
+                <div class="box box-primary{% if builder.defaultFiltersVisibility == 'collapsed' %} slided-box{% endif %}">
+        {% endif %}
+                    <div class="box-header">
+                        <h3 class="box-title">{{ echo_trans('list.filters') }}</h3>
+                        {% if builder.filtersMode == 'top' %}
+                            <div class="box-tools pull-right">
+                                <button class="btn btn-primary btn-xs" data-widget="collapse"><i class="fa fa-{% if builder.defaultFiltersVisibility == 'collapsed' %}plus{% else %}minus{% endif %}"></i></button>
+                            </div>
+                        {% endif %}
+                    </div>
                     <div class="box-body"{% if builder.filtersMode == 'top' and builder.defaultFiltersVisibility == 'collapsed' %} style="display: none;"{% endif %}>
                         {{ echo_twig("form_errors(form)") }}
                         {% for column in builder.filterColumns %}
@@ -51,8 +54,8 @@
                             </div>
                         </div>
                     </div>
-                </form>
-            </div>
+                </div>
+            </form>
         </div>
         {% if builder.filterColumnGroups is not empty %}
             {{ echo_endif() }}
