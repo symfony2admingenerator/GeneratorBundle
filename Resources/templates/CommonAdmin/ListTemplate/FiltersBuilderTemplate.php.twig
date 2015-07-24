@@ -5,11 +5,23 @@
             {{ echo_set('filterColumnGroups', echo_twig_arr(builder.filterColumnGroups), false) }}
             {{ echo_if('filterColumnGroups|intersect(groups) is not empty') }}
         {% endif %}
-        {% if builder.filtersMode == 'top' %}
+
+
+        {% set boxClass = '' %}
+        {% set classPrefix = builder.filtersMode == 'modal' ? 'modal' : 'box' %}
+        {% if builder.filtersMode == 'modal' %}
+
+<div class="modal fade" id="s2a_modal_filter_dialog" tabindex="-1" role="dialog" aria-labelledby="s2a_modal_filter_label" aria-hidden="true">
+    <div class="modal-dialog ">
+        <div class="modal-content">
+
+
+        {% elseif builder.filtersMode == 'top' %}
         <div class="col-md-12 list-filters-container">
         {% else %}
         <div class="col-md-3 col-xs-12 list-filters-container pull-right">
         {% endif %}
+<<<<<<< HEAD
             <form action="{{ echo_twig('filtersUrl') }}" method="post" {{ echo_twig("form_enctype(form)") }} role="form" novalidate="novalidate">
         {% if builder.filtersMode == 'top' %}
                 <div class="box box-primary{% if builder.defaultFiltersVisibility == 'collapsed' %} collapsed-box{% endif %}">
@@ -25,6 +37,30 @@
                         {% endif %}
                     </div>
                     <div class="box-body"{% if builder.filtersMode == 'top' and builder.defaultFiltersVisibility == 'collapsed' %} style="display: none;"{% endif %}>
+=======
+
+<form action="{{ echo_twig('filtersUrl') }}" method="post" {{ echo_twig("form_enctype(form)") }} role="form" novalidate="novalidate">
+        
+        {% if builder.filtersMode != 'modal' %}
+
+            {% set boxClass = (builder.defaultFiltersVisibility == 'collapsed') ? (builder.filtersMode == 'top') ? 'collapsed-box' : 'slided-box' : '' %}
+            <div class="box box-primary {{ boxClass }}">
+        {% endif %}
+
+                <div class="{{ classPrefix }}-header">
+                    {% if builder.filtersMode == 'modal' %}
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    {% endif %}
+                    <h3 class="{{ classPrefix }}-title" id="s2a_modal_filter_label">{{ echo_trans('list.filters') }}</h3>
+                    {% if builder.filtersMode == 'top' %}
+                        <div class="box-tools pull-right">
+                            <button class="btn btn-xs" data-widget="collapse"><i class="fa fa-{% if builder.defaultFiltersVisibility == 'collapsed' %}plus{% else %}minus{% endif %}"></i></button>
+                        </div>
+                    {% endif %}
+                </div>
+
+                    <div class="{{ classPrefix }}-body"{% if builder.filtersMode == 'top' and builder.defaultFiltersVisibility == 'collapsed' %} style="display: none;"{% endif %}>
+>>>>>>> Update FiltersBuilderTemplate.php.twig
                         {{ echo_twig("form_errors(form)") }}
                         {% for column in builder.filterColumns %}
                             {{ echo_block("list_filters_field_" ~ (column.name|lower)) }}
@@ -46,17 +82,35 @@
                         {% endfor %}
                         {{ echo_twig("form_rest(form)") }}
                     </div>
-                    <div class="box-footer"{% if builder.filtersMode == 'top' and builder.defaultFiltersVisibility == 'collapsed' %} style="display: none;"{% endif %}>
+                    <div class="{{ classPrefix }}-footer"{% if builder.filtersMode == 'top' and builder.defaultFiltersVisibility == 'collapsed' %} style="display: none;"{% endif %}>
                         <div class="btn-toolbar">
+                            <div class="pull-left">
+                                    <button type="button" class="btn btn-sm btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+                            </div>
                             <div class="pull-right">
                                 <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-search"></i> {{ echo_trans('list.button.filter') }}</button>
                                 <button type="submit" class="btn btn-sm btn-default" name="reset" value="true"><i class="fa fa-refresh"></i> {{ echo_trans('list.button.reset') }}</button>
                             </div>
                         </div>
                     </div>
+<<<<<<< HEAD
                 </div>
             </form>
+=======
+        {% if builder.filtersMode != 'modal' %}
+            </div>
+        {% endif %}
+
+</form> 
+
+>>>>>>> Update FiltersBuilderTemplate.php.twig
         </div>
+        {% if builder.filtersMode == 'modal' %}
+    </div>
+</div>
+        {% endif %}
+    
+
         {% if builder.filterColumnGroups is not empty %}
             {{ echo_endif() }}
         {% endif %}
