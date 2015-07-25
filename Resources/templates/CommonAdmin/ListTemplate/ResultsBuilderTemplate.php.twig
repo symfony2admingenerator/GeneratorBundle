@@ -23,11 +23,15 @@
             <div class="box-header list-header list-nb-results">
                 {{- block('list_nbresults') -}}
 {% if builder.filtersMode == 'modal' %}
+    {{ echo_set('class', '') }}
+    {{ echo_if("app.session.get('\\\\" ~ bundle_name ~ '\\\\' ~ builder.ModelClass ~ "List\\\\Filters',{}) is empty") }}
+    {{ echo_set('class', 'disabled') }}
+    {{ echo_endif() }}
                 <div class="box-tools pull-right">          
-                  <button class="btn btn-text btn-sm btn-primary" data-toggle="modal" data-target="#s2a_modal_filter_dialog">
+                  <button class="btn btn-sm btn-default" data-toggle="modal" data-target="#s2a_modal_filter_dialog">
                     <i class="fa fa-filter"></i> {{ echo_trans('list.filters') }}
-                </button>
-                  <a href="{{ echo_twig('filtersUrl') }}?reset=all" class="btn btn-sm btn-default">
+                  </button>
+                  <a href="{{ echo_twig('filtersUrl') }}?reset=all" class="btn btn-sm btn-default {{ echo_twig('class') }}">
                     <i class="fa fa-refresh"></i> {{ echo_trans('list.button.reset') }}
                   </a>                    
                 </div><!-- /.box-tools -->
