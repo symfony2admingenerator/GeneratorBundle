@@ -403,7 +403,7 @@ class PropelORMFieldGuesser extends ContainerAware
         $field = $resolved['field'];
 
         if ($relation = $this->getRelation($field, $class)) {
-            $class = $relation->getName();
+            $class = $relation->getLocalTable()->getClassname();
 
             return $this->getModelPrimaryKeyName($class);
         } else {
