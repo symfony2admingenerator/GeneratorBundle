@@ -21,26 +21,6 @@
         {% else %}
         <div class="col-md-3 col-xs-12 list-filters-container pull-right">
         {% endif %}
-<<<<<<< HEAD
-<<<<<<< HEAD
-            <form action="{{ echo_twig('filtersUrl') }}" method="post" {{ echo_twig("form_enctype(form)") }} role="form" novalidate="novalidate">
-        {% if builder.filtersMode == 'top' %}
-                <div class="box box-primary{% if builder.defaultFiltersVisibility == 'collapsed' %} collapsed-box{% endif %}">
-        {% else %}
-                <div class="box box-primary{% if builder.defaultFiltersVisibility == 'collapsed' %} slided-box{% endif %}">
-        {% endif %}
-                    <div class="box-header">
-                        <h3 class="box-title">{{ echo_trans('list.filters') }}</h3>
-                        {% if builder.filtersMode == 'top' %}
-                            <div class="box-tools pull-right">
-                                <button class="btn btn-primary btn-xs" data-widget="collapse"><i class="fa fa-{% if builder.defaultFiltersVisibility == 'collapsed' %}plus{% else %}minus{% endif %}"></i></button>
-                            </div>
-                        {% endif %}
-                    </div>
-                    <div class="box-body"{% if builder.filtersMode == 'top' and builder.defaultFiltersVisibility == 'collapsed' %} style="display: none;"{% endif %}>
-=======
-=======
->>>>>>> d60c6fb6fe87897084822d057607084ed7818850
 
 <form action="{{ echo_twig('filtersUrl') }}" method="post" {{ echo_twig("form_enctype(form)") }} role="form" novalidate="novalidate">
         
@@ -63,10 +43,6 @@
                 </div>
 
                     <div class="{{ classPrefix }}-body"{% if builder.filtersMode == 'top' and builder.defaultFiltersVisibility == 'collapsed' %} style="display: none;"{% endif %}>
-<<<<<<< HEAD
->>>>>>> Update FiltersBuilderTemplate.php.twig
-=======
->>>>>>> d60c6fb6fe87897084822d057607084ed7818850
                         {{ echo_twig("form_errors(form)") }}
                         {% for column in builder.filterColumns %}
                             {{ echo_block("list_filters_field_" ~ (column.name|lower)) }}
@@ -99,23 +75,12 @@
                             </div>
                         </div>
                     </div>
-<<<<<<< HEAD
-<<<<<<< HEAD
-                </div>
-            </form>
-=======
-=======
->>>>>>> d60c6fb6fe87897084822d057607084ed7818850
         {% if builder.filtersMode != 'modal' %}
             </div>
         {% endif %}
 
 </form> 
 
-<<<<<<< HEAD
->>>>>>> Update FiltersBuilderTemplate.php.twig
-=======
->>>>>>> d60c6fb6fe87897084822d057607084ed7818850
         </div>
         {% if builder.filtersMode == 'modal' %}
     </div>
