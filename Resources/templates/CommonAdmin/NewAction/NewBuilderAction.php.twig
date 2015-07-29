@@ -7,6 +7,7 @@ namespace Admingenerated\{{ namespace_prefix }}{{ bundle_name }}\{{ builder.gene
 
 use {{ builder.generator.baseController }} as BaseController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 {{- block('index_use') -}}
 
@@ -116,7 +117,7 @@ class NewController extends BaseController
     protected function getNewType()
     {
         $type = new NewType();
-        $type->setSecurityContext($this->get('security.context'));
+        $type->setAuthorizationChecker($this->get('security.authorization_checker'));
 
         return $type;
     }

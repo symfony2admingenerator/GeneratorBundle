@@ -28,7 +28,7 @@ use JMS\SecurityExtraBundle\Security\Authorization\Expression\Expression;
     protected function evaluate($expression, \{{ model }} ${{ builder.ModelClass }} = null)
     {
         return $this
-            ->get('security.context')
+            ->get('security.authorization_checker')
             ->isGranted(array(new Expression($expression)), ${{ builder.ModelClass }});
     }
 {% endblock %}

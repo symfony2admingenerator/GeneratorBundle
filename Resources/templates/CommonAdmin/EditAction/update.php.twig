@@ -5,8 +5,9 @@
 
 {% block update %}
 
-    public function updateAction($pk)
+    public function updateAction(Request $request, $pk)
     {
+        $this->request = $request;
         ${{ builder.ModelClass }} = $this->getObject($pk);
 
         {{ block('security_action_with_object') }}
@@ -17,7 +18,8 @@
 
         $this->preBindRequest(${{ builder.ModelClass }});
         $form = $this->getEditForm(${{ builder.ModelClass }});
-        $form->handleRequest($this->get('request'));
+
+        $form->handleRequest($request);
         $this->postBindRequest($form, ${{ builder.ModelClass }});
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -35,11 +37,11 @@
 
                 {% set defaultActionAfterSave = builder.generator.bundleConfig.default_action_after_save %}
                 $actionAfterSave = "{{ actionAfterSave|default(defaultActionAfterSave) }}";
-                if ($this->get('request')->request->has('save-and-add') || ('new' == $actionAfterSave)) {
+                if ($request->request->has('save-and-add') || ('new' == $actionAfterSave)) {
                     return new RedirectResponse($this->getNewUrl());
-                } else if ($this->get('request')->request->has('save-and-list') || ('list' == $actionAfterSave)) {
+                } elseif ($request->request->has('save-and-list') || ('list' == $actionAfterSave)) {
                     return new RedirectResponse($this->getListUrl());
-                } else if ($this->get('request')->request->has('save-and-show') || ('show' == $actionAfterSave)) {
+                } elseif ($request->request->has('save-and-show') || ('show' == $actionAfterSave)) {
                     return new RedirectResponse($this->getShowUrl($pk));
                 } else {
                     if (('edit' != $actionAfterSave) &&

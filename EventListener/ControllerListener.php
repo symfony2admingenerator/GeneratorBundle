@@ -83,7 +83,7 @@ class ControllerListener
     protected function getGenerator($generatorYaml)
     {
         if (!$generatorName = $this->cacheProvider->fetch($this->getCacheKey($generatorYaml.'_generator'))) {
-            $yamlParsed = Yaml::parse($generatorYaml);
+            $yamlParsed = Yaml::parse(file_get_contents($generatorYaml));
             $this->cacheProvider->save($this->getCacheKey($generatorYaml.'_generator'), $generatorName = $yamlParsed['generator']);
         }
 

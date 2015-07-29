@@ -89,6 +89,8 @@ class AdmingeneratorMenuBuilder extends ContainerAware
      */
     protected function isCurrentUri($uri)
     {
-        return $this->container->get('request')->getBaseUrl().$this->container->get('request')->getPathInfo() === $uri;
+        $request = $this->container->get('request_stack')->getCurrentRequest();
+
+        return $request->getBaseUrl().$request->getPathInfo() === $uri;
     }
 }

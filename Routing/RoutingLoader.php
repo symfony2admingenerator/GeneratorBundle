@@ -11,78 +11,82 @@ use Symfony\Component\Yaml\Yaml;
 
 class RoutingLoader extends FileLoader
 {
-    // Assoc beetween a controller and is route path
+    // Assoc beetween a controller and its route path
     //@todo make an object for this
     protected $actions = array(
         'list' => array(
-                    'pattern'      => '/',
-                    'defaults'     => array(),
-                    'requirements' => array(),
-                ),
+            'path'         => '/',
+            'defaults'     => array(),
+            'requirements' => array(),
+            'methods'      => array('GET'),
+        ),
         'excel'=> array(
-                    'pattern'      => '/excel',
-                    'defaults'     => array(),
-                    'requirements' => array(),
-                    'controller'   => 'excel',
-                ),
+            'path'         => '/excel',
+            'defaults'     => array(),
+            'requirements' => array(),
+            'methods'      => array('GET'),
+            'controller'   => 'excel',
+        ),
         'edit' => array(
-                    'pattern'      => '/{pk}/edit',
-                    'defaults'     => array(),
-                    'requirements' => array(),
-                ),
+            'path'         => '/{pk}/edit',
+            'defaults'     => array(),
+            'requirements' => array(),
+            'methods'      => array('GET'),
+        ),
         'update' => array(
-                    'pattern'      => '/{pk}/update',
-                    'defaults'     => array(),
-                    'requirements' => array(
-                        '_method' => 'POST'
-                    ),
-                    'controller'   => 'edit',
-                ),
+            'path'         => '/{pk}/update',
+            'defaults'     => array(),
+            'requirements' => array(),
+            'methods'      => array('POST'),
+            'controller'   => 'edit',
+        ),
         'show' => array(
-                    'pattern'      => '/{pk}/show',
-                    'defaults'     => array(),
-                    'requirements' => array(),
-                ),
+            'path'         => '/{pk}/show',
+            'defaults'     => array(),
+            'requirements' => array(),
+            'methods'      => array('GET'),
+        ),
         'object' => array(
-                    'pattern'      => '/{pk}/{action}',
-                    'defaults'     => array(),
-                    'requirements' => array(),
-                    'controller'   => 'actions',
-                ),
+            'path'         => '/{pk}/{action}',
+            'defaults'     => array(),
+            'requirements' => array(),
+            'methods'      => array('GET', 'POST'),
+            'controller'   => 'actions',
+        ),
         'batch' => array(
-                    'pattern'      => '/batch',
-                    'defaults'     => array(),
-                    'requirements' => array(
-                        '_method' => 'POST'
-                    ),
-                    'controller'   => 'actions',
-                ),
+            'path'         => '/batch',
+            'defaults'     => array(),
+            'requirements' => array(),
+            'methods'      => array('POST'),
+            'controller'   => 'actions',
+        ),
         'new' => array(
-                    'pattern'      => '/new',
-                    'defaults'     => array(),
-                    'requirements' => array(),
-                    'methods'      => array(),
-                ),
+            'path'         => '/new',
+            'defaults'     => array(),
+            'requirements' => array(),
+            'methods'      => array('GET'),
+        ),
         'create' => array(
-                    'pattern'      => '/create',
-                    'defaults'     => array(),
-                    'requirements' => array(
-                        '_method' => 'POST'
-                    ),
-                    'controller'   => 'new',
-                ),
+            'path'         => '/create',
+            'defaults'     => array(),
+            'requirements' => array(),
+            'methods'      => array('POST'),
+            'controller'   => 'new',
+        ),
         'filters' => array(
-                    'pattern'      => '/filter',
-                    'defaults'     => array(),
-                    'requirements' => array(),
-                    'controller'   => 'list',
-                ),
+            'path'         => '/filter',
+            'defaults'     => array(),
+            'requirements' => array(),
+            'methods'      => array('POST', 'GET'),
+            'controller'   => 'list',
+        ),
         'scopes' => array(
-                    'pattern'      => '/scope/{group}/{scope}',
-                    'defaults'     => array(),
-                    'requirements' => array(),
-                    'controller'   => 'list',
-                ),
+            'path'         => '/scope/{group}/{scope}',
+            'defaults'     => array(),
+            'requirements' => array(),
+            'methods'      => array('POST', 'GET'),
+            'controller'   => 'list',
+        ),
     );
 
     /**
@@ -95,10 +99,9 @@ class RoutingLoader extends FileLoader
         $collection = new RouteCollection();
 
         $resource = str_replace('\\', '/', $resource);
-        $this->yaml = Yaml::parse($this->getGeneratorFilePath($resource));
+        $this->yaml = Yaml::parse(file_get_contents($this->getGeneratorFilePath($resource)));
 
         $namespace = $this->getNamespaceFromResource($resource);
-        $fullBundleName = $this->getFullBundleNameFromResource($resource);
         $bundle_name = $this->getBundleNameFromResource($resource);
 
         foreach ($this->actions as $controller => $datas) {
@@ -125,24 +128,30 @@ class RoutingLoader extends FileLoader
             }
 
             $controllerName = $resource.ucfirst($controller).'Controller.php';
-            if (is_file($controllerName)) {
-                if ($controller_folder) {
-                    $datas['defaults']['_controller'] = $namespace . '\\'
-                            . $bundle_name . '\\Controller\\'
-                            . $controller_folder . '\\'
-                            . ucfirst($controller) . 'Controller::'
-                            . $action . 'Action';
-                } else {
-                    $datas['defaults']['_controller'] = $loweredNamespace
-                            . $bundle_name . ':'
-                            . ucfirst($controller) . ':' . $action;
-                }
-
-                $route = new Route($datas['pattern'], $datas['defaults'], $datas['requirements']);
-                $route_name = ltrim($route_name, '_'); // fix routes in AppBundle without vendor
-                $collection->add($route_name, $route);
-                $collection->addResource(new FileResource($controllerName));
+            if (!is_file($controllerName)) {
+                // TODO: what does it mean if controller is not a file??
+                continue;
             }
+
+            if ($controller_folder) {
+                $datas['defaults']['_controller'] = $namespace . '\\'
+                        . $bundle_name . '\\Controller\\'
+                        . $controller_folder . '\\'
+                        . ucfirst($controller) . 'Controller::'
+                        . $action . 'Action';
+            } else {
+                $datas['defaults']['_controller'] = $loweredNamespace
+                        . $bundle_name . ':'
+                        . ucfirst($controller) . ':' . $action;
+            }
+
+            $route = new Route($datas['path'], $datas['defaults'], $datas['requirements']);
+            $route->setMethods($datas['methods']);
+
+            $route_name = ltrim($route_name, '_'); // fix routes in AppBundle without vendor
+
+            $collection->add($route_name, $route);
+            $collection->addResource(new FileResource($controllerName));
         }
 
         return $collection;
@@ -161,28 +170,6 @@ class RoutingLoader extends FileLoader
         preg_match('#.+/.+Bundle/Controller?/(.*?)/?$#', $resource, $matches);
 
         return $matches[1];
-    }
-
-    protected function getFullBundleNameFromResource($resource)
-    {
-        // Find the *Bundle.php
-        $finder = Finder::create()
-            ->name('*Bundle.php')
-            ->depth(0)
-            ->in(realpath($resource.'/../../')) // ressource is controller folder
-            ->getIterator();
-        $finder->rewind();
-        $file = $finder->current();
-
-        if ($file) {
-            if (PHP_VERSION_ID >= 50306) {
-                return $file->getBasename('.' . $file->getExtension());
-            }
-
-            return $file->getBasename('.' . pathinfo($file->getFilename(), PATHINFO_EXTENSION));
-        }
-
-        return null;
     }
 
     /**
@@ -230,7 +217,7 @@ class RoutingLoader extends FileLoader
     /**
      * @param string $yaml_path string with point for levels
      */
-    public function getFromYaml($yaml_path, $default = null)
+    protected function getFromYaml($yaml_path, $default = null)
     {
         $search_in = $this->yaml;
         $yaml_path = explode('.', $yaml_path);

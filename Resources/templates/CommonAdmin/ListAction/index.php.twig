@@ -6,8 +6,9 @@ use {{ builder.namespacePrefixWithSubfolder }}\{{ bundle_name }}\Form\Type\{{ bu
 
 {% block index %}
 
-    public function indexAction()
+    public function indexAction(Request $request)
     {
+        $this->request = $request;
         {{ block('security_action') }}
 
         $this->parseRequestForPager();

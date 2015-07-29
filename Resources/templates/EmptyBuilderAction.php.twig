@@ -4,18 +4,20 @@ namespace {{ namespace }};
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Admingenerator\GeneratorBundle\Exception\CantGenerateException;
+use Symfony\Component\HttpFoundation\Request;
+
 
 /**
  * AdmingeneratorEmptyBuilderClass
  */
 class {{ controllerName }} extends Controller
 {
-    public function indexAction({% if require_pk %}$pk{% endif %})
+    public function indexAction(Request $request, {% if require_pk %}$pk{% endif %})
     {
-        if ($this->get('request')->get('stop_loop')) {
+        if ($request->get('stop_loop')) {
             throw new CantGenerateException('Opps an error occurred in your configuration. If you\'re in prod try cache:warmup');
         }
 
-        return $this->redirect($this->get('request')->getRequestUri()."?stop_loop=true");
+        return $this->redirect($request->getRequestUri()."?stop_loop=true");
     }
 }

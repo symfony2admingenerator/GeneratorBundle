@@ -6,8 +6,10 @@ use {{ builder.namespacePrefixWithSubfolder }}\{{ bundle_name }}\Form\Type\{{ bu
 
 {% block index %}
 
-    public function indexAction($pk)
+    public function indexAction(Request $request, $pk)
     {
+        $this->request = $request;
+
         ${{ builder.ModelClass }} = $this->getObject($pk);
 
         {% if concurrency_lock -%}

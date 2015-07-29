@@ -19,7 +19,7 @@
         try {
             {{ block('security_action_with_object') -}}
 
-            if ('POST' == $this->get('request')->getMethod()) {
+            if ('POST' == $this->request->getMethod()) {
                 {{ block('csrf_action_check_token') }}
 
                 $this->executeObjectDelete(${{ builder.ModelClass }});

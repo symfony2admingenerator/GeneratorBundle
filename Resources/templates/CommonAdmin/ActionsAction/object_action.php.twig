@@ -20,7 +20,7 @@
             {{ block('security_action_with_object') -}}
 
             {%- if action.csrfProtected %}
-            if ('POST' == $this->get('request')->getMethod()) {
+            if ('POST' == $this->request->getMethod()) {
                 {{ block('csrf_action_check_token') }}
 
                 $this->executeObject{{ action.name|php_name|capitalize }}(${{ builder.ModelClass }});

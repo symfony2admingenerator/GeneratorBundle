@@ -11,8 +11,7 @@ use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
      */
     protected function isGeneratedCsrfTokenValid($intention)
     {
-        $token = $this->getRequest()->request->get('_csrf_token');
-        if (!$this->get('form.csrf_provider')->isCsrfTokenValid($intention, $token)) {
+        if (!$this->isCsrfTokenValid($intention, $this->request->request->get('_csrf_token'))) {
             throw new InvalidCsrfTokenException();
         }
     }
@@ -21,12 +20,10 @@ use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
 
 {% block csrf_action_check_token %}
 // Check CSRF token for action
-$intention = $this->getRequest()->getRequestUri();
-$this->isGeneratedCsrfTokenValid($intention);
+$this->isGeneratedCsrfTokenValid($this->request->getRequestUri());
 {% endblock %}
 
 {% block csrf_action_check_batch_token %}
 // Check CSRF token for batch action
-$intention = '{{ builder.baseActionsRoute }}_batch';
-$this->isGeneratedCsrfTokenValid($intention);
+$this->isGeneratedCsrfTokenValid('{{ builder.baseActionsRoute }}_batch');
 {% endblock %}
