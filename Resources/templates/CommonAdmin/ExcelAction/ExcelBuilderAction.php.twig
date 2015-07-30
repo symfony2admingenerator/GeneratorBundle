@@ -130,13 +130,15 @@ class ExcelController extends ListController
         $accessor = PropertyAccess::createPropertyAccessor();
         $data = $rowData;
         
-        // Retrieve relations
-        while (($pos = strpos($field, '.')) > 0) {
+        // Retrieve relations, but stop on $data = null
+        while (($pos = strpos($field, '.')) > 0 && $data !== null) {
             $data = $accessor->getValue($data, substr($field, 0, $pos));
             $field = substr($field, $pos + 1);
         }
         
-        $data = $accessor->getValue($data, $field);
+        if($data !== null) {
+            $data = $accessor->getValue($data, $field);
+        }
 
         // Convert DateTime object to given format
         if ($data instanceof \DateTime) {
