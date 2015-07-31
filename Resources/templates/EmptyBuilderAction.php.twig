@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class {{ controllerName }} extends Controller
 {
-    public function indexAction(Request $request, {% if require_pk %}$pk{% endif %})
+    public function indexAction(Request $request{% if require_pk %}, $pk{% endif %})
     {
         if ($request->get('stop_loop')) {
             throw new CantGenerateException('Opps an error occurred in your configuration. If you\'re in prod try cache:warmup');
