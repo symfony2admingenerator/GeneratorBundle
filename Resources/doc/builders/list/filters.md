@@ -7,7 +7,7 @@
 
 ## Filters position
 
-By default, the current template provides two ways to display filters: 
+By default, the current template provides three ways to display filters: 
  * on top of results list
  * on the right of the results
  * in pop-up modal dialog
@@ -20,9 +20,9 @@ keyword `filtersMode`. Three values are currently interpreted:
 
 Also in modal dialog mode (`filtersMode: modal`) you can setup desirable modal dialog size with the specific 
 keyword `filtersModalSize`. Change the size of the modal by specifing one of these values:
+ * `small`
  * `medium` (default)
  * `large`
- * `small`
  
 ### Default filters position (`filtersMode: default`)
 
