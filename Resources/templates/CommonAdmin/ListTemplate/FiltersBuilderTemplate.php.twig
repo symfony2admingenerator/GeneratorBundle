@@ -6,13 +6,16 @@
             {{ echo_if('filterColumnGroups|intersect(groups) is not empty') }}
         {% endif %}
 
-
         {% set boxClass = '' %}
         {% set classPrefix = builder.filtersMode == 'modal' ? 'modal' : 'box' %}
         {% if builder.filtersMode == 'modal' %}
 
+            {% set sizeClass = (builder.filtersModalSize != 'medium') ? ('modal-' ~ 
+                (builder.filtersModalSize == 'small' ? 'sm' : (
+                    builder.filtersModalSize == 'large' ? 'lg' : ''))) : '' %}
+
 <div class="modal fade" id="s2a_modal_filter_dialog" tabindex="-1" role="dialog" aria-labelledby="s2a_modal_filter_label" aria-hidden="true">
-    <div class="modal-dialog ">
+    <div class="modal-dialog {{ sizeClass }}">
         <div class="modal-content">
 
 
