@@ -22,6 +22,7 @@ list:
     display:
         range:      Display <b role="results-range-start">%start%</b> - <b role="results-range-end">%end%</b> of <b role="results-count">%count%</b> results.
         all:        Display all <b role="results-count">%count%</b> results.
+        one:        Display <b role="results-count">%count%</b> result.
     header.actions: Actions
 
 # Nested List
