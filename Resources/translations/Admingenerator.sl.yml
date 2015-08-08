@@ -21,6 +21,7 @@ list:
     display:
         range:      Prikazani rezultati <b role="results-range-start">%start%</b> - <b role="results-range-end">%end%</b> od <b role="results-count">%count%</b>.
         all:        Prikazani vsi rezultati <b>(%count%)</b>.
+        one:        Prikazani <b>(%count%)</b> rezultat.
     header.actions: Akcije
 
 # Nested List
