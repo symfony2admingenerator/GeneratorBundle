@@ -21,6 +21,7 @@ list:
     display:
         range:      Toplam <b role="results-count">%count%</b> sonuçtan <b role="results-range-start">%start%</b> - <b role="results-range-end">%end%</b> kadarı gösteriliyor.
         all:        Tüm <b role="results-count">%count%</b> sonuçlar.
+        one:        <b role="results-count">%count%</b> sonuç gösteriliyor.
     header.actions: Eylemler
 
 # Profile

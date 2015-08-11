@@ -20,6 +20,7 @@ list:
     display:
         range:      Відображені <b role="results-range-start">%start%</b> - <b role="results-range-end">%end%</b> з <b role="results-count">%count%</b> записи(ів).
         all:        Відображені всі <b role="results-count">%count%</b> записи(ів).
+        one:        Відображені <b role="results-count">%count%</b> запис.
     header.actions: Дії
 
 # Nested List

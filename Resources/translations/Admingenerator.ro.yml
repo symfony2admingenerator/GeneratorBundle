@@ -20,7 +20,8 @@ list:
     no.results:     Exista intrari
     display:
         range:      Rezultate <b role="results-range-start">%start%</b> - <b role="results-range-end">%end%</b> de  <b role="results-count">%count%</b> înregistrarea(e).
-        all:        Afișează toate <b role="results-count">%count%</b> înregistrarea(e).
+        all:        Afișează toate <b role="results-count">%count%</b> înregistrareae.
+        one:        Afișează <b role="results-count">%count%</b> înregistrarea.
     header.actions: Acțiuni
 
 # Nested List

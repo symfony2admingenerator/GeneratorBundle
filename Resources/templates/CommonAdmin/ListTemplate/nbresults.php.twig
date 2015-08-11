@@ -9,8 +9,10 @@
 
                 {{ echo_if ( builder.ModelClass ~ "s.haveToPaginate") }}
                 {{ echo_trans("list.display.range|{ start, end, count }|") }}
-                {{ echo_elseif (" count > 0 ") }}
+                {{ echo_elseif (" count > 1 ") }}
                 {{ echo_trans("list.display.all|{ count }|") }}
+                {{ echo_else () }}
+                {{ echo_trans("list.display.one|{ count }|") }}
                 {{ echo_endif () }}
             {{ echo_endblock() }}
         </h3>

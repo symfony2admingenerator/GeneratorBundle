@@ -21,6 +21,7 @@ list:
     display:
         range:      Mostra i risultati da <b role="results-range-start">%start%</b> a <b role="results-range-end">%end%</b> di <b role="results-count">%count%</b>.
         all:        Mostra tutti i <b role="results-count">%count%</b> risultati.
+        one:        Mostra <b role="results-count">%count%</b> risultato.
     header.actions: Azioni
 
 # Nested List
