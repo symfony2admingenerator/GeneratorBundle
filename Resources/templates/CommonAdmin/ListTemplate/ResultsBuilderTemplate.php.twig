@@ -24,7 +24,7 @@
                 {{- block('list_nbresults') -}}
 {% if builder.filtersMode == 'modal' %}
     {{ echo_set('class', '') }}
-    {{ echo_if("app.session.get('\\\\" ~ bundle_name ~ '\\\\' ~ builder.ModelClass ~ "List\\\\Filters',{}) is empty") }}
+    {{ echo_if("app.session.get('" ~ builder.getNamespacePrefixForTemplate ~ '\\\\' ~ bundle_name ~ '\\\\' ~ builder.baseGeneratorName ~ "List\\\\Filters',{}) is empty") }}
     {{ echo_set('class', 'disabled') }}
     {{ echo_endif() }}
                 <div class="box-tools pull-right">          
