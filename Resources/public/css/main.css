@@ -73,4 +73,5 @@ table.table thead .sorting_desc_disabled:after { content: '\f0d7'; opacity: 0.2;
 .scopes-group {padding-bottom: 5px; padding-right: 5px; display: inline-block;}
 .scopes-group:last-child {padding-right: 0px;}
 
-.skin-blue .sidebar .user-panel > .info {max-width: 155px;}
+.sidebar .user-panel > .info {max-width: 155px;}
+.sidebar .treeview {width: 100%;}
