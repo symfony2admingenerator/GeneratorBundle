@@ -1,5 +1,8 @@
 // Custom scripts belonging to Admingenerator
 ;(function(window, $, undefined){
+    //needed to make select2 formtypes function in filter modal
+    $.fn.modal.Constructor.prototype.enforceFocus = function() {};
+    
     var S2A = window.S2A || {};
     window.S2A = S2A;
 
