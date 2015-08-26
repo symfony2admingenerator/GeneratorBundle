@@ -2,12 +2,12 @@
     {{ echo_block("generic_actions") }}
             {% if builder.actions|default is not empty %}
                 {{ echo_block('pre_generic_actions') }}{{ echo_endblock() }}
-                {{ echo_if_granted(builder.actions|mapBy('credentials')|flatten|join(' or ')|default('denyAll')) }}
+                {{ echo_if_granted(builder.actions|mapBy('credentials')|flatten|join(' or ')|default('denyAll'), builder.ModelClass) }}
 
                 {% for action in builder.Actions %}
                     {{ echo_block("generic_action_" ~ action.twigName) }}
                     {% if action.credentials %}
-                        {{ echo_if_granted(action.credentials) }}
+                        {{ echo_if_granted(action.credentials, builder.ModelClass) }}
                     {% endif %}
 
                     {{ block('generic_action_block') }}
