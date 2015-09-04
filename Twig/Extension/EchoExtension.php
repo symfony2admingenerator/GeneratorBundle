@@ -122,7 +122,7 @@ class EchoExtension extends \Twig_Extension
         return sprintf(
             "{%% if is_expr_granted('%s'%s) %%}",
             $credentials,
-            $modelName ? ', ' . $modelName : ''
+            $modelName ? ', '.$modelName.' is defined ? '.$modelName.' : null' : ''
         );
     }
 

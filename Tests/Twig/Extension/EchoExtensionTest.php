@@ -201,7 +201,7 @@ class EchoExtensionTest extends BaseExtensionTest
                 'If granted work with a complex role expression'
             ),
             'with_object' => array(
-                '{% if is_expr_granted(\'hasRole(\'ROLE_A\')\', modelName) %}',
+                '{% if is_expr_granted(\'hasRole(\'ROLE_A\')\', modelName is defined ? modelName : null) %}',
                 'If granted work with an object'
             ),
         );
