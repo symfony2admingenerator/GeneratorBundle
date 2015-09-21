@@ -44,6 +44,8 @@ class GeneratorCacheWarmer implements CacheWarmerInterface
                 $this->buildFromYaml($yaml);
             } catch (GeneratedModelClassNotFoundException $e) {
                 echo ">> Skip warmup ".$e->getMessage()."\n";
+            } catch (\LogicException $e) {
+                echo ">> Skip warmup ".$e->getMessage()."\n";
             }
         }
     }
