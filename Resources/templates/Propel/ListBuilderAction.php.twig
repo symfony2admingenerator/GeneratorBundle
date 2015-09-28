@@ -79,6 +79,8 @@ use Pagerfanta\Adapter\PropelAdapter as PagerAdapter;
      */
     protected function filter{{ filter|classify }}($queryFilter, $value)
     {
+        $filterObject = $this->getFilters();
+
         $queryFilter->add{{ builder.fieldGuesser().dbType(model, column.filterOn)|lower|classify }}Filter('{{ column.filterOn }}', $filterObject['{{ column.name }}']);
     }
     {% endfor %}
