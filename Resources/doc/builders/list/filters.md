@@ -7,6 +7,22 @@
 
 ## Filters position
 
+First you must define your field as filterable in the global section of your generator :
+```
+generator: admingenerator.generator.doctrine
+params:
+    model:              Admingenerator\DoctrineOrmDemoBundle\Entity\Post
+    namespace_prefix:   Admingenerator
+    i18n_catalog:       AdmingeneratorOrmDemoBundle
+    concurrency_lock:   ~
+    bundle_name:        DoctrineOrmDemoBundle
+    pk_requirement: ~
+    fields:
+        author:
+            filterable: 1
+```
+
+
 By default, the current template provides three ways to display filters: 
  * on top of results list
  * on the right of the results
