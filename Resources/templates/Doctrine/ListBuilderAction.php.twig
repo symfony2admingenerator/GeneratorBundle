@@ -19,11 +19,13 @@
             {%- endif %}
             {%- if 'entity' == builder.getFieldGuesser().getDbType(model, column.filterOn) or 'collection' == builder.getFieldGuesser().getDbType(model, column.filterOn) -%}
             {% set filterModel = builder.getFieldGuesser().getModelType(model, column.filterOn) %}
-        if (isset($filters['{{ filter }}_{{ builder.getFieldGuesser().getModelPrimaryKeyName(filterModel)|lower }}']) && is_string($filters['{{ filter }}_{{ builder.getFieldGuesser().getModelPrimaryKeyName(filterModel)|lower }}'])) {
+            {% set filterByIdName = filter ~ '_' ~ builder.getFieldGuesser().getModelPrimaryKeyName(filterModel)|lower %}
+        if (isset($filters['{{ filterByIdName }}']) && is_string($filters['{{ filterByIdName }}'])) {
                 $filters['{{ filter }}'] = array (
-                    '{{ builder.getFieldGuesser().getModelPrimaryKeyName(filterModel) }}' => $filters['{{ filter }}_{{ builder.getFieldGuesser().getModelPrimaryKeyName(filterModel)|lower }}'],
+                    '{{ builder.getFieldGuesser().getModelPrimaryKeyName(filterModel) }}' => $filters['{{ filterByIdName }}'],
                     'entityName' => '{{ filterModel }}'
                 );
+                unset($filters['{{ filterByIdName }}']);
         }
             {%- endif %}
         {% endfor -%}
