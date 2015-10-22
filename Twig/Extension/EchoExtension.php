@@ -15,10 +15,10 @@ class EchoExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            'echo_if_granted'     => new \Twig_Function_Method($this, 'getEchoIfGranted'),
-            'echo_path'           => new \Twig_Function_Method($this, 'getEchoPath'),
-            'echo_trans'          => new \Twig_Function_Method($this, 'getEchoTrans'),
-            'echo_render'         => new \Twig_Function_Method($this, 'getEchoRender')
+            'echo_if_granted'     => new \Twig_SimpleFunction('echo_if_granted', array($this, 'getEchoIfGranted')),
+            'echo_path'           => new \Twig_SimpleFunction('echo_path', array($this, 'getEchoPath')),
+            'echo_trans'          => new \Twig_SimpleFunction('echo_trans', array($this, 'getEchoTrans')),
+            'echo_render'         => new \Twig_SimpleFunction('echo_render', array($this, 'getEchoRender'))
         );
     }
 
@@ -28,7 +28,7 @@ class EchoExtension extends \Twig_Extension
     public function getFilters()
     {
         return array(
-            'convert_as_form' => new \Twig_Filter_Method($this, 'convertAsForm'),
+            'convert_as_form' => new \Twig_SimpleFilter('convert_as_form', array($this, 'convertAsForm')),
         );
     }
 

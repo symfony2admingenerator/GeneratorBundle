@@ -43,7 +43,7 @@
         
         <service id="twig.extension.admingenerator.csrf" class="Admingenerator\GeneratorBundle\Twig\Extension\CsrfTokenExtension" public="false">
             <tag name="twig.extension" />
-            <argument type="service" id="form.csrf_provider" />
+            <argument type="service" id="security.csrf.token_manager" />
         </service>
         
         <service id="twig.extension.admingenerator.localized_money" class="Admingenerator\GeneratorBundle\Twig\Extension\LocalizedMoneyExtension" public="false">

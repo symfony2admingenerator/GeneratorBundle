@@ -26,7 +26,7 @@ class ConfigExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            'admingenerator_config' => new \Twig_Function_Method($this, 'getAdmingeneratorConfig'),
+            'admingenerator_config' => new \Twig_SimpleFunction('admingenerator_config', array($this, 'getAdmingeneratorConfig')),
         );
     }
 

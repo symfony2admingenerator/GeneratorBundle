@@ -10,8 +10,6 @@ use JMS\SecurityExtraBundle\Security\Authorization\Expression\Expression;
 
 class {{ builder.YamlKey|ucfirst }}Type extends BaseType
 {
-    protected $securityContext;
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->groups = $options['groups'];
