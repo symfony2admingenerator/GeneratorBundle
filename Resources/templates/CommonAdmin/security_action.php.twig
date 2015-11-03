@@ -34,7 +34,7 @@ use JMS\SecurityExtraBundle\Security\Authorization\Expression\Expression;
 {% endblock %}
 
 {% block security_action %}
-{% if builder.yamlKey is sameas('actions')  %}
+{% if builder.yamlKey is same as('actions')  %}
     {% if action is defined and action.credentials %}
     $this->checkCredentials('{{ action.credentials }}');
     {% endif %}
@@ -44,7 +44,7 @@ use JMS\SecurityExtraBundle\Security\Authorization\Expression\Expression;
 {% endblock %}
 
 {% block security_action_with_object %}
-{% if builder.yamlKey is sameas('actions') %}
+{% if builder.yamlKey is same as('actions') %}
     {% if action is defined and action.credentials %}
     $this->checkCredentials('{{ action.credentials }}', ${{ builder.ModelClass }});
     {% endif %}

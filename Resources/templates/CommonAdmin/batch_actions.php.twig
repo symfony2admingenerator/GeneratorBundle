@@ -29,7 +29,7 @@
 {% endblock %}
 
 {% block batch_action_block %}
-    {% set translationDomain = action.type is sameas('custom') ? i18n_catalog|default("Admin") : 'Admingenerator' %}
+    {% set translationDomain = action.type is same as('custom') ? i18n_catalog|default("Admin") : 'Admingenerator' %}
     <option
         value="{{ action.name }}"
         {%- if action.confirm %} data-confirm="{{ echo_trans(action.confirm, {}, translationDomain, 'html_attr') }}" {% endif -%}
