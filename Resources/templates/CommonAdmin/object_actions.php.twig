@@ -23,14 +23,14 @@
 {% block object_action_block %}
     {% set actionRoute  = action.route ? action.route : builder.getObjectActionsRoute %}
     {% set actionParams = action.params ? echo_twig_assoc(action.params) : "{ 'pk': " ~ builder.ModelClass ~ "." ~ builder.getFieldGuesser().getModelPrimaryKeyName(model) ~ ", action: '" ~ action.name ~ "' }" %}
-    {% set translationDomain = action.type is sameas('custom') ? i18n_catalog|default("Admin") : 'Admingenerator' %}
+    {% set translationDomain = action.type is same as('custom') ? i18n_catalog|default("Admin") : 'Admingenerator' %}
 
     {% spaceless %}
         {{ echo_spaceless() }}
-        <a  class="object-action btn btn-default {% if builder.yamlKey is sameas('list') or builder.yamlKey is sameas('nested_list') %}btn-xs {% endif %}{{ action.class|default('') }}"
+        <a  class="object-action btn btn-default {% if builder.yamlKey is same as('list') or builder.yamlKey is same as('nested_list') %}btn-xs {% endif %}{{ action.class|default('') }}"
             href="{{ echo_path(actionRoute, actionParams) }}"
             title="{{ echo_trans(action.label, {}, translationDomain, 'html_attr') }}"
-                {% if builder.yamlKey is sameas('list') or builder.yamlKey is sameas('nested_list') %}
+                {% if builder.yamlKey is same as('list') or builder.yamlKey is same as('nested_list') %}
                     data-toggle="tooltip"
                 {% endif %}
                 {%- if action.confirm %} data-confirm="{{ echo_trans(action.confirm, {}, translationDomain, 'html_attr') }}" {% endif -%}

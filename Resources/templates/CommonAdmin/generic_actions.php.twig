@@ -27,7 +27,7 @@
 {% block generic_action_block %}
     {% set actionRoute = action.route ? action.route : builder.baseActionsRoute ~ '_' ~ action.name %}
     {% set actionParams = action.params ? echo_twig_assoc(action.params) : "{}" %}
-    {% set translationDomain = action.type is sameas('custom') ? i18n_catalog|default("Admin") : 'Admingenerator' %}
+    {% set translationDomain = action.type is same as('custom') ? i18n_catalog|default("Admin") : 'Admingenerator' %}
 
     {% if action.submit %}
         <button type="submit" name="{{ action.name }}" class="generic-action btn {{ action.class|default('btn-default') }}"

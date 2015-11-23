@@ -3,6 +3,7 @@
 namespace Admingenerator\GeneratorBundle\Twig\Extension;
 
 use Symfony\Component\Form\Extension\Csrf\CsrfProvider\CsrfProviderInterface;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 /**
  * @author Stéphane Escandell
@@ -10,16 +11,16 @@ use Symfony\Component\Form\Extension\Csrf\CsrfProvider\CsrfProviderInterface;
 class CsrfTokenExtension extends \Twig_Extension
 {
     /**
-     * @var CsrfProviderInterface
+     * @var CsrfTokenManagerInterface
      */
-    protected $csrfProvider;
+    protected $csrfTokenManager;
 
     /**
-     * @param CsrfProviderInterface $csrfProvider
+     * @param CsrfTokenManagerInterface $csrfTokenManager
      */
-    public function __construct(CsrfProviderInterface $csrfProvider)
+    public function __construct(CsrfTokenManagerInterface $csrfTokenManager)
     {
-        $this->csrfProvider = $csrfProvider;
+        $this->csrfTokenManager = $csrfTokenManager;
     }
 
     /**
@@ -28,13 +29,13 @@ class CsrfTokenExtension extends \Twig_Extension
     public function getFilters()
     {
         return array(
-            'csrf_token' => new \Twig_Filter_Method($this, 'getCsrfToken'),
+            'csrf_token' => new \Twig_SimpleFilter('csrf_token', array($this, 'getCsrfToken')),
         );
     }
 
     public function getCsrfToken($intention)
     {
-        return $this->csrfProvider->generateCsrfToken($intention);
+        return $this->csrfTokenManager->getToken($intention);
     }
 
     /**

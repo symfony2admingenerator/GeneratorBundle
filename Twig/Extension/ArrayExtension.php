@@ -14,9 +14,9 @@ class ArrayExtension extends \Twig_Extension
     public function getFilters()
     {
         return array(
-            'mapBy'     => new \Twig_Filter_Method($this, 'mapBy'),
-            'flatten'   => new \Twig_Filter_Method($this, 'flatten'),
-            'intersect' => new \Twig_Filter_Method($this, 'intersect'),
+            'mapBy'     => new \Twig_SimpleFilter('mapBy', array($this, 'mapBy')),
+            'flatten'   => new \Twig_SimpleFilter('flatten', array($this, 'flatten')),
+            'intersect' => new \Twig_SimpleFilter('intersect', array($this, 'intersect')),
         );
     }
 

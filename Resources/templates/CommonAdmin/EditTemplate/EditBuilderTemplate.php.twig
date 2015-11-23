@@ -30,9 +30,9 @@
             <form
             {{ echo_for('attrvalue', 'attr', 'attrname') }}
                 {{ echo_twig('" "') }}
-                {{ echo_if('attrvalue is sameas(true)') }}
+                {{ echo_if('attrvalue is same as(true)') }}
                     {{- echo_twig('attrname') }}="{{ echo_twig('attrname') }}"
-                {{ echo_elseif('attrvalue is not sameas(false)') }}
+                {{ echo_elseif('attrvalue is not same as(false)') }}
                     {{ echo_twig('attrname') }}="{{ echo_twig('attrvalue') }}"
                 {{ echo_endif() }}
             {{ echo_endfor() }}
