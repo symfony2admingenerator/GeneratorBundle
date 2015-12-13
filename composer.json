@@ -26,7 +26,7 @@
         "sensio/generator-bundle": "~2.5",
         "symfony2admingenerator/twig-generator": "~1.1",
         "jms/security-extra-bundle": ">= 1.5.0",
-        "knplabs/knp-menu-bundle": ">1.0,<2.1",
+        "knplabs/knp-menu-bundle": ">1.0,<2.2",
         "white-october/pagerfanta-bundle": "~1.0",
         "twig/twig": ">= 1.12.0",
         "twig/extensions": "~1.0"
