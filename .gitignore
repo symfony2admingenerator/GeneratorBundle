@@ -4,3 +4,6 @@ vendor/*
 .buildpath
 .project
 .settings
+
+# Ignore idea dirs
+.idea
