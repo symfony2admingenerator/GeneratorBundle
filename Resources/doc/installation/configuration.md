@@ -84,6 +84,9 @@ admingenerator_generator:
     use_doctrine_odm: false
     use_propel: false
     overwrite_if_exists: false
+    guess_required: true
+    default_required: false
+    throw_exceptions: false
     base_admin_template: AdmingeneratorGeneratorBundle::base.html.twig
     dashboard_route: ~
     login_route: ~

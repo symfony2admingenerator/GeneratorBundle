@@ -244,6 +244,7 @@ class Configuration implements ConfigurationInterface
                 ->booleanNode('guess_required')->defaultTrue()->end()
                 ->booleanNode('default_required')->defaultTrue()->end()
                 ->booleanNode('overwrite_if_exists')->defaultFalse()->end()
+                ->booleanNode('throw_exceptions')->defaultFalse()->end()
                 ->scalarNode('base_admin_template')
                     ->defaultValue("AdmingeneratorGeneratorBundle::base.html.twig")
                 ->end()
