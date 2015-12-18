@@ -80,6 +80,46 @@ class PropelQueryFilter extends BaseQueryFilter
         return $this->addDateFilter($field, $value);
     }
 
+    /**
+     * Add date range filter
+     *
+     * @param string $field
+     * @param string|array $value
+     * @param string $format
+     */
+    public function addDateRangeFilter($field, $value, $format = 'Y-m-d')
+    {
+        list($query, $filteredField) = $this->addTablePathToField($field);
+
+        if (is_string($value)) {
+            $values = preg_split('/\s+-\s+/', $value, -1, PREG_SPLIT_NO_EMPTY);
+
+            $from = $this->formatDate($values[0], $format);
+            $to = $this->formatDate($values[1], $format);
+
+            $value = array('from' => $from, 'to' => $to);
+        }
+        
+        if (is_array($value)) {
+            $filters = array();
+
+            if (array_key_exists('from', $value) && $from = $this->formatDate($value['from'], $format)) {
+                $filters['min'] = $from;
+            }
+
+            if (array_key_exists('to', $value) && $to = $this->formatDate($value['to'], $format)) {
+                $filters['max'] = $to;
+            }
+
+            if (count($filters) > 0) {
+                $method = 'filterBy'.Inflector::classify($filteredField);
+                $query->$method($filters);
+            }
+        } else {
+            throw new \InvalidArgumentException();
+        }
+    }
+
     public function addNullFilter($field, $value = null)
     {
         list($query, $filteredField) = $this->addTablePathToField($field);
