@@ -67,7 +67,7 @@
      */
     protected function onException(\Exception $exception, \Symfony\Component\Form\Form $form, \{{ model }} ${{ builder.ModelClass }})
     {
-        if ($this->container->getParameter('kernel.debug') || $this->container->getParameter('admingenerator.throw_exceptions')) {
+        if ($this->container->getParameter('admingenerator.throw_exceptions')) {
             throw $exception;
         }
     }

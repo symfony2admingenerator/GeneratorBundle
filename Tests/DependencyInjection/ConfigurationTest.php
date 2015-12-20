@@ -199,6 +199,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
             'stylesheets'           => array(),
             'javascripts'           => array(),
             'default_action_after_save' => 'edit',
+            'throw_exceptions' => false
         );
 
         if (!is_null($key) && array_key_exists($key, $defaultConfiguration)) {
