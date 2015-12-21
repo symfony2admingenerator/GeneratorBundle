@@ -39,12 +39,18 @@ class GeneratorCacheWarmer implements CacheWarmerInterface
      */
     public function warmUp($cacheDir)
     {
+        if ($this->container->has('admingenerator.generator.propel')) {
+            $this->propelInit();
+        }
+
         foreach ($this->finder->findAllGeneratorYamls() as $yaml) {
             try {
                 $this->buildFromYaml($yaml);
             } catch (GeneratedModelClassNotFoundException $e) {
                 echo ">> Skip warmup ".$e->getMessage()."\n";
             } catch (\LogicException $e) {
+                echo ">> Skip warmup ".$e->getMessage()."\n";
+            } catch (\Exception $e) {
                 echo ">> Skip warmup ".$e->getMessage()."\n";
             }
         }
@@ -83,4 +89,14 @@ class GeneratorCacheWarmer implements CacheWarmerInterface
         $this->yaml_datas = Yaml::parse(file_get_contents($file));
     }
 
+    /**
+     * Force Propel boot before cache warmup
+     */
+    protected function propelInit()
+    {
+        if (!\Propel::isInit()) {
+            \Propel::setConfiguration($this->container->get('propel.configuration'));
+            \Propel::initialize();
+        }
+    }
 }

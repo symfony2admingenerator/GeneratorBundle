@@ -52,6 +52,20 @@ class PropelQueryFilter extends BaseQueryFilter
     {
         list($query, $filteredField) = $this->addTablePathToField($field);
 
+        if (is_string($value)) {
+            if (false === strpos($value, ' - ') && false !== $date = $this->formatDate($value, $format)) {
+                $query->filterBy($filteredField, $date);
+            } else {
+                // manage date range as a string
+                $values = preg_split('/\s+-\s+/', $value, -1, PREG_SPLIT_NO_EMPTY);
+
+                $from = $this->formatDate($values[0], $format);
+                $to = $this->formatDate($values[1], $format);
+
+                $value = array('from' => $from, 'to' => $to);
+            }
+        }
+
         if (is_array($value)) {
             $filters = array();
 
@@ -68,10 +82,6 @@ class PropelQueryFilter extends BaseQueryFilter
                 $query->$method($filters);
             }
 
-        } else {
-            if (false !== $date = $this->formatDate($value, $format)) {
-                $query->filterBy($filteredField, $date);
-            }
         }
     }
 
