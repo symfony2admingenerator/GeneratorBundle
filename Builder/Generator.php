@@ -118,43 +118,49 @@ class Generator extends TwigGeneratorGenerator
     protected function mergeParameters(array $global, array $builder)
     {
         foreach ($global as $param => &$value) {
-            if (array_key_exists($param, $builder)) {
-                if (in_array($param, array('fields', 'actions', 'object_actions', 'batch_actions'))) {
-                    // Grab builder configuration only if defined
-                    if (!is_null($builder[$param])) {
-                        $configurations = array();
-                        foreach ($builder[$param] as $name => $configuration) {
-                            if (is_array($configuration) || is_null($configuration)) {
-                                if (!is_null($value) && array_key_exists($name, $value)) {
-                                    $configurations[$name] = $configuration
-                                        ? $this->mergeConfiguration($value[$name], $configuration) // Override definition
-                                        : $value[$name]; // Configuration is null => use global definition
-                                } else {
-                                    // New definition (new field, new action) from builder
-                                    $configurations[$name] = $configuration;
-                                }
-                            } else {
-                                throw new \InvalidArgumentException(
-                                    sprintf('Invalid %s "%s" builder definition for %s', $param, $name, $this->getFromYaml('params.model'))
-                                );
-                            }
-                        }
+            if (!array_key_exists($param, $builder)) {
+                continue;
+            }
 
-                        if (in_array($param, array('actions', 'object_actions', 'batch_actions'))) {
-                            // Actions list comes from builder
-                            $value = $configurations;
-                        } else {
-                            // All fields are still available in a builder
-                            $value = array_merge($value ?:array(), $configurations);
-                        }
-                    }
+            if (!in_array($param, array('fields', 'actions', 'object_actions', 'batch_actions'))) {
+                if (is_array($value)) {
+                    $value = $this->recursiveReplace($value, $builder[$param]);
                 } else {
-                    if (is_array($value)) {
-                        $value = $this->recursiveReplace($value, $builder[$param]);
-                    } else {
-                        $value = $builder[$param];
-                    }
+                    $value = $builder[$param];
                 }
+
+                continue;
+            }
+
+            // Grab builder configuration only if defined
+            if (is_null($builder[$param])) {
+                continue;
+            }
+
+            $configurations = array();
+            foreach ($builder[$param] as $name => $configuration) {
+                if (!(is_array($configuration) || is_null($configuration))) {
+                    throw new \InvalidArgumentException(
+                        sprintf('Invalid %s "%s" builder definition for %s', $param, $name, $this->getFromYaml('params.model'))
+                    );
+                }
+
+                if (!is_null($value) && array_key_exists($name, $value)) {
+                    $configurations[$name] = $configuration
+                        ? $this->mergeConfiguration($value[$name], $configuration) // Override definition
+                        : $value[$name]; // Configuration is null => use global definition
+                } else {
+                    // New definition (new field, new action) from builder
+                    $configurations[$name] = $configuration;
+                }
+            }
+
+            if (in_array($param, array('actions', 'object_actions', 'batch_actions'))) {
+                // Actions list comes from builder
+                $value = $configurations;
+            } else {
+                // All fields are still available in a builder
+                $value = array_merge($value ?:array(), $configurations);
             }
         }
 
@@ -177,20 +183,21 @@ class Generator extends TwigGeneratorGenerator
     protected function mergeConfiguration(array $global, array $builder)
     {
         foreach ($global as $name => &$value) {
-            if (array_key_exists($name, $builder)) {
-                if (is_null($builder[$name])) {
-                    continue;
-                }
-
-                if (is_array($value)) {
-                    if (!is_array($builder[$name])) {
-                        throw new \InvalidArgumentException('Invalid generator');
-                    }
-                    $value = array_replace($value, $builder[$name]);
-                } else {
-                    $value = $builder[$name];
-                }
+            if (!array_key_exists($name, $builder) || is_null($builder[$name])) {
+                continue;
             }
+
+            if (!is_array($value)) {
+                $value = $builder[$name];
+
+                continue;
+            }
+
+            if (!is_array($builder[$name])) {
+                throw new \InvalidArgumentException('Invalid generator');
+            }
+
+            $value = array_replace($value, $builder[$name]);
         }
 
         return array_merge($global, array_diff_key($builder, $global));
