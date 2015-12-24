@@ -51,13 +51,17 @@ class {{ builder.YamlKey|ucfirst }}Type extends BaseType
     }
 
     /**
-     * Check groups for {{ column.name }} field.
+     * Check credentials for {{ column.name }} field.
      *
      * @return boolean
      */
     protected function canDisplay{{ column.name|classify|php_name }}()
     {
-        return $this->checkGroups({{ column.groups|as_php }});
+        {% if column.credentials is not empty %}
+            return $this->checkCredentials('{{ column.credentials }}');
+        {% else %}
+            return true;
+        {% endif %}
     }
 
 {% endfor %}
