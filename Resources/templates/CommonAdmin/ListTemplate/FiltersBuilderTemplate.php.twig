@@ -1,9 +1,9 @@
 {% block list_filters %}
     {{ echo_block('list_filters') }}
     {% if builder.filterColumns is not empty %}
-        {% if builder.filterColumnGroups is not empty %}
-            {{ echo_set('filterColumnGroups', echo_twig_arr(builder.filterColumnGroups), false) }}
-            {{ echo_if('filterColumnGroups|intersect(groups) is not empty') }}
+        {% if builder.filterColumnCredentials is not empty %}
+            {{ echo_set('filterColumnCredentials', echo_twig_arr(builder.filterColumnCredentials), false) }}
+            {{ echo_if('is_one_admingenerator_granted(filterColumnCredentials)') }}
         {% endif %}
 
         {% set boxClass = '' %}
@@ -49,9 +49,8 @@
                         {{ echo_twig("form_errors(form)") }}
                         {% for column in builder.filterColumns %}
                             {{ echo_block("list_filters_field_" ~ (column.name|lower)) }}
-                            {% if column.filtersGroups is not empty %}
-                                {{ echo_set('columnFiltersGroups', echo_twig_arr(column.filtersGroups), false) }}
-                                {{ echo_if('columnFiltersGroups|intersect(groups) is not empty') }}
+                            {% if column.filtersCredentials is not empty %}
+                                {{ echo_if('is_granted(' ~ column.filtersCredentials ~ ')') }}
                             {% endif %}
                             <div class="list-filters-field-{{ column.name|lower }} list-filters-type-{{ column.filterType|lower }}">
                                 {{ echo_block("list_filters_field_" ~ (column.name|lower) ~ "_content" ) }}
@@ -60,7 +59,7 @@
                                 {{ echo_twig("form_errors(form['" ~ column.name ~ "'], {'attr': {'class': 'form-control-feedback'}})") }}
                                 {{ echo_endblock() }}
                             </div>
-                            {% if column.filtersGroups is not empty %}
+                            {% if column.filtersCredentials is not empty %}
                                 {{ echo_endif () }}
                             {% endif %}
                             {{ echo_endblock() }}
@@ -93,7 +92,7 @@
         {% endif %}
     
 
-        {% if builder.filterColumnGroups is not empty %}
+        {% if builder.filterColumnCredentials is not empty %}
             {{ echo_endif() }}
         {% endif %}
     {% endif %}

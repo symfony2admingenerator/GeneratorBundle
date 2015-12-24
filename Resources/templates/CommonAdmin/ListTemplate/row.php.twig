@@ -10,14 +10,13 @@
         {% endif %}
 
         {% for column in builder.columns %}
-            {% if column.groups|default is not empty %}
-                {{ echo_set('columnGroups', echo_twig_arr(column.groups), false) }}
-                {{ echo_if('columnGroups|intersect(groups) is not empty') }}
+            {% if column.credentials|default is not empty %}
+                {{ echo_if('is_granted(' ~ column.credentials ~ ', ' ~ builder.ModelClass ~ ')') }}
             {% endif %}
             <td class="list-results-fields-row-{{ column.dbType|lower }} list-results-fields-row-column-{{ column.name|lower }}">
                 {{- block('column_default') -}}
             </td>
-            {% if column.groups|default is not empty %}
+            {% if column.credentials|default is not empty %}
                 {{ echo_endif() }}
             {% endif %}
         {% endfor %}
