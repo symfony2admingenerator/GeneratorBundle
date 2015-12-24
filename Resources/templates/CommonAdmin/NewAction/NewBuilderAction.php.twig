@@ -6,7 +6,6 @@
 namespace Admingenerated\{{ namespace_prefix }}{{ bundle_name }}\{{ builder.generator.GeneratedControllerFolder }};
 
 use {{ builder.generator.baseController }} as BaseController;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 {{- block('index_use') -}}
@@ -85,17 +84,6 @@ class NewController extends BaseController
     }
 
     /**
-     * Get groups.
-     *
-     * @param \{{ model }} ${{ builder.ModelClass }}
-     * @return array
-     */
-    protected function getGroups(\{{ model }} ${{ builder.ModelClass }})
-    {
-        return array();
-    }
-
-    /**
      * Get optional form options.
      *
      * @param \{{ model }} ${{ builder.ModelClass }}
@@ -109,8 +97,7 @@ class NewController extends BaseController
     protected function getNewForm(\{{ model }} ${{ builder.ModelClass }})
     {
         return $this->createForm($this->getNewType(), ${{ builder.ModelClass }}, array_merge(
-            $this->getFormOptions(${{ builder.ModelClass }}),
-            array('groups' => $this->getGroups(${{ builder.ModelClass }}))
+            $this->getFormOptions(${{ builder.ModelClass }})
         ));
     }
 
