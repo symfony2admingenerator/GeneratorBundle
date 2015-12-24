@@ -104,8 +104,7 @@
         {% endfor -%}
 
         return $this->createForm($this->getFiltersType(), $filters, array_merge(
-            $this->getFiltersOptions(),
-            array('groups' => $this->getGroups())
+            $this->getFiltersOptions()
         ));
     }
 {% endblock %}

@@ -143,6 +143,16 @@ class Column
     /**
      * @var string
      */
+    protected $credentials = '';
+
+    /**
+     * @var string
+     */
+    protected $filtersCredentials = false;
+
+    /**
+     * @var string
+     */
     protected $gridClass = '';
 
     /* Used for more verbose error messages */
@@ -406,28 +416,28 @@ class Column
         return $this->primaryKey;
     }
 
-    public function setGroups(array $groups = array())
+    public function setCredentials($credentials = '')
     {
-        return $this->groups = $groups;
+        return $this->credentials = $credentials;
     }
 
-    public function getGroups()
+    public function getCredentials()
     {
-        return $this->groups;
+        return $this->credentials;
     }
 
-    public function setFiltersGroups(array $groups = array())
+    public function setFiltersCredentials($credentials = '')
     {
-        return $this->filtersGroups = $groups;
+        $this->filtersCredentials = $credentials;
     }
 
-    public function getFiltersGroups()
+    public function getFiltersCredentials()
     {
-        if (false === $this->filtersGroups) {
-            return $this->groups;
+        if (false === $this->filtersCredentials) {
+            return $this->credentials;
         }
 
-        return $this->filtersGroups;
+        return $this->filtersCredentials;
     }
 
     public function setGridClass($gridClass)
