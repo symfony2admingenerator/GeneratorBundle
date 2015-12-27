@@ -132,7 +132,7 @@ class EchoExtension extends \Twig_Extension
         return sprintf(
             "{%% if %s('%s'%s) %%}",
             $this->useExpression ? 'is_expr_granted' : 'is_granted',
-            $this->useExpression ? new \JMS\SecurityExtraBundle\Security\Authorization\Expression\Expression($credentials) : $credentials,
+            $credentials,
             $modelName ? ', '.$modelName.' is defined ? '.$modelName.' : null' : ''
         );
     }

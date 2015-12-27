@@ -13,11 +13,16 @@ use Admingenerator\GeneratorBundle\Twig\Extension\EchoExtension;
 class EchoExtensionTest extends BaseExtensionTest
 {
     /**
+     * @var bool
+     */
+    protected $useJms = false;
+
+    /**
      * @return \Twig_Extension
      */
     protected function getTestedExtension()
     {
-        return new EchoExtension();
+        return new EchoExtension($this->useJms);
     }
 
     /**
@@ -184,8 +189,30 @@ class EchoExtensionTest extends BaseExtensionTest
         $this->runTwigTests($tpls, $returns);
     }
 
-    public function testGetEchoIfGranted()
+    public function testGetEchoIfGrantedWithoutJms()
     {
+        $this->useJms = false;
+        $tpls = array(
+            'simple'  => '{{ echo_if_granted ( "ROLE_A" ) }}',
+            'with_object' => '{{ echo_if_granted ( "ROLE_A", \'modelName\' ) }}',
+        );
+
+        $returns = array(
+            'simple'  => array(
+                '{% if is_granted(\'ROLE_A\') %}',
+                'If granted work with a simple role'),
+            'with_object' => array(
+                '{% if is_granted(\'ROLE_A\', modelName is defined ? modelName : null) %}',
+                'If granted work with an object'
+            ),
+        );
+
+        $this->runTwigTests($tpls, $returns);
+    }
+
+    public function testGetEchoIfGrantedWithJms()
+    {
+        $this->useJms = true;
         $tpls = array(
             'simple'  => '{{ echo_if_granted ( "hasRole(\'ROLE_A\')" ) }}',
             'complex' => '{{ echo_if_granted ( "hasRole(\'ROLE_A\')\') or (hasRole(\'ROLE_B\') and hasRole(\'ROLE_C\')" ) }}',

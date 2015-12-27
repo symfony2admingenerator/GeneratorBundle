@@ -19,11 +19,6 @@ abstract class BaseExtensionTest extends \PHPUnit_Framework_TestCase
     protected $twigVariables = array();
 
     /**
-     * @var \Twig_Extension
-     */
-    protected $extension;
-
-    /**
      * @return \Twig_Extension
      */
     abstract protected function getTestedExtension();
@@ -36,7 +31,6 @@ abstract class BaseExtensionTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->twigVariables = $this->getTwigVariables();
-        $this->extension = $this->getTestedExtension();
     }
 
     protected function runTwigTests(array $templates, array $returns)
@@ -73,7 +67,7 @@ abstract class BaseExtensionTest extends \PHPUnit_Framework_TestCase
                 $options
             )
         );
-        $twig->addExtension($this->extension);
+        $twig->addExtension($this->getTestedExtension());
 
         return $twig;
     }
