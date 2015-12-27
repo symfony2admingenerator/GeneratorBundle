@@ -82,27 +82,28 @@ class ColumnTest extends TestCase
         $this->assertEquals($testOptions, $options['years']);
     }
 
-    public function testFiltersGroups()
+    public function testCredentials()
     {
         $column = new Column('test', false);
 
-        $column->setGroups(array('group1', 'group2'));
-        $column->setFiltersGroups(array('group3', 'group4'));
+        $column->setCredentials(array('credential1', 'credential2'));
+        $column->setFiltersCredentials(array('credential3', 'credential4'));
 
-        $this->assertEquals(array('group3', 'group4'), $column->getFiltersGroups());
+        $this->assertEquals(array('credential1', 'credential2'), $column->getCredentials());
+        $this->assertEquals(array('credential3', 'credential4'), $column->getFiltersCredentials());
 
-        $column->setFiltersGroups(array());
+        $column->setFiltersCredentials(array());
 
-        $this->assertEquals(array(), $column->getFiltersGroups());
+        $this->assertEquals(array(), $column->getFiltersCredentials());
     }
 
-    public function testFiltersGroupsFallbackOnGroupsIfNotCustomized()
+    public function testFiltersCredentialsFallbackOnCredentialsIfNotCustomized()
     {
         $column = new Column('test', false);
 
-        $column->setGroups(array('group1', 'group2'));
+        $column->setCredentials(array('credential1', 'credential2'));
 
-        $this->assertEquals(array('group1', 'group2'), $column->getFiltersGroups());
+        $this->assertEquals(array('credential1', 'credential2'), $column->getFiltersCredentials());
     }
 
 
