@@ -1,7 +1,7 @@
 {% block batch_actions %}
     {{ echo_block("batch_actions") }}
         {% if builder.BatchActions|default is not empty %}
-            {% set actionCredentials = builder.BatchActions|mapBy('credentials')|flatten %}
+            {% set actionCredentials = builder.BatchActions|mapBy('credentials')|flatten|clean %}
 
             {% if actionCredentials is not empty %}
                 {{ echo_set('actionCredentials', echo_twig_arr(actionCredentials), false) }}

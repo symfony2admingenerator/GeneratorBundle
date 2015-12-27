@@ -36,7 +36,7 @@ class Action
 
     protected $forceIntermediate = false;
 
-    protected $credentials = 'permitAll';
+    protected $credentials = null;
 
     public function __construct($name, $type = 'custom')
     {
@@ -165,7 +165,7 @@ class Action
         return $this->csrfProtected;
     }
 
-    public function setCredentials($credentials = 'permitAll')
+    public function setCredentials($credentials)
     {
         $this->credentials = $credentials;
     }

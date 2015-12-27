@@ -31,7 +31,7 @@ use JMS\SecurityExtraBundle\Security\Authorization\Expression\Expression;
     */
     protected function denyAccessUnlessValidateCredentials($credentials, \{{ model }} ${{ builder.ModelClass }} = null)
     {
-        if (!$this->validateCredentials($credentials, ${{ builder.ModelClass }}) {
+        if (!$this->validateCredentials($credentials, ${{ builder.ModelClass }})) {
             throw $this->createAccessDeniedException('Credentials unsatisfied');
         }
     }

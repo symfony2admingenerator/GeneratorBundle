@@ -6,9 +6,10 @@
 
 {%- block list_results -%}
     {% if builder.filtersMode != 'top' and builder.filtersMode != 'modal' and builder.getFilterColumns() is not empty %}
-        {% if builder.filterColumnCredentials is not empty %}
-            {{ echo_set('filterColumnCredentials', echo_twig_arr(builder.filterColumnCredentials), false) }}
-            {{ echo_if('is_one_admingenerator_granted(filterColumnCredentials)') }}
+        {% set filterColumnsCredentials = builder.filterColumnsCredentials %}
+        {% if filterColumnsCredentials is not empty %}
+            {{ echo_set('filterColumnsCredentials', echo_twig_arr(filterColumnsCredentials), false) }}
+            {{ echo_if('is_one_admingenerator_granted(filterColumnsCredentials)') }}
                 <div class="col-md-9 col-sd-12 list-results-container pull-left">
             {{ echo_else() }}
                 <div class="col-md-12 list-results-container no-filters">

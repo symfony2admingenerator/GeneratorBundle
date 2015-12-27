@@ -4,6 +4,7 @@ namespace Admingenerator\GeneratorBundle\Command;
 
 use Admingenerator\GeneratorBundle\Routing\Manipulator\RoutingManipulator;
 use Admingenerator\GeneratorBundle\Generator\BundleGenerator;
+use Sensio\Bundle\GeneratorBundle\Model\Bundle;
 use Sensio\Bundle\GeneratorBundle\Command\GenerateBundleCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -16,6 +17,8 @@ use Symfony\Component\Console\Question\ChoiceQuestion;
 
 class GenerateAdminCommand extends GenerateBundleCommand
 {
+    protected $prefix;
+
     protected function configure()
     {
         $this
@@ -159,7 +162,8 @@ EOT
         $runner($this->updateKernel($questionHelper, $input, $output, $this->getContainer()->get('kernel'), $namespace, $bundle));
 
         // routing
-        $runner($this->updateRouting($questionHelper, $input, $output, $bundle, $format));
+        $this->prefix = $input->getOption('prefix');
+        $runner($this->updateRouting($output, $bundle));
 
         $questionHelper->writeGeneratorSummary($output, $errors);
     }
@@ -172,22 +176,16 @@ EOT
     /**
      * @param string $format
      */
-    protected function updateRouting(QuestionHelper $questionHelper, InputInterface $input, OutputInterface $output, $bundle, $format)                                                         
+    protected function updateRouting(OutputInterface $output, Bundle $bundle)
     {
-        $auto = true;
-        if ($input->isInteractive()) { 
-            $question = new ConfirmationQuestion('Confirm automatic update of the Routing?', true);
-            $auto = $questionHelper->ask($input, $output, $question);
-        }
-
         $output->write('Importing the bundle routing resource: ');
         $routing = new RoutingManipulator($this->getContainer()->getParameter('kernel.root_dir').'/config/routing.yml');
-        $routing->setYamlPrefix($input->getOption('prefix'));
+        $routing->setYamlPrefix($this->prefix);
 
         try {
-            $ret = $auto ? $routing->addResource($bundle, 'admingenerator') : false;
+            $ret = $routing->addResource($bundle, 'admingenerator');
             if (!$ret) {
-                $help = sprintf("        <comment>resource: \"@%s/Resources/Controller/%s/\"</comment>\n        <comment>type:     admingenerator</comment>", $bundle, ucfirst($input->getOption('prefix')));
+                $help = sprintf("        <comment>resource: \"@%s/Resources/Controller/%s/\"</comment>\n        <comment>type:     admingenerator</comment>", $bundle, ucfirst($this->prefix));
                 $help .= "        <comment>prefix:   /</comment>\n";
 
                 return array(

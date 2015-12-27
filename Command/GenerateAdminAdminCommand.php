@@ -4,6 +4,7 @@ namespace Admingenerator\GeneratorBundle\Command;
 
 use Admingenerator\GeneratorBundle\Routing\Manipulator\RoutingManipulator;
 use Admingenerator\GeneratorBundle\Generator\BundleGenerator;
+use Sensio\Bundle\GeneratorBundle\Model\Bundle;
 use Sensio\Bundle\GeneratorBundle\Command\GenerateBundleCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -16,6 +17,8 @@ use Symfony\Component\Console\Question\ChoiceQuestion;
 
 class GenerateAdminAdminCommand extends GenerateBundleCommand
 {
+    protected $prefix;
+
     protected function configure()
     {
         $this
@@ -84,7 +87,7 @@ EOT
             while (!$acceptedNamespace) {
                 $question = new Question($questionHelper->getQuestion('Bundle namespace', $input->getOption('namespace')), $input->getOption('namespace'));
                 $question->setValidator(function ($answer) {
-                        return Validators::validateBundleNamespace($answer, false);
+                    return Validators::validateBundleNamespace($answer, false);
                 });
                 $namespace = $questionHelper->ask($input, $output, $question);
 
@@ -116,7 +119,7 @@ EOT
         $question = new Question($questionHelper->getQuestion('Model name', $modelName), $modelName);
         $question->setValidator(function ($answer) {
             if (empty($answer) || preg_match('#[^a-zA-Z0-9]#', $answer)) {
-              throw new \RuntimeException('Model name should not contain any special characters nor spaces.');
+                throw new \RuntimeException('Model name should not contain any special characters nor spaces.');
             }
             return $answer;
         });
@@ -144,7 +147,7 @@ EOT
             ));
             $question = new Question($questionHelper->getQuestion('Bundle name', $bundle), $bundle);
             $question->setValidator(
-                 array('Sensio\Bundle\GeneratorBundle\Command\Validators', 'validateBundleName')
+                array('Sensio\Bundle\GeneratorBundle\Command\Validators', 'validateBundleName')
             );
             $bundle = $questionHelper->ask($input, $output, $question);
             $input->setOption('bundle-name', $bundle);
@@ -169,7 +172,7 @@ EOT
             ));
             $question = new Question($questionHelper->getQuestion('Target directory', $dir), $dir);
             $question->setValidator(function ($dir) use ($bundle, $namespace) {
-                    return Validators::validateTargetDir($dir, $bundle, $namespace);
+                return Validators::validateTargetDir($dir, $bundle, $namespace);
             });
             $dir = $questionHelper->ask($input, $output, $question);
             $input->setOption('dir', $dir);
@@ -200,17 +203,17 @@ EOT
         // prefix
         $prefix = $input->getOption('prefix');
         $question = new Question($questionHelper->getQuestion('Prefix of yaml', $prefix), $prefix);
-        $question->setValidator(function ($prefix) { 
-            if (!preg_match('/([a-z]+)/i', $prefix)) { 
-                throw new \RuntimeException('Prefix have to be a simple word'); 
-            } 
-            return $prefix; 
+        $question->setValidator(function ($prefix) {
+            if (!preg_match('/([a-z]+)/i', $prefix)) {
+                throw new \RuntimeException('Prefix have to be a simple word');
+            }
+            return $prefix;
         });
         $prefix = $questionHelper->ask($input, $output, $question);
         $input->setOption('prefix', $prefix);
     }
 
-     /**
+    /**
      * @see Command
      *
      * @throws \InvalidArgumentException When namespace doesn't end with Bundle
@@ -265,7 +268,8 @@ EOT
         $runner = $questionHelper->getRunner($output, $errors);
 
         // routing
-        $runner($this->updateRouting($questionHelper, $input, $output, $bundle, $format));
+        $this->prefix = $input->getOption('prefix');
+        $runner($this->updateRouting($output, $bundle));
 
         $questionHelper->writeGeneratorSummary($output, $errors);
     }
@@ -278,22 +282,16 @@ EOT
     /**
      * @param string $format
      */
-    protected function updateRouting(QuestionHelper $questionHelper, InputInterface $input, OutputInterface $output, $bundle, $format)                                                         
+    protected function updateRouting(OutputInterface $output, Bundle $bundle)
     {
-        $auto = true;
-        if ($input->isInteractive()) {
-            $question = new ConfirmationQuestion('Confirm automatic update of the Routing?', true);
-            $auto = $questionHelper->ask($input, $output, $question);
-        }
-
         $output->write('Importing the bundle routing resource: ');
         $routing = new RoutingManipulator($this->getContainer()->getParameter('kernel.root_dir').'/config/routing.yml');
-        $routing->setYamlPrefix($input->getOption('prefix'));
+        $routing->setYamlPrefix($this->prefix);
 
         try {
-            $ret = $auto ? $routing->addResource($bundle, 'admingenerator') : false;
+            $ret = $routing->addResource($bundle, 'admingenerator');
             if (!$ret) {
-                $help = sprintf("        <comment>resource: \"@%s/Controller/%s/\"</comment>\n        <comment>type:     admingenerator</comment>\n", $bundle, ucfirst($input->getOption('prefix')));
+                $help = sprintf("        <comment>resource: \"@%s/Controller/%s/\"</comment>\n        <comment>type:     admingenerator</comment>\n", $bundle, ucfirst($this->prefix));
                 $help .= "        <comment>prefix:   /</comment>\n";
 
                 return array(
