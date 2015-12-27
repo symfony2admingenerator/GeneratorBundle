@@ -29,7 +29,7 @@
                             <div class="row">
                                 {% for column in rowColumns %}
                                     {% if column.credentials is not empty %}
-                                        {{ echo_if('is_granted(' ~ column.credentials ~ ')') }}
+                                        {{ echo_if_granted(column.credentials) }}
                                     {% endif %}
                                         {{ echo_block("form_col_" ~ (column.name|lower)) }}
                                         <div class="{{ column.gridClass ? column.gridClass : rowspan }} form-model-field form-model-field-{{ column.name }} form-model-type-{{ column.formType|php_name|lower }}">

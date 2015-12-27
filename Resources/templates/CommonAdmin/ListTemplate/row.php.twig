@@ -11,7 +11,7 @@
 
         {% for column in builder.columns %}
             {% if column.credentials|default is not empty %}
-                {{ echo_if('is_granted(' ~ column.credentials ~ ', ' ~ builder.ModelClass ~ ')') }}
+                {{ echo_if_granted(column.credentials, builder.ModelClass) }}
             {% endif %}
             <td class="list-results-fields-row-{{ column.dbType|lower }} list-results-fields-row-column-{{ column.name|lower }}">
                 {{- block('column_default') -}}

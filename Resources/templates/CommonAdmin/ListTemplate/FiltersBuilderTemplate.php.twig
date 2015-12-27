@@ -50,7 +50,7 @@
                         {% for column in builder.filterColumns %}
                             {{ echo_block("list_filters_field_" ~ (column.name|lower)) }}
                             {% if column.filtersCredentials is not empty %}
-                                {{ echo_if('is_granted(' ~ column.filtersCredentials ~ ')') }}
+                                {{ echo_if_granted(column.filtersCredentials) }}
                             {% endif %}
                             <div class="list-filters-field-{{ column.name|lower }} list-filters-type-{{ column.filterType|lower }}">
                                 {{ echo_block("list_filters_field_" ~ (column.name|lower) ~ "_content" ) }}

@@ -28,7 +28,7 @@
                         {% for column in rowColumns %}
                             <div class="row">
                                 {% if column.credentials is not empty %}
-                                    {{ echo_if('is_granted("' ~ column.credentials ~ '", ' ~ builder.modelClass ~ ')') }}
+                                    {{ echo_if_granted(column.credentials, builder.modelClass) }}
                                 {% endif %}
 
                                 <div class="show-model-field-label show-model-field-label-{{ column.name|lower }} show-model-field-type-{{ column.formType|lower }} col-md-2 text-right">
