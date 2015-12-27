@@ -1,5 +1,8 @@
 {% block security_use %}
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+{% if(admingenerator_config('use_jms_security')) %}
+use JMS\SecurityExtraBundle\Security\Authorization\Expression\Expression;
+{% endif %}
 {% endblock %}
 
 {% block security_check %}
@@ -12,8 +15,10 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
      */
     protected function validateCredentials($credentials, \{{ model }} ${{ builder.ModelClass }} = null)
     {
-        // TODO: define parameter to use (or not) JMS extra security bundle and
-        // wrap $credentials into an Expression. If this, don't forget to edit the "use" section
+        {% if(admingenerator_config('use_jms_security')) %}
+        $credentials = new Expression($credentials);
+        {% endif %}
+
         return $this->isGranted($credentials, ${{ builder.ModelClass }});
     }
 

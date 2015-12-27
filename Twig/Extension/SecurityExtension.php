@@ -15,11 +15,18 @@ class SecurityExtension extends \Twig_Extension
     private $authorizationChecker;
 
     /**
-     * @param
+     * @var bool
      */
-    public function __construct(AuthorizationCheckerInterface $authorizationChecker)
+    private $useExpression;
+
+    /**
+     * @param AuthorizationCheckerInterface $authorizationChecker
+     * @param bool $useExpression
+     */
+    public function __construct(AuthorizationCheckerInterface $authorizationChecker, $useExpression = false)
     {
         $this->authorizationChecker = $authorizationChecker;
+        $this->useExpression = $useExpression;
     }
 
     /**
@@ -43,6 +50,10 @@ class SecurityExtension extends \Twig_Extension
         }
 
         foreach ($credentials as $credential) {
+            if ($this->useExpression) {
+                $credential = new \JMS\SecurityExtraBundle\Security\Authorization\Expression\Expression($credential);
+            }
+
             if ($this->authorizationChecker->isGranted($credential, $object)) {
                 return true;
             }

@@ -1,7 +1,12 @@
 {% block batch_actions %}
     {{ echo_block("batch_actions") }}
         {% if builder.BatchActions|default is not empty %}
-            {{ echo_if_granted(builder.BatchActions|mapBy('credentials')|flatten|join(' or ')|default('denyAll')) }}
+            {% set actionCredentials = builder.BatchActions|mapBy('credentials')|flatten %}
+
+            {% if actionCredentials is not empty %}
+                {{ echo_set('actionCredentials', echo_twig_arr(actionCredentials), false) }}
+                {{ echo_if('is_one_admingenerator_granted(actionCredentials)') }}
+            {% endif %}
                 <div class="input-group">
                     <select name="action" class="form-control">
                         <option selected="selected" value="none">{{ echo_trans('batch.list.selected') }}</option>
@@ -23,7 +28,9 @@
                         </button>
                     </span>
                 </div>
-            {{ echo_endif() }}
+            {% if actionCredentials is not empty %}
+                {{ echo_endif() }}
+            {% endif %}
         {% endif %}
     {{ echo_endblock() }}
 {% endblock %}
