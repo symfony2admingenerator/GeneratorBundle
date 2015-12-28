@@ -12,6 +12,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Sensio\Bundle\GeneratorBundle\Command\Validators;
 use Symfony\Component\Console\Question\Question;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 class GenerateAdminAdminCommand extends GeneratorCommand
 {
@@ -240,6 +241,11 @@ EOT
         return new BundleGenerator($this->getContainer()->get('filesystem'), __DIR__.'/../Resources/skeleton/bundle');
     }
 
+    /**
+     * @param OutputInterface $output
+     * @param Bundle $bundle
+     * @return array
+     */
     protected function checkAutoloader(OutputInterface $output, Bundle $bundle)
     {
         $output->write('> Checking that the bundle is autoloaded: ');
@@ -250,6 +256,8 @@ EOT
                 '',
             );
         }
+
+        return array();
     }
 
     protected function updateKernel(OutputInterface $output, KernelInterface $kernel, Bundle $bundle)
@@ -281,6 +289,8 @@ EOT
                 '',
             );
         }
+
+        return array();
     }
 
     /**
@@ -297,7 +307,7 @@ EOT
             $this->makePathRelative($targetRoutingPath)
         ));
         $routing = new RoutingManipulator($targetRoutingPath);
-        $routing->setYamlPrefix($this->prefix);
+        $routing->setYamlPrefix($prefix);
 
         try {
             $ret = $routing->addResource($bundle->getName(), 'admingenerator');
@@ -319,6 +329,8 @@ EOT
                 '',
             );
         }
+
+        return array();
     }
 
     /**
@@ -336,7 +348,7 @@ EOT
             }
         }
 
-        $namespace = Validators::validateBundleNamespace($input->getOption('namespace'), $shared);
+        $namespace = Validators::validateBundleNamespace($input->getOption('namespace'), false);
         if (!$bundleName = $input->getOption('bundle-name')) {
             $bundleName = strtr($namespace, array('\\' => ''));
         }
