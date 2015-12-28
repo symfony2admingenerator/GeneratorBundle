@@ -4,6 +4,7 @@ namespace Admingenerator\GeneratorBundle\Command;
 
 use Admingenerator\GeneratorBundle\Routing\Manipulator\RoutingManipulator;
 use Admingenerator\GeneratorBundle\Generator\BundleGenerator;
+use Sensio\Bundle\GeneratorBundle\Manipulator\KernelManipulator;
 use Sensio\Bundle\GeneratorBundle\Model\Bundle;
 use Sensio\Bundle\GeneratorBundle\Command\GeneratorCommand;
 use Symfony\Component\Console\Input\InputInterface;
@@ -29,7 +30,15 @@ class GenerateAdminAdminCommand extends GeneratorCommand
 
             ))
             ->setHelp(<<<EOT
-The <info>admin:generate-admin</info> command helps you generates new admin controllers into an existant bundle.
+The <info>admin:generate-admin</info> command helps you generates new admin pages for a given model.
+This command creates the bundle and register it if it doesn't exists.
+
+By default, the command interacts with the developer to tweak the generation.
+Any passed option will be used as a default value for the interaction.
+
+If you want to disable any user interaction, use <comment>--no-interaction</comment> but don't forget to pass all needed options.
+
+Note that the bundle namespace must end with "Bundle".
 EOT
             )
         ;
@@ -214,6 +223,12 @@ EOT
         $errors = array();
         $runner = $questionHelper->getRunner($output, $errors);
 
+        // check that the namespace is already autoloaded
+        $runner($this->checkAutoloader($output, $bundle));
+
+        // register the bundle in the Kernel class
+        $runner($this->updateKernel($output, $this->getContainer()->get('kernel'), $bundle));
+
         // routing
         $runner($this->updateRouting($output, $bundle, $input->getOption('prefix')));
 
@@ -223,6 +238,49 @@ EOT
     protected function createGenerator()
     {
         return new BundleGenerator($this->getContainer()->get('filesystem'), __DIR__.'/../Resources/skeleton/bundle');
+    }
+
+    protected function checkAutoloader(OutputInterface $output, Bundle $bundle)
+    {
+        $output->write('> Checking that the bundle is autoloaded: ');
+        if (!class_exists($bundle->getBundleClassName())) {
+            return array(
+                '- Edit the <comment>composer.json</comment> file and register the bundle',
+                '  namespace in the "autoload" section:',
+                '',
+            );
+        }
+    }
+
+    protected function updateKernel(OutputInterface $output, KernelInterface $kernel, Bundle $bundle)
+    {
+        $kernelManipulator = new KernelManipulator($kernel);
+
+        $output->write(sprintf(
+            '> Enabling the bundle inside <info>%s</info>: ',
+            $this->makePathRelative($kernelManipulator->getFilename())
+        ));
+
+        try {
+            $ret = $kernelManipulator->addBundle($bundle->getBundleClassName());
+
+            if (!$ret) {
+                $reflected = new \ReflectionObject($kernel);
+
+                return array(
+                    sprintf('- Edit <comment>%s</comment>', $reflected->getFilename()),
+                    '  and add the following bundle in the <comment>AppKernel::registerBundles()</comment> method:',
+                    '',
+                    sprintf('    <comment>new %s(),</comment>', $bundle->getBundleClassName()),
+                    '',
+                );
+            }
+        } catch (\RuntimeException $e) {
+            return array(
+                sprintf('Bundle <comment>%s</comment> is already defined in <comment>AppKernel::registerBundles()</comment>.', $bundle->getBundleClassName()),
+                '',
+            );
+        }
     }
 
     /**
