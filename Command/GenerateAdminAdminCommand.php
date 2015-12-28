@@ -20,7 +20,7 @@ class GenerateAdminAdminCommand extends GeneratorCommand
     {
         $this
             ->setName('admin:generate-admin')
-            ->setDescription('Generate admin classes into an existant bundle')
+            ->setDescription('Generate new admin pages given a model')
             ->setDefinition(array(
                 new InputOption('namespace', '', InputOption::VALUE_REQUIRED, 'The namespace of the bundle to use'),
                 new InputOption('dir', '', InputOption::VALUE_REQUIRED, 'The directory where the bundle is', 'src/'),
@@ -55,7 +55,7 @@ EOT
         $askForBundleName = true;
         $namespace = $input->getOption('namespace');
         $output->writeln(array(
-            'Which bundle do you want to generate files?',
+            'Which bundle do you want to generate files into?',
         ));
 
         $question = new Question($questionHelper->getQuestion(
@@ -154,7 +154,7 @@ EOT
         $modelName = $input->getOption('model-name');
         $output->writeln(array(
             '',
-            'What is the model name you want to generate files?',
+            'What is the model name you want to generate files for?',
             ''
         ));
         $question = new Question($questionHelper->getQuestion(
@@ -215,7 +215,6 @@ EOT
         $generator->generate(
             $bundle->getNamespace(),
             $bundle->getName(),
-            $bundle->getTargetDirectory(),
             $input->getOption('model-name')
         );
 
@@ -252,7 +251,7 @@ EOT
         if (!class_exists($bundle->getBundleClassName())) {
             return array(
                 '- Edit the <comment>composer.json</comment> file and register the bundle',
-                '  namespace in the "autoload" section:',
+                '  namespace in the "autoload" section.',
                 '',
             );
         }
