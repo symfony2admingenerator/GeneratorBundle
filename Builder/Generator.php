@@ -139,7 +139,7 @@ class Generator extends TwigGeneratorGenerator
 
             $configurations = array();
             foreach ($builder[$param] as $name => $configuration) {
-                if (!(is_array($configuration) || is_null($configuration))) {
+                if (!is_array($configuration) && !is_null($configuration)) {
                     throw new \InvalidArgumentException(
                         sprintf('Invalid %s "%s" builder definition for %s', $param, $name, $this->getFromYaml('params.model'))
                     );
