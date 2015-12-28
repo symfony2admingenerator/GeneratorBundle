@@ -213,8 +213,7 @@ EOT
         $generator->setGenerator($input->getOption('generator'));
         $generator->setPrefix($input->getOption('prefix'));
         $generator->generate(
-            $bundle->getNamespace(),
-            $bundle->getName(),
+            $bundle,
             $input->getOption('model-name')
         );
 
