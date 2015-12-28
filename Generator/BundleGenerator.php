@@ -67,13 +67,13 @@ class BundleGenerator extends BaseBundleGenerator
      * @param string $namespace
      * @param string $format
      */
-    public function generate($namespace, $bundle, $dir, $format, $structure, $generator, $modelName)
+    public function generate($namespace, $bundle, $dir, $modelName)
     {
         $dir .= '/'.strtr($namespace, '\\', '/');
 
         // Retrieves model folder depending of chosen ORM
         $modelFolder = '';
-        switch ($generator) {
+        switch ($this->generator) {
             case 'propel':
                 $modelFolder = 'Model';
                 break;
