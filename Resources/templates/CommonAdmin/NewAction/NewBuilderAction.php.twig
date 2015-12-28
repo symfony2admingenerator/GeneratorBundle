@@ -96,9 +96,11 @@ class NewController extends BaseController
 
     protected function getNewForm(\{{ model }} ${{ builder.ModelClass }})
     {
-        return $this->createForm($this->getNewType(), ${{ builder.ModelClass }}, array_merge(
+        return $this->createForm(
+            $this->getNewType(),
+            ${{ builder.ModelClass }},
             $this->getFormOptions(${{ builder.ModelClass }})
-        ));
+        );
     }
 
     protected function getNewType()

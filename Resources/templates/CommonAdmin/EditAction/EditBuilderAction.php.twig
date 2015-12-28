@@ -26,9 +26,11 @@ class EditController extends BaseController
 
     protected function getEditForm(\{{ model }} ${{ builder.ModelClass }})
     {
-        return $this->createForm($this->getEditType(), ${{ builder.ModelClass }}, array_merge(
+        return $this->createForm(
+            $this->getEditType(),
+            ${{ builder.ModelClass }},
             $this->getFormOptions(${{ builder.ModelClass }})
-        ));
+        );
     }
 
     protected function getEditType()

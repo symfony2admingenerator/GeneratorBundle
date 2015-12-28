@@ -43,9 +43,11 @@ use Pagerfanta\Adapter\PropelAdapter as PagerAdapter;
     {
         $filters = $this->getFilters();
         {# Don't we should handle "relations" for Propel too? #}
-        return $this->createForm($this->getFiltersType(), $filters, array_merge(
+        return $this->createForm(
+            $this->getFiltersType(),
+            $filters,
             $this->getFiltersOptions()
-        ));
+        );
     }
 {% endblock %}
 
