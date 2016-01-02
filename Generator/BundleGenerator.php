@@ -13,13 +13,29 @@ use Symfony\Component\Filesystem\Filesystem;
  */
 class BundleGenerator extends BaseBundleGenerator
 {
+    /**
+     * @var Filesystem
+     */
     private $filesystem;
+
+    /**
+     * @var string
+     */
     private $skeletonDir;
 
+    /**
+     * @var string
+     */
     protected $generator;
 
+    /**
+     * @var string
+     */
     protected $prefix;
 
+    /**
+     * @var array
+     */
     protected $actions = array(
         'New'  => array('views' => array(
             'index',
@@ -40,6 +56,9 @@ class BundleGenerator extends BaseBundleGenerator
         'Actions' => array('views' => array('index'))
     );
 
+    /**
+     * @var array
+     */
     protected $forms = array('New', 'Filters', 'Edit');
 
     /**
@@ -54,19 +73,25 @@ class BundleGenerator extends BaseBundleGenerator
         }
     }
 
+    /**
+     * @param string $generator
+     */
     public function setGenerator($generator)
     {
         $this->generator = $generator;
     }
 
+    /**
+     * @param string $prefix
+     */
     public function setPrefix($prefix)
     {
         $this->prefix = $prefix;
     }
 
     /**
-     * @param string $namespace
-     * @param string $format
+     * @param Bundle $bundle
+     * @param string $modelName
      */
     public function generate(Bundle $bundle, $modelName)
     {

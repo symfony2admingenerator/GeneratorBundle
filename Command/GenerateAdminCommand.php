@@ -89,7 +89,7 @@ EOT
 
             $output->writeln(array(
                 '',
-                'Please precise the Bundle name.',
+                'Please specify the Bundle name.',
                 'Based on the namespace, we suggest <comment>'.$bundle.'</comment>.',
                 '',
             ));
