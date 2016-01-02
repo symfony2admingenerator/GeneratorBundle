@@ -83,10 +83,10 @@ class ExcelController extends ListController
         {% for column in builder.columns %}
             {% if column.credentials is not empty %}
             {% set credentials = column.credentials %}
-            if ({{ block('security_action') }}) {
+            if ($this->validateCredentials('{{ credentials }}')) {
             {% endif %}
-            $sheet->setCellValueByColumnAndRow(colNum, 1, $translator->trans("{{ column.label }}", array(), '{{ i18n_catalog|default("Admin") }}'), true);
-            $columnLetter = \PHPExcel_Cell::stringFromColumnIndex(colNum);
+            $sheet->setCellValueByColumnAndRow($colNum, 1, $translator->trans("{{ column.label }}", array(), '{{ i18n_catalog|default("Admin") }}'), true);
+            $columnLetter = \PHPExcel_Cell::stringFromColumnIndex($colNum);
             $sheet->getStyle($columnLetter . '1')->getFont()->setBold(true);
             $sheet->getColumnDimension($columnLetter)->setAutoSize(true);
 
@@ -110,7 +110,7 @@ class ExcelController extends ListController
             {% for name,column in builder.columns %}
                 {% if column.credentials is not empty %}
                     {% set credentials = column.credentials %}
-                if({{ block('security_action_with_object') }}) {
+                if ($this->validateCredentials('{{ credentials }}', ${{ builder.ModelClass }})) {
                 {% endif %}
                 $data = $this->getValueForCell('{{ column.getter }}', ${{ builder.ModelClass }});
                 $formatedValue = $this->format{{ name|classify|php_name }}($data);
