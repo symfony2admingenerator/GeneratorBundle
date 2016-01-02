@@ -14,7 +14,7 @@ use Sensio\Bundle\GeneratorBundle\Command\Validators;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\HttpKernel\KernelInterface;
 
-class GenerateAdminAdminCommand extends GeneratorCommand
+class GenerateAdminCommand extends GeneratorCommand
 {
     protected function configure()
     {
@@ -56,7 +56,7 @@ EOT
         $namespace = $input->getOption('namespace');
         $output->writeln(array(
             '',
-            'Precise your full bundle namespace where you want to generate files',
+            'Precise the full bundle namespace where you want to generate files (including vendor name if any)',
             ''
         ));
 
