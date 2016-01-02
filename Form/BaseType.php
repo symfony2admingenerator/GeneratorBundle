@@ -44,7 +44,8 @@ abstract class BaseType extends AbstractType
      */
     protected function checkCredentials($credentials)
     {
-        return $this->authorizationChecker->isGranted($credentials);
+        return 'AdmingenAllowed' == $credentials
+            || $this->authorizationChecker->isGranted($credentials);
     }
 
     /**
