@@ -130,9 +130,9 @@ class EchoExtension extends \Twig_Extension
     public function getEchoIfGranted($credentials, $modelName = null)
     {
         if ('AdmingenAllowed' == $credentials) {
-            return sprintf("{%% if (true) %%}");
+            return "{% if (true) %}";
         }
-        
+
         return sprintf(
             "{%% if %s('%s'%s) %%}",
             $this->useExpression ? 'is_expr_granted' : 'is_granted',

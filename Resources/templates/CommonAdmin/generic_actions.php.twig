@@ -2,7 +2,7 @@
     {{ echo_block("generic_actions") }}
             {% if builder.actions|default is not empty %}
                 {{ echo_block('pre_generic_actions') }}{{ echo_endblock() }}
-                {% set actionCredentials = builder.actions|mapBy('credentials')|clean|flatten %}
+                {% set actionCredentials = builder.actions|mapBy('credentials')|flatten|clean|unique %}
 
                 {% if actionCredentials is not empty %}
                     {{ echo_set('actionCredentials', echo_twig_arr(actionCredentials), false) }}
