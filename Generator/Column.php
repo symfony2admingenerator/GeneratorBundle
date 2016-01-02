@@ -143,7 +143,7 @@ class Column
     /**
      * @var string
      */
-    protected $credentials = '';
+    protected $credentials = 'AdmingenAllowed';
 
     /**
      * @var string

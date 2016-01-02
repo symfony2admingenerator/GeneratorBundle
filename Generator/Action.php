@@ -36,7 +36,7 @@ class Action
 
     protected $forceIntermediate = false;
 
-    protected $credentials = null;
+    protected $credentials = 'AdmingenAllowed';
 
     public function __construct($name, $type = 'custom')
     {

@@ -7,7 +7,7 @@
 
         {% if fieldsetCredentials is not empty %}
             {{ echo_set('fieldsetCredentials', echo_twig_arr(fieldsetCredentials), false) }}
-            {{ echo_if('is_one_admingenerator_granted(fieldsetCredentials)') }}
+            {{ echo_if('is_one_admingenerator_granted(fieldsetCredentials, ' ~ builder.ModelClass ~ ')') }}
         {% endif %}
 
             {{ echo_block("form_fieldset_" ~ fieldsetName|classify|replace({'.': '_'})) }}
@@ -23,13 +23,13 @@
 
                         {% if rowCredentials is not empty %}
                             {{ echo_set('rowCredentials', echo_twig_arr(rowCredentials), false) }}
-                            {{ echo_if('is_one_admingenerator_granted(rowCredentials)') }}
+                            {{ echo_if('is_one_admingenerator_granted(rowCredentials, ' ~ builder.ModelClass ~ ')') }}
                         {% endif %}
 
                             <div class="row">
                                 {% for column in rowColumns %}
                                     {% if column.credentials is not empty %}
-                                        {{ echo_if_granted(column.credentials) }}
+                                        {{ echo_if_granted(column.credentials, builder.ModelClass) }}
                                     {% endif %}
                                         {{ echo_block("form_col_" ~ (column.name|lower)) }}
                                         <div class="{{ column.gridClass ? column.gridClass : rowspan }} form-model-field form-model-field-{{ column.name }} form-model-type-{{ column.formType|php_name|lower }}">
