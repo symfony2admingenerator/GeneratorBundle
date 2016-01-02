@@ -4,7 +4,7 @@
     {{ echo_block('show_object') }}
         {% for fieldsetName,fieldset in builder.fieldsets %}
             {% set fieldsetColumns = builder.columnsFor(fieldset) %}
-            {% set fieldsetCredentials = fieldsetColumns|mapBy('credentials')|flatten|clean %}
+            {% set fieldsetCredentials = fieldsetColumns|mapBy('credentials')|clean|flatten %}
 
             {% if fieldsetCredentials is not empty %}
                 {{ echo_set('fieldsetCredentials', echo_twig_arr(fieldsetCredentials), false) }}
@@ -18,7 +18,7 @@
 
                     {% for row in fieldset %}
                         {% set rowColumns = builder.columnsFor(row) %}
-                        {% set rowCredentials = rowColumns|mapBy('credentials')|flatten|clean %}
+                        {% set rowCredentials = rowColumns|mapBy('credentials')|clean|flatten %}
 
                         {% if rowCredentials is not empty %}
                             {{ echo_set('rowCredentials', echo_twig_arr(rowCredentials), false) }}

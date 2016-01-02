@@ -1,7 +1,7 @@
 {% block object_actions %}
     {{ echo_block("object_actions") }}
     {% if builder.objectActions|default is not empty %}
-        {% set actionCredentials = builder.objectActions|mapBy('credentials')|flatten|clean %}
+        {% set actionCredentials = builder.objectActions|mapBy('credentials')|clean|flatten %}
 
         {% if actionCredentials is not empty %}
             {{ echo_set('actionCredentials', echo_twig_arr(actionCredentials), false) }}

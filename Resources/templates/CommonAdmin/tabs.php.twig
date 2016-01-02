@@ -6,7 +6,7 @@
                     {{ echo_block("nav_tabs") }}
                         {% for name, tab in tabs %}
                             {% set tabColumns = builder.getColumnsFor(tab) %}
-                            {% set tabCredentials = tabColumns|mapBy('credentials')|flatten|clean %}
+                            {% set tabCredentials = tabColumns|mapBy('credentials')|clean|flatten %}
 
                             {{ echo_block("nav_tabs"~name|classify|replace({'.': '_'})) }}
                                 {% if tabCredentials is not empty %}
