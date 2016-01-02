@@ -55,11 +55,13 @@ EOT
         $askForBundleName = true;
         $namespace = $input->getOption('namespace');
         $output->writeln(array(
-            'Which bundle do you want to generate files into?',
+            '',
+            'Precise your full bundle namespace where you want to generate files',
+            ''
         ));
 
         $question = new Question($questionHelper->getQuestion(
-            'Bundle name',
+            'Fully qualified bundle name',
             $namespace
         ), $namespace);
         $question->setValidator(function ($inputNamespace) {
@@ -87,7 +89,7 @@ EOT
 
             $output->writeln(array(
                 '',
-                'Please precise the real Bundle name.',
+                'Please precise the Bundle name.',
                 'Based on the namespace, we suggest <comment>'.$bundle.'</comment>.',
                 '',
             ));

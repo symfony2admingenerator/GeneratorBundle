@@ -86,12 +86,19 @@ class BundleGenerator extends BaseBundleGenerator
                 break;
         }
 
+        if (false === strpos($bundle->getNamespace(), '\\')) {
+            $bundleName = $bundle->getNamespace();
+            $namespacePrefix = null;
+        } else {
+            list( $namespacePrefix, $bundleName) = explode('\\', $bundle->getNamespace(), 2);
+        }
+
         $parameters = array(
             'namespace'        => $bundle->getNamespace(),
             'bundle'           => $bundle->getName(),
             'generator'        => 'admingenerator.generator.'.$this->generator,
-            'namespace_prefix' => $bundle->getNamespace(),
-            'bundle_name'      => $bundle->getName(),
+            'namespace_prefix' => $namespacePrefix,
+            'bundle_name'      => $bundleName,
             'model_folder'     => $modelFolder,
             'model_name'       => $modelName,
             'prefix'           => ucfirst($this->prefix),
@@ -105,7 +112,7 @@ class BundleGenerator extends BaseBundleGenerator
             $parameters['action'] = $action;
 
             $controllerFile = $dir.'/Controller/'
-                    .($this->prefix ? ucfirst($this->prefix).'/' : '').$action.'Controller.php';
+                .($this->prefix ? ucfirst($this->prefix).'/' : '').$action.'Controller.php';
             $this->copyPreviousFile($controllerFile);
             $this->renderGeneratedFile(
                 'DefaultController.php.twig',
