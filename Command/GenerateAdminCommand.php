@@ -284,10 +284,7 @@ EOT
                 );
             }
         } catch (\RuntimeException $e) {
-            return array(
-                sprintf('Bundle <comment>%s</comment> is already defined in <comment>AppKernel::registerBundles()</comment>.', $bundle->getBundleClassName()),
-                '',
-            );
+            // Bundle already registered, this is not an error
         }
 
         return array();
