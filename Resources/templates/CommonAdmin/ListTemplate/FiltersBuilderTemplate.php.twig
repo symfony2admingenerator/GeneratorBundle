@@ -26,7 +26,7 @@
         <div class="col-md-3 col-xs-12 list-filters-container pull-right">
         {% endif %}
 
-{{ echo_twig('form_start(form, {method: "post", action: filtersUrl, role: "form", novalidate: "novalidate"}') }}
+{{ echo_twig('form_start(form, {method: "post", action: filtersUrl, role: "form", novalidate: "novalidate"})') }}
         {% if builder.filtersMode != 'modal' %}
 
             {% set boxClass = (builder.defaultFiltersVisibility == 'collapsed') ? (builder.filtersMode == 'top') ? 'collapsed-box' : 'slided-box' : '' %}
