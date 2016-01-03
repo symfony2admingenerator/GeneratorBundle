@@ -4,9 +4,8 @@ namespace Admingenerator\GeneratorBundle\Guesser;
 
 use Admingenerator\GeneratorBundle\Exception\NotImplementedException;
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Symfony\Component\DependencyInjection\ContainerAware;
 
-class DoctrineODMFieldGuesser extends ContainerAware
+class DoctrineODMFieldGuesser
 {
     /**
      * @var DocumentManager
@@ -23,9 +22,23 @@ class DoctrineODMFieldGuesser extends ContainerAware
      */
     private $defaultRequired;
 
-    public function __construct(DocumentManager $documentManager)
+    /**
+     * @var array
+     */
+    private $formTypes;
+
+    /**
+     * @var array
+     */
+    private $filterTypes;
+
+    public function __construct(DocumentManager $documentManager, array $formTypes, array $filterTypes, $guessRequired, $defaultRequired)
     {
         $this->documentManager = $documentManager;
+        $this->formTypes = $formTypes;
+        $this->filterTypes = $filterTypes;
+        $this->guessRequired = $guessRequired;
+        $this->defaultRequired = $defaultRequired;
     }
 
     protected function getMetadatas($class)
@@ -123,10 +136,8 @@ class DoctrineODMFieldGuesser extends ContainerAware
 
     public function getFormType($dbType, $class, $columnName)
     {
-        $formTypes = $this->container->getParameter('admingenerator.doctrineodm_form_types');
-
-        if (array_key_exists($dbType, $formTypes)) {
-            return $formTypes[$dbType];
+        if (array_key_exists($dbType, $this->formTypes)) {
+            return $this->formTypes[$dbType];
         }
 
         if ('virtual' === $dbType) {
@@ -147,10 +158,8 @@ class DoctrineODMFieldGuesser extends ContainerAware
      */
     public function getFilterType($dbType, $class, $columnName)
     {
-        $filterTypes = $this->container->getParameter('admingenerator.doctrineodm_filter_types');
-
-        if (array_key_exists($dbType, $filterTypes)) {
-            return $filterTypes[$dbType];
+        if (array_key_exists($dbType, $this->filterTypes)) {
+            return $this->filterTypes[$dbType];
         }
 
         if ('virtual' === $dbType) {
@@ -261,11 +270,6 @@ class DoctrineODMFieldGuesser extends ContainerAware
 
     protected function isRequired($class, $fieldName)
     {
-        if (!isset($this->guessRequired) || !isset($this->defaultRequired)) {
-            $this->guessRequired = $this->container->getParameter('admingenerator.guess_required');
-            $this->defaultRequired = $this->container->getParameter('admingenerator.default_required');
-        }
-
         if (!$this->guessRequired) {
             return $this->defaultRequired;
         }
