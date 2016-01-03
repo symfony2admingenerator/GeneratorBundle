@@ -94,7 +94,7 @@ class AdmingeneratorGeneratorExtension extends Extension implements PrependExten
 
             }
 
-            $container->getDefinition('admingenerator.generator.doctrine')
+            $container->getDefinition('admingenerator.fieldguesser.doctrine_odm')
                 ->addArgument($config['form_types']['doctrine_orm'])
                 ->addArgument($config['filter_types']['doctrine_orm'])
                 ->addArgument($config['guess_required'])
@@ -126,7 +126,7 @@ class AdmingeneratorGeneratorExtension extends Extension implements PrependExten
                     ->addMethodCall('forceOverwriteIfExists');
             }
 
-            $container->getDefinition('admingenerator.generator.propel')
+            $container->getDefinition('admingenerator.fieldguesser.propel')
                 ->addArgument($config['form_types']['propel'])
                 ->addArgument($config['filter_types']['propel'])
                 ->addArgument($config['guess_required'])
