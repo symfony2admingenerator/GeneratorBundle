@@ -142,6 +142,7 @@ abstract class BaseBuilder extends GenericBaseBuilder
      * (non-PHPdoc)
      * @see Builder/Admingenerator\GeneratorBundle\Builder.BuilderInterface::hasVariable()
      * @param string $key
+     * @return bool
      */
     public function hasVariable($key)
     {
@@ -169,7 +170,7 @@ abstract class BaseBuilder extends GenericBaseBuilder
     /**
      * Set the generator.
      *
-     * @param \Admingenerator\GeneratorBundle\Builder\Generator $generator   A generator.
+     * @param \TwigGenerator\Builder\Generator $generator A generator.
      */
     public function setGenerator(GenericBaseGenerator $generator)
     {

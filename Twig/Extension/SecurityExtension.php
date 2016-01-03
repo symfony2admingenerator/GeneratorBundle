@@ -50,7 +50,6 @@ class SecurityExtension extends \Twig_Extension
         }
 
         foreach ($credentials as $credential) {
-            // Use voter?
             if ('AdmingenAllowed' == $credential) {
                 return true;
             }
