@@ -27,16 +27,7 @@
             {{ echo_else() }}
                 {{ echo_set("attr", "{'class': 'form-model-new', 'action': createUrl}|merge(form.vars.attr|default({}))", false) }}
             {{ echo_endif() }}
-            <form
-            {{ echo_for('attrvalue', 'attr', 'attrname') }}
-                {{ echo_twig('" "') }}
-                {{ echo_if('attrvalue is same as(true)') }}
-                    {{- echo_twig('attrname') }}="{{ echo_twig('attrname') }}"
-                {{ echo_elseif('attrvalue is not same as(false)') }}
-                    {{ echo_twig('attrname') }}="{{ echo_twig('attrvalue') }}"
-                {{ echo_endif() }}
-            {{ echo_endfor() }}
-                method="post" {{ echo_twig("form_enctype(form)") }} role="form">
+            {{ echo_twig('form_start(form, attr|merge({role:"form", method:"post"}))') }}
 
                 {% if tabs|default is not empty %}
                     {{- block('tabs') }}

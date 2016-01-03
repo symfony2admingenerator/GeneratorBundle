@@ -222,7 +222,7 @@ class DoctrineORMFieldGuesser extends ContainerAware
                     0 => 'boolean.no',
                     1 => 'boolean.yes'
                 ),
-                'empty_value' => 'boolean.yes_or_no',
+                'placeholder' => 'boolean.yes_or_no',
                 'translation_domain' => 'Admingenerator'
             );
         }

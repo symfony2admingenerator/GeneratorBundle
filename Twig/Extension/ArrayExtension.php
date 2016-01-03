@@ -18,7 +18,7 @@ class ArrayExtension extends \Twig_Extension
             'flatten'   => new \Twig_SimpleFilter('flatten', array($this, 'flatten')),
             'intersect' => new \Twig_SimpleFilter('intersect', array($this, 'intersect')),
             'clean'     => new \Twig_SimpleFilter('clean', array($this, 'clean')),
-            'unique'     => new \Twig_SimpleFilter('unique', array($this, 'unique')),
+            'unique'    => new \Twig_SimpleFilter('unique', array($this, 'unique')),
         );
     }
 
