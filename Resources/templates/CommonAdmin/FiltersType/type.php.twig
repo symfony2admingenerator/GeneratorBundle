@@ -57,7 +57,7 @@ class FiltersType extends BaseType
         protected function canDisplay{{ column.name|classify|php_name }}()
         {
             {% if column.filtersCredentials is not empty %}
-                return $this->checkCredentials('{{ column.filtersCredentials }}');
+                return $this->checkCredentials('{{ column.filtersCredentials }}', null);
             {% else %}
                 return true;
             {% endif %}
