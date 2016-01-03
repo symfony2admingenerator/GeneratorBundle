@@ -94,7 +94,7 @@ class AdmingeneratorGeneratorExtension extends Extension implements PrependExten
 
             }
 
-            $container->getDefinition('admingenerator.fieldguesser.doctrine_odm')
+            $container->getDefinition('admingenerator.fieldguesser.doctrine')
                 ->addArgument($config['form_types']['doctrine_orm'])
                 ->addArgument($config['filter_types']['doctrine_orm'])
                 ->addArgument($config['guess_required'])
