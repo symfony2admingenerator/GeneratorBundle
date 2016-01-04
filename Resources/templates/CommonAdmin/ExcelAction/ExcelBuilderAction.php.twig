@@ -78,15 +78,22 @@ class ExcelController extends ListController
     protected function createExcelheader(\PhpExcel_Worksheet $sheet)
     {
         $translator = $this->get('translator');
-        
-        {% set colNum = 0 %}
-        {% for column in builder.columns %}
-        $sheet->setCellValueByColumnAndRow({{ colNum }}, 1, $translator->trans("{{ column.label }}", array(), '{{ i18n_catalog|default("Admin") }}'), true);
-        $columnLetter = \PHPExcel_Cell::stringFromColumnIndex({{ colNum }});
-        $sheet->getStyle($columnLetter . '1')->getFont()->setBold(true);
-        $sheet->getColumnDimension($columnLetter)->setAutoSize(true);
 
-        {% set colNum = colNum + 1 %}
+        $colNum = 0;
+        {% for column in builder.columns %}
+            {% if column.credentials is not empty %}
+            {% set credentials = column.credentials %}
+            if ($this->validateCredentials('{{ credentials }}')) {
+            {% endif %}
+            $sheet->setCellValueByColumnAndRow($colNum, 1, $translator->trans("{{ column.label }}", array(), '{{ i18n_catalog|default("Admin") }}'), true);
+            $columnLetter = \PHPExcel_Cell::stringFromColumnIndex($colNum);
+            $sheet->getStyle($columnLetter . '1')->getFont()->setBold(true);
+            $sheet->getColumnDimension($columnLetter)->setAutoSize(true);
+
+            $colNum++;
+            {% if column.credentials is not empty %}
+            }
+            {% endif %}
         {% endfor %}
     }
 
@@ -98,19 +105,29 @@ class ExcelController extends ListController
         $row = 2;
         $results = $this->getResults();
 
-        {% set colNum = 0 %}
-        foreach($results as $rowData) {
+        $colNum = 0;
+        foreach($results as ${{ builder.ModelClass }}) {
             {% for name,column in builder.columns %}
-            $data = $this->getValueForCell('{{ column.getter }}', $rowData);
-            $formatedValue = $this->format{{ name|classify|php_name }}($data);
+                {% if column.credentials is not empty %}
+                    {% set credentials = column.credentials %}
+                if ($this->validateCredentials('{{ credentials }}', ${{ builder.ModelClass }})) {
+                {% endif %}
+                $data = $this->getValueForCell('{{ column.getter }}', ${{ builder.ModelClass }});
+                $formatedValue = $this->format{{ name|classify|php_name }}($data);
 
-            // Convert DateTime object to given format
-            if ($formatedValue instanceof \DateTime){
-                $formatedValue = $formatedValue->format('{{ builder.dateTimeFormat }}');
-            }
+                // Convert DateTime object to given format
+                if ($formatedValue instanceof \DateTime){
+                    $formatedValue = $formatedValue->format('{{ builder.dateTimeFormat }}');
+                }
 
-            $sheet->setCellValueByColumnAndRow({{ colNum }}, $row, $formatedValue);
-            {% set colNum = colNum + 1 %}
+                $sheet->setCellValueByColumnAndRow($colNum, $row, $formatedValue);
+                {% if column.credentials is not empty %}
+                }
+                {% endif %}
+            // Inc is outside of the credentials check to be sync with headers.
+            // Otherwise if column X is authorized but depending on object, there will
+            // be some offset. Putting inc outise of the check will always update it.
+            $colNum++;
             {% endfor %}
 
             $row++;
@@ -121,14 +138,14 @@ class ExcelController extends ListController
      * Gets the value from the given field that will be place at an Excel cell
      *
      * @param string $field   The name of the field to extract the value
-     * @param mixed  $rowData The main entity object
+     * @param mixed  ${{ builder.ModelClass }} The main entity object
      *
      * @return $data The data to place on the respective Excel cell
      */
-    protected function getValueForCell($field, $rowData)
+    protected function getValueForCell($field, ${{ builder.ModelClass }})
     {
         $accessor = PropertyAccess::createPropertyAccessor();
-        $data = $rowData;
+        $data = ${{ builder.ModelClass }};
         
         // Retrieve relations, but stop on $data = null
         while (($pos = strpos($field, '.')) > 0 && $data !== null) {

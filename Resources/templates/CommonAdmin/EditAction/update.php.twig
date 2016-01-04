@@ -38,18 +38,18 @@
                 {% set defaultActionAfterSave = builder.generator.bundleConfig.default_action_after_save %}
                 $actionAfterSave = "{{ actionAfterSave|default(defaultActionAfterSave) }}";
                 if ($request->request->has('save-and-add') || ('new' == $actionAfterSave)) {
-                    return new RedirectResponse($this->getNewUrl());
+                    return $this->redirect($this->getNewUrl());
                 } elseif ($request->request->has('save-and-list') || ('list' == $actionAfterSave)) {
-                    return new RedirectResponse($this->getListUrl());
+                    return $this->redirect($this->getListUrl());
                 } elseif ($request->request->has('save-and-show') || ('show' == $actionAfterSave)) {
-                    return new RedirectResponse($this->getShowUrl($pk));
+                    return $this->redirect($this->getShowUrl($pk));
                 } else {
                     if (('edit' != $actionAfterSave) &&
                         method_exists($this,'get{{ builder.actionAfterSave|default(defaultActionAfterSave)|title }}Url')) {
-                        return new RedirectResponse(call_user_func(array($this, 'get{{ builder.actionAfterSave|default(defaultActionAfterSave)|title }}Url'), $pk));
+                        return $this->redirect(call_user_func(array($this, 'get{{ builder.actionAfterSave|default(defaultActionAfterSave)|title }}Url'), $pk));
 
                     }
-                    return new RedirectResponse($this->getEditUrl($pk));
+                    return $this->redirect($this->getEditUrl($pk));
                 }
             {% if concurrency_lock -%}
             } catch ({% block lockException %}// ORM job{% endblock %} $e) {
@@ -79,8 +79,7 @@
         return $this->render('{{ builder.namespacePrefixForTemplate }}{{ bundle_name }}:{{ builder.BaseGeneratorName }}Edit:index.html.twig', $this->getAdditionalRenderParameters(${{ builder.ModelClass }}) + array(
             "{{ builder.ModelClass }}" => ${{ builder.ModelClass }},
             'updateUrl' => $this->getUpdateUrl($pk),
-            "form" => $form->createView(),
-            'groups' => $this->getGroups(${{ builder.ModelClass }}),
+            "form" => $form->createView()
         ));
     }
 

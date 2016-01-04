@@ -54,6 +54,11 @@
             <tag name="twig.extension" />
         </service>
 
+        <service id="twig.extension.admingenerator.security" class="Admingenerator\GeneratorBundle\Twig\Extension\SecurityExtension" public="false">
+            <tag name="twig.extension" />
+            <argument type="service" id="security.authorization_checker" />
+        </service>
+
         <!-- General -->
         <service id="admingenerator.generator.listener"
             class="Admingenerator\GeneratorBundle\EventListener\ControllerListener">
@@ -75,6 +80,12 @@
         <service id="pagerfanta.view.admingenerator" class="%admingenerator.pagination.class%">
             <tag name="pagerfanta.view" alias="admingenerator" />
             <argument type="service" id="translator" />
+        </service>
+
+        <service id="admingen.menu.default_builder" class="Admingenerator\GeneratorBundle\Menu\DefaultMenuBuilder">
+            <argument type="service" id="knp_menu.factory" />
+            <argument type="service" id="request_stack" />
+            <tag name="knp_menu.menu_builder" method="sidebarMenu" alias="admingen_sidebar" />
         </service>
         
         <!-- Filters -->

@@ -30,13 +30,13 @@ class Action
 
     protected $params = array();
 
-    protected $confirm_message;
+    protected $confirmMessage;
 
-    protected $csrf_protected = false;
+    protected $csrfProtected = false;
 
-    protected $force_intermediate = false;
+    protected $forceIntermediate = false;
 
-    protected $credentials = 'permitAll';
+    protected $credentials = 'AdmingenAllowed';
 
     public function __construct($name, $type = 'custom')
     {
@@ -140,44 +140,44 @@ class Action
     }
 
     /**
-     * @param string $confirm_message
+     * @param string $confirmMessage
      */
-    public function setConfirm($confirm_message)
+    public function setConfirm($confirmMessage)
     {
-        $this->confirm_message = $confirm_message;
+        $this->confirmMessage = $confirmMessage;
     }
 
     public function getConfirm()
     {
-        return $this->confirm_message;
+        return $this->confirmMessage;
     }
 
     /**
-     * @param boolean $csrf_protected
+     * @param boolean $csrfProtected
      */
-    public function setCsrfProtected($csrf_protected)
+    public function setCsrfProtected($csrfProtected)
     {
-        $this->csrf_protected = $csrf_protected;
+        $this->csrfProtected = $csrfProtected;
     }
 
     public function getCsrfProtected()
     {
-        return $this->csrf_protected;
+        return $this->csrfProtected;
     }
 
-    public function setCredentials($credentials = 'permitAll')
+    public function setCredentials($credentials)
     {
         $this->credentials = $credentials;
     }
 
-    public function setForceIntermediate($force_intermediate)
+    public function setForceIntermediate($forceIntermediate)
     {
-        $this->force_intermediate = $force_intermediate;
+        $this->forceIntermediate = $forceIntermediate;
     }
 
     public function getForceIntermediate()
     {
-        return $this->force_intermediate;
+        return $this->forceIntermediate;
     }
 
     public function getCredentials()

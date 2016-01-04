@@ -27,18 +27,18 @@
                 $actionAfterSave = "{{ actionAfterSave|default(defaultActionAfterSave) }}";
                 $pk = ${{ builder.ModelClass }}->get{{ builder.getFieldGuesser().getModelPrimaryKeyName(model)|classify }}();
                 if ($this->request->request->has('save-and-add') || ('new' == $actionAfterSave)) {
-                    return new RedirectResponse($this->getNewUrl());
+                    return $this->redirect($this->getNewUrl());
                 } elseif ($this->request->request->has('save-and-list') || ('list' == $actionAfterSave)) {
-                    return new RedirectResponse($this->getListUrl());
+                    return $this->redirect($this->getListUrl());
                 } elseif ($this->request->request->has('save-and-show') || ('show' == $actionAfterSave)) {
-                    return new RedirectResponse($this->getShowUrl($pk));
+                    return $this->redirect($this->getShowUrl($pk));
                 } else {
                     if (('edit' != $actionAfterSave) &&
                         method_exists($this,'get{{ builder.actionAfterSave|default(defaultActionAfterSave)|title }}Url')) {
-                        return new RedirectResponse(call_user_func(array($this, 'get{{ builder.actionAfterSave|default(defaultActionAfterSave)|title }}Url'), $pk));
+                        return $this->redirect(call_user_func(array($this, 'get{{ builder.actionAfterSave|default(defaultActionAfterSave)|title }}Url'), $pk));
 
                     }
-                    return new RedirectResponse($this->getEditUrl($pk));
+                    return $this->redirect($this->getEditUrl($pk));
                 }
             } catch (\Exception $e) {
                 $logger = $this->get('logger')->error($e->getMessage());
@@ -51,10 +51,9 @@
         }
 
         return $this->render('{{ builder.namespacePrefixForTemplate }}{{ bundle_name }}:{{ builder.BaseGeneratorName }}New:index.html.twig', $this->getAdditionalRenderParameters(${{ builder.ModelClass }}) + array(
-            "{{ builder.ModelClass }}" => ${{ builder.ModelClass }},
+            '{{ builder.ModelClass }}' => ${{ builder.ModelClass }},
             'createUrl' => $this->getCreateUrl(),
-            "form" => $form->createView(),
-            'groups' => $this->getGroups(${{ builder.ModelClass }}),
+            'form' => $form->createView(),
         ));
     }
 

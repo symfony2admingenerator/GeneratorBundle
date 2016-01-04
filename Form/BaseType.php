@@ -34,30 +34,22 @@ abstract class BaseType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'groups' => array(),
             'cascade_validation' => true
         ));
-
-        $resolver->setAllowedTypes('groups', array('array'));
     }
 
     /**
-     * Checks if groups intersect.
-     *
-     * @param array $groups         Column groups.
-     * @return boolean
+     * @param $credentials
+     * @return bool
      */
-    protected function checkGroups(array $groups)
+    protected function checkCredentials($credentials, $model)
     {
-        if (count($groups) === 0) {
-            return true;
-        }
-
-        return count(array_intersect($this->groups, $groups)) > 0;
+        return 'AdmingenAllowed' == $credentials
+            || $this->authorizationChecker->isGranted($credentials, $model);
     }
 
     /**
-     * This method is used to pass the securityContext and groups into custom formTypes.
+     * This method is used to pass the securityContext into custom formTypes.
      *
      * @param string|FormTypeInterface $formType
      * @return string|FormTypeInterface
@@ -105,10 +97,6 @@ abstract class BaseType extends AbstractType
             $fieldType = $fieldOptions['type'];
             $fieldOptions['type'] = $this->inject($fieldType);
             $fieldOptions['validation_groups'] = $builderOptions['validation_groups'];
-            
-            if (is_object($fieldType)) {
-                $fieldOptions['options']['groups'] = $builderOptions['groups'];
-            }
         }
 
         return $fieldOptions;

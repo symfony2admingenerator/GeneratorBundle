@@ -4,11 +4,11 @@
     {{ echo_block('show_object') }}
         {% for fieldsetName,fieldset in builder.fieldsets %}
             {% set fieldsetColumns = builder.columnsFor(fieldset) %}
-            {% set fieldsetGroups = fieldsetColumns|mapBy('groups')|flatten %}
+            {% set fieldsetCredentials = fieldsetColumns|mapBy('credentials')|flatten|clean|unique %}
 
-            {% if fieldsetGroups is not empty %}
-                {{ echo_set('fieldsetGroups', echo_twig_arr(fieldsetGroups), false) }}
-                {{ echo_if('fieldsetGroups|intersect(groups) is not empty') }}
+            {% if fieldsetCredentials is not empty %}
+                {{ echo_set('fieldsetCredentials', echo_twig_arr(fieldsetCredentials), false) }}
+                {{ echo_if('is_one_admingenerator_granted(fieldsetCredentials, ' ~ builder.modelClass ~ ')') }}
             {% endif %}
 
                 <div class="show-model-tab-pane tab-pane-model-{{ fieldsetName|classify|replace({'.': '-'}) }} tab-pane">
@@ -18,18 +18,17 @@
 
                     {% for row in fieldset %}
                         {% set rowColumns = builder.columnsFor(row) %}
-                        {% set rowGroups = rowColumns|mapBy('groups')|flatten %}
+                        {% set rowCredentials = rowColumns|mapBy('credentials')|flatten|clean|unique %}
 
-                        {% if rowGroups is not empty %}
-                            {{ echo_set('rowGroups', echo_twig_arr(rowGroups), false) }}
-                            {{ echo_if('rowGroups|intersect(groups) is not empty') }}
+                        {% if rowCredentials is not empty %}
+                            {{ echo_set('rowCredentials', echo_twig_arr(rowCredentials), false) }}
+                            {{ echo_if('is_one_admingenerator_granted(rowCredentials, ' ~ builder.modelClass ~ ')') }}
                         {% endif %}
 
                         {% for column in rowColumns %}
                             <div class="row">
-                                {% if column.groups is not empty %}
-                                    {{ echo_set('columnGroups', echo_twig_arr(column.groups), false) }}
-                                    {{ echo_if('columnGroups|intersect(groups) is not empty') }}
+                                {% if column.credentials is not empty %}
+                                    {{ echo_if_granted(column.credentials, builder.modelClass) }}
                                 {% endif %}
 
                                 <div class="show-model-field-label show-model-field-label-{{ column.name|lower }} show-model-field-type-{{ column.formType|lower }} col-md-2 text-right">
@@ -42,19 +41,19 @@
                                     {{ block('show_column') }}
                                 </div>
 
-                                {% if column.groups is not empty %}
+                                {% if column.credentials is not empty %}
                                     {{ echo_endif() }}
                                 {% endif %}
                             </div>
                         {% endfor %}
 
-                        {% if rowGroups is not empty %}
+                        {% if rowCredentials is not empty %}
                             {{ echo_endif() }}
                         {% endif %}
                     {% endfor %}
                 </div>
 
-            {% if fieldsetGroups is not empty %}
+            {% if fieldsetCredentials is not empty %}
                 {{ echo_endif() }}
             {% endif %}
         {% endfor %}

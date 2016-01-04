@@ -12,8 +12,6 @@ class FiltersType extends BaseType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->groups = $options['groups'];
-
     {% for column in builder.filterColumns %}
         if ($this->canDisplay{{ column.name|classify|php_name }}()) {
             $builder->add('{{ column.name }}', $this->getType{{ column.name|classify|php_name }}(), $this->getOptions{{ column.name|classify|php_name }}($options));
@@ -58,7 +56,11 @@ class FiltersType extends BaseType
         */
         protected function canDisplay{{ column.name|classify|php_name }}()
         {
-            return $this->checkGroups({{ column.filtersGroups|as_php }});
+            {% if column.filtersCredentials is not empty %}
+                return $this->checkCredentials('{{ column.filtersCredentials }}', null);
+            {% else %}
+                return true;
+            {% endif %}
         }
     {% endfor %}
 

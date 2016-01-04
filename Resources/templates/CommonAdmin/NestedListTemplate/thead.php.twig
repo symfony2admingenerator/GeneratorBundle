@@ -31,14 +31,13 @@
 
 {% block list_thead_content_column %}
     {{ echo_block('list_thead_column_' ~ (column.name|lower)) -}}
-    {% if column.groups|default is not empty %}
-        {{ echo_set('columnGroups', echo_twig_arr(column.groups), false) }}
-        {{ echo_if('groups is empty or columnGroups|intersect(groups) is not empty') }}
+    {% if column.credentials|default is not empty %}
+        {{ echo_if_granted(column.credentials) }}
     {% endif %}
     <th class="list-results-fields-header-column list-results-fields-header-column-{{ column.name|lower  }}">
         {{ echo_twig("'" ~ column.label|addslashes ~ "'|trans({}, '" ~ i18n_catalog|default("Admin") ~ "')") }}
     </th>
-    {% if column.groups|default is not empty %}
+    {% if column.credentials|default is not empty %}
         {{ echo_endif() }}
     {% endif %}
     {{ echo_endblock() }}

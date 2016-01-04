@@ -7,87 +7,109 @@
 
 ### 1. Description
 
-Credentials allow you to protect actions and fields depending on your own logic (using security context, or object status,
-or whatever you can think about).
+Credentials allow you to protect actions and fields depending on your own logic. Credentials are based on
+Symfony Security Component.
 
-### 2. Requirements
+### 2. Usage and configuration
 
-Credentials check in admingenerator are based on [JMSSecurityExtraBundle][jms-securityextrabundle-documentation] and 
-`Expressions`. You need to activate them in your config file:
-
-```yaml
-    # config.yml
-    jms_security_extra:
-        expressions: true
-```
-
-### 3. Usage and configuration
-
-Now, you can easily protect any action or field using the parameter `credentials` in your `generator.yml`.
-Credentials should be a valid `Expression` string as described in the [JMSSecurityExtraBundle Expressions documentation][jms-securityextrabundle-expressions].
+You can easily protect any action or field using the parameter `credentials` in your `generator.yml`.
+Credentials should be a valid `expression` string that could be used in a `isGranted` call from the 
+`AuthorizationChecker` service.
 You can so, for example, easily protect any action or field using roles expression:
 
 ```yaml
   object_actions:
     delete:
-      credentials: 'hasRole("ROLE_ADMIN")'
+      credentials: 'ROLE_ADMIN'
   fields:
     myField:
-      credentials: 'hasRole("ROLE_USER")'
+      credentials: 'ROLE_USER'
 ```
 
-If all available native Expressions are not enough, you can create your own `Security Function` as described in
-[JMSSecurityExtraBundle "Creating your own Expression function" documentation][jms-securityextrabundle-expression-function].
-Example:
+Because credentials are using native security component, you can use all the power of Voters to create
+more sophisticated scenarios than simple ROLE checkers. For more information, take a look to 
+[How to Use Voters to Check User Permissions](http://symfony.com/doc/current/cookbook/security/voters.html)
+from the Symfony documentation.
 
-1- Create your service
+### 3. Using JMS Security Extra Bundle
 
-```php
-<?php
+If you are used to use JMS bundle or simply like the `Security function` capacities from this bundle, the 
+Admingenerator is able to use `Expression`. You need to turn on this functionality thanks to the 
+`use_jms_security` configuration parameter.
 
-namespace Acme\DemoBundle\Security;
+ > Of course, you also need to install the JMS bundle and activate it by yourself.
+ 
+### 4. Credentials configuration reference
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use JMS\DiExtraBundle\Annotation as DI;
+#### Securing a field
 
-/** @DI\Service */
-class MyObjectAccessEvaluator
-{
-    private $container;
+You can secure a field globaly through the global `fields` entry:
 
-    /**
-     * @DI\InjectParams({
-     *     "container" = @DI\Inject("service_container"),
-     * })
-     */
-    public function __construct(ContainerInterface $container)
-    {
-        $this->container = $container;
-    }
-
-    /** @DI\SecurityFunction("isActivatedByUser") */
-    public function isActivatedByUser(MyObject $myObject = null)
-    {
-        // Your own logic.
-        // Must return a boolean value
-    }
-}
-```
-
-2- Use your new function in the configuration:
-
-```yaml
-    # On actions
-    object_actions:
-        delete:
-            credentials: 'isActivatedByUser(object)'
-    # Or on a field
+```yml
+generator: admingenerator.generator.doctrine
+params:
+    model:              Admingenerator\DoctrineOrmDemoBundle\Entity\Post
+    namespace_prefix:   Admingenerator
+    i18n_catalog:       AdmingeneratorOrmDemoBundle
+    concurrency_lock:   ~
+    bundle_name:        DoctrineOrmDemoBundle
+    pk_requirement: ~
     fields:
-        my_field:
-            credentials: 'isActivatedByUser()'
+        category:
+            filterable: 1
+            filterOn: category.name
+            credentials: ROLE_USER # category field will be visible only if the user has the role ROLE_USER in all screens, including filters
 ```
 
+#### Securing an action
 
-[jms-securityextrabundle-documentation]: http://jmsyst.com/bundles/JMSSecurityExtraBundle
-[jms-securityextrabundle-expressions]: http://jmsyst.com/bundles/JMSSecurityExtraBundle/master/expressions
-[jms-securityextrabundle-expression-function]: https://github.com/schmittjoh/JMSSecurityExtraBundle/blob/master/Resources/doc/cookbook/creating_your_own_expression_function.rst
+To secure `generic` action, add the `credentials` parameter to the builder definition:
+
+```yml
+generator: admingenerator.generator.doctrine
+params:
+    ...
+builders:
+    new:
+        params:
+            credentials: ROLE_USER
+            title: post.title.new
+```
+
+To secure an `object` or `batch` action, use the global section:
+
+```yml
+generator: admingenerator.generator.doctrine
+params:
+    model:              Admingenerator\DoctrineOrmDemoBundle\Entity\Post
+    namespace_prefix:   Admingenerator
+    i18n_catalog:       AdmingeneratorOrmDemoBundle
+    concurrency_lock:   ~
+    bundle_name:        DoctrineOrmDemoBundle
+    pk_requirement: ~
+    object_action:
+        delete:
+            credentials: ROLE_USER
+        myCustomAction:
+            credentials: MY_CUSTOM_SECURITY_CHECK
+    batch_action:
+        delete:
+            credentials: ROLE_USER
+```
+
+#### Model object used in `isGranted` calls
+
+| Origin                   | Model object instance  | Description                                                                                |
+|--------------------------|------------------------|--------------------------------------------------------------------------------------------|
+| New controller           | null                   | No object is used                                                                          |
+| Edit controller          | Model                  | Object currently edited (retrieved from the `getObject` call)                              |
+| Object action controller | Model                  | Object currently edited (retrieved from the `getObject` call)                              |
+| Object action button     | Model                  | Object related to the action                                                               |
+| Batch action controller  | null                   | No object is used                                                                          |
+| Batch action button      | null                   | No object is used                                                                          |
+| Field in header list     | null                   | No object is used                                                                          |
+| Field in lists           | Model                  | Object of the current row                                                                  |
+| Filter form field        | null                   | No object is used                                                                          |
+| New form field           | Model                  | Called in the `PRE_SET_DATA` listener. Object used is the one from the `$event->getData()` |
+| Edit form field          | Model                  | Called in the `PRE_SET_DATA` listener. Object used is the one from the `$event->getData()` |
+| Field in show template   | Model                  | Object currently viewed                                                                    |

@@ -23,9 +23,8 @@
     "require": {
         "symfony/symfony": "~2.7",
         "doctrine/common": "~2.2",
-        "sensio/generator-bundle": "~2.5|~3.0",
+        "sensio/generator-bundle": "~3.0",
         "symfony2admingenerator/twig-generator": "~1.1",
-        "jms/security-extra-bundle": ">= 1.5.0",
         "knplabs/knp-menu-bundle": ">1.0,<2.2",
         "white-october/pagerfanta-bundle": "~1.0",
         "twig/twig": ">= 1.12.0",
@@ -39,7 +38,8 @@
     "suggest": {
         "symfony2admingenerator/form-extensions-bundle": "Symfony2 form extensions",
         "symfony2admingenerator/user-bundle": "FOSUserBundle integration for Admingenerator",
-        "liuggio/excelbundle": "(version >= 2.0) Allows the usage of the Excel export."
+        "liuggio/excelbundle": "(version >= 2.0) Allows the usage of the Excel export.",
+        "jms/security-extra-bundle": "Take advantages of JMS Security Extra Bundle in your generated templates."
     },
     "autoload": {
         "psr-4": {

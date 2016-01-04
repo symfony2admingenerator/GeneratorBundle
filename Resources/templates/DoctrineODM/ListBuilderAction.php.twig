@@ -93,10 +93,11 @@ use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter as PagerAdapter;
             {%- endif %}
         {% endfor -%}
 
-        return $this->createForm($this->getFiltersType(), $filters, array_merge(
-            $this->getFiltersOptions(),
-            array('groups' => $this->getGroups())
-        ));
+        return $this->createForm(
+            $this->getFiltersType(),
+            $filters,
+            $this->getFiltersOptions()
+        );
     }
 {% endblock %}
 

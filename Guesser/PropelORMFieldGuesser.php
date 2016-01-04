@@ -4,9 +4,8 @@ namespace Admingenerator\GeneratorBundle\Guesser;
 
 use Admingenerator\GeneratorBundle\Exception\NotImplementedException;
 use Doctrine\Common\Util\Inflector;
-use Symfony\Component\DependencyInjection\ContainerAware;
 
-class PropelORMFieldGuesser extends ContainerAware
+class PropelORMFieldGuesser
 {
     /**
      * @var boolean
@@ -22,6 +21,24 @@ class PropelORMFieldGuesser extends ContainerAware
      * @var array
      */
     private $cache = array();
+
+    /**
+     * @var array
+     */
+    private $formTypes;
+
+    /**
+     * @var array
+     */
+    private $filterTypes;
+
+    public function __construct(array $formTypes, array $filterTypes, $guessRequired, $defaultRequired)
+    {
+        $this->formTypes = $formTypes;
+        $this->filterTypes = $filterTypes;
+        $this->guessRequired = $guessRequired;
+        $this->defaultRequired = $defaultRequired;
+    }
 
     /**
      * @param $class
@@ -160,10 +177,9 @@ class PropelORMFieldGuesser extends ContainerAware
      */
     public function getFormType($dbType, $class, $columnName)
     {
-        $config = $this->container->getParameter('admingenerator.propel_form_types');
         $formTypes = array();
 
-        foreach ($config as $key => $value) {
+        foreach ($this->formTypes as $key => $value) {
             // if config is all uppercase use it to retrieve \PropelColumnTypes
             // constant, otherwise use it literally
             if ($key === strtoupper($key)) {
@@ -175,14 +191,16 @@ class PropelORMFieldGuesser extends ContainerAware
 
         if (array_key_exists($dbType, $formTypes)) {
             return $formTypes[$dbType];
-        } elseif ('virtual' === $dbType) {
-            return 'virtual_form';
-        } else {
-            throw new NotImplementedException(
-                'The dbType "'.$dbType.'" is not yet implemented '
-                .'(column "'.$columnName.'" in "'.$class.'")'
-            );
         }
+
+        if ('virtual' === $dbType) {
+            return 'virtual_form';
+        }
+
+        throw new NotImplementedException(
+            'The dbType "'.$dbType.'" is not yet implemented '
+            .'(column "'.$columnName.'" in "'.$class.'")'
+        );
     }
 
     /**
@@ -192,10 +210,9 @@ class PropelORMFieldGuesser extends ContainerAware
      */
     public function getFilterType($dbType, $class, $columnName)
     {
-        $config = $this->container->getParameter('admingenerator.propel_filter_types');
         $filterTypes = array();
 
-        foreach ($config as $key => $value) {
+        foreach ($this->filterTypes as $key => $value) {
             // if config is all uppercase use it to retrieve \PropelColumnTypes
             // constant, otherwise use it literally
             if ($key === strtoupper($key)) {
@@ -268,7 +285,7 @@ class PropelORMFieldGuesser extends ContainerAware
                    0 => 'boolean.no',
                    1 => 'boolean.yes'
                 ),
-                'empty_value' => 'boolean.yes_or_no',
+                'placeholder' => 'boolean.yes_or_no',
                 'translation_domain' => 'Admingenerator'
             );
         }
@@ -326,11 +343,6 @@ class PropelORMFieldGuesser extends ContainerAware
 
     protected function isRequired($class, $fieldName)
     {
-        if (!isset($this->guessRequired) || !isset($this->defaultRequired)) {
-            $this->guessRequired = $this->container->getParameter('admingenerator.guess_required');
-            $this->defaultRequired = $this->container->getParameter('admingenerator.default_required');
-        }
-
         if (!$this->guessRequired) {
             return $this->defaultRequired;
         }

@@ -15,7 +15,6 @@ namespace Admingenerated\{{ namespace_prefix }}{{ bundle_name }}\{{ builder.gene
 
 use {{ builder.generator.baseController }} as BaseController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 use Pagerfanta\Pagerfanta;
@@ -97,31 +96,6 @@ class ListController extends BaseController
     protected function getAdditionalRenderParameters()
     {
         return array();
-    }
-
-    /**
-     * Get groups.
-     *
-     * @return array
-     */
-    protected function getGroups()
-    {
-        return array();
-    }
-
-    /**
-     * Checks if groups intersect.
-     *
-     * @param array $groups   Groups.
-     * @return boolean
-     */
-    protected function checkGroups(array $groups)
-    {
-        if (count($groups) === 0) {
-            return true;
-        }
-
-        return count(array_intersect($this->getGroups(), $groups)) > 0;
     }
 
     /**

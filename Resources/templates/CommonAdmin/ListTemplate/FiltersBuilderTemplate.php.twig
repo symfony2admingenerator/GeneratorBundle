@@ -1,9 +1,10 @@
 {% block list_filters %}
     {{ echo_block('list_filters') }}
     {% if builder.filterColumns is not empty %}
-        {% if builder.filterColumnGroups is not empty %}
-            {{ echo_set('filterColumnGroups', echo_twig_arr(builder.filterColumnGroups), false) }}
-            {{ echo_if('filterColumnGroups|intersect(groups) is not empty') }}
+        {% set filterColumnsCredentials = builder.filterColumnsCredentials  %}
+        {% if filterColumnsCredentials is not empty %}
+            {{ echo_set('filterColumnsCredentials', echo_twig_arr(filterColumnsCredentials), false) }}
+            {{ echo_if('is_one_admingenerator_granted(filterColumnsCredentials)') }}
         {% endif %}
 
         {% set boxClass = '' %}
@@ -25,8 +26,7 @@
         <div class="col-md-3 col-xs-12 list-filters-container pull-right">
         {% endif %}
 
-<form action="{{ echo_twig('filtersUrl') }}" method="post" {{ echo_twig("form_enctype(form)") }} role="form" novalidate="novalidate">
-        
+{{ echo_twig('form_start(form, {method: "post", action: filtersUrl, role: "form", novalidate: "novalidate"})') }}
         {% if builder.filtersMode != 'modal' %}
 
             {% set boxClass = (builder.defaultFiltersVisibility == 'collapsed') ? (builder.filtersMode == 'top') ? 'collapsed-box' : 'slided-box' : '' %}
@@ -49,9 +49,8 @@
                         {{ echo_twig("form_errors(form)") }}
                         {% for column in builder.filterColumns %}
                             {{ echo_block("list_filters_field_" ~ (column.name|lower)) }}
-                            {% if column.filtersGroups is not empty %}
-                                {{ echo_set('columnFiltersGroups', echo_twig_arr(column.filtersGroups), false) }}
-                                {{ echo_if('columnFiltersGroups|intersect(groups) is not empty') }}
+                            {% if column.filtersCredentials is not empty %}
+                                {{ echo_if_granted(column.filtersCredentials) }}
                             {% endif %}
                             <div class="list-filters-field-{{ column.name|lower }} list-filters-type-{{ column.filterType|lower }}">
                                 {{ echo_block("list_filters_field_" ~ (column.name|lower) ~ "_content" ) }}
@@ -60,7 +59,7 @@
                                 {{ echo_twig("form_errors(form['" ~ column.name ~ "'], {'attr': {'class': 'form-control-feedback'}})") }}
                                 {{ echo_endblock() }}
                             </div>
-                            {% if column.filtersGroups is not empty %}
+                            {% if column.filtersCredentials is not empty %}
                                 {{ echo_endif () }}
                             {% endif %}
                             {{ echo_endblock() }}
@@ -93,7 +92,7 @@
         {% endif %}
     
 
-        {% if builder.filterColumnGroups is not empty %}
+        {% if filterColumnsCredentials is not empty %}
             {{ echo_endif() }}
         {% endif %}
     {% endif %}

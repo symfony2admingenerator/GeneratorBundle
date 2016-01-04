@@ -38,11 +38,9 @@ class AdmingeneratorGeneratorExtension extends Extension implements PrependExten
 
         $config = $this->processConfiguration($this->getConfiguration($configs, $container), $configs);
 
+        // TODO: remove this one...
         $container->setParameter('admingenerator', $config);
         $container->setParameter('admingenerator.base_admin_template', $config['base_admin_template']);
-        $container->setParameter('admingenerator.dashboard_route', $config['dashboard_route']);
-        $container->setParameter('admingenerator.guess_required', $config['guess_required']);
-        $container->setParameter('admingenerator.default_required', $config['default_required']);
         $container->setParameter('admingenerator.login_route', $config['login_route']);
         $container->setParameter('admingenerator.logout_route', $config['logout_route']);
         $container->setParameter('admingenerator.exit_route', $config['exit_route']);
@@ -50,6 +48,14 @@ class AdmingeneratorGeneratorExtension extends Extension implements PrependExten
         $container->setParameter('admingenerator.javascripts', $config['javascripts']);
         $container->setParameter('admingenerator.default_action_after_save', $config['default_action_after_save']);
         $container->setParameter('admingenerator.throw_exceptions', $config['throw_exceptions']);
+
+        $container->getDefinition('admingen.menu.default_builder')
+            ->addArgument($config['dashboard_route']);
+
+        if ($config['use_jms_security']) {
+            $container->getDefinition('twig.extension.admingenerator.security')->addArgument(true);
+            $container->getDefinition('twig.extension.admingenerator.echo')->addArgument(true);
+        }
 
         $this->processModelManagerConfiguration($config, $container);
         $this->processTwigConfiguration($config['twig'], $container);
@@ -90,10 +96,11 @@ class AdmingeneratorGeneratorExtension extends Extension implements PrependExten
 
             }
 
-            $formTypes = $config['form_types']['doctrine_orm'];
-            $filterTypes = $config['filter_types']['doctrine_orm'];
-            $container->setParameter('admingenerator.doctrine_form_types', $formTypes);
-            $container->setParameter('admingenerator.doctrine_filter_types', $filterTypes);
+            $container->getDefinition('admingenerator.fieldguesser.doctrine')
+                ->addArgument($config['form_types']['doctrine_orm'])
+                ->addArgument($config['filter_types']['doctrine_orm'])
+                ->addArgument($config['guess_required'])
+                ->addArgument($config['default_required']);
         }
 
         if ($config['use_doctrine_odm']) {
@@ -105,10 +112,11 @@ class AdmingeneratorGeneratorExtension extends Extension implements PrependExten
                     ->addMethodCall('forceOverwriteIfExists');
             }
 
-            $formTypes = $config['form_types']['doctrine_odm'];
-            $filterTypes = $config['filter_types']['doctrine_odm'];
-            $container->setParameter('admingenerator.doctrineodm_form_types', $formTypes);
-            $container->setParameter('admingenerator.doctrineodm_filter_types', $filterTypes);
+            $container->getDefinition('admingenerator.generator.doctrine_odm')
+                ->addArgument($config['form_types']['doctrine_odm'])
+                ->addArgument($config['filter_types']['doctrine_odm'])
+                ->addArgument($config['guess_required'])
+                ->addArgument($config['default_required']);
         }
 
         if ($config['use_propel']) {
@@ -120,10 +128,11 @@ class AdmingeneratorGeneratorExtension extends Extension implements PrependExten
                     ->addMethodCall('forceOverwriteIfExists');
             }
 
-            $formTypes = $config['form_types']['propel'];
-            $filterTypes = $config['filter_types']['propel'];
-            $container->setParameter('admingenerator.propel_form_types', $formTypes);
-            $container->setParameter('admingenerator.propel_filter_types', $filterTypes);
+            $container->getDefinition('admingenerator.fieldguesser.propel')
+                ->addArgument($config['form_types']['propel'])
+                ->addArgument($config['filter_types']['propel'])
+                ->addArgument($config['guess_required'])
+                ->addArgument($config['default_required']);
         }
     }
 

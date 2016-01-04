@@ -2,16 +2,14 @@
 
 namespace Admingenerator\GeneratorBundle\Menu;
 
-use Knp\Menu\FactoryInterface;
-
 class DefaultMenuBuilder extends AdmingeneratorMenuBuilder
 {
-    public function sidebarMenu(FactoryInterface $factory, array $options)
+    public function sidebarMenu(array $options)
     {
-        $menu = $factory->createItem('root');
+        $menu = $this->factory->createItem('root');
         $menu->setChildrenAttributes(array('class' => 'sidebar-menu'));
 
-        if ($dashboardRoute = $this->container->getParameter('admingenerator.dashboard_route')) {
+        if ($dashboardRoute = $this->dashboardRoute) {
             $this
                 ->addLinkRoute($menu, 'admingenerator.dashboard', $dashboardRoute)
                 ->setExtra('icon', 'fa fa-dashboard');

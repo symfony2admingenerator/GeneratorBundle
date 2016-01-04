@@ -213,7 +213,11 @@ class BaseBuilder extends GenericBaseBuilder
     }
 
     /**
+     * @param Column $column
      * @param string $optionName
+     * @param string $default
+     *
+     * @return string
      */
     protected function getFieldOption(Column $column, $optionName, $default = null)
     {
@@ -403,6 +407,13 @@ class BaseBuilder extends GenericBaseBuilder
         } elseif (null !== $globalOptions) {
             foreach ($globalOptions as $option => $value) {
                 $action->setProperty($option, $value);
+            }
+        }
+
+        if ('generic' == $action->getType()) {
+            // Let's try to get credentials from builder for consistency
+            if ($credentials = $this->generator->getFromYaml(sprintf('builders.%s.params.credentials', $action->getName()))) {
+                $action->setCredentials($credentials);
             }
         }
     }

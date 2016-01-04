@@ -5,7 +5,6 @@
 namespace Admingenerated\{{ namespace_prefix }}{{ bundle_name }}\{{ builder.generator.GeneratedControllerFolder }};
 
 use {{ builder.generator.baseController }} as BaseController;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 {{- block('index_use') -}}
@@ -25,17 +24,6 @@ class ShowController extends BaseController
      * @return array
      */
     protected function getAdditionalRenderParameters(\{{ model }} ${{ builder.ModelClass }})
-    {
-        return array();
-    }
-
-    /**
-     * Get groups.
-     *
-     * @param \{{ model }} ${{ builder.ModelClass }} your \{{ model }} object
-     * @return array
-     */
-    protected function getGroups(\{{ model }} ${{ builder.ModelClass }})
     {
         return array();
     }

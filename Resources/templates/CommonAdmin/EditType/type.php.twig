@@ -6,20 +6,33 @@ namespace Admingenerated\{{ namespace_prefix }}{{ bundle_name }}\Form\Base{{ bui
 use Admingenerator\GeneratorBundle\Form\BaseType;
 use Admingenerator\GeneratorBundle\Form\BaseOptions;
 use Symfony\Component\Form\FormBuilderInterface;
-use JMS\SecurityExtraBundle\Security\Authorization\Expression\Expression;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 
 class {{ builder.YamlKey|ucfirst }}Type extends BaseType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->groups = $options['groups'];
-        
+    {%- set columnAdded = 0 -%}
     {% for column in builder.columns %}
+        {% if (column.credentials is empty) or (column.credentials is same as('AdmingenAllowed')) %}
         if ($this->canDisplay{{ column.name|classify|php_name }}()) {
             $builder->add('{{ column.name }}', $this->getType{{ column.name|classify|php_name }}(), $this->getOptions{{ column.name|classify|php_name }}($options));
         }
-
+        {% set columnAdded = columnAdded+1 %}
+        {% endif %}
     {% endfor %}
+    {% if columnAdded != builder.columns|length %}
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($options) {
+        {% for column in builder.columns %}
+            {% if (column.credentials is not empty) and (column.credentials is not same as ('AdmingenAllowed')) %}
+            if ($this->canDisplay{{ column.name|classify|php_name }}($event->getData())) {
+                $event->getForm()->add('{{ column.name }}', $this->getType{{ column.name|classify|php_name }}(), $this->getOptions{{ column.name|classify|php_name }}($options));
+            }
+            {% endif %}
+        {% endfor %}
+        });
+    {% endif %}
     }
 
 {% for column in builder.columns %}
@@ -51,13 +64,17 @@ class {{ builder.YamlKey|ucfirst }}Type extends BaseType
     }
 
     /**
-     * Check groups for {{ column.name }} field.
+     * Check credentials for {{ column.name }} field.
      *
      * @return boolean
      */
-    protected function canDisplay{{ column.name|classify|php_name }}()
+    protected function canDisplay{{ column.name|classify|php_name }}(\{{ model }} ${{ builder.ModelClass }} = null)
     {
-        return $this->checkGroups({{ column.groups|as_php }});
+        {% if column.credentials is not empty %}
+            return $this->checkCredentials('{{ column.credentials }}', ${{ builder.ModelClass }});
+        {% else %}
+            return true;
+        {% endif %}
     }
 
 {% endfor %}

@@ -9,7 +9,6 @@
 namespace Admingenerated\{{ namespace_prefix }}{{ bundle_name }}\{{ builder.generator.GeneratedControllerFolder }};
 
 use {{ builder.generator.baseController }} as BaseController;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Admingenerator\GeneratorBundle\Exception\ValidationException;
 use Symfony\Component\HttpFoundation\Request;
@@ -53,7 +52,7 @@ class ActionsController extends BaseController
                 )
             );
 
-            return new RedirectResponse($this->generateUrl("{{ builder.baseActionsRoute }}_list"));
+            return $this->redirect($this->generateUrl("{{ builder.baseActionsRoute }}_list"));
         }
 
         $methodName = 'attemptBatch'.ucfirst(strtolower($this->cleanMethodName($action)));

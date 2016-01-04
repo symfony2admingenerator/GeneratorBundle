@@ -31,6 +31,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
             'use_doctrine_orm'      => false,
             'use_doctrine_odm'      => false,
             'use_propel'            => false,
+            'use_jms_security'      => false,
             'guess_required'        => true,
             'default_required'      => true,
             'overwrite_if_exists'   => false,
