@@ -19,11 +19,6 @@ abstract class BaseType extends AbstractType
     protected $authorizationChecker;
 
     /**
-     * @var array
-     */
-    protected $groups = array();
-
-    /**
      * @param AuthorizationCheckerInterface $authorizationChecker
      */
     public function setAuthorizationChecker(AuthorizationCheckerInterface $authorizationChecker)
