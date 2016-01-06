@@ -28,201 +28,201 @@ class Configuration implements ConfigurationInterface
     private $defaultFormTypes = array(
         'doctrine_orm' => array(
             // datetime types
-            'datetime' => 'Symfony\Component\Form\Extension\Core\Type\DateTimeType',
+            'datetime'    => 'Symfony\Component\Form\Extension\Core\Type\DateTimeType',
             'vardatetime' => 'Symfony\Component\Form\Extension\Core\Type\DateTimeType',
-            'datetimetz' => 'Symfony\Component\Form\Extension\Core\Type\DateTimeType',
-            'date' => 'Symfony\Component\Form\Extension\Core\Type\DateType',
+            'datetimetz'  => 'Symfony\Component\Form\Extension\Core\Type\DateTimeType',
+            'date'        => 'Symfony\Component\Form\Extension\Core\Type\DateType',
             // time types
-            'time' => 'Symfony\Component\Form\Extension\Core\Type\TimeType',
+            'time'        => 'Symfony\Component\Form\Extension\Core\Type\TimeType',
             // number types
-            'decimal' => 'Symfony\Component\Form\Extension\Core\Type\NumberType',
-            'float' => 'Symfony\Component\Form\Extension\Core\Type\NumberType',
+            'decimal'     => 'Symfony\Component\Form\Extension\Core\Type\NumberType',
+            'float'       => 'Symfony\Component\Form\Extension\Core\Type\NumberType',
             // integer types
-            'integer' => 'Symfony\Component\Form\Extension\Core\Type\IntegerType',
-            'bigint' => 'Symfony\Component\Form\Extension\Core\Type\IntegerType',
-            'smallint' => 'Symfony\Component\Form\Extension\Core\Type\IntegerType',
+            'integer'     => 'Symfony\Component\Form\Extension\Core\Type\IntegerType',
+            'bigint'      => 'Symfony\Component\Form\Extension\Core\Type\IntegerType',
+            'smallint'    => 'Symfony\Component\Form\Extension\Core\Type\IntegerType',
             // text types
-            'string' => 'Symfony\Component\Form\Extension\Core\Type\TextType',
+            'string'      => 'Symfony\Component\Form\Extension\Core\Type\TextType',
             // textarea types
-            'text' => 'Symfony\Component\Form\Extension\Core\Type\TextareaType',
+            'text'        => 'Symfony\Component\Form\Extension\Core\Type\TextareaType',
             // association types
-            'entity' => 'Symfony\Bridge\Doctrine\Form\Type\EntityType',
-            'collection' => 'Symfony\Component\Form\Extension\Core\Type\CollectionType',
+            'entity'      => 'Symfony\Bridge\Doctrine\Form\Type\EntityType',
+            'collection'  => 'Symfony\Component\Form\Extension\Core\Type\CollectionType',
             // array types
-            'array' => 'Symfony\Component\Form\Extension\Core\Type\CollectionType',
+            'array'       => 'Symfony\Component\Form\Extension\Core\Type\CollectionType',
             // boolean types
-            'boolean' => 'Symfony\Component\Form\Extension\Core\Type\CheckboxType',
+            'boolean'     => 'Symfony\Component\Form\Extension\Core\Type\CheckboxType',
         ),
         'doctrine_odm' => array(
             // datetime types
-            'datetime' => 'Symfony\Component\Form\Extension\Core\Type\DateTimeType',
-            'timestamp' => 'Symfony\Component\Form\Extension\Core\Type\DateTimeType',
+            'datetime'    => 'Symfony\Component\Form\Extension\Core\Type\DateTimeType',
+            'timestamp'   => 'Symfony\Component\Form\Extension\Core\Type\DateTimeType',
             'vardatetime' => 'Symfony\Component\Form\Extension\Core\Type\DateTimeType',
-            'datetimetz' => 'Symfony\Component\Form\Extension\Core\Type\DateTimeType',
-            'date' => 'Symfony\Component\Form\Extension\Core\Type\DateType',
+            'datetimetz'  => 'Symfony\Component\Form\Extension\Core\Type\DateTimeType',
+            'date'        => 'Symfony\Component\Form\Extension\Core\Type\DateType',
             // time types
-            'time' => 'Symfony\Component\Form\Extension\Core\Type\TimeType',
+            'time'        => 'Symfony\Component\Form\Extension\Core\Type\TimeType',
             // number types
-            'decimal' => 'Symfony\Component\Form\Extension\Core\Type\NumberType',
-            'float' => 'Symfony\Component\Form\Extension\Core\Type\NumberType',
+            'decimal'     => 'Symfony\Component\Form\Extension\Core\Type\NumberType',
+            'float'       => 'Symfony\Component\Form\Extension\Core\Type\NumberType',
             // integer types
-            'int' => 'Symfony\Component\Form\Extension\Core\Type\IntegerType',
-            'integer' => 'Symfony\Component\Form\Extension\Core\Type\IntegerType',
-            'int_id' => 'Symfony\Component\Form\Extension\Core\Type\IntegerType',
-            'bigint' => 'Symfony\Component\Form\Extension\Core\Type\IntegerType',
-            'smallint' => 'Symfony\Component\Form\Extension\Core\Type\IntegerType',
+            'int'         => 'Symfony\Component\Form\Extension\Core\Type\IntegerType',
+            'integer'     => 'Symfony\Component\Form\Extension\Core\Type\IntegerType',
+            'int_id'      => 'Symfony\Component\Form\Extension\Core\Type\IntegerType',
+            'bigint'      => 'Symfony\Component\Form\Extension\Core\Type\IntegerType',
+            'smallint'    => 'Symfony\Component\Form\Extension\Core\Type\IntegerType',
             // text types
-            'id' => 'Symfony\Component\Form\Extension\Core\Type\TextType',
-            'custom_id' => 'Symfony\Component\Form\Extension\Core\Type\TextType',
-            'string' => 'Symfony\Component\Form\Extension\Core\Type\TextType',
+            'id'          => 'Symfony\Component\Form\Extension\Core\Type\TextType',
+            'custom_id'   => 'Symfony\Component\Form\Extension\Core\Type\TextType',
+            'string'      => 'Symfony\Component\Form\Extension\Core\Type\TextType',
             // textarea types
-            'text' => 'Symfony\Component\Form\Extension\Core\Type\TextareaType',
+            'text'        => 'Symfony\Component\Form\Extension\Core\Type\TextareaType',
             // association types
-            'document' => 'Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType',
-            'collection' => 'Symfony\Component\Form\Extension\Core\Type\CollectionType',
+            'document'    => 'Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType',
+            'collection'  => 'Symfony\Component\Form\Extension\Core\Type\CollectionType',
             // hash types
-            'hash' => 'Symfony\Component\Form\Extension\Core\Type\CollectionType',
+            'hash'        => 'Symfony\Component\Form\Extension\Core\Type\CollectionType',
             // boolean types
-            'boolean' => 'Symfony\Component\Form\Extension\Core\Type\CheckboxType',
+            'boolean'     => 'Symfony\Component\Form\Extension\Core\Type\CheckboxType',
         ),
-        'propel' => array(
+        'propel'       => array(
             // datetime types
-            'TIMESTAMP' => 'Symfony\Component\Form\Extension\Core\Type\DateTimeType',
+            'TIMESTAMP'    => 'Symfony\Component\Form\Extension\Core\Type\DateTimeType',
             'BU_TIMESTAMP' => 'Symfony\Component\Form\Extension\Core\Type\DateTimeType',
             // date types
-            'DATE' => 'Symfony\Component\Form\Extension\Core\Type\DateType',
-            'BU_DATE' => 'Symfony\Component\Form\Extension\Core\Type\DateType',
+            'DATE'         => 'Symfony\Component\Form\Extension\Core\Type\DateType',
+            'BU_DATE'      => 'Symfony\Component\Form\Extension\Core\Type\DateType',
             // time types
-            'TIME' => 'Symfony\Component\Form\Extension\Core\Type\TimeType',
+            'TIME'         => 'Symfony\Component\Form\Extension\Core\Type\TimeType',
             // number types
-            'FLOAT' => 'Symfony\Component\Form\Extension\Core\Type\NumberType',
-            'REAL' => 'Symfony\Component\Form\Extension\Core\Type\NumberType',
-            'DOUBLE' => 'Symfony\Component\Form\Extension\Core\Type\NumberType',
-            'DECIMAL' => 'Symfony\Component\Form\Extension\Core\Type\NumberType',
+            'FLOAT'        => 'Symfony\Component\Form\Extension\Core\Type\NumberType',
+            'REAL'         => 'Symfony\Component\Form\Extension\Core\Type\NumberType',
+            'DOUBLE'       => 'Symfony\Component\Form\Extension\Core\Type\NumberType',
+            'DECIMAL'      => 'Symfony\Component\Form\Extension\Core\Type\NumberType',
             // integer types
-            'TINYINT' => 'Symfony\Component\Form\Extension\Core\Type\IntegerType',
-            'SMALLINT' => 'Symfony\Component\Form\Extension\Core\Type\IntegerType',
-            'INTEGER' => 'Symfony\Component\Form\Extension\Core\Type\IntegerType',
-            'BIGINT' => 'Symfony\Component\Form\Extension\Core\Type\IntegerType',
-            'NUMERIC' => 'Symfony\Component\Form\Extension\Core\Type\IntegerType',
+            'TINYINT'      => 'Symfony\Component\Form\Extension\Core\Type\IntegerType',
+            'SMALLINT'     => 'Symfony\Component\Form\Extension\Core\Type\IntegerType',
+            'INTEGER'      => 'Symfony\Component\Form\Extension\Core\Type\IntegerType',
+            'BIGINT'       => 'Symfony\Component\Form\Extension\Core\Type\IntegerType',
+            'NUMERIC'      => 'Symfony\Component\Form\Extension\Core\Type\IntegerType',
             // text types
-            'CHAR' => 'Symfony\Component\Form\Extension\Core\Type\TextType',
-            'VARCHAR' => 'Symfony\Component\Form\Extension\Core\Type\TextType',
+            'CHAR'         => 'Symfony\Component\Form\Extension\Core\Type\TextType',
+            'VARCHAR'      => 'Symfony\Component\Form\Extension\Core\Type\TextType',
             // textarea types
-            'LONGVARCHAR' => 'Symfony\Component\Form\Extension\Core\Type\TextareaType',
-            'BLOB' => 'Symfony\Component\Form\Extension\Core\Type\TextareaType',
-            'CLOB' => 'Symfony\Component\Form\Extension\Core\Type\TextareaType',
-            'CLOB_EMU' => 'Symfony\Component\Form\Extension\Core\Type\TextareaType',
+            'LONGVARCHAR'  => 'Symfony\Component\Form\Extension\Core\Type\TextareaType',
+            'BLOB'         => 'Symfony\Component\Form\Extension\Core\Type\TextareaType',
+            'CLOB'         => 'Symfony\Component\Form\Extension\Core\Type\TextareaType',
+            'CLOB_EMU'     => 'Symfony\Component\Form\Extension\Core\Type\TextareaType',
             // association types
-            'model' => 'Symfony\Bridge\Propel1\Form\Type\ModelType',
-            'collection' => 'Symfony\Component\Form\Extension\Core\Type\CollectionType',
+            'model'        => 'Symfony\Bridge\Propel1\Form\Type\ModelType',
+            'collection'   => 'Symfony\Component\Form\Extension\Core\Type\CollectionType',
             // array types
-            'PHP_ARRAY' => 'Symfony\Component\Form\Extension\Core\Type\CollectionType',
+            'PHP_ARRAY'    => 'Symfony\Component\Form\Extension\Core\Type\CollectionType',
             // choice types
-            'ENUM' => 'Symfony\Component\Form\Extension\Core\Type\ChoiceType',
+            'ENUM'         => 'Symfony\Component\Form\Extension\Core\Type\ChoiceType',
             // boolean types
-            'BOOLEAN' => 'Symfony\Component\Form\Extension\Core\Type\CheckboxType',
-            'BOOLEAN_EMU' => 'Symfony\Component\Form\Extension\Core\Type\CheckboxType',
+            'BOOLEAN'      => 'Symfony\Component\Form\Extension\Core\Type\CheckboxType',
+            'BOOLEAN_EMU'  => 'Symfony\Component\Form\Extension\Core\Type\CheckboxType',
         ));
 
     private $defaultFilterTypes = array(
         'doctrine_orm' => array(
             // datetime types
-            'datetime' => 'Symfony\Component\Form\Extension\Core\Type\DateTimeType',
+            'datetime'    => 'Symfony\Component\Form\Extension\Core\Type\DateTimeType',
             'vardatetime' => 'Symfony\Component\Form\Extension\Core\Type\DateTimeType',
-            'datetimetz' => 'Symfony\Component\Form\Extension\Core\Type\DateTimeType',
-            'date' => 'Symfony\Component\Form\Extension\Core\Type\DateType',
+            'datetimetz'  => 'Symfony\Component\Form\Extension\Core\Type\DateTimeType',
+            'date'        => 'Symfony\Component\Form\Extension\Core\Type\DateType',
             // time types
-            'time' => 'Symfony\Component\Form\Extension\Core\Type\TimeType',
+            'time'        => 'Symfony\Component\Form\Extension\Core\Type\TimeType',
             // number types
-            'decimal' => 'Symfony\Component\Form\Extension\Core\Type\NumberType',
-            'float' => 'Symfony\Component\Form\Extension\Core\Type\NumberType',
+            'decimal'     => 'Symfony\Component\Form\Extension\Core\Type\NumberType',
+            'float'       => 'Symfony\Component\Form\Extension\Core\Type\NumberType',
             // integer types
-            'integer' => 'Symfony\Component\Form\Extension\Core\Type\NumberType',
-            'bigint' => 'Symfony\Component\Form\Extension\Core\Type\NumberType',
-            'smallint' => 'Symfony\Component\Form\Extension\Core\Type\NumberType',
+            'integer'     => 'Symfony\Component\Form\Extension\Core\Type\NumberType',
+            'bigint'      => 'Symfony\Component\Form\Extension\Core\Type\NumberType',
+            'smallint'    => 'Symfony\Component\Form\Extension\Core\Type\NumberType',
             // text types
-            'string' => 'Symfony\Component\Form\Extension\Core\Type\TextType',
+            'string'      => 'Symfony\Component\Form\Extension\Core\Type\TextType',
             // textarea types
-            'text' => 'Symfony\Component\Form\Extension\Core\Type\TextType',
+            'text'        => 'Symfony\Component\Form\Extension\Core\Type\TextType',
             // association types
-            'entity' => 'Symfony\Bridge\Doctrine\Form\Type\EntityType',
-            'collection' => 'Symfony\Component\Form\Extension\Core\Type\CollectionType',
+            'entity'      => 'Symfony\Bridge\Doctrine\Form\Type\EntityType',
+            'collection'  => 'Symfony\Component\Form\Extension\Core\Type\CollectionType',
             // array types
-            'array' => 'Symfony\Component\Form\Extension\Core\Type\TextType',
+            'array'       => 'Symfony\Component\Form\Extension\Core\Type\TextType',
             // boolean types
-            'boolean' => 'Symfony\Component\Form\Extension\Core\Type\ChoiceType',
+            'boolean'     => 'Symfony\Component\Form\Extension\Core\Type\ChoiceType',
         ),
         'doctrine_odm' => array(
             // datetime types
-            'datetime' => 'Symfony\Component\Form\Extension\Core\Type\DateTimeType',
-            'timestamp' => 'Symfony\Component\Form\Extension\Core\Type\DateTimeType',
+            'datetime'    => 'Symfony\Component\Form\Extension\Core\Type\DateTimeType',
+            'timestamp'   => 'Symfony\Component\Form\Extension\Core\Type\DateTimeType',
             'vardatetime' => 'Symfony\Component\Form\Extension\Core\Type\DateTimeType',
-            'datetimetz' => 'Symfony\Component\Form\Extension\Core\Type\DateTimeType',
-            'date' => 'Symfony\Component\Form\Extension\Core\Type\DateType',
+            'datetimetz'  => 'Symfony\Component\Form\Extension\Core\Type\DateTimeType',
+            'date'        => 'Symfony\Component\Form\Extension\Core\Type\DateType',
             // time types
-            'time' => 'Symfony\Component\Form\Extension\Core\Type\TimeType',
+            'time'        => 'Symfony\Component\Form\Extension\Core\Type\TimeType',
             // number types
-            'decimal' => 'Symfony\Component\Form\Extension\Core\Type\NumberType',
-            'float' => 'Symfony\Component\Form\Extension\Core\Type\NumberType',
+            'decimal'     => 'Symfony\Component\Form\Extension\Core\Type\NumberType',
+            'float'       => 'Symfony\Component\Form\Extension\Core\Type\NumberType',
             // integer types
-            'int' => 'Symfony\Component\Form\Extension\Core\Type\NumberType',
-            'integer' => 'Symfony\Component\Form\Extension\Core\Type\NumberType',
-            'int_id' => 'Symfony\Component\Form\Extension\Core\Type\NumberType',
-            'bigint' => 'Symfony\Component\Form\Extension\Core\Type\NumberType',
-            'smallint' => 'Symfony\Component\Form\Extension\Core\Type\NumberType',
+            'int'         => 'Symfony\Component\Form\Extension\Core\Type\NumberType',
+            'integer'     => 'Symfony\Component\Form\Extension\Core\Type\NumberType',
+            'int_id'      => 'Symfony\Component\Form\Extension\Core\Type\NumberType',
+            'bigint'      => 'Symfony\Component\Form\Extension\Core\Type\NumberType',
+            'smallint'    => 'Symfony\Component\Form\Extension\Core\Type\NumberType',
             // text types
-            'id' => 'Symfony\Component\Form\Extension\Core\Type\TextType',
-            'custom_id' => 'Symfony\Component\Form\Extension\Core\Type\TextType',
-            'string' => 'Symfony\Component\Form\Extension\Core\Type\TextType',
+            'id'          => 'Symfony\Component\Form\Extension\Core\Type\TextType',
+            'custom_id'   => 'Symfony\Component\Form\Extension\Core\Type\TextType',
+            'string'      => 'Symfony\Component\Form\Extension\Core\Type\TextType',
             // textarea types
-            'text' => 'Symfony\Component\Form\Extension\Core\Type\TextType',
+            'text'        => 'Symfony\Component\Form\Extension\Core\Type\TextType',
             // association types
-            'document' => 'Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType',
-            'collection' => 'Symfony\Component\Form\Extension\Core\Type\CollectionType',
+            'document'    => 'Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType',
+            'collection'  => 'Symfony\Component\Form\Extension\Core\Type\CollectionType',
             // hash types
-            'hash' => 'Symfony\Component\Form\Extension\Core\Type\TextType',
+            'hash'        => 'Symfony\Component\Form\Extension\Core\Type\TextType',
             // boolean types
-            'boolean' => 'Symfony\Component\Form\Extension\Core\Type\ChoiceType',
+            'boolean'     => 'Symfony\Component\Form\Extension\Core\Type\ChoiceType',
         ),
         'propel' => array(
             // datetime types
-            'TIMESTAMP' => 'Symfony\Component\Form\Extension\Core\Type\DateTimeType',
+            'TIMESTAMP'    => 'Symfony\Component\Form\Extension\Core\Type\DateTimeType',
             'BU_TIMESTAMP' => 'Symfony\Component\Form\Extension\Core\Type\DateTimeType',
             // date types
-            'DATE' => 'Symfony\Component\Form\Extension\Core\Type\DateType',
-            'BU_DATE' => 'Symfony\Component\Form\Extension\Core\Type\DateType',
+            'DATE'         => 'Symfony\Component\Form\Extension\Core\Type\DateType',
+            'BU_DATE'      => 'Symfony\Component\Form\Extension\Core\Type\DateType',
             // time types
-            'TIME' => 'Symfony\Component\Form\Extension\Core\Type\TimeType',
+            'TIME'         => 'Symfony\Component\Form\Extension\Core\Type\TimeType',
             // number types
-            'FLOAT' => 'Symfony\Component\Form\Extension\Core\Type\NumberType',
-            'REAL' => 'Symfony\Component\Form\Extension\Core\Type\NumberType',
-            'DOUBLE' => 'Symfony\Component\Form\Extension\Core\Type\NumberType',
-            'DECIMAL' => 'Symfony\Component\Form\Extension\Core\Type\NumberType',
+            'FLOAT'        => 'Symfony\Component\Form\Extension\Core\Type\NumberType',
+            'REAL'         => 'Symfony\Component\Form\Extension\Core\Type\NumberType',
+            'DOUBLE'       => 'Symfony\Component\Form\Extension\Core\Type\NumberType',
+            'DECIMAL'      => 'Symfony\Component\Form\Extension\Core\Type\NumberType',
             // integer types
-            'TINYINT' => 'Symfony\Component\Form\Extension\Core\Type\IntegerType',
-            'SMALLINT' => 'Symfony\Component\Form\Extension\Core\Type\IntegerType',
-            'INTEGER' => 'Symfony\Component\Form\Extension\Core\Type\IntegerType',
-            'BIGINT' => 'Symfony\Component\Form\Extension\Core\Type\IntegerType',
-            'NUMERIC' => 'Symfony\Component\Form\Extension\Core\Type\NumberType',
+            'TINYINT'      => 'Symfony\Component\Form\Extension\Core\Type\IntegerType',
+            'SMALLINT'     => 'Symfony\Component\Form\Extension\Core\Type\IntegerType',
+            'INTEGER'      => 'Symfony\Component\Form\Extension\Core\Type\IntegerType',
+            'BIGINT'       => 'Symfony\Component\Form\Extension\Core\Type\IntegerType',
+            'NUMERIC'      => 'Symfony\Component\Form\Extension\Core\Type\NumberType',
             // text types
-            'CHAR' => 'Symfony\Component\Form\Extension\Core\Type\TextType',
-            'VARCHAR' => 'Symfony\Component\Form\Extension\Core\Type\TextType',
+            'CHAR'         => 'Symfony\Component\Form\Extension\Core\Type\TextType',
+            'VARCHAR'      => 'Symfony\Component\Form\Extension\Core\Type\TextType',
             // textarea types
-            'LONGVARCHAR' => 'Symfony\Component\Form\Extension\Core\Type\TextType',
-            'BLOB' => 'Symfony\Component\Form\Extension\Core\Type\TextType',
-            'CLOB' => 'Symfony\Component\Form\Extension\Core\Type\TextType',
-            'CLOB_EMU' => 'Symfony\Component\Form\Extension\Core\Type\TextType',
+            'LONGVARCHAR'  => 'Symfony\Component\Form\Extension\Core\Type\TextType',
+            'BLOB'         => 'Symfony\Component\Form\Extension\Core\Type\TextType',
+            'CLOB'         => 'Symfony\Component\Form\Extension\Core\Type\TextType',
+            'CLOB_EMU'     => 'Symfony\Component\Form\Extension\Core\Type\TextType',
             // association types
-            'model' => 'Symfony\Bridge\Propel1\Form\Type\ModelType',
-            'collection' => 'Symfony\Component\Form\Extension\Core\Type\CollectionType',
+            'model'        => 'Symfony\Bridge\Propel1\Form\Type\ModelType',
+            'collection'   => 'Symfony\Component\Form\Extension\Core\Type\CollectionType',
             // array types
-            'PHP_ARRAY' => 'Symfony\Component\Form\Extension\Core\Type\TextType',
+            'PHP_ARRAY'    => 'Symfony\Component\Form\Extension\Core\Type\TextType',
             // choice types
-            'ENUM' => 'Symfony\Component\Form\Extension\Core\Type\TextType',
+            'ENUM'         => 'Symfony\Component\Form\Extension\Core\Type\TextType',
             // boolean types
-            'BOOLEAN' => 'Symfony\Component\Form\Extension\Core\Type\ChoiceType',
-            'BOOLEAN_EMU' => 'Symfony\Component\Form\Extension\Core\Type\ChoiceType',
+            'BOOLEAN'      => 'Symfony\Component\Form\Extension\Core\Type\ChoiceType',
+            'BOOLEAN_EMU'  => 'Symfony\Component\Form\Extension\Core\Type\ChoiceType',
         ));
 
     /**
