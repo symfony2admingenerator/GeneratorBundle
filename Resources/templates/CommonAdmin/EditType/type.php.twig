@@ -73,7 +73,7 @@ class {{ builder.YamlKey|ucfirst }}Type extends BaseType
      */
     protected function canDisplay{{ column.name|classify|php_name }}(\{{ model }} ${{ builder.ModelClass }} = null)
     {
-        {% if column.credentials is not empty %}
+        {% if column.credentials is not empty and column.credentials != 'AdmingenAllowed' %}
             {% if(admingenerator_config('use_jms_security')) %}
                 $credentials = new Expression('{{ column.credentials }}');
             {% else %}
