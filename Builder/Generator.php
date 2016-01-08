@@ -233,45 +233,6 @@ class Generator extends TwigGeneratorGenerator
     }
 
     /**
-     * Inject default action credentials default from associated builder
-     *
-     * This must be executed after $this->mergeParameters() as it will
-     * replace null parameter with empty arrays and $this->mergeParameters()
-     * treats null as "use global config".
-     *
-     * @return array
-     */
-    protected function applyActionsCredentialDefaults(array $params)
-    {
-        $defaultCredentialsFor = array(
-            array('actions', 'new', 'builder.new.credentials'),
-            array('actions', 'excel', 'builder.excel.credentials'),
-            array('actions', 'list', 'builder.list.credentials'),
-            array('object_actions', 'edit', 'builder.edit.credentials'),
-            array('object_actions', 'show', 'builder.show.credentials'),
-        );
-
-        foreach ($defaultCredentialsFor as $config) {
-            list($param, $action, $key) = $config;
-            $default = $this->getFromYaml($key, false);
-
-            if (!array_key_exists($param, $params) || !is_array($params[$param])) {
-                $params[$param] = array();
-            }
-
-            if (!array_key_exists($action, $params[$param]) || !is_array($params[$param][$action])) {
-                $params[$param][$action] = array();
-            }
-
-            if (!array_key_exists('credentials', $params[$param][$action])) {
-                $params[$param][$action]['credentials'] = $default;
-            }
-        }
-
-        return $params;
-    }
-
-    /**
      * Inject default batch and object actions settings
      *
      * @return array
