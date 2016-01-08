@@ -5,6 +5,9 @@ namespace Admingenerated\{{ namespace_prefix }}{{ bundle_name }}\Form\Base{{ bui
 
 use Admingenerator\GeneratorBundle\Form\BaseType;
 use Admingenerator\GeneratorBundle\Form\BaseOptions;
+{% if(admingenerator_config('use_jms_security')) %}
+use JMS\SecurityExtraBundle\Security\Authorization\Expression\Expression;
+{% endif %}
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -71,7 +74,12 @@ class {{ builder.YamlKey|ucfirst }}Type extends BaseType
     protected function canDisplay{{ column.name|classify|php_name }}(\{{ model }} ${{ builder.ModelClass }} = null)
     {
         {% if column.credentials is not empty %}
-            return $this->checkCredentials('{{ column.credentials }}', ${{ builder.ModelClass }});
+            {% if(admingenerator_config('use_jms_security')) %}
+                $credentials = new Expression('{{ column.credentials }}');
+            {% else %}
+                $credentials = '{{ column.credentials }}';
+            {% endif %}
+            return $this->checkCredentials($credentials, ${{ builder.ModelClass }});
         {% else %}
             return true;
         {% endif %}
