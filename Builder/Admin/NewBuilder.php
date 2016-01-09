@@ -20,6 +20,11 @@ class NewBuilder extends BaseBuilder
         return 'new';
     }
 
+    /**
+     * Retrieve the FQCN formType used by this builder
+     * 
+     * @return string
+     */
     public function getFormType()
     {
         return sprintf(

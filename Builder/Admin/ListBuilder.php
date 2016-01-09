@@ -38,10 +38,15 @@ class ListBuilder extends BaseBuilder
         return 'list';
     }
 
+    /**
+     * Retrieve the FQCN formType used by this builder
+     *
+     * @return string
+     */
     public function getFormType()
     {
         return sprintf(
-            '%s\\%s\\Form\Type\\%s\\FilterType',
+            '%s\\%s\\Form\Type\\%s\\FiltersType',
             $this->getVariable('namespace_prefix'),
             $this->getVariable('bundle_name'),
             $this->getModelClass()
