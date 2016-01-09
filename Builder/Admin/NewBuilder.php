@@ -22,7 +22,7 @@ class NewBuilder extends BaseBuilder
 
     /**
      * Retrieve the FQCN formType used by this builder
-     * 
+     *
      * @return string
      */
     public function getFormType()

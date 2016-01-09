@@ -5,6 +5,7 @@ namespace Admingenerator\GeneratorBundle\Guesser;
 use Admingenerator\GeneratorBundle\Exception\NotImplementedException;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\Mapping\ClassMetadataInfo;
+use Symfony\Component\HttpKernel\Kernel;
 
 class DoctrineORMFieldGuesser
 {
@@ -224,20 +225,24 @@ class DoctrineORMFieldGuesser
         $class = $resolved['class'];
         $columnName = $resolved['field'];
 
-        if ('boolean' == $dbType &&
-            (preg_match("#^choice#i", $type) || preg_match("#choice$#i", $type))) {
-            return array(
+        if ('boolean' == $dbType && preg_match("#ChoiceType$#i", $type)) {
+            $options = array(
                 'choices' => array(
-                    0 => 'boolean.no',
-                    1 => 'boolean.yes'
+                    'boolean.no' => 0,
+                    'boolean.yes' => 1
                 ),
                 'placeholder' => 'boolean.yes_or_no',
                 'translation_domain' => 'Admingenerator'
             );
+
+            if (Kernel::MAJOR_VERSION < 3) {
+                $options['choices_as_values'] = true;
+            }
+
+            return $options;
         }
-        
-        if ('boolean' == $dbType &&
-            (preg_match("#^checkbox#i", $type) || preg_match("#checkbox#i", $type))) {
+
+        if ('boolean' == $dbType && preg_match("#CheckboxType#i", $type)) {
             return array(
                 'required' => false,
             );
@@ -260,7 +265,7 @@ class DoctrineORMFieldGuesser
             );
         }
 
-        if (preg_match("#^entity#i", $type) || preg_match("#entity$#i", $type)) {
+        if (preg_match("#EntityType$#i", $type)) {
             $mapping = $this->getMetadatas($class)->getAssociationMapping($columnName);
 
             return array(
@@ -271,14 +276,14 @@ class DoctrineORMFieldGuesser
             );
         }
 
-        if (preg_match("#^collection#i", $type) || preg_match("#collection$#i", $type)) {
+        if (preg_match("#CollectionType$#i", $type)) {
             $mapping = $this->getMetadatas($class)->getAssociationMapping($columnName);
 
             return array(
                 'allow_add'     => true,
                 'allow_delete'  => true,
                 'by_reference'  => false,
-                'type' => 'entity',
+                'type' => $filter ? $this->filterTypes['entity'] : $this->formTypes['entity'],
                 'options' => array(
                     'class' => $mapping['targetEntity']
                 )
@@ -286,7 +291,7 @@ class DoctrineORMFieldGuesser
         }
 
         return array(
-            'required' => $this->isRequired($class, $columnName)
+            'required' => $filter ? false : $this->isRequired($class, $columnName)
         );
     }
 
