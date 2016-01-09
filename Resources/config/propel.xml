@@ -7,7 +7,6 @@
         <parameter key="admingenerator.propel.class">Admingenerator\GeneratorBundle\Generator\PropelGenerator</parameter>
         <parameter key="admingenerator.fieldguesser.propel.class">Admingenerator\GeneratorBundle\Guesser\PropelORMFieldGuesser</parameter>
         <parameter key="admingenerator.queryfilter.propel.class">Admingenerator\GeneratorBundle\QueryFilter\PropelQueryFilter</parameter>
-        <parameter key="admingenerator.sessionserializer.propel.class">Admingenerator\GeneratorBundle\SessionSerializer\PropelSessionSerializer</parameter>
     </parameters>
     
     <services>
@@ -36,9 +35,5 @@
                 <argument type="service" id="kernel" />
             </call>
         </service>
-
-        <service id="admingenerator.sessionserializer.propel" class="%admingenerator.sessionserializer.propel.class%">
-        </service>
-        
     </services>
 </container>

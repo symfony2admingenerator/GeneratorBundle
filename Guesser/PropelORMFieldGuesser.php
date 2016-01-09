@@ -4,6 +4,7 @@ namespace Admingenerator\GeneratorBundle\Guesser;
 
 use Admingenerator\GeneratorBundle\Exception\NotImplementedException;
 use Doctrine\Common\Util\Inflector;
+use Symfony\Component\HttpKernel\Kernel;
 
 class PropelORMFieldGuesser
 {
@@ -279,26 +280,32 @@ class PropelORMFieldGuesser
         $columnName = $resolved['field'];
 
         if ((\PropelColumnTypes::BOOLEAN == $dbType || \PropelColumnTypes::BOOLEAN_EMU == $dbType) &&
-            (preg_match("#^choice#i", $type) || preg_match("#choice$#i", $type))) {
-            return array(
+            preg_match("#ChoiceType$#i", $type)) {
+            $options = array(
                 'choices' => array(
-                   0 => 'boolean.no',
-                   1 => 'boolean.yes'
+                    'boolean.no' => 0,
+                    'boolean.yes' => 1
                 ),
                 'placeholder' => 'boolean.yes_or_no',
                 'translation_domain' => 'Admingenerator'
             );
+
+            if (Kernel::MAJOR_VERSION < 3) {
+                $options['choices_as_values'] = true;
+            }
+
+            return $options;
         }
 
         if (!$filter &&
             (\PropelColumnTypes::BOOLEAN == $dbType || \PropelColumnTypes::BOOLEAN_EMU == $dbType) &&
-            (preg_match("#^checkbox#i", $type) || preg_match("#checkbox#i", $type))) {
+            preg_match("#CheckboxType#i", $type)) {
             return array(
                 'required' => false
             );
         }
 
-        if (preg_match("#^model#i", $type) || preg_match("#model$#i", $type)) {
+        if (preg_match("#ModelType$#i", $type)) {
             $relation = $this->getRelation($columnName, $class);
             if ($relation) {
                 if (\RelationMap::MANY_TO_ONE === $relation->getType()) {
@@ -315,7 +322,7 @@ class PropelORMFieldGuesser
             }
         }
 
-        if (preg_match("#^collection#i", $type) || preg_match("#collection$#i", $type)) {
+        if (preg_match("#CollectionType$#i", $type)) {
             $relation = $this->getRelation($columnName, $class);
 
             return array(
