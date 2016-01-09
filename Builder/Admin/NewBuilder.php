@@ -19,4 +19,14 @@ class NewBuilder extends BaseBuilder
     {
         return 'new';
     }
+
+    public function getFormType()
+    {
+        return sprintf(
+            '%s\\%s\\Form\Type\\%s\\NewType',
+            $this->getVariable('namespace_prefix'),
+            $this->getVariable('bundle_name'),
+            $this->getModelClass()
+        );
+    }
 }

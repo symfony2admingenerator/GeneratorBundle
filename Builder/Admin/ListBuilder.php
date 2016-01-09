@@ -38,6 +38,16 @@ class ListBuilder extends BaseBuilder
         return 'list';
     }
 
+    public function getFormType()
+    {
+        return sprintf(
+            '%s\\%s\\Form\Type\\%s\\FilterType',
+            $this->getVariable('namespace_prefix'),
+            $this->getVariable('bundle_name'),
+            $this->getModelClass()
+        );
+    }
+
     public function getFilterColumns()
     {
         if (null === $this->filterColumns) {
