@@ -8,6 +8,8 @@ This site provides API documentation for latest build of Symfony2 Admin Generato
     - [General configuration][install-general-configuration]
 2. Getting started
  	- [Creating an admingenerator][start-create-admin]
+ 	- [Internationalization][start-internationalization]
+3. Model configuration
  	- [General parameters][start-general-params]
  	- [List/filters builder][start-list-builder]
  	- [Edit/new builder][start-edit-builder]
@@ -26,7 +28,9 @@ This site provides API documentation for latest build of Symfony2 Admin Generato
 [install-base-install]: install/base-installation.md
 [install-general-configuration]: install/general-configuration.md
 
-[start-create-admin]: admin/create-admin.md
+[start-create-admin]: getting-started/create-admin.md
+[start-internationalization]: getting-started/internationalization.md
+
 [start-general-params]: admin/general-params.md
 [start-list-builder]: admin/list-builder.md
 [start-edit-builder]: admin/edit-builder.md
