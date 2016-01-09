@@ -1,19 +1,26 @@
 <?php
 
-namespace Admingenerator\GeneratorBundle\CacheWarmer;
+namespace Admingenerator\GeneratorBundle\Filesystem;
 
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 use Symfony\Component\Finder\Finder;
 
 /**
- * Finds all the generator.yml.
+ * Finds all the *-generator.yml.
  *
  * @author Cedric LOMBARDOT
+ * @author Stéphane Escandell <stephane.escandell@gmail.com>
  */
-class GeneratorFinder
+class GeneratorsFinder
 {
+    /**
+     * @var KernelInterface
+     */
     private $kernel;
+    /**
+     * @var array
+     */
     private $yamls;
 
     /**
@@ -31,7 +38,7 @@ class GeneratorFinder
      *
      * @return array An array of yaml files
      */
-    public function findAllGeneratorYamls()
+    public function findAll()
     {
         if (null !== $this->yamls) {
             return $this->yamls;
@@ -40,7 +47,7 @@ class GeneratorFinder
         $yamls = array();
 
         foreach ($this->kernel->getBundles() as $name => $bundle) {
-            foreach ($this->findGeneratorYamlInBundle($bundle) as $yaml) {
+            foreach ($this->find($bundle) as $yaml) {
                 $yamls[$yaml] = $yaml;
             }
         }
@@ -55,7 +62,7 @@ class GeneratorFinder
      *
      * @return array of yaml paths
      */
-    private function findGeneratorYamlInBundle(BundleInterface $bundle)
+    private function find(BundleInterface $bundle)
     {
         $yamls =  array();
 
@@ -65,7 +72,6 @@ class GeneratorFinder
 
         $finder = new Finder();
         $finder->files()
-               ->name('generator.yml')
                ->name('*-generator.yml')
                ->in($bundle->getPath().'/Resources/config');
 

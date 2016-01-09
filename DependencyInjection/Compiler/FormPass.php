@@ -5,19 +5,35 @@ namespace Admingenerator\GeneratorBundle\DependencyInjection\Compiler;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 
-class FormCompilerPass implements CompilerPassInterface
+/**
+ * Class FormCompilerPass
+ * @package Admingenerator\GeneratorBundle\DependencyInjection\Compiler
+ * @author Stéphane Escandell <stephane.escandell@gmail.com>
+ */
+class FormPass implements CompilerPassInterface
 {
     /**
      * {@inheritdoc}
      */
     public function process(ContainerBuilder $container)
     {
+        $this->injectFormThemeConfiguration($container);
+    }
+
+    /**
+     * Check if we need to automatically add form theme from admingen in the
+     * application configuration.
+     *
+     * @param ContainerBuilder $container
+     */
+    private function injectFormThemeConfiguration(ContainerBuilder $container)
+    {
         if (($twigConfiguration = $container->getParameter('admingenerator.twig')) !== false) {
             $resources = $container->getParameter('twig.form.resources');
             $alreadyIn = in_array('bootstrap_3_layout.html.twig', $resources);
 
             if ($twigConfiguration['use_form_resources'] && !$alreadyIn) {
-                $key = array_search('form_div_layout.html.twig', $resources) ?: 0;
+                $key = array_search('form_div_layout.html.twig', $resources) ? array_search('form_div_layout.html.twig', $resources) : 0;
                 // Insert right after form_div_layout.html.twig if exists
                 array_splice($resources, ++$key, 0, array('bootstrap_3_layout.html.twig'));
 

@@ -27,7 +27,7 @@
         "symfony2admingenerator/twig-generator": "~1.2",
         "knplabs/knp-menu-bundle": ">1.0,<2.2",
         "white-october/pagerfanta-bundle": "~1.0",
-        "twig/twig": ">= 1.12.0",
+        "twig/twig": "~1.12",
         "twig/extensions": "~1.0"
     },
     "require-dev": {

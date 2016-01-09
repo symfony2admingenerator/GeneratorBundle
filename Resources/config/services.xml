@@ -9,7 +9,6 @@
         <parameter key="routing.loader.admingenerator.class">Admingenerator\GeneratorBundle\Routing\RoutingLoader</parameter>
         <parameter key="routing.loader.admingenerator_nested.class">Admingenerator\GeneratorBundle\Routing\NestedRoutingLoader</parameter>
         <parameter key="admingenerator.cache_warmer.class">Admingenerator\GeneratorBundle\CacheWarmer\GeneratorCacheWarmer</parameter>
-        <parameter key="admingenerator.finder.class">Admingenerator\GeneratorBundle\CacheWarmer\GeneratorFinder</parameter>
         <parameter key="form.type_guesser.admingenerator.class">Admingenerator\GeneratorBundle\Validator\ValidatorTypeGuesser</parameter>
         <parameter key="admingenerator.pagination.class">Admingenerator\GeneratorBundle\Pagerfanta\View\AdmingeneratorView</parameter>
         <parameter key="admingenerator.base_admin_template">AdmingeneratorOldThemeBundle::base_admin.html.twig</parameter>
@@ -119,15 +118,9 @@
             <tag name="admingenerator.validator.propel" alias="propel_model_class" />
         </service>
 
-        <!-- Warmup -->
-        <service id="admingenerator.finder" class="%admingenerator.finder.class%" public="false">
-            <argument type="service" id="kernel" />
-        </service>
-
         <service id="admingenerator.cache_warmer" class="%admingenerator.cache_warmer.class%" public="false">
             <tag name="kernel.cache_warmer" priority="100" />
             <argument type="service" id="service_container" />
-            <argument type="service" id="admingenerator.finder" />
         </service>
         
     </services>

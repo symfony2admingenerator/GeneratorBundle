@@ -19,11 +19,6 @@ abstract class BaseType extends AbstractType
     protected $authorizationChecker;
 
     /**
-     * @var array
-     */
-    protected $groups = array();
-
-    /**
      * @param AuthorizationCheckerInterface $authorizationChecker
      */
     public function setAuthorizationChecker(AuthorizationCheckerInterface $authorizationChecker)
@@ -46,21 +41,6 @@ abstract class BaseType extends AbstractType
     {
         return 'AdmingenAllowed' == $credentials
             || $this->authorizationChecker->isGranted($credentials, $model);
-    }
-
-    /**
-     * This method is used to pass the securityContext into custom formTypes.
-     *
-     * @param string|FormTypeInterface $formType
-     * @return string|FormTypeInterface
-     */
-    protected function inject($formType)
-    {
-        if (is_object($formType) && method_exists($formType, 'setAuthorizationChecker')) {
-            $formType->setAuthorizationChecker($this->authorizationChecker);
-        }
-
-        return $formType;
     }
 
     /**
@@ -91,19 +71,7 @@ abstract class BaseType extends AbstractType
             // merge options from form type class
             $fieldOptions = $this->$getter($fieldOptions, $builderOptions);
         }
-        
-        // Pass on securityContext to collection types
-        if (array_key_exists('type', $fieldOptions)) {
-            $fieldType = $fieldOptions['type'];
-            $fieldOptions['type'] = $this->inject($fieldType);
-            $fieldOptions['validation_groups'] = $builderOptions['validation_groups'];
-        }
 
         return $fieldOptions;
-    }
-
-    public function getName()
-    {
-        return 'admingenerator_base_type';
     }
 }

@@ -6,6 +6,7 @@ use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\HttpKernel\CacheWarmer\CacheWarmerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Admingenerator\GeneratorBundle\Exception\GeneratedModelClassNotFoundException;
+use Admingenerator\GeneratorBundle\Filesystem\GeneratorsFinder;
 
 /**
  * Generate all admingenerated bundle on warmup
@@ -14,22 +15,25 @@ use Admingenerator\GeneratorBundle\Exception\GeneratedModelClassNotFoundExceptio
  */
 class GeneratorCacheWarmer implements CacheWarmerInterface
 {
-
+    /**
+     * @var ContainerInterface
+     */
     protected $container;
 
+    /**
+     * @var GeneratorsFinder
+     */
     protected $finder;
-
-    protected $yaml_datas = array();
 
     /**
      * Constructor.
      *
      * @param ContainerInterface $container The dependency injection container
      */
-    public function __construct(ContainerInterface $container, GeneratorFinder $finder)
+    public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
-        $this->finder = $finder;
+        $this->finder = new GeneratorsFinder($container->get('kernel'));
     }
 
     /**
@@ -43,7 +47,7 @@ class GeneratorCacheWarmer implements CacheWarmerInterface
             $this->propelInit();
         }
 
-        foreach ($this->finder->findAllGeneratorYamls() as $yaml) {
+        foreach ($this->finder->findAll() as $yaml) {
             try {
                 $this->buildFromYaml($yaml);
             } catch (GeneratedModelClassNotFoundException $e) {
@@ -68,10 +72,8 @@ class GeneratorCacheWarmer implements CacheWarmerInterface
 
     protected function buildFromYaml($file)
     {
-        $this->parseYaml($file);
-        $service = $this->yaml_datas['generator'];
-
-        $generator = $this->container->get($service);
+        $generatorConfiguration = Yaml::parse(file_get_contents($file));
+        $generator = $this->container->get($generatorConfiguration['generator']);
         $generator->setGeneratorYml($file);
 
         // windows support too
@@ -81,12 +83,7 @@ class GeneratorCacheWarmer implements CacheWarmerInterface
             $generator->setBaseGeneratorName('');
         }
 
-        $generator->build();
-    }
-
-    protected function parseYaml($file)
-    {
-        $this->yaml_datas = Yaml::parse(file_get_contents($file));
+        $generator->build(true);
     }
 
     /**

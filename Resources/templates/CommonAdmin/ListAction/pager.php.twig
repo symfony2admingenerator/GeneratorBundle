@@ -65,7 +65,7 @@
      */
     protected function getPerPage()
     {
-        return $this->get('session')->get($this->getSessionPrefix().'List\PerPage', {{ max_per_page is defined ? max_per_page : 10 }});
+        return $this->get('session')->get($this->getSessionPrefix().'List\PerPage', {{ maxPerPage is defined ? maxPerPage : 10 }});
     }
 
     protected function getPager()

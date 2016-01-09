@@ -20,17 +20,17 @@ class FiltersType extends BaseType
     }
 
     {% for column in builder.filterColumns %}
-        /**
+       /**
         * Get form type for {{ column.name }} field.
         *
         * @return string|FormTypeInterface Field form type.
         */
         protected function getType{{ column.name|classify|php_name }}()
         {
-        return $this->inject('{{ column.filterType }}');
+        return '{{ column.filterType }}';
         }
 
-        /**
+       /**
         * Get options for {{ column.name }} field.
         *
         * @param  array $builderOptions The builder options.
@@ -45,12 +45,12 @@ class FiltersType extends BaseType
                     'label': column.label,
                     'translation_domain': i18n_catalog|default('Admin'),
                     'required': false
-                }|merge(column.filterOptions)|as_php|convert_as_form(column.filterType) }}, $builderOptions, $options
+                }|merge(column.filterOptions)|as_php }}, $builderOptions, $options
             );
         }
 
-        /**
-        * Check filters groups for {{ column.name }} field.
+       /**
+        * Check filters credentials for {{ column.name }} field.
         *
         * @return boolean
         */
@@ -64,7 +64,7 @@ class FiltersType extends BaseType
         }
     {% endfor %}
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'filters_{{ bundle_name|lower }}_{{ builder.ModelClass|lower }}';
     }

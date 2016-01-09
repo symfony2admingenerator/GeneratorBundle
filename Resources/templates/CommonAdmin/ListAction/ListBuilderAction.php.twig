@@ -144,10 +144,7 @@ class ListController extends BaseController
 
     protected function getFiltersType()
     {
-        $type = new FiltersType();
-        $type->setAuthorizationChecker($this->get('security.authorization_checker'));
-
-        return $type;
+        return '{{ builder.formType }}';
     }
 
    /**
