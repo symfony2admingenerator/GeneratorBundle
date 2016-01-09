@@ -1,6 +1,6 @@
 # Documentation
 ---------------------------------------
-This site provides API documentation for latest build of Symfony2 Admin Generator. If you're working with older versions we encourage you to update to latest build. If you're getting errors or have trouble with updating see [submitting issues][general-submitting-issues] and open a ticket on github.
+This site provides API documentation for latest build of Symfony2 Admin Generator. If you're working with older versions we encourage you to update to latest build. If you're getting errors or have trouble with updating see [submitting issues][support-issues] and open a ticket on github.
 
 ## Table of contents
 1. Installation
@@ -16,9 +16,12 @@ This site provides API documentation for latest build of Symfony2 Admin Generato
     - [Action customization][cust-actions]
 4. Cookbook
     - [][]
+5. Support and contribution
+    - [Submitting issues][support-issues]
+    - [Contributing code][support-contributing]
 
-
-[general-submitting-issues]: submitting-issues.md
+[support-contributing]: support-and-contribution/contributing.md
+[support-issues]: support-and-contribution/submitting-issues.md
 
 [install-base-install]: install/base-installation.md
 [install-general-configuration]: install/general-configuration.md
