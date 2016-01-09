@@ -24,7 +24,7 @@
         "symfony/symfony": "~2.7",
         "doctrine/common": "~2.2",
         "sensio/generator-bundle": "~3.0",
-        "symfony2admingenerator/twig-generator": "~1.1",
+        "symfony2admingenerator/twig-generator": "~1.2",
         "knplabs/knp-menu-bundle": ">1.0,<2.2",
         "white-october/pagerfanta-bundle": "~1.0",
         "twig/twig": ">= 1.12.0",
