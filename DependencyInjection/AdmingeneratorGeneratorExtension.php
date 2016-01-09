@@ -240,42 +240,58 @@ class AdmingeneratorGeneratorExtension extends Extension implements PrependExten
         foreach($finder->findAll() as $generator) {
             $generator = Yaml::parse(file_get_contents($generator));
             if (!array_key_exists('params', $generator)) {
-                throw new \InvalidArgumentException('Generator mal');
+                throw new \InvalidArgumentException('"params" field is missing in ' . $generator);
             }
-            $this->registerFormsServicesFromGenerator($generator['params'], $container);
+
+            if (!array_key_exists('builders', $generator)) {
+                throw new \InvalidArgumentException('"builders" field is missing in ' . $generator);
+            }
+
+            $this->registerFormsServicesFromGenerator($generator['params'], array_keys($generator['builders']), $container);
         }
     }
 
     /**
-     * @param array $generator
+     * Register forms as services for a generator.
+     * Register only generated forms based on defined builders.
+     *
+     * @param array $generatorParameters
+     * @param array $builders
+     * @param ContainerBuilder $container
      */
-    private function registerFormsServicesFromGenerator(array $generatorParameters, ContainerBuilder $container)
+    private function registerFormsServicesFromGenerator(array $generatorParameters, array $builders, ContainerBuilder $container)
     {
         $modelParts = explode('\\', $generatorParameters['model']);
         $model = array_pop($modelParts);
         $formsBundleNamespace = $generatorParameters['namespace_prefix'] . '\\' . $generatorParameters['bundle_name'] . '\\Form\\Type\\' . $model;
         $authorizationCheckerServiceReference = new Reference('security.authorization_checker');
 
-        $newDefinition = new Definition($formsBundleNamespace . '\\' . 'NewType');
-        $newDefinition
-            ->addMethodCall('setAuthorizationChecker', array($authorizationCheckerServiceReference))
-            ->addTag('form.type');
+        if (in_array('new', $builders)) {
+            $newDefinition = new Definition($formsBundleNamespace . '\\' . 'NewType');
+            $newDefinition
+                ->addMethodCall('setAuthorizationChecker', array($authorizationCheckerServiceReference))
+                ->addTag('form.type');
 
-        $editDefinition = new Definition($formsBundleNamespace . '\\' . 'EditType');
-        $editDefinition
-            ->addMethodCall('setAuthorizationChecker', array($authorizationCheckerServiceReference))
-            ->addTag('form.type');
+            $container->setDefinition('admingen_generator_'.strtolower($model).'_new', $newDefinition);
+        }
 
-        $filterDefinition = new Definition($formsBundleNamespace . '\\' . 'FiltersType');
-        $filterDefinition
-            ->addMethodCall('setAuthorizationChecker', array($authorizationCheckerServiceReference))
-            ->addTag('form.type');
+        if (in_array('edit', $builders)) {
+            $editDefinition = new Definition($formsBundleNamespace . '\\' . 'EditType');
+            $editDefinition
+                ->addMethodCall('setAuthorizationChecker', array($authorizationCheckerServiceReference))
+                ->addTag('form.type');
 
-        $container->addDefinitions(array(
-            'admingen_generator_'.strtolower($model).'_new' => $newDefinition,
-            'admingen_generator_'.strtolower($model).'_edit' => $editDefinition,
-            'admingen_generator_'.strtolower($model).'_filter' => $filterDefinition
-        ));
+            $container->setDefinition('admingen_generator_'.strtolower($model).'_edit', $editDefinition);
+        }
+
+        if (in_array('list', $builders) || in_array('nested_list', $builders)) {
+            $filterDefinition = new Definition($formsBundleNamespace . '\\' . 'FiltersType');
+            $filterDefinition
+                ->addMethodCall('setAuthorizationChecker', array($authorizationCheckerServiceReference))
+                ->addTag('form.type');
+
+            $container->setDefinition('admingen_generator_'.strtolower($model).'_filter', $filterDefinition);
+        }
     }
 
     /**
