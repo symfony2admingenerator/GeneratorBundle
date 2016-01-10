@@ -7,8 +7,8 @@
 
 ### 1. Usage
 
-When using Doctrine ORM, all Managers are auto-selected by the use of getManagerForClass of Doctrine. 
+When using Doctrine, all Managers are auto-selected by the use of getManagerForClass of Doctrine. 
 
 ### 2. Support
 
-Multiple Entity Managers are only automatically implemented for **Doctrine ORM**.
+Multiple Object Managers are only automatically implemented for **Doctrine (ORM and ODM)**.

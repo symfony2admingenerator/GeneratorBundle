@@ -3,7 +3,6 @@
 namespace Admingenerator\GeneratorBundle\Generator;
 
 use Admingenerator\GeneratorBundle\Builder\Generator as AdminGenerator;
-use Admingenerator\GeneratorBundle\Exception\CantGenerateException;
 use Admingenerator\GeneratorBundle\Builder\Doctrine\ListBuilderAction;
 use Admingenerator\GeneratorBundle\Builder\Doctrine\ListBuilderTemplate;
 use Admingenerator\GeneratorBundle\Builder\Doctrine\NestedListBuilderAction;
@@ -50,12 +49,6 @@ class DoctrineGenerator extends Generator
         );
         $generator->setBaseGeneratorName($this->getBaseGeneratorName());
 
-        $embed_types = $generator->getFromYaml('params.embed_types', array());
-
-        foreach ($embed_types as $yaml_path) {
-            $this->prebuildEmbedType($yaml_path, $generator);
-        }
-
         $builders = $generator->getFromYaml('builders', array());
 
         if (array_key_exists('list', $builders)) {
@@ -98,54 +91,6 @@ class DoctrineGenerator extends Generator
         $generator->writeOnDisk(
             $this->getCachePath(
                 $generator->getFromYaml('params.namespace_prefix'),
-                $generator->getFromYaml('params.bundle_name')
-            )
-        );
-    }
-
-    public function prebuildEmbedType($yaml_path, AdminGenerator $generator)
-    {
-        $pattern_string = '/(?<namespace_prefix>(?>.+\:)?.+)\:(?<bundle_name>.+Bundle)\:(?<generator_path>.*?)$/';
-
-        if (preg_match($pattern_string, $yaml_path, $match_string)) {
-            $namespace_prefix = $match_string['namespace_prefix'];
-            $bundle_name      = $match_string['bundle_name'];
-            $generator_path   = $match_string['generator_path'];
-        } else {
-            $namespace_prefix = $generator->getFromYaml('params.namespace_prefix');
-            $bundle_name      = $generator->getFromYaml('params.bundle_name');
-            $generator_path   = $yaml_path;
-        }
-
-        $yaml_file = $this->kernel->locateResource('@'.$namespace_prefix.$bundle_name.'/Resources/config/'.$generator_path);
-
-        if (!file_exists($yaml_file)) {
-            throw new CantGenerateException(
-                "Can't generate embed type for $yaml_file, file not found."
-            );
-        }
-
-        $embedGenerator = new AdminGenerator($this->cache_dir, $yaml_file);
-        $embedGenerator->setBundleConfig($this->bundleConfig);
-        $embedGenerator->setRouter($this->router);
-        $embedGenerator->setBaseAdminTemplate(
-            $embedGenerator->getFromYaml(
-                'base_admin_template',
-                $embedGenerator->getFromBundleConfig('base_admin_template')
-            )
-        );
-        $embedGenerator->setFieldGuesser($this->getFieldGuesser());
-        $embedGenerator->setMustOverwriteIfExists($this->needToOverwrite($embedGenerator));
-        $embedGenerator->setTwigExtensions($this->twig->getExtensions());
-        $embedGenerator->setTwigFilters($this->twig->getFilters());
-        $embedGenerator->setTemplateDirs($this->templatesDirectories);
-
-        $embedGenerator->addBuilder(new EditBuilderType());
-        $embedGenerator->addBuilder(new NewBuilderType());
-
-        $embedGenerator->writeOnDisk(
-            $this->getCachePath(
-                $embedGenerator->getFromYaml('params.namespace_prefix'),
                 $generator->getFromYaml('params.bundle_name')
             )
         );
