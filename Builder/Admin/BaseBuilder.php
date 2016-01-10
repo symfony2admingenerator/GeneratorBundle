@@ -232,11 +232,8 @@ class BaseBuilder extends GenericBaseBuilder
 
     protected function setUserColumnConfiguration(Column $column)
     {
-        $options = $this->getVariable(
-            sprintf('fields[%s]', $column->getName()),
-            array(),
-            true
-        );
+        $optionsFields = $this->getVariable('fields', array());
+        $options = array_key_exists($column->getName(), $optionsFields) ? $optionsFields[$column->getName()] : array();
 
         foreach ($options as $option => $value) {
             $column->setProperty($option, $value);
