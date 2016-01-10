@@ -176,11 +176,10 @@ class ListBuilder extends BaseBuilder
 
     protected function setUserBatchActionConfiguration(Action $action)
     {
-        $builderOptions = $this->getVariable(
-            sprintf('batch_actions[%s]', $action->getName()),
-            array(),
-            true
-        );
+        $batchActions = $this->getVariable('batch_actions', array());
+        $builderOptions = is_array($batchActions) && array_key_exists($action->getName(), $batchActions)
+            ? $batchActions[$action->getName()]
+            : array();
 
         $globalOptions = $this->getGenerator()->getFromYaml(
             'params.batch_actions.'.$action->getName(),
