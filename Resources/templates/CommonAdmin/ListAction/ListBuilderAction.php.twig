@@ -69,26 +69,6 @@ class ListController extends BaseController
     }
 
     /**
-     * Get list filters URL
-     *
-     * @return string
-     */
-    protected function getFiltersUrl()
-    {
-        return $this->generateUrl($this->getFiltersRoute());
-    }
-
-    /**
-     * Get list filters route
-     *
-     * @return string
-     */
-    protected function getFiltersRoute()
-    {
-        return "{{ builder.baseActionsRoute ~ '_filters' }}";
-    }
-
-    /**
      * Get additional parameters for rendering.
      *
      * @return array
@@ -134,29 +114,6 @@ class ListController extends BaseController
         // ORM JOB
     }
     {% endblock %}
-
-    {% block processFilters -%}
-    protected function processFilters($queryFilter)
-    {
-        // ORM JOB
-    }
-    {% endblock %}
-
-    protected function getFiltersType()
-    {
-        return '{{ builder.formType }}';
-    }
-
-   /**
-    * Get optional form filter options.
-    *
-    * @param
-    * @return array
-    */
-    protected function getFiltersOptions()
-    {
-        return array();
-    }
 
     {% block getQueryFilter -%}
     protected function getQueryFilter($query)

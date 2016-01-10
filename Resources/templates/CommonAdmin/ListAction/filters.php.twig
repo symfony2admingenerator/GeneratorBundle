@@ -1,4 +1,12 @@
 {% block filters %}
+
+   /**
+    * Action called on filter request. After the call, the user is redirected
+    * to the list page.
+    *
+    * @param Request $request The request
+    * @return RedirectResponse
+    **/
     public function filtersAction(Request $request)
     {
         $this->request = $request;
@@ -48,9 +56,76 @@
     {% endblock %}
 
     {% block getFilters -%}
+   /**
+    * @return array
+    **/
     protected function getFilters()
     {
         return $this->get('session')->get($this->getSessionPrefix().'List\Filters', array());
     }
     {% endblock %}
+
+    protected function processFilters($queryFilter)
+    {
+        $filterObject = $this->getFilters();
+
+    {% for filter,column in builder.filterColumns %}
+        if (isset($filterObject['{{ column.name }}']) && null !== $filterObject['{{ column.name }}']) {
+            $this->filter{{ filter|classify }}($queryFilter, $filterObject['{{ column.name }}']);
+        }
+    {% endfor %}
+    }
+
+    {% for filter,column in builder.filterColumns %}
+   /**
+    * Add filters to the query for {{ filter }}
+    *
+    * @param queryFilter The queryFilter
+    * @param mixed The value
+    */
+    protected function filter{{ filter|classify }}($queryFilter, $value)
+    {
+        $queryFilter->add{{ builder.fieldGuesser().dbType(model, column.filterOn)|classify }}Filter('{{ column.filterOn }}', $value{{ column.manyToMany ? ', ' ~ column.manyToMany : '' }});
+    }
+    {% endfor %}
+
+   /**
+    * Returns the FilterType form FQCN
+    *
+    * @return string
+    */
+    protected function getFiltersType()
+    {
+        return '{{ builder.formType }}';
+    }
+
+   /**
+    * Get optional form filter options.
+    *
+    * @return array
+    */
+    protected function getFiltersOptions()
+    {
+        return array();
+    }
+
+   /**
+    * Get list filters URL
+    *
+    * @return string
+    */
+    protected function getFiltersUrl()
+    {
+        return $this->generateUrl($this->getFiltersRoute());
+    }
+
+   /**
+    * Get list filters route
+    *
+    * @return string
+    */
+    protected function getFiltersRoute()
+    {
+        return "{{ builder.baseActionsRoute ~ '_filters' }}";
+    }
 {% endblock %}
