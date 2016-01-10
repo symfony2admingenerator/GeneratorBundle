@@ -36,7 +36,7 @@ abstract class DoctrineFieldGuesser
 
     public function __construct(ManagerRegistry $registry, $objectModel, array $formTypes, array $filterTypes, $guessRequired, $defaultRequired)
     {
-        if (!in_array($objectModel, array())) {
+        if (!in_array($objectModel = strtolower($objectModel), array('document', 'entity'))) {
             throw new \InvalidArgumentException('$objectModel must be Document or Entity');
         }
 
