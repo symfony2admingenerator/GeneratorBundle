@@ -237,7 +237,7 @@ class AdmingeneratorGeneratorExtension extends Extension implements PrependExten
     {
         $finder = new GeneratorsFinder($this->kernel);
 
-        foreach($finder->findAll() as $generator) {
+        foreach($finder->findAll() as $path => $generator) {
             $generator = Yaml::parse(file_get_contents($generator));
             if (!array_key_exists('params', $generator)) {
                 throw new \InvalidArgumentException('"params" field is missing in ' . $generator);
@@ -246,7 +246,9 @@ class AdmingeneratorGeneratorExtension extends Extension implements PrependExten
             if (!array_key_exists('builders', $generator)) {
                 throw new \InvalidArgumentException('"builders" field is missing in ' . $generator);
             }
-
+            preg_match('/[^\/]*-generator.yml/', $path, $prefix);
+            $prefix = substr($prefix[0], 0, strlen($prefix[0]) - strlen('-generator.yml'));
+            $generator['params']['prefix'] = $prefix;
             $this->registerFormsServicesFromGenerator($generator['params'], array_keys($generator['builders']), $container);
         }
     }
@@ -263,7 +265,7 @@ class AdmingeneratorGeneratorExtension extends Extension implements PrependExten
     {
         $modelParts = explode('\\', $generatorParameters['model']);
         $model = array_pop($modelParts);
-        $formsBundleNamespace = $generatorParameters['namespace_prefix'] . '\\' . $generatorParameters['bundle_name'] . '\\Form\\Type\\' . $model;
+        $formsBundleNamespace = $generatorParameters['namespace_prefix'] . '\\' . $generatorParameters['bundle_name'] . '\\Form\\Type\\' . $generatorParameters['prefix'] . $model;
         $authorizationCheckerServiceReference = new Reference('security.authorization_checker');
 
         if (in_array('new', $builders)) {
