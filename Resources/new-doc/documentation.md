@@ -14,6 +14,7 @@ This site provides API documentation for latest build of Symfony2 Admin Generato
  	- [List/filters builder][start-list-builder]
  	- [Edit/new builder][start-edit-builder]
  	- [Excel builder][start-excel-builder]
+ 	- [Security][start-security]
 3. Customization
     - [Action customization][cust-actions]
 4. Cookbook
@@ -35,5 +36,6 @@ This site provides API documentation for latest build of Symfony2 Admin Generato
 [start-list-builder]: admin/list-builder.md
 [start-edit-builder]: admin/edit-builder.md
 [start-excel-builder]: admin/excel-builder.md
+[start-security]: admin/security.md
 
 [cust-actions]: customization/actions.md
