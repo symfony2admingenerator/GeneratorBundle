@@ -11,6 +11,7 @@ admingenerator_generator:
     use_doctrine_orm: false
     use_doctrine_odm: false
     use_propel: false
+    use_jms_security: false
     guess_required: true
     default_required: true
     overwrite_if_exists: false
@@ -52,6 +53,11 @@ admingenerator_generator:
 `use_propel`: __default__: `false` __type__: `boolean`
 
 You must enable one of the model managers to be able to use the bundle. Enable the correct one with a simple `true`.
+
+### Use JMS Security Extra bundle
+`use_jms_security`: __default__: `false` __type__: `boolean`
+
+Set this to true to enable the JMS Security bundle to parse the credentials defined in your model configuration.
 
 ### Guess required
 `guess_required`: __default__: `true` __type__: `boolean`

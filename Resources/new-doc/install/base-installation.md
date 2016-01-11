@@ -13,21 +13,20 @@ Run following commands:
 * `composer update symfony2admingenerator/generator-bundle`
 
 > **Note:** If you're getting **no matching package found** error then you must also add `"minimum-stability": "dev"` to your **composer.json** file.
-    
+
 ### 2. Enable bundles
 
-Admin Generator deppends on:
- 
+This bundle depends on:
+
  * KnpMenuBundle
  * WhiteOctoberPagerfantaBundle
- * JMSSecurityExtraBundle
 
 > **Note:** there are also some optional dependencies, each is described in corresponding feature`s doc. This guide describes only the minimal-setup. 
 
 Enable Admin Generator and its dependencies in your `app/AppKernel.php`:
 
 ```php
-<?php 
+<?php
 public function registerBundles()
 {
     $bundles = array(
@@ -42,13 +41,15 @@ public function registerBundles()
 }
 ```
 
-You also need to configure the JMS Security Extra Bundle:
+If you want to use the JMS Security Extra expressions, make sure to install the bundle and enable it in the config:
 
 ```yaml
 jms_security_extra:
     # Enables expression language
     expressions: true
 
+admingenerator_generator:
+	use_jms_security: true
 ```
 
 ### 3. Basic configuration
@@ -61,7 +62,7 @@ admingenerator_generator:
     use_propel:           true
     use_doctrine_orm:     true
     use_doctrine_odm:     false
-    
+
     # add this line if you want to use assetic
     base_admin_template: AdmingeneratorGeneratorBundle::base_uncompressed.html.twig
 ```
