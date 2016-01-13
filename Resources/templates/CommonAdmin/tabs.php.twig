@@ -11,7 +11,7 @@
                             {{ echo_block("nav_tabs"~name|classify|replace({'.': '_'})) }}
                                 {% if tabCredentials is not empty %}
                                     {{ echo_set('tabCredentials', echo_twig_arr(tabCredentials), false) }}
-                                    {% if builder.ymlKey is same as('list') or builder.ymlKey is same as('nested_list') %}
+                                    {% if builder.yamlKey is same as('list') or builder.yamlKey is same as('nested_list') %}
                                         {{ echo_if('is_one_admingenerator_granted(tabCredentials)') }}
                                     {% else %}
                                         {{ echo_if('is_one_admingenerator_granted(tabCredentials, ' ~ builder.ModelClass ~ ')') }}
