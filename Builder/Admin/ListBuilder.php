@@ -71,21 +71,21 @@ class ListBuilder extends BaseBuilder
         $this->filterColumns[$column->getName()] = $column;
     }
 
-    public function getFilterColumnGroups()
+    public function getFilterColumnsCredentials()
     {
-        $groups = array();
+        $credentials = array();
 
-        foreach ($this->getFilterColumns() as $column) {
-            $columnGroups = $column->getFiltersGroups();
-            // If one column has no Group constraint, we always
-            // have to display the filter panel
-            if (empty($columnGroups)) {
+        foreach($this->getFilterColumns() as $column) {
+            if (! $filterCredentials = $column->getFiltersCredentials()) {
+                // If one column has no Credentials constraint, we always
+                // have to display the filter panel
                 return array();
             }
-            $groups = array_merge($groups, $columnGroups);
+
+            $credentials[] = $filterCredentials;
         }
 
-        return $groups;
+        return $credentials;
     }
 
     /**

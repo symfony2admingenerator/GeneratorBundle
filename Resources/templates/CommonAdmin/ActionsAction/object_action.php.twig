@@ -87,7 +87,7 @@
             )
         );
 
-        return new RedirectResponse($this->generateUrl("{{ builder.baseActionsRoute }}_list"));
+        return $this->redirect($this->generateUrl("{{ builder.baseActionsRoute }}_list"));
     }
 
 {% endblock %}
@@ -114,7 +114,7 @@
 
         $this->get('session')->getFlashBag()->add('error', $header.' '.$errors);
 
-        return new RedirectResponse($this->generateUrl("{{ builder.baseActionsRoute }}_list"));
+        return $this->redirect($this->generateUrl("{{ builder.baseActionsRoute }}_list"));
     }
 
 {% endblock %}

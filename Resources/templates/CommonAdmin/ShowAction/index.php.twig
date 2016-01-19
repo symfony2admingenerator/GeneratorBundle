@@ -17,8 +17,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
         {{ block('security_action_with_object') }}
 
         return $this->render('{{ builder.namespacePrefixForTemplate }}{{ bundle_name }}:{{ builder.BaseGeneratorName }}Show:index.html.twig', $this->getAdditionalRenderParameters(${{ builder.ModelClass }}) + array(
-            "{{ builder.ModelClass }}" => ${{ builder.ModelClass }},
-            'groups' => $this->getGroups(${{ builder.ModelClass }}),
+            '{{ builder.ModelClass }}' => ${{ builder.ModelClass }},
         ));
     }
 {% endblock %}

@@ -3,6 +3,7 @@
 namespace Admingenerator\GeneratorBundle\Generator;
 
 use Sensio\Bundle\GeneratorBundle\Generator\Generator as BaseBundleGenerator;
+use Sensio\Bundle\GeneratorBundle\Model\Bundle;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
@@ -12,13 +13,29 @@ use Symfony\Component\Filesystem\Filesystem;
  */
 class BundleGenerator extends BaseBundleGenerator
 {
+    /**
+     * @var Filesystem
+     */
     private $filesystem;
+
+    /**
+     * @var string
+     */
     private $skeletonDir;
 
+    /**
+     * @var string
+     */
     protected $generator;
 
+    /**
+     * @var string
+     */
     protected $prefix;
 
+    /**
+     * @var array
+     */
     protected $actions = array(
         'New'  => array('views' => array(
             'index',
@@ -39,6 +56,9 @@ class BundleGenerator extends BaseBundleGenerator
         'Actions' => array('views' => array('index'))
     );
 
+    /**
+     * @var array
+     */
     protected $forms = array('New', 'Filters', 'Edit');
 
     /**
@@ -53,27 +73,33 @@ class BundleGenerator extends BaseBundleGenerator
         }
     }
 
+    /**
+     * @param string $generator
+     */
     public function setGenerator($generator)
     {
         $this->generator = $generator;
     }
 
+    /**
+     * @param string $prefix
+     */
     public function setPrefix($prefix)
     {
         $this->prefix = $prefix;
     }
 
     /**
-     * @param string $namespace
-     * @param string $format
+     * @param Bundle $bundle
+     * @param string $modelName
      */
-    public function generate($namespace, $bundle, $dir, $format, $structure, $generator, $modelName)
+    public function generate(Bundle $bundle, $modelName)
     {
-        $dir .= '/'.strtr($namespace, '\\', '/');
+        $dir = $bundle->getTargetDirectory();
 
-        // Retrieves model folder depending of chosen ORM
+        // Retrieves model folder depending on chosen Model Manager
         $modelFolder = '';
-        switch ($generator) {
+        switch ($this->generator) {
             case 'propel':
                 $modelFolder = 'Model';
                 break;
@@ -85,33 +111,33 @@ class BundleGenerator extends BaseBundleGenerator
                 break;
         }
 
-        if (FALSE === strpos($namespace, '\\')) {
-            $bundle_name = $namespace;
-            $namespace_prefix = null;
+        if (false === strpos($bundle->getNamespace(), '\\')) {
+            $bundleName = $bundle->getNamespace();
+            $namespacePrefix = null;
         } else {
-            list( $namespace_prefix, $bundle_name) = explode('\\', $namespace, 2);
+            list( $namespacePrefix, $bundleName) = explode('\\', $bundle->getNamespace(), 2);
         }
 
         $parameters = array(
-            'namespace'        => $namespace,
-            'bundle'           => $bundle,
+            'namespace'        => $bundle->getNamespace(),
+            'bundle'           => $bundle->getName(),
             'generator'        => 'admingenerator.generator.'.$this->generator,
-            'namespace_prefix' => $namespace_prefix,
-            'bundle_name'      => $bundle_name,
+            'namespace_prefix' => $namespacePrefix,
+            'bundle_name'      => $bundleName,
             'model_folder'     => $modelFolder,
             'model_name'       => $modelName,
             'prefix'           => ucfirst($this->prefix),
         );
 
-        if (!file_exists($dir.'/'.$bundle.'.php')) {
-            $this->renderGeneratedFile('Bundle.php.twig', $dir.'/'.$bundle.'.php', $parameters);
+        if (!file_exists($dir.'/'.$bundle->getName().'.php')) {
+            $this->renderGeneratedFile('Bundle.php.twig', $dir.'/'.$bundle->getName().'.php', $parameters);
         }
 
         foreach ($this->actions as $action => $actionProperties) {
             $parameters['action'] = $action;
 
             $controllerFile = $dir.'/Controller/'
-                    .($this->prefix ? ucfirst($this->prefix).'/' : '').$action.'Controller.php';
+                .($this->prefix ? ucfirst($this->prefix).'/' : '').$action.'Controller.php';
             $this->copyPreviousFile($controllerFile);
             $this->renderGeneratedFile(
                 'DefaultController.php.twig',
@@ -165,11 +191,7 @@ class BundleGenerator extends BaseBundleGenerator
      */
     protected function renderGeneratedFile($template, $target, array $parameters)
     {
-        if (method_exists($this, 'setSkeletonDirs')) {
-            $this->renderFile($template, $target, $parameters);
-        } else {
-            $this->renderFile($this->skeletonDir, $template, $target, $parameters);
-        }
+        $this->renderFile($template, $target, $parameters);
     }
 
     /**

@@ -61,7 +61,7 @@
             )
         );
 
-        return new RedirectResponse($this->generateUrl("{{ builder.baseActionsRoute }}_list"));
+        return $this->redirect($this->generateUrl("{{ builder.baseActionsRoute }}_list"));
     }
     
 {% endblock %}
@@ -84,7 +84,7 @@
             )
         );
 
-        return new RedirectResponse($this->generateUrl("{{ builder.baseActionsRoute }}_list"));
+        return $this->redirect($this->generateUrl("{{ builder.baseActionsRoute }}_list"));
     }
     
 {% endblock %}

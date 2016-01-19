@@ -31,9 +31,8 @@
 
 {% block list_thead_content_column %}
     {{ echo_block('list_thead_column_' ~ (column.name|lower)) -}}
-    {% if column.groups|default is not empty %}
-        {{ echo_set('columnGroups', echo_twig_arr(column.groups), false) }}
-        {{ echo_if('columnGroups|intersect(groups) is not empty') }}
+    {% if column.credentials|default is not empty %}
+        {{ echo_if_granted(column.credentials) }}
     {% endif %}
     <th class="list-results-fields-header-column list-results-fields-header-column-{{ column.name|lower  }}{{ echo_if (column.isSortable) }} sorting{{ echo_if ("sortColumn == '" ~ column.sortOn ~ "' and sortOrder == 'ASC'") }}_asc{{ echo_elseif ("sortColumn == '" ~ column.sortOn ~ "' and sortOrder == 'DESC'") }}_desc{{ echo_endif () }}{{ echo_endif () }}">
         {% if column.isSortable -%}
@@ -48,7 +47,7 @@
             </a>
         {% endif -%}
     </th>
-    {% if column.groups|default is not empty %}
+    {% if column.credentials|default is not empty %}
         {{ echo_endif() }}
     {% endif %}
     {{ echo_endblock() }}

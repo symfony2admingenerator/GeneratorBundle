@@ -17,6 +17,8 @@ class ArrayExtension extends \Twig_Extension
             'mapBy'     => new \Twig_SimpleFilter('mapBy', array($this, 'mapBy')),
             'flatten'   => new \Twig_SimpleFilter('flatten', array($this, 'flatten')),
             'intersect' => new \Twig_SimpleFilter('intersect', array($this, 'intersect')),
+            'clean'     => new \Twig_SimpleFilter('clean', array($this, 'clean')),
+            'unique'    => new \Twig_SimpleFilter('unique', array($this, 'unique')),
         );
     }
 
@@ -41,6 +43,7 @@ class ArrayExtension extends \Twig_Extension
                 return $item[$key];
             }
 
+            // TODO: use PropertyAccessor ??
             if (!is_object($item)) {
                 throw new \InvalidArgumentException("Item must be an array or object.");
             }
@@ -93,6 +96,31 @@ class ArrayExtension extends \Twig_Extension
     public function intersect()
     {
         return call_user_func_array('array_intersect', func_get_args());
+    }
+
+    /**
+     * Remove entries with value $car
+     *
+     * @param array $input
+     * @param string $car
+     * @return array
+     */
+    public function clean(array $input, $car = '')
+    {
+        return array_filter($input, function($v) use ($car) {
+            return $car != $v;
+        });
+    }
+
+    /**
+     * Remove duplicate entries
+     *
+     * @param array $input
+     * @return array
+     */
+    public function unique(array $input)
+    {
+        return array_unique($input);
     }
 
     /**

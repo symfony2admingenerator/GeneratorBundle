@@ -6,12 +6,16 @@
                     {{ echo_block("nav_tabs") }}
                         {% for name, tab in tabs %}
                             {% set tabColumns = builder.getColumnsFor(tab) %}
-                            {% set tabGroups = tabColumns|mapBy('groups')|flatten %}
+                            {% set tabCredentials = tabColumns|mapBy('credentials')|flatten|clean|unique %}
 
                             {{ echo_block("nav_tabs"~name|classify|replace({'.': '_'})) }}
-                                {% if tabGroups is not empty %}
-                                {{ echo_set('tabGroups', echo_twig_arr(tabGroups), false) }}
-                                {{ echo_if('groups is empty or tabGroups|intersect(groups) is not empty') }}
+                                {% if tabCredentials is not empty %}
+                                    {{ echo_set('tabCredentials', echo_twig_arr(tabCredentials), false) }}
+                                    {% if builder.yamlKey is same as('list') or builder.yamlKey is same as('nested_list') %}
+                                        {{ echo_if('is_one_admingenerator_granted(tabCredentials)') }}
+                                    {% else %}
+                                        {{ echo_if('is_one_admingenerator_granted(tabCredentials, ' ~ builder.ModelClass ~ ')') }}
+                                    {% endif %}
                                 {% endif %}
                                 <li>
                                     <a data-toggle="tab" href="#"
@@ -19,9 +23,9 @@
                                         {{ echo_trans(name, {}, i18n_catalog|default("Admin") ) }}
                                     </a>
                                 </li>
-                                {% if tabGroups is not empty %}
+                            {% if tabCredentials is not empty %}
                                 {{ echo_endif() }}
-                                {% endif %}
+                            {% endif %}
                             {{ echo_endblock() }}
                         {% endfor %}
                     {{ echo_endblock() }}

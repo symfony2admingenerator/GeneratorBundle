@@ -5,9 +5,8 @@ namespace Admingenerator\GeneratorBundle\Guesser;
 use Admingenerator\GeneratorBundle\Exception\NotImplementedException;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\Mapping\ClassMetadataInfo;
-use Symfony\Component\DependencyInjection\ContainerAware;
 
-class DoctrineORMFieldGuesser extends ContainerAware
+class DoctrineORMFieldGuesser
 {
     /**
      * @var Registry
@@ -24,9 +23,23 @@ class DoctrineORMFieldGuesser extends ContainerAware
      */
     private $defaultRequired;
 
-    public function __construct(Registry $doctrine)
+    /**
+     * @var array
+     */
+    private $formTypes;
+
+    /**
+     * @var array
+     */
+    private $filterTypes;
+
+    public function __construct(Registry $doctrine, array $formTypes, array $filterTypes, $guessRequired, $defaultRequired)
     {
         $this->doctrine = $doctrine;
+        $this->formTypes = $formTypes;
+        $this->filterTypes = $filterTypes;
+        $this->guessRequired = $guessRequired;
+        $this->defaultRequired = $defaultRequired;
     }
 
     protected function getMetadatas($class)
@@ -130,10 +143,8 @@ class DoctrineORMFieldGuesser extends ContainerAware
      */
     public function getFormType($dbType, $class, $columnName)
     {
-        $formTypes = $this->container->getParameter('admingenerator.doctrine_form_types');
-
-        if (array_key_exists($dbType, $formTypes)) {
-            return $formTypes[$dbType];
+        if (array_key_exists($dbType, $this->formTypes)) {
+            return $this->formTypes[$dbType];
         }
 
         if ('virtual' === $dbType) {
@@ -154,10 +165,8 @@ class DoctrineORMFieldGuesser extends ContainerAware
      */
     public function getFilterType($dbType, $class, $columnName)
     {
-        $filterTypes = $this->container->getParameter('admingenerator.doctrine_filter_types');
-
-        if (array_key_exists($dbType, $filterTypes)) {
-            return $filterTypes[$dbType];
+        if (array_key_exists($dbType, $this->filterTypes)) {
+            return $this->filterTypes[$dbType];
         }
 
         if ('virtual' === $dbType) {
@@ -222,7 +231,7 @@ class DoctrineORMFieldGuesser extends ContainerAware
                     0 => 'boolean.no',
                     1 => 'boolean.yes'
                 ),
-                'empty_value' => 'boolean.yes_or_no',
+                'placeholder' => 'boolean.yes_or_no',
                 'translation_domain' => 'Admingenerator'
             );
         }
@@ -283,11 +292,6 @@ class DoctrineORMFieldGuesser extends ContainerAware
 
     protected function isRequired($class, $fieldName)
     {
-        if (!isset($this->guessRequired) || !isset($this->defaultRequired)) {
-            $this->guessRequired = $this->container->getParameter('admingenerator.guess_required');
-            $this->defaultRequired = $this->container->getParameter('admingenerator.default_required');
-        }
-
         if (!$this->guessRequired) {
             return $this->defaultRequired;
         }

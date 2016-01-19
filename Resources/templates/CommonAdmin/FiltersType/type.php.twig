@@ -5,15 +5,16 @@ namespace Admingenerated\{{ namespace_prefix }}{{ bundle_name }}\Form\Base{{ bui
 
 use Admingenerator\GeneratorBundle\Form\BaseType;
 use Admingenerator\GeneratorBundle\Form\BaseOptions;
-use Symfony\Component\Form\FormBuilderInterface;
+{% if(admingenerator_config('use_jms_security')) %}
 use JMS\SecurityExtraBundle\Security\Authorization\Expression\Expression;
+{% endif %}
+use Symfony\Component\Form\FormBuilderInterface;
+
 
 class FiltersType extends BaseType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->groups = $options['groups'];
-
     {% for column in builder.filterColumns %}
         if ($this->canDisplay{{ column.name|classify|php_name }}()) {
             $builder->add('{{ column.name }}', $this->getType{{ column.name|classify|php_name }}(), $this->getOptions{{ column.name|classify|php_name }}($options));
@@ -58,7 +59,16 @@ class FiltersType extends BaseType
         */
         protected function canDisplay{{ column.name|classify|php_name }}()
         {
-            return $this->checkGroups({{ column.filtersGroups|as_php }});
+            {% if column.filtersCredentials is not empty and column.filtersCredentials != 'AdmingenAllowed' %}
+                {% if(admingenerator_config('use_jms_security')) %}
+                    $credentials = new Expression('{{ column.filtersCredentials }}');
+                {% else %}
+                    $credentials = '{{ column.filtersCredentials }}';
+                {% endif %}
+                return $this->checkCredentials($credentials, null);
+            {% else %}
+                return true;
+            {% endif %}
         }
     {% endfor %}
 

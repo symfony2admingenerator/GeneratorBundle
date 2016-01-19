@@ -4,7 +4,7 @@
         $this->request = $request;
         $this->setScope($this->request->get('group'), $this->request->get('scope'));
 
-        return new RedirectResponse($this->getListUrl());
+        return $this->redirect($this->getListUrl());
     }
 
     /**

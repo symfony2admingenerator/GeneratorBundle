@@ -2,14 +2,43 @@
 
 namespace Admingenerator\GeneratorBundle\Menu;
 
+use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
-use Symfony\Component\DependencyInjection\ContainerAware;
+use Symfony\Component\HttpFoundation\RequestStack;
 
-class AdmingeneratorMenuBuilder extends ContainerAware
+class AdmingeneratorMenuBuilder
 {
+    /**
+     * @var array
+     */
     protected $dividers = array();
-    
+
+    /**
+     * @var string
+     */
     protected $translation_domain = 'Admingenerator';
+
+    /**
+     * @var FactoryInterface
+     */
+    protected $factory;
+
+    /**
+     * @var RequestStack
+     */
+    protected $requestStack;
+
+    /**
+     * @var string
+     */
+    protected $dashboardRoute;
+
+    public function __construct(FactoryInterface $factory, RequestStack $requestStack, $dashboardRoute)
+    {
+        $this->factory = $factory;
+        $this->requestStack = $requestStack;
+        $this->dashboardRoute = $dashboardRoute;
+    }
 
     /**
      * Creates link to uri element and adds it to menu
@@ -89,7 +118,7 @@ class AdmingeneratorMenuBuilder extends ContainerAware
      */
     protected function isCurrentUri($uri)
     {
-        $request = $this->container->get('request_stack')->getCurrentRequest();
+        $request = $this->requestStack->getCurrentRequest();
 
         return $request->getBaseUrl().$request->getPathInfo() === $uri;
     }

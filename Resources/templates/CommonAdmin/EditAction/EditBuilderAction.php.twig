@@ -6,7 +6,6 @@
 namespace Admingenerated\{{ namespace_prefix }}{{ bundle_name }}\{{ builder.generator.GeneratedControllerFolder }};
 
 use {{ builder.generator.baseController }} as BaseController;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 {% block orm_use %}{% endblock %}
@@ -27,10 +26,11 @@ class EditController extends BaseController
 
     protected function getEditForm(\{{ model }} ${{ builder.ModelClass }})
     {
-        return $this->createForm($this->getEditType(), ${{ builder.ModelClass }}, array_merge(
-            $this->getFormOptions(${{ builder.ModelClass }}),
-            array('groups' => $this->getGroups(${{ builder.ModelClass }}))
-        ));
+        return $this->createForm(
+            $this->getEditType(),
+            ${{ builder.ModelClass }},
+            $this->getFormOptions(${{ builder.ModelClass }})
+        );
     }
 
     protected function getEditType()
@@ -98,17 +98,6 @@ class EditController extends BaseController
      * @return array
      */
     protected function getAdditionalRenderParameters(\{{ model }} ${{ builder.ModelClass }})
-    {
-        return array();
-    }
-
-    /**
-     * Get groups.
-     *
-     * @param \{{ model }} ${{ builder.ModelClass }}
-     * @return array
-     */
-    protected function getGroups(\{{ model }} ${{ builder.ModelClass }})
     {
         return array();
     }

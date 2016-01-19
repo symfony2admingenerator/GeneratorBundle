@@ -2,12 +2,17 @@
     {{ echo_block("generic_actions") }}
             {% if builder.actions|default is not empty %}
                 {{ echo_block('pre_generic_actions') }}{{ echo_endblock() }}
-                {{ echo_if_granted(builder.actions|mapBy('credentials')|flatten|join(' or ')|default('denyAll'), builder.ModelClass) }}
+                {% set actionCredentials = builder.actions|mapBy('credentials')|flatten|clean|unique %}
+
+                {% if actionCredentials is not empty %}
+                    {{ echo_set('actionCredentials', echo_twig_arr(actionCredentials), false) }}
+                    {{ echo_if('is_one_admingenerator_granted(actionCredentials)') }}
+                {% endif %}
 
                 {% for action in builder.Actions %}
                     {{ echo_block("generic_action_" ~ action.twigName) }}
                     {% if action.credentials %}
-                        {{ echo_if_granted(action.credentials, builder.ModelClass) }}
+                        {{ echo_if_granted(action.credentials) }}
                     {% endif %}
 
                     {{ block('generic_action_block') }}
@@ -18,7 +23,9 @@
                     {{ echo_endblock() }}
                 {% endfor %}
 
-                {{ echo_endif() }}
+                {% if actionCredentials is not empty %}
+                    {{ echo_endif() }}
+                {% endif %}
                 {{ echo_block('post_generic_actions') }}{{ echo_endblock() }}
             {% endif %}
     {{ echo_endblock() }}

@@ -32,8 +32,6 @@ abstract class BaseBuilder extends GenericBaseBuilder
         parent::__construct();
         $this->variables = new ParameterBag(array());
         $this->twigFilters[] = '\\Doctrine\\Common\\Util\\Inflector::classify';
-        $this->twigExtensions[] = '\\Admingenerator\\GeneratorBundle\\Twig\\Extension\\EchoExtension';
-        $this->twigExtensions[] = '\\Admingenerator\\GeneratorBundle\\Twig\\Extension\\ArrayExtension';
     }
 
     /**
@@ -142,6 +140,7 @@ abstract class BaseBuilder extends GenericBaseBuilder
      * (non-PHPdoc)
      * @see Builder/Admingenerator\GeneratorBundle\Builder.BuilderInterface::hasVariable()
      * @param string $key
+     * @return bool
      */
     public function hasVariable($key)
     {
@@ -169,7 +168,7 @@ abstract class BaseBuilder extends GenericBaseBuilder
     /**
      * Set the generator.
      *
-     * @param \Admingenerator\GeneratorBundle\Builder\Generator $generator   A generator.
+     * @param \TwigGenerator\Builder\Generator $generator A generator.
      */
     public function setGenerator(GenericBaseGenerator $generator)
     {

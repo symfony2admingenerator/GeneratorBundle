@@ -10,6 +10,16 @@ namespace Admingenerator\GeneratorBundle\Twig\Extension;
 class EchoExtension extends \Twig_Extension
 {
     /**
+     * @var bool
+     */
+    private $useExpression;
+
+    public function __construct($useExpression = false)
+    {
+        $this->useExpression = $useExpression;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function getFunctions()
@@ -119,8 +129,13 @@ class EchoExtension extends \Twig_Extension
      */
     public function getEchoIfGranted($credentials, $modelName = null)
     {
+        if ('AdmingenAllowed' == $credentials) {
+            return "{% if (true) %}";
+        }
+
         return sprintf(
-            "{%% if is_expr_granted('%s'%s) %%}",
+            "{%% if %s('%s'%s) %%}",
+            $this->useExpression ? 'is_expr_granted' : 'is_granted',
             $credentials,
             $modelName ? ', '.$modelName.' is defined ? '.$modelName.' : null' : ''
         );

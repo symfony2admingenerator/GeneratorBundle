@@ -1,6 +1,8 @@
 {% block security_use %}
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+{% if(admingenerator_config('use_jms_security')) %}
 use JMS\SecurityExtraBundle\Security\Authorization\Expression\Expression;
+{% endif %}
 {% endblock %}
 
 {% block security_check %}
@@ -9,46 +11,48 @@ use JMS\SecurityExtraBundle\Security\Authorization\Expression\Expression;
      *
      * @param string $credentials
      * @param \{{ model }} ${{ builder.ModelClass }}
-     * @throws AccessDeniedException if is not allowed
-     */
-    protected function checkCredentials($credentials, \{{ model }} ${{ builder.ModelClass }} = null)
-    {
-        if (!$this->evaluate($credentials, ${{ builder.ModelClass }})) {
-            throw new AccessDeniedException();
-        }
-    }
-
-    /**
-     * Evaluate expression
-     *
-     * @param string $expression
-     * @param \{{ model }} ${{ builder.ModelClass }}
      * @return boolean
      */
-    protected function evaluate($expression, \{{ model }} ${{ builder.ModelClass }} = null)
+    protected function validateCredentials($credentials, \{{ model }} ${{ builder.ModelClass }} = null)
     {
-        return $this
-            ->get('security.authorization_checker')
-            ->isGranted(array(new Expression($expression)), ${{ builder.ModelClass }});
+        {% if(admingenerator_config('use_jms_security')) %}
+        $credentials = new Expression($credentials);
+        {% endif %}
+
+        return $this->isGranted($credentials, ${{ builder.ModelClass }});
+    }
+
+   /**
+    * Throws exception if credentials are not validated
+    *
+    * @param string $credentials
+    * @param \{{ model }} ${{ builder.ModelClass }}
+    * @throws AccessDeniedException if is not allowed
+    */
+    protected function denyAccessUnlessValidateCredentials($credentials, \{{ model }} ${{ builder.ModelClass }} = null)
+    {
+        if (!$this->validateCredentials($credentials, ${{ builder.ModelClass }})) {
+            throw $this->createAccessDeniedException('Credentials unsatisfied');
+        }
     }
 {% endblock %}
 
 {% block security_action %}
 {% if builder.yamlKey is same as('actions')  %}
     {% if action is defined and action.credentials %}
-    $this->checkCredentials('{{ action.credentials }}');
+    $this->denyAccessUnlessValidateCredentials('{{ action.credentials }}');
     {% endif %}
 {% elseif credentials %}
-    $this->checkCredentials('{{ credentials }}');
+    $this->denyAccessUnlessValidateCredentials('{{ credentials }}');
 {% endif %}
 {% endblock %}
 
 {% block security_action_with_object %}
 {% if builder.yamlKey is same as('actions') %}
     {% if action is defined and action.credentials %}
-    $this->checkCredentials('{{ action.credentials }}', ${{ builder.ModelClass }});
+    $this->denyAccessUnlessValidateCredentials('{{ action.credentials }}', ${{ builder.ModelClass }});
     {% endif %}
 {% elseif credentials %}
-    $this->checkCredentials('{{ credentials }}', ${{ builder.ModelClass }});
+    $this->denyAccessUnlessValidateCredentials('{{ credentials }}', ${{ builder.ModelClass }});
 {% endif %}
 {% endblock %}

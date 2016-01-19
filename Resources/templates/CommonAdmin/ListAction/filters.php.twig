@@ -7,10 +7,10 @@
             // Remove scopes and re-apply default ones
             $this->setScopes(null);
 
-            return new RedirectResponse($this->getListUrl());
+            return $this->redirect($this->getListUrl());
         }
 
-        if ($this->request->getMethod() == "POST") {
+        if ('POST' === $this->request->getMethod()) {
             $form = $this->getFilterForm();
             $form->handleRequest($this->request);
 
@@ -19,12 +19,12 @@
             }
         }
 
-        if ('GET' == $this->request->getMethod()) {
+        if ('GET' === $this->request->getMethod()) {
             $filters = $this->request->query->all();
 
             {% for filter,column in builder.filterColumns %}
-                {% if column.filtersGroups %}
-                    if (isset($filters['{{ column.name }}']) && !$this->checkGroups({{ column.filtersGroups|as_php }})) {
+                {% if column.filtersCredentials %}
+                    if (array_key_exists('{{ column.name }}', $filters) && !$this->validateCredentials('{{ column.filtersCredentials }}')) {
                         unset($filters['{{ column.name }}']);
                     }
                 {% endif %}
@@ -37,7 +37,7 @@
             $this->setFilters($filters);
         }
 
-        return new RedirectResponse($this->getListUrl());
+        return $this->redirect($this->getListUrl());
     }
 
     {% block setFilters -%}
