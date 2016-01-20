@@ -6,7 +6,7 @@
     *
     * @param Request $request The request
     * @return RedirectResponse
-    **/
+    */
     public function filtersAction(Request $request)
     {
         $this->request = $request;
@@ -58,7 +58,7 @@
     {% block getFilters -%}
    /**
     * @return array
-    **/
+    */
     protected function getFilters()
     {
         return $this->get('session')->get($this->getSessionPrefix().'List\Filters', array());
