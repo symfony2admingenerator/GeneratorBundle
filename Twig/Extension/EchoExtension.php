@@ -33,6 +33,57 @@ class EchoExtension extends \Twig_Extension
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function getFilters()
+    {
+        return array(
+            'convert_as_form' => new \Twig_SimpleFilter('convert_as_form', array($this, 'convertAsForm')),
+        );
+    }
+
+    /**
+     * Try to convert options of form given as string from yaml to a good object
+     *    > Transforms PHP call into PHP :
+     *      addFormOptions:
+     *          myOption: __php(MyStaticClass::myCustomFunction())
+     *
+     *    > Tranforms [query_builder|query] into valid Closure:
+     *      addFormOptions:
+     *          query_builder: function($er) { return $er->createMyCustomQueryBuilder(); }
+     *
+     *
+     * @param string $options  the string as php
+     * @param string $formType the form type
+     *
+     * @return string the new options
+     */
+    public function convertAsForm($options, $formType)
+    {
+        // Transforms PHP call into PHP (simple copy/paste)
+        $options = preg_replace("/'__php\((.+?)\)'/i", '$1', stripslashes($options), -1, $count);
+
+        // Query builder: remove quotes around closure
+        if (preg_match("/EntityType$/i", $formType)) {
+            preg_match("/'query_builder' => '(.+?)',/i", $options, $matches);
+
+            if (count($matches) > 0) {
+                $options = str_replace("'query_builder' => '$matches[1]'", "'query_builder' => ".stripslashes($matches[1]), $options);
+            }
+        }
+
+        if (preg_match("/ModelType$/i", $formType)) {
+            preg_match("/'query' => '(.+?)',/i", $options, $matches);
+
+            if (count($matches) > 0) {
+                $options = str_replace("'query' => '$matches[1]'", "'query' => ".stripslashes($matches[1]), $options);
+            }
+        }
+
+        return $options;
+    }
+
+    /**
      * Print "trans" tag for string $str with parameters $parameters
      * for catalog $catalog.
      *
