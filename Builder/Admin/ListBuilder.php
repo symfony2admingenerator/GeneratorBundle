@@ -49,7 +49,7 @@ class ListBuilder extends BaseBuilder
             '%s\\%s\\Form\Type\\%s\\FiltersType',
             $this->getVariable('namespace_prefix'),
             $this->getVariable('bundle_name'),
-            $this->getModelClass()
+            $this->getBaseGeneratorName()
         );
     }
 

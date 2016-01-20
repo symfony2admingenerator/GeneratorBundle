@@ -31,7 +31,7 @@ class EditBuilder extends BaseBuilder
             '%s\\%s\\Form\Type\\%s\\EditType',
             $this->getVariable('namespace_prefix'),
             $this->getVariable('bundle_name'),
-            $this->getModelClass()
+            $this->getBaseGeneratorName()
         );
     }
 }
