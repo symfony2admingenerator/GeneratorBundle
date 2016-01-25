@@ -64,6 +64,8 @@ class EchoExtension extends \Twig_Extension
         $options = preg_replace("/'__php\((.+?)\)'/i", '$1', stripslashes($options), -1, $count);
 
         // Query builder: remove quotes around closure
+        // Should we really check formType or can we just
+        // look for query_builder option?
         if (preg_match("/EntityType$/i", $formType)) {
             preg_match("/'query_builder' => '(.+?)',/i", $options, $matches);
 
@@ -72,6 +74,7 @@ class EchoExtension extends \Twig_Extension
             }
         }
 
+        // Same question here
         if (preg_match("/ModelType$/i", $formType)) {
             preg_match("/'query' => '(.+?)',/i", $options, $matches);
 

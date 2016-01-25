@@ -60,7 +60,7 @@ class {{ builder.YamlKey|ucfirst }}Type extends BaseType
         return $this->resolveOptions('{{ column.name }}', {{ ({
             'label': column.label,
             'translation_domain': i18n_catalog|default('Admin')
-        })|merge(column.formOptions)|as_php }}, $builderOptions, $options);
+        })|merge(column.formOptions)|as_php|convert_as_form(column.formType) }}, $builderOptions, $options);
     }
 
     /**
