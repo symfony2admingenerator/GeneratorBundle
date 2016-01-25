@@ -234,7 +234,7 @@ abstract class DoctrineFieldGuesser
         $class = $resolved['class'];
         $columnName = $resolved['field'];
 
-        if ('boolean' == $dbType && preg_match("#ChoiceType$#i", $type)) {
+        if ('boolean' == $dbType && preg_match("/ChoiceType$/i", $type)) {
             $options = array(
                 'choices' => array(
                     'boolean.no' => 0,
@@ -251,13 +251,13 @@ abstract class DoctrineFieldGuesser
             return $options;
         }
 
-        if ('boolean' == $dbType && preg_match("#CheckboxType#i", $type)) {
+        if ('boolean' == $dbType && preg_match("/CheckboxType/i", $type)) {
             return array(
                 'required' => false,
             );
         }
 
-        if (preg_match("#NumberType#i", $type)) {
+        if (preg_match("/NumberType/i", $type)) {
             $mapping = $this->getMetadatas($class)->getFieldMapping($columnName);
 
             if (isset($mapping['scale'])) {
@@ -274,7 +274,7 @@ abstract class DoctrineFieldGuesser
             );
         }
 
-        if (preg_match(sprintf('#%sType$#i', ucfirst($this->objectModel)), $type)) {
+        if (preg_match(sprintf('/%sType$/i', ucfirst($this->objectModel)), $type)) {
             $mapping = $this->getMetadatas($class)->getAssociationMapping($columnName);
 
             return array(
@@ -285,7 +285,7 @@ abstract class DoctrineFieldGuesser
             );
         }
 
-        if (preg_match("#CollectionType$#i", $type)) {
+        if (preg_match("/CollectionType$/i", $type)) {
             $mapping = $this->getMetadatas($class)->getAssociationMapping($columnName);
 
             return array(
