@@ -22,6 +22,7 @@
     ],
     "require": {
         "symfony/symfony": ">=2.8,<4.0",
+        "symfony/assetic-bundle": "^2.3",
         "doctrine/common": "~2.2",
         "sensio/generator-bundle": "~3.0",
         "symfony2admingenerator/twig-generator": "~1.2,>=1.2.2",
