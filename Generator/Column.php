@@ -462,12 +462,16 @@ class Column
 
     protected function parseOption($option)
     {
-        if (is_array($option)) {
-            foreach ($option as $k => $v) {
-                if (preg_match('/\.(.+)/i', $k, $matches)) {
-                    // enable to call php function to build your form options
-                    $option = call_user_func_array($matches[1], $v);
-                }
+        if (!is_array($option)) {
+            return $option;
+        }
+
+        foreach ($option as $k => $v) {
+            if (preg_match('/^\.(.+)/i', $k, $matches)) {
+                // enable to call php function to build your form options
+                // Only if key STARTS with a dot (.). Values are used a params for the
+                // function. See tests for sample.
+                return call_user_func_array($matches[1], $v);
             }
         }
 

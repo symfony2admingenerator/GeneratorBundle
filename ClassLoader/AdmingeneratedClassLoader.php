@@ -10,7 +10,10 @@ use Admingenerator\GeneratorBundle\Builder\EmptyGenerator;
  */
 class AdmingeneratedClassLoader
 {
-    protected $base_path;
+    /**
+     * @var string
+     */
+    protected $basePath;
 
     /**
      * Registers this instance as an autoloader.
@@ -22,9 +25,13 @@ class AdmingeneratedClassLoader
         spl_autoload_register(array($this, 'loadClass'), true, $prepend);
     }
 
-    public function setBasePath($base_path)
+    /**
+     * @param string $basePath
+     * @return string
+     */
+    public function setBasePath($basePath)
     {
-        return $this->base_path = $base_path;
+        return $this->basePath = $basePath;
     }
 
     /**
@@ -35,14 +42,14 @@ class AdmingeneratedClassLoader
     public function loadClass($class)
     {
         if (0 === strpos($class, 'Admingenerated')) {
-            $file_path = $this->base_path.DIRECTORY_SEPARATOR.str_replace('\\', DIRECTORY_SEPARATOR, $class).'.php';
+            $filePath = $this->basePath.DIRECTORY_SEPARATOR.str_replace('\\', DIRECTORY_SEPARATOR, $class).'.php';
 
-            if (!file_exists($file_path)) {
+            if (!file_exists($filePath)) {
                 $this->generateEmptyController($class);
             }
 
-            if (file_exists($file_path)) {
-                require $file_path;
+            if (file_exists($filePath)) {
+                require $filePath;
             }
         }
     }
@@ -52,7 +59,7 @@ class AdmingeneratedClassLoader
      */
     protected function generateEmptyController($class)
     {
-        $generator = new EmptyGenerator($this->base_path);
+        $generator = new EmptyGenerator($this->basePath);
 
         $parts = explode('\\',$class);
         $controllerName = $parts[count($parts) - 1];
@@ -71,7 +78,7 @@ class AdmingeneratedClassLoader
             'require_pk'     => 'ListController' != $controllerName // We don't care about ActionsController and filters
         ));
 
-        $generator->writeOnDisk($this->base_path);
+        $generator->writeOnDisk($this->basePath);
     }
 
 }

@@ -35,7 +35,8 @@ class BaseBuilderTest extends TestCase
         $this->assertEquals('default', $builder->getVariable('nonexistant','default'));
 
         $builder->setVariables(array('foo' => array('bar' =>'bazz')));
-        $this->assertEquals('bazz', $builder->getVariable('foo[bar]','default', true));
+        $foo = $builder->getVariable('foo');
+        $this->assertEquals('bazz', $foo['bar']);
     }
 
     public function testHasVariable()

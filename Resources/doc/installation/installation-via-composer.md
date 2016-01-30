@@ -17,7 +17,6 @@ Admingenerator has a dependency on:
  
  * KnpMenuBundle
  * WhiteOctoberPagerfantaBundle
- * JMSSecurityExtraBundle
 
 > **Note:** there are also some optional dependencies, each is described in corresponding feature`s doc. This guide describes only the minimal-setup. 
 
@@ -29,24 +28,12 @@ public function registerBundles()
 {
     $bundles = array(
         // ...
-        new JMS\AopBundle\JMSAopBundle(),
-        new JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
-        new JMS\DiExtraBundle\JMSDiExtraBundle($this),
-        new Admingenerator\GeneratorBundle\AdmingeneratorGeneratorBundle(),
+        new Admingenerator\GeneratorBundle\AdmingeneratorGeneratorBundle($this), // Take care to use $this here
         new Knp\Bundle\MenuBundle\KnpMenuBundle(),
         new WhiteOctober\PagerfantaBundle\WhiteOctoberPagerfantaBundle(),
     );
 }
 ?>
-```
-
-You also need to configure the JMS Security Extra Bundle:
-
-```yaml
-jms_security_extra:
-    # Enables expression language
-    expressions: true
-
 ```
 
 ### 3. Basic configuration

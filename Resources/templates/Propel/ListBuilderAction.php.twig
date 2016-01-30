@@ -59,34 +59,6 @@ use Pagerfanta\Adapter\PropelAdapter as PagerAdapter;
     }
 {% endblock %}
 
-{% block processFilters -%}
-    protected function processFilters($queryFilter)
-    {
-        $filterObject = $this->getFilters();
-
-    {% for filter,column in builder.filterColumns %}
-        if (isset($filterObject['{{ column.name }}']) && null !== $filterObject['{{ column.name }}']) {
-            $this->filter{{ filter|classify }}($queryFilter, $filterObject['{{ column.name }}']);
-        }
-    {% endfor %}
-    }
-
-    {% for filter,column in builder.filterColumns %}
-    /**
-     * Add the filters to the query for {{ filter }}
-     *
-     * @param queryFilter The queryFilter
-     * @param mixed The value
-     */
-    protected function filter{{ filter|classify }}($queryFilter, $value)
-    {
-        $filterObject = $this->getFilters();
-
-        $queryFilter->add{{ builder.fieldGuesser().dbType(model, column.filterOn)|lower|classify }}Filter('{{ column.filterOn }}', $filterObject['{{ column.name }}']);
-    }
-    {% endfor %}
-{% endblock %}
-
 {% block getQueryFilter %}
     /**
      * @return \Admingenerator\GeneratorBundle\QueryFilter\QueryFilterInterface

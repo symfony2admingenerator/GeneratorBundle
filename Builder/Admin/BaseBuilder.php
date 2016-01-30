@@ -182,11 +182,10 @@ class BaseBuilder extends GenericBaseBuilder
                 ));
             }
 
-            $fieldOptions = $this->getVariable(
-                sprintf('fields[%s]', $column->getName()),
-                array(),
-                true
-            );
+            $fields = $this->getVariable('fields', array());
+            $fieldOptions = is_array($fields) && array_key_exists($column->getName(), $fields)
+                ? $fields[$column->getName()]
+                : array();
 
             if (array_key_exists('addFormOptions', $fieldOptions)) {
                 $column->setAddFormOptions($fieldOptions['addFormOptions']);
@@ -221,22 +220,16 @@ class BaseBuilder extends GenericBaseBuilder
      */
     protected function getFieldOption(Column $column, $optionName, $default = null)
     {
-        $options = $this->getVariable(
-            sprintf('fields[%s]', $column->getName()),
-            array(),
-            true
-        );
+        $optionsFields = $this->getVariable('fields', array());
+        $options = is_array($optionsFields) && array_key_exists($column->getName(), $optionsFields) ? $optionsFields[$column->getName()] : array();
 
         return isset($options[$optionName]) ? $options[$optionName] : $default;
     }
 
     protected function setUserColumnConfiguration(Column $column)
     {
-        $options = $this->getVariable(
-            sprintf('fields[%s]', $column->getName()),
-            array(),
-            true
-        );
+        $optionsFields = $this->getVariable('fields', array());
+        $options = is_array($optionsFields) && array_key_exists($column->getName(), $optionsFields) ? $optionsFields[$column->getName()] : array();
 
         foreach ($options as $option => $value) {
             $column->setProperty($option, $value);
@@ -389,11 +382,8 @@ class BaseBuilder extends GenericBaseBuilder
 
     protected function setUserActionConfiguration(Action $action)
     {
-        $builderOptions = $this->getVariable(
-            sprintf('actions[%s]', $action->getName()),
-            array(),
-            true
-        );
+        $actions = $this->getVariable('actions', array());
+        $builderOptions = is_array($actions) && array_key_exists($action->getName(), $actions) ? $actions[$action->getName()] : array();
 
         $globalOptions = $this->getGenerator()->getFromYaml(
             'params.actions.'.$action->getName(),
@@ -464,11 +454,10 @@ class BaseBuilder extends GenericBaseBuilder
 
     protected function setUserObjectActionConfiguration(Action $action)
     {
-        $builderOptions = $this->getVariable(
-            sprintf('object_actions[%s]', $action->getName()),
-            array(),
-            true
-        );
+        $objectActions = $this->getVariable('object_actions', array());
+        $builderOptions = is_array($objectActions) && array_key_exists($action->getName(), $objectActions)
+            ? $objectActions[$action->getName()]
+            : array();
 
         $globalOptions = $this->getGenerator()->getFromYaml(
             'params.object_actions.'.$action->getName(),

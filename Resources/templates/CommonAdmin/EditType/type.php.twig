@@ -46,7 +46,7 @@ class {{ builder.YamlKey|ucfirst }}Type extends BaseType
      */
     protected function getType{{ column.name|classify|php_name }}()
     {
-        return $this->inject({{ column.formType|as_php|convert_as_form(column.formType) }});
+        return '{{ column.formType }}';
     }
 
     /**
@@ -87,7 +87,7 @@ class {{ builder.YamlKey|ucfirst }}Type extends BaseType
 
 {% endfor %}
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return '{{ builder.YamlKey }}_{{ bundle_name|lower }}_{{ builder.ModelClass|lower }}';
     }

@@ -256,4 +256,23 @@ class EchoExtensionTest extends BaseExtensionTest
 
         $this->runTwigTests($tpls, $returns);
     }
+
+    public function testConvertAsForm()
+    {
+        $tpls = array(
+            'no_modifications' => "{{ 'my string'|convert_as_form('unused') }}",
+            'query_builder' => "{{ \"'query_builder' => 'function(\$er) { return \$er->createQueryBuilder(); }',\"|convert_as_form('MyEntityType') }}",
+            'query' => "{{ \"'query' => 'function() { return MyModel::GetPeerTable(); }',\"|convert_as_form('ModelType') }}",
+            'php_call' => "{{ \"'__php(strtolower(\'TeSt\'))'\"|convert_as_form('unused') }}",
+        );
+
+        $returns = array(
+            'no_modifications' => array('my string', "convert_as_form doesn't modify string"),
+            'query_builder' => array("'query_builder' => function(\$er) { return \$er->createQueryBuilder(); },", 'convert_as_form properly transforms query_builder'),
+            'query' => array("'query' => function() { return MyModel::GetPeerTable(); },", 'convert_as_form properly transforms query'),
+            'php_call' => array("strtolower('TeSt')", 'convert_as_form properly transforms __php'),
+        );
+
+        $this->runTwigTests($tpls, $returns);
+    }
 }

@@ -169,9 +169,9 @@ abstract class Generator implements GeneratorInterface
      * (non-PHPdoc)
      * @see Generator/Admingenerator\GeneratorBundle\Generator.GeneratorInterface::build()
      */
-    public function build()
+    public function build($forceGeneration = false)
     {
-        if ($this->cacheProvider->fetch($this->getCacheKey())) {
+        if (!$forceGeneration && $this->cacheProvider->fetch($this->getCacheKey())) {
             return;
         }
 
