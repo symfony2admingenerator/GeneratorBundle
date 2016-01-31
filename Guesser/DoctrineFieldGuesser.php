@@ -331,7 +331,9 @@ abstract class DoctrineFieldGuesser
      */
     public function getModelPrimaryKeyName($class)
     {
-        return $this->getMetadatas($class)->getSingleIdentifierFieldName();
+        $identifierFieldNames = $this->getMetadatas($class)->getIdentifierFieldNames();
+
+        return !empty($identifierFieldNames) ? $identifierFieldNames[0] : null;
     }
 
     /**
@@ -351,8 +353,11 @@ abstract class DoctrineFieldGuesser
 
         if ($metadata->hasAssociation($field)) {
             $class = $metadata->getAssociationTargetClass($field);
+            $classIdentifiers = $this->getMetadatas($class)->getIdentifierFieldNames();
 
-            return $this->getModelPrimaryKeyName($class);
+            // Short workaround for https://github.com/symfony2admingenerator/GeneratorBundle/issues/161
+            // TODO: throw an exception to correctly handle that situation?
+            return 1 == count($classIdentifiers) ? $classIdentifiers[0] : null;
         }
 
         // if the leaf node is not an association
@@ -366,7 +371,7 @@ abstract class DoctrineFieldGuesser
      * @param  string $fieldPath The field path.
      * @return array  An array containing field and class information.
      */
-    private function resolveRelatedField($model, $fieldPath)
+    protected function resolveRelatedField($model, $fieldPath)
     {
         $path = explode('.', $fieldPath);
         $field = array_pop($path);
@@ -395,7 +400,7 @@ abstract class DoctrineFieldGuesser
      * @return int|string
      * @throws \Exception
      */
-    private function getObjectManagerName($className)
+    protected function getObjectManagerName($className)
     {
         $om = $this->registry->getManagerForClass($className);
         foreach ($this->registry->getManagerNames() as $emName=>$omName)
