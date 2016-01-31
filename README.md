@@ -1,6 +1,5 @@
 # AdminGenerator [![knpbundles.com](http://knpbundles.com/symfony2admingenerator/GeneratorBundle/badge-short)](http://knpbundles.com/symfony2admingenerator/GeneratorBundle) [![SensioLabsInsight](https://insight.sensiolabs.com/projects/e8ee4e4c-d8fb-4354-96c3-8971dce11201/small.png)](https://insight.sensiolabs.com/projects/e8ee4e4c-d8fb-4354-96c3-8971dce11201)
 
-![project status](http://stillmaintained.com/cedriclombardot/AdmingeneratorGeneratorBundle.png)
 [![Build Status](https://scrutinizer-ci.com/g/symfony2admingenerator/GeneratorBundle/badges/build.png?b=master)](https://scrutinizer-ci.com/g/symfony2admingenerator/GeneratorBundle/build-status/master)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/symfony2admingenerator/GeneratorBundle/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/symfony2admingenerator/GeneratorBundle/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/symfony2admingenerator/GeneratorBundle/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/symfony2admingenerator/GeneratorBundle/?branch=master)
