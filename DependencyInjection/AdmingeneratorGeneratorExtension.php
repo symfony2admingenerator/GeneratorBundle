@@ -265,7 +265,12 @@ class AdmingeneratorGeneratorExtension extends Extension implements PrependExten
     {
         $modelParts = explode('\\', $generatorParameters['model']);
         $model = array_pop($modelParts);
-        $formsBundleNamespace = $generatorParameters['namespace_prefix'] . '\\' . $generatorParameters['bundle_name'] . '\\Form\\Type\\' . $generatorParameters['prefix'];
+        $formsBundleNamespace = sprintf(
+            '%s%s\\Form\\Type\\%s',
+            $generatorParameters['namespace_prefix'] ? $generatorParameters['namespace_prefix'] . '\\' : '',
+            $generatorParameters['bundle_name'],
+            $generatorParameters['prefix']
+        );
         $authorizationCheckerServiceReference = new Reference('security.authorization_checker');
 
         if (in_array('new', $builders)) {
