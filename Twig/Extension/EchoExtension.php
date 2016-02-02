@@ -61,7 +61,10 @@ class EchoExtension extends \Twig_Extension
     public function convertAsForm($options, $formType)
     {
         // Transforms PHP call into PHP (simple copy/paste)
-        $options = preg_replace("/'__php\((.+?)\)'/i", '$1', stripslashes($options), -1, $count);
+        preg_match("/'__php\((.+?)\)'/i", stripslashes($options), $matches);
+        if (count($matches)) {
+            return $matches[1];
+        }
 
         // Query builder: remove quotes around closure
         // Should we really check formType or can we just
