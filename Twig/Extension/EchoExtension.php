@@ -63,7 +63,7 @@ class EchoExtension extends \Twig_Extension
         // Transforms PHP call into PHP (simple copy/paste)
         preg_match("/'__php\((.+?)\)'/i", stripslashes($options), $matches);
         if (count($matches)) {
-            return $matches[1];
+            $options = preg_replace("/'__php\((.+?)\)'/i", $matches[1], $options);
         }
 
         // Query builder: remove quotes around closure

@@ -265,6 +265,7 @@ class EchoExtensionTest extends BaseExtensionTest
             'query_builder' => "{{ \"'query_builder' => 'function(\$er) { return \$er->createQueryBuilder(); }',\"|convert_as_form('MyEntityType') }}",
             'query' => "{{ \"'query' => 'function() { return MyModel::GetPeerTable(); }',\"|convert_as_form('ModelType') }}",
             'php_call' => "{{ \"'__php(strtolower(\'TeSt\'))'\"|convert_as_form('unused') }}",
+            'php_call_and_string' => "{{ \"'__php(strtolower(\'TeSt\'))','my other string'\"|convert_as_form('unused') }}",
         );
 
         $returns = array(
@@ -273,6 +274,7 @@ class EchoExtensionTest extends BaseExtensionTest
             'query_builder' => array("'query_builder' => function(\$er) { return \$er->createQueryBuilder(); },", 'convert_as_form properly transforms query_builder'),
             'query' => array("'query' => function() { return MyModel::GetPeerTable(); },", 'convert_as_form properly transforms query'),
             'php_call' => array("strtolower('TeSt')", 'convert_as_form properly transforms __php'),
+            'php_call_and_string' => array("strtolower('TeSt'),'my other string'", 'convert_as_form properly transforms __php'),
         );
 
         $this->runTwigTests($tpls, $returns);
