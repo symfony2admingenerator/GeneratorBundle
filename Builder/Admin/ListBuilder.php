@@ -46,8 +46,8 @@ class ListBuilder extends BaseBuilder
     public function getFormType()
     {
         return sprintf(
-            '%s\\%s\\Form\Type\\%s\\FiltersType',
-            $this->getVariable('namespace_prefix'),
+            '%s%s\\Form\Type\\%s\\FiltersType',
+            $this->getVariable('namespace_prefix') ? $this->getVariable('namespace_prefix') . '\\' : '',
             $this->getVariable('bundle_name'),
             $this->getBaseGeneratorName()
         );
