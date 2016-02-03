@@ -16,9 +16,9 @@ use Symfony\Component\PropertyAccess\PropertyAccess;
  * @author Bob van de Vijver
  */
 {% if namespace_prefix is empty %}
-class ExcelController extends {{ bundle_name }}\Controller\{{ builder.generator.baseGeneratorName }}\ListController
+class ExcelController extends \{{ bundle_name }}\Controller\{{ builder.generator.baseGeneratorName }}\ListController
 {% else %}
-class ExcelController extends {{ namespace_prefix }}\{{ bundle_name }}\Controller\{{ builder.generator.baseGeneratorName }}\ListController
+class ExcelController extends \{{ namespace_prefix }}\{{ bundle_name }}\Controller\{{ builder.generator.baseGeneratorName }}\ListController
 {% endif %}
 {
     /**
