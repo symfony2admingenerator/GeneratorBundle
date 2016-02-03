@@ -109,8 +109,8 @@ class ExcelController extends \{{ namespace_prefix }}\{{ bundle_name }}\Controll
         $row = 2;
         $results = $this->getResults();
 
-        $colNum = 0;
         foreach($results as ${{ builder.ModelClass }}) {
+            $colNum = 0;
             {% for name,column in builder.columns %}
                 {% if column.credentials is not empty %}
                     {% set credentials = column.credentials %}
