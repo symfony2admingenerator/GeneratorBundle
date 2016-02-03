@@ -9,48 +9,49 @@ These are the default conversions made by the admingenerator for Doctrine ODM. N
 
 Database type | Form type
 ------------ | -------------
-datetime | datetime
-vardatetime | datetime
-datetimetz | datetime
-date | date
-time | time
-decimal | number
-float | number
-integer | integer
-bigint | integer
-smallint | integer
-string | text
-text | textarea
-entity | entity
-collection | collection
-array | collection
-boolean | checkbox
+timestamp | Symfony\Component\Form\Extension\Core\Type\DateTimeType
+datetime | Symfony\Component\Form\Extension\Core\Type\DateTimeType
+vardatetime | Symfony\Component\Form\Extension\Core\Type\DateTimeType
+datetimetz | Symfony\Component\Form\Extension\Core\Type\DateTimeType
+date | Symfony\Component\Form\Extension\Core\Type\DateType
+time | Symfony\Component\Form\Extension\Core\Type\TimeType
+decimal | Symfony\Component\Form\Extension\Core\Type\NumberType
+float | Symfony\Component\Form\Extension\Core\Type\NumberType
+integer | Symfony\Component\Form\Extension\Core\Type\IntegerType
+bigint | Symfony\Component\Form\Extension\Core\Type\IntegerType
+smallint | Symfony\Component\Form\Extension\Core\Type\IntegerType
+string | Symfony\Component\Form\Extension\Core\Type\TextType
+text | Symfony\Component\Form\Extension\Core\Type\TextareaType
+entity | Symfony\Bridge\Doctrine\Form\Type\EntityType
+collection | Symfony\Component\Form\Extension\Core\Type\CollectionType
+array | Symfony\Component\Form\Extension\Core\Type\CollectionType
+boolean | Symfony\Component\Form\Extension\Core\Type\CheckboxType
 
 ### Filter form conversion table
 
 Database type | Filter form type
 ------------ | -------------
-datetime | datetime
-timestamp | datetime
-vardatetime | datetime
-datetimetz | datetime
-date | date
-time | time
-decimal | number
-float | number
-int | number
-integer | number
-int_id | number
-bigint | number
-smallint | number
-id | text
-custom_id | text
-string | text
-text | text
-document | model
-collection | collection
-hash | text
-boolean | choice
+timestamp | Symfony\Component\Form\Extension\Core\Type\DateTimeType
+datetime | Symfony\Component\Form\Extension\Core\Type\DateTimeType
+vardatetime | Symfony\Component\Form\Extension\Core\Type\DateTimeType
+datetimetz | Symfony\Component\Form\Extension\Core\Type\DateTimeType
+date | Symfony\Component\Form\Extension\Core\Type\DateType
+time | Symfony\Component\Form\Extension\Core\Type\TimeType
+decimal | Symfony\Component\Form\Extension\Core\Type\NumberType
+float | Symfony\Component\Form\Extension\Core\Type\NumberType
+int | Symfony\Component\Form\Extension\Core\Type\NumberType
+integer | Symfony\Component\Form\Extension\Core\Type\NumberType
+int_id | Symfony\Component\Form\Extension\Core\Type\NumberType
+bigint | Symfony\Component\Form\Extension\Core\Type\NumberType
+smallint | Symfony\Component\Form\Extension\Core\Type\NumberType
+id | Symfony\Component\Form\Extension\Core\Type\TextType
+custom_id | Symfony\Component\Form\Extension\Core\Type\TextType
+string | Symfony\Component\Form\Extension\Core\Type\TextType
+text | Symfony\Component\Form\Extension\Core\Type\TextType
+document | Symfony\Bridge\Propel1\Form\Type\ModelType
+collection | Symfony\Component\Form\Extension\Core\Type\CollectionType
+hash | Symfony\Component\Form\Extension\Core\Type\TextType
+boolean | Symfony\Component\Form\Extension\Core\Type\ChoiceType
 
 [back-to-index]: ../../documentation.md
 [back-to-general-config]: ../general-configuration.md
