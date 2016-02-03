@@ -2,6 +2,7 @@
 
 namespace Admingenerator\GeneratorBundle\Generator;
 
+use Admingenerator\GeneratorBundle\Exception\CantGenerateException;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
@@ -298,5 +299,72 @@ abstract class Generator implements GeneratorInterface
     public function setKernel(KernelInterface $kernel)
     {
         $this->kernel = $kernel;
+    }
+
+    /**
+     * @param AdminGenerator $generator
+     */
+    protected function generateEmbedTypes(AdminGenerator $generator, $typeBuilderNamespace)
+    {
+        foreach ($generator->getFromYaml('params.embed_types', array()) as $yamlPath) {
+            $this->buildEmbedTypes($yamlPath, $generator, $typeBuilderNamespace);
+        }
+    }
+
+    /**
+     * @param $yamlPath
+     * @param AdminGenerator $generator
+     * @throws CantGenerateException
+     */
+    protected function buildEmbedTypes($yamlPath, AdminGenerator $generator, $typeBuilderNamespace)
+    {
+        if (preg_match(
+            '/(?<namespace_prefix>(?>.+\:)?.+)\:(?<bundle_name>.+Bundle)\:(?<generator_path>.*?)$/',
+            $yamlPath,
+            $match_string)) {
+            $namespace_prefix = $match_string['namespace_prefix'];
+            $bundle_name      = $match_string['bundle_name'];
+            $generator_path   = $match_string['generator_path'];
+        } else {
+            $namespace_prefix = $generator->getFromYaml('params.namespace_prefix');
+            $bundle_name      = $generator->getFromYaml('params.bundle_name');
+            $generator_path   = $yamlPath;
+        }
+
+        $yamlFile = $this->kernel->locateResource('@'.$namespace_prefix.$bundle_name.'/Resources/config/'.$generator_path);
+
+        if (!file_exists($yamlFile)) {
+            throw new CantGenerateException(
+                "Can't generate embed type for $yamlPath: file $yamlFile not found."
+            );
+        }
+
+        $embedGenerator = new AdminGenerator($this->cache_dir, $yamlFile);
+        $embedGenerator->setBundleConfig($this->bundleConfig);
+        $embedGenerator->setRouter($this->router);
+        $embedGenerator->setBaseAdminTemplate(
+            $embedGenerator->getFromYaml(
+                'base_admin_template',
+                $embedGenerator->getFromBundleConfig('base_admin_template')
+            )
+        );
+        $embedGenerator->setFieldGuesser($this->getFieldGuesser());
+        $embedGenerator->setMustOverwriteIfExists($this->needToOverwrite($embedGenerator));
+        $embedGenerator->setTwigExtensions($this->twig->getExtensions());
+        $embedGenerator->setTwigFilters($this->twig->getFilters());
+        $embedGenerator->setTemplateDirs($this->templatesDirectories);
+        $embedGenerator->setColumnClass($generator->getColumnClass());
+
+        $fqcnEditBuilderType = $typeBuilderNamespace.'\\EditBuilderType';
+        $fqcnNewBuilderType = $typeBuilderNamespace.'\\NewBuilderType';
+        $embedGenerator->addBuilder(new $fqcnEditBuilderType());
+        $embedGenerator->addBuilder(new $fqcnNewBuilderType());
+
+        $embedGenerator->writeOnDisk(
+            $this->getCachePath(
+                $embedGenerator->getFromYaml('params.namespace_prefix'),
+                $embedGenerator->getFromYaml('params.bundle_name')
+            )
+        );
     }
 }
