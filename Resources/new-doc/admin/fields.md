@@ -109,7 +109,7 @@ In this example, we set the admingenerator to handle an Image object as string i
 ```yaml
 image:
   label:            Organisation photo
-  formType:         s2a_single_upload
+  formType:         Admingenerator\FormExtensionsBundle\Form\Type\SingleUploadType
   dbType:           string
 ```
 

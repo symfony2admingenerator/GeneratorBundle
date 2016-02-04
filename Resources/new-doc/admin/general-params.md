@@ -112,23 +112,36 @@ For displaying values (such as in the list view or simply the show view) by defa
 When you want to use a custom show block, the value of this parameter must be set to the twig file containing the block you want to use. For example:
 
 ```yaml
-custom_blocks: AcmeAcmeBundle:Form:custom_blocks.html.twig
+#example for the show and list builder
+params:
+  custom_blocks: AcmeDemoBundle:Form:custom_blocks.html.twig
+```
+
+```yaml
+#example for just the show builder
+builder:
+  show:
+    params:
+      custom_blocks: Acme:Form:custom_blocks.html.twig
 ```
 
 In the field configuration itself you will need to specify the block you want to use, for example:
 ```yaml
 fields:
-  id:
-    label: Default
-    customView: event_id
+  gender:
+    customView: gender
 ```
 
 In this example, the custom blocks template must contain the following block:
 ```twig
-{% block column_event_id %}
+{% block column_gender %}
   {% spaceless %}
-    {% if field_value == 1 %}
-      <i class="fa fa-asterisk"></i>
+    {% if(field_value == 'm') %}
+      <i class="glyphicon glyphicon-male"></i>
+    {% elseif(field_value == 'f') %}
+      <i class="glyphicon glyphicon-female"></i>
+    {% else %}
+      <i class="glyphicon glyphicon-unknown"></i>
     {% endif %}
   {% endspaceless %}
 {% endblock %}
