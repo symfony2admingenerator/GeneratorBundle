@@ -42,7 +42,7 @@
         {% if action is defined and action.credentials and action.credentials is not same as('AdmingenAllowed') %}
             $this->denyAccessUnlessValidateCredentials('{{ action.credentials }}');
         {% endif %}
-    {% elseif credentials is defined and credentials is not same as('AdmingenAllowed') %}
+    {% elseif credentials is defined and credentials is not empty and credentials is not same as('AdmingenAllowed') %}
         $this->denyAccessUnlessValidateCredentials('{{ credentials }}');
     {% endif %}
 {% endblock %}
@@ -52,7 +52,7 @@
         {% if action is defined and action.credentials and action.credentials is not same as('AdmingenAllowed') %}
             $this->denyAccessUnlessValidateCredentials('{{ action.credentials }}', ${{ builder.ModelClass }});
         {% endif %}
-    {% elseif credentials and credentials is not same as('AdmingenAllowed') %}
+    {% elseif credentials is defined and credentials is not empty and credentials is not same as('AdmingenAllowed') %}
         $this->denyAccessUnlessValidateCredentials('{{ credentials }}', ${{ builder.ModelClass }});
     {% endif %}
 {% endblock %}
