@@ -21,7 +21,7 @@ This bundle depends on:
  * KnpMenuBundle
  * WhiteOctoberPagerfantaBundle
 
-> **Note:** there are also some optional dependencies, each is described in corresponding feature`s doc. This guide describes only the minimal-setup. 
+> **Note:** there are also some optional dependencies, each is described in corresponding feature`s doc. This guide describes only the minimal-setup.
 
 Enable Admin Generator and its dependencies in your `app/AppKernel.php`:
 
@@ -34,12 +34,14 @@ public function registerBundles()
         new JMS\AopBundle\JMSAopBundle(),
         new JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
         new JMS\DiExtraBundle\JMSDiExtraBundle($this),
-        new Admingenerator\GeneratorBundle\AdmingeneratorGeneratorBundle(),
+        new Admingenerator\GeneratorBundle\AdmingeneratorGeneratorBundle($this),
         new Knp\Bundle\MenuBundle\KnpMenuBundle(),
         new WhiteOctober\PagerfantaBundle\WhiteOctoberPagerfantaBundle(),
     );
 }
 ```
+
+> **Note:** Do not forget to add the kernel to the initialization of the bundle (the `$this` argument).
 
 If you want to use the JMS Security Extra expressions, make sure to install the bundle and enable it in the config:
 
