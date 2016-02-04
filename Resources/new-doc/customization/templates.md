@@ -1,4 +1,4 @@
-# Extending Generator Templates
+# Template customization
 
 [go back to Table of contents][back-to-index]
 
