@@ -131,16 +131,6 @@ class Column
     protected $extras = array();
 
     /**
-     * @var array
-     */
-    protected $groups = array();
-
-    /**
-     * @var array
-     */
-    protected $filtersGroups = false;
-
-    /**
      * @var string
      */
     protected $credentials = 'AdmingenAllowed';
