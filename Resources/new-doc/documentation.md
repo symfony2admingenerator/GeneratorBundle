@@ -20,7 +20,12 @@ This site provides API documentation for latest build of Symfony2 Admin Generato
     - [Form customization][cust-forms]
     - [Template customization][cust-templates]
 4. Cookbook
+    - [a2lix/TranslationFormBundle integration][cookbook-a2lix]
     - [Breadcrumbs][cookbook-breadcrumbs]
+    - [Custom avatars][cookbook-avatar]
+    - [KnpMenuBundle][cookbook-menu]
+    - [Multiple entity managers (Doctrine)][cookbook-em]
+    - [View parameters][cookbook-view-parameters]
 5. Support and contribution
     - [Submitting issues][support-issues]
     - [Contributing code][support-contributing]
@@ -44,4 +49,9 @@ This site provides API documentation for latest build of Symfony2 Admin Generato
 [cust-forms]: customization/forms.md
 [cust-templates]: customization/templates.md
 
+[cookbook-a2lix]: cookbook/a2lix-translation.md
+[cookbook-avatar]: cookbook/custom-avatars.md
 [cookbook-breadcrumbs]: cookbook/breadcrumbs.md
+[cookbook-em]: cookbook/multiple-entity-managers.md
+[cookbook-menu]: cookbook/knp-menu.md
+[cookbook-view-parameters]: cookbook/view-parameters.md
