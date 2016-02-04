@@ -17,6 +17,8 @@ This site provides API documentation for latest build of Symfony2 Admin Generato
  	- [Security][start-security]
 3. Customization
     - [Action customization][cust-actions]
+    - [Form cutomization][cust-forms]
+    - [Template customization][cust-templates]
 4. Cookbook
     - [Breadcrumbs][cookbook-breadcrumbs]
 5. Support and contribution
@@ -39,5 +41,7 @@ This site provides API documentation for latest build of Symfony2 Admin Generato
 [start-security]: admin/security.md
 
 [cust-actions]: customization/actions.md
+[cust-forms]: customization/forms.md
+[cust-templates]: customization/templates.md
 
 [cookbook-breadcrumbs]: cookbook/breadcrumbs.md
