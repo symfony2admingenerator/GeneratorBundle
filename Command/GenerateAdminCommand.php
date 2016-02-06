@@ -11,6 +11,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Sensio\Bundle\GeneratorBundle\Command\Validators;
+use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\HttpKernel\KernelInterface;
 
@@ -231,7 +232,7 @@ EOT
         $runner($this->updateKernel($output, $this->getContainer()->get('kernel'), $bundle));
 
         // routing
-        $runner($this->updateRouting($output, $bundle, $input->getOption('prefix')));
+        $runner($this->updateRouting($input, $output, $bundle, $input->getOption('prefix')));
 
         $questionHelper->writeGeneratorSummary($output, $errors);
     }
@@ -291,13 +292,21 @@ EOT
     }
 
     /**
+     * @param InputInterface $input
      * @param OutputInterface $output
      * @param Bundle $bundle
      * @param $prefix
      * @return array|void
      */
-    protected function updateRouting(OutputInterface $output, Bundle $bundle, $prefix)
+    protected function updateRouting(InputInterface $input, OutputInterface $output, Bundle $bundle, $prefix)
     {
+        $questionHelper = $this->getQuestionHelper();
+        $question = new ConfirmationQuestion('Would you like to update the ::routing.yml file?');
+
+        if (!$questionHelper->ask($input, $output, $question)) {
+            return;
+        }
+
         $targetRoutingPath = $this->getContainer()->getParameter('kernel.root_dir').'/config/routing.yml';
         $output->write(sprintf(
             '> Importing the bundle\'s routes from the <info>%s</info> file: ',
