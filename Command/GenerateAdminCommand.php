@@ -232,7 +232,9 @@ EOT
         $runner($this->updateKernel($output, $this->getContainer()->get('kernel'), $bundle));
 
         // routing
-        $runner($this->updateRouting($output, $bundle, $input->getOption('prefix')));
+        if (!$input->hasOption('forms-only')) {
+            $runner($this->updateRouting($output, $bundle, $input->getOption('prefix')));
+        }
 
         $questionHelper->writeGeneratorSummary($output, $errors);
     }
