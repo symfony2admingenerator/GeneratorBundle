@@ -93,7 +93,7 @@ class BundleGenerator extends BaseBundleGenerator
      * @param Bundle $bundle
      * @param string $modelName
      */
-    public function generate(Bundle $bundle, $modelName)
+    public function generate(Bundle $bundle, $modelName, $formsOnly)
     {
         $dir = $bundle->getTargetDirectory();
 
@@ -127,33 +127,11 @@ class BundleGenerator extends BaseBundleGenerator
             'model_folder'     => $modelFolder,
             'model_name'       => $modelName,
             'prefix'           => ucfirst($this->prefix),
+            'forms_only'       => $formsOnly
         );
 
         if (!file_exists($dir.'/'.$bundle->getName().'.php')) {
             $this->renderGeneratedFile('Bundle.php.twig', $dir.'/'.$bundle->getName().'.php', $parameters);
-        }
-
-        foreach ($this->actions as $action => $actionProperties) {
-            $parameters['action'] = $action;
-
-            $controllerFile = $dir.'/Controller/'
-                .($this->prefix ? ucfirst($this->prefix).'/' : '').$action.'Controller.php';
-            $this->copyPreviousFile($controllerFile);
-            $this->renderGeneratedFile(
-                'DefaultController.php.twig',
-                $controllerFile,
-                $parameters
-            );
-
-            foreach ($actionProperties['views'] as $templateName) {
-                $templateFile = $dir.'/Resources/views/'.ucfirst($this->prefix).$action.'/'.$templateName.'.html.twig';
-                $this->copyPreviousFile($templateFile);
-                $this->renderGeneratedFile(
-                    'default_view.html.twig',
-                    $templateFile,
-                    $parameters + array('view' => $templateName)
-                );
-            }
         }
 
         foreach ($this->forms as $form) {
@@ -183,6 +161,33 @@ class BundleGenerator extends BaseBundleGenerator
             $generatorFile,
             $parameters
         );
+
+        if ($formsOnly) {
+            return;
+        }
+
+        foreach ($this->actions as $action => $actionProperties) {
+            $parameters['action'] = $action;
+
+            $controllerFile = $dir.'/Controller/'
+                .($this->prefix ? ucfirst($this->prefix).'/' : '').$action.'Controller.php';
+            $this->copyPreviousFile($controllerFile);
+            $this->renderGeneratedFile(
+                'DefaultController.php.twig',
+                $controllerFile,
+                $parameters
+            );
+
+            foreach ($actionProperties['views'] as $templateName) {
+                $templateFile = $dir.'/Resources/views/'.ucfirst($this->prefix).$action.'/'.$templateName.'.html.twig';
+                $this->copyPreviousFile($templateFile);
+                $this->renderGeneratedFile(
+                    'default_view.html.twig',
+                    $templateFile,
+                    $parameters + array('view' => $templateName)
+                );
+            }
+        }
     }
 
     /**
