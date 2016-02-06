@@ -4,7 +4,7 @@ params:
     namespace_prefix: {{ namespace_prefix }}
     concurrency_lock: ~
     bundle_name: {{ bundle_name }}
-    forms_only: {{ forms_only }}
+    forms_only: {{ forms_only ? 1 : 0 }}
     pk_requirement: ~
     fields: ~
     object_actions:
@@ -14,6 +14,7 @@ params:
 builders:
     list:
         params:
+            {% if not forms_only -%}
             title: List for {{ bundle_name }}
             display: ~
             actions:
@@ -21,24 +22,32 @@ builders:
             object_actions:
                 edit: ~
                 delete: ~
+            {% endif %}
+    {% if not forms_only %}
     excel:
         params: ~
         filename: ~
         filetype: ~
+    {% endif %}
     new:
         params:
+            {% if not forms_only -%}
             title: New object for {{ bundle_name }}
             display: ~
             actions:
                 save: ~
                 list: ~
+            {% endif %}
     edit:
         params:
+            {% if not forms_only -%}
             title: "You're editing the object \"%object%\"|{ %object%: {{ model_name }}.title }|"
             display: ~
             actions:
                 save: ~
                 list: ~
+            {% endif %}
+    {% if not forms_only -%}
     show:
         params:
             title: "You're viewing the object \"%object%\"|{ %object%: {{ model_name }}.title }|"
@@ -52,3 +61,4 @@ builders:
                 delete: ~
             batch_actions:
                 delete: ~
+    {% endif %}
