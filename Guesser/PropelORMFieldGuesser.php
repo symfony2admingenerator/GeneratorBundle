@@ -329,8 +329,8 @@ class PropelORMFieldGuesser
                 'allow_add'     => true,
                 'allow_delete'  => true,
                 'by_reference'  => false,
-                'type' => 'entity',
-                'options' => array(
+                'entry_type' => 'entity',
+                'entry_options' => array(
                     'class' => \RelationMap::MANY_TO_ONE === $relation->getType() ? $relation->getForeignTable()->getClassname() : $relation->getLocalTable()->getClassname()
                 )
             );

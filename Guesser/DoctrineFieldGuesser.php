@@ -292,8 +292,8 @@ abstract class DoctrineFieldGuesser
                 'allow_add'     => true,
                 'allow_delete'  => true,
                 'by_reference'  => false,
-                'type' => $filter ? $this->filterTypes[$this->objectModel] : $this->formTypes[$this->objectModel],
-                'options' => array(
+                'entry_type' => $filter ? $this->filterTypes[$this->objectModel] : $this->formTypes[$this->objectModel],
+                'entry_options' => array(
                     'class' => $mapping['target'.ucfirst($this->objectModel)]
                 )
             );
