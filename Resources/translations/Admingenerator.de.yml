@@ -1,3 +1,5 @@
+# German translations
+
 # Boolean filter
 boolean:
     yes:        Ja
@@ -47,6 +49,7 @@ action.generic:
     save:   Speichern
     save-and-add:   Speichern und Neu
     save-and-list:  Speichern und Übersicht
+    save-and-show:  Speichern und zeigen
     excel:  Export to Excel
 
 # Object actions

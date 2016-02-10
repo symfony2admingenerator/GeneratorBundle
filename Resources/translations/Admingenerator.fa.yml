@@ -1,3 +1,5 @@
+# Persian translations
+
 # Boolean filter
 boolean:
     yes:        بله
@@ -47,6 +49,7 @@ action.generic:
     save:   ذخیره
     save-and-add:   ذخیره و اضافه
     save-and-list:  ذخیره و لیست
+    save-and-show:  ذخیره و نشان
     excel:  Export to Excel
 
 # Object actions
