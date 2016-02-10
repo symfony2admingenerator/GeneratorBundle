@@ -8,6 +8,8 @@
 
 If you need to customize your form options using some PHP logic, you have two options. The first option can be used when the option hold for every form, while the second option can be used for specific forms.
 
+> **Note**: It is possible to use both! When that is the case, the Options class takes precendence over de Form method. The Form method will also get the `fieldOptions` as returned by the Options class.
+
 ### Method 1: Options class
 
 With the options class you can set options for fields in all generated forms. The class is located in the `Form/Type/{prefix}` directory of your admin generator bundle and is by default empty.
@@ -43,11 +45,11 @@ public function setAuthorizationChecker($authorizationChecker){
 }
 ```
 
-It can then be used in the `get{{field}}Options` method.
+It can then be used in the `get{{field}}Options` method as it will be injected automatically when the method above exists.
 
 ### Method 2: Form methods
 
-When you want to overwrite a form option in a specific form (filter, new or edit), you can simply add a method to the form definition (located in `Form/Type/{prefix}` directory). The methods signature is the same as with the Options class
+When you want to overwrite a form option in a specific form (filter, new or edit), you can simply add a method to the form definition (located in `Form/Type/{prefix}` directory). The methods signature is the same as with the Options class. When also using the Options class for the global options, the `fieldOptions` argument will contain the result from the Options class, which can be rewritten with this method.
 
 For example (using the same names aswith the Options class):
 
