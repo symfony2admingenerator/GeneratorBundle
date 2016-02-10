@@ -15,7 +15,7 @@ class {{ controllerName }} extends Controller
     public function indexAction(Request $request{% if require_pk %}, $pk{% endif %})
     {
         if ($request->get('stop_loop')) {
-            throw new CantGenerateException('Opps an error occurred in your configuration. If you\'re in prod try cache:warmup');
+            throw new CantGenerateException('Oops an error occurred in your configuration. If you\'re in prod try cache:warmup');
         }
 
         return $this->redirect($request->getRequestUri()."?stop_loop=true");
