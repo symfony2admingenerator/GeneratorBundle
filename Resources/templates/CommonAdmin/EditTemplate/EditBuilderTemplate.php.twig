@@ -48,14 +48,18 @@
 
                 {{ echo_block("form_actions") }}
                     <div class="form-model-actions row">
-                        <div class="form-model-actions-object col-md-6 btn-group" role="object-actions">
-                            {{ block('object_actions') }}
-                            {{ block('object_actions_script') }}
-                        </div>
-                        <div class="form-model-actions-generic col-md-6 text-right" role="generic-actions">
-                            {{ block('generic_actions') }}
-                            {{ block('generic_actions_script') }}
-                        </div>
+                        {% if builder.objectActions|default is not empty %}
+                            <div class="form-model-actions-object col-md-{{ builder.actions|default is empty ? '12' : '6' }} btn-group" role="object-actions">
+                                {{ block('object_actions') }}
+                                {{ block('object_actions_script') }}
+                            </div>
+                        {% endif %}
+                        {% if builder.actions|default is not empty %}
+                            <div class="form-model-actions-generic col-md-{{ builder.objectActions|default is empty ? '12' : '6' }} text-right" role="generic-actions">
+                                {{ block('generic_actions') }}
+                                {{ block('generic_actions_script') }}
+                            </div>
+                        {% endif %}
                     </div>
                 {{ echo_endblock() }}
 

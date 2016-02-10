@@ -1,28 +1,28 @@
 {% block security_use %}
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-{% if(admingenerator_config('use_jms_security')) %}
-use JMS\SecurityExtraBundle\Security\Authorization\Expression\Expression;
-{% endif %}
+    use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+    {% if(admingenerator_config('use_jms_security')) %}
+        use JMS\SecurityExtraBundle\Security\Authorization\Expression\Expression;
+    {% endif %}
 {% endblock %}
 
 {% block security_check %}
     /**
-     * Check user credentials
-     *
-     * @param string $credentials
-     * @param \{{ model }} ${{ builder.ModelClass }}
-     * @return boolean
-     */
+    * Check user credentials
+    *
+    * @param string $credentials
+    * @param \{{ model }} ${{ builder.ModelClass }}
+    * @return boolean
+    */
     protected function validateCredentials($credentials, \{{ model }} ${{ builder.ModelClass }} = null)
     {
-        {% if(admingenerator_config('use_jms_security')) %}
+    {% if(admingenerator_config('use_jms_security')) %}
         $credentials = new Expression($credentials);
-        {% endif %}
+    {% endif %}
 
-        return $this->isGranted($credentials, ${{ builder.ModelClass }});
+    return $this->isGranted($credentials, ${{ builder.ModelClass }});
     }
 
-   /**
+    /**
     * Throws exception if credentials are not validated
     *
     * @param string $credentials
@@ -31,28 +31,28 @@ use JMS\SecurityExtraBundle\Security\Authorization\Expression\Expression;
     */
     protected function denyAccessUnlessValidateCredentials($credentials, \{{ model }} ${{ builder.ModelClass }} = null)
     {
-        if (!$this->validateCredentials($credentials, ${{ builder.ModelClass }})) {
-            throw $this->createAccessDeniedException('Credentials unsatisfied');
-        }
+    if (!$this->validateCredentials($credentials, ${{ builder.ModelClass }})) {
+    throw $this->createAccessDeniedException('Credentials unsatisfied');
+    }
     }
 {% endblock %}
 
 {% block security_action %}
-{% if builder.yamlKey is same as('actions')  %}
-    {% if action is defined and action.credentials %}
-    $this->denyAccessUnlessValidateCredentials('{{ action.credentials }}');
+    {% if builder.yamlKey is same as('actions')  %}
+        {% if action is defined and action.credentials and action.credentials is not same as('AdmingenAllowed') %}
+            $this->denyAccessUnlessValidateCredentials('{{ action.credentials }}');
+        {% endif %}
+    {% elseif credentials is defined and credentials is not empty and credentials is not same as('AdmingenAllowed') %}
+        $this->denyAccessUnlessValidateCredentials('{{ credentials }}');
     {% endif %}
-{% elseif credentials %}
-    $this->denyAccessUnlessValidateCredentials('{{ credentials }}');
-{% endif %}
 {% endblock %}
 
 {% block security_action_with_object %}
-{% if builder.yamlKey is same as('actions') %}
-    {% if action is defined and action.credentials %}
-    $this->denyAccessUnlessValidateCredentials('{{ action.credentials }}', ${{ builder.ModelClass }});
+    {% if builder.yamlKey is same as('actions') %}
+        {% if action is defined and action.credentials and action.credentials is not same as('AdmingenAllowed') %}
+            $this->denyAccessUnlessValidateCredentials('{{ action.credentials }}', ${{ builder.ModelClass }});
+        {% endif %}
+    {% elseif credentials is defined and credentials is not empty and credentials is not same as('AdmingenAllowed') %}
+        $this->denyAccessUnlessValidateCredentials('{{ credentials }}', ${{ builder.ModelClass }});
     {% endif %}
-{% elseif credentials %}
-    $this->denyAccessUnlessValidateCredentials('{{ credentials }}', ${{ builder.ModelClass }});
-{% endif %}
 {% endblock %}

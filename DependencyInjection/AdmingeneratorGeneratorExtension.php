@@ -9,10 +9,26 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
+use Symfony\Component\HttpKernel\KernelInterface;
+use Admingenerator\GeneratorBundle\Filesystem\GeneratorsFinder;
 use Admingenerator\GeneratorBundle\Exception\ModelManagerNotSelectedException;
+use Symfony\Component\Yaml\Yaml;
 
 class AdmingeneratorGeneratorExtension extends Extension implements PrependExtensionInterface
 {
+    /**
+     * @var KernelInterface
+     */
+    private $kernel;
+
+    /**
+     * @param KernelInterface $kernel
+     */
+    public function __construct(KernelInterface $kernel)
+    {
+        $this->kernel = $kernel;
+    }
+
     /**
      * Prepend KnpMenuBundle config
      */
@@ -49,14 +65,14 @@ class AdmingeneratorGeneratorExtension extends Extension implements PrependExten
         $container->setParameter('admingenerator.default_action_after_save', $config['default_action_after_save']);
         $container->setParameter('admingenerator.throw_exceptions', $config['throw_exceptions']);
 
-        $container->getDefinition('admingen.menu.default_builder')
-            ->addArgument($config['dashboard_route']);
+        $container->getDefinition('admingen.menu.default_builder')->addArgument($config['dashboard_route']);
 
         if ($config['use_jms_security']) {
             $container->getDefinition('twig.extension.admingenerator.security')->addArgument(true);
             $container->getDefinition('twig.extension.admingenerator.echo')->addArgument(true);
         }
 
+        $this->registerGeneratedFormsAsServices($container);
         $this->processModelManagerConfiguration($config, $container);
         $this->processTwigConfiguration($config['twig'], $container);
         $this->processCacheConfiguration($config, $container);
@@ -208,6 +224,81 @@ class AdmingeneratorGeneratorExtension extends Extension implements PrependExten
                 new Reference($cacheProviderServiceName),
                 $container->getParameter('kernel.environment')
             ));
+    }
+
+    /**
+     * Since Symfony 2.8, we need to use FQCN for FormType (using FormType instance in Factory is deprecated)
+     * Unfortunately, our generated form types require Dependency Injection.
+     * We so need to register all generated form as services so Security Authorization
+     * Checker is injected.
+     * @param ContainerBuilder $container
+     */
+    private function registerGeneratedFormsAsServices(ContainerBuilder $container)
+    {
+        $finder = new GeneratorsFinder($this->kernel);
+
+        foreach($finder->findAll() as $path => $generator) {
+            $generator = Yaml::parse(file_get_contents($generator));
+            if (!array_key_exists('params', $generator)) {
+                throw new \InvalidArgumentException('"params" field is missing in ' . $generator);
+            }
+
+            if (!array_key_exists('builders', $generator)) {
+                throw new \InvalidArgumentException('"builders" field is missing in ' . $generator);
+            }
+            preg_match('/[^\/]*-generator.yml/', $path, $prefix);
+            $prefix = substr($prefix[0], 0, strlen($prefix[0]) - strlen('-generator.yml'));
+            $generator['params']['prefix'] = $prefix;
+            $this->registerFormsServicesFromGenerator($generator['params'], array_keys($generator['builders']), $container);
+        }
+    }
+
+    /**
+     * Register forms as services for a generator.
+     * Register only generated forms based on defined builders.
+     *
+     * @param array $generatorParameters
+     * @param array $builders
+     * @param ContainerBuilder $container
+     */
+    private function registerFormsServicesFromGenerator(array $generatorParameters, array $builders, ContainerBuilder $container)
+    {
+        $modelParts = explode('\\', $generatorParameters['model']);
+        $model = array_pop($modelParts);
+        $formsBundleNamespace = sprintf(
+            '%s%s\\Form\\Type\\%s',
+            $generatorParameters['namespace_prefix'] ? $generatorParameters['namespace_prefix'] . '\\' : '',
+            $generatorParameters['bundle_name'],
+            $generatorParameters['prefix']
+        );
+        $authorizationCheckerServiceReference = new Reference('security.authorization_checker');
+
+        if (in_array('new', $builders)) {
+            $newDefinition = new Definition($formsBundleNamespace . '\\' . 'NewType');
+            $newDefinition
+                ->addMethodCall('setAuthorizationChecker', array($authorizationCheckerServiceReference))
+                ->addTag('form.type');
+
+            $container->setDefinition('admingen_generator_'.strtolower($model).'_new', $newDefinition);
+        }
+
+        if (in_array('edit', $builders)) {
+            $editDefinition = new Definition($formsBundleNamespace . '\\' . 'EditType');
+            $editDefinition
+                ->addMethodCall('setAuthorizationChecker', array($authorizationCheckerServiceReference))
+                ->addTag('form.type');
+
+            $container->setDefinition('admingen_generator_'.strtolower($model).'_edit', $editDefinition);
+        }
+
+        if (in_array('list', $builders) || in_array('nested_list', $builders)) {
+            $filterDefinition = new Definition($formsBundleNamespace . '\\' . 'FiltersType');
+            $filterDefinition
+                ->addMethodCall('setAuthorizationChecker', array($authorizationCheckerServiceReference))
+                ->addTag('form.type');
+
+            $container->setDefinition('admingen_generator_'.strtolower($model).'_filter', $filterDefinition);
+        }
     }
 
     /**

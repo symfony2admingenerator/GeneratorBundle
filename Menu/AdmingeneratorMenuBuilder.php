@@ -5,6 +5,7 @@ namespace Admingenerator\GeneratorBundle\Menu;
 use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class AdmingeneratorMenuBuilder
 {
@@ -71,7 +72,7 @@ class AdmingeneratorMenuBuilder
      */
     protected function addLinkRoute(ItemInterface $menu, $label, $route, $routeParameters = array())
     {
-        $item = $menu->addChild($label, array('route' => $route, 'routeParameters' => $routeParameters));
+        $item = $menu->addChild($label, array('route' => $route, 'routeParameters' => $routeParameters, 'routeAbsolute' => UrlGeneratorInterface::ABSOLUTE_PATH));
         $item->setExtra('translation_domain', $this->translation_domain);
 
         if ($this->isCurrentUri($item->getUri())) {

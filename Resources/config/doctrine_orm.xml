@@ -7,7 +7,6 @@
         <parameter key="admingenerator.doctrine.class">Admingenerator\GeneratorBundle\Generator\DoctrineGenerator</parameter>
         <parameter key="admingenerator.fieldguesser.doctrine.class">Admingenerator\GeneratorBundle\Guesser\DoctrineORMFieldGuesser</parameter>
         <parameter key="admingenerator.queryfilter.doctrine.class">Admingenerator\GeneratorBundle\QueryFilter\DoctrineQueryFilter</parameter>
-        <parameter key="admingenerator.sessionserializer.doctrine.class">Admingenerator\GeneratorBundle\SessionSerializer\DoctrineORMSessionSerializer</parameter>
     </parameters>
     
     <services>
@@ -15,6 +14,7 @@
         <service id="admingenerator.fieldguesser.doctrine" class="%admingenerator.fieldguesser.doctrine.class%"
             public="false">
             <argument type="service" id="doctrine"></argument>
+            <argument type="string">entity</argument>
         </service>
 
         <service id="admingenerator.generator.doctrine"
@@ -37,10 +37,5 @@
                 <argument type="service" id="kernel" />
             </call>
         </service>
-
-        <service id="admingenerator.sessionserializer.doctrine" class="%admingenerator.sessionserializer.doctrine.class%">
-            <argument type="service" id="doctrine"></argument>
-        </service>
-        
     </services>
 </container>

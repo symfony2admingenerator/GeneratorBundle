@@ -195,6 +195,8 @@ class RoutingLoader extends FileLoader
 
             return implode('\\', explode('\\', $matches[1], -1)); // Remove the short bundle name
         }
+
+        throw new \Exception(sprintf('Bundle file not found in %s.', realpath($resource.'/../../')));
     }
 
     /**
@@ -202,16 +204,22 @@ class RoutingLoader extends FileLoader
      */
     protected function getGeneratorFilePath($resource)
     {
+        // TODO: use the GeneratorsFinder
         // Find the *-generator.yml
         $finder = Finder::create()
             ->name($this->getControllerFolder($resource).'-generator.yml')
-            ->depth(0)
             ->in(realpath($resource.'/../../Resources/config/'))
             ->getIterator();
 
         foreach ($finder as $file) {
             return $file->getRealPath();
         }
+
+        throw new \Exception(sprintf(
+            'Generator file for %s not found in %s',
+            $this->getControllerFolder($resource),
+            realpath($resource.'/../../Resources/config/')
+        ));
     }
 
     /**

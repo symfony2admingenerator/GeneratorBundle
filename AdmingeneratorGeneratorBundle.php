@@ -2,13 +2,14 @@
 
 namespace Admingenerator\GeneratorBundle;
 
-use Admingenerator\GeneratorBundle\DependencyInjection\Compiler\TwigLoaderCompilerPass;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Admingenerator\GeneratorBundle\ClassLoader\AdmingeneratedClassLoader;
-use Admingenerator\GeneratorBundle\DependencyInjection\Compiler\ValidatorCompilerPass;
-use Admingenerator\GeneratorBundle\DependencyInjection\Compiler\FormCompilerPass;
+use Admingenerator\GeneratorBundle\DependencyInjection\Compiler\TwigLoaderPass;
+use Admingenerator\GeneratorBundle\DependencyInjection\Compiler\ValidatorPass;
+use Admingenerator\GeneratorBundle\DependencyInjection\Compiler\FormPass;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 class AdmingeneratorGeneratorBundle extends Bundle
 {
@@ -16,6 +17,19 @@ class AdmingeneratorGeneratorBundle extends Bundle
      * @var boolean
      */
     private $classLoaderInitialized = false;
+
+    /**
+     * @var KernelInterface
+     */
+    private $kernel;
+
+    /**
+     * @param KernelInterface $kernel
+     */
+    public function __construct(KernelInterface $kernel)
+    {
+        $this->kernel = $kernel;
+    }
 
     /**
      * (non-PHPdoc)
@@ -36,9 +50,9 @@ class AdmingeneratorGeneratorBundle extends Bundle
 
         parent::build($container);
 
-        $container->addCompilerPass(new ValidatorCompilerPass());
-        $container->addCompilerPass(new FormCompilerPass());
-        $container->addCompilerPass(new TwigLoaderCompilerPass());
+        $container->addCompilerPass(new ValidatorPass());
+        $container->addCompilerPass(new FormPass());
+        $container->addCompilerPass(new TwigLoaderPass());
     }
 
     /**
@@ -46,7 +60,7 @@ class AdmingeneratorGeneratorBundle extends Bundle
      */
     public function getContainerExtension()
     {
-        $this->extension = new DependencyInjection\AdmingeneratorGeneratorExtension();
+        $this->extension = new DependencyInjection\AdmingeneratorGeneratorExtension($this->kernel);
 
         return $this->extension;
     }
@@ -61,9 +75,9 @@ class AdmingeneratorGeneratorBundle extends Bundle
         if (!$this->classLoaderInitialized) {
             $this->classLoaderInitialized = true;
 
-            $AdmingeneratedClassLoader = new AdmingeneratedClassLoader();
-            $AdmingeneratedClassLoader->setBasePath($container->getParameter('kernel.cache_dir'));
-            $AdmingeneratedClassLoader->register();
+            $admingeneratedClassLoader = new AdmingeneratedClassLoader();
+            $admingeneratedClassLoader->setBasePath($container->getParameter('kernel.cache_dir'));
+            $admingeneratedClassLoader->register();
         }
     }
 }

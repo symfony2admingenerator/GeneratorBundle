@@ -15,7 +15,11 @@ use Symfony\Component\PropertyAccess\PropertyAccess;
 /**
  * @author Bob van de Vijver
  */
+{% if namespace_prefix is empty %}
+class ExcelController extends \{{ bundle_name }}\Controller\{{ builder.generator.baseGeneratorName }}\ListController
+{% else %}
 class ExcelController extends \{{ namespace_prefix }}\{{ bundle_name }}\Controller\{{ builder.generator.baseGeneratorName }}\ListController
+{% endif %}
 {
     /**
      * Generates the Excel object and send a streamed response
@@ -81,7 +85,7 @@ class ExcelController extends \{{ namespace_prefix }}\{{ bundle_name }}\Controll
 
         $colNum = 0;
         {% for column in builder.columns %}
-            {% if column.credentials is not empty %}
+            {% if column.credentials is not empty and column.credentials is not same as('AdmingenAllowed') %}
             {% set credentials = column.credentials %}
             if ($this->validateCredentials('{{ credentials }}')) {
             {% endif %}
@@ -91,7 +95,7 @@ class ExcelController extends \{{ namespace_prefix }}\{{ bundle_name }}\Controll
             $sheet->getColumnDimension($columnLetter)->setAutoSize(true);
 
             $colNum++;
-            {% if column.credentials is not empty %}
+            {% if column.credentials is not empty and column.credentials is not same as('AdmingenAllowed') %}
             }
             {% endif %}
         {% endfor %}
@@ -105,10 +109,10 @@ class ExcelController extends \{{ namespace_prefix }}\{{ bundle_name }}\Controll
         $row = 2;
         $results = $this->getResults();
 
-        $colNum = 0;
         foreach($results as ${{ builder.ModelClass }}) {
+            $colNum = 0;
             {% for name,column in builder.columns %}
-                {% if column.credentials is not empty %}
+                {% if column.credentials is not empty and column.credentials is not same as('AdmingenAllowed') %}
                     {% set credentials = column.credentials %}
                 if ($this->validateCredentials('{{ credentials }}', ${{ builder.ModelClass }})) {
                 {% endif %}
@@ -121,7 +125,7 @@ class ExcelController extends \{{ namespace_prefix }}\{{ bundle_name }}\Controll
                 }
 
                 $sheet->setCellValueByColumnAndRow($colNum, $row, $formatedValue);
-                {% if column.credentials is not empty %}
+                {% if column.credentials is not empty and column.credentials is not same as('AdmingenAllowed') %}
                 }
                 {% endif %}
             // Inc is outside of the credentials check to be sync with headers.

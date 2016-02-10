@@ -35,10 +35,7 @@ class EditController extends BaseController
 
     protected function getEditType()
     {
-        $type = new EditType();
-        $type->setAuthorizationChecker($this->get('security.authorization_checker'));
-
-        return $type;
+        return '{{ builder.formType }}';
     }
 
     /**

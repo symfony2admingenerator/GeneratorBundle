@@ -19,4 +19,19 @@ class EditBuilder extends BaseBuilder
     {
         return 'edit';
     }
+
+    /**
+     * Retrieve the FQCN formType used by this builder
+     *
+     * @return string
+     */
+    public function getFormType()
+    {
+        return sprintf(
+            '%s%s\\Form\Type\\%s\\EditType',
+            $this->getVariable('namespace_prefix') ? $this->getVariable('namespace_prefix') . '\\' : '',
+            $this->getVariable('bundle_name'),
+            $this->getBaseGeneratorName()
+        );
+    }
 }

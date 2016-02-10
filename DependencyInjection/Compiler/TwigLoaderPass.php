@@ -5,7 +5,7 @@ namespace Admingenerator\GeneratorBundle\DependencyInjection\Compiler;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 
-class TwigLoaderCompilerPass implements CompilerPassInterface
+class TwigLoaderPass implements CompilerPassInterface
 {
     /**
      * {@inheritdoc}
