@@ -446,6 +446,22 @@ class Generator extends TwigGeneratorGenerator
     }
 
     /**
+     * @return array
+     */
+    public function getBuildersFromYaml()
+    {
+        return $this->getFromYaml('builders', array());
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isFormsOnly()
+    {
+        return $this->getFromYaml('params.forms_only', false);
+    }
+
+    /**
      * @param array     $array      The array to traverse.
      * @param string    $path       Path string with point for levels.
      * @param mixed     $default    Value to default to, path key not found.

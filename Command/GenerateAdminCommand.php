@@ -26,9 +26,9 @@ class GenerateAdminCommand extends GeneratorCommand
                 new InputOption('dir', '', InputOption::VALUE_REQUIRED, 'The directory where the bundle is', 'src/'),
                 new InputOption('bundle-name', '', InputOption::VALUE_REQUIRED, 'The bundle name'),
                 new InputOption('generator', '', InputOption::VALUE_REQUIRED, 'The generator service (propel, doctrine, doctrine_odm)', 'doctrine'),
-                new InputOption('model-name', '', InputOption::VALUE_REQUIRED, 'Base model name for admin module, without namespace.', 'YourModel'),
+                new InputOption('model-name', '', InputOption::VALUE_REQUIRED, 'Base model name for admin module, without namespace.'),
                 new InputOption('prefix', '', InputOption::VALUE_REQUIRED, 'The generator prefix ([prefix]-generator.yml)'),
-
+                new InputOption('forms-only', null, InputOption::VALUE_NONE, 'If set, only forms will be auto-generated.')
             ))
             ->setHelp(<<<EOT
 The <info>admin:generate-admin</info> command helps you generates new admin pages for a given model.
@@ -216,7 +216,8 @@ EOT
         $generator->setPrefix($input->getOption('prefix'));
         $generator->generate(
             $bundle,
-            $input->getOption('model-name')
+            $input->getOption('model-name'),
+            $input->hasOption('forms-only')
         );
 
         $output->writeln('Generating the bundle code: <info>OK</info>');
@@ -231,7 +232,9 @@ EOT
         $runner($this->updateKernel($output, $this->getContainer()->get('kernel'), $bundle));
 
         // routing
-        $runner($this->updateRouting($output, $bundle, $input->getOption('prefix')));
+        if (!$input->hasOption('forms-only')) {
+            $runner($this->updateRouting($output, $bundle, $input->getOption('prefix')));
+        }
 
         $questionHelper->writeGeneratorSummary($output, $errors);
     }
@@ -309,13 +312,13 @@ EOT
         try {
             $ret = $routing->addResource($bundle->getName(), 'admingenerator');
             if (!$ret) {
-                $help = sprintf("        <comment>resource: \"@%s/Controller/%s/\"</comment>\n        <comment>type:     admingenerator</comment>\n", $bundle->getName(), ucfirst($prefix));
-                $help .= "        <comment>prefix:   /</comment>\n";
+                $help = sprintf("\t\t<comment>resource: \"@%s/Controller/%s/\"</comment>\n\t<comment>type:\tadmingenerator</comment>\n", $bundle->getName(), ucfirst($prefix));
+                $help .= "\t\t<comment>prefix:\t/</comment>\n";
 
                 return array(
                     '- Import the bundle\'s routing resource in the app main routing file:',
                     '',
-                    sprintf('    <comment>%s:</comment>', $bundle->getName()),
+                    sprintf('\t<comment>%s:</comment>', $bundle->getName()),
                     $help,
                     '',
                 );

@@ -49,41 +49,48 @@ class DoctrineGenerator extends Generator
         );
         $generator->setBaseGeneratorName($this->getBaseGeneratorName());
 
-        $builders = $generator->getFromYaml('builders', array());
+        $builders = $generator->getBuildersFromYaml();
+        $formsOnly = $generator->isFormsOnly();
 
         if (array_key_exists('list', $builders)) {
-            $generator->addBuilder(new ListBuilderAction());
-            $generator->addBuilder(new ListBuilderTemplate());
+            if (!$formsOnly) {
+                $generator->addBuilder(new ListBuilderAction());
+                $generator->addBuilder(new ListBuilderTemplate());
+            }
             $generator->addBuilder(new FiltersBuilderType());
         }
 
-        if (array_key_exists('nested_list', $builders)) {
+        if (array_key_exists('nested_list', $builders) && !$formsOnly) {
             $generator->addBuilder(new NestedListBuilderAction());
             $generator->addBuilder(new NestedListBuilderTemplate());
         }
 
         if (array_key_exists('edit', $builders)) {
-            $generator->addBuilder(new EditBuilderAction());
-            $generator->addBuilder(new EditBuilderTemplate());
+            if (!$formsOnly) {
+                $generator->addBuilder(new EditBuilderAction());
+                $generator->addBuilder(new EditBuilderTemplate());
+            }
             $generator->addBuilder(new EditBuilderType());
         }
 
         if (array_key_exists('new', $builders)) {
-            $generator->addBuilder(new NewBuilderAction());
-            $generator->addBuilder(new NewBuilderTemplate());
+            if (!$formsOnly) {
+                $generator->addBuilder(new NewBuilderAction());
+                $generator->addBuilder(new NewBuilderTemplate());
+            }
             $generator->addBuilder(new NewBuilderType());
         }
 
-        if (array_key_exists('show', $builders)) {
+        if (array_key_exists('show', $builders) && !$formsOnly) {
             $generator->addBuilder(new ShowBuilderAction());
             $generator->addBuilder(new ShowBuilderTemplate());
         }
 
-        if (array_key_exists('excel', $builders)) {
+        if (array_key_exists('excel', $builders) && !$formsOnly) {
             $generator->addBuilder(new ExcelBuilderAction());
         }
 
-        if (array_key_exists('actions', $builders)) {
+        if (array_key_exists('actions', $builders) && !$formsOnly) {
             $generator->addBuilder(new ActionsBuilderAction());
             $generator->addBuilder(new ActionsBuilderTemplate());
         }
