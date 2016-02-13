@@ -1,3 +1,5 @@
+# Spanish translations
+
 # Boolean filter
 boolean:
     yes:        Sí
@@ -46,8 +48,9 @@ action.generic:
     list:   Listar
     new:    Nuevo
     save:   Guardar
-    save-and-add:   Guardar y Nuevo
-    save-and-list:  Guardar y Listar
+    save-and-add:   Guardar y nuevo
+    save-and-list:  Guardar y listar
+    save-and-show:  Guardar y mostrar
     excel:  Export to Excel
 
 # Object actions

@@ -1,3 +1,5 @@
+# Slovenian translations
+
 # Boolean filter
 boolean:
     yes:        Da
@@ -47,6 +49,7 @@ action.generic:
     save:   Shrani
     save-and-add:   Shrani in Novo
     save-and-list:  Shrani in Seznam
+    save-and-show:  Shrani in Prikaz
     excel:  Izvoz v Excel
 
 # Object actions

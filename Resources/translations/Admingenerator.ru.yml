@@ -1,3 +1,5 @@
+# Russian translations
+
 # Boolean filter
 boolean:
     yes:        Да
@@ -48,6 +50,7 @@ action.generic:
     save:   Сохранить
     save-and-add:   Сохранить и Добавить
     save-and-list:  Сохранить и Список
+    save-and-show:  Cохранить и показать
     excel:  Экспорт в Excel
 
 # Object actions
