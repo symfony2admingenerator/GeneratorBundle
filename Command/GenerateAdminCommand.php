@@ -11,6 +11,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Sensio\Bundle\GeneratorBundle\Command\Validators;
+use Symfony\Component\Console\Question\ChoiceQuestion;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\HttpKernel\KernelInterface;
@@ -301,13 +302,30 @@ EOT
     protected function updateRouting(InputInterface $input, OutputInterface $output, Bundle $bundle, $prefix)
     {
         $questionHelper = $this->getQuestionHelper();
-        $question = new ConfirmationQuestion('Would you like to update the ::routing.yml file?');
+        $question = new ChoiceQuestion(
+            'Which routing file would you like to update?',
+            array(
+                'base' => '::routing.yml',
+                'bundle' => sprintf('%s:Resources:%s', $bundle->getName(), $bundle->getRoutingConfigurationFilename()),
+                'none' => 'Do not update any file.'
+            ),
+            'base'
+        );
 
-        if (!$questionHelper->ask($input, $output, $question)) {
-            return;
+        $routingFile = $questionHelper->ask($input, $output, $question);
+
+        if ('none' == $routingFile) {
+            return array();
         }
 
-        $targetRoutingPath = $this->getContainer()->getParameter('kernel.root_dir').'/config/routing.yml';
+        if ('base' == $routingFile) {
+            $targetRoutingPath = $this->getContainer()->getParameter('kernel.root_dir').'/config/routing.yml';
+        } else {
+            $targetRoutingPath = sprintf('%s/Resources/config/%s', $bundle->getTargetDirectory(), $bundle->getRoutingConfigurationFilename());
+        }
+
+        var_dump($targetRoutingPath);die;
+
         $output->write(sprintf(
             '> Importing the bundle\'s routes from the <info>%s</info> file: ',
             $this->makePathRelative($targetRoutingPath)
@@ -371,7 +389,7 @@ EOT
             $namespace,
             $bundleName,
             $dir,
-            'yml', // unused
+            'yml',
             false // unused
         );
     }
