@@ -324,8 +324,6 @@ EOT
             $targetRoutingPath = sprintf('%s/Resources/config/%s', $bundle->getTargetDirectory(), $bundle->getRoutingConfigurationFilename());
         }
 
-        var_dump($targetRoutingPath);die;
-
         $output->write(sprintf(
             '> Importing the bundle\'s routes from the <info>%s</info> file: ',
             $this->makePathRelative($targetRoutingPath)
