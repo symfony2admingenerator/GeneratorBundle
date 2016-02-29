@@ -21,10 +21,12 @@ params:
         delete: ~
     batch_actions:
         delete: ~
-	actions: ~
+    actions: ~
 ```
 
 They can be customized on a per admin basis, according to your needs.
+
+If you want to see the actual list/excel/new/edit builder documentation, check [this documentation][builders-doc].
 
 ### Generator
 `generator` __default__: `admingenerator.generator.{{generator}}` __type__: `string`
@@ -85,7 +87,7 @@ Provide the tranlation catalogue that needs to be used to translate the text.
 ### Credentials
 `credentials` __default__: `~` __type__: `string`
 
-By default, there are no credentials required to view every page of this particular admin. To check for a specific credential, just enter is here. For more documenation about credentials, check our [security documentation][security-doc].
+By default, there are no credentials required to view every page of this particular admin. To check for a specific credential, just enter it here. For more documenation about credentials, check our [security documentation][security-doc].
 
 > __NOTE__ Credentials given here are valid for the whole admin, but can be overridden in specific builders or even specific fields.
 
@@ -156,7 +158,7 @@ In this example, the custom blocks template must contain the following block:
 
 The fields parameter can be used to configure the fields on a global level. THe configuration entered here will be used by the builders, which can overwrite specific parts.
 
-For more information about configuring field, see our [field configuration documentation][field-doc].
+For more information about configuring field, see our [field configuration documentation][fields-doc].
 
 ### Actions
 `object_actions` __default__: `~` __type__: `array`
@@ -172,6 +174,7 @@ This bundle provides some configurable default actions, but custom actions can a
 More information on actions can be found in the [action configuration documentation][actions-doc].
 
 [back-to-index]: ../documentation.md
+[builders-doc]: builders.md
 [security-doc]: security.md
-[field-doc]: fields.md
+[fields-doc]: fields.md
 [actions-doc]: actions.md

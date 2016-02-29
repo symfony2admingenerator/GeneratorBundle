@@ -11,7 +11,11 @@ This site provides API documentation for latest build of Symfony2 Admin Generato
  	- [Internationalization][start-internationalization]
 3. Model configuration
  	- [General parameters][start-general-params]
- 	- [List/filters builder][start-list-builder]
+ 	- [Field configuration][start-field-configuration]
+ 	- [Action configuration][start-action-configuration]
+ 	- [Builder configuration][start-builder-configuration]
+ 	- [List builder][start-list-builder]
+ 	- [Filters builder][start-filter-builder]
  	- [Edit/new builder][start-edit-builder]
  	- [Excel builder][start-excel-builder]
  	- [Security][start-security]
@@ -40,9 +44,13 @@ This site provides API documentation for latest build of Symfony2 Admin Generato
 [start-internationalization]: getting-started/internationalization.md
 
 [start-general-params]: admin/general-params.md
-[start-list-builder]: admin/list-builder.md
-[start-edit-builder]: admin/edit-builder.md
-[start-excel-builder]: admin/excel-builder.md
+[start-field-configuration]: admin/fields.md
+[start-action-configuration]: admin/actions.md
+[start-builder-configuration]: admin/builders.md
+[start-list-builder]: admin/builder-list.md
+[start-filter-builder]: admin/builder-filter.md
+[start-edit-builder]: admin/builder-edit.md
+[start-excel-builder]: admin/builder-excel.md
 [start-security]: admin/security.md
 
 [cust-actions]: customization/actions.md

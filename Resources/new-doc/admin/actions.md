@@ -16,6 +16,8 @@ The configuration of the actions is done in the generator config yaml file, at w
 
 If you want to adjust the list, excel, new, edit or show view, check the [builder configuration][builder-config] documentation.
 
+> **Note**: Keep in mind that every piece of controller code can be overwritten in your bundle. Check the cache to find what is generated in your case.
+
 ### Batch actions
 
 Batch actions are only available in the list view and are rendered at the bottom of the list (left half of the screen). There is a single pre-defined batch action: `delete`.
