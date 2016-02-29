@@ -1,3 +1,5 @@
+# Polish translations
+
 # Boolean filter
 boolean:
     yes:            Tak
@@ -47,6 +49,7 @@ action.generic:
     save:           Zapisz
     save-and-add:   Zapisz i Nowy
     save-and-list:  Zapisz i Lista
+    save-and-show:  Zapisz i Pokazać
     excel:          Eksportuj
 
 # Object actions

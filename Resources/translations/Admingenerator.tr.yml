@@ -1,3 +1,5 @@
+# Turkish translations
+
 # Boolean filter
 boolean:
     yes:        Evet
@@ -39,6 +41,7 @@ action.generic:
     save:   Kaydet
     save-and-add:   Kaydet ve Yeni Oluştur
     save-and-list:  Kaydet ve Listeye Dön
+    save-and-show:  Kaydet ve Göstermek
     excel:  Excel'e verme
 
 # Object actions

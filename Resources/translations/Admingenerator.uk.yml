@@ -1,3 +1,5 @@
+# Ukrainian translations
+
 # Boolean filter
 boolean:
     yes:        Так
@@ -46,6 +48,7 @@ action.generic:
     save:   Зберегти
     save-and-add:   Зберегти та додати
     save-and-list:  Зберегти та список
+    save-and-show:  Зберегти та показати
     excel:  Експорт в Excel
 
 # Object actions

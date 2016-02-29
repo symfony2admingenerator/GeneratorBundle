@@ -1,3 +1,5 @@
+# Japanese translations
+
 # Boolean filter
 boolean:
     yes:        はい
@@ -47,6 +49,7 @@ action.generic:
     save:   保存
     save-and-add:   保存して追加
     save-and-list:  保存して戻る
+    save-and-show:  保存して表示
     excel:  Excel へのエクスポート
 
 # Object actions

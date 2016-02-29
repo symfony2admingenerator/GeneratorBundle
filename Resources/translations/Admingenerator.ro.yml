@@ -1,3 +1,5 @@
+# Romanian translations
+
 # Boolean filter
 boolean:
     yes:        Da
@@ -47,6 +49,7 @@ action.generic:
     save:   Salvați
     save-and-add:   Adăugați și Salvare
     save-and-list:  Lista și Salvare
+    save-and-show:  Arată și Salvare
     excel:  Export în Excel
 
 # Object actions

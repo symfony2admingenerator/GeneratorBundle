@@ -1,3 +1,5 @@
+# English translations
+
 # Boolean filter
 boolean:
     yes:        Yes
@@ -46,8 +48,9 @@ action.generic:
     list:   List
     new:    New
     save:   Save
-    save-and-add:   Save and Add
-    save-and-list:  Save and List
+    save-and-add:   Save and add
+    save-and-list:  Save and list
+    save-and-show:  Save and show
     excel:  Export to Excel
 
 # Object actions
