@@ -57,7 +57,7 @@ This site provides API documentation for latest build of Symfony2 Admin Generato
 [cust-forms]: customization/forms.md
 [cust-templates]: customization/templates.md
 
-[cookbook-a2lix]: cookbook/a2lix-translation.md
+[cookbook-a2lix]: cookbook/a2lix-translations.md
 [cookbook-avatar]: cookbook/custom-avatars.md
 [cookbook-breadcrumbs]: cookbook/breadcrumbs.md
 [cookbook-em]: cookbook/multiple-entity-managers.md
