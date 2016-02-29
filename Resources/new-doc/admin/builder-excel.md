@@ -6,6 +6,8 @@
 
 The Excel builder extends the [List builder](list-builder), which means that when the Excel export is executed, the available data is exactly the same as shown in the List view at that moment (but not paginated). Filters and scopes are applied as expected.
 
+> **Note**: As the Excel builder extends the List builder, it is required to have an list builder in your admin configuration.
+
 ### Requirements
 To use the Excel export make sure you have installed the recommended dependency `liuggio/excelbundle` and enabled it in your `AppKernel.php` (`new Liuggio\ExcelBundle\LiuggioExcelBundle()`). Without this bundle enabled the ExcelAction will not work.
 
