@@ -18,7 +18,7 @@ The list builder is used to configure the list view. You can read more about the
 
 ### Filters builder
 
-The filters builder is used to configure the filters which are displayed on the list view. You can read more about the list builder in [it's own documentation page][list-builder].
+The filters builder is used to configure the filters which are displayed on the list view. You can read more about the filter builder in [it's own documentation page][filter-builder].
 
 ### Excel builder
 
@@ -32,7 +32,8 @@ The show builder is used to configure the show view. You can read more about the
 
 
 [back-to-index]: ../documentation.md
-[edit-builder]: edit-builder.md
-[excel-builder]: excel-builder.md
-[list-builder]: list-builder.md
-[show-builder]: show-builder.md
+[edit-builder]: builder-edit.md
+[excel-builder]: builder-excel.md
+[list-builder]: builder-list.md
+[filter-builder]: builder-filter.md
+[show-builder]: builder-show.md
