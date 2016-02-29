@@ -34,6 +34,25 @@ This site provides API documentation for latest build of Symfony2 Admin Generato
     - [Submitting issues][support-issues]
     - [Contributing code][support-contributing]
 
+### Showcase
+
+Below are some screenshots of our very simple demo project.
+
+##### List view
+![List view](img/showcase/list.png)
+
+##### List view with filter
+![List view with filter](img/showcase/list-with-filter.png)
+
+##### List view with scopes
+![List view with scopes](img/showcase/list-with-scopes.png)
+
+##### Scoped List view
+![Scoped List view](img/showcase/list-with-scopes--scoped.png)
+
+##### Edit form
+![Edit form](img/showcase/edit-form.png)
+
 [support-contributing]: support-and-contribution/contributing.md
 [support-issues]: support-and-contribution/submitting-issues.md
 
