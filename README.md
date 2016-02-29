@@ -13,7 +13,7 @@
 
 ## 1. Quick tour:
 
-This bundle helps you quickly create powerful CRUD backend. Customizing the standard functionalities is simple - you can easily overwrite any part of the generated code. Most features can be configured in one (per model) YAML file. Advanced examples are covered in our [Cookbook][cookbook]. For a quick preview visit our [demo project][s2a-demo].
+This bundle helps you quickly create powerful CRUD backend. Customizing the standard functionalities is simple - you can easily overwrite any part of the generated code. Most features can be configured in one (per model) YAML file. Advanced examples are covered in our cookbook, accessible through our [documentation](documentation). For a quick preview visit our [demo project][s2a-demo].
 
 ## 2. Highlights:
 
@@ -23,11 +23,42 @@ This bundle helps you quickly create powerful CRUD backend. Customizing the stan
 * admin design based on [AdminLTE v2](https://github.com/almasaeed2010/AdminLTE)
 * active community, support on [Gitter Chat][gitter-chat]
 
-## 3. Documentation
+## 3. Features:
 
-The [documentation][documentation] for this bundle can be found in `Resources/doc` directory. 
+#### List view:
 
-## 4. Community and support
+* sorting
+* pagination
+* filters
+* scopes
+* button links to object actions
+* check rows to select and perform batch actions
+
+#### Nestedset List view:
+
+* *drag & drop* to manage your tree
+
+#### New / Edit form:
+
+* group fields in fieldsets
+* group fieldsets in tabs
+* [dedicated bundle](https://github.com/symfony2admingenerator/FormExtensionsBundle) with additional form types
+* add/remove fields to the form based on credential checks
+* display errors next to fields when form is invalid
+* display error count for each tab
+* (optional) help blocks
+* button links to object actions
+
+#### Show view:
+
+* add/remove displayed fields  based on credential checks
+* button links to object actions
+
+## 4. Documentation
+
+The [documentation][documentation] for this bundle can be found in `Resources/doc` directory.
+
+## 5. Community and support
 
 If you're having trouble or you found an error feel free to open a github ticket, but first please read [submitting issues][submitting-issues].
 You can also find help on our chat. If you like this bundle join our SensioConnect club, follow us on Twitter and recommend us on KnpBundles.
@@ -37,7 +68,7 @@ You can also find help on our chat. If you like this bundle join our SensioConne
 [![SensioConnect join the club](http://img.shields.io/badge/SensioConnect-join%20the%20club-82e83e.svg)](https://connect.sensiolabs.com/c/symfony2admingenerator/apply-membership)
 [![KnpBundles recommend](https://img.shields.io/badge/KnpBundles-recommend-8DCAF8.svg)](http://knpbundles.com/symfony2admingenerator/GeneratorBundle/change-usage-status)
 
-# 5. Versioning
+## 6. Versioning
 
 Releases will be numbered with the format `major.minor.patch`.
 
@@ -53,7 +84,7 @@ For more information on SemVer, please visit [semver.org][semver] website.
 
 When upgrading the to the newest build, always check our [upgrade notes][upgrade-notes].
 
-# 5. Contributing
+## 7. Contributing
 
 This bundle follows branching model described in [A successful git branching model][branching-model-post] blog post by Vincent Driessen.
 
@@ -63,17 +94,27 @@ This bundle follows branching model described in [A successful git branching mod
 * The `hotfixes` branch is used to develop fixes to severe bugs in stable releases. When ready, the fix is merged both to `develop` and `master` branches.
 * The release branches (eg. `1.1`) are created for each minor release and only patches will be merged into them.
 
-![Branching model](https://github.com/symfony2admingenerator/FormBundle/raw/master/Resources/doc/img/branching-model.png)
+![Branching model](Resources/doc/img/branching-model.png)
 
-# 6. License
+## 8. This bundle in pictures
+By default, this Bundle uses the [AdminLTE](http://almsaeedstudio.com/AdminLTE/) templates. See its [documentation](http://almsaeedstudio.com/) to create your own widget and customize the interface.
+
+![Preview of dashboard](Resources/doc/img/showcase/dashboard-adminlte-preview.png)
+
+![Preview of list](Resources/doc/img/showcase/list-preview.png)
+
+![Preview of nested list](Resources/doc/img/showcase/nestedlist-preview.png)
+
+![Preview of edit](Resources/doc/img/showcase/edit-preview.png)
+
+## 9. License
 
 This bundle is released under the [MIT License](LICENSE) except for the file: `Resources/doc/img/branching-model.png` by Vincent Driessen, which is released under `Creative Commons BY-SA`.
 
-[cookbook]: https://github.com/symfony2admingenerator/GeneratorBundle/blob/master/Resources/doc/cookbook.md
-[documentation]: https://github.com/symfony2admingenerator/GeneratorBundle/blob/master/Resources/doc/documentation.md
-[submitting-issues]: https://github.com/symfony2admingenerator/GeneratorBundle/blob/master/Resources/doc/support-and-contribution/submitting-issues.md
+[documentation]: Resources/doc/documentation.md
+[submitting-issues]: Resources/doc/support-and-contribution/submitting-issues.md
 [gitter-chat]: https://gitter.im/symfony2admingenerator/GeneratorBundle
 [s2a-demo]: https://github.com/symfony2admingenerator/symfony2-admingenerator-demo-edition
 [semver]: http://semver.org
 [branching-model-post]: http://nvie.com/posts/a-successful-git-branching-model/
-[upgrade-notes]:  https://github.com/symfony2admingenerator/GeneratorBundle/blob/master/UPGRADE.md
+[upgrade-notes]: UPGRADE.md

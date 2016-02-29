@@ -38,6 +38,9 @@ This site provides API documentation for latest build of Symfony2 Admin Generato
 
 Below are some screenshots of our very simple demo project.
 
+#### AdminLTE Dashboard
+![Preview of dashboard](img/showcase/dashboard-adminlte-preview.png)
+
 ##### List view
 ![List view](img/showcase/list.png)
 
@@ -49,6 +52,9 @@ Below are some screenshots of our very simple demo project.
 
 ##### Scoped List view
 ![Scoped List view](img/showcase/list-with-scopes--scoped.png)
+
+#### Nested list
+![Preview of nested list](img/showcase/nestedlist-preview.png)
 
 ##### Edit form
 ![Edit form](img/showcase/edit-form.png)
