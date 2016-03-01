@@ -80,8 +80,6 @@ And constructed with the following guidelines.
 
 For more information on SemVer, please visit [semver.org][semver] website.
 
-> **Note:** while we're still in beta, these may not always apply.
-
 When upgrading the to the newest build, always check our [upgrade notes][upgrade-notes].
 
 ## 7. Contributing
