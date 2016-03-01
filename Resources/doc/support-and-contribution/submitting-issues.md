@@ -1,41 +1,32 @@
 # Submitting issues
----------------------------------------
 
 [go back to Table of contents][back-to-index]
 
-[back-to-index]: https://github.com/symfony2admingenerator/AdmingeneratorGeneratorBundle/blob/master/Resources/doc/documentation.md#2-support-and-contribution
+-----
 
-Before you submit an issue [make sure][docs-features] the feature you're haveing 
-trouble with is supported for your model manager.
-
-[docs-features]: https://github.com/symfony2admingenerator/AdmingeneratorGeneratorBundle/blob/master/Resources/doc/documentation.md#3-features
-
-### Step 1: check existing issues
+### Step 1: Check existing issues
 
 Go to [our issues page][docs-issues] and search existing issues, your problem may have been answered there already.
 
-[docs-issues]: https://github.com/symfony2admingenerator/AdmingeneratorGeneratorBundle/issues
 
-### Step 2: check google groups
+### Step 2: Check google groups
 
 Go to [our google group][docs-google] and search existing threads, your problem may have been answered there already.
 
-[docs-google]: http://groups.google.com/group/symfony2admingenerator/topics
 
-### Step 3: create new issue
+### Step 3: Ask on Gitter
 
-Though we support both [Github issues][docs-issues] and [Google Group][docs-google], we prefer you use **Github** becouse issues written useing [Github Flavored Markdown][docs-markdown] are much more human-readable.
+You can always ask for support in our [Gitter][docs-gitter]. You are free to ask questions, however keep in mind that there is not always someone who can answer them.
 
-To create a new issue go to [Github issues][docs-issues] and click on **New issue** button (or use [this shortcut][docs-new-issue]).
 
-[docs-markdown]: http://github.github.com/github-flavored-markdown/
-[docs-new-issue]: https://github.com/symfony2admingenerator/AdmingeneratorGeneratorBundle/issues/new
+### Step 4: Create new issue
 
-### Basic formatting guide
+You can create an issue using [Github][docs-issues], using [Github Flavored Markdown][docs-markdown] are much more human-readable. To create a new issue go to [Github issues][docs-issues] and click on the **New issue** button (or use [this shortcut][docs-new-issue]).
 
-While writing your issue please use Github Flavored Markdown to make it more readable. 
 
-If you paste any code **wrap it in github's code block!** To do that start with 3 **```** characters, then name language you're useing, for example **yaml**:
+##### Basic formatting guide
+
+While writing your issue please use Github Flavored Markdown to make it more readable. If you paste any code **wrap it in github's code block!** To do that start with 3 **```** characters, then name language you're useing, for example **yaml**:
 
 > **```yaml**
 > 
@@ -43,11 +34,16 @@ If you paste any code **wrap it in github's code block!** To do that start with 
 > 
 > **```**
 
-will resuilt in:
+which will resuilt in
 ```yaml
 my.yaml_code:  is here
 ```
 
-To learn how to use GFM simply click on *Github Flavored Markdown* link above issue form to see ![Cheat sheet][doc-gfm-image]
+To learn how to use Github Flavoured Markdown simply click on the *Github Flavored Markdown* link above the text field to see!
 
-[doc-gfm-image]: https://raw.github.com/symfony2admingenerator/AdmingeneratorGeneratorBundle/master/Resources/doc/support-and-contribution/gfm-cheat-sheet.png
+[back-to-index]: ../documentation.md
+[docs-gitter]: https://gitter.im/symfony2admingenerator/GeneratorBundle
+[docs-google]: http://groups.google.com/group/symfony2admingenerator/topics
+[docs-issues]: https://github.com/symfony2admingenerator/AdmingeneratorGeneratorBundle/issues
+[docs-markdown]: http://github.github.com/github-flavored-markdown
+[docs-new-issue]: https://github.com/symfony2admingenerator/AdmingeneratorGeneratorBundle/issues/new
