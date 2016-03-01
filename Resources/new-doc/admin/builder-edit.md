@@ -37,10 +37,10 @@ For example, a single group without fieldset element:
 ```yaml
 edit:
   params:
-    title: Edit contact
+    title: "You're editing the contact \"%object%\"|{ %object%: Contact.name }|"
     display:
       NONE:
-        "row1 col-md-12": [ name, gender ]
+        "row1 col-md-12": [ name, gender, address ]
 ```
 
 > **Note** the `row1 col-md-12` in the example above. The name of the row will be used as class for the rows, and needs to be unique per builder. If not, they rows will overwrite each other, effectively resulting in only the last to be rendered.
@@ -55,10 +55,18 @@ edit:
         "row1 col-md-12": [ name ]
       "Gender information":
         "row2 col-md-12": [ gender ]
-      "Related stuff":
-        "row3 col-md-12": [ articles ]
+      "Address information":
+        "row3 col-md-12": [ address ]
 ```
 > **Note** the different row numbers, to ensure they are unique.
+
+If you do not care about the class of the rows and you do not want to use any groups, you can simply use an array. An example:
+```yaml
+edit:
+  params:
+    title: "You're editing the contact \"%object%\"|{ %object%: Contact.name }|"
+    display: [ name, gender, address ]
+```
 
 #### Actions
 `actions` __default__: `~` __type__: `array`
