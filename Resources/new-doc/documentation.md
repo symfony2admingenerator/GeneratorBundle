@@ -4,7 +4,7 @@ This site provides API documentation for latest build of Symfony2 Admin Generato
 
 ## Table of contents
 1. Installation
-    - [Basic installation][install-base-install]
+    - [Base installation][install-base-install]
     - [General configuration][install-general-configuration]
 2. Getting started
  	- [Creating an admingenerator][start-create-admin]
