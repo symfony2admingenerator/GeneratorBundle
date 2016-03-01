@@ -8,10 +8,11 @@ The show builder is the simplest builder of this bundle: it simply creates a pag
 
 The show builder takes only a few parameters:
 ```yaml
-show:
-  title: ~
-  display: ~
-  actions: ~
+builders:
+  show:
+    title: ~
+    display: ~
+    actions: ~
 ```
 
 #### Title
@@ -36,9 +37,9 @@ edit:
 	  new: ~
 ```
 
-You can also use self-defined action from your global generator parameters, or overwrite specific part of the actions. Check the [action documentation][action-doc] for more information.
-
+You can also use self-defined actions from your global generator parameters, or overwrite specific part of the actions. Check the [action documentation][action-doc] for more information.
 
 
 [back-to-index]: ../documentation.md
+[action-doc]: actions.md
 [edit-doc-display]: builder-edit.md#display

@@ -13,7 +13,8 @@ The Edit/New builders are basically the same: the only difference between the tw
 
 The Edit builder configuration looks as follows:
 ```yaml
-edit:
+builders:
+  edit:
     params:
       title: ~
       display: ~
@@ -80,7 +81,7 @@ edit:
 	  list: ~
 ```
 
-You can also use self-defined action from your global generator parameters, or overwrite specific part of the actions. Check the [action documentation][action-doc] for more information.
+You can also use self-defined actions from your global generator parameters, or overwrite specific part of the actions. Check the [action documentation][action-doc] for more information.
 
 
 #### Fields

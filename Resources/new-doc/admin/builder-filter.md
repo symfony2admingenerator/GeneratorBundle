@@ -14,6 +14,15 @@ There are two types of filters:
 
 Building filters is actually really simple: by default they use the global form configuration for the filterForm (set with `formType`, `formOptions` and `addFormOptions`. However there are also dedicated `filtersType`, `filterOptions` and `addFilterOptions` to configure the filters completely seperated from the normal form. This might be convenient when the filterFormType is different than the normal FormType.
 
+Filters can be specified in the `filters` parameter of the list builder and are specified as an array:
+
+```yaml
+builders:
+  list:
+    params:
+	  filters: [ name, gender ]
+```
+
 See for more information about this configuration the [fields documentation][field-doc].
 
 ### Filter position
@@ -120,4 +129,4 @@ The `QueryFilter` type can be used to get the query for your manager and to set 
 
 [back-to-index]: ../documentation.md
 [list-builder]: builder-list.md
-[field-doc]: ../fields.md
+[field-doc]: fields.md
