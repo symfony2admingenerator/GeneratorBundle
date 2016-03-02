@@ -4,7 +4,8 @@
 
 -----
 
-All actions are customizable, but you can also define custom actions that can be used in your admin. As described in the [admin actions documentation][admin-actions-docs], there are three types of actions:
+All actions are customizable, but you can also define custom actions that can be used in your admin. As described in 
+the [admin actions documentation][admin-actions-docs], there are three types of actions:
 * `batch_actions`
 * `object_actions`
 * `actions`
@@ -15,15 +16,22 @@ For every action type you can create custom actions. They all have the same opti
 
 ### Action builders
 
-When an action is defined with the `object_actions` or `batch_actions` which does not exists, a controller STUB will be generated. You will have to add code to the controller before you custom action will work.
+When an action is defined with the `object_actions` or `batch_actions` which does not exists, a controller STUB will 
+be generated. You will have to add code to the controller before your custom action will work.
 
-There are two Actions that handle everything the custom action:
-* `objectAction`: route for this action is `Vendor_BundleName_GeneratorPrefix_object`, for example: `Acme_DemoBundle_User_object`. It takes two arguments: `pk` (object primary key) and `action` (object action name).
-* `batchAction` route for this action is `Vendor_BundleName_GeneratorPrefix_batch`, for example: `Acme_DemoBundle_User_batch`. This action requires *POST* method and two posted variables: `action` (batch action name) and `selected` (an array of selected object primary keys).
+There are two routes (and so methods) that handle all custom actions:
+* `objectAction`: route for this action is `Vendor_BundleName_GeneratorPrefix_object`, for example: 
+`Acme_DemoBundle_User_object`. It takes two arguments: `pk` (object primary key) and 
+`action` (object action name).
+* `batchAction` route for this action is `Vendor_BundleName_GeneratorPrefix_batch`, for example: 
+`Acme_DemoBundle_User_batch`. This action requires *POST* method and two posted variables: 
+`action` (batch action name) and `selected` (an array of selected object primary keys).
 
-Additionally all batch actions are by default CSRF protected. Object actions may be CSRF protected, if you add `csrfProtected: true` in action config.
+Additionally all batch actions are by default CSRF protected. Object actions can be CSRF protected, if you add 
+`csrfProtected: true` in action config.
 
-Depending on the value of `action` parameter different action will be called. E.g. `/{pk}/delete` will call delete object action.
+Depending on the value of `action` parameter, different method will be called. E.g. `/{pk}/delete` will call delete 
+object action.
 
 
 ### Custom object action example
@@ -45,11 +53,11 @@ params:
         lock:
             label:    Lock account
             icon:     glyphicon-lock
-            route:    Acme_SecurityBundle_User_object
-            csrfProtected: true
-            params:
+            route:    Acme_SecurityBundle_User_object # Optional
+            params: # Optional
                 pk:       "{{ User.id }}"
                 action:   lock
+            csrfProtected: true
             options:
                 # this is the title for intermediate page
                 # if JS is available then intermediate page will not be used
@@ -73,15 +81,21 @@ builders:
             # we're generating a STUB for lock action
 ```
 
-Let's have a quick look what's going on in this config. First of all, we're configuring `object_actions` under global `params`, so we don't have to configure them twice (for list and actions builder).
+Let's have a quick look what's going on in this config. First of all, we're configuring `object_actions` under global 
+`params`, so we don't have to configure them twice (for list and actions builder).
 
-**Impersonate** action leads to `Homepage` route, which takes no parameters. Because of that `_switch_user` parameter will be appended as a GET parameter (e.g. `/?_switch_user=cedric`) which is exactly what we want. [Read more][impersonate-user] about impersonating a user in Symfony2 book, Security chapter.
+**Impersonate** action leads to `Homepage` route, which takes no parameters. Because of that `_switch_user` parameter 
+will be appended as a GET parameter (e.g. `/?_switch_user=cedric`) which is exactly what we want. 
+[Read more][impersonate-user] about impersonating a user in Symfony2 book, Security chapter.
 
-**Lock** action is a custom action, for which we will generate a STUB and customize it in our ActionsController. So, first we configure `lock` action to use our `object_actions` route.
+**Lock** action is a custom action, for which we will generate a STUB and customize it in our ActionsController. So, 
+first we configure `lock` action to use our `object_actions` route.
 
 > **Note:** the route for object and batch actions uses `generator prefix`, not ~model name~!
 
-You may have multiple generators for one model (e.g. for `User` model you may generate `BasicUser-generator.yml`, `AdvancedUser-generator.yml` and `AdminUser-generator.yml`). In such case remember that the route for BasicUser would be `Acme_SecurityBundle_BasicUser_object` or `Acme_SecurityBundle_BasicUser_batch` for batch actions.
+You may have multiple generators for one model (e.g. for `User` model you may generate `BasicUser-generator.yml`, 
+`AdvancedUser-generator.yml` and `AdminUser-generator.yml`). In such case remember that the route for BasicUser would 
+be `Acme_SecurityBundle_BasicUser_object` or `Acme_SecurityBundle_BasicUser_batch` for batch actions.
 
 This route requires two parameters: `pk`, in this case `{{ User.id }}` and `action` which is our action's name `lock`.
 
@@ -91,7 +105,9 @@ Last, we're configuring the intermediate page title. Intermediate page is only u
 
 #### List builder
 
-In list builder configuration we're adding actions we want to display. If action config is set to null (~) then global config will be used. Thats to this little fix we can have different object actions in List and Actions builders, but share their configuration.
+In list builder configuration we're adding actions we want to display. If action config is set to null (~) then global 
+config will be used. Thanks to this little fix we can have different object actions in List and Actions builders, but 
+share their configuration.
 
 So, in list we want to display:
 
@@ -101,11 +117,13 @@ So, in list we want to display:
 
 #### Actions builder
 
-In actions builder configuration we're adding actions we want to generate STUBs for. That is only `lock` action in this example.
+In actions builder configuration we're adding actions we want to generate STUBs for. That is only `lock` action in 
+this example.
 
 #### Code your custom actions
 
-Now, all we have to do is go to our bundle's directory and code what our `lock` action actually does. In our example we can do that by editing `Acme/SecurityBundle/Controller/UserController/ActionsController.php`.
+Now, all we have to do is go to our bundle's directory and code what our `lock` action actually does. In our example we 
+can do that by editing `Acme/SecurityBundle/Controller/UserController/ActionsController.php`.
 
 ```php
 
@@ -165,13 +183,18 @@ builders:
             # we're generating a STUB for lock action
 ```
 
-Let's have a quick look what's going on in this config. Similar to object actions configuration, first we're configuring "global" batch actions. Batch actions configuration is a bit shorter, because all batch actions are always CSRF protected, and there is no intermediate page, so we don't have to specify a title for it.
+Let's have a quick look what's going on in this config. Similar to object actions configuration, first we're configuring 
+"global" batch actions. Batch actions configuration is a bit shorter, because all batch actions are always CSRF protected, 
+and there is no intermediate page, so we don't have to specify a title for it.
 
-Also, all required parameters (action name, selected objects, csrf token) are rendered as part of form on List view, so they need no further configuration.
+Also, all required parameters (action name, selected objects, csrf token) are rendered as part of form on List view, so 
+they need no further configuration.
 
 #### List builder
 
-In list builder configuration we're adding actions we want to display. If action config is set to null (~) then global config will be used. Thanks to this little fix we can have different batch actions in List and Actions builders, but share their configuration.
+In list builder configuration we're adding actions we want to display. If action config is set to null (~) then global 
+config will be used. Thanks to this little fix we can have different batch actions in List and Actions builders, but 
+share their configuration.
 
 So, in list we want to display:
 
@@ -180,12 +203,14 @@ So, in list we want to display:
 
 #### Actions builder
 
-In actions builder configuration we're adding actions we want to generate STUBs for. That is only `lock` action in this example.
+In actions builder configuration we're adding actions we want to generate STUBs for. That is only `lock` action in this 
+example.
 
 
 #### Code your custom actions
 
-Now, all we have to do is go to our bundle's directory and code what our `lock` action actually does. In our example we can do that by editing `Acme/SecurityBundle/Controller/UserController/ActionsController.php`.
+Now, all we have to do is go to our bundle's directory and code what our `lock` action actually does. In our example we 
+can do that by editing `Acme/SecurityBundle/Controller/UserController/ActionsController.php`.
 
 ```php
 
@@ -217,9 +242,11 @@ checking CSRF protection token or credentials
 
 ### Valid action names
 
-Becouse admingenerator generates functions based on action name, action names must be validated. Actions names cannot contain characters like `!@#$%^&*;:"',.()[]{}`, they may contain only word-characters and dashes.
+Because admingenerator generates functions based on action name, action names must be validated. Actions names cannot 
+contain characters like `!@#$%^&*;:"',.()[]{}`, they may contain only word-characters and dashes.
 
-Any non-word character will be removed from generated function name, e.g. object action `toggle-is-valid` will generate functions:
+Any non-word character will be removed from generated function name, e.g. object action `toggle-is-valid` will generate 
+functions:
 
 ```php
 
@@ -248,43 +275,54 @@ protected function errorObjectToggleisvalid() { ... }
 * [Submit](#submit)
 
 ##### Class
+
 `class` __type__: `string`
 
 Add any css class(es) to the rendered button.
 
 ##### Confirm
+
 `confirm` __type__: `string`
 
-Used to set an confirm message. When set, the action will first use an javascript popup with your confirm message to ask for confirmation of the user.
+Used to set a confirm message. When set, the action will first use a javascript popup with your confirm message to ask 
+for confirmation from the user.
 
 ##### Credentials
+
 `credentials` __type__: `string`
 
-By default, there are no credentials required to show and use an action. To check for a specific credential, just enter it here. For more documenation about credentials, check our [security documentation][security-doc].
+By default, there are no credentials required to show and use an action. To check for a specific credential, just enter 
+it here. For more documenation about credentials, check our [security documentation][security-doc].
 
-> __NOTE__ Credentials given here are valid for the whole admin, but can be overridden in specific builders or even specific fields.
+> __NOTE__ Credentials given here are valid for the whole admin, but can be overridden in specific builders or even 
+specific fields.
 
 ##### CSRF protected
+
 `crsfProtected` __type__: `bool` __default__: `false`
 
 When set to `true` an extra crsf token is added to the `data-crsf-token` of the button.
 
 ##### Force intermediate
+
 `forceIntermediate` __type__: `array` __default__: `false`
 
 When set to `true` the intermediate confirm page will always be used instead of the javascript confirm.
 
 ##### Icon
+
 `icon` __type__: `string`
 
 Set the icon that is used in the button. For example `fa-book`.
 
 ##### Label
+
 `label` __type__: `string`
 
 Set the label of the button.
 
 ##### Options
+
 `options` __type__: `array`
 
 Can be used to set specific settings for the actions. Currenlty inplemented:
@@ -295,17 +333,21 @@ Can be used to set specific settings for the actions. Currenlty inplemented:
 * `i18n`: Used to set the translations catalogue
 
 ##### Params
+
 `params` __type__: `array`
 
 Set the params used for route generation.
 
 ##### Route
+
 `route` __type__: `string`
 
-Set the action of the button. When this is set, there will be no controller STUB, as it will not be used. The button is rendered as simple URL.
+Set the action of the button. When this is set, there will be no controller STUB, as it will not be used. The button is 
+rendered as simple URL.
 
 ##### Submit
-`submit` __type__: `bool`
+`submit` __type
+__: `bool`
 
 If set to true, the button will behave as a submit button for the form on that page.
 

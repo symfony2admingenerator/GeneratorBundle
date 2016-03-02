@@ -1,6 +1,8 @@
 # Documentation
 ---------------------------------------
-This site provides API documentation for latest build of Symfony2 Admin Generator. If you're working with older versions we encourage you to update to latest build. If you're getting errors or have trouble with updating see [submitting issues][support-issues] and open a ticket on github.
+This site provides API documentation for latest build of Symfony2 Admin Generator. If you're working with older versions 
+we encourage you to update to latest build. If you're getting errors or have trouble with updating see 
+[submitting issues][support-issues] and open a ticket on github.
 
 ## Table of contents
 1. Installation

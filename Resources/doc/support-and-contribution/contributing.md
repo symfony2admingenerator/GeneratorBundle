@@ -6,9 +6,12 @@
 
 ## 1. Creating and managing git branches
 
-In your github fork, you need to keep your master branch clean, without any changes. This way you can create a branch from your master at any time necessary. Each time that you want commit a bug fix or a feature, you need to create a branch for it, which will be the copy of your master branch.
+In your github fork, you need to keep your master branch clean, without any changes. This way you can create a branch 
+from your master at any time necessary. Each time that you want to commit a bug fix or a feature, you need to create 
+a branch for it, which will be the copy of your master branch.
 
-When you make a pull request off branch, you can continue to work on an another branch and make another pull request for the other branch.
+When you make a pull request of a branch, you can continue to work on an another branch and make another pull request 
+for the other one.
 
 Before creating a new branch pull the changes from Symfony2Admingenerator, your master needs to be up to date.
 
@@ -74,14 +77,18 @@ $ git push origin :<name_of_your_new_branch>
 
 The only difference it's the `:` to say delete.
 
-If you want to change default branch, it's so easy with github, in your fork go into Admin and in the drop-down list default branch choose what you want.
+If you want to change default branch, it's so easy with github, in your fork go into Admin and in the drop-down list 
+default branch choose what you want.
 
 ## 2. Stashing local changes
 
 Sometimes you are in the middle of something, and suddenly you are notified with
-a bug report that needs to be fixed as soon as possible. You are not ready to commit your changes, because you your tests don’t pass yet.
+a bug report that needs to be fixed as soon as possible. You are not ready to commit your changes, because you your 
+tests don’t pass yet.
 
-You could throw away your current changes to make the patch or checkout a clean copy of your project to make the changes.. but wait! You can just stash your changes away, and make the patch! Afterward you grab your changes back and continue work.
+You could throw away your current changes to make the patch or checkout a clean copy of your project to make the 
+changes... but wait! You can just stash your changes away, and make the patch! Afterward you grab your changes back 
+and continue work.
 
 ### Stash your current changes:
 
@@ -107,7 +114,8 @@ stash@{0}: WIP on default_save_styles: e7f4318 Add default styles
 $ git stash apply <stash_name>
 ```
 
-Stash names look like **stash@{0}** where 0 is stash index number. You may notice the stash is still there after you have applied it. You can drop it if you don’t need it any more.
+Stash names look like **stash@{0}** where 0 is stash index number. You may notice the stash is still there after you 
+have applied it. You can drop it if you don’t need it any more.
 
 ### Drop a stash:
 

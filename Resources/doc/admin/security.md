@@ -6,11 +6,14 @@
 
 ### 1. Description
 
-Credentials allow you to protect actions and fields depending on your own logic. Credentials are based on Symfony Security Component.
+Credentials allow you to protect actions and fields depending on your own logic. Credentials are based on Symfony 
+Security Component.
 
 ### 2. Usage and configuration
 
-You can easily protect any action or field using the parameter `credentials` in your `generator.yml`. Credentials should be a valid `expression` string that could be used in a `isGranted` call from the `AuthorizationChecker` service. You can so, for example, easily protect any action or field using roles expression:
+You can easily protect any action or field using the parameter `credentials` in your `generator.yml`. Credentials should 
+be a valid `expression` string that could be used in a `isGranted` call from the `AuthorizationChecker` service. You 
+can so, for example, easily protect any action or field using roles expression:
 
 ```yaml
   object_actions:
@@ -21,11 +24,16 @@ You can easily protect any action or field using the parameter `credentials` in 
       credentials: 'ROLE_USER'
 ```
 
-Because credentials are using native security component, you can use all the power of Voters to create more sophisticated scenarios than simple ROLE checkers. For more information, take a look to [How to Use Voters to Check User Permissions](http://symfony.com/doc/current/cookbook/security/voters.html) from the Symfony documentation.
+Because credentials are using native security component, you can use all the power of `Voters` to create more 
+sophisticated scenarios than simple ROLE checkers. For more information, take a look to 
+[How to Use Voters to Check User Permissions](http://symfony.com/doc/current/cookbook/security/voters.html) from the 
+Symfony documentation.
 
 ### 3. Using JMS Security Extra Bundle
 
-If you are used to use JMS bundle or simply like the `Security function` capacities from this bundle, the Admingenerator is able to use `Expression`. You need to turn on this functionality thanks to the `use_jms_security` configuration parameter.
+If you are used to use JMS bundle or simply like the `Security function` capacities from this bundle, the Admingenerator 
+is able to use `Expression`. You need to turn on this functionality thanks to the `use_jms_security` configuration 
+parameter.
 
  > Of course, you also need to install the JMS bundle and activate it by yourself.
 

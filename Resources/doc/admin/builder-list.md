@@ -29,35 +29,47 @@ Used to set the title of the page. By default, it is filled with `{admingenerato
 
 
 ### Filters
+
 `filters` __default__: `~` __type__: `array`
 `filtersMode` __default__: `default` __type__: `string`
 `filtersModalSize` __default__: `medium` __type__: `string`
 
-By default, all filterable fields are available as filter. If you want to specify which filters (and in which order) you want to display, simply fill the `filters` array:
+By default, all filterable fields are available as filter. If you want to specify which filters (and in which order) 
+you want to display, simply fill the `filters` array:
+
 ```yaml
 list:
   params:
     filters: [ name, gender ]
 ```
 
-If you want to adjust the rendering of the filter field, please refer to the [field configuration documentation][field-doc]. Several filter related configuration parameters are described there.
+If you want to adjust the rendering of the filter field, please refer to the 
+[field configuration documentation][field-doc]. Several filter related configuration parameters are described there.
 
 More information about the `filtersMode` and `filtersModalSize` can be found in the [filter documentation][filter-doc].
 
 
 ### Fields
+
 `filters` __default__: `~` __type__: `array`
 See the [field configuration documentation][field-doc].
 
-> **Note**: The field and filter parameters have the same effect in the list view. However note that the filter parameters overwrite the form parameters, if any.
+> **Note**: The field and filter parameters have the same effect in the list view. However note that the filter 
+parameters overwrite the form parameters, if any.
 
 #### Display
+
 `display` __default__: `~` __type__: `array`
 
-With the display parameter you can specify the fields that need to be displayed. Works the same as the [`filters`](#filters) parameter.
+With the display parameter you can specify the fields that need to be displayed. Works the same as the 
+[`filters`](#filters) parameter.
 
 ### Actions
-Actions can be enabled by simply specifying them here with the value `~`. The following example will render the new action on the right below the list, the batch delete action on the left below the list and the edit action for every object:
+
+Actions can be enabled by simply specifying them here with the value `~`. The following example will render the new 
+action on the right below the list, the batch delete action on the left below the list and the edit action for every 
+object:
+
 ```yaml
 edit:
   params:
@@ -69,7 +81,8 @@ edit:
 	  delete: ~
 ```
 
-You can also use self-defined actions from your global generator parameters, or overwrite specific part of the actions. Check the [action documentation][action-doc] for more information.
+You can also use self-defined actions from your global generator parameters, or overwrite specific part of the actions. 
+Check the [action documentation][action-doc] for more information.
 
 
 [back-to-index]: ../documentation.md

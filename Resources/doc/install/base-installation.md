@@ -31,9 +31,6 @@ public function registerBundles()
 {
     $bundles = array(
         // ...
-        new JMS\AopBundle\JMSAopBundle(),
-        new JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
-        new JMS\DiExtraBundle\JMSDiExtraBundle($this),
         new Admingenerator\GeneratorBundle\AdmingeneratorGeneratorBundle($this),
         new Knp\Bundle\MenuBundle\KnpMenuBundle(),
         new WhiteOctober\PagerfantaBundle\WhiteOctoberPagerfantaBundle(),
@@ -43,7 +40,9 @@ public function registerBundles()
 
 > **Note:** Do not forget to add the kernel to the initialization of the bundle (the `$this` argument).
 
-If you want to use the JMS Security Extra expressions, make sure to install the bundle and enable it in the config:
+If you want to use the JMS Security Extra expressions, make sure to 
+[install the bundle](http://jmsyst.com/bundles/JMSSecurityExtraBundle/master/installation#using-composer-recommended)
+and enable it in the config:
 
 ```yaml
 jms_security_extra:
@@ -88,7 +87,7 @@ Assets will be downloaded to the `admin` directory into the root `web` directory
 
 ### (optional) Dump assets
 
-If you're useing assetic for asset management dump your assets by running:
+If you're using assetic for asset management, dump your assets by running:
 
 `php app/console assetic:dump`
 
