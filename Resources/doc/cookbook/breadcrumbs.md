@@ -55,106 +55,83 @@ You can customize the example below if needed. The file should be located in `ap
 
 Add the following code to your menu builder to build the breadcrumbs tree (`src/AppBundle/Menu/Builder.php`):
 ```php
-public function breadcrumbMenu(FactoryInterface $factory, array $options)
-{
-    $primaryKey = $this->container->get('request')->get('pk', $this->container->get('request')->get('id', 1));
-    $menu = $factory
-        ->createItem('main', array('label' => 'Главная', 'route' => 'homepage'))
-        ->setExtra('icon', 'fa fa-dashboard');
-    $login = $menu->addChild('Идентификация', array('route' => 'fos_user_security_login'))
-        ->addChild('Восстановление пароля', array('route' => 'fos_user_resetting_request',
-            'extras' => array('routes' => array('fos_user_resetting_send_email', 'fos_user_resetting_check_email')), ));
-    $login->addChild('Получение доступа в систему ?', array('route' => 'help'));
+    public function breadcrumbMenu(FactoryInterface $factory, array $options)
+    {
+        $primaryKey = $this->container->get('request')->get('pk', $this->container->get('request')->get('id', 1));
+        $menu = $factory
+            ->createItem('main', array('label' => 'homepage', 'route' => 'homepage'))
+            ->setExtra('icon', 'fa fa-dashboard')
+            ->setExtra('translation_domain', 'messages');
+        
+        $login = $menu
+            ->addChild('fos_user_security_login', array('route' => 'fos_user_security_login'))
+            ->setExtra('translation_domain', 'AdmingeneratorUserBundle')
+            ->addChild('fos_user_resetting_request', array('route' => 'fos_user_resetting_request',
+                'extras' => array(
+                    'routes' => array('fos_user_resetting_send_email', 'fos_user_resetting_check_email')), 
+                ))
+            ->setExtra('translation_domain', 'AdmingeneratorUserBundle');
+        $login
+            ->addChild('help.title', array('route' => 'help'))
+            ->setExtra('translation_domain', 'messages');
 
-    $user = $menu->addChild('Список сотрудников', array('route' => 'AppBundle_Employee_list',
-        'extras' => array('routes' => array('AppBundle_Employee_create')), ));
-    $user->addChild('Добавление нового сотрудника', array('route' => 'AppBundle_Employee_new'));
-    $user->addChild('Карточка сотрудника', array('route' => 'AppBundle_Employee_show',
-            'routeParameters' => array('pk' => $primaryKey), ))
-        ->addChild('Редактирование сотрудника', array('route' => 'AppBundle_Employee_edit',
-            'routeParameters' => array('pk' => $primaryKey), 'extra' => array(
-                'routes' => array('AppBundle_Employee_update'),
-                'routesParameters' => array('pk' => $primaryKey), ),
-            ));
+        // $this->addAdminGeneratorRoutesForBreadcrumbs($menu, $primaryKey, 'AppBundle_Employee', 'employee');
+        // $this->addAdminGeneratorRoutesForBreadcrumbs($menu, $primaryKey, 'AppBundle_Regional_center', 'regional.center', 'regional', true);
 
-    $profile = $user->addChild('Просмотр профиля', array('route' => 'profile'));
-    $profile->addChild('Параметры профиля', array('route' => 'fos_user_profile_edit'));
-
-    // $this->addAdminGeneratorRoutesForBreadcrumbs($menu, $primaryKey, 'AppBundle_Employee',
-    //     'Список сотрудников', 'Добавление нового сотрудника',
-    //     'Карточка сотрудника', 'Правка сотрудника', true, 'users'
-    // );
-
-    return $menu;
-}
+        return $menu;
+    }
 ```
 
 It is also possible to generate breadcrumbs for s2a controllers automatically via the `addAdminGeneratorRoutesForBreadcrumbs` function call from the file above. Add the following and uncomment the call in the code above.
 
 ```php
-/**
- * Add breadcrumbs for AdminGenerated module.
- *
- * @param ItemInterface $menu
- * @param int             $primaryKey
- * @param string        $routePrefix
- * @param string        $listLabel
- * @param string        $newLabel
- * @param string        $showLabel
- * @param string        $editLabel
- * @param boolean    $edit_under_show
- * @param string        $icon
- *
- * @return ItemInterface
- */
-private function addAdminGeneratorRoutesForBreadcrumbs(ItemInterface $menu, $primaryKey, $routePrefix, $listLabel, $newLabel, $showLabel, $editLabel, $edit_under_show = false, $icon = null)
-{
-    $submenu = $menu
-        ->addChild($listLabel, array('route' => $routePrefix.'_list'));
+    /**
+     * Add breadcrumbs for AdminGenerated module.
+     *
+     * @param ItemInterface $menu
+     * @param int           $primaryKey
+     * @param string        $routePrefix
+     * @param string        $translation_prefix
+     * @param string        $translation_catalog
+     * @param bool          $edit_under_show
+     * @param string        $icon
+     *
+     * @return ItemInterface
+     */
+    private function addAdminGeneratorRoutesForBreadcrumbs(ItemInterface $menu, $primaryKey, $routePrefix, $translation_prefix, $translation_catalog = 'messages', $edit_under_show = false, $icon = null)
+    {
+        $submenu = $menu
+            ->addChild($translation_prefix.'.list.title', array('route' => $routePrefix.'_list'))
+            ->setExtra('translation_domain', $translation_catalog);
 
-    if ($icon) {
-        $submenu->setExtra('icon', 'fa fa-'.$icon);
-    }
+        if ($icon) {
+            $submenu->setExtra('icon', 'fa fa-'.$icon);
+        }
 
-    $submenu->addChild($newLabel, array('route' => $routePrefix.'_create'));
-    $submenu->addChild($newLabel.' ', array('route' => $routePrefix.'_new'));
-    $showmenu = $submenu->addChild($showLabel, array('route' => $routePrefix.'_show',
-            'routeParameters' => array('pk' => $primaryKey), ));
+        $submenu->addChild($translation_prefix.'.new.title', array('route' => $routePrefix.'_new',
+            'extras' => array('routes' => array($routePrefix.'_create')), ))
+                ->setExtra('translation_domain', $translation_catalog);
+        $showmenu = $submenu->addChild($translation_prefix.'.show.title', array('route' => $routePrefix.'_show',
+            'routeParameters' => array('pk' => $primaryKey), ))
+                ->setExtra('translation_domain', $translation_catalog);
 
-    if ($edit_under_show) {
-        $showmenu->addChild(
-            $editLabel,
+        $mymenu = $edit_under_show ? $showmenu : $submenu;
+
+        $mymenu->addChild(
+            $translation_prefix.'.edit.title',
             array(
                 'route' => $routePrefix.'_edit',
                 'routeParameters' => array('pk' => $primaryKey),
+                'extras' => array(
+                    'routes' => array($routePrefix.'_update'),
+                    'routesParameters' => array('pk' => $primaryKey),
+                ),
             )
-        );
-        $showmenu->addChild(
-            $editLabel.' ',
-            array(
-                'route' => $routePrefix.'_update',
-                'routeParameters' => array('pk' => $primaryKey),
-            )
-        );
-    } else {
-        $submenu->addChild(
-            $editLabel,
-            array(
-                'route' => $routePrefix.'_edit',
-                'routeParameters' => array('pk' => $primaryKey),
-            )
-        );
-        $submenu->addChild(
-            $editLabel.' ',
-            array(
-                'route' => $routePrefix.'_update',
-                'routeParameters' => array('pk' => $primaryKey),
-            )
-        );
-    }
+        )
+        ->setExtra('translation_domain', $translation_catalog);
 
-    return $menu;
-}
+        return $submenu;
+    }
 ```
 
 Many thanks to @ksn135 for this cookbook article.
