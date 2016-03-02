@@ -1,22 +1,16 @@
 # Contributing
-----------------------------------------------------
 
 [go back to Table of contents][back-to-index]
 
-[back-to-index]: https://github.com/symfony2admingenerator/AdmingeneratorGeneratorBundle/blob/master/Resources/doc/documentation.md#2-support-and-contribution
+-----
 
-## 1. Createing and managing git branches
+## 1. Creating and managing git branches
 
-In your github fork, you need to keep your master branch clean, without any changes, 
-like that you can create at any time a branch from your master. Each time, that you 
-want commit a bug fix or a feature, you need to create a branch for it, which will 
-be the copy of your master branch. 
+In your github fork, you need to keep your master branch clean, without any changes. This way you can create a branch from your master at any time necessary. Each time that you want commit a bug fix or a feature, you need to create a branch for it, which will be the copy of your master branch.
 
-When you will do a pull request on a branch, you can continue to work on an another 
-branch and make another pull request on the other branch. 
+When you make a pull request off branch, you can continue to work on an another branch and make another pull request for the other branch.
 
-Before createing a new branch pull the changes from Symfony2Admingenerator, your master 
-needs to be up to date.
+Before creating a new branch pull the changes from Symfony2Admingenerator, your master needs to be up to date.
 
 ### Create the branch on your local machine:
 
@@ -80,18 +74,14 @@ $ git push origin :<name_of_your_new_branch>
 
 The only difference it's the `:` to say delete.
 
-If you want to change default branch, it's so easy with github, in your fork go 
-into Admin and in the drop-down list default branch choose what you want.
+If you want to change default branch, it's so easy with github, in your fork go into Admin and in the drop-down list default branch choose what you want.
 
 ## 2. Stashing local changes
 
-Sometimes you are in the middle of something, and suddenly you are notified with 
-a bug report that needs to be fixed as soon as possible. You are not ready to 
-commit your changes, because you your tests don’t pass yet.
+Sometimes you are in the middle of something, and suddenly you are notified with
+a bug report that needs to be fixed as soon as possible. You are not ready to commit your changes, because you your tests don’t pass yet.
 
-You could throw away your current changes to make the patch or checkout 
-a clean copy of your project to make the changes.. but wait! You can just stash your 
-changes away, and make the patch! Afterward you grab your changes back and continue work.
+You could throw away your current changes to make the patch or checkout a clean copy of your project to make the changes.. but wait! You can just stash your changes away, and make the patch! Afterward you grab your changes back and continue work.
 
 ### Stash your current changes:
 
@@ -117,9 +107,7 @@ stash@{0}: WIP on default_save_styles: e7f4318 Add default styles
 $ git stash apply <stash_name>
 ```
 
-Stash names look like **stash@{0}** where 0 is stash index number. You may notice 
-the stash is still there after you have applied it. You can drop it if you don’t 
-need it any more.
+Stash names look like **stash@{0}** where 0 is stash index number. You may notice the stash is still there after you have applied it. You can drop it if you don’t need it any more.
 
 ### Drop a stash:
 
@@ -138,3 +126,5 @@ $ git stash pop
 ```console
 $ git stash clear
 ```
+
+[back-to-index]: ../documentation.md

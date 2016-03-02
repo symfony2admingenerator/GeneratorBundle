@@ -40,7 +40,8 @@
         "symfony2admingenerator/form-extensions-bundle": "Symfony2 form extensions",
         "symfony2admingenerator/user-bundle": "FOSUserBundle integration for Admingenerator",
         "liuggio/excelbundle": "(version >= 2.0) Allows the usage of the Excel export.",
-        "jms/security-extra-bundle": "Take advantages of JMS Security Extra Bundle in your generated templates."
+        "jms/security-extra-bundle": "Take advantages of JMS Security Extra Bundle in your generated templates.",
+        "cnerta/breadcrumb-bundle": "(version ^2.0) Allows the usage of breadcrumbs."
     },
     "autoload": {
         "psr-4": {

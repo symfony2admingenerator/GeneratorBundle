@@ -1,132 +1,90 @@
 # Documentation
 ---------------------------------------
-
-This site provides API documentation for latest build of Symfony2 Admin Generator. 
-If you're working with older versions we encourage you to update to latest build. 
-If you're getting errors or have trouble with update'ing see [submitting issues][1] 
-and open a ticket on github.
-
-[1]: https://github.com/symfony2admingenerator/GeneratorBundle/blob/master/Resources/doc/support/submitting-issues.md
+This site provides API documentation for latest build of Symfony2 Admin Generator. If you're working with older versions we encourage you to update to latest build. If you're getting errors or have trouble with updating see [submitting issues][support-issues] and open a ticket on github.
 
 ## Table of contents
+1. Installation
+    - [Base installation][install-base-install]
+    - [General configuration][install-general-configuration]
+2. Getting started
+ 	- [Creating an admingenerator][start-create-admin]
+ 	- [Internationalization][start-internationalization]
+3. Model configuration
+ 	- [General parameters][start-general-params]
+ 	- [Field configuration][start-field-configuration]
+ 	- [Action configuration][start-action-configuration]
+ 	- [Builder configuration][start-builder-configuration]
+ 	- [List builder][start-list-builder]
+ 	- [Filters builder][start-filter-builder]
+ 	- [Edit/new builder][start-edit-builder]
+ 	- [Excel builder][start-excel-builder]
+ 	- [Security][start-security]
+3. Customization
+    - [Action customization][cust-actions]
+    - [Form customization][cust-forms]
+    - [Template customization][cust-templates]
+4. Cookbook
+    - [a2lix/TranslationFormBundle integration][cookbook-a2lix]
+    - [Breadcrumbs][cookbook-breadcrumbs]
+    - [Custom avatars][cookbook-avatar]
+    - [KnpMenuBundle][cookbook-menu]
+    - [Multiple entity managers (Doctrine)][cookbook-em]
+    - [View parameters][cookbook-view-parameters]
+5. Support and contribution
+    - [Submitting issues][support-issues]
+    - [Contributing code][support-contributing]
 
-1. [Installation][table-of-contents-1]
-2. [Support and Contribution][table-of-contents-2]
-3. [Features][table-of-contents-3]
-4. [Generator][table-of-contents-4]
-5. [Builders][table-of-contents-5]
-6. [Internationalization][table-of-contents-6]
-7. [Cookbook][table-of-contents-7]
-8. [Security][table-of-contents-8]
+### Showcase
 
-[go-up]: https://github.com/symfony2admingenerator/GeneratorBundle/blob/master/Resources/doc/documentation.md#table-of-contents
-[table-of-contents-1]: https://github.com/symfony2admingenerator/GeneratorBundle/blob/master/Resources/doc/documentation.md#1-installation
-[table-of-contents-2]: https://github.com/symfony2admingenerator/GeneratorBundle/blob/master/Resources/doc/documentation.md#2-support-and-contribution
-[table-of-contents-3]: https://github.com/symfony2admingenerator/GeneratorBundle/blob/master/Resources/doc/documentation.md#3-features
-[table-of-contents-4]: https://github.com/symfony2admingenerator/GeneratorBundle/blob/master/Resources/doc/documentation.md#4-generator
-[table-of-contents-5]: https://github.com/symfony2admingenerator/GeneratorBundle/blob/master/Resources/doc/documentation.md#5-builders
-[table-of-contents-6]: https://github.com/symfony2admingenerator/GeneratorBundle/blob/master/Resources/doc/documentation.md#6-internationalization
-[table-of-contents-7]: https://github.com/symfony2admingenerator/GeneratorBundle/blob/master/Resources/doc/documentation.md#7-cookbook
-[table-of-contents-8]: https://github.com/symfony2admingenerator/GeneratorBundle/blob/master/Resources/doc/documentation.md#8-security
+Below are some screenshots of our very simple demo project.
 
-## 1. Installation
+#### AdminLTE Dashboard
+![Preview of dashboard](img/showcase/dashboard-adminlte-preview.png)
 
-1. [Installation via composer][installation-1]
-2. [Configuration][installation-2]
+##### List view
+![List view](img/showcase/list.png)
 
-[go up][go-up]
+##### List view with filter
+![List view with filter](img/showcase/list-with-filter.png)
 
-[installation-1]: https://github.com/symfony2admingenerator/GeneratorBundle/blob/master/Resources/doc/installation/installation-via-composer.md
-[installation-2]: https://github.com/symfony2admingenerator/GeneratorBundle/blob/master/Resources/doc/installation/configuration.md
+##### List view with scopes
+![List view with scopes](img/showcase/list-with-scopes.png)
 
-## 2. Support and Contribution
+##### Scoped List view
+![Scoped List view](img/showcase/list-with-scopes--scoped.png)
 
-1. [Submitting issues][support-and-contribution-1]
-1. [Contributing][support-and-contribution-2]
-1. [Upgrade notes][support-and-contribution-3]
+#### Nested list
+![Preview of nested list](img/showcase/nestedlist-preview.png)
 
-[go up][go-up]
+##### Edit form
+![Edit form](img/showcase/edit-form.png)
 
-[support-and-contribution-1]: https://github.com/symfony2admingenerator/GeneratorBundle/blob/master/Resources/doc/support-and-contribution/submitting-issues.md
-[support-and-contribution-2]: https://github.com/symfony2admingenerator/GeneratorBundle/blob/master/Resources/doc/support-and-contribution/contributing.md
-[support-and-contribution-3]: https://github.com/symfony2admingenerator/GeneratorBundle/blob/master/Resources/doc/support-and-contribution/upgrade-notes.md
+[support-contributing]: support-and-contribution/contributing.md
+[support-issues]: support-and-contribution/submitting-issues.md
 
-## 3. Features
+[install-base-install]: install/base-installation.md
+[install-general-configuration]: install/general-configuration.md
 
-List of supported features for each model manager:
+[start-create-admin]: getting-started/create-admin.md
+[start-internationalization]: getting-started/internationalization.md
 
-1. [Doctrine ORM][features-1]
-2. [Doctrine ODM][features-2]
-3. [Propel][features-3]
+[start-general-params]: admin/general-params.md
+[start-field-configuration]: admin/fields.md
+[start-action-configuration]: admin/actions.md
+[start-builder-configuration]: admin/builders.md
+[start-list-builder]: admin/builder-list.md
+[start-filter-builder]: admin/builder-filter.md
+[start-edit-builder]: admin/builder-edit.md
+[start-excel-builder]: admin/builder-excel.md
+[start-security]: admin/security.md
 
-[go up][go-up]
+[cust-actions]: customization/actions.md
+[cust-forms]: customization/forms.md
+[cust-templates]: customization/templates.md
 
-[features-1]: https://github.com/symfony2admingenerator/GeneratorBundle/blob/master/Resources/doc/features/doctrine-orm-features.md
-[features-2]: https://github.com/symfony2admingenerator/GeneratorBundle/blob/master/Resources/doc/features/doctrine-odm-features.md
-[features-3]: https://github.com/symfony2admingenerator/GeneratorBundle/blob/master/Resources/doc/features/propel-features.md
-
-## 4. Generator
-
-1. [Embed form types][generator-1]
-2. [Entity manager][generator-2]
-3. [Primary Key requirement][generator-3]
-
-[generator-1]: https://github.com/symfony2admingenerator/GeneratorBundle/blob/master/Resources/doc/generator/embed-types.md
-[generator-2]: https://github.com/symfony2admingenerator/GeneratorBundle/blob/master/Resources/doc/generator/entity-manager.md
-[generator-3]: https://github.com/symfony2admingenerator/GeneratorBundle/blob/master/Resources/doc/generator/pk-requirement.md
-
-[go up][go-up]
-
-## 5. Builders
-
-1. [Actions builder][builders-1]
-2. [List builder][builders-2]
-3. [Edit builder][builders-3]
-4. [Excel builder][builders-4]
-
-[builders-1]: https://github.com/symfony2admingenerator/GeneratorBundle/blob/master/Resources/doc/builders/actions-builder.md
-[builders-2]: https://github.com/symfony2admingenerator/GeneratorBundle/blob/master/Resources/doc/builders/list-builder.md
-[builders-3]: https://github.com/symfony2admingenerator/GeneratorBundle/blob/master/Resources/doc/builders/edit-builder.md
-[builders-4]: https://github.com/symfony2admingenerator/GeneratorBundle/blob/master/Resources/doc/builders/excel-builder.md
-
-[go up][go-up]
-
-## 6. Internationalization
-
-1. [Generator translation][internationalization-1]
-
-[go up][go-up]
-
-[internationalization-1]: https://github.com/symfony2admingenerator/AdmingeneratorGeneratorBundle/blob/master/Resources/doc/internationalization/generator-translation.md
-
-## 7. Cookbook
-
-1. [Controllers Tips and Tricks][cookbook-1]
-2. [Templating Tips and Tricks][cookbook-2]
-3. [How to create menu][cookbook-3]
-4. [How to use a2lixTranslationFormBundle with AdmingeneratorGeneratorBundle][cookbook-4]
-5. [Command Line][cookbook-5]
-6. [Form types][cookbook-6]
-7. [Extending generator templates][cookbook-7]
-8. [Creating custom view types][cookbook-8]
-
-[go up][go-up]
-
-[cookbook-1]: https://github.com/symfony2admingenerator/AdmingeneratorGeneratorBundle/blob/master/Resources/doc/cookbook/controllers.md
-[cookbook-2]: https://github.com/symfony2admingenerator/AdmingeneratorGeneratorBundle/blob/master/Resources/doc/cookbook/templating.md
-[cookbook-3]: https://github.com/symfony2admingenerator/AdmingeneratorGeneratorBundle/blob/master/Resources/doc/cookbook/menu.md
-[cookbook-4]: https://github.com/symfony2admingenerator/AdmingeneratorGeneratorBundle/blob/master/Resources/doc/cookbook/a2lixTranslationFormBundle-integration.md
-[cookbook-5]: https://github.com/symfony2admingenerator/AdmingeneratorGeneratorBundle/blob/master/Resources/doc/cookbook/commandLine.md
-[cookbook-6]: https://github.com/symfony2admingenerator/AdmingeneratorGeneratorBundle/blob/master/Resources/doc/cookbook/formTypes.md
-[cookbook-7]: https://github.com/symfony2admingenerator/AdmingeneratorGeneratorBundle/blob/master/Resources/doc/cookbook/extending-generator-templates.md
-[cookbook-8]: https://github.com/symfony2admingenerator/AdmingeneratorGeneratorBundle/blob/master/Resources/doc/cookbook/custom-view-types.md
-
-## 8. Security
-
-1. [Credentials][security-1]
-2. [CSRF Protection][security-2]
-
-[go up][go-up]
-
-[security-1]: https://github.com/symfony2admingenerator/AdmingeneratorGeneratorBundle/blob/master/Resources/doc/security/credentials.md
-[security-2]: https://github.com/symfony2admingenerator/AdmingeneratorGeneratorBundle/blob/master/Resources/doc/security/csrf-protection.md
+[cookbook-a2lix]: cookbook/a2lix-translations.md
+[cookbook-avatar]: cookbook/custom-avatars.md
+[cookbook-breadcrumbs]: cookbook/breadcrumbs.md
+[cookbook-em]: cookbook/multiple-entity-managers.md
+[cookbook-menu]: cookbook/knp-menu.md
+[cookbook-view-parameters]: cookbook/view-parameters.md
