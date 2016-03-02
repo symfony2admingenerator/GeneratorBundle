@@ -6,7 +6,7 @@
 
 It is possible to add breadcrumbs to your admin generator when following this cookbook article.
 
-![Breadcrumbs preview](../img/cookbook-breadcrumbs.png)
+![Breadcrumbs preview](images/breadcrumbs.png)
 
 ### 1. Install suggested breadcrumb bundle
 Use composer to install `"cnerta/breadcrumb-bundle": "^2.0"` and add the following to your configuration:
