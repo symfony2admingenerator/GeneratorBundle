@@ -62,7 +62,8 @@ class Article
      */
     private $version;
 
-    public function getVersion(){
+    public function getVersion()
+	{
         return $this->version;
     }
 }

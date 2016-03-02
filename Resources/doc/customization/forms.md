@@ -29,7 +29,8 @@ namespace Acme\DemoBundle\Form\Type\AdminArticle;
 class Options
 {
   public function getCategoryOptions(array $fieldOptions, array $builderOptions = array()){
-    $fieldOptions['query_builder'] = function (CategoryRepository $er) {
+    $fieldOptions['query_builder'] = function (CategoryRepository $er) 
+	{
       return $er->getQueryBuilderForFind();
     };
     return $fieldOptions;
@@ -40,7 +41,8 @@ class Options
 When you need access to an authorization checker, simply add the `setAuthorizationChecker` method with the authorization checker as argument. The method will automatically be called before the options are retrieved, so for example:
 
 ```php
-public function setAuthorizationChecker($authorizationChecker){
+public function setAuthorizationChecker($authorizationChecker)
+{
   $this->authorizationChecker = $autorizationChecker;
 }
 ```
@@ -65,7 +67,8 @@ use Admingenerated\AcmeDemoBundle\Form\BaseAdminArticleType\NewType as BaseNewTy
  */
 class NewType extends BaseNewType
 {
-  public function getCategoryOptions(array $fieldOptions, array $builderOptions = array()){
+  public function getCategoryOptions(array $fieldOptions, array $builderOptions = array())
+  {
     $fieldOptions['query_builder'] = function (CategoryRepository $er) {
       return $er->getQueryBuilderForFind();
     };
