@@ -4,6 +4,7 @@
 {% use '../CommonAdmin/tabs.php.twig' %}
 {% use '../CommonAdmin/generic_actions.php.twig' %}
 {% use '../CommonAdmin/object_actions.php.twig' %}
+{% use '../CommonAdmin/modals.php.twig' %}
 
 {{ echo_extends( builder.getBaseAdminTemplate ) }}
 
@@ -75,3 +76,5 @@
         </div>
     </div>	
 {{ echo_endblock() }}
+
+{{- block('modals') -}}

@@ -38,10 +38,11 @@
         <a  class="object-action btn btn-default {% if builder.yamlKey is same as('list') or builder.yamlKey is same as('nested_list') %}btn-xs {% endif %}{{ action.class|default('') }}"
             href="{{ echo_path(actionRoute, actionParams) }}"
             title="{{ echo_trans(action.label, {}, translationDomain, 'html_attr') }}"
-                {% if builder.yamlKey is same as('list') or builder.yamlKey is same as('nested_list') %}
-                    data-toggle="tooltip"
-                {% endif %}
-                {%- if action.confirm %} data-confirm="{{ echo_trans(action.confirm, {}, translationDomain, 'html_attr') }}" {% endif -%}
+                {%- if action.confirm and not action.forceIntermediate %}
+                    data-confirm="{{ echo_trans(action.confirm, {}, translationDomain, 'html_attr') }}"
+                    data-confirm-modal="{{ action.confirmModal|default('#confirmObjectModal') }}"
+                    data-toggle="modal"
+                {% endif -%}
                 {%- if action.csrfProtected and not action.forceIntermediate %} data-csrf-token="{{ echo_path(actionRoute, actionParams, ['csrf_token']) }}" {% endif -%}>
             <i class="fa fa-fw {{ action.icon|default('fa-square-o') }}"></i>
             <span>{{ echo_trans(action.label, {}, translationDomain) }}</span>

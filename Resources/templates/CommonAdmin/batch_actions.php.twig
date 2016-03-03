@@ -39,7 +39,11 @@
     {% set translationDomain = action.type is same as('custom') ? i18n_catalog|default("Admin") : 'Admingenerator' %}
     <option
         value="{{ action.name }}"
-        {%- if action.confirm %} data-confirm="{{ echo_trans(action.confirm, {}, translationDomain, 'html_attr') }}" {% endif -%}
+        {%- if action.confirm and not action.forceIntermediate %}
+            data-confirm="{{ echo_trans(action.confirm, {}, translationDomain, 'html_attr') }}"
+            data-confirm-modal="{{ action.confirmModal|default('#confirmBatchModal') }}"
+            data-toggle="modal"
+        {% endif -%}
         >
             {% if action.icon %}<i class="{% if action.icon is defined and action.icon|length > 0 %}fa {{ action.icon }}{% endif %}"></i> {% endif %}
             {{ echo_trans(action.label, {}, translationDomain) }}

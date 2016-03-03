@@ -32,6 +32,7 @@ we encourage you to update to latest build. If you're getting errors or have tro
     - [KnpMenuBundle][cookbook-menu]
     - [Multiple entity managers (Doctrine)][cookbook-em]
     - [View parameters][cookbook-view-parameters]
+    - [Modal with fields][modal-with-fields]
 5. Support and contribution
     - [Submitting issues][support-issues]
     - [Contributing code][support-contributing]
@@ -90,3 +91,4 @@ Below are some screenshots of our very simple demo project.
 [cookbook-em]: cookbook/multiple-entity-managers.md
 [cookbook-menu]: cookbook/knp-menu.md
 [cookbook-view-parameters]: cookbook/view-parameters.md
+[modal-with-fields]: cookbook/modal-with-fields.md

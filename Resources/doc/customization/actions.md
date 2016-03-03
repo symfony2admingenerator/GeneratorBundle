@@ -264,6 +264,7 @@ protected function errorObjectToggleisvalid() { ... }
 
 * [Class](#class)
 * [Confirm](#confirm)
+* [ConfirmModal](#confirmModal)
 * [Credentials](#credentials)
 * [CsrfProtected](#csrf-protected)
 * [ForceIntermediate](#force-intermediate)
@@ -286,6 +287,17 @@ Add any css class(es) to the rendered button.
 
 Used to set a confirm message. When set, the action will first use a javascript popup with your confirm message to ask 
 for confirmation from the user.
+
+##### ConfirmModal
+
+`confirmModal` __type__: `string`
+
+Used to set an id of modal confirm dialog. Use when you want to use different id than default:
+* `confirmGenericModal`: Used for generic-actions
+* `confirmBatchModal`: Used for batch-actions
+* `confirmObjectModal`: Used for object-actions
+
+This is not needed unless you want to use a dialog with special field(s). For example action with a parameter.
 
 ##### Credentials
 
