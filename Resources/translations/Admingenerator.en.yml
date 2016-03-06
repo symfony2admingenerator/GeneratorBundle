@@ -52,6 +52,7 @@ action.generic:
     save-and-list:  Save and list
     save-and-show:  Save and show
     excel:  Export to Excel
+    export: Export
 
 # Object actions
 action.object.edit:

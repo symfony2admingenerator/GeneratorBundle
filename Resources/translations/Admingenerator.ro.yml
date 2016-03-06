@@ -51,6 +51,7 @@ action.generic:
     save-and-list:  Lista și Salvare
     save-and-show:  Arată și Salvare
     excel:  Export în Excel
+    export:  Export
 
 # Object actions
 action.object.edit:

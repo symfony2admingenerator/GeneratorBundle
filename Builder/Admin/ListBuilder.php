@@ -4,6 +4,7 @@ namespace Admingenerator\GeneratorBundle\Builder\Admin;
 
 use Admingenerator\GeneratorBundle\Generator\Column;
 use Admingenerator\GeneratorBundle\Generator\Action;
+use Admingenerator\GeneratorBundle\Generator\Action\Generic\ExcelAction;
 
 /**
  * This builder generates php for list actions
@@ -14,6 +15,11 @@ use Admingenerator\GeneratorBundle\Generator\Action;
  */
 class ListBuilder extends BaseBuilder
 {
+   /**
+    * @var array
+    */
+    protected $excelActions = null;
+
     /**
      * @var array
      */
@@ -223,4 +229,46 @@ class ListBuilder extends BaseBuilder
             $this->addBatchAction($action);
         }
     }
+
+  /**
+   * Return a list of actions from excel.export
+   * 
+   * @return array
+   */
+  public function getExcelActions()
+  {
+      if (null === $this->excelActions) {
+          $this->excelActions = array();
+          $this->fillExportActions();
+      }
+
+      return $this->excelActions;
+  }
+
+  protected function fillExportActions()
+  {
+      $export = $this->getGenerator()->getFromYaml('builders.excel.params.export', []);
+      if (!count($export)) return;
+
+      foreach ($export as $keyName => $params ) {
+          if (!isset($params['show_button']) || (isset($params['show_button']) && filter_var($params['show_button'], FILTER_VALIDATE_BOOLEAN))) {
+              $action = new ExcelAction($keyName, $this);
+              $action->setCredentials($this->getExportParamsForKey($keyName, 'credentials', 'AdmingenAllowed'));
+              $action->setClass($this->getExportParamsForKey($keyName, 'class', 'btn-info'));
+              $action->setIcon($this->getExportParamsForKey($keyName, 'icon', 'fa-file-excel-o'));
+              $action->setLabel($this->getExportParamsForKey($keyName, 'label', 'action.generic.excel'));
+              $this->excelActions[$keyName] = $action;
+          }
+      }
+  }
+
+  public function getExportParamsForKey($key, $name, $default)
+  {
+      if (!$key) return $default;
+
+      $export = $this->getGenerator()->getFromYaml('builders.excel.params.export', []);
+      if (!count($export) || !isset($export[$key]) || !count($export[$key]) || !isset($export[$key][$name])) return $default;
+
+      return $export[$key][$name];
+  }
 }

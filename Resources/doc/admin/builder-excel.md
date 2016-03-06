@@ -30,7 +30,68 @@ builders:
 	  filetype: ~
 	  datetime_format: ~
 	  fields: ~
+	  export: ~
 ```
+
+#### Export
+
+This key allows to export several excel files in different formats.
+
+```yaml
+builders:
+    excel:
+        params: 
+            export:  
+                full:
+                    credentials:     'hasRole("ROLE_A")'        
+                    show_button:     false
+                    icon:            fa-files-o 
+                    label:           Full report
+                    filename:        full-report.xlsx
+                    filetype:        Excel2007
+                    datetime_format: Y-m-d H:i:s
+                    display:
+                        -            id
+                        -            title
+                        -            code
+                        -            guid
+                        -            note
+
+                short:
+                    credentials:     'hasRole("ROLE_B")'        
+                    show_button:     true
+                    icon:            fa-files-o 
+                    label:           Show report
+                    filename:        Short-repot.xls
+                    filetype:        Excel5
+                    datetime_format: d.m.Y
+                    fields:          
+                        title:
+                            label:   Product name
+                    display:
+                        -            id
+                        -            code
+                        -            title
+
+```
+
+You can customize everything includes columns, format, filename, title and even credentials.
+Also you can setup autogeneration of export buttons on list template via parameter `show_button`.
+It also auto-generates routes for each export key (if key is not found use defaults – `display`):
+
+*  /excel
+*  /excel/full
+*  /excel/short
+
+#### Show button
+
+`show_button` __default__: `true` __type__: `boolean`
+
+```yaml
+show_button: true
+```
+
+This will display button for each key (report) registered under `export` parameters key.
 
 #### Display
 

@@ -51,6 +51,7 @@ action.generic:
     save-and-list:  Opslaan en naar lijst
     save-and-show:  Opslaan en tonen
     excel:  Exporteren naar Excel
+    export: Exporteren
 
 # Object actions
 action.object.edit:

@@ -11,6 +11,7 @@ use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\PropertyAccess\PropertyAccess;
+use Doctrine\Common\Util\Inflector;
 
 /**
  * @author Bob van de Vijver
@@ -25,7 +26,7 @@ class ExcelController extends \{{ namespace_prefix }}\{{ bundle_name }}\Controll
      * Generates the Excel object and send a streamed response
      * @return \Symfony\Component\HttpFoundation\StreamedResponse
      */
-    public function excelAction(Request $request)
+    public function excelAction(Request $request, $key = null)
     {
         $this->request = $request;
         {{ block('security_action') }}
@@ -40,15 +41,26 @@ class ExcelController extends \{{ namespace_prefix }}\{{ bundle_name }}\Controll
         $phpExcelObject = $phpexcel->createPHPExcelObject();
         $this->createExcelObject($phpExcelObject);
         $sheet = $phpExcelObject->setActiveSheetIndex(0);
+        $results = $this->getResults();
+
+        $suffix = Inflector::classify($key);
+        if (!method_exists($this,"createExcelHeader$suffix")) {
+            // back to defaults
+            $key = null;
+            $suffix = '';
+        } 
 
         // Create the first bold row in the Excel spreadsheet
-        $this->createExcelHeader($sheet);
-
+        call_user_func(array($this,"createExcelHeader$suffix"), $sheet);
         // Print the data
-        $this->createExcelData($sheet);
+        call_user_func(array($this,"createExcelData$suffix"), $sheet, $results);
+
+        $fileType = call_user_func(array($this,"getExcelFileType$suffix"));
+        $fileName = call_user_func(array($this,"getExcelFileName$suffix"), $fileType);
+        $mimeType = $this->getExcelMimeType($fileType);
 
         // Create the Writer, Response and add header
-        $writer = $phpexcel->createWriter($phpExcelObject, '{{ builder.filetype }}');
+        $writer = $phpexcel->createWriter($phpExcelObject, $fileType);
         $response = new StreamedResponse(
             function () use ($writer) {
                 $tempFile = $this->get('kernel')->getCacheDir().'/'. 
@@ -59,11 +71,52 @@ class ExcelController extends \{{ namespace_prefix }}\{{ bundle_name }}\Controll
             },
             200, array()
         );    
-        $response->headers->set('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; charset=utf-8');
-        $response->headers->set('Content-Disposition', 'attachment;filename={{ builder.filename }}.xlsx');
+        $response->headers->set('Content-Type', $mimeType.'; charset=utf-8');
+        $response->headers->set('Content-Disposition', 'attachment;filename='.$fileName);
 
         return $response;
     }
+
+    protected function getExcelMimeType($fileType)
+    {
+        switch (strtoupper($fileType))
+        {
+            case 'CSV': return 'text/csv';
+            case 'PDF': return 'application/pdf';
+            case 'EXCEL5': return 'application/vnd.ms-excel';
+        }
+        return 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+    }
+
+    protected function getExcelExtension($fileType)
+    {
+        switch (strtoupper($fileType))
+        {
+            case 'CSV': return 'csv';
+            case 'PDF': return 'pdf';
+            case 'EXCEL5': return 'xls';
+        }
+        return 'xlsx';
+    }
+
+    protected function getExcelFileType()
+    {
+        return '{{ builder.filetype }}';
+    }
+
+    protected function getExcelFileName($fileType)
+    {
+        return $this->fixExtension('{{ builder.filename }}', $fileType);
+    }
+
+    protected function fixExtension($fileName, $fileType)
+    {
+        $path_parts = pathinfo($fileName);
+        if (!isset($path_parts['filename'])) $path_parts['filename'] = 'report';
+        $path_parts['extension'] = $this->getExcelExtension($fileType);
+        return $path_parts['filename'] . '.' . $path_parts['extension'];
+    }
+
 
     /**
      * Override this method to add your own creator, title and more to the Excel spreadsheet
@@ -79,7 +132,7 @@ class ExcelController extends \{{ namespace_prefix }}\{{ bundle_name }}\Controll
     /**
      * Fill the Excel speadsheet with the headers
      */
-    protected function createExcelheader(\PhpExcel_Worksheet $sheet)
+    protected function createExcelHeader(\PhpExcel_Worksheet $sheet)
     {
         $translator = $this->get('translator');
 
@@ -104,10 +157,9 @@ class ExcelController extends \{{ namespace_prefix }}\{{ bundle_name }}\Controll
     /**
      * Fills the Excel spreadsheet with data
      */
-    protected function createExcelData(\PhpExcel_Worksheet $sheet)
+    protected function createExcelData(\PhpExcel_Worksheet $sheet, $results)
     {
         $row = 2;
-        $results = $this->getResults();
 
         foreach($results as ${{ builder.ModelClass }}) {
             $colNum = 0;
@@ -138,6 +190,86 @@ class ExcelController extends \{{ namespace_prefix }}\{{ bundle_name }}\Controll
         }
     }
     
+{% for keyname, columns in builder.export %}
+
+    /**
+     * Fill the Excel speadsheet with the headers for {{ keyname }}
+     */
+    protected function createExcelHeader{{ keyname|classify|php_name }}(\PhpExcel_Worksheet $sheet)
+    {
+        {% set credentials = builder.exportCredentials(keyname) %}
+        {{ block('security_action') }}
+
+        $translator = $this->get('translator');
+
+        $colNum = 0;
+        {% for column in columns %}
+            {% if column.credentials is not empty and column.credentials is not same as('AdmingenAllowed') %}
+            {% set credentials = column.credentials %}
+            if ($this->validateCredentials('{{ credentials }}')) {
+            {% endif %}
+            $sheet->setCellValueByColumnAndRow($colNum, 1, $translator->trans("{{ column.label }}", array(), '{{ i18n_catalog|default("Admin") }}'), true);
+            $columnLetter = \PHPExcel_Cell::stringFromColumnIndex($colNum);
+            $sheet->getStyle($columnLetter . '1')->getFont()->setBold(true);
+            $sheet->getColumnDimension($columnLetter)->setAutoSize(true);
+
+            $colNum++;
+            {% if column.credentials is not empty and column.credentials is not same as('AdmingenAllowed') %}
+            }
+            {% endif %}
+        {% endfor %}
+    }
+
+    /**
+     * Fills the Excel spreadsheet with data for {{ keyname }}
+     */
+    protected function createExcelData{{ keyname|classify|php_name }}(\PhpExcel_Worksheet $sheet, $results)
+    {
+        $row = 2;
+
+        foreach($results as ${{ builder.ModelClass }}) {
+            $colNum = 0;
+            {% for name,column in columns %}
+                {% if column.credentials is not empty and column.credentials is not same as('AdmingenAllowed') %}
+                    {% set credentials = column.credentials %}
+                if ($this->validateCredentials('{{ credentials }}', ${{ builder.ModelClass }})) {
+                {% endif %}
+                $data = $this->getValueForCell('{{ column.getter }}', ${{ builder.ModelClass }});
+                $formatedValue = $this->format{{ name|classify|php_name }}($data);
+
+                // Convert DateTime object to given format
+                if ($formatedValue instanceof \DateTime){
+                    $formatedValue = $formatedValue->format('{{ builder.dateTimeFormat(keyname) }}');
+                }
+
+                $sheet->setCellValueByColumnAndRow($colNum, $row, $formatedValue);
+                {% if column.credentials is not empty and column.credentials is not same as('AdmingenAllowed') %}
+                }
+                {% endif %}
+            // Inc is outside of the credentials check to be sync with headers.
+            // Otherwise if column X is authorized but depending on object, there will
+            // be some offset. Putting inc outise of the check will always update it.
+            $colNum++;
+            {% endfor %}
+
+            $row++;
+        }
+    }
+
+    protected function getExcelFileType{{ keyname|classify|php_name }}()
+    {
+        return '{{ builder.filetype(keyname) }}';
+    }
+
+    protected function getExcelFileName{{ keyname|classify|php_name }}($fileType)
+    {
+        return $this->fixExtension('{{ builder.filename(keyname) }}', $fileType);
+    }
+
+
+{% endfor %}
+
+
     /**
      * Gets the value from the given field that will be place at an Excel cell
      *
