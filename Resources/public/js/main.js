@@ -76,7 +76,7 @@
         $(this.options.containerSelector).find('*[type=submit]').hide();
 
         this.actionInputSelector.on('change', this.selectedActionChangedHandler.bind(this));
-        this.allElementsToggleButton.on('ifChecked ifUnchecked', this.allElementsChangedHandler.bind(this));
+        this.allElementsToggleButton.on('change ifChecked ifUnchecked', this.allElementsChangedHandler.bind(this));
     };
 
     S2A.batchActionsManager.prototype = {
@@ -104,9 +104,11 @@
         },
 
         allElementsChangedHandler: function(evt){
-            $(this.options.elementSelector)
-                .prop('checked', $(evt.currentTarget).is(':checked'))
-                .iCheck('update');
+            var $element = $(this.options.elementSelector);
+            $element.prop('checked', $(evt.currentTarget).is(':checked'));
+            if(typeof($element.iCheck) == "function"){
+                $element.iCheck('update');
+            }
         },
 
         isValidActionSelected: function(actionValue){
@@ -138,35 +140,52 @@
         $(this.options.tableSelector).treetable({expendable: true});
     };
 
-    // Force first tab to be displayed
-    $('.nav-tabs *[data-toggle="tab"]:first').click();
-    
-    // Display number of errors on tabs
-	$('.nav.nav-tabs li').each(function(i){
-        $(this).find('a span.label-danger').remove();
-        var invalid_items = $('fieldset'+$(this).find('a:first').data('target')).find('.has-error');
-        if (invalid_items.length > 0) {
-            $(this).find('a:first').append('<span class="label label-danger">'+invalid_items.length+'</span>');
+    // Called once the DOM is loaded
+    $(function(){
+        // Initializing the iCheck dependency: should be made in AdminLTE dist app.js code...
+        // However, check if it is loaded. If not, do not crash
+        var checkboxes = $("input[type='checkbox']:not(.simple), input[type='radio']:not(.simple)");
+        if(typeof(checkboxes.iCheck) == "function") {
+            checkboxes.iCheck({
+                checkboxClass: 'icheckbox_minimal',
+                radioClass: 'iradio_minimal'
+            });
+            // We bind this such that users can use the change event
+            checkboxes.on('ifChecked ifUnchecked', function () {
+                $(this).trigger('change');
+            });
+        }
+
+        // Force first tab to be displayed
+        $('.nav-tabs *[data-toggle="tab"]:first').click();
+
+        // Display number of errors on tabs
+        $('.nav.nav-tabs li').each(function(i){
+            $(this).find('a span.label-danger').remove();
+            var invalid_items = $('fieldset'+$(this).find('a:first').data('target')).find('.has-error');
+            if (invalid_items.length > 0) {
+                $(this).find('a:first').append('<span class="label label-danger">'+invalid_items.length+'</span>');
+            }
+        });
+
+        // Display object actions tooltips
+        $('a.object-action[data-toggle="tooltip"]').tooltip();
+
+        // Object actions
+        if (S2A.hasOwnProperty('singleActionsAdminOptions')) {
+            new S2A.singleActionsManager(S2A.singleActionsAdminOptions);
+        }
+        // Generic actions
+        if (S2A.hasOwnProperty('genericActionsAdminOptions')) {
+            new S2A.singleActionsManager(S2A.genericActionsAdminOptions);
+        }
+        // Batch actions
+        if (S2A.hasOwnProperty('batchActionsAdminOptions')) {
+            new S2A.batchActionsManager(S2A.batchActionsAdminOptions);
+        }
+        // Nested list
+        if (S2A.hasOwnProperty('nestedTreeAdminOptions')) {
+            new S2A.nestedListManager(S2A.nestedTreeAdminOptions);
         }
     });
-	
-    // Display object actions tooltips
-    $('a.object-action[data-toggle="tooltip"]').tooltip(); 
-
-    // Object actions
-    if (S2A.hasOwnProperty('singleActionsAdminOptions')) {
-        new S2A.singleActionsManager(S2A.singleActionsAdminOptions);
-    }
-    // Generic actions
-    if (S2A.hasOwnProperty('genericActionsAdminOptions')) {
-        new S2A.singleActionsManager(S2A.genericActionsAdminOptions);
-    }
-    // Batch actions
-    if (S2A.hasOwnProperty('batchActionsAdminOptions')) {
-        new S2A.batchActionsManager(S2A.batchActionsAdminOptions);
-    }
-    // Nested list
-    if (S2A.hasOwnProperty('nestedTreeAdminOptions')) {
-        new S2A.nestedListManager(S2A.nestedTreeAdminOptions);
-    }
 })(window, jQuery);
