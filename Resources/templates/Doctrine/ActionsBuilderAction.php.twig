@@ -66,10 +66,21 @@
 
     protected function executeBatchDelete(array $selected)
     {
-        $this->getDoctrine()->getManagerForClass('{{ model }}')
-            ->createQuery('DELETE {{ model }} m WHERE m.{{ builder.getFieldGuesser().getModelPrimaryKeyName(model) }} IN (:selected)')
-            ->setParameter('selected', $selected)
-            ->getResult();
+        if ($this->container->getParameter('admingenerator.use_doctrine_orm_batch_remove')) {
+            $em = $this->getDoctrine()->getManagerForClass('{{ model }}');
+            $objects = $em->getRepository('{{ model }}')
+                ->findBy(array('{{ builder.getFieldGuesser().getModelPrimaryKeyName(model) }}' => $selected));
+            foreach ($objects as $object) {
+                $em->remove($object);
+            }
+            $em->flush();
+            $em->clear();
+        } else {
+            $this->getDoctrine()->getManagerForClass('{{ model }}')
+                ->createQuery('DELETE {{ model }} m WHERE m.{{ builder.getFieldGuesser().getModelPrimaryKeyName(model) }} IN (:selected)')
+                ->setParameter('selected', $selected)
+                ->getResult();
+        }
     }
 
 {% endblock %}
