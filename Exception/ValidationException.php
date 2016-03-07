@@ -35,7 +35,7 @@ class ValidationException extends \LogicException
     {
         foreach ($errors as $error) {
             if (!$error instanceof ConstraintViolation) {
-                throw new \InvalidArgumentException();
+                throw new \InvalidArgumentException(sprintf('The supplied error is of class "%s", while a "Symfony\Component\Validator\ConstraintViolation" was expected.', get_class($error)));
             }
         }
 
