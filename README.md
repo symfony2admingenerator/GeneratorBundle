@@ -13,7 +13,7 @@
 
 ## 1. Quick tour:
 
-This bundle helps you quickly create powerful CRUD backend. Customizing the standard functionalities is simple - you can easily overwrite any part of the generated code. Most features can be configured in one (per model) YAML file. Advanced examples are covered in our cookbook, accessible through our [documentation](documentation). For a quick preview visit our [demo project][s2a-demo].
+This bundle helps you quickly create powerful CRUD backend. Customizing the standard functionalities is simple - you can easily overwrite any part of the generated code. Most features can be configured in one (per model) YAML file. Advanced examples are covered in our cookbook, accessible through our [documentation][documentation]. For a quick preview visit our [demo project][s2a-demo].
 
 ## 2. Highlights:
 
