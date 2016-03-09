@@ -4,7 +4,6 @@
 {% use '../CommonAdmin/ListTemplate/Column/money.php.twig' %}
 {% use '../CommonAdmin/ListTemplate/Column/decimal.php.twig' %}
 {% use '../CommonAdmin/ListTemplate/Column/collection.php.twig' %}
-{% use '../CommonAdmin/ListTemplate/Column/undefined.php.twig' %}
 
 {% block column_default %}
     {{ echo_block('list_td_column_' ~ column.name) -}}
