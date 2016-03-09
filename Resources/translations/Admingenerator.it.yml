@@ -70,6 +70,7 @@ action.object.delete:
     confirm:  Sei sicuro di voler eliminare questo elemento?
     success:  Elemento è stato eliminato con successo.
     error:    Elemento non può essere eliminato.
+    notfound: Elemento non può essere eliminato in quanto è già eliminato.
 action.object.show:
     label:    Mostra
 

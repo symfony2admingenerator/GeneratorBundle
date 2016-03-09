@@ -68,6 +68,7 @@ action.object.delete:
     confirm:  Are you sure you want to delete this element?
     success:  Element has been successfully deleted.
     error:    Element can't be deleted.
+    notfound: Element can't be deleted as it is already deleted.
 action.object.show:
     label:    Show
 

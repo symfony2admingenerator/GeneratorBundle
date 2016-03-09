@@ -60,6 +60,7 @@ action.object.delete:
     confirm:  Bu öğeyi silmek istediğinize emin misiniz?
     success:  Eleman başarıyla silindi.
     error:    Eleman silinemez.
+    notfound: Zaten silinir olarak Eleman silinemez.
 action.object.show:
     label:    Göster
 

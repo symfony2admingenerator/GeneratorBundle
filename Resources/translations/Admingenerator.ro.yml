@@ -68,6 +68,7 @@ action.object.delete:
     confirm:  Sunteți sigur că doriți să ștergeți acest articol?
     success:  Elementul eliminat cu succes.
     error:    Elementul nu a putut fi șterse.
+    notfound: Elementul nu poate fi eliminată, deoarece acesta este deja șters.
 action.object.show:
     label:    Arată
 

@@ -69,6 +69,7 @@ action.object.delete:
     confirm:  Sind Sie sicher, dass Sie diesen Eintrag löschen möchten?
     success:  Der Eintrag wurde erfolgreich gelöscht.
     error:    Der Eintrag kann nicht gelöscht werden.
+    notfound: Element kann nicht gelöscht werden, da sie bereits gelöscht.
 action.object.show:
     label:    Zeigen
 

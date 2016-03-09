@@ -11,7 +11,7 @@
      *
      * To customize your action look into:
      * executeBatchDelete() - holds action logic
-     * successBatchDelete() - called if action was successfull
+     * successBatchDelete() - called if action was successful
      * errorBatchDelete()   - called if action errored
      */
     protected function attemptBatchDelete(array $selected)
@@ -47,7 +47,7 @@
 {% block successBatchDelete %}
     
     /**
-     * This is called when batch action is successfull
+     * This is called when batch action is successful
      * Default behavior is redirecting to list with success message
      *
      * @return Response Must return a response!
@@ -57,7 +57,9 @@
         $this->get('session')->getFlashBag()->add(
             'success',
             $this->get('translator')->trans(
-                "action.batch.delete.success", array(), 'Admingenerator'
+                '{{ action.options.success|default('action.batch.delete.success') }}',
+                array(),
+                '{{ action.options.i18n|default('Admingenerator') }}'
             )
         );
 
@@ -80,7 +82,9 @@
         $this->get('session')->getFlashBag()->add(
             'error',
             $this->get('translator')->trans(
-                "action.batch.delete.error", array(), 'Admingenerator'
+                '{{ action.options.error|default('action.batch.delete.error') }}',
+                array(),
+                '{{ action.options.i18n|default('Admingenerator') }}'
             )
         );
 
