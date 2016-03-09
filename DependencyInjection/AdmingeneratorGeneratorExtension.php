@@ -14,7 +14,7 @@ use Admingenerator\GeneratorBundle\Filesystem\GeneratorsFinder;
 use Admingenerator\GeneratorBundle\Exception\ModelManagerNotSelectedException;
 use Symfony\Component\Yaml\Yaml;
 
-class AdmingeneratorGeneratorExtension extends Extension implements PrependExtensionInterface
+class AdmingeneratorGeneratorExtension extends Extension
 {
     /**
      * @var KernelInterface
@@ -29,24 +29,6 @@ class AdmingeneratorGeneratorExtension extends Extension implements PrependExten
         $this->kernel = $kernel;
     }
 
-    /**
-     * Prepend KnpMenuBundle config
-     */
-    public function prepend(ContainerBuilder $container)
-    {
-        $config = array('twig' => array(
-            'template' => 'AdmingeneratorGeneratorBundle:KnpMenu:knp_menu_trans.html.twig'
-        ));
-
-        foreach ($container->getExtensions() as $name => $extension) {
-            switch ($name) {
-                case 'knp_menu':
-                    $container->prependExtensionConfig($name, $config);
-                    break;
-            }
-        }
-    }
-
     public function load(array $configs, ContainerBuilder $container)
     {
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
@@ -57,6 +39,7 @@ class AdmingeneratorGeneratorExtension extends Extension implements PrependExten
         // TODO: remove this one...
         $container->setParameter('admingenerator', $config);
         $container->setParameter('admingenerator.base_admin_template', $config['base_admin_template']);
+        $container->setParameter('admingenerator.dashboard_route', $config['dashboard_route']);
         $container->setParameter('admingenerator.login_route', $config['login_route']);
         $container->setParameter('admingenerator.logout_route', $config['logout_route']);
         $container->setParameter('admingenerator.exit_route', $config['exit_route']);
@@ -64,8 +47,6 @@ class AdmingeneratorGeneratorExtension extends Extension implements PrependExten
         $container->setParameter('admingenerator.javascripts', $config['javascripts']);
         $container->setParameter('admingenerator.default_action_after_save', $config['default_action_after_save']);
         $container->setParameter('admingenerator.throw_exceptions', $config['throw_exceptions']);
-
-        $container->getDefinition('admingen.menu.default_builder')->addArgument($config['dashboard_route']);
 
         if ($config['use_jms_security']) {
             $container->getDefinition('twig.extension.admingenerator.security')->addArgument(true);

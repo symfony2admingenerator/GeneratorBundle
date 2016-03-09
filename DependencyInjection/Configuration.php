@@ -255,6 +255,7 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('exit_route')->defaultNull()->end()
                 ->scalarNode('generator_cache')->defaultNull()->end()
                 ->scalarNode('default_action_after_save')->defaultValue('edit')->end()
+                ->scalarNode('knp_menu_alias')->defaultNull()->end()
                 ->arrayNode('twig')
                     ->addDefaultsIfNotSet()
                     ->children()
