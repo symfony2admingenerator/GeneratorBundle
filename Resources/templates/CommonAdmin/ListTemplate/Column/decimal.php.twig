@@ -1,5 +1,8 @@
 {% block column_decimal %}
     {% spaceless %}
-        {{- echo_twig(builder.ModelClass ~ '.' ~ column.getter ~ "|number_format(2, '.', ',')") -}}
+        {{- echo_twig(builder.ModelClass ~ '.' ~ column.getter ~ "|number_format(" ~
+            column.formOptions.precision|default(admingenerator_config('twig.number_format.decimal')) ~ ", '" ~
+            admingenerator_config('twig.number_format.decimal_point') ~ "', '" ~
+            admingenerator_config('twig.number_format.thousand_separator')~ "')") -}}
     {% endspaceless %}
 {% endblock %}
