@@ -91,7 +91,9 @@ for the user. If you have a custom error handling system (which for example mail
 page), you can set this option to `true`. The errors will no longer be catched and will be handled by your custom 
 handler.
 
-__Note__: Exceptions will always be thrown if the parameter `%kernel.debug%` is `true`.
+> __Note__: This works for the new, edit, batch and object actions.
+
+> __Note__: Exceptions will always be thrown if the parameter `%kernel.debug%` is `true`.
 
 ### Base admin template
  

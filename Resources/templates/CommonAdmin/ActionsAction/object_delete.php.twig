@@ -97,6 +97,12 @@
      */
     protected function errorObjectDelete(\Exception $e, \{{ model }} ${{ builder.ModelClass }} = null)
     {
+
+        // Throw exception if defined
+        if ($this->container->getParameter('admingenerator.throw_exceptions')) {
+            throw $e;
+        }
+
         $this->get('session')->getFlashBag()->add(
             'error',
             $this->get('translator')->trans(

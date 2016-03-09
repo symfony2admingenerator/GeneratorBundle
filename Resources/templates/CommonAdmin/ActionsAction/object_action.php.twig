@@ -104,6 +104,12 @@
      */
     protected function errorObject{{ action.name|php_name|capitalize }}(\Exception $e, \{{ model }} ${{ builder.ModelClass }} = null)
     {
+
+        // Throw exception if defined
+        if ($this->container->getParameter('admingenerator.throw_exceptions')) {
+            throw $e;
+        }
+
         $header = $this->get('translator')->trans(
             "{{ action.options.error|default("action.custom.error") }}",
             array('%name%' => '{{ action.label }}'),

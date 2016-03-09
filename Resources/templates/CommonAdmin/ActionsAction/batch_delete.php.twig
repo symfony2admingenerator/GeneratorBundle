@@ -77,6 +77,12 @@
      */
     protected function errorBatchDelete(\Exception $e)
     {
+
+        // Throw exception if defined
+        if ($this->container->getParameter('admingenerator.throw_exceptions')) {
+            throw $e;
+        }
+
         $this->get('session')->getFlashBag()->add(
             'error',
             $this->get('translator')->trans(
