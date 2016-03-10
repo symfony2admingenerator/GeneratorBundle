@@ -41,6 +41,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
             'logout_route'          => null,
             'exit_route'            => null,
             'generator_cache'       => null,
+            'knp_menu_alias'        => null,
             'twig'                  => array(
                 'use_form_resources'        => true,
                 'use_localized_date'        => false,
