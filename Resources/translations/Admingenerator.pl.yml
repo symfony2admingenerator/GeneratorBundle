@@ -77,6 +77,8 @@ action.batch.delete:
     success:        Usunięto wskazane elementy.
     error:          Zaznaczone elementy nie mogły zostać usunięte.
 
+action.batch.none: Najpierw należy wybrać akcję.
+
 # Custom actions
 action.custom:
     title:          Czy na pewno chcesz wykonać akcję %name%?

@@ -79,6 +79,8 @@ action.batch.delete:
     success:  Registros foram apagados com sucesso.
     error:    Os registros não podem ser apagados.
 
+action.batch.none: Primeiro você deve selecionar uma ação.
+
 # Custom actions
 action.custom:
     title:    Tem certeza de que deseja executar a ação %name%?

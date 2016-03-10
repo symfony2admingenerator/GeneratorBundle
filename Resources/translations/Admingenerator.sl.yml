@@ -77,6 +77,8 @@ action.batch.delete:
     success:  Predmet je bil uspešno izbrisan.
     error:    Predmet ni bil izbrisan.
 
+action.batch.none: Najprej morate izbrati dejanje.
+
 # Custom actions
 action.custom:
     title:    Ali ste prepričani, da želite izvršiti %name% ukrepanje?

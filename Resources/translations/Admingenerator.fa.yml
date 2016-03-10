@@ -77,6 +77,8 @@ action.batch.delete:
     success:  عناصر مورد نظر با موفقیت حذف شدند
     error:    عملیات حذف عناصر مورد نظر با خطا مواجه شد
 
+action.batch.none: در ابتدا شما باید یک عمل را انتخاب کنید.
+
 # Custom actions
 action.custom:
     title:    آیا شما مطمئن هستید که میخواهید%name% اقدام به اجرای؟

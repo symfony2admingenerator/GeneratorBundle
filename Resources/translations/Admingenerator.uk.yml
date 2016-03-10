@@ -75,6 +75,8 @@ action.batch.delete:
     success:  Записи успішно видалені.
     error:    Неможливо видалити записи.
 
+action.batch.none: По-перше, ви повинні вибрати дію.
+
 # Custom actions
 action.custom:
     title:    Ви впевнені, що хочете виконати дію %name%?

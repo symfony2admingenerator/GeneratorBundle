@@ -76,6 +76,8 @@ action.batch.delete:
     success:  Records zijn succesvol verwijderd.
     error:    Records kunnen niet verwijderd worden.
 
+action.batch.none: Eerst moet je een actie te selecteren.
+
 # Custom actions
 action.custom:
     title:    Weet u zeker dat u %name% wilt uitvoeren?

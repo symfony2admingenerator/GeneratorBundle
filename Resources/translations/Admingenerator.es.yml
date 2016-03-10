@@ -80,6 +80,8 @@ action.batch.delete:
     success:  El registro ha sido borrado correctamente.
     error:    Este registro no puede ser borrado.
 
+action.batch.none: En primer lugar, hay que seleccionar una acción.
+
 # Custom actions
 action.custom:
     title:    ¿Está seguro de que desea ejecutar la acción %name%?

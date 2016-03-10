@@ -78,6 +78,8 @@ action.batch.delete:
     success:  Records have been successfully deleted.
     error:    Records can't be deleted.
 
+action.batch.none: First you should select an action.
+
 # Custom actions
 action.custom:
     title:    Are you sure you want to execute %name% action?
