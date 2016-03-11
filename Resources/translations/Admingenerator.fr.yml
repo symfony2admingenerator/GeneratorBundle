@@ -80,7 +80,7 @@ action.batch.delete:
     success:  Les enregistrements ont été supprimés avec succès.
     error:    Les enregistrements n'ont pu être supprimés.
 
-action.batch.none: Premièrement, vous devez sélectionner une action.
+action.batch.none: Merci de sélectionner une action.
 
 # Custom actions
 action.custom:
