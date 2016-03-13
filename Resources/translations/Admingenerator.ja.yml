@@ -76,6 +76,8 @@ action.batch.delete:
     success:  データの削除が正常に完了しました。
     error:    データの削除に失敗しました。
 
+action.batch.none: まず、アクションを選択する必要があります。
+
 # Custom actions
 action.custom:
     title:    あなたはの%name%のアクションを実行してもよろしいですか？

@@ -79,6 +79,8 @@ action.batch.delete:
     success:  Die Einträge wurden erfolgreich gelöscht.
     error:    Die Einträge können nicht gelöscht werden.
 
+action.batch.none: Zuerst sollten Sie eine Aktion auswählen.
+
 # Custom actions
 action.custom:
     title:    Sind Sie sicher, dass Sie die Aktion %name% ausführen möchten?

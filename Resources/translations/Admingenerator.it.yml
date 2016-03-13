@@ -80,6 +80,8 @@ action.batch.delete:
     success:  I dati sono stati correttamente eliminati.
     error:    I dati non possono essere eliminati.
 
+action.batch.none: In primo luogo è necessario selezionare un'azione.
+
 # Custom actions
 action.custom:
     title:    Sei sicuro che si desidera eseguire l'azione %name%?

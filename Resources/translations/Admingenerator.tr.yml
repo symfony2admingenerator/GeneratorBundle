@@ -70,6 +70,8 @@ action.batch.delete:
     success:  Öğeler başarıyla silindi.
     error:    Öğeler silinirken bir hata oluştu.
 
+action.batch.none: Önce bir eylem seçmelisiniz.
+
 # Custom actions
 action.custom:
     title:    Eğer %name% eylem yürütmek istediğinizden emin misiniz?

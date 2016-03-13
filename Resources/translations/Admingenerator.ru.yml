@@ -78,6 +78,8 @@ action.batch.delete:
     success:  Объекты были успешно удалены.
     error:    Невозможно удалить объекты.
 
+action.batch.none: Во-первых, вы должны выбрать действие.
+
 # Custom actions
 action.custom:
     title:    Вы уверены, что хотите выполнить действие %name%?

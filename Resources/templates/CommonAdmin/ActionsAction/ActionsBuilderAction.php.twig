@@ -91,6 +91,8 @@ class ActionsController extends BaseController
         {% endif %}
     {% endfor %}
 
+    {{- block('attemptBatchNone') -}}
+
     {{- block('csrf_check_token') -}}
 
     {{- block('security_check') }}
