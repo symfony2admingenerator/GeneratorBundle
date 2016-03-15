@@ -66,12 +66,25 @@
 
     protected function executeBatchDelete(array $selected)
     {
-        $this->getDocumentManager()
-             ->createQueryBuilder('{{ model }}')
-             ->remove()
-             ->field('_id')->in($selected)
-             ->getQuery()
-             ->execute();
+        $dm = $this->getDocumentManager();
+{% if admingenerator_config('use_doctrine_odm_batch_remove') %}
+        $objects = $dm->getRepository('{{ model }}')
+            ->findBy(array('_id' => $selected));
+
+        foreach ($objects as $object) {
+            $em->remove($object);
+        }
+
+        $dm->flush();
+        $dm->clear();
+{% else %}
+        $dm
+            ->createQueryBuilder('{{ model }}')
+            ->remove()
+            ->field('_id')->in($selected)
+            ->getQuery()
+            ->execute();
+{% endif %}
     }
 
 {% endblock %}

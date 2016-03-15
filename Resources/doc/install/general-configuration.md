@@ -25,6 +25,9 @@ admingenerator_generator:
     exit_route: null
     generator_cache: null
     default_action_after_save: edit
+    use_doctrine_orm_batch_remove: false
+    use_doctrine_odm_batch_remove: false
+    use_doctrine_propel_remove: false
     twig:
         use_form_resources: true
         use_localized_date: false
@@ -121,6 +124,18 @@ about the menu and how to customize it, check the [cookbook][knp-menu].
 
 Adjust the default action after the save action has been processed successfully. Can be one of `new`, `edit`, `list`, 
 `show` or a custom name which needs to be created in your controller (which is propably not desirable on a global level).
+
+### Use Doctrine ORM/ODM/Propel manager for batch remove
+
+`use_doctrine_orm_batch_remove`: __default__: `false` __type__: `boolean`
+`use_doctrine_odm_batch_remove`: __default__: `false` __type__: `boolean`
+`use_prope_batch_removel`: __default__: `false` __type__: `boolean`
+
+By default, this bundle will perform a `DELETE` query for batch remove action. This reduces the number of queries
+required for this action, but no lifecycle events are called (eg. for soft-delete).
+
+If set to true, the bundle will iterate over objects, removing them one by one via 
+ObjectManager/DocumentManager/QueryClass remove/delete method.
 
 ### Twig
 

@@ -42,6 +42,9 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
             'exit_route'            => null,
             'generator_cache'       => null,
             'knp_menu_alias'        => null,
+            'use_doctrine_orm_batch_remove' => false,
+            'use_doctrine_odm_batch_remove' => false,
+            'use_propel_batch_remove'       => false,
             'twig'                  => array(
                 'use_form_resources'        => true,
                 'use_localized_date'        => false,
@@ -198,10 +201,13 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
                     'BOOLEAN_EMU'  => 'Symfony\Component\Form\Extension\Core\Type\ChoiceType',
                 ),
             ),
-            'stylesheets'           => array(),
-            'javascripts'           => array(),
+            'stylesheets'               => array(),
+            'javascripts'               => array(),
             'default_action_after_save' => 'edit',
-            'throw_exceptions' => false
+            'throw_exceptions'          => false,
+            'use_doctrine_orm_batch_remove' => false,
+            'use_doctrine_odm_batch_remove' => false,
+            'use_propel_batch_remove'       => false,
         );
 
         if (!is_null($key) && array_key_exists($key, $defaultConfiguration)) {

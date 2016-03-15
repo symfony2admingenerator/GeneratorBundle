@@ -35,9 +35,20 @@
 
     protected function executeBatchDelete(array $selected)
     {
-        \{{ model }}Query::create()
+        $oq = \{{ model }}Query::create();
+{% if admingenerator_config('use_propel_batch_remove') %}
+        $objects = $oq
+            ->filterByPrimaryKeys($selected)
+            ->find();
+
+        foreach ($objects as $object) {
+            $object->delete();
+        }
+{% else %}
+        $oq
             ->filterByPrimaryKeys($selected)
             ->delete();
+{% endif %}
     }
 
 {% endblock %}

@@ -2,16 +2,16 @@
 
 namespace Admingenerator\GeneratorBundle\DependencyInjection;
 
+use Admingenerator\GeneratorBundle\Exception\ModelManagerNotSelectedException;
+use Admingenerator\GeneratorBundle\Filesystem\GeneratorsFinder;
+use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
-use Symfony\Component\HttpKernel\DependencyInjection\Extension;
-use Symfony\Component\Config\FileLocator;
-use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
+use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\HttpKernel\KernelInterface;
-use Admingenerator\GeneratorBundle\Filesystem\GeneratorsFinder;
-use Admingenerator\GeneratorBundle\Exception\ModelManagerNotSelectedException;
 use Symfony\Component\Yaml\Yaml;
 
 class AdmingeneratorGeneratorExtension extends Extension
@@ -29,14 +29,31 @@ class AdmingeneratorGeneratorExtension extends Extension
         $this->kernel = $kernel;
     }
 
+    /**
+     * Prepend KnpMenuBundle config
+     */
+    public function prepend(ContainerBuilder $container)
+    {
+        $config = array('twig' => array(
+            'template' => 'AdmingeneratorGeneratorBundle:KnpMenu:knp_menu_trans.html.twig',
+        ));
+
+        foreach ($container->getExtensions() as $name => $extension) {
+            switch ($name) {
+                case 'knp_menu':
+                    $container->prependExtensionConfig($name, $config);
+                    break;
+            }
+        }
+    }
+
     public function load(array $configs, ContainerBuilder $container)
     {
-        $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.xml');
 
         $config = $this->processConfiguration($this->getConfiguration($configs, $container), $configs);
 
-        // TODO: remove this one...
         $container->setParameter('admingenerator', $config);
         $container->setParameter('admingenerator.base_admin_template', $config['base_admin_template']);
         $container->setParameter('admingenerator.dashboard_route', $config['dashboard_route']);
@@ -46,16 +63,21 @@ class AdmingeneratorGeneratorExtension extends Extension
         $container->setParameter('admingenerator.stylesheets', $config['stylesheets']);
         $container->setParameter('admingenerator.javascripts', $config['javascripts']);
         $container->setParameter('admingenerator.default_action_after_save', $config['default_action_after_save']);
-        if($container->getParameter('kernel.debug')){
-            $container->setParameter('admingenerator.throw_exceptions', true);
-        } else {
-            $container->setParameter('admingenerator.throw_exceptions', $config['throw_exceptions']);
-        }
+
+        $container->setParameter('admingenerator.throw_exceptions', $container->getParameter('kernel.debug')
+            ? true
+            : $config['throw_exceptions']
+        );
+
+        $container->setParameter('admingenerator.use_doctrine_orm_batch_remove', $config['use_doctrine_orm_batch_remove']);
+        $container->setParameter('admingenerator.use_doctrine_odm_batch_remove', $config['use_doctrine_odm_batch_remove']);
+        $container->setParameter('admingenerator.use_propel_batch_remove', $config['use_propel_batch_remove']);
+        $container->getDefinition('admingen.menu.default_builder')->addArgument($config['dashboard_route']);
 
         if ($config['use_jms_security']) {
             $container->getDefinition('twig.extension.admingenerator.security')->addArgument(true);
             $container->getDefinition('twig.extension.admingenerator.echo')->addArgument(true);
-        }
+        } 
 
         $this->registerGeneratedFormsAsServices($container);
         $this->processModelManagerConfiguration($config, $container);
@@ -74,18 +96,17 @@ class AdmingeneratorGeneratorExtension extends Extension
             throw new ModelManagerNotSelectedException();
         }
 
-        $loader = new XmlFileLoader($container, new FileLocator(dirname(__DIR__).DIRECTORY_SEPARATOR.'Resources'.DIRECTORY_SEPARATOR.'config'));
+        $loader = new XmlFileLoader($container, new FileLocator(dirname(__DIR__) . DIRECTORY_SEPARATOR . 'Resources' . DIRECTORY_SEPARATOR . 'config'));
         $config['templates_dirs'][] = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'Resources' . DIRECTORY_SEPARATOR . 'templates';
 
         $doctrineOrmTemplatesDirs = array();
-        $doctrineOdmTemplatesDirs = array() ;
+        $doctrineOdmTemplatesDirs = array();
         $propelTemplatesDirs = array();
         foreach ($config['templates_dirs'] as $dir) {
-            $doctrineOrmTemplatesDirs[] = $dir.DIRECTORY_SEPARATOR.'Doctrine';
-            $doctrineOdmTemplatesDirs[] = $dir.DIRECTORY_SEPARATOR.'DoctrineODM';
-            $propelTemplatesDirs[]      = $dir.DIRECTORY_SEPARATOR.'Propel';
+            $doctrineOrmTemplatesDirs[] = $dir . DIRECTORY_SEPARATOR . 'Doctrine';
+            $doctrineOdmTemplatesDirs[] = $dir . DIRECTORY_SEPARATOR . 'DoctrineODM';
+            $propelTemplatesDirs[] = $dir . DIRECTORY_SEPARATOR . 'Propel';
         }
-
 
         if ($config['use_doctrine_orm']) {
             $loader->load('doctrine_orm.xml');
@@ -182,7 +203,7 @@ class AdmingeneratorGeneratorExtension extends Extension
             ->getDefinition('admingenerator.generator.listener')
             ->addMethodCall('setCacheProvider', array(
                 new Reference($config['generator_cache']),
-                $container->getParameter('kernel.environment')
+                $container->getParameter('kernel.environment'),
             ));
 
         if ($config['use_doctrine_orm']) {
@@ -207,7 +228,7 @@ class AdmingeneratorGeneratorExtension extends Extension
         $serviceDefinition
             ->addMethodCall('setCacheProvider', array(
                 new Reference($cacheProviderServiceName),
-                $container->getParameter('kernel.environment')
+                $container->getParameter('kernel.environment'),
             ));
     }
 
@@ -222,7 +243,7 @@ class AdmingeneratorGeneratorExtension extends Extension
     {
         $finder = new GeneratorsFinder($this->kernel);
 
-        foreach($finder->findAll() as $path => $generator) {
+        foreach ($finder->findAll() as $path => $generator) {
             $generator = Yaml::parse(file_get_contents($generator));
             if (!array_key_exists('params', $generator)) {
                 throw new \InvalidArgumentException('"params" field is missing in ' . $generator);
@@ -264,7 +285,7 @@ class AdmingeneratorGeneratorExtension extends Extension
                 ->addMethodCall('setAuthorizationChecker', array($authorizationCheckerServiceReference))
                 ->addTag('form.type');
 
-            $container->setDefinition('admingen_generator_'.strtolower($model).'_new', $newDefinition);
+            $container->setDefinition('admingen_generator_' . strtolower($model) . '_new', $newDefinition);
         }
 
         if (in_array('edit', $builders)) {
@@ -273,7 +294,7 @@ class AdmingeneratorGeneratorExtension extends Extension
                 ->addMethodCall('setAuthorizationChecker', array($authorizationCheckerServiceReference))
                 ->addTag('form.type');
 
-            $container->setDefinition('admingen_generator_'.strtolower($model).'_edit', $editDefinition);
+            $container->setDefinition('admingen_generator_' . strtolower($model) . '_edit', $editDefinition);
         }
 
         if (in_array('list', $builders) || in_array('nested_list', $builders)) {
@@ -282,7 +303,7 @@ class AdmingeneratorGeneratorExtension extends Extension
                 ->addMethodCall('setAuthorizationChecker', array($authorizationCheckerServiceReference))
                 ->addTag('form.type');
 
-            $container->setDefinition('admingen_generator_'.strtolower($model).'_filter', $filterDefinition);
+            $container->setDefinition('admingen_generator_' . strtolower($model) . '_filter', $filterDefinition);
         }
     }
 
