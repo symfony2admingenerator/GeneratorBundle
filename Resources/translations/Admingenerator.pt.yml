@@ -69,6 +69,7 @@ action.object.delete:
     confirm:  Tem certeza de que deseja excluir este elemento?
     success:  Elemento foi excluído com sucesso.
     error:    Elemento não pode ser excluído.
+    notfound: Elemento não pode ser excluída, uma vez que já está eliminado.
 action.object.show:
     label:    Mostrar
 

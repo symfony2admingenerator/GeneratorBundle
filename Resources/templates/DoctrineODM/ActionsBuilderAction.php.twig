@@ -14,7 +14,7 @@
         ${{ builder.ModelClass }} = $this->getObjectQuery($pk)->getSingleResult();
 
         if (!${{ builder.ModelClass }}) {
-            throw new \InvalidArgumentException("No {{ model }} found on {{ builder.getFieldGuesser().getModelPrimaryKeyName(model) }} : $pk");
+            throw new NotFoundHttpException("No {{ model }} found on {{ builder.getFieldGuesser().getModelPrimaryKeyName(model) }} : $pk");
         }
 
         return ${{ builder.ModelClass }};

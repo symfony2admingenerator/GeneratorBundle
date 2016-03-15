@@ -70,6 +70,7 @@ action.object.delete:
     confirm:  Etes-vous sur de vouloir supprimer cet élement?
     success:  L'élément sélectionné a été supprimé.
     error:    L'élément sélectionné ne peut pas être supprimé.
+    notfound: Suppression impossible : l'élément est inconnu
 action.object.show:
     label:    Montrer
 

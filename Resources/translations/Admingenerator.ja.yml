@@ -75,6 +75,7 @@ action.batch.delete:
     confirm:  選択したすべてのデータを削除します。よろしいですか?
     success:  データの削除が正常に完了しました。
     error:    データの削除に失敗しました。
+    notfound: それはすでに削除されているように要素を削除することはできません。
 
 action.batch.none: まず、アクションを選択する必要があります。
 
