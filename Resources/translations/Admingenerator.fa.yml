@@ -67,6 +67,7 @@ action.object.delete:
     confirm:  آیا از حذف کردن این عنصر مطمئن می باشید؟
     success:  عنصر با موفقیت حذف شده است.
     error:    عنصر نمی تواند حذف شود.
+    notfound: عنصر را نمی توان حذف آن را به عنوان در حال حاضر حذف شده است.
 action.object.show:
     label:    نمایش
 
@@ -76,6 +77,8 @@ action.batch.delete:
     confirm:  آیا حذف کردن همه ی عناصر انتخاب شده را تایید می نمایید؟
     success:  عناصر مورد نظر با موفقیت حذف شدند
     error:    عملیات حذف عناصر مورد نظر با خطا مواجه شد
+
+action.batch.none: در ابتدا شما باید یک عمل را انتخاب کنید.
 
 # Custom actions
 action.custom:

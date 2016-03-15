@@ -69,6 +69,7 @@ action.object.delete:
     confirm:  Sind Sie sicher, dass Sie diesen Eintrag löschen möchten?
     success:  Der Eintrag wurde erfolgreich gelöscht.
     error:    Der Eintrag kann nicht gelöscht werden.
+    notfound: Element kann nicht gelöscht werden, da sie bereits gelöscht.
 action.object.show:
     label:    Zeigen
 
@@ -78,6 +79,8 @@ action.batch.delete:
     confirm:  Möchten Sie wirklich alle ausgewählten Einträge löschen?
     success:  Die Einträge wurden erfolgreich gelöscht.
     error:    Die Einträge können nicht gelöscht werden.
+
+action.batch.none: Zuerst sollten Sie eine Aktion auswählen.
 
 # Custom actions
 action.custom:

@@ -68,6 +68,7 @@ action.object.delete:
     confirm:  Are you sure you want to delete this element?
     success:  Element has been successfully deleted.
     error:    Element can't be deleted.
+    notfound: Element can't be deleted as it is already deleted.
 action.object.show:
     label:    Show
 
@@ -77,6 +78,8 @@ action.batch.delete:
     confirm:  Are you sure you want to delete all selected elements?
     success:  Records have been successfully deleted.
     error:    Records can't be deleted.
+
+action.batch.none: First you should select an action.
 
 # Custom actions
 action.custom:

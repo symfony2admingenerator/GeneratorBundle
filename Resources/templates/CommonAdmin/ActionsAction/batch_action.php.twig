@@ -60,9 +60,9 @@
         $this->get('session')->getFlashBag()->add(
             'success',
             $this->get('translator')->trans(
-                "{{ action.options.success|default("action.custom.success") }}",
+                '{{ action.options.success|default("action.custom.success") }}',
                 array('%name%' => '{{ action.name }}'),
-                '{{ action.options.success is defined ? i18n_catalog|default("Admin") : 'Admingenerator' }}'
+                '{{ action.options.i18n|default('Admingenerator') }}'
             )
         );
 
@@ -91,9 +91,30 @@
         $this->get('session')->getFlashBag()->add(
             'error',
             $this->get('translator')->trans(
-                "{{ action.options.error|default("action.custom.error") }}",
+                '{{ action.options.error|default("action.custom.error") }}',
                 array('%name%' => '{{ action.name }}'),
-                '{{ action.options.error is defined ? i18n_catalog|default("Admin") : 'Admingenerator' }}'
+                '{{ action.options.i18n|default('Admingenerator') }}'
+            )
+        );
+
+        return $this->redirect($this->generateUrl("{{ builder.baseActionsRoute }}_list"));
+    }
+
+{% endblock %}
+
+{% block attemptBatchNone %}
+
+    /**
+     * This function handles a wrong batch post
+     */
+    protected function attemptBatchNone(array $selected)
+    {
+        $this->get('session')->getFlashBag()->add(
+            'error',
+            $this->get('translator')->trans(
+                'action.batch.none',
+                array(),
+                'Admingenerator'
             )
         );
 

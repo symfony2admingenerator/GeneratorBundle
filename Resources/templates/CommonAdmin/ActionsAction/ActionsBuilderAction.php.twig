@@ -69,6 +69,7 @@ class ActionsController extends BaseController
             {{- block('executeObjectDelete') -}}
             {{- block('successObjectDelete') -}}
             {{- block('errorObjectDelete') -}}
+            {{- block('notFoundObjectDelete') -}}
         {% else %}
             {{- block('attemptObjectAction') -}}
             {{- block('executeObjectAction') -}}
@@ -90,6 +91,8 @@ class ActionsController extends BaseController
             {{- block('errorBatchAction') -}}
         {% endif %}
     {% endfor %}
+
+    {{- block('attemptBatchNone') -}}
 
     {{- block('csrf_check_token') -}}
 

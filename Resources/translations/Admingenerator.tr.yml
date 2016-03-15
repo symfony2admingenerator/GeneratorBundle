@@ -60,6 +60,7 @@ action.object.delete:
     confirm:  Bu öğeyi silmek istediğinize emin misiniz?
     success:  Eleman başarıyla silindi.
     error:    Eleman silinemez.
+    notfound: Zaten silinir olarak Eleman silinemez.
 action.object.show:
     label:    Göster
 
@@ -69,6 +70,8 @@ action.batch.delete:
     confirm:  Seçili tüm öğeleri silmek istediğinize emin misiniz?
     success:  Öğeler başarıyla silindi.
     error:    Öğeler silinirken bir hata oluştu.
+
+action.batch.none: Önce bir eylem seçmelisiniz.
 
 # Custom actions
 action.custom:

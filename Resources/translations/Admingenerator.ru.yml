@@ -68,6 +68,7 @@ action.object.delete:
     confirm:  Вы действительно хотите удалить этот элемент?
     success:  Элемент успешно удален.
     error:    Элемент не может быть удален.
+    notfound: Элемент не может быть удален, как он уже удален.
 action.object.show:
     label:    Просмотр
 
@@ -77,6 +78,8 @@ action.batch.delete:
     confirm:  Вы подтверждаете удаление выбранных элементов?
     success:  Объекты были успешно удалены.
     error:    Невозможно удалить объекты.
+
+action.batch.none: Во-первых, вы должны выбрать действие.
 
 # Custom actions
 action.custom:

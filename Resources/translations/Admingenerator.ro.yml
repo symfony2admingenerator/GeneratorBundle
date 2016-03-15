@@ -68,6 +68,7 @@ action.object.delete:
     confirm:  Sunteți sigur că doriți să ștergeți acest articol?
     success:  Elementul eliminat cu succes.
     error:    Elementul nu a putut fi șterse.
+    notfound: Elementul nu poate fi eliminată, deoarece acesta este deja șters.
 action.object.show:
     label:    Arată
 
@@ -77,7 +78,9 @@ action.batch.delete:
     confirm:  Sigur doriți să ștergeți elementele selectate?
     success:  Materialele au fost eliminate cu succes.
     error:    Nu se poate șterge materiale.
-    
+
+action.batch.none: Mai întâi ar trebui să selectați o acțiune.
+
 # Custom actions
 action.custom:
     title:    Sunteți sigur că doriți să efectuați acțiunea %name%?

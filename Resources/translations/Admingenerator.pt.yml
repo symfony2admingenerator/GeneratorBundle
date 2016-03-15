@@ -69,6 +69,7 @@ action.object.delete:
     confirm:  Tem certeza de que deseja excluir este elemento?
     success:  Elemento foi excluído com sucesso.
     error:    Elemento não pode ser excluído.
+    notfound: Elemento não pode ser excluída, uma vez que já está eliminado.
 action.object.show:
     label:    Mostrar
 
@@ -78,6 +79,8 @@ action.batch.delete:
     confirm:  Você confirmar a eliminação de todos os elementos selecionados?
     success:  Registros foram apagados com sucesso.
     error:    Os registros não podem ser apagados.
+
+action.batch.none: Primeiro você deve selecionar uma ação.
 
 # Custom actions
 action.custom:

@@ -70,6 +70,7 @@ action.object.delete:
     confirm:  Etes-vous sur de vouloir supprimer cet élement?
     success:  L'élément sélectionné a été supprimé.
     error:    L'élément sélectionné ne peut pas être supprimé.
+    notfound: Suppression impossible : l'élément est inconnu
 action.object.show:
     label:    Montrer
 
@@ -79,6 +80,8 @@ action.batch.delete:
     confirm:  Etes-vous sur de vouloir supprimer les élements sélectionnés?
     success:  Les enregistrements ont été supprimés avec succès.
     error:    Les enregistrements n'ont pu être supprimés.
+
+action.batch.none: Merci de sélectionner une action.
 
 # Custom actions
 action.custom:

@@ -67,6 +67,7 @@ action.object.delete:
     confirm:        Czy potwierdzasz usunięcie elementu?
     success:        Usunięto wskazany element.
     error:          Element nie mógł zostać usunięty.
+    notfound:       Element nie może być usunięty, ponieważ został już usunięty.
 action.object.show:
     label:          Pokaż
 
@@ -76,6 +77,8 @@ action.batch.delete:
     confirm:        Czy potwierdzasz usunięcie wszystkich zaznaczonych elementów?
     success:        Usunięto wskazane elementy.
     error:          Zaznaczone elementy nie mogły zostać usunięte.
+
+action.batch.none: Najpierw należy wybrać akcję.
 
 # Custom actions
 action.custom:

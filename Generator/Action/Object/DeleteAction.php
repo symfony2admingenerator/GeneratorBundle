@@ -29,11 +29,5 @@ class DeleteAction extends Action
             'action' => 'delete'
         ));
 
-        $this->setOptions(array(
-            'title' => 'action.object.delete.confirm',
-            'success' => 'action.object.delete.success',
-            'error' => 'action.object.delete.error',
-            'i18n' => 'Admingenerator'
-        ));
     }
 }

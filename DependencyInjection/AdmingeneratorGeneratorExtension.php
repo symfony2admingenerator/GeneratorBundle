@@ -46,7 +46,11 @@ class AdmingeneratorGeneratorExtension extends Extension
         $container->setParameter('admingenerator.stylesheets', $config['stylesheets']);
         $container->setParameter('admingenerator.javascripts', $config['javascripts']);
         $container->setParameter('admingenerator.default_action_after_save', $config['default_action_after_save']);
-        $container->setParameter('admingenerator.throw_exceptions', $config['throw_exceptions']);
+        if($container->getParameter('kernel.debug')){
+            $container->setParameter('admingenerator.throw_exceptions', true);
+        } else {
+            $container->setParameter('admingenerator.throw_exceptions', $config['throw_exceptions']);
+        }
 
         if ($config['use_jms_security']) {
             $container->getDefinition('twig.extension.admingenerator.security')->addArgument(true);

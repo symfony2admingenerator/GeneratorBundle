@@ -70,6 +70,7 @@ action.object.delete:
     confirm:  Sei sicuro di voler eliminare questo elemento?
     success:  Elemento è stato eliminato con successo.
     error:    Elemento non può essere eliminato.
+    notfound: Elemento non può essere eliminato in quanto è già eliminato.
 action.object.show:
     label:    Mostra
 
@@ -79,6 +80,8 @@ action.batch.delete:
     confirm:  Confermi l'eliminazione di tutti gli elementi selezionati?
     success:  I dati sono stati correttamente eliminati.
     error:    I dati non possono essere eliminati.
+
+action.batch.none: In primo luogo è necessario selezionare un'azione.
 
 # Custom actions
 action.custom:

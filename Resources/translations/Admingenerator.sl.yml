@@ -67,6 +67,7 @@ action.object.delete:
     confirm:  Ali ste prepričani, da želite izbrisati ta element?
     success:  Element je bil uspešno izbrisan.
     error:    Element, ki ga ni mogoče izbrisati.
+    notfound: Element ni mogoče izbrisati, ker je že izbrisan.
 action.object.show:
     label:    Prikaži
 
@@ -76,6 +77,8 @@ action.batch.delete:
     confirm:  Ali lahko potrdite brisanje vseh izbranih elementov?
     success:  Predmet je bil uspešno izbrisan.
     error:    Predmet ni bil izbrisan.
+
+action.batch.none: Najprej morate izbrati dejanje.
 
 # Custom actions
 action.custom:

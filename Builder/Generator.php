@@ -287,6 +287,7 @@ class Generator extends TwigGeneratorGenerator
                             'title'     => $baseKey.'.title',
                             'success'   => $baseKey.'.success',
                             'error'     => $baseKey.'.error',
+                            'notfound'  => $baseKey.'.notfound',
                         ),
                     ));
                 }
@@ -316,7 +317,7 @@ class Generator extends TwigGeneratorGenerator
     /**
      * Set the yaml to pass all the vars to the builders
      *
-     * @param Yaml $yaml
+     * @param array $yaml
      * @return void
      */
     protected function setYamlConfig(array $yaml)

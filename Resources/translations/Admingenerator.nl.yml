@@ -66,6 +66,7 @@ action.object.delete:
     confirm:  Weet u zeker dat u dit element wilt verwijderen?
     success:  Element is succesvol verwijderd.
     error:    Element kan niet verwijderd worden.
+    notfound: Element kon niet verwijderd worden omdat het al verwijderd is.
 action.object.show:
     label:    Tonen
 
@@ -75,6 +76,8 @@ action.batch.delete:
     confirm:  Weet u zeker dat u alle geselecteerde elementen wilt verwijderen?
     success:  Records zijn succesvol verwijderd.
     error:    Records kunnen niet verwijderd worden.
+
+action.batch.none: Eerst moet je een actie te selecteren.
 
 # Custom actions
 action.custom:
