@@ -19,8 +19,6 @@ $loader->registerNamespaces(array(
     'Sensio\Bundle'     => $vendorDir,
     'WhiteOctober\PagerfantaBundle' => $vendorDir,
     'Pagerfanta'                    => $vendorDir.'/src',
-    'Knp'               => $vendorDir,
-    'Knp\Menu'          => $vendorDir.'/src',
     'Assetic'           => $vendorDir.'/src',
     'TwigGenerator'     => $vendorDir.'/twig-generator/src',
     'Doctrine\Common'   => $vendorDir.'/doctrine-common/lib',

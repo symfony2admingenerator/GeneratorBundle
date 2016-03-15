@@ -11,6 +11,8 @@
         {% endif %}
     {% endblock sidebar_profile %}
     {% block sidebar_menu %}
-        {{ knp_menu_render('admingen_sidebar') }}
+        {% if admingenerator_config('knp_menu_alias') is not null %}
+            {{ knp_menu_render(admingenerator_config('knp_menu_alias')) }}
+        {% endif %}
     {% endblock sidebar_menu %}
 </section>

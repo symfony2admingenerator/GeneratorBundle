@@ -80,12 +80,6 @@
             <tag name="pagerfanta.view" alias="admingenerator" />
             <argument type="service" id="translator" />
         </service>
-
-        <service id="admingen.menu.default_builder" class="Admingenerator\GeneratorBundle\Menu\DefaultMenuBuilder">
-            <argument type="service" id="knp_menu.factory" />
-            <argument type="service" id="request_stack" />
-            <tag name="knp_menu.menu_builder" method="sidebarMenu" alias="admingen_sidebar" />
-        </service>
         
         <!-- Filters -->
         <service id="admingenerator.filter.root" class="Admingenerator\GeneratorBundle\Filter\Type\FilterRootType">

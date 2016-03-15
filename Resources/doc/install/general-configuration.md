@@ -18,6 +18,7 @@ admingenerator_generator:
     overwrite_if_exists: false
     throw_exceptions: false
     base_admin_template: 'AdmingeneratorGeneratorBundle::base.html.twig'
+    knp_menu_alias: ~
     dashboard_route: null
     login_route: null
     logout_route: null
@@ -98,6 +99,14 @@ handler.
 ### Base admin template
  
 `base_admin_template`: __default__: `AdmingeneratorGeneratorBundle::base.html.twig` __type__: `string`
+
+### KnpMenuBundle alias
+
+`knp_menu_alias` __default__: `~` __type__: `string`
+
+This parameter is used to enable the automatic usage of the KnpMenuBundle in the admin generator templates. 
+You can set it to `admingen_sidebar` to enable the shipped KnpMenuBundle sidebar menu. For more information
+about the menu and how to customize it, check the [cookbook][knp-menu].
 
 ### Routes
 
@@ -291,6 +300,7 @@ javascripts:
 [form-type-orm]: form_types/doctrine_orm.md
 [form-type-odm]: form_types/doctrine_odm.md
 [form-type-propel]: form_types/propel.md
+[knp-menu]: cookbook/knp-menu.md
 
 [intl-date-formatter]: http://www.php.net/manual/en/intldateformatter.format.php
 [iso-8601]: http://framework.zend.com/manual/1.12/en/zend.date.constants.html#zend.date.constants.selfdefinedformats

@@ -18,7 +18,6 @@ Run following commands:
 
 This bundle depends on:
 
- * KnpMenuBundle
  * WhiteOctoberPagerfantaBundle
 
 > **Note:** there are also some optional dependencies, each is described in corresponding feature`s doc. This guide describes only the minimal-setup.
@@ -32,7 +31,6 @@ public function registerBundles()
     $bundles = array(
         // ...
         new Admingenerator\GeneratorBundle\AdmingeneratorGeneratorBundle($this),
-        new Knp\Bundle\MenuBundle\KnpMenuBundle(),
         new WhiteOctober\PagerfantaBundle\WhiteOctoberPagerfantaBundle(),
     );
 }
