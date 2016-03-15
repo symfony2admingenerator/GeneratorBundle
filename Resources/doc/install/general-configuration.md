@@ -134,7 +134,7 @@ Adjust the default action after the save action has been processed successfully.
 By default, this bundle will perform a `DELETE` query for batch remove action. This reduces the number of queries
 required for this action, but no lifecycle events are called (eg. for soft-delete).
 
-If set to true, the bundle will iterate over objects, removeing them one by one via 
+If set to true, the bundle will iterate over objects, removing them one by one via 
 ObjectManager/DocumentManager/QueryClass remove/delete method.
 
 ### Twig
