@@ -72,7 +72,6 @@ class AdmingeneratorGeneratorExtension extends Extension
         $container->setParameter('admingenerator.use_doctrine_orm_batch_remove', $config['use_doctrine_orm_batch_remove']);
         $container->setParameter('admingenerator.use_doctrine_odm_batch_remove', $config['use_doctrine_odm_batch_remove']);
         $container->setParameter('admingenerator.use_propel_batch_remove', $config['use_propel_batch_remove']);
-        $container->getDefinition('admingen.menu.default_builder')->addArgument($config['dashboard_route']);
 
         if ($config['use_jms_security']) {
             $container->getDefinition('twig.extension.admingenerator.security')->addArgument(true);
