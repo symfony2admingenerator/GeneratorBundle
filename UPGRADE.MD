@@ -14,5 +14,7 @@ This page contains all upgrade notes since the release of the stable 2.0.0 versi
   When a object is not found, previously an InvalidArgumentException
   was thrown. This has changed to an HttpNotFoundException. By default, this exception is now catched to forward the 
   user to the list with the notification that the object no longer exists.
+- Updated PagerFantaBundle. Required is now version <=1.0.4 or >=1.0.6. 
+  1.0.5 breaks paginator behavior, but there should be no complications.
 
 [back-to-index]: README.md
