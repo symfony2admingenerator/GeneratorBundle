@@ -325,15 +325,21 @@ class PropelORMFieldGuesser
         if (preg_match("#CollectionType$#i", $type)) {
             $relation = $this->getRelation($columnName, $class);
 
+            if ($relation) {
+                return array(
+                    'allow_add'     => true,
+                    'allow_delete'  => true,
+                    'by_reference'  => false,
+                    'entry_type' => 'entity',
+                    'entry_options' => array(
+                        'class' => \RelationMap::MANY_TO_ONE === $relation->getType() ? $relation->getForeignTable()->getClassname() : $relation->getLocalTable()->getClassname()
+                    )
+                );
+            }
+            
             return array(
-                'allow_add'     => true,
-                'allow_delete'  => true,
-                'by_reference'  => false,
-                'entry_type' => 'entity',
-                'entry_options' => array(
-                    'class' => \RelationMap::MANY_TO_ONE === $relation->getType() ? $relation->getForeignTable()->getClassname() : $relation->getLocalTable()->getClassname()
-                )
-            );
+                    'entry_type' => 'text',
+                );
         }
 
         if (\PropelColumnTypes::ENUM == $dbType) {
