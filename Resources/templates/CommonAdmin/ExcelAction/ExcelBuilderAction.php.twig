@@ -1,4 +1,5 @@
 {% use '../CommonAdmin/security_action.php.twig' %}
+{% use '../CommonAdmin/csrf_protection.php.twig' %}
 <?php
 
 namespace Admingenerated\{{ namespace_prefix }}{{ bundle_name }}\{{ builder.generator.GeneratedControllerFolder }};
@@ -28,8 +29,9 @@ class ExcelController extends \{{ namespace_prefix }}\{{ bundle_name }}\Controll
     public function excelAction(Request $request)
     {
         $this->request = $request;
+
         {{ block('security_action') }}
-        
+
         // Create the PHPExcel object with some standard values
         try {
           $phpexcel = $this->get('phpexcel');
@@ -189,4 +191,6 @@ class ExcelController extends \{{ namespace_prefix }}\{{ bundle_name }}\Controll
     }
 
     {% endfor %}
+
+    {{- block('csrf_check_token') -}}
 }

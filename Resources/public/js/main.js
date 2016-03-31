@@ -13,31 +13,24 @@
             },
             options
         );
-        $(this.options.containerSelector).on('click', this.options.buttonSelector, this.clickHandler.bind(this));
+        $(this.options.containerSelector).on('click',this.options.buttonSelector,this.clickHandler.bind(this));
     };
 
     S2A.singleActionsManager.prototype = {
         clickHandler: function(evt){
             var $elt = $(evt.currentTarget);
-
-            if (!this.isConfirmed($elt)) {
-                evt.preventDefault();
-                return;
-            }
-
-            if (this.isProtected($elt)) {
+            if (this.isProtected($elt) && !this.needConfirmation($elt)) {
                 evt.preventDefault();
                 this.sendSecured($elt);
             }
         },
 
-        isConfirmed: function($elt){
-            // TODO: move confirm() to custom popin
-            return !$elt.data('confirm') || confirm($elt.data('confirm'));
-        },
-
         isProtected: function($elt){
             return !!$elt.data('csrf-token');
+        },
+
+        needConfirmation: function($elt){
+            return !!$elt.data('confirm');
         },
 
         sendSecured: function($elt){
@@ -53,12 +46,9 @@
                 name:   '_csrf_token',
                 value:  $elt.data('csrf-token')
             }).appendTo($form);
-            // TODO: add pre-submit trigger
             $form.submit();
-            // TODO: add post-submit trigger
         }
     };
-
     S2A.batchActionsManager = function(options){
         this.options = $.extend( {}, {
                 containerSelector: 'document',
@@ -87,19 +77,18 @@
             }
 
             if (!this.hasElementsSelected()) {
-                // TODO: move this to a popin or dynamic message displayer
-                alert(this.options.noElementSelectedMessage);
+                evt.preventDefault();
                 $elt.val(this.options.noActionValue);
+                $('#alertModal').find('.modal-title').text(this.options.noElementSelectedMessage);
+                $('#alertModal').modal('show');
                 return;
             }
 
-            if (!this.isConfirmed($elt)) {
-                $elt.val(this.options.noActionValue);
+            if (this.needConfirmation($elt)) {
+                $(this.selectedOption($elt).data('confirm-modal')).modal('show', $elt);
                 return;
             }
 
-            // TODO: pre-submit trigger
-            // Send the form
             $elt[0].form.submit();
         },
 
@@ -119,15 +108,14 @@
             return 0 !== $(this.options.containerSelector + ' ' + this.options.elementSelector).filter(':checked').length;
         },
 
-        isConfirmed: function($elt){
-            var $selectedOption = $(':selected', $elt);
+        needConfirmation: function($elt){
+            return !!this.selectedOption($elt).data('confirm');
+        },
 
-            if (0 == $selectedOption.length) {
-                return false;
-            }
-
-            return !$selectedOption.data('confirm') || confirm($selectedOption.data('confirm'));
+        selectedOption: function ($elt) {
+            return $(':selected', $elt);
         }
+
     };
 
     S2A.nestedListManager = function(options){
@@ -158,7 +146,7 @@
 
         // Force first tab to be displayed
         $('.nav-tabs *[data-toggle="tab"]:first').click();
-
+        
         // Display number of errors on tabs
         $('.nav.nav-tabs li').each(function(i){
             $(this).find('a span.label-danger').remove();
@@ -167,9 +155,59 @@
                 $(this).find('a:first').append('<span class="label label-danger">'+invalid_items.length+'</span>');
             }
         });
-
+        
         // Display object actions tooltips
-        $('a.object-action[data-toggle="tooltip"]').tooltip();
+        $('a.object-action').tooltip();
+
+        // Save action for modals
+        $('.object-action, .generic-action, select[name=action] option').each(function(index, item) {
+            $item = $(item);
+            $item.data('action', $item.attr('href'));
+            $item.attr('href', $item.data('confirmModal'));
+        });
+
+        // hookup on submit button
+        $('button[type=submit].generic-action').click(function(event) {
+            if ($(this).data('confirm')) {
+                event.preventDefault();
+            }
+        });
+
+        $('.confirm-object-modal, .confirm-generic-modal').on('show.bs.modal', function (event) {
+          var $elt = $(event.relatedTarget);
+          var $form = $(this).find('form');
+          var action = $elt.data('action');
+          var confirm = $elt.data('confirm');
+          var csrf_token = $elt.data('csrf-token');
+          $form.attr('action', action);
+          $(this).find('.modal-title').text(confirm);
+          // submit button confirmation
+          if ($elt.is('button[type=submit]')) {
+            $form.submit(function(event) {
+               event.preventDefault();
+               $elt.closest('form').submit();
+            });
+          }
+          if (csrf_token) {
+            $('<input />').attr({
+                    type:   'hidden',
+                    name:   '_csrf_token',
+                    value:  csrf_token
+                }).appendTo($form);
+          }
+        });
+
+        $('.confirm-batch-modal').on('show.bs.modal', function (event) {
+          var $elt = $(event.relatedTarget);
+          var confirm = $(':selected', $elt).data('confirm');
+          $(this).find('.modal-title').text(confirm);
+          $(this).find('.confirm').click(function() {
+            $elt[0].form.submit();
+          })
+          $(this).find('.cancel').click(function() {
+            $elt.val(S2A.batchActionsAdminOptions.noActionValue);
+          })
+        });
 
         // Object actions
         if (S2A.hasOwnProperty('singleActionsAdminOptions')) {

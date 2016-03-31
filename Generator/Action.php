@@ -32,6 +32,8 @@ class Action
 
     protected $confirmMessage;
 
+    protected $confirmModal;
+
     protected $csrfProtected = false;
 
     protected $forceIntermediate = false;
@@ -150,6 +152,19 @@ class Action
     public function getConfirm()
     {
         return $this->confirmMessage;
+    }
+
+    /**
+     * @param string $confirmModal
+     */
+    public function setConfirmModal($confirmModal)
+    {
+        $this->confirmModal = $confirmModal;
+    }
+
+    public function getConfirmModal()
+    {
+        return $this->confirmModal;
     }
 
     /**
