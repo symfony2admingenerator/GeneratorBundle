@@ -51,7 +51,8 @@ action.generic:
     save-and-list:  Speichern und Übersicht
     save-and-show:  Speichern und zeigen
     excel:  Export to Excel
-
+    export: Export
+    
 # Object actions
 action.object.edit:
     label:    Bearbeiten

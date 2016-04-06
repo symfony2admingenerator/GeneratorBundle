@@ -51,6 +51,7 @@ action.generic:
     save-and-list:  Shrani in Seznam
     save-and-show:  Shrani in Prikaz
     excel:  Izvoz v Excel
+    export: Izvoz
 
 # Object actions
 action.object.edit:

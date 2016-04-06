@@ -52,7 +52,8 @@ action.generic:
     save-and-list:  Сохранить и Список
     save-and-show:  Cохранить и показать
     excel:  Экспорт в Excel
-
+    export: Экспорт
+    
 # Object actions
 action.object.edit:
     label:    Редактировать

@@ -50,7 +50,8 @@ action.generic:
     save-and-add:   Enregistrer et Nouveau
     save-and-list:  Enregistrer et Retour à la liste
     save-and-show:  Enregistrer et montrer
-    excel:  Export to Excel
+    excel:  Exporter au format Excel
+    export: Exporter
 
 # Object actions
 action.object.edit:

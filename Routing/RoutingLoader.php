@@ -21,8 +21,8 @@ class RoutingLoader extends FileLoader
             'methods'      => array('GET'),
         ),
         'excel'=> array(
-            'path'         => '/excel',
-            'defaults'     => array(),
+            'path'         => '/excel/{key}',
+            'defaults'     => array('key'=>null),
             'requirements' => array(),
             'methods'      => array('GET'),
             'controller'   => 'excel',

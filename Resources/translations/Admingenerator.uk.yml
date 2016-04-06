@@ -50,6 +50,7 @@ action.generic:
     save-and-list:  Зберегти та список
     save-and-show:  Зберегти та показати
     excel:  Експорт в Excel
+    export: Експорт
 
 # Object actions
 action.object.edit:

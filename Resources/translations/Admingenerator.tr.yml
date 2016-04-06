@@ -43,6 +43,7 @@ action.generic:
     save-and-list:  Kaydet ve Listeye Dön
     save-and-show:  Kaydet ve Göstermek
     excel:  Excel'e verme
+    export:  Verme
 
 # Object actions
 action.object.edit:

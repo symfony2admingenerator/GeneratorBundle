@@ -51,6 +51,7 @@ action.generic:
     save-and-list:  保存して戻る
     save-and-show:  保存して表示
     excel:  Excel へのエクスポート
+    export: Export
 
 # Object actions
 action.object.edit:
