@@ -31,7 +31,20 @@ class ExcelController extends \{{ namespace_prefix }}\{{ bundle_name }}\Controll
     {
         $this->request = $request;
 
-        {{ block('security_action') }}
+        if ($key === null) {
+          // Standard credential check
+          {{ block('security_action') }}
+        } else {
+          {% for eaction in builder.excelActions %}
+            {% if eaction.credentials is not empty and eaction.credentials is not same as('AdmingenAllowed') %}
+              // Check specific credentials
+              $this->denyAccessUnlessValidateCredentials('{{ eaction.credentials }}');
+            {% else %}
+              // Check default if not specific credentials are given
+              {{ block('security_action') }}
+            {% endif %}
+          {% endfor %}
+        }
 
         // Create the PHPExcel object with some standard values
         try {
