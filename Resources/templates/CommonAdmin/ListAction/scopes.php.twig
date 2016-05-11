@@ -106,7 +106,7 @@
                 {% if params["filters"] is defined -%}
                     {%- for filter, filterParams in params["filters"] -%}
                         {%- if not filter|is_numeric -%}
-                            $filters['{{ filter }}'] = '{{ filterParams }}';
+                            $filters['{{ filter }}'] = {{ filterParams|as_php }};
                         {%- endif -%}
                     {%- endfor -%}
                 {%- endif %}
