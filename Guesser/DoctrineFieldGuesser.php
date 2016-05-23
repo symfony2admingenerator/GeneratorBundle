@@ -286,17 +286,21 @@ abstract class DoctrineFieldGuesser
         }
 
         if (preg_match("/CollectionType$/i", $type)) {
-            $mapping = $this->getMetadatas($class)->getAssociationMapping($columnName);
-
-            return array(
+            $options = array(
                 'allow_add'     => true,
                 'allow_delete'  => true,
                 'by_reference'  => false,
                 'entry_type' => $filter ? $this->filterTypes[$this->objectModel] : $this->formTypes[$this->objectModel],
-                'entry_options' => array(
-                    'class' => $mapping['target'.ucfirst($this->objectModel)]
-                )
             );
+
+            if ($this->getMetadatas($class)->hasAssociation($columnName)) {
+                $mapping = $this->getMetadatas($class)->getAssociationMapping($columnName);
+                $options['entry_options'] = array(
+                    'class' => $mapping['target'.ucfirst($this->objectModel)]
+                );
+            }
+
+            return $options;
         }
 
         return array(
