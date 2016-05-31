@@ -251,7 +251,7 @@ class AdmingeneratorGeneratorExtension extends Extension
             if (!array_key_exists('builders', $generator)) {
                 throw new \InvalidArgumentException('"builders" field is missing in ' . $generator);
             }
-            preg_match('/[^\/]*-generator.yml/', $path, $prefix);
+            preg_match('/[^\/|\\\\]*-generator.yml/', $path, $prefix);
             $prefix = substr($prefix[0], 0, strlen($prefix[0]) - strlen('-generator.yml'));
             $generator['params']['prefix'] = $prefix;
             $this->registerFormsServicesFromGenerator($generator['params'], array_keys($generator['builders']), $container);
