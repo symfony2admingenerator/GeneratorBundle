@@ -270,7 +270,7 @@ class AdmingeneratorGeneratorExtension extends Extension
     {
         $modelParts = explode('\\', $generatorParameters['model']);
         $model = strtolower(array_pop($modelParts)); // @TODO: BC Support, remove it starting from v.3.0.0
-        $fullQualifiedNormalizedModelName = strtolower(str_replace('\\', '_', ltrim($generatorParameters['model'])));
+        $fullQualifiedNormalizedModelName = strtolower(str_replace('\\', '_', ltrim($generatorParameters['model'], '\\')));
         $formsBundleNamespace = sprintf(
             '%s%s\\Form\\Type\\%s',
             $generatorParameters['namespace_prefix'] ? $generatorParameters['namespace_prefix'] . '\\' : '',
