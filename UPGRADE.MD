@@ -4,6 +4,12 @@
 
 -----
 
+## Current `master` branch
+
+- Fixed [#288](https://github.com/symfony2admingenerator/GeneratorBundle/issues/288): 
+Generated form types now have unique service name. Old naming is aliased to new 
+service name in order not to have BC break.
+
 This page contains all upgrade notes since the release of the stable 2.0.0 version.
 
 ## 2.1.0
