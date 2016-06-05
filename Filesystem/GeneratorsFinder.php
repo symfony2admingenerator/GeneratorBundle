@@ -66,7 +66,7 @@ class GeneratorsFinder
     {
         $yamls =  array();
 
-        if (!file_exists($bundle->getPath().'/Resources/config')) {
+        if (!is_dir($bundle->getPath().'/Resources/config')) {
             return $yamls;
         }
 
