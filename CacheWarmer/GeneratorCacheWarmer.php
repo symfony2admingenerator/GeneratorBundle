@@ -5,7 +5,6 @@ namespace Admingenerator\GeneratorBundle\CacheWarmer;
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\HttpKernel\CacheWarmer\CacheWarmerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Admingenerator\GeneratorBundle\Exception\GeneratedModelClassNotFoundException;
 use Admingenerator\GeneratorBundle\Filesystem\GeneratorsFinder;
 
 /**
@@ -50,12 +49,18 @@ class GeneratorCacheWarmer implements CacheWarmerInterface
         foreach ($this->finder->findAll() as $yaml) {
             try {
                 $this->buildFromYaml($yaml);
-            } catch (GeneratedModelClassNotFoundException $e) {
-                echo ">> Skip warmup ".$e->getMessage()."\n";
-            } catch (\LogicException $e) {
-                echo ">> Skip warmup ".$e->getMessage()."\n";
             } catch (\Exception $e) {
-                echo ">> Skip warmup ".$e->getMessage()."\n";
+                while ($e->getPrevious()) {
+                    $e = $e->getPrevious();
+                }
+                echo ">> Skip warmup ".
+                    $e->getMessage().
+                    ".\nIn file ".
+                    $e->getFile().
+                    " on line ".
+                    $e->getLine().
+                    ".\nBacktrace:\n".
+                    $e->getTraceAsString();
             }
         }
     }
