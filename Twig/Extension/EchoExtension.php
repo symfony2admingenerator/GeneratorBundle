@@ -26,6 +26,7 @@ class EchoExtension extends \Twig_Extension
     {
         return array(
             'echo_if_granted'     => new \Twig_SimpleFunction('echo_if_granted', array($this, 'getEchoIfGranted')),
+            'echo_if_workflow'    => new \Twig_SimpleFunction('echo_if_workflow', array($this, 'getEchoIfWorkflow')),
             'echo_path'           => new \Twig_SimpleFunction('echo_path', array($this, 'getEchoPath')),
             'echo_trans'          => new \Twig_SimpleFunction('echo_trans', array($this, 'getEchoTrans')),
             'echo_render'         => new \Twig_SimpleFunction('echo_render', array($this, 'getEchoRender'))
@@ -185,6 +186,27 @@ class EchoExtension extends \Twig_Extension
             $this->useExpression ? 'is_expr_granted' : 'is_granted',
             $credentials,
             $modelName ? ', '.$modelName.' is defined ? '.$modelName.' : null' : ''
+        );
+    }
+
+    /**
+     * Print "if" tag with condition workflow_can()
+     *
+     * @param string $modelName
+     * @param array  $workflows
+     * @return string
+     */
+    public function getEchoIfWorkflow($modelName, $workflows = array())
+    {
+        if (empty($workflows)) {
+            return "{% if (true) %}";
+        }
+        
+        return sprintf(
+            "{%% if %s(%s, '%s') %%}",
+            'workflow_can',
+            $modelName,
+            implode("', '", $workflows)
         );
     }
 
