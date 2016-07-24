@@ -155,6 +155,38 @@ For each custom object action there are four methods generated:
 
 > **Note:** The only method you **have to** overwrite is `executeObject{{ ActionName }}`.
 
+#### Workflow transition actions
+
+If you use the [Symfony Workflow Component](http://symfony.com/blog/new-in-symfony-3-2-workflow-component), you can use the `workflows` option to wrap object actions with a `workflow_can` check. Example config and controller:
+
+```yaml
+# config
+params:
+    object_actions:
+        lock:
+            label:    Lock account
+            icon:     glyphicon-lock
+            route:    Acme_SecurityBundle_User_object # Optional
+            params: # Optional
+                pk:       "{{ User.id }}"
+                action:   lock
+            csrfProtected: true
+            workflows:
+                - lock
+```
+
+```php
+
+    /**
+     * This function is for you to customize what action actually does
+     */
+    protected function executeObjectLock($User)
+    {
+        $this->get('worflow.user_management')->apply($User, 'lock');
+    }
+
+```
+
 ### Custom batch action example
 
 #### Batch actions configuration
