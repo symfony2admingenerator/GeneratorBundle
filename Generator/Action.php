@@ -40,6 +40,8 @@ class Action
 
     protected $credentials = 'AdmingenAllowed';
 
+    protected $workflows = array();
+
     public function __construct($name, $type = 'custom')
     {
         $this->name = $name;
@@ -180,11 +182,6 @@ class Action
         return $this->csrfProtected;
     }
 
-    public function setCredentials($credentials)
-    {
-        $this->credentials = $credentials;
-    }
-
     public function setForceIntermediate($forceIntermediate)
     {
         $this->forceIntermediate = $forceIntermediate;
@@ -195,9 +192,24 @@ class Action
         return $this->forceIntermediate;
     }
 
+    public function setCredentials($credentials)
+    {
+        $this->credentials = $credentials;
+    }
+
     public function getCredentials()
     {
         return $this->credentials;
+    }
+
+    public function setWorkflows(array $workflows)
+    {
+        $this->workflows = $workflows;
+    }
+
+    public function getWorkflows()
+    {
+        return $this->workflows;
     }
 
     public function getParams()
