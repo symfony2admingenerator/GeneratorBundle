@@ -14,7 +14,13 @@
             {% if action.credentials %}
                 {{ echo_if_granted(action.credentials, builder.ModelClass) }}
             {% endif -%}
+            {% if action.workflows is not empty %}
+                {{ echo_if_workflow(builder.ModelClass, action.workflows) }}
+            {% endif -%}
             {{ block('object_action_block') }}
+            {%- if action.workflows is not empty %}
+                {{ echo_endif() }}
+            {% endif %}
             {%- if action.credentials %}
                 {{ echo_endif() }}
             {% endif %}
