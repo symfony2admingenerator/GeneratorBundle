@@ -58,6 +58,10 @@ params:
                 pk:       "{{ User.id }}"
                 action:   lock
             csrfProtected: true
+            workflows:
+                # if set, protects the action with a `workflow_can` check
+                # see Symfony 3.2 workflow component
+                - lock
             options:
                 # this is the title for intermediate page
                 # if JS is available then intermediate page will not be used
@@ -308,6 +312,12 @@ it here. For more documenation about credentials, check our [security documentat
 
 > __NOTE__ Credentials given here are valid for the whole admin, but can be overridden in specific builders or even 
 specific fields.
+
+##### Workflows
+
+`workflows` __type__: `array`
+
+This parameter is implemented only for **object actions** as Workflow Component transition checks can be only made given entity context. Empty by default, if set - the action will check for if given transitions can be made - and only then the button will be rendered and corresponding controller will allow to complete the action.
 
 ##### CSRF protected
 
