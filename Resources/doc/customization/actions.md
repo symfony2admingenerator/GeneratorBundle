@@ -59,7 +59,7 @@ params:
                 action:   lock
             csrfProtected: true
             workflows:
-                # if set, protects the action with a `workflow_can` check
+                # if set, wraps action link with a `workflow_can` check
                 # see Symfony 3.2 workflow component
                 - lock
             options:
@@ -317,7 +317,7 @@ specific fields.
 
 `workflows` __type__: `array`
 
-This parameter is implemented only for **object actions** as Workflow Component transition checks can be only made given entity context. Empty by default, if set - the action will check for if given transitions can be made - and only then the button will be rendered and corresponding controller will allow to complete the action.
+This parameter is implemented only for **object actions** as Workflow Component transition checks can be only made given entity context. Empty by default, if set - the button link will be wrapped in a `workflow_can` check.
 
 ##### CSRF protected
 
