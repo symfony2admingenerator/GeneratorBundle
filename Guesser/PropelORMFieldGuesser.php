@@ -73,6 +73,8 @@ class PropelORMFieldGuesser
         if ($relation) {
             return \RelationMap::MANY_TO_MANY === $relation->getType();
         }
+
+        return false;
     }
 
     /**

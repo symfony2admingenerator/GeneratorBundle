@@ -62,7 +62,8 @@ abstract class DoctrineFieldGuesser
     public function getManyToMany($model, $fieldPath)
     {
         $resolved = $this->resolveRelatedField($model, $fieldPath);
-        return !$this->getMetadatas($resolved['class'])->isAssociationWithSingleJoinColumn($resolved['field']);
+        $metadata = $this->getMetadatas($resolved['class']);
+        return $metadata->hasAssociation($resolved['field']) && !$metadata->isAssociationWithSingleJoinColumn($resolved['field']);
     }
 
     /**
