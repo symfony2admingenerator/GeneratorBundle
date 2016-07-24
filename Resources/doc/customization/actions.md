@@ -368,8 +368,7 @@ Set the action of the button. When this is set, there will be no controller STUB
 rendered as simple URL.
 
 ##### Submit
-`submit` __type
-__: `bool`
+`submit` __type__: `bool`
 
 If set to true, the button will behave as a submit button for the form on that page.
 
