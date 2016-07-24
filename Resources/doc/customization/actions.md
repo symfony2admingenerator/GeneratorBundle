@@ -166,8 +166,8 @@ params:
         lock:
             label:    Lock account
             icon:     glyphicon-lock
-            route:    Acme_SecurityBundle_User_object # Optional
-            params: # Optional
+            route:    Acme_SecurityBundle_User_object
+            params:
                 pk:       "{{ User.id }}"
                 action:   lock
             csrfProtected: true
@@ -182,6 +182,7 @@ params:
      */
     protected function executeObjectLock($User)
     {
+        // this service is provieded by Workflow Component
         $this->get('worflow.user_management')->apply($User, 'lock');
     }
 
