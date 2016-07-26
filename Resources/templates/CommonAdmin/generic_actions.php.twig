@@ -6,14 +6,14 @@
 
                 {% if actionCredentials is not empty %}
                     {{ echo_set('actionCredentials', echo_twig_arr(actionCredentials), false) }}
-                    {{ echo_if('is_one_admingenerator_granted(actionCredentials)') }}
+                    {{ echo_if('is_one_admingenerator_granted(actionCredentials, (' ~ builder.ModelClass ~  ' is defined) ? ' ~ builder.ModelClass ~  ' : null )') }}
                 {% endif %}
 
                 {% set excelActions = builder.excelActions is defined ? builder.excelActions : [] %}
                 {% for action in builder.Actions %}
                     {{ echo_block("generic_action_" ~ action.twigName) }}
                     {% if action.credentials %}
-                        {{ echo_if_granted(action.credentials) }}
+                        {{ echo_if_granted(action.credentials, builder.ModelClass) }}
                     {% endif %}
 
                     {% if action.name is same as('excel') and excelActions|length %}
