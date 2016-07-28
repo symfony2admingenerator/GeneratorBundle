@@ -10,7 +10,7 @@
         {% if filterColumnsCredentials is not empty %}
             {{ echo_set('filterColumnsCredentials', echo_twig_arr(filterColumnsCredentials), false) }}
             {{ echo_if('is_one_admingenerator_granted(filterColumnsCredentials)') }}
-                <div class="col-md-9 col-sd-12 list-results-container pull-left">
+                <div class="col-md-9 col-xs-12 list-results-container pull-left">
             {{ echo_else() }}
                 <div class="col-md-12 list-results-container no-filters">
             {{ echo_endif() }}
