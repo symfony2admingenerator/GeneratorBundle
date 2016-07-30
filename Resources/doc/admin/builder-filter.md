@@ -119,7 +119,7 @@ page load.
 
 ### Configuring the scope filter
 
-Previously, we showed the filter `signedIn` in the scope. These filters are available by default and thus they must be 
+Previously, we showed the filter `signedIn` in the scope. These filters are not available by default and thus they must be 
 created. This is done in the `ListController` of your admingenerator bundle, in the `Controller/youradmin` folder. 
 For example (when using Doctrine):
 
