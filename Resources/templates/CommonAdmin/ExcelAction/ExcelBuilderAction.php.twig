@@ -184,14 +184,14 @@ class ExcelController extends \{{ namespace_prefix }}\{{ bundle_name }}\Controll
                 if ($this->validateCredentials('{{ credentials }}', ${{ builder.ModelClass }})) {
                 {% endif %}
                 $data = $this->getValueForCell('{{ column.getter }}', ${{ builder.ModelClass }});
-                $formatedValue = $this->format{{ name|classify|php_name }}($data);
+                $formattedValue = $this->format{{ name|classify|php_name }}($data);
 
                 // Convert DateTime object to given format
-                if ($formatedValue instanceof \DateTime){
-                    $formatedValue = $formatedValue->format('{{ builder.dateTimeFormat }}');
+                if ($formattedValue instanceof \DateTime){
+                    $formattedValue = $formattedValue->format('{{ builder.dateTimeFormat }}');
                 }
 
-                $sheet->setCellValueByColumnAndRow($colNum, $row, $formatedValue);
+                $sheet->setCellValueByColumnAndRow($colNum, $row, $formattedValue);
                 {% if column.credentials is not empty and column.credentials is not same as('AdmingenAllowed') %}
                 }
                 {% endif %}
@@ -250,14 +250,14 @@ class ExcelController extends \{{ namespace_prefix }}\{{ bundle_name }}\Controll
                 if ($this->validateCredentials('{{ credentials }}', ${{ builder.ModelClass }})) {
                 {% endif %}
                 $data = $this->getValueForCell('{{ column.getter }}', ${{ builder.ModelClass }});
-                $formatedValue = $this->format{{ name|classify|php_name }}($data);
+                $formattedValue = $this->format{{ name|classify|php_name }}($data);
 
                 // Convert DateTime object to given format
-                if ($formatedValue instanceof \DateTime){
-                    $formatedValue = $formatedValue->format('{{ builder.dateTimeFormat(keyname) }}');
+                if ($formattedValue instanceof \DateTime){
+                    $formattedValue = $formattedValue->format('{{ builder.dateTimeFormat(keyname) }}');
                 }
 
-                $sheet->setCellValueByColumnAndRow($colNum, $row, $formatedValue);
+                $sheet->setCellValueByColumnAndRow($colNum, $row, $formattedValue);
                 {% if column.credentials is not empty and column.credentials is not same as('AdmingenAllowed') %}
                 }
                 {% endif %}
@@ -307,12 +307,7 @@ class ExcelController extends \{{ namespace_prefix }}\{{ bundle_name }}\Controll
         if($data !== null) {
             $data = $accessor->getValue($data, $field);
         }
-
-        // Convert DateTime object to given format
-        if ($data instanceof \DateTime) {
-            $data = $data->format('{{ builder.dateTimeFormat }}');
-        }
-
+        
         return $data;
     }
 
