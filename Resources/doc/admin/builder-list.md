@@ -16,6 +16,7 @@ builders:
 	  filtersModalSize: ~
       fields: ~
       display: ~
+      sort: ~
       actions: ~
       object_actions: ~
       batch_actions: ~
@@ -63,6 +64,15 @@ parameters overwrite the form parameters, if any.
 
 With the display parameter you can specify the fields that need to be displayed. Works the same as the 
 [`filters`](#filters) parameter.
+
+### Sort
+
+`sort` __default__: `~` __type__: `array`
+
+With this parameter you can define default sort column and sort order. First element of array is column,
+while sort order is optional second element of array and default is `ASC`. Example:
+
+    sort: [ column_name, 'ASC' ]
 
 ### Actions
 
