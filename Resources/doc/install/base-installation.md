@@ -58,7 +58,7 @@ Choose your model manager (Doctrine, Doctrine ODM or Propel) and choose choose i
 ```yaml
 admingenerator_generator:
     # choose and enable at least one
-    use_propel:           true
+    use_propel:           false
     use_doctrine_orm:     true
     use_doctrine_odm:     false
 
