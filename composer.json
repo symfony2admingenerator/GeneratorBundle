@@ -26,7 +26,8 @@
         "doctrine/common": "~2.2",
         "sensio/generator-bundle": "~3.0",
         "symfony2admingenerator/twig-generator": "~1.2,>=1.2.2",
-        "white-october/pagerfanta-bundle": ">=1.0.6",
+        "pagerfanta/pagerfanta": "dev-adaptater-propel2",
+        "white-october/pagerfanta-bundle": "dev-adaptater-propel2",
         "twig/twig": "~1.12",
         "twig/extensions": "~1.0"
     },
@@ -52,5 +53,15 @@
         "branch-alias": {
             "dev-master": "2.0-dev"
         }
-    }
+    },
+    "repositories": [
+       {
+         "type": "git",
+         "url": "https://github.com/donkeycode/Pagerfanta.git"
+       },
+       {
+         "type": "git",
+         "url": "https://github.com/donkeycode/WhiteOctoberPagerfantaBundle.git"
+       }
+   ]
 }
