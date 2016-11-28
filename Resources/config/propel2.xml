@@ -1,0 +1,39 @@
+<?xml version="1.0" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <parameters>
+        <!-- Propel -->
+        <parameter key="admingenerator.propel2.class">Admingenerator\GeneratorBundle\Generator\PropelGenerator</parameter>
+        <parameter key="admingenerator.fieldguesser.propel2.class">Admingenerator\GeneratorBundle\Guesser\Propel2ORMFieldGuesser</parameter>
+        <parameter key="admingenerator.queryfilter.propel2.class">Admingenerator\GeneratorBundle\QueryFilter\PropelQueryFilter</parameter>
+    </parameters>
+
+    <services>
+        <!-- Propel -->
+        <service id="admingenerator.fieldguesser.propel2" class="%admingenerator.fieldguesser.propel2.class%"
+            public="false">
+        </service>
+
+        <service id="admingenerator.generator.propel2"
+            class="%admingenerator.propel2.class%">
+            <argument type="string">%kernel.root_dir%</argument>
+            <argument type="string">%kernel.cache_dir%</argument>
+            <call method="setBundleConfig">
+                <argument type="expression">parameter('admingenerator')</argument>
+            </call>
+            <call method="setFieldGuesser">
+                <argument type="service" id="admingenerator.fieldguesser.propel2" />
+            </call>
+            <call method="setRouter">
+                <argument type="service" id="router" />
+            </call>
+            <call method="setTwig">
+                <argument type="service" id="twig" />
+            </call>
+            <call method="setKernel">
+                <argument type="service" id="kernel" />
+            </call>
+        </service>
+    </services>
+</container>

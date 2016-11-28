@@ -241,6 +241,7 @@ class Configuration implements ConfigurationInterface
                 ->booleanNode('use_doctrine_orm')->defaultFalse()->end()
                 ->booleanNode('use_doctrine_odm')->defaultFalse()->end()
                 ->booleanNode('use_propel')->defaultFalse()->end()
+                ->booleanNode('use_propel2')->defaultFalse()->end()
                 ->booleanNode('use_jms_security')->defaultFalse()->end()
                 ->booleanNode('guess_required')->defaultTrue()->end()
                 ->booleanNode('default_required')->defaultTrue()->end()

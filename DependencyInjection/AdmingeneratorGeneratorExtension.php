@@ -76,7 +76,7 @@ class AdmingeneratorGeneratorExtension extends Extension
         if ($config['use_jms_security']) {
             $container->getDefinition('twig.extension.admingenerator.security')->addArgument(true);
             $container->getDefinition('twig.extension.admingenerator.echo')->addArgument(true);
-        } 
+        }
 
         $this->registerGeneratedFormsAsServices($container);
         $this->processModelManagerConfiguration($config, $container);
@@ -91,7 +91,7 @@ class AdmingeneratorGeneratorExtension extends Extension
      */
     private function processModelManagerConfiguration(array $config, ContainerBuilder $container)
     {
-        if (!($config['use_doctrine_orm'] || $config['use_doctrine_odm'] || $config['use_propel'])) {
+        if (!($config['use_doctrine_orm'] || $config['use_doctrine_odm'] || $config['use_propel'] || $config['use_propel2'])) {
             throw new ModelManagerNotSelectedException();
         }
 
@@ -105,6 +105,7 @@ class AdmingeneratorGeneratorExtension extends Extension
             $doctrineOrmTemplatesDirs[] = $dir . DIRECTORY_SEPARATOR . 'Doctrine';
             $doctrineOdmTemplatesDirs[] = $dir . DIRECTORY_SEPARATOR . 'DoctrineODM';
             $propelTemplatesDirs[] = $dir . DIRECTORY_SEPARATOR . 'Propel';
+            $propel2TemplatesDirs[] = $dir . DIRECTORY_SEPARATOR . 'Propel2';
         }
 
         if ($config['use_doctrine_orm']) {
@@ -150,6 +151,23 @@ class AdmingeneratorGeneratorExtension extends Extension
             }
 
             $container->getDefinition('admingenerator.fieldguesser.propel')
+                ->addArgument($config['form_types']['propel'])
+                ->addArgument($config['filter_types']['propel'])
+                ->addArgument($config['guess_required'])
+                ->addArgument($config['default_required']);
+        }
+
+
+        if ($config['use_propel2']) {
+            $loader->load('propel2.xml');
+            $this->addTemplatesInitialization($container->getDefinition('admingenerator.generator.propel2'), $propel2TemplatesDirs);
+            if ($config['overwrite_if_exists']) {
+                $container
+                    ->getDefinition('admingenerator.generator.propel2')
+                    ->addMethodCall('forceOverwriteIfExists');
+            }
+
+            $container->getDefinition('admingenerator.fieldguesser.propel2')
                 ->addArgument($config['form_types']['propel'])
                 ->addArgument($config['filter_types']['propel'])
                 ->addArgument($config['guess_required'])
