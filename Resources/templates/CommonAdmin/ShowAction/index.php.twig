@@ -11,7 +11,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
         ${{ builder.ModelClass }} = $this->getObject($pk);
 
         if (!${{ builder.ModelClass }}) {
-            throw new NotFoundHttpException("The {{ model }} with {{ builder.getFieldGuesser().getModelPrimaryKeyName(model) }} $pk can't be found");
+            throw new NotFoundHttpException("The \{{ model }} with {{ builder.getFieldGuesser().getModelPrimaryKeyName(model) }} $pk can't be found");
         }
 
         {{ block('security_action_with_object') }}

@@ -3,10 +3,10 @@
 {% block getObject %}
 
     /**
-     * Get object {{ model }} with identifier $pk
+     * Get object \{{ model }} with identifier $pk
      *
      * @param mixed $pk
-     * @return {{ model }}
+     * @return \{{ model }}
      */
     protected function getObject($pk)
     {
@@ -14,7 +14,7 @@
         ${{ builder.ModelClass }} = $this->getObjectQuery($pk)->getSingleResult();
 
         if (!${{ builder.ModelClass }}) {
-            throw new NotFoundHttpException("No {{ model }} found on {{ builder.getFieldGuesser().getModelPrimaryKeyName(model) }} : $pk");
+            throw new NotFoundHttpException("No \{{ model }} found on {{ builder.getFieldGuesser().getModelPrimaryKeyName(model) }} : $pk");
         }
 
         return ${{ builder.ModelClass }};
