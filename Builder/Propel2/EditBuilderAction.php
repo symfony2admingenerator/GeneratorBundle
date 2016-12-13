@@ -1,6 +1,6 @@
 <?php
 
-namespace Admingenerator\GeneratorBundle\Builder\Propel;
+namespace Admingenerator\GeneratorBundle\Builder\Propel2;
 
 use Admingenerator\GeneratorBundle\Builder\Admin\EditBuilderAction as AdminEditBuilderAction;
 
