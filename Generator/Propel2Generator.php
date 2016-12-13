@@ -20,7 +20,7 @@ use Admingenerator\GeneratorBundle\Builder\Propel2\ShowBuilderTemplate;
 use Admingenerator\GeneratorBundle\Builder\Propel2\ActionsBuilderAction;
 use Admingenerator\GeneratorBundle\Builder\Propel2\ActionsBuilderTemplate;
 
-class PropelGenerator extends Generator
+class Propel2Generator extends Generator
 {
     /**
      * (non-PHPdoc)
