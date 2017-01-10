@@ -6,6 +6,7 @@ use Admingenerator\GeneratorBundle\Exception\NotImplementedException;
 use Doctrine\Common\Util\Inflector;
 use Symfony\Component\HttpKernel\Kernel;
 use Propel\Generator\Model\PropelTypes;
+use Propel\Runtime\Map\RelationMap;
 
 class Propel2ORMFieldGuesser
 {
@@ -72,7 +73,7 @@ class Propel2ORMFieldGuesser
         $relation = $this->getRelation($resolved['field'], $resolved['class']);
 
         if ($relation) {
-            return \RelationMap::MANY_TO_MANY === $relation->getType();
+            return RelationMap::MANY_TO_MANY === $relation->getType();
         }
 
         return false;
@@ -94,7 +95,7 @@ class Propel2ORMFieldGuesser
         $relation = $this->getRelation($field, $class);
 
         if ($relation) {
-            return \RelationMap::MANY_TO_ONE === $relation->getType() ? 'model' : 'collection';
+            return RelationMap::MANY_TO_ONE === $relation->getType() ? 'model' : 'collection';
         }
 
         $column = $this->getColumn($class, $field);
@@ -311,7 +312,7 @@ class Propel2ORMFieldGuesser
         if (preg_match("#ModelType$#i", $type)) {
             $relation = $this->getRelation($columnName, $class);
             if ($relation) {
-                if (\RelationMap::MANY_TO_ONE === $relation->getType()) {
+                if (RelationMap::MANY_TO_ONE === $relation->getType()) {
                     return array(
                         'class'     => $relation->getForeignTable()->getClassname(),
                         'multiple'  => false,
@@ -335,7 +336,7 @@ class Propel2ORMFieldGuesser
                     'by_reference'  => false,
                     'entry_type' => 'entity',
                     'entry_options' => array(
-                        'class' => \RelationMap::MANY_TO_ONE === $relation->getType() ? $relation->getForeignTable()->getClassname() : $relation->getLocalTable()->getClassname()
+                        'class' => RelationMap::MANY_TO_ONE === $relation->getType() ? $relation->getForeignTable()->getClassname() : $relation->getLocalTable()->getClassname()
                     )
                 );
             }
