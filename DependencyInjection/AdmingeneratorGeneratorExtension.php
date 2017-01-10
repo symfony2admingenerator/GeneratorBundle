@@ -168,8 +168,8 @@ class AdmingeneratorGeneratorExtension extends Extension
             }
 
             $container->getDefinition('admingenerator.fieldguesser.propel2')
-                ->addArgument($config['form_types']['propel'])
-                ->addArgument($config['filter_types']['propel'])
+                ->addArgument($config['form_types']['propel2'])
+                ->addArgument($config['filter_types']['propel2'])
                 ->addArgument($config['guess_required'])
                 ->addArgument($config['default_required']);
         }
