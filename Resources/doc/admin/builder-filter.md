@@ -75,7 +75,7 @@ Also in modal dialog mode (`filtersMode: modal`) you can setup desirable modal d
 
 ## Scopes
 
-Scopes are predefined filters, which can be used to select a specific part of the list. They are rendered as buttons on 
+Scopes are predefined filters (which need to be specified, however, in the filters parameter as well!), which can be used to select a specific part of the list. They are rendered as buttons on 
 top of the list (see [this](../img/showcase/list-with-scopes.png) screenshot).
 
 They are simply configured under the List builder params:
