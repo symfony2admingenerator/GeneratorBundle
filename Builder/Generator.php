@@ -309,7 +309,7 @@ class Generator extends TwigGeneratorGenerator
     /**
      * @return string The column class.
      */
-    protected function getColumnClass()
+    public function getColumnClass()
     {
         return $this->columnClass;
     }

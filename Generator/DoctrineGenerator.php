@@ -49,6 +49,8 @@ class DoctrineGenerator extends Generator
         );
         $generator->setBaseGeneratorName($this->getBaseGeneratorName());
 
+        $this->generateEmbedTypes($generator, 'Admingenerator\\GeneratorBundle\\Builder\\Doctrine');
+
         $builders = $generator->getFromYaml('builders', array());
 
         if (array_key_exists('list', $builders)) {

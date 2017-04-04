@@ -49,6 +49,8 @@ class PropelGenerator extends Generator
         $generator->setColumnClass('Admingenerator\GeneratorBundle\Generator\PropelColumn');
         $generator->setBaseGeneratorName($this->getBaseGeneratorName());
 
+        $this->generateEmbedTypes($generator, 'Admingenerator\\GeneratorBundle\\Builder\\Propel');
+
         $builders = $generator->getFromYaml('builders', array());
 
         if (array_key_exists('list', $builders)) {
