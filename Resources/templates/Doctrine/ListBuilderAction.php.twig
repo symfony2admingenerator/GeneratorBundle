@@ -10,11 +10,22 @@
         {%- for filter,column in builder.filterColumns -%}
             {%- if 'entity' == builder.getFieldGuesser().getDbType(model, column.filterOn) or 'collection' == builder.getFieldGuesser().getDbType(model, column.filterOn) -%}
             {% set filterModel = builder.getFieldGuesser().getModelType(model, column.filterOn) %}
-        if (isset($filters['{{ filter }}'])) {
+        if (isset($filters['{{ filter }}']) && $filters['{{ filter }}'] instanceof \{{ filterModel }} ) {
                 $filters['{{ filter }}'] = array (
                     '{{ builder.getFieldGuesser().getModelPrimaryKeyName(filterModel) }}' => is_object($filters['{{ filter }}']) ? $filters['{{ filter }}']->get{{ builder.getFieldGuesser().getModelPrimaryKeyName(filterModel)|capitalize }}() : $filters['{{ filter }}'],
                     'entityName' => '{{ filterModel }}'
                 );
+        }
+            {%- endif %}
+            {%- if 'entity' == builder.getFieldGuesser().getDbType(model, column.filterOn) or 'collection' == builder.getFieldGuesser().getDbType(model, column.filterOn) -%}
+            {% set filterModel = builder.getFieldGuesser().getModelType(model, column.filterOn) %}
+            {% set filterByIdName = filter ~ '_' ~ builder.getFieldGuesser().getModelPrimaryKeyName(filterModel)|lower %}
+        if (isset($filters['{{ filterByIdName }}']) && is_string($filters['{{ filterByIdName }}'])) {
+                $filters['{{ filter }}'] = array (
+                    '{{ builder.getFieldGuesser().getModelPrimaryKeyName(filterModel) }}' => $filters['{{ filterByIdName }}'],
+                    'entityName' => '{{ filterModel }}'
+                );
+                unset($filters['{{ filterByIdName }}']);
         }
             {%- endif %}
         {% endfor -%}
