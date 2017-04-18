@@ -5,8 +5,8 @@
      */
     protected function parseRequestForPager()
     {
-        if ($this->request->query->get('page')) {
-            $this->setPage($this->request->query->get('page'));
+        if ($this->request->query->get('page', 1)) {
+            $this->setPage($this->request->query->get('page', 1));
         }
 
         if ($this->request->query->get('perPage')) {
