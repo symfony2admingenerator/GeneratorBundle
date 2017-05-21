@@ -70,6 +70,11 @@ class EchoExtension extends \Twig_Extension
         // Should we really check formType or can we just
         // look for query_builder option?
         if (preg_match("/EntityType$/i", $formType)) {
+            preg_match("/'query_builder' => '(.+?)}',/i", $options, $matches);
+
+            if (count($matches) > 0) {
+              $options = str_replace("'query_builder' => '$matches[1]}'", "'query_builder' => ".stripslashes($matches[1]).'}', $options);
+            }
             preg_match("/'query_builder' => '(.+?)',/i", $options, $matches);
 
             if (count($matches) > 0) {
@@ -79,6 +84,11 @@ class EchoExtension extends \Twig_Extension
 
         // Same question here
         if (preg_match("/ModelType$/i", $formType)) {
+            preg_match("/'query' => '(.+?)}',/i", $options, $matches);
+
+            if (count($matches) > 0) {
+                $options = str_replace("'query' => '$matches[1]}'", "'query' => ".stripslashes($matches[1]).'}', $options);
+            }
             preg_match("/'query' => '(.+?)',/i", $options, $matches);
 
             if (count($matches) > 0) {
