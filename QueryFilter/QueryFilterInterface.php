@@ -5,7 +5,7 @@ namespace Admingenerator\GeneratorBundle\QueryFilter;
 interface QueryFilterInterface
 {
     /**
-     * @return the query object interface depend of the ORM
+     * @return mixed the query object interface depend of the ORM
      *
      * @api
      */

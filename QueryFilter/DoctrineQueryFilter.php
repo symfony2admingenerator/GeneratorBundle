@@ -2,8 +2,15 @@
 
 namespace Admingenerator\GeneratorBundle\QueryFilter;
 
+use Doctrine\ORM\QueryBuilder;
+
 class DoctrineQueryFilter extends BaseQueryFilter
 {
+    /**
+     * @var QueryBuilder
+     */
+    protected $query;
+
     /**
      * @var array
      */

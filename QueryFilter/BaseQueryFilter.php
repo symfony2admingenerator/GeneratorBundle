@@ -4,6 +4,9 @@ namespace Admingenerator\GeneratorBundle\QueryFilter;
 
 abstract class BaseQueryFilter implements QueryFilterInterface
 {
+    /**
+     * @var mixed
+     */
     protected $query;
 
     /**
