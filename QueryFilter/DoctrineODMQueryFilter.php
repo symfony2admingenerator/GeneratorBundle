@@ -2,8 +2,14 @@
 
 namespace Admingenerator\GeneratorBundle\QueryFilter;
 
+use Doctrine\ODM\MongoDB\Query\Builder;
+
 class DoctrineODMQueryFilter extends BaseQueryFilter
 {
+    /**
+     * @var Builder
+     */
+    protected $query;
 
     public function addDefaultFilter($field, $value)
     {

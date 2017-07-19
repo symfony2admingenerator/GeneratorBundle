@@ -7,6 +7,11 @@ use Doctrine\Common\Util\Inflector;
 class PropelQueryFilter extends BaseQueryFilter
 {
     /**
+     * @var \ModelCriteria
+     */
+    protected $query;
+
+    /**
      * @var array
      */
     protected $joins = array();
