@@ -1,0 +1,72 @@
+{% extends '../CommonAdmin/ListAction/ListBuilderAction.php.twig' %}
+{% block pager_adapter -%}
+use Pagerfanta\Adapter\Propel2Adapter as PagerAdapter;
+{% endblock %}
+{% block getQuery -%}
+    protected function getQuery()
+    {
+        $query = $this->buildQuery();
+
+        $this->processQuery($query);
+        $this->processSort($query);
+
+        $queryFilter = $this->getQueryFilter($query);
+        $this->processFilters($queryFilter);
+        $this->processScopes($queryFilter);
+
+        return $query;
+    }
+
+    protected function buildQuery()
+    {
+        return \{{ model }}Query::create();
+    }
+{% endblock %}
+
+{% block processSort -%}
+    protected function processSort($query)
+    {
+        if ($this->getSortColumn()) {
+            if (!strstr($this->getSortColumn(), '.')) { //direct column
+                $query->orderBy($this->getSortColumn(), $this->getSortOrder());
+            } else {
+                list($table, $column) = explode('.', $this->getSortColumn(), 2);
+                $this->addJoinFor($table, $query);
+                $query->orderBy($this->getSortColumn(), $this->getSortOrder());
+            }
+        }
+    }
+{% endblock %}
+
+{% block getFilterForm -%}
+    protected function getFilterForm()
+    {
+        $filters = $this->getFilters();
+        {# Don't we should handle "relations" for Propel too? #}
+        return $this->createForm(
+            $this->getFiltersType(),
+            $filters,
+            $this->getFiltersOptions()
+        );
+    }
+{% endblock %}
+
+{% block addJoinFor -%}
+    protected function addJoinFor($table, $query)
+    {
+        {# TODO: Not sure this is the good way to proceed. Shouldn't we use the useXXXXQuery method? #}
+        $query->leftJoin($table);
+    }
+{% endblock %}
+
+{% block getQueryFilter %}
+    /**
+     * @return \Admingenerator\GeneratorBundle\QueryFilter\QueryFilterInterface
+     */
+    protected function getQueryFilter($query)
+    {
+        $queryFilterClass = $this->container->getParameter('admingenerator.queryfilter.propel2.class');
+
+        return new $queryFilterClass($query);
+    }
+{% endblock %}

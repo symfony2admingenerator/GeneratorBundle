@@ -1,0 +1,34 @@
+{% extends '../CommonAdmin/EditAction/EditBuilderAction.php.twig' %}
+
+{% block orm_use %}
+use \PropelException;
+{% endblock %}
+
+{% block getObject -%}
+    protected function getObject($pk)
+    {
+        return $this->getQuery($pk)->findPk($pk);
+    }
+{% endblock %}
+
+{% block getQuery -%}
+    protected function getQuery($pk)
+    {
+        return \{{ model }}Query::create();
+    }
+{% endblock %}
+
+{% block saveObject -%}
+    protected function saveObject(\{{ model }} ${{ builder.ModelClass }})
+    {
+        ${{ builder.ModelClass }}->save();
+    }
+{% endblock %}
+
+{% block checkVersion -%}
+    if (${{ builder.ModelClass }}->getVersion() !== $versions[$pk]) {
+        throw new PropelException("The lock failed, version ".$versions[$pk]." was expected, but is actually ".${{ builder.ModelClass }}->getVersion());
+    }
+{% endblock %}
+
+{% block lockException %}PropelException{% endblock %}

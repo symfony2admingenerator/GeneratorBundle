@@ -123,6 +123,45 @@ class Configuration implements ConfigurationInterface
             // boolean types
             'BOOLEAN'      => 'Symfony\Component\Form\Extension\Core\Type\CheckboxType',
             'BOOLEAN_EMU'  => 'Symfony\Component\Form\Extension\Core\Type\CheckboxType',
+        ),
+        'propel2'       => array(
+            // datetime types
+            'TIMESTAMP'    => 'Symfony\Component\Form\Extension\Core\Type\DateTimeType',
+            'BU_TIMESTAMP' => 'Symfony\Component\Form\Extension\Core\Type\DateTimeType',
+            // date types
+            'DATE'         => 'Symfony\Component\Form\Extension\Core\Type\DateType',
+            'BU_DATE'      => 'Symfony\Component\Form\Extension\Core\Type\DateType',
+            // time types
+            'TIME'         => 'Symfony\Component\Form\Extension\Core\Type\TimeType',
+            // number types
+            'FLOAT'        => 'Symfony\Component\Form\Extension\Core\Type\NumberType',
+            'REAL'         => 'Symfony\Component\Form\Extension\Core\Type\NumberType',
+            'DOUBLE'       => 'Symfony\Component\Form\Extension\Core\Type\NumberType',
+            'DECIMAL'      => 'Symfony\Component\Form\Extension\Core\Type\NumberType',
+            // integer types
+            'TINYINT'      => 'Symfony\Component\Form\Extension\Core\Type\IntegerType',
+            'SMALLINT'     => 'Symfony\Component\Form\Extension\Core\Type\IntegerType',
+            'INTEGER'      => 'Symfony\Component\Form\Extension\Core\Type\IntegerType',
+            'BIGINT'       => 'Symfony\Component\Form\Extension\Core\Type\IntegerType',
+            'NUMERIC'      => 'Symfony\Component\Form\Extension\Core\Type\IntegerType',
+            // text types
+            'CHAR'         => 'Symfony\Component\Form\Extension\Core\Type\TextType',
+            'VARCHAR'      => 'Symfony\Component\Form\Extension\Core\Type\TextType',
+            // textarea types
+            'LONGVARCHAR'  => 'Symfony\Component\Form\Extension\Core\Type\TextareaType',
+            'BLOB'         => 'Symfony\Component\Form\Extension\Core\Type\TextareaType',
+            'CLOB'         => 'Symfony\Component\Form\Extension\Core\Type\TextareaType',
+            'CLOB_EMU'     => 'Symfony\Component\Form\Extension\Core\Type\TextareaType',
+            // association types
+            'model'        => 'Propel\Bundle\PropelBundle\Form\Type\ModelType',
+            'collection'   => 'Symfony\Component\Form\Extension\Core\Type\CollectionType',
+            // array types
+            'PHP_ARRAY'    => 'Symfony\Component\Form\Extension\Core\Type\CollectionType',
+            // choice types
+            'ENUM'         => 'Symfony\Component\Form\Extension\Core\Type\ChoiceType',
+            // boolean types
+            'BOOLEAN'      => 'Symfony\Component\Form\Extension\Core\Type\CheckboxType',
+            'BOOLEAN_EMU'  => 'Symfony\Component\Form\Extension\Core\Type\CheckboxType',
         ));
 
     private $defaultFilterTypes = array(
@@ -223,6 +262,45 @@ class Configuration implements ConfigurationInterface
             // boolean types
             'BOOLEAN'      => 'Symfony\Component\Form\Extension\Core\Type\ChoiceType',
             'BOOLEAN_EMU'  => 'Symfony\Component\Form\Extension\Core\Type\ChoiceType',
+        ),
+        'propel2' => array(
+            // datetime types
+            'TIMESTAMP'    => 'Symfony\Component\Form\Extension\Core\Type\DateTimeType',
+            'BU_TIMESTAMP' => 'Symfony\Component\Form\Extension\Core\Type\DateTimeType',
+            // date types
+            'DATE'         => 'Symfony\Component\Form\Extension\Core\Type\DateType',
+            'BU_DATE'      => 'Symfony\Component\Form\Extension\Core\Type\DateType',
+            // time types
+            'TIME'         => 'Symfony\Component\Form\Extension\Core\Type\TimeType',
+            // number types
+            'FLOAT'        => 'Symfony\Component\Form\Extension\Core\Type\NumberType',
+            'REAL'         => 'Symfony\Component\Form\Extension\Core\Type\NumberType',
+            'DOUBLE'       => 'Symfony\Component\Form\Extension\Core\Type\NumberType',
+            'DECIMAL'      => 'Symfony\Component\Form\Extension\Core\Type\NumberType',
+            // integer types
+            'TINYINT'      => 'Symfony\Component\Form\Extension\Core\Type\IntegerType',
+            'SMALLINT'     => 'Symfony\Component\Form\Extension\Core\Type\IntegerType',
+            'INTEGER'      => 'Symfony\Component\Form\Extension\Core\Type\IntegerType',
+            'BIGINT'       => 'Symfony\Component\Form\Extension\Core\Type\IntegerType',
+            'NUMERIC'      => 'Symfony\Component\Form\Extension\Core\Type\NumberType',
+            // text types
+            'CHAR'         => 'Symfony\Component\Form\Extension\Core\Type\TextType',
+            'VARCHAR'      => 'Symfony\Component\Form\Extension\Core\Type\TextType',
+            // textarea types
+            'LONGVARCHAR'  => 'Symfony\Component\Form\Extension\Core\Type\TextType',
+            'BLOB'         => 'Symfony\Component\Form\Extension\Core\Type\TextType',
+            'CLOB'         => 'Symfony\Component\Form\Extension\Core\Type\TextType',
+            'CLOB_EMU'     => 'Symfony\Component\Form\Extension\Core\Type\TextType',
+            // association types
+            'model'        => 'Propel\Bundle\PropelBundle\Form\Type\ModelType',
+            'collection'   => 'Symfony\Component\Form\Extension\Core\Type\CollectionType',
+            // array types
+            'PHP_ARRAY'    => 'Symfony\Component\Form\Extension\Core\Type\TextType',
+            // choice types
+            'ENUM'         => 'Symfony\Component\Form\Extension\Core\Type\TextType',
+            // boolean types
+            'BOOLEAN'      => 'Symfony\Component\Form\Extension\Core\Type\ChoiceType',
+            'BOOLEAN_EMU'  => 'Symfony\Component\Form\Extension\Core\Type\ChoiceType',
         ));
 
     /**
@@ -241,6 +319,7 @@ class Configuration implements ConfigurationInterface
                 ->booleanNode('use_doctrine_orm')->defaultFalse()->end()
                 ->booleanNode('use_doctrine_odm')->defaultFalse()->end()
                 ->booleanNode('use_propel')->defaultFalse()->end()
+                ->booleanNode('use_propel2')->defaultFalse()->end()
                 ->booleanNode('use_jms_security')->defaultFalse()->end()
                 ->booleanNode('guess_required')->defaultTrue()->end()
                 ->booleanNode('default_required')->defaultTrue()->end()
@@ -317,6 +396,17 @@ class Configuration implements ConfigurationInterface
                                 })
                             ->end()
                         ->end()
+                        ->arrayNode('propel2')
+                            ->useAttributeAsKey('name')
+                            ->prototype('scalar')->end()
+                            ->defaultValue($this->defaultFormTypes['propel2'])
+                            ->validate()
+                            ->ifNotInArray(array_values($this->defaultFormTypes['propel2']))
+                                ->then(function ($v){
+                                    return array_merge($this->defaultFormTypes['propel2'], $v);
+                                })
+                            ->end()
+                        ->end()
                     ->end()
                 ->end()
                 ->arrayNode('filter_types')
@@ -352,6 +442,17 @@ class Configuration implements ConfigurationInterface
                             ->ifNotInArray(array_values($this->defaultFilterTypes['propel']))
                                 ->then(function ($v){
                                     return array_merge($this->defaultFilterTypes['propel'], $v);
+                                })
+                            ->end()
+                        ->end()
+                        ->arrayNode('propel2')
+                            ->useAttributeAsKey('name')
+                            ->prototype('scalar')->end()
+                            ->defaultValue($this->defaultFilterTypes['propel2'])
+                            ->validate()
+                            ->ifNotInArray(array_values($this->defaultFilterTypes['propel2']))
+                                ->then(function ($v){
+                                    return array_merge($this->defaultFilterTypes['propel2'], $v);
                                 })
                             ->end()
                         ->end()

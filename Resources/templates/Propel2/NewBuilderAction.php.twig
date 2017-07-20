@@ -1,0 +1,8 @@
+{% extends '../CommonAdmin/NewAction/NewBuilderAction.php.twig' %}
+
+{% block saveObject -%}
+    protected function saveObject(\{{ model }} ${{ builder.ModelClass }})
+    {
+        ${{ builder.ModelClass }}->save();
+    }
+{% endblock %}

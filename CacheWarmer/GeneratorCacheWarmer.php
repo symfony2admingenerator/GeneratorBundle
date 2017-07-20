@@ -96,9 +96,13 @@ class GeneratorCacheWarmer implements CacheWarmerInterface
      */
     protected function propelInit()
     {
-        if (!\Propel::isInit()) {
-            \Propel::setConfiguration($this->container->get('propel.configuration'));
-            \Propel::initialize();
+        if (class_exists('Propel')) { // Propel 1
+            if (!\Propel::isInit()) {
+                \Propel::setConfiguration($this->container->get('propel.configuration'));
+                \Propel::initialize();
+            }
+
+            return;
         }
     }
 }
