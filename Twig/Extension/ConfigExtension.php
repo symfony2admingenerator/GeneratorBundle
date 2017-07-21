@@ -42,10 +42,11 @@ class ConfigExtension extends \Twig_Extension
         $path = explode('.', $name);
         foreach ($path as $key) {
             if (!array_key_exists($key, $search_in)) {
-                throw new \InvalidArgumentException('Unknown parameter "admingenerator.'+$name+'".');
+                throw new \InvalidArgumentException('Unknown parameter "admingenerator.' . $name . '".');
             }
             $search_in = $search_in[$key];
         }
+
         return $search_in;
     }
 

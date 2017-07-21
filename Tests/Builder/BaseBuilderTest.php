@@ -97,6 +97,7 @@ class BaseBuilderTest extends TestCase
         $generator = $this->getMockBuilder('Admingenerator\GeneratorBundle\Builder\Generator')
                           ->disableOriginalConstructor()
                           ->getMock();
+        $generator->method('getTempDir')->willReturn('/tmp');
 
         $builder->setGenerator($generator);
         $builder->setMustOverwriteIfExists(true);
