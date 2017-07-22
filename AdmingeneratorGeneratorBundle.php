@@ -29,15 +29,7 @@ class AdmingeneratorGeneratorBundle extends Bundle
     public function __construct(KernelInterface $kernel)
     {
         $this->kernel = $kernel;
-    }
-
-    /**
-     * (non-PHPdoc)
-     * @see \Symfony\Component\HttpKernel\Bundle\Bundle::boot()
-     */
-    public function boot()
-    {
-        $this->initAdmingeneratorClassLoader($this->container);
+        $this->initAdmingeneratorClassLoader($kernel->getCacheDir());
     }
 
     /**
@@ -46,8 +38,6 @@ class AdmingeneratorGeneratorBundle extends Bundle
      */
     public function build(ContainerBuilder $container)
     {
-        $this->initAdmingeneratorClassLoader($container);
-
         parent::build($container);
 
         $container->addCompilerPass(new ValidatorPass());
@@ -68,16 +58,18 @@ class AdmingeneratorGeneratorBundle extends Bundle
     /**
      * Initialize Admingenerator Class loader
      *
-     * @param ContainerBuilder $container
+     * @param string $cacheDir
      */
-    private function initAdmingeneratorClassLoader(ContainerInterface $container)
+    private function initAdmingeneratorClassLoader($cacheDir)
     {
-        if (!$this->classLoaderInitialized) {
-            $this->classLoaderInitialized = true;
-
-            $admingeneratedClassLoader = new AdmingeneratedClassLoader();
-            $admingeneratedClassLoader->setBasePath($container->getParameter('kernel.cache_dir'));
-            $admingeneratedClassLoader->register();
+        if ($this->classLoaderInitialized) {
+            return;
         }
+
+        $this->classLoaderInitialized = true;
+
+        $admingeneratedClassLoader = new AdmingeneratedClassLoader();
+        $admingeneratedClassLoader->setBasePath($cacheDir);
+        $admingeneratedClassLoader->register();
     }
 }
