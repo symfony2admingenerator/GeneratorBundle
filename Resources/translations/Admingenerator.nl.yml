@@ -21,7 +21,7 @@ list:
         reset:          Reset
     no.results:     Er zijn geen resultaten.
     display:
-        range:      Geef <b role="results-range-start">%start%</b> - <b role="results-range-end">%end%</b> of <b role="results-count">%count%</b> resultaten weer.
+        range:      Geef <b role="results-range-start">%start%</b> - <b role="results-range-end">%end%</b> van <b role="results-count">%count%</b> resultaten weer.
         all:        Geef alle <b role="results-count">%count%</b> resultaten weer.
         one:        Geef <b role="results-count">%count%</b> resultaat.
     header.actions: Acties
@@ -31,7 +31,7 @@ nested.list:
     expand:     Weergeven
     collapse:   Verbergen
     loading:    Aan het laden
-    success:    Het element is successvol verplaatst.
+    success:    Het element is succesvol verplaatst.
     error:      Kan element niet verplaatsen.
 
 # Profile
@@ -39,7 +39,7 @@ profile:
     welcome:  <b>Welkom</b>, %username%!
     login:    Inloggen
     logout:   Uitloggen
-    exit:     Verlaat impersonatie modus
+    exit:     Verlaat impersonatiemodus
     unauthenticated: Niet ingelogd
 
 # Generic actions
@@ -92,7 +92,7 @@ action.custom:
 batch.list:
     selected:       Geselecteerd
     none.selected:  U moet minstens 1 element selecteren.
-    warning:        Kon batch actie niet uitvoeren vanwege ontbrekende parameters
+    warning:        Kon batch-actie niet uitvoeren vanwege ontbrekende parameters
     send:           Uitvoeren
 
 # Layout
