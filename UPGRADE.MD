@@ -8,6 +8,7 @@ This page contains all upgrade notes since the release of the stable 2.0.0 versi
 
 ## Current `master` branch
 
+- Form type service names will be generated based on form FQCN instead of model FQCN. Old naming is aliased to new service name to not have BC break.
 - Fixed [#285](https://github.com/symfony2admingenerator/GeneratorBundle/issues/285): added cookbook entry regarding injection
   of additional services in form types. Documented method of registration of auto generated form types in service container.
 - Fixed [#288](https://github.com/symfony2admingenerator/GeneratorBundle/issues/288): generated form types now have unique 

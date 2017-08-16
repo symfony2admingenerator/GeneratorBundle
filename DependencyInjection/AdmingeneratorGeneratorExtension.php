@@ -268,12 +268,15 @@ class AdmingeneratorGeneratorExtension extends Extension
      */
     private function registerFormsServicesFromGenerator(array $generatorParameters, array $builders, ContainerBuilder $container)
     {
-        $modelParts = explode('\\', $generatorParameters['model']);
-        $model = strtolower(array_pop($modelParts)); // @TODO: BC Support, remove it starting from v.3.0.0
-        $fullQualifiedNormalizedModelName = strtolower(str_replace('\\', '_', ltrim($generatorParameters['model'], '\\')));
+        $modelParts                       = explode('\\', $generatorParameters['model']);
+        $model                            = strtolower(array_pop($modelParts)); // @TODO: BC Support, remove it starting from v.3.0.0
+        $fullQualifiedNormalizedModelName = strtolower(str_replace('\\', '_', ltrim($generatorParameters['model'], '\\'))); // @TODO: BC Support, remove it starting from v.3.0.0
+        $namespace_prefix                 = $generatorParameters['namespace_prefix'] ? $generatorParameters['namespace_prefix'] . '\\' : '';
+        $fullQualifiedNormalizedFormName  = sprintf('%s%s_%s', str_replace('\\', '_', ltrim($namespace_prefix, '\\')), $generatorParameters['bundle_name'], $generatorParameters['prefix']);
+
         $formsBundleNamespace = sprintf(
             '%s%s\\Form\\Type\\%s',
-            $generatorParameters['namespace_prefix'] ? $generatorParameters['namespace_prefix'] . '\\' : '',
+            $namespace_prefix,
             $generatorParameters['bundle_name'],
             $generatorParameters['prefix']
         );
@@ -285,7 +288,8 @@ class AdmingeneratorGeneratorExtension extends Extension
                 ->addMethodCall('setAuthorizationChecker', array($authorizationCheckerServiceReference))
                 ->addTag('form.type');
 
-            $container->setDefinition(($id = 'admingen_generator_' . $fullQualifiedNormalizedModelName . '_new'), $newDefinition);
+            $container->setDefinition(($id = 'admingen_generator_' . $fullQualifiedNormalizedFormName . '_new'), $newDefinition);
+            $container->setAlias('admingen_generator_' . $fullQualifiedNormalizedModelName . '_new', $id);
             $container->setAlias('admingen_generator_' . $model . '_new', $id);
         }
 
@@ -295,7 +299,8 @@ class AdmingeneratorGeneratorExtension extends Extension
                 ->addMethodCall('setAuthorizationChecker', array($authorizationCheckerServiceReference))
                 ->addTag('form.type');
 
-            $container->setDefinition(($id = 'admingen_generator_' . $fullQualifiedNormalizedModelName . '_edit'), $editDefinition);
+            $container->setDefinition(($id = 'admingen_generator_' . $fullQualifiedNormalizedFormName . '_edit'), $editDefinition);
+            $container->setAlias('admingen_generator_' . $fullQualifiedNormalizedModelName . '_edit', $id);
             $container->setAlias('admingen_generator_' . $model . '_edit', $id);
         }
 
@@ -305,7 +310,8 @@ class AdmingeneratorGeneratorExtension extends Extension
                 ->addMethodCall('setAuthorizationChecker', array($authorizationCheckerServiceReference))
                 ->addTag('form.type');
 
-            $container->setDefinition(($id = 'admingen_generator_' . $fullQualifiedNormalizedModelName . '_filter'), $filterDefinition);
+            $container->setDefinition(($id = 'admingen_generator_' . $fullQualifiedNormalizedFormName . '_filter'), $filterDefinition);
+            $container->setAlias('admingen_generator_' . $fullQualifiedNormalizedModelName . '_filter', $id);
             $container->setAlias('admingen_generator_' . $model . '_filter', $id);
         }
     }
