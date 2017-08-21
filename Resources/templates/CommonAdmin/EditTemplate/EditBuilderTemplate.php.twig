@@ -23,7 +23,7 @@
 {{ echo_block("page_content") }}
     <div class="row">
         <div class="form-model form-model-{{ builder.modelClass|lower }} col-md-12">
-            {{ echo_if(builder.ModelClass ~ "." ~ builder.getFieldGuesser().getModelPrimaryKeyName(model)) }}
+            {{ echo_if('updateUrl is defined') }}
                 {{ echo_set("attr", "{'class': 'form-model-update', 'action': updateUrl}|merge(form.vars.attr|default({}))", false) }}
             {{ echo_else() }}
                 {{ echo_set("attr", "{'class': 'form-model-new', 'action': createUrl}|merge(form.vars.attr|default({}))", false) }}
