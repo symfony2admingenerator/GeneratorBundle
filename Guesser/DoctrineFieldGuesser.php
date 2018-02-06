@@ -270,7 +270,7 @@ abstract class DoctrineFieldGuesser
             }
 
             return array(
-                'scale' => isset($scale) ? $scale : '',
+                'scale' => isset($scale) ? $scale : null,
                 'required'  => $filter ? false : $this->isRequired($class, $columnName)
             );
         }
