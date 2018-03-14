@@ -36,7 +36,12 @@ class ExcelBuilder extends ListBuilder
 
   public function getFileType($key = null){
     if(null === ($filetype = $this->getVariable('filetype'))){
-      $filetype = 'Excel2007';
+      if(class_exists('\PhpOffice\PhpSpreadsheet\Spreadsheet'))
+      {
+        $filetype = 'Xlsx';
+      } else {
+        $filetype = 'Excel2007';
+      }
     }
     return $this->getExportParamsForKey($key, 'filetype', $filetype);
   }

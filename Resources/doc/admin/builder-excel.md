@@ -48,7 +48,7 @@ builders:
                     icon:            fa-files-o 
                     label:           Full report
                     filename:        full-report.xlsx
-                    filetype:        Excel2007
+                    filetype:        Xlsx
                     datetime_format: Y-m-d H:i:s
                     display:
                         -            id
@@ -63,7 +63,7 @@ builders:
                     icon:            fa-files-o 
                     label:           Show report
                     filename:        Short-repot.xls
-                    filetype:        Excel5
+                    filetype:        Xls
                     datetime_format: d.m.Y
                     fields:          
                         title:
@@ -117,7 +117,7 @@ Specify the export filename. When null 'admin_export_{list title}' is used.
 
 `filetype` __default__: `Excel2007` __type__: `string`
 
-Default Excel2007. See the [excelbundle documention](https://github.com/liuggio/excelbundle#not-only-excel5) for the 
+Default Xlsx. See the [PHPSpreadsheet documention](https://phpspreadsheet.readthedocs.io/en/develop/topics/file-formats/) for the 
 possible options.
 
 #### Datetime format
