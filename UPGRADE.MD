@@ -8,6 +8,8 @@ This page contains all upgrade notes since the release of the stable 2.0.0 versi
 
 ## Current `master` branch
 
+## 2.5.0
+
 - Added support for PHPSpreadsheet due to the abandonment of PHPExcel
 
 ## 2.4.0
