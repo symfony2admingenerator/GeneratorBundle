@@ -13,7 +13,7 @@ builders:
       title: ~
       filters: ~
       filtersMode: ~
-	  filtersModalSize: ~
+      filtersModalSize: ~
       fields: ~
       display: ~
       sort: ~
