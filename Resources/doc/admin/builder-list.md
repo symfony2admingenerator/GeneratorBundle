@@ -13,7 +13,7 @@ builders:
       title: ~
       filters: ~
       filtersMode: ~
-	  filtersModalSize: ~
+      filtersModalSize: ~
       fields: ~
       display: ~
       sort: ~
@@ -84,11 +84,11 @@ object:
 edit:
   params:
     actions:
-	  new: ~
-	object_actions:
-	  edit: ~
+        new: ~
+        object_actions:
+        edit: ~
     batch_actions:
-	  delete: ~
+        delete: ~
 ```
 
 You can also use self-defined actions from your global generator parameters, or overwrite specific part of the actions. 

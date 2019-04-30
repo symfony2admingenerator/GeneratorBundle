@@ -161,7 +161,7 @@
 
         // Save action for modals
         $('.object-action, .generic-action, select[name=action] option').each(function(index, item) {
-            $item = $(item);
+            var $item = $(item);
             $item.data('action', $item.attr('href'));
             $item.attr('href', $item.data('confirmModal'));
         });

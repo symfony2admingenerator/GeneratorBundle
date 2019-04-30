@@ -19,6 +19,7 @@ list:
     button:
         filter:         Filter
         reset:          Reset
+        close:          Sluiten
     no.results:     Er zijn geen resultaten.
     display:
         range:      Geef <b role="results-range-start">%start%</b> - <b role="results-range-end">%end%</b> van <b role="results-count">%count%</b> resultaten weer.

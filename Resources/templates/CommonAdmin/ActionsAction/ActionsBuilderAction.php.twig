@@ -12,6 +12,7 @@ use {{ builder.generator.baseController }} as BaseController;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Admingenerator\GeneratorBundle\Exception\ValidationException;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 {{ block('csrf_protection_use') }}
 

@@ -289,7 +289,8 @@ class PropelORMFieldGuesser
                     'boolean.yes' => 1
                 ),
                 'placeholder' => 'boolean.yes_or_no',
-                'translation_domain' => 'Admingenerator'
+                'translation_domain' => 'Admingenerator',
+                'choice_translation_domain' => 'Admingenerator'
             );
 
             if (Kernel::MAJOR_VERSION < 3) {
