@@ -249,10 +249,10 @@ class BaseBuilder extends GenericBaseBuilder
         $display = $this->getVariable('display');
 
         // tabs
-        if (null == $display || 0 == sizeof($display)) {
+        if (null == $display || (is_array($display) && 0 == count($display))) {
             $tabs = $this->getVariable('tabs');
 
-            if (null != $tabs || 0 < sizeof($tabs)) {
+            if (null != $tabs || (is_array($tabs) && 0 < count($tabs))) {
                 $display = array();
 
                 foreach ($tabs as $tab) {
@@ -261,7 +261,7 @@ class BaseBuilder extends GenericBaseBuilder
             }
         }
 
-        if (null == $display || 0 == sizeof($display)) {
+        if (null == $display || (is_array($display) && 0 == count($display))) {
             return $this->getAllFields();
         }
 
@@ -303,10 +303,10 @@ class BaseBuilder extends GenericBaseBuilder
         $display = $this->getVariable('display');
 
         // tabs
-        if (null == $display || 0 == sizeof($display)) {
+        if (null == $display || (is_array($display) && 0 == count($display))) {
             $tabs = $this->getVariable('tabs');
 
-            if (null != $tabs || 0 < sizeof($tabs)) {
+            if (null != $tabs || (is_array($tabs) && 0 < count($tabs))) {
                 $display = array();
 
                 foreach ($tabs as $tab) {
@@ -315,7 +315,7 @@ class BaseBuilder extends GenericBaseBuilder
             }
         }
 
-        if (null == $display || 0 == sizeof($display)) {
+        if (null == $display || (is_array($display) && 0 == count($display))) {
             $display = $this->getAllFields();
         }
 
