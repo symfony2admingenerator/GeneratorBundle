@@ -52,7 +52,7 @@ class ExcelController extends \{{ namespace_prefix }}\{{ bundle_name }}\Controll
           $sheet = $spreadsheet->setActiveSheetIndex(0);
           $results = $this->getResults();
 
-          $suffix = Inflector::classify($key);
+          $suffix = Inflector::classify($key === null ? '' : $key);
           if (!method_exists($this,"createSpreadsheetHeader$suffix")) {
               // back to defaults
               $key = null;
@@ -97,7 +97,7 @@ class ExcelController extends \{{ namespace_prefix }}\{{ bundle_name }}\Controll
           $sheet = $phpExcelObject->setActiveSheetIndex(0);
           $results = $this->getResults();
 
-          $suffix = Inflector::classify($key);
+          $suffix = Inflector::classify($key === null ? '' : $key);
           if (!method_exists($this,"createExcelHeader$suffix")) {
               // back to defaults
               $key = null;
