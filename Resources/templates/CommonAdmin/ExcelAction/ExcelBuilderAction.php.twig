@@ -14,9 +14,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Doctrine\Common\Util\Inflector;
 
-/**
- * @author Bob van de Vijver
- */
 {% if namespace_prefix is empty %}
 class ExcelController extends \{{ bundle_name }}\Controller\{{ builder.generator.baseGeneratorName }}\ListController
 {% else %}
