@@ -58,6 +58,10 @@ params:
                 pk:       "{{ User.id }}"
                 action:   lock
             csrfProtected: true
+            workflows:
+                # if set, wraps action link with a `workflow_can` check
+                # see Symfony 3.2 workflow component
+                - lock
             options:
                 # this is the title for intermediate page
                 # if JS is available then intermediate page will not be used
@@ -150,6 +154,39 @@ For each custom object action there are four methods generated:
 * `errorObject{{ ActionName }}` - called if action errored
 
 > **Note:** The only method you **have to** overwrite is `executeObject{{ ActionName }}`.
+
+#### Workflow transition actions
+
+If you use the [Symfony Workflow Component](http://symfony.com/blog/new-in-symfony-3-2-workflow-component), you can use the `workflows` option to wrap object actions with a `workflow_can` check. Example config and controller:
+
+```yaml
+# config
+params:
+    object_actions:
+        lock:
+            label:    Lock account
+            icon:     glyphicon-lock
+            route:    Acme_SecurityBundle_User_object
+            params:
+                pk:       "{{ User.id }}"
+                action:   lock
+            csrfProtected: true
+            workflows:
+                - lock
+```
+
+```php
+
+    /**
+     * This function is for you to customize what action actually does
+     */
+    protected function executeObjectLock($User)
+    {
+        // this service is provieded by Workflow Component
+        $this->get('worflow.user_management')->apply($User, 'lock');
+    }
+
+```
 
 ### Custom batch action example
 
@@ -309,6 +346,12 @@ it here. For more documenation about credentials, check our [security documentat
 > __NOTE__ Credentials given here are valid for the whole admin, but can be overridden in specific builders or even 
 specific fields.
 
+##### Workflows
+
+`workflows` __type__: `array`
+
+This parameter is implemented only for **object actions** as Workflow Component transition checks can be only made given entity context. Empty by default, if set - the button link will be wrapped in a `workflow_can` check.
+
 ##### CSRF protected
 
 `crsfProtected` __type__: `bool` __default__: `false`
@@ -358,8 +401,7 @@ Set the action of the button. When this is set, there will be no controller STUB
 rendered as simple URL.
 
 ##### Submit
-`submit` __type
-__: `bool`
+`submit` __type__: `bool`
 
 If set to true, the button will behave as a submit button for the form on that page.
 
