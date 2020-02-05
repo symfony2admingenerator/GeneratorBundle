@@ -1,7 +1,7 @@
 {
     "name": "symfony2admingenerator/generator-bundle",
     "minimum-stability": "stable",
-    "description": "Admingenerator for Symfony2 based on YAML configuration and Twig templating",
+    "description": "Admingenerator for Symfony based on YAML configuration and Twig templating",
     "keywords": [
         "admin",
         "generator",
@@ -21,22 +21,40 @@
         }
     ],
     "require": {
-        "symfony/symfony": ">=2.8,<4.0",
+        "symfony/config": ">=2.8,<4.0",
+        "symfony/console": ">=2.8,<4.0",
+        "symfony/dependency-injection": ">=2.8,<4.0",
+        "symfony/filesystem": ">=2.8,<4.0",
+        "symfony/finder": ">=2.8,<4.0",
+        "symfony/form": ">=2.8,<4.0",
+        "symfony/framework-bundle": ">=2.8,<4.0",
+        "symfony/http-foundation": ">=2.8,<4.0",
+        "symfony/http-kernel": ">=2.8,<4.0",
+        "symfony/options-resolver": ">=2.8,<4.0",
+        "symfony/process": ">=2.8,<4.0",
+        "symfony/routing": ">=2.8,<4.0",
+        "symfony/security": ">=2.8,<4.0",
+        "symfony/templating": ">=2.8,<4.0",
+        "symfony/translation": ">=2.8,<4.0",
+        "symfony/twig-bundle": ">=2.8,<4.0",
+        "symfony/validator": ">=2.8,<4.0",
+        "symfony/yaml": ">=2.8,<4.0",
         "symfony/assetic-bundle": "^2.7,>=2.7.1",
+        "symfony/maker-bundle": "~1.0",
         "doctrine/common": "~2.2",
-        "sensio/generator-bundle": "~3.0",
         "symfony2admingenerator/twig-generator": "~1.2,>=1.2.2",
         "white-october/pagerfanta-bundle": ">=1.0.6",
         "twig/twig": "~1.26||~2.0",
         "twig/extensions": "~1.0"
     },
     "require-dev": {
+        "symfony/class-loader": ">=2.8,<4.0",
         "doctrine/orm": ">=2.2.3",
         "doctrine/dbal": ">=2.2.3",
         "phpunit/phpunit": "~4.3"
     },
     "suggest": {
-        "symfony2admingenerator/form-extensions-bundle": "Symfony2 form extensions",
+        "symfony2admingenerator/form-extensions-bundle": "Symfony form extensions",
         "symfony2admingenerator/user-bundle": "FOSUserBundle integration for Admingenerator",
         "phpoffice/phpspreadsheet": "Allows the usage of the Excel export.",
         "jms/security-extra-bundle": "Take advantages of JMS Security Extra Bundle in your generated templates.",
