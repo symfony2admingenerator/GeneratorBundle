@@ -80,27 +80,9 @@
             <tag name="pagerfanta.view" alias="admingenerator" />
             <argument type="service" id="translator" />
         </service>
-        
-        <!-- Filters -->
-        <service id="admingenerator.filter.root" class="Admingenerator\GeneratorBundle\Filter\Type\FilterRootType">
-            <tag name="form.type" alias="admingenerator_filter_root" />
-        </service>
-        
-        <service id="admingenerator.filter.group" class="Admingenerator\GeneratorBundle\Filter\Type\FilterGroupType">
-            <tag name="form.type" alias="admingenerator_filter_group" />
-        </service>
-        
-        <service id="admingenerator.filter.item" class="Admingenerator\GeneratorBundle\Filter\Type\FilterItemType">
-            <tag name="form.type" alias="admingenerator_filter_item" />
-        </service>
 
-        <!-- Validators -->
-        <service id="admingenerator.validator.model_class" class="%admingenerator.validator.model_class.class%" public="false">
-            <tag name="admingenerator.validator" alias="model_class" />
-        </service>
-
-        <service id="admingenerator.validator.propel_model_class" class="%admingenerator.validator.propel_model_class.class%" public="false">
-            <tag name="admingenerator.validator.propel" alias="propel_model_class" />
+        <service class="Admingenerator\GeneratorBundle\Maker\MakeAdmin" public="true">
+            <tag name="maker.command" />
         </service>
 
         <!-- Validators -->
