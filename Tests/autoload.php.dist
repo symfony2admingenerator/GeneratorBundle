@@ -16,10 +16,8 @@ use Symfony\Component\ClassLoader\UniversalClassLoader;
 $loader = new UniversalClassLoader();
 $loader->registerNamespaces(array(
     'Symfony'           => $vendorDir.'/symfony/src',
-    'Sensio\Bundle'     => $vendorDir,
     'WhiteOctober\PagerfantaBundle' => $vendorDir,
     'Pagerfanta'                    => $vendorDir.'/src',
-    'Assetic'           => $vendorDir.'/src',
     'TwigGenerator'     => $vendorDir.'/twig-generator/src',
     'Doctrine\Common'   => $vendorDir.'/doctrine-common/lib',
     'Doctrine\DBAL'     => $vendorDir.'/../vendor/doctrine-dbal/lib',

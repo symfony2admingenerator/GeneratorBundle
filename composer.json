@@ -21,6 +21,7 @@
         }
     ],
     "require": {
+        "doctrine/common": "~2.2",
         "symfony/config": ">=2.8,<4.0",
         "symfony/console": ">=2.8,<4.0",
         "symfony/dependency-injection": ">=2.8,<4.0",
@@ -30,6 +31,7 @@
         "symfony/framework-bundle": ">=2.8,<4.0",
         "symfony/http-foundation": ">=2.8,<4.0",
         "symfony/http-kernel": ">=2.8,<4.0",
+        "symfony/maker-bundle": "~1.0",
         "symfony/options-resolver": ">=2.8,<4.0",
         "symfony/process": ">=2.8,<4.0",
         "symfony/routing": ">=2.8,<4.0",
@@ -39,18 +41,15 @@
         "symfony/twig-bundle": ">=2.8,<4.0",
         "symfony/validator": ">=2.8,<4.0",
         "symfony/yaml": ">=2.8,<4.0",
-        "symfony/assetic-bundle": "^2.7,>=2.7.1",
-        "symfony/maker-bundle": "~1.0",
-        "doctrine/common": "~2.2",
         "symfony2admingenerator/twig-generator": "~1.2,>=1.2.2",
-        "white-october/pagerfanta-bundle": ">=1.0.6",
+        "twig/extensions": "~1.0",
         "twig/twig": "~1.26||~2.0",
-        "twig/extensions": "~1.0"
+        "white-october/pagerfanta-bundle": ">=1.0.6"
     },
     "require-dev": {
-        "symfony/class-loader": ">=2.8,<4.0",
-        "doctrine/orm": ">=2.2.3",
         "doctrine/dbal": ">=2.2.3",
+        "doctrine/orm": ">=2.2.3",
+        "symfony/class-loader": ">=2.8,<4.0",
         "phpunit/phpunit": "~4.3"
     },
     "suggest": {
