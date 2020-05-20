@@ -2,61 +2,61 @@
 
 # Boolean filter
 boolean:
-    yes:        Sim
-    no:         Não
-    yes_or_no:  Sim ou Não
+    yes:        'Sim'
+    no:         'Não'
+    yes_or_no:  'Sim ou Não'
 
 # Pager
 pagerfanta:
-    previous:       <
-    next:           ">"
-    view.perpage:   Mostrar
-    num.elements:   %number% elementos
+    previous:       '<'
+    next:           '>'
+    view.perpage:   'Mostrar'
+    num.elements:   '%number% elementos'
 
 # List
 list:
-    filters: Filtros
+    filters: 'Filtros'
     button:
-        filter:         Filtro
-        reset:          Redefinir
-    no.results:     Não há resultados.
+        filter:         'Filtro'
+        reset:          'Redefinir'
+    no.results:     'Não há resultados.'
     display:
-        range:      Mostrando <b role="results-range-start">%start%</b> - <b role="results-range-end">%end%</b> de <b role="results-count">%count%</b> resultados.
-        all:        Mostrando todos os <b role="results-count">%count%</b> resultados.
-        one:        Mostrando <b role="results-count">%count%</b> resultado.
-    header.actions: Ações
+        range:      'Mostrando <b role="results-range-start">%start%</b> - <b role="results-range-end">%end%</b> de <b role="results-count">%count%</b> resultados.'
+        all:        'Mostrando todos os <b role="results-count">%count%</b> resultados.'
+        one:        'Mostrando <b role="results-count">%count%</b> resultado.'
+    header.actions: 'Ações'
 
 # Nested List
 nested.list:
-    expand:     Mostrar
-    collapse:   Esconder
-    loading:    Carregamento em curso
-    success:    O elemento foi movido com sucesso.
-    error:      Não foi possível mover elemento.
+    expand:     'Mostrar'
+    collapse:   'Esconder'
+    loading:    'Carregamento em curso'
+    success:    'O elemento foi movido com sucesso.'
+    error:      'Não foi possível mover elemento.'
 
 # Profile
 profile:
-    welcome:  <b>Bem-vindo</b>, %username%!
-    login:    Iniciar sessão
-    logout:   Sair
-    exit:     Sair do modo de representação
-    unauthenticated: Não está logado
+    welcome:  '<b>Bem-vindo</b>, %username%!'
+    login:    'Iniciar sessão'
+    logout:   'Sair'
+    exit:     'Sair do modo de representação'
+    unauthenticated: 'Não está logado'
 
 # Generic actions
 action.generic:
-    list:   Listar
-    new:    Novo
-    save:   Salvar
-    save-and-add:   Salvar e Novo
-    save-and-list:  Salvar e Listar
-    save-and-show:  Salvar e Mostrar
-    excel:  Excelar a Excel
-    export:  Excelar
+    list:   'Listar'
+    new:    'Novo'
+    save:   'Salvar'
+    save-and-add:   'Salvar e Novo'
+    save-and-list:  'Salvar e Listar'
+    save-and-show:  'Salvar e Mostrar'
+    excel:  'Excelar a Excel'
+    export:  'Excelar'
 
 # Object actions
 action.object.edit:
-    label:    Editar
-    success:  O objeto foi salvo com sucesso.
+    label:    'Editar'
+    success:  'O objeto foi salvo com sucesso.'
     error:    |
                 O formulário não pode ser salvo. Verifique os erros e tente 
                 novamente.
@@ -66,43 +66,43 @@ action.object.edit:
                 mudanças em uma nova aba ou enviar o formulário novamente para 
                 aplicar as alterações!
 action.object.delete:
-    label:    Excluir
-    confirm:  Tem certeza de que deseja excluir este elemento?
-    success:  Elemento foi excluído com sucesso.
-    error:    Elemento não pode ser excluído.
-    notfound: Elemento não pode ser excluída, uma vez que já está eliminado.
+    label:    'Excluir'
+    confirm:  'Tem certeza de que deseja excluir este elemento?'
+    success:  'Elemento foi excluído com sucesso.'
+    error:    'Elemento não pode ser excluído.'
+    notfound: 'Elemento não pode ser excluída, uma vez que já está eliminado.'
 action.object.show:
-    label:    Mostrar
+    label:    'Mostrar'
 
 # Batch actions
 action.batch.delete:
-    label:    Excluir
-    confirm:  Você confirmar a eliminação de todos os elementos selecionados?
-    success:  Registros foram apagados com sucesso.
-    error:    Os registros não podem ser apagados.
+    label:    'Excluir'
+    confirm:  'Você confirmar a eliminação de todos os elementos selecionados?'
+    success:  'Registros foram apagados com sucesso.'
+    error:    'Os registros não podem ser apagados.'
 
-action.batch.none: Primeiro você deve selecionar uma ação.
+action.batch.none: 'Primeiro você deve selecionar uma ação.'
 
 # Custom actions
 action.custom:
-    title:    Tem certeza de que deseja executar a ação %name%?
-    success:  A ação %name% foi executado com sucesso.
-    error:    Não foi possível executar a ação %name%.
-    confirm:  Confirmar
-    cancel:   Cancelar
+    title:    'Tem certeza de que deseja executar a ação %name%?'
+    success:  'A ação %name% foi executado com sucesso.'
+    error:    'Não foi possível executar a ação %name%.'
+    confirm:  'Confirmar'
+    cancel:   'Cancelar'
 
 # Batch list
 batch.list:
-    selected:       Selecionado
-    none.selected:  Você tem que selecionar pelo menos um elemento.
-    warning:        Não foi possível concluir a ação em lote, devido à falta de parâmetros.
-    selector:       Choose an action for selection
-    send:           Executar
+    selected:       'Selecionado'
+    none.selected:  'Você tem que selecionar pelo menos um elemento.'
+    warning:        'Não foi possível concluir a ação em lote, devido à falta de parâmetros.'
+    selector:       'Choose an action for selection'
+    send:           'Executar'
 
 # Layout
 dashboard:
-    homepage:   Página inicial
-    brand:      Painel de controle
+    homepage:   'Página inicial'
+    brand:      'Painel de controle'
 
 admingenerator:
-    dashboard: Painel de controle
+    dashboard: 'Painel de controle'

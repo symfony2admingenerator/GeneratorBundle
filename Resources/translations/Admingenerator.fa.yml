@@ -2,104 +2,104 @@
 
 # Boolean filter
 boolean:
-    yes:        بله
-    no:         خیر
-    yes_or_no:  بله یا خیر
+    yes:        'بله'
+    no:         'خیر'
+    yes_or_no:  'بله یا خیر'
 
 # Pager
 pagerfanta:
-    previous: <
-    next:           ">"
-    view.perpage:   نمایش
-    num.elements:   %number% عناصر
+    previous: '<'
+    next:           '>'
+    view.perpage:   'نمایش'
+    num.elements:   '%number% عناصر'
 
 # List
 list:
-    filters: مرشحات
+    filters: 'مرشحات'
     button:
-        filter:         فیلتر
-        reset:          مجدد سازی
-    no.results:     موردی پیدا نشد.
+        filter:         'فیلتر'
+        reset:          'مجدد سازی'
+    no.results:     'موردی پیدا نشد.'
     display:
-        range:      نمایش <b role="results-range-start">%start%</b> - <b role="results-range-end">%end%</b> از <b role="results-count">%count%</b> نتیجه.
-        all:        نمایش همه ی  <b role="results-count">%count%</b> نتیجه.
-        one:        نمایش همه ی  <b role="results-count">%count%</b> نتیجه.
-    header.actions: اقدام ها
+        range:      'نمایش <b role="results-range-start">%start%</b> - <b role="results-range-end">%end%</b> از <b role="results-count">%count%</b> نتیجه.'
+        all:        'نمایش همه ی  <b role="results-count">%count%</b> نتیجه.'
+        one:        'نمایش همه ی  <b role="results-count">%count%</b> نتیجه.'
+    header.actions: 'اقدام ها'
 
 # Nested List
 nested.list:
-    expand:     نمایش
-    collapse:   مخفی کردن
-    loading:    در حال بارگذاری
-    success:    عنصر مورد نظر با موفقیت جابه جا گردید
-    error:      عنصر مورد نظر جا به جا نشد
+    expand:     'نمایش'
+    collapse:   'مخفی کردن'
+    loading:    'در حال بارگذاری'
+    success:    'عنصر مورد نظر با موفقیت جابه جا گردید'
+    error:      'عنصر مورد نظر جا به جا نشد'
 
 # Profile
 profile:
-    welcome:  <b>خوش آمدید</b>, %username%!
-    login:    ورود
-    logout:   خروج
-    exit:     خروج از حالت جعل هویت
-    unauthenticated: عضو وارد نشده اید
+    welcome:  '<b>خوش آمدید</b>, %username%!'
+    login:    'ورود'
+    logout:   'خروج'
+    exit:     'خروج از حالت جعل هویت'
+    unauthenticated: 'عضو وارد نشده اید'
 
 # Generic actions
 action.generic:
-    list:   لیست
-    new:    جدید
-    save:   ذخیره
-    save-and-add:   ذخیره و اضافه
-    save-and-list:  ذخیره و لیست
-    save-and-show:  ذخیره و نشان
-    excel:  Export to Excel
-    export: Export
+    list:   'لیست'
+    new:    'جدید'
+    save:   'ذخیره'
+    save-and-add:   'ذخیره و اضافه'
+    save-and-list:  'ذخیره و لیست'
+    save-and-show:  'ذخیره و نشان'
+    excel:  'Export to Excel'
+    export: 'Export'
 
 # Object actions
 action.object.edit:
-    label:    ویرایش
-    success:  ذخیره سازی با موفقیت انجام پذیرفت.
-    error:    فرم مورد نظر ذخیره نشد. خطاها را بررسی کرده و سپس دوباره امتحان کنید.
+    label:    'ویرایش'
+    success:  'ذخیره سازی با موفقیت انجام پذیرفت.'
+    error:    'فرم مورد نظر ذخیره نشد. خطاها را بررسی کرده و سپس دوباره امتحان کنید.'
     locked:   |
                 با عرض پوزش، اما شخص دیگری در حال حاضر این شیء تغییر کرده است.<br />
                 تغییرات خود را!
                 <a href="%path%" target="_blank">اینجا را کلیک کنید</a>
                 برای مشاهده تغییرات در یک تب جدید یا دوباره فرم به درخواست
 action.object.delete:
-    label:    حذف کردن
-    confirm:  آیا از حذف کردن این عنصر مطمئن می باشید؟
-    success:  عنصر با موفقیت حذف شده است.
-    error:    عنصر نمی تواند حذف شود.
-    notfound: عنصر را نمی توان حذف آن را به عنوان در حال حاضر حذف شده است.
+    label:    'حذف کردن'
+    confirm:  'آیا از حذف کردن این عنصر مطمئن می باشید؟'
+    success:  'عنصر با موفقیت حذف شده است.'
+    error:    'عنصر نمی تواند حذف شود.'
+    notfound: 'عنصر را نمی توان حذف آن را به عنوان در حال حاضر حذف شده است.'
 action.object.show:
-    label:    نمایش
+    label:    'نمایش'
 
 # Batch actions
 action.batch.delete:
-    label:    پاک کردن
-    confirm:  آیا حذف کردن همه ی عناصر انتخاب شده را تایید می نمایید؟
-    success:  عناصر مورد نظر با موفقیت حذف شدند
-    error:    عملیات حذف عناصر مورد نظر با خطا مواجه شد
+    label:    'پاک کردن'
+    confirm:  'آیا حذف کردن همه ی عناصر انتخاب شده را تایید می نمایید؟'
+    success:  'عناصر مورد نظر با موفقیت حذف شدند'
+    error:    'عملیات حذف عناصر مورد نظر با خطا مواجه شد'
 
-action.batch.none: در ابتدا شما باید یک عمل را انتخاب کنید.
+action.batch.none: 'در ابتدا شما باید یک عمل را انتخاب کنید.'
 
 # Custom actions
 action.custom:
-    title:    آیا شما مطمئن هستید که میخواهید%name% اقدام به اجرای؟
-    success:  %name% عمل با موفقیت اجرا شد.
-    error:    %name% عمل اجرا نیست.
-    confirm:  تکرار
-    cancel:   لغو کردن
+    title:    'آیا شما مطمئن هستید که میخواهید%name% اقدام به اجرای؟'
+    success:  '%name% عمل با موفقیت اجرا شد.'
+    error:    '%name% عمل اجرا نیست.'
+    confirm:  'تکرار'
+    cancel:   'لغو کردن'
 
 # Batch list
 batch.list:
-    selected:       انتخاب شده
-    none.selected:  شما باید حداقل یک عنصر را انتخاب کنید
-    warning:        اقدام گروه با توجه به پارامتر های از دست رفته کامل نیست
-    send:           اجرا کردن
+    selected:       'انتخاب شده'
+    none.selected:  'شما باید حداقل یک عنصر را انتخاب کنید'
+    warning:        'اقدام گروه با توجه به پارامتر های از دست رفته کامل نیست'
+    send:           'اجرا کردن'
 
 # Layout
 dashboard:
-    homepage:   خانه
-    brand:      داشبورد
+    homepage:   'خانه'
+    brand:      'داشبورد'
 
 admingenerator:
-    dashboard: داشبورد
+    dashboard: 'داشبورد'

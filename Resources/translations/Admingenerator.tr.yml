@@ -2,54 +2,54 @@
 
 # Boolean filter
 boolean:
-    yes:        Evet
-    no:         Hayır
-    yes_or_no:  Evet veya Hayır
+    yes:        'Evet'
+    no:         'Hayır'
+    yes_or_no:  'Evet veya Hayır'
 
 # Pager
 pagerfanta:
-    previous:       <
-    next:           ">"
-    view.perpage:   Göster
-    num.elements:   %number% element
+    previous:       '<'
+    next:           '>'
+    view.perpage:   'Göster'
+    num.elements:   '%number% element'
 
 # List
 list:
-    filters: Filters
+    filters: 'Filters'
     button:
-        filter:         Filtrele
-        reset:          Sıfırla
-    no.results:     Hiç bir sonuç bulunamadı.
+        filter:         'Filtrele'
+        reset:          'Sıfırla'
+    no.results:     'Hiç bir sonuç bulunamadı.'
     display:
-        range:      Toplam <b role="results-count">%count%</b> sonuçtan <b role="results-range-start">%start%</b> - <b role="results-range-end">%end%</b> kadarı gösteriliyor.
-        all:        Tüm <b role="results-count">%count%</b> sonuçlar.
-        one:        <b role="results-count">%count%</b> sonuç gösteriliyor.
-    header.actions: Eylemler
+        range:      'Toplam <b role="results-count">%count%</b> sonuçtan <b role="results-range-start">%start%</b> - <b role="results-range-end">%end%</b> kadarı gösteriliyor.'
+        all:        'Tüm <b role="results-count">%count%</b> sonuçlar.'
+        one:        '<b role="results-count">%count%</b> sonuç gösteriliyor.'
+    header.actions: 'Eylemler'
 
 # Profile
 profile:
-    welcome:  <b>Merhaba</b>, %username%!
-    login:    Giriş
-    logout:   Çıkış
-    exit:     Kimliğe bürünme modundan çıkın
-    unauthenticated: Oturum açık değil
+    welcome:  '<b>Merhaba</b>, %username%!'
+    login:    'Giriş'
+    logout:   'Çıkış'
+    exit:     'Kimliğe bürünme modundan çıkın'
+    unauthenticated: 'Oturum açık değil'
 
 # Generic actions
 action.generic:
-    list:   Liste
-    new:    Yeni
-    save:   Kaydet
-    save-and-add:   Kaydet ve Yeni Oluştur
-    save-and-list:  Kaydet ve Listeye Dön
-    save-and-show:  Kaydet ve Göstermek
-    excel:  Excel'e verme
-    export:  Verme
+    list:   'Liste'
+    new:    'Yeni'
+    save:   'Kaydet'
+    save-and-add:   'Kaydet ve Yeni Oluştur'
+    save-and-list:  'Kaydet ve Listeye Dön'
+    save-and-show:  'Kaydet ve Göstermek'
+    excel:  'Excel'e verme'
+    export:  'Verme'
 
 # Object actions
 action.object.edit:
-    label:    Düzenle
-    success:  Nesne başarıyla kaydedildi.
-    error:    Form kaydı yapılamadı. Hataları düzeltip tekrar deneyin.
+    label:    'Düzenle'
+    success:  'Nesne başarıyla kaydedildi.'
+    error:    'Form kaydı yapılamadı. Hataları düzeltip tekrar deneyin.'
     locked:   |
                 Üzgünüz, ama başkası zaten bu nesne değişti.<br />
                 Yeni bir sekmede değişiklikleri görüntülemek veya uygulamak için 
@@ -57,42 +57,42 @@ action.object.edit:
                 <a href="%path%" target="_blank">için tıklayınız</a> 
                 Yaptığınız değişiklikleri!
 action.object.delete:
-    label:    Sil
-    confirm:  Bu öğeyi silmek istediğinize emin misiniz?
-    success:  Eleman başarıyla silindi.
-    error:    Eleman silinemez.
-    notfound: Zaten silinir olarak Eleman silinemez.
+    label:    'Sil'
+    confirm:  'Bu öğeyi silmek istediğinize emin misiniz?'
+    success:  'Eleman başarıyla silindi.'
+    error:    'Eleman silinemez.'
+    notfound: 'Zaten silinir olarak Eleman silinemez.'
 action.object.show:
-    label:    Göster
+    label:    'Göster'
 
 # Batch actions
 action.batch.delete:
-    label:    Sil
-    confirm:  Seçili tüm öğeleri silmek istediğinize emin misiniz?
-    success:  Öğeler başarıyla silindi.
-    error:    Öğeler silinirken bir hata oluştu.
+    label:    'Sil'
+    confirm:  'Seçili tüm öğeleri silmek istediğinize emin misiniz?'
+    success:  'Öğeler başarıyla silindi.'
+    error:    'Öğeler silinirken bir hata oluştu.'
 
-action.batch.none: Önce bir eylem seçmelisiniz.
+action.batch.none: 'Önce bir eylem seçmelisiniz.'
 
 # Custom actions
 action.custom:
-    title:    Eğer %name% eylem yürütmek istediğinizden emin misiniz?
-    success:  Eylem %name% başarıyla idam edildi.
-    error:    Eylem %name% yürütmek olamazdı.
-    confirm:  Onaylamak
-    cancel:   Iptal
+    title:    'Eğer %name% eylem yürütmek istediğinizden emin misiniz?'
+    success:  'Eylem %name% başarıyla idam edildi.'
+    error:    'Eylem %name% yürütmek olamazdı.'
+    confirm:  'Onaylamak'
+    cancel:   'Iptal'
 
 # Batch list
 batch.list:
-    selected:       Seçili
-    none.selected:  En az bir öğe seçmek zorundasınız.
-    warning:        Nedeniyle kayıp parametreleri için toplu eylem tamamlanamadı.
-    send:           Gerçekleştirmek
+    selected:       'Seçili'
+    none.selected:  'En az bir öğe seçmek zorundasınız.'
+    warning:        'Nedeniyle kayıp parametreleri için toplu eylem tamamlanamadı.'
+    send:           'Gerçekleştirmek'
 
 # Layout
 dashboard:
-    homepage:   Anasayfa
-    brand:      Kontrol paneli
+    homepage:   'Anasayfa'
+    brand:      'Kontrol paneli'
 
 admingenerator:
-    dashboard: Kontrol paneli
+    dashboard: 'Kontrol paneli'

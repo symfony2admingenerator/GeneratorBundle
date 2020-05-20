@@ -2,105 +2,105 @@
 
 # Boolean filter
 boolean:
-    yes:        Yes
-    no:         No
-    yes_or_no:  Yes or No
+    yes:        'Yes'
+    no:         'No'
+    yes_or_no:  'Yes or No'
 
 # Pager
 pagerfanta:
-    previous:       <
-    next:           ">"
-    view.perpage:   Display
-    num.elements:   %number% elements
+    previous:       '<'
+    next:           '>'
+    view.perpage:   'Display'
+    num.elements:   '%number% elements'
 
 # List
 list:
-    filters: Filters
+    filters: 'Filters'
     button:
-        filter:         Filter
-        reset:          Reset
-        close:          Close
-    no.results:     There are no results.
+        filter:         'Filter'
+        reset:          'Reset'
+        close:          'Close'
+    no.results:     'There are no results.'
     display:
-        range:      Display <b role="results-range-start">%start%</b> - <b role="results-range-end">%end%</b> of <b role="results-count">%count%</b> results.
-        all:        Display all <b role="results-count">%count%</b> results.
-        one:        Display <b role="results-count">%count%</b> result.
-    header.actions: Actions
+        range:      'Display <b role="results-range-start">%start%</b> - <b role="results-range-end">%end%</b> of <b role="results-count">%count%</b> results.'
+        all:        'Display all <b role="results-count">%count%</b> results.'
+        one:        'Display <b role="results-count">%count%</b> result.'
+    header.actions: 'Actions'
 
 # Nested List
 nested.list:
-    expand:     Show
-    collapse:   Hide
-    loading:    Loading in progress
-    success:    The element was successfully moved.
-    error:      Could not move element.
+    expand:     'Show'
+    collapse:   'Hide'
+    loading:    'Loading in progress'
+    success:    'The element was successfully moved.'
+    error:      'Could not move element.'
 
 # Profile
 profile:
-    welcome:  <b>Welcome</b>, %username%!
-    login:    Login
-    logout:   Log out
-    exit:     Exit impersonation mode
-    unauthenticated: Unauthenticated
+    welcome:  '<b>Welcome</b>, %username%!'
+    login:    'Login'
+    logout:   'Log out'
+    exit:     'Exit impersonation mode'
+    unauthenticated: 'Unauthenticated'
 
 # Generic actions
 action.generic:
-    list:   List
-    new:    New
-    save:   Save
-    save-and-add:   Save and add
-    save-and-list:  Save and list
-    save-and-show:  Save and show
-    excel:  Export to Excel
-    export: Export
+    list:   'List'
+    new:    'New'
+    save:   'Save'
+    save-and-add:   'Save and add'
+    save-and-list:  'Save and list'
+    save-and-show:  'Save and show'
+    excel:  'Export to Excel'
+    export: 'Export'
 
 # Object actions
 action.object.edit:
-    label:    Edit
-    success:  The object was successfully saved.
-    error:    The form can't be saved. Check errors and try to resubmit.
+    label:    'Edit'
+    success:  'The object was successfully saved.'
+    error:    'The form can''t be saved. Check errors and try to resubmit.'
     locked:   |
                 Sorry, but someone else has already changed this object.<br />
                 <a href="%path%" target="_blank">Click here</a> to view 
                 changes in a new tab or submit the form again to apply your 
                 changes!
 action.object.delete:
-    label:    Delete
-    confirm:  Are you sure you want to delete this element?
-    success:  Element has been successfully deleted.
-    error:    Element can't be deleted.
-    notfound: Element can't be deleted as it is already deleted.
+    label:    'Delete'
+    confirm:  'Are you sure you want to delete this element?'
+    success:  'Element has been successfully deleted.'
+    error:    'Element can''t be deleted.'
+    notfound: 'Element can''t be deleted as it is already deleted.'
 action.object.show:
-    label:    Show
+    label:    'Show'
 
 # Batch actions
 action.batch.delete:
-    label:    Delete
-    confirm:  Are you sure you want to delete all selected elements?
-    success:  Records have been successfully deleted.
-    error:    Records can't be deleted.
+    label:    'Delete'
+    confirm:  'Are you sure you want to delete all selected elements?'
+    success:  'Records have been successfully deleted.'
+    error:    'Records can''t be deleted.'
 
-action.batch.none: First you should select an action.
+action.batch.none: 'First you should select an action.'
 
 # Custom actions
 action.custom:
-    title:    Are you sure you want to execute %name% action?
-    success:  The %name% action was successfully executed.
-    error:    Could not execute %name% action.
-    confirm:  Confirm
-    cancel:   Cancel
+    title:    'Are you sure you want to execute %name% action?'
+    success:  'The %name% action was successfully executed.'
+    error:    'Could not execute %name% action.'
+    confirm:  'Confirm'
+    cancel:   'Cancel'
 
 # Batch list
 batch.list:
-    selected:       Selected
-    none.selected:  You have to select at least one element.
-    warning:        Could not complete batch action due to missing parameters
-    send:           Execute
+    selected:       'Selected'
+    none.selected:  'You have to select at least one element.'
+    warning:        'Could not complete batch action due to missing parameters'
+    send:           'Execute'
 
 # Layout
 dashboard:
-    homepage:   Homepage
-    brand:      Dashboard
+    homepage:   'Homepage'
+    brand:      'Dashboard'
 
 admingenerator:
-    dashboard: Dashboard
+    dashboard: 'Dashboard'

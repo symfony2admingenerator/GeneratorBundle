@@ -81,7 +81,7 @@
             <argument type="service" id="translator" />
         </service>
 
-        <service class="Admingenerator\GeneratorBundle\Maker\MakeAdmin" public="true">
+        <service id="admingenerator.maker.make_admin" class="Admingenerator\GeneratorBundle\Maker\MakeAdmin" public="true">
             <tag name="maker.command" />
         </service>
 

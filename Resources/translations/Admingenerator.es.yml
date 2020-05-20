@@ -2,62 +2,61 @@
 
 # Boolean filter
 boolean:
-    yes:        Sí
-    no:         No
-    yes_or_no:  Sí o No
+    yes:        'Sí'
+    no:         'No'
+    yes_or_no:  'Sí o No'
 
 # Pager
 pagerfanta:
-    previous:       <
-    next:           ">"
-    view.perpage:   Mostrar
-    num.elements:   %number% elementos
+    previous:       '<'
+    next:           '>'
+    view.perpage:   'Mostrar'
+    num.elements:   '%number% elementos'
 
 # List
 list:
-    filters: Filtros
+    filters: 'Filtros'
     button:
-        filter:         Filtro
-        reset:          Reajustar
-    no.results:     No existen resultados.
-    filters:        Filtros
+        filter:         'Filtro'
+        reset:          'Reajustar'
+    no.results:     'No existen resultados.'
     display:
-        range:      Mostrar <b role="results-range-start">%start%</b> - <b role="results-range-end">%end%</b> de <b role="results-count">%count%</b> resultados.
-        all:        Mostrar todos los <b role="results-count">%count%</b> resultados.
-        one:        Mostrar <b role="results-count">%count%</b> resultado.
-    header.actions: Acciones
+        range:      'Mostrar <b role="results-range-start">%start%</b> - <b role="results-range-end">%end%</b> de <b role="results-count">%count%</b> resultados.'
+        all:        'Mostrar todos los <b role="results-count">%count%</b> resultados.'
+        one:        'Mostrar <b role="results-count">%count%</b> resultado.'
+    header.actions: 'Acciones'
 
 # Nested List
 nested.list:
-    expand:     Mostrar
-    collapse:   Ocultar
-    loading:    Carga en curso
-    success:    El elemento fue trasladado con éxito.
-    error:      No se pudo mover el elemento.
+    expand:     'Mostrar'
+    collapse:   'Ocultar'
+    loading:    'Carga en curso'
+    success:    'El elemento fue trasladado con éxito.'
+    error:      'No se pudo mover el elemento.'
 
 # Profile
 profile:
-    welcome:  <b>Bienvenido</b>, %username%!
-    login:    Iniciar sesión
-    logout:   Cerrar sesión
-    exit:     Salga del modo de suplantación
-    unauthenticated: No ha iniciado sesión
+    welcome:  '<b>Bienvenido</b>, %username%!'
+    login:    'Iniciar sesión'
+    logout:   'Cerrar sesión'
+    exit:     'Salga del modo de suplantación'
+    unauthenticated: 'No ha iniciado sesión'
 
 # Generic actions
 action.generic:
-    list:   Listar
-    new:    Nuevo
-    save:   Guardar
-    save-and-add:   Guardar y nuevo
-    save-and-list:  Guardar y listar
-    save-and-show:  Guardar y mostrar
-    excel:  Export to Excel
-    export: Export
+    list:   'Listar'
+    new:    'Nuevo'
+    save:   'Guardar'
+    save-and-add:   'Guardar y nuevo'
+    save-and-list:  'Guardar y listar'
+    save-and-show:  'Guardar y mostrar'
+    excel:  'Export to Excel'
+    export: 'Export'
 
 # Object actions
 action.object.edit:
-    label:    Editar
-    success:  El objeto fue guardado satisfactoriamente.
+    label:    'Editar'
+    success:  'El objeto fue guardado satisfactoriamente.'
     error:    |
                 El formulario no pudo ser guardado. comprueba los errores y 
                 vuelve a intentarlo.
@@ -67,45 +66,45 @@ action.object.edit:
                 los cambios en una nueva pestaña o enviar el formulario de nuevo 
                 para aplicar los cambios! 
 action.object.delete:
-    label:    Borrar
-    confirm:  ¿Está seguro que desea eliminar este elemento?
-    success:  El elemento se ha eliminado correctamente.
-    error:    El elemento no se puede eliminar.
-    notfound: El elemento no puede suprimirse, ya que ya ha sido borrada.
+    label:    'Borrar'
+    confirm:  '¿Está seguro que desea eliminar este elemento?'
+    success:  'El elemento se ha eliminado correctamente.'
+    error:    'El elemento no se puede eliminar.'
+    notfound: 'El elemento no puede suprimirse, ya que ya ha sido borrada.'
 action.object.show:
-    label:    Mostrar
+    label:    'Mostrar'
 
 # Batch actions
 action.batch.delete:
-    label:    Borrar
-    confirm:  ¿Te confirmar la eliminación de todos los elementos seleccionados?
-    success:  El registro ha sido borrado correctamente.
-    error:    Este registro no puede ser borrado.
+    label:    'Borrar'
+    confirm:  '¿Te confirmar la eliminación de todos los elementos seleccionados?'
+    success:  'El registro ha sido borrado correctamente.'
+    error:    'Este registro no puede ser borrado.'
 
-action.batch.none: En primer lugar, hay que seleccionar una acción.
+action.batch.none: 'En primer lugar, hay que seleccionar una acción.'
 
 # Custom actions
 action.custom:
-    title:    ¿Está seguro de que desea ejecutar la acción %name%?
-    success:  La acción %name% se ejecutó con éxito.
-    error:    No se pudo ejecutar la acción %name%.
-    confirm:  Confirmar
-    cancel:   Cancelar
+    title:    '¿Está seguro de que desea ejecutar la acción %name%?'
+    success:  'La acción %name% se ejecutó con éxito.'
+    error:    'No se pudo ejecutar la acción %name%.'
+    confirm:  'Confirmar'
+    cancel:   'Cancelar'
 
 # Batch list
 batch.list:
-    selected:       Seleccionado
-    none.selected:  Debe seleccionar al menos un elemento.
+    selected:       'Seleccionado'
+    none.selected:  'Debe seleccionar al menos un elemento.'
     warning:        |
                       No se pudo completar la acción de lote debido a los 
                       parámetros que faltan.
-    selector:       Choose an action for selection
-    send:           Ejecutar
+    selector:       'Choose an action for selection'
+    send:           'Ejecutar'
 
 # Layout
 dashboard:
-    homepage:   Página principal
-    brand:      Tablero de instrumentos
+    homepage:   'Página principal'
+    brand:      'Tablero de instrumentos'
 
 admingenerator:
-    dashboard: Tablero de instrumentos
+    dashboard: 'Tablero de instrumentos'

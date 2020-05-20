@@ -2,61 +2,61 @@
 
 # Boolean filter
 boolean:
-    yes:        Oui
-    no:         Non
-    yes_or_no:  Oui ou Non
+    yes:        'Oui'
+    no:         'Non'
+    yes_or_no:  'Oui ou Non'
 
 # Pager
 pagerfanta:
-    previous: <
-    next:           ">"
-    view.perpage:   Montrer
-    num.elements:   %number% éléments
+    previous: '<'
+    next:           '>'
+    view.perpage:   'Montrer'
+    num.elements:   '%number% éléments'
 
 # List
 list:
-    filters: Filtres
+    filters: 'Filtres'
     button:
-        filter:         Filtrer
-        reset:          Réinitialiser
-    no.results:     Aucun résultat
+        filter:         'Filtrer'
+        reset:          'Réinitialiser'
+    no.results:     'Aucun résultat'
     display:
-        range:      Résultats <b role="results-range-start">%start%</b> à <b role="results-range-end">%end%</b> sur <b role="results-count">%count%</b>.
-        all:        Affiche les <b role="results-count">%count%</b> résultats.
-        one:        Affiche <b role="results-count">%count%</b> résultat.
-    header.actions: Actions
+        range:      'Résultats <b role="results-range-start">%start%</b> à <b role="results-range-end">%end%</b> sur <b role="results-count">%count%</b>.'
+        all:        'Affiche les <b role="results-count">%count%</b> résultats.'
+        one:        'Affiche <b role="results-count">%count%</b> résultat.'
+    header.actions: 'Actions'
 
 # Nested List
 nested.list:
-    expand:     Montrer
-    collapse:   Cacher
-    loading:    Chargement en cours
-    success:    L'élément a été déplacé avec succès.
-    error:      Impossible de déplacer l'élément.
+    expand:     'Montrer'
+    collapse:   'Cacher'
+    loading:    'Chargement en cours'
+    success:    'L''élément a été déplacé avec succès.'
+    error:      'Impossible de déplacer l''élément.'
 
 # Profile
 profile:
-    welcome:  <b>Bienvenue</b>, %username%!
-    login:    Connexion
-    logout:   Déconnexion
-    exit:     Revenir sur mon compte
-    unauthenticated: Non connecté
+    welcome:  '<b>Bienvenue</b>, %username%!'
+    login:    'Connexion'
+    logout:   'Déconnexion'
+    exit:     'Revenir sur mon compte'
+    unauthenticated: 'Non connecté'
 
 # Generic actions
 action.generic:
-    list:   Retour à la liste
-    new:    Nouveau
-    save:   Enregistrer
-    save-and-add:   Enregistrer et Nouveau
-    save-and-list:  Enregistrer et Retour à la liste
-    save-and-show:  Enregistrer et montrer
-    excel:  Exporter au format Excel
-    export: Exporter
+    list:   'Retour à la liste'
+    new:    'Nouveau'
+    save:   'Enregistrer'
+    save-and-add:   'Enregistrer et Nouveau'
+    save-and-list:  'Enregistrer et Retour à la liste'
+    save-and-show:  'Enregistrer et montrer'
+    excel:  'Exporter au format Excel'
+    export: 'Exporter'
 
 # Object actions
 action.object.edit:
-    label:    Éditer
-    success:  L'enregistrement a été effectué avec succès.
+    label:    'Éditer'
+    success:  'L''enregistrement a été effectué avec succès.'
     error:    |
                 Une erreur est survenue. Vérifiez les données saisies, et 
                 validez à nouveau le formulaire.
@@ -67,42 +67,42 @@ action.object.edit:
                 changements dans un nouvel onglet, ou validez de nouveau le 
                 formulaire pour forcer l'enregistrement de vos données.
 action.object.delete:
-    label:    Effacer
-    confirm:  Etes-vous sur de vouloir supprimer cet élement?
-    success:  L'élément sélectionné a été supprimé.
-    error:    L'élément sélectionné ne peut pas être supprimé.
+    label:    'Effacer'
+    confirm:  'Etes-vous sur de vouloir supprimer cet élement?'
+    success:  'L''élément sélectionné a été supprimé.'
+    error:    'L''élément sélectionné ne peut pas être supprimé.'
     notfound: "Suppression impossible : l'élément est inconnu"
 action.object.show:
-    label:    Montrer
+    label:    'Montrer'
 
 # Batch actions
 action.batch.delete:
-    label:    Effacer
-    confirm:  Etes-vous sur de vouloir supprimer les élements sélectionnés?
-    success:  Les enregistrements ont été supprimés avec succès.
-    error:    Les enregistrements n'ont pu être supprimés.
+    label:    'Effacer'
+    confirm:  'Etes-vous sur de vouloir supprimer les élements sélectionnés?'
+    success:  'Les enregistrements ont été supprimés avec succès.'
+    error:    'Les enregistrements n'ont pu être supprimés.'
 
-action.batch.none: Merci de sélectionner une action.
+action.batch.none: 'Merci de sélectionner une action.'
 
 # Custom actions
 action.custom:
-    title:    Êtes-vous sûr de vouloir exécuter l'action %name%?
-    success:  L'action %name% a été exécutée avec succès.
-    error:    Impossible d'exécuter l'action %name%.
-    confirm:  Confirmer
-    cancel:   Annuler
+    title:    'Êtes-vous sûr de vouloir exécuter l''action %name%?'
+    success:  'L''action %name% a été exécutée avec succès.'
+    error:    'Impossible d''exécuter l'action %name%.'
+    confirm:  'Confirmer'
+    cancel:   'Annuler'
 
 # Batch list
 batch.list:
-    selected:       Pour la sélection
-    none.selected:  Vous devez sélectionner au moins un élément.
-    warning:        Impossible de terminer l'action du lot en raison de paramètres manquants.
-    send:           Exécuter
+    selected:       'Pour la sélection'
+    none.selected:  'Vous devez sélectionner au moins un élément.'
+    warning:        'Impossible de terminer l''action du lot en raison de paramètres manquants.'
+    send:           'Exécuter'
 
 # Layout
 dashboard:
-    homepage:   Accueil
-    brand:      Tableau de bord
+    homepage:   'Accueil'
+    brand:      'Tableau de bord'
 
 admingenerator:
-    dashboard: Tableau de bord
+    dashboard: 'Tableau de bord'

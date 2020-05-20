@@ -2,62 +2,62 @@
 
 # Boolean filter
 boolean:
-    yes:        Da
-    no:         Nu
-    yes_or_no:  Da sau Nu
+    yes:        'Da'
+    no:         'Nu'
+    yes_or_no:  'Da sau Nu'
 
 # Pager
 pagerfanta:
-    previous:       <
-    next:           ">"
-    view.perpage:   Arată
-    num.elements:   %number% de elemente
+    previous:       '<'
+    next:           '>'
+    view.perpage:   'Arată'
+    num.elements:   '%number% de elemente'
 
 # List
 list:
-    filters: Filters
+    filters: 'Filters'
     button:
-        filter:         Filtru
-        reset:          Resetați
-    no.results:     Exista intrari
+        filter:         'Filtru'
+        reset:          'Resetați'
+    no.results:     'Exista intrari'
     display:
-        range:      Rezultate <b role="results-range-start">%start%</b> - <b role="results-range-end">%end%</b> de  <b role="results-count">%count%</b> înregistrarea(e).
-        all:        Afișează toate <b role="results-count">%count%</b> înregistrareae.
-        one:        Afișează <b role="results-count">%count%</b> înregistrarea.
-    header.actions: Acțiuni
+        range:      'Rezultate <b role="results-range-start">%start%</b> - <b role="results-range-end">%end%</b> de  <b role="results-count">%count%</b> înregistrarea(e).'
+        all:        'Afișează toate <b role="results-count">%count%</b> înregistrareae.'
+        one:        'Afișează <b role="results-count">%count%</b> înregistrarea.'
+    header.actions: 'Acțiuni'
 
 # Nested List
 nested.list:
-    expand:     Arata
-    collapse:   Ascundeți
-    loading:    încărcare în curs
-    success:    Elementul a fost mutat cu succes.
-    error:      A eșuat pentru a muta elementul.
+    expand:     'Arata'
+    collapse:   'Ascundeți'
+    loading:    'încărcare în curs'
+    success:    'Elementul a fost mutat cu succes.'
+    error:      'A eșuat pentru a muta elementul.'
 
 # Profile
 profile:
-    welcome:  <b>Bună ziua </b>, %username%!
-    login:    Intrare
-    logout:   Iesire
-    exit:     Ieșiți din personificare a regimului
-    unauthenticated: Nu autentificat
+    welcome:  '<b>Bună ziua </b>, %username%!'
+    login:    'Intrare'
+    logout:   'Iesire'
+    exit:     'Ieșiți din personificare a regimului'
+    unauthenticated: 'Nu autentificat'
 
 # Generic actions
 action.generic:
-    list:   Lista
-    new:    Adauga
-    save:   Salvați
-    save-and-add:   Adăugați și Salvare
-    save-and-list:  Lista și Salvare
-    save-and-show:  Arată și Salvare
-    excel:  Export în Excel
-    export:  Export
+    list:   'Lista'
+    new:    'Adauga'
+    save:   'Salvați'
+    save-and-add:   'Adăugați și Salvare'
+    save-and-list:  'Lista și Salvare'
+    save-and-show:  'Arată și Salvare'
+    excel:  'Export în Excel'
+    export:  'Export'
 
 # Object actions
 action.object.edit:
-    label:    Editare
-    success:  Material salvat cu succes.
-    error:    Formularul nu este salvat. Corecteze erorile și încercați din nou.
+    label:    'Editare'
+    success:  'Material salvat cu succes.'
+    error:    'Formularul nu este salvat. Corecteze erorile și încercați din nou.'
     locked:   |
                 Ne pare rau, dar cineva a schimbat deja obiectul.<br />
                 <a href="%path%" target="_blank">Click aici</a>
@@ -65,42 +65,42 @@ action.object.edit:
                 timpul pentru o schimbare schimbare!
                 
 action.object.delete:
-    label:    Eliminați
-    confirm:  Sunteți sigur că doriți să ștergeți acest articol?
-    success:  Elementul eliminat cu succes.
-    error:    Elementul nu a putut fi șterse.
-    notfound: Elementul nu poate fi eliminată, deoarece acesta este deja șters.
+    label:    'Eliminați'
+    confirm:  'Sunteți sigur că doriți să ștergeți acest articol?'
+    success:  'Elementul eliminat cu succes.'
+    error:    'Elementul nu a putut fi șterse.'
+    notfound: 'Elementul nu poate fi eliminată, deoarece acesta este deja șters.'
 action.object.show:
-    label:    Arată
+    label:    'Arată'
 
 # Batch actions
 action.batch.delete:
-    label:    Eliminați
-    confirm:  Sigur doriți să ștergeți elementele selectate?
-    success:  Materialele au fost eliminate cu succes.
-    error:    Nu se poate șterge materiale.
+    label:    'Eliminați'
+    confirm:  'Sigur doriți să ștergeți elementele selectate?'
+    success:  'Materialele au fost eliminate cu succes.'
+    error:    'Nu se poate șterge materiale.'
 
-action.batch.none: Mai întâi ar trebui să selectați o acțiune.
+action.batch.none: 'Mai întâi ar trebui să selectați o acțiune.'
 
 # Custom actions
 action.custom:
-    title:    Sunteți sigur că doriți să efectuați acțiunea %name%?
-    success:  Acțiune %name%  de succes.
-    error:    Nu a reușit %name% acțiuni.
-    confirm:  Confirmați
-    cancel:   Anulare
+    title:    'Sunteți sigur că doriți să efectuați acțiunea %name%?'
+    success:  'Acțiune %name%  de succes.'
+    error:    'Nu a reușit %name% acțiuni.'
+    confirm:  'Confirmați'
+    cancel:   'Anulare'
 
 # Batch list
 batch.list:
-    selected:       Selectați acțiunea
-    none.selected:  Trebuie să selectați cel puțin un punct.
-    warning:        Nu a putut finaliza lot din cauza lipsei de opțiuni.
-    send:           Efectuați
+    selected:       'Selectați acțiunea'
+    none.selected:  'Trebuie să selectați cel puțin un punct.'
+    warning:        'Nu a putut finaliza lot din cauza lipsei de opțiuni.'
+    send:           'Efectuați'
 
 # Layout
 dashboard:
-    homepage:   Acasă
-    brand:      Tabloul de bord
+    homepage:   'Acasă'
+    brand:      'Tabloul de bord'
 
 admingenerator:
-    dashboard: Tabloul de bord
+    dashboard: 'Tabloul de bord'

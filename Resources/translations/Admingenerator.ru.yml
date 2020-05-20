@@ -2,105 +2,105 @@
 
 # Boolean filter
 boolean:
-    yes:        Да
-    no:         Нет
-    yes_or_no:  Да или Нет
+    yes:        'Да'
+    no:         'Нет'
+    yes_or_no:  'Да или Нет'
 
 # Pager
 pagerfanta:
-    previous:       <
-    next:           ">"
-    view.perpage:   Показать
-    num.elements:   %number% элементов
+    previous:       '<'
+    next:           '>'
+    view.perpage:   'Показать'
+    num.elements:   '%number% элементов'
 
 # List
 list:
-    filters:          Фильтры
+    filters:          'Фильтры'
     button:
-        filter:         Фильтровать
-        reset:          Сбросить
-        close:          Закрыть
-    no.results:     Нет записей.
+        filter:         'Фильтровать'
+        reset:          'Сбросить'
+        close:          'Закрыть'
+    no.results:     'Нет записей.'
     display:
-        range:      Показаны <b role="results-range-start">%start%</b> - <b role="results-range-end">%end%</b> из <b role="results-count">%count%</b> записи(ей).
-        all:        Показаны все <b role="results-count">%count%</b> записией.
-        one:        Показаны <b role="results-count">%count%</b> записи.
-    header.actions: Действия
+        range:      'Показаны <b role="results-range-start">%start%</b> - <b role="results-range-end">%end%</b> из <b role="results-count">%count%</b> записи(ей).'
+        all:        'Показаны все <b role="results-count">%count%</b> записией.'
+        one:        'Показаны <b role="results-count">%count%</b> записи.'
+    header.actions: 'Действия'
 
 # Nested List
 nested.list:
-    expand:     Показывать
-    collapse:   Скрывать
-    loading:    Загрузка в процессе
-    success:    Элемент был успешно перемещен.
-    error:      Не удалось переместить элемент.
+    expand:     'Показывать'
+    collapse:   'Скрывать'
+    loading:    'Загрузка в процессе'
+    success:    'Элемент был успешно перемещен.'
+    error:      'Не удалось переместить элемент.'
 
 # Profile
 profile:
-    welcome:  <b>Здравствуйте</b>, %username%!
-    login:    Войти
-    logout:   Выйти
-    exit:     Выход из режима подмены
-    unauthenticated: Вы не вошли в
+    welcome:  '<b>Здравствуйте</b>, %username%!'
+    login:    'Войти'
+    logout:   'Выйти'
+    exit:     'Выход из режима подмены'
+    unauthenticated: 'Вы не вошли в'
 
 # Generic actions
 action.generic:
-    list:   Список
-    new:    Добавить
-    save:   Сохранить
-    save-and-add:   Сохранить и Добавить
-    save-and-list:  Сохранить и Список
-    save-and-show:  Cохранить и показать
-    excel:  Экспорт в Excel
-    export: Экспорт
+    list:   'Список'
+    new:    'Добавить'
+    save:   'Сохранить'
+    save-and-add:   'Сохранить и Добавить'
+    save-and-list:  'Сохранить и Список'
+    save-and-show:  'Cохранить и показать'
+    excel:  'Экспорт в Excel'
+    export: 'Экспорт'
     
 # Object actions
 action.object.edit:
-    label:    Редактировать
-    success:  Объект успешно сохранен.
-    error:    Форма не сохранена. Исправьте ошибки и попробуйте еще раз.
+    label:    'Редактировать'
+    success:  'Объект успешно сохранен.'
+    error:    'Форма не сохранена. Исправьте ошибки и попробуйте еще раз.'
     locked:   |
                 Извините, но кто-то уже изменил этот объект.<br />
                 <a href="%path%" target="_blank">Щелкните здесь</a>
                 для просмотра изменений в новой вкладке или отправить форму еще 
                 раз для изменения изменения!
 action.object.delete:
-    label:    Удалить
-    confirm:  Вы действительно хотите удалить этот элемент?
-    success:  Элемент успешно удален.
-    error:    Элемент не может быть удален.
-    notfound: Элемент не может быть удален, как он уже удален.
+    label:    'Удалить'
+    confirm:  'Вы действительно хотите удалить этот элемент?'
+    success:  'Элемент успешно удален.'
+    error:    'Элемент не может быть удален.'
+    notfound: 'Элемент не может быть удален, как он уже удален.'
 action.object.show:
-    label:    Просмотр
+    label:    'Просмотр'
 
 # Batch actions
 action.batch.delete:
-    label:    Удалить
-    confirm:  Вы подтверждаете удаление выбранных элементов?
-    success:  Объекты были успешно удалены.
-    error:    Невозможно удалить объекты.
+    label:    'Удалить'
+    confirm:  'Вы подтверждаете удаление выбранных элементов?'
+    success:  'Объекты были успешно удалены.'
+    error:    'Невозможно удалить объекты.'
 
-action.batch.none: Во-первых, вы должны выбрать действие.
+action.batch.none: 'Во-первых, вы должны выбрать действие.'
 
 # Custom actions
 action.custom:
-    title:    Вы уверены, что хотите выполнить действие %name%?
-    success:  Действие %name% успешно выполнено.
-    error:    Не удалось выполнить действие %name%.
-    confirm:  Подтверждаю
-    cancel:   Отмена
+    title:    'Вы уверены, что хотите выполнить действие %name%?'
+    success:  'Действие %name% успешно выполнено.'
+    error:    'Не удалось выполнить действие %name%.'
+    confirm:  'Подтверждаю'
+    cancel:   'Отмена'
 
 # Batch list
 batch.list:
-    selected:       Выберите действие
-    none.selected:  Необходимо выбрать не менее одного элемента.
-    warning:        Не удалось завершить периодического действия из-за отсутствия параметров.
-    send:           Выполнить
+    selected:       'Выберите действие'
+    none.selected:  'Необходимо выбрать не менее одного элемента.'
+    warning:        'Не удалось завершить периодического действия из-за отсутствия параметров.'
+    send:           'Выполнить'
 
 # Layout
 dashboard:
-    homepage:   Главная
-    brand:      Панель мониторинга
+    homepage:   'Главная'
+    brand:      'Панель мониторинга'
 
 admingenerator:
-    dashboard: Панель мониторинга
+    dashboard: 'Панель мониторинга'

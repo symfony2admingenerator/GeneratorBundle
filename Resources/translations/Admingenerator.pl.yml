@@ -2,104 +2,104 @@
 
 # Boolean filter
 boolean:
-    yes:            Tak
-    no:             Nie
-    yes_or_no:      Tak lub Nie
+    yes:            'Tak'
+    no:             'Nie'
+    yes_or_no:      'Tak lub Nie'
 
 # Pager
 pagerfanta:
-    previous:       "<"
-    next:           ">"
-    view.perpage:   Wyświetl po
-    num.elements:   %number% elementów
+    previous:       '<'
+    next:           '>'
+    view.perpage:   'Wyświetl po'
+    num.elements:   '%number% elementów'
 
 # List
 list:
-    filters:        Filtry
+    filters:        'Filtry'
     button:
-        filter:     Filtruj
-        reset:      Resetuj
-    no.results:     Brak wyników.
+        filter:     'Filtruj'
+        reset:      'Resetuj'
+    no.results:     'Brak wyników.'
     display:
-        range:      Wyświetlanie <b role="results-range-start">%start%</b> - <b role="results-range-end">%end%</b> z <b role="results-count">%count%</b> rezultatów.
-        all:        Wyświetlanie wszystkich <b role="results-count">%count%</b> rezultatów.
-        one:        Wyświetlanie <b role="results-count">%count%</b> rezultat.
-    header.actions: Akcje
+        range:      'Wyświetlanie <b role="results-range-start">%start%</b> - <b role="results-range-end">%end%</b> z <b role="results-count">%count%</b> rezultatów.'
+        all:        'Wyświetlanie wszystkich <b role="results-count">%count%</b> rezultatów.'
+        one:        'Wyświetlanie <b role="results-count">%count%</b> rezultat.'
+    header.actions: 'Akcje'
 
 # Nested List
 nested.list:
-    expand:         Pokaż
-    collapse:       Ukryj
-    loading:        Wczytywanie
-    success:        Element przeniesiono.
-    error:          Element nie mógł zostać przeniesiony.
+    expand:         'Pokaż'
+    collapse:       'Ukryj'
+    loading:        'Wczytywanie'
+    success:        'Element przeniesiono.'
+    error:          'Element nie mógł zostać przeniesiony.'
 
 # Profile
 profile:
-    welcome:        <b>Witaj</b>, %username%!
-    login:          Zaloguj
-    logout:         Wyloguj
-    exit:           Wyjście z trybu personifikacji
-    unauthenticated: Niezalogowany
+    welcome:        '<b>Witaj</b>, %username%!'
+    login:          'Zaloguj'
+    logout:         'Wyloguj'
+    exit:           'Wyjście z trybu personifikacji'
+    unauthenticated: 'Niezalogowany'
 
 # Generic actions
 action.generic:
-    list:           Lista
-    new:            Nowy
-    save:           Zapisz
-    save-and-add:   Zapisz i Nowy
-    save-and-list:  Zapisz i Lista
-    save-and-show:  Zapisz i Pokazać
-    excel:          Eksportuj
-    export:         Eksportuj
+    list:           'Lista'
+    new:            'Nowy'
+    save:           'Zapisz'
+    save-and-add:   'Zapisz i Nowy'
+    save-and-list:  'Zapisz i Lista'
+    save-and-show:  'Zapisz i Pokazać'
+    excel:          'Eksportuj'
+    export:         'Eksportuj'
 
 # Object actions
 action.object.edit:
-    label:          Edytuj
-    success:        Zapisano zmiany.
-    error:          Zmiany nie mogły zostać zapisane. Sprawdź błędy i spróbuj ponownie.
+    label:          'Edytuj'
+    success:        'Zapisano zmiany.'
+    error:          'Zmiany nie mogły zostać zapisane. Sprawdź błędy i spróbuj ponownie.'
     locked:   |
                 Niestety, ale ktoś inny już zmienił ten obiekt.<br />
                 <a href="%path%" target="_blank">Kliknij tutaj</a>, aby 
                 zobaczyć zmiany na nowej zakładce lub wyślij formularz ponownie,
                 aby zastosować Twoje zmiany!
 action.object.delete:
-    label:          Usuń
-    confirm:        Czy potwierdzasz usunięcie elementu?
-    success:        Usunięto wskazany element.
-    error:          Element nie mógł zostać usunięty.
-    notfound:       Element nie może być usunięty, ponieważ został już usunięty.
+    label:          'Usuń'
+    confirm:        'Czy potwierdzasz usunięcie elementu?'
+    success:        'Usunięto wskazany element.'
+    error:          'Element nie mógł zostać usunięty.'
+    notfound:       'Element nie może być usunięty, ponieważ został już usunięty.'
 action.object.show:
-    label:          Pokaż
+    label:          'Pokaż'
 
 # Batch actions
 action.batch.delete:
-    label:          Usuń
-    confirm:        Czy potwierdzasz usunięcie wszystkich zaznaczonych elementów?
-    success:        Usunięto wskazane elementy.
-    error:          Zaznaczone elementy nie mogły zostać usunięte.
+    label:          'Usuń'
+    confirm:        'Czy potwierdzasz usunięcie wszystkich zaznaczonych elementów?'
+    success:        'Usunięto wskazane elementy.'
+    error:          'Zaznaczone elementy nie mogły zostać usunięte.'
 
-action.batch.none: Najpierw należy wybrać akcję.
+action.batch.none: 'Najpierw należy wybrać akcję.'
 
 # Custom actions
 action.custom:
-    title:          Czy na pewno chcesz wykonać akcję %name%?
-    success:        Akcja %name% zakończona sukcesem.
-    error:          Nie można było ukończyć akcji %name%.
-    confirm:        Potwierdź
-    cancel:         Anuluj
+    title:          'Czy na pewno chcesz wykonać akcję %name%?'
+    success:        'Akcja %name% zakończona sukcesem.'
+    error:          'Nie można było ukończyć akcji %name%.'
+    confirm:        'Potwierdź'
+    cancel:         'Anuluj'
 
 # Batch list
 batch.list:
-    selected:       Zaznaczone
-    none.selected:  Musisz zaznaczyć co najmniej jeden element.
-    warning:        Nie można było ukończyć grupowej akcji ze względu na brakujące parametry.
-    send:           Wykonaj
+    selected:       'Zaznaczone'
+    none.selected:  'Musisz zaznaczyć co najmniej jeden element.'
+    warning:        'Nie można było ukończyć grupowej akcji ze względu na brakujące parametry.'
+    send:           'Wykonaj'
 
 # Layout
 dashboard:
-    homepage:       Strona Główna
-    brand:          Pulpit
+    homepage:       'Strona Główna'
+    brand:          'Pulpit'
 
 admingenerator:
-    dashboard: Pulpit
+    dashboard: 'Pulpit'

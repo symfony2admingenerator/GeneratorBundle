@@ -2,61 +2,61 @@
 
 # Boolean filter
 boolean:
-    yes:        Ja
-    no:         Nein
-    yes_or_no:  Ja oder Nein
+    yes:        'Ja'
+    no:         'Nein'
+    yes_or_no:  'Ja oder Nein'
 
 # Pager
 pagerfanta:
-    previous:       <
-    next:           ">"
-    view.perpage:   Anzeige
-    num.elements:   %number% Einträge
+    previous:       '<'
+    next:           '>'
+    view.perpage:   'Anzeige'
+    num.elements:   '%number% Einträge'
 
 # List
 list:
-    filters: Filter
+    filters: 'Filter'
     button:
-        filter:         Filtern
-        reset:          Zurücksetzen
-    no.results:     Keine Einträge vorhanden.
+        filter:         'Filtern'
+        reset:          'Zurücksetzen'
+    no.results:     'Keine Einträge vorhanden.'
     display:
-        range:      Zeige <b role="results-range-start">%start%</b> bis <b role="results-range-end">%end%</b> von <b role="results-count">%count%</b> Datensätze.
-        all:        Zeige alle <b role="results-count">%count%</b> Datensätze.
-        one:        Zeige <b role="results-count">%count%</b> Datensätze.
-    header.actions: Aktionen
+        range:      'Zeige <b role="results-range-start">%start%</b> bis <b role="results-range-end">%end%</b> von <b role="results-count">%count%</b> Datensätze.'
+        all:        'Zeige alle <b role="results-count">%count%</b> Datensätze.'
+        one:        'Zeige <b role="results-count">%count%</b> Datensätze.'
+    header.actions: 'Aktionen'
 
 # Nested List
 nested.list:
-    expand:     Zeigen
-    collapse:   Verbergen
-    loading:    Laden
-    success:    Der Eintrag wurde erfolgreich verschoben.
-    error:      Der Eintrag konnte nicht verschoben werden.
+    expand:     'Zeigen'
+    collapse:   'Verbergen'
+    loading:    'Laden'
+    success:    'Der Eintrag wurde erfolgreich verschoben.'
+    error:      'Der Eintrag konnte nicht verschoben werden.'
 
 # Profile
 profile:
-    welcome:  <b>Willkommen</b>, %username%!
-    login:    Anmelden
-    logout:   Abmelden
-    exit:     Identitätswechselmodus verlassen
-    unauthenticated: Nicht angemeldet
+    welcome:  '<b>Willkommen</b>, %username%!'
+    login:    'Anmelden'
+    logout:   'Abmelden'
+    exit:     'Identitätswechselmodus verlassen'
+    unauthenticated: 'Nicht angemeldet'
 
 # Generic actions
 action.generic:
-    list:   Übersicht
-    new:    Neu
-    save:   Speichern
-    save-and-add:   Speichern und Neu
-    save-and-list:  Speichern und Übersicht
-    save-and-show:  Speichern und zeigen
-    excel:  Export to Excel
-    export: Export
+    list:   'Übersicht'
+    new:    'Neu'
+    save:   'Speichern'
+    save-and-add:   'Speichern und Neu'
+    save-and-list:  'Speichern und Übersicht'
+    save-and-show:  'Speichern und zeigen'
+    excel:  'Export to Excel'
+    export: 'Export'
     
 # Object actions
 action.object.edit:
-    label:    Bearbeiten
-    success:  Der Eintrag wurde erfolgreich gespeichert.
+    label:    'Bearbeiten'
+    success:  'Der Eintrag wurde erfolgreich gespeichert.'
     error:    |
                 Die Daten konnten nicht gespeichert werden. Bitte überprüfen Sie die Eingaben
                 und versuchen es erneut.
@@ -66,42 +66,42 @@ action.object.edit:
                 Änderungen in einem neuen Tab anzusehen oder senden Sie das Formular
                 erneut ab, um Ihre Änderungen zu übernehmen!
 action.object.delete:
-    label:    Löschen
-    confirm:  Sind Sie sicher, dass Sie diesen Eintrag löschen möchten?
-    success:  Der Eintrag wurde erfolgreich gelöscht.
-    error:    Der Eintrag kann nicht gelöscht werden.
-    notfound: Element kann nicht gelöscht werden, da sie bereits gelöscht.
+    label:    'Löschen'
+    confirm:  'Sind Sie sicher, dass Sie diesen Eintrag löschen möchten?'
+    success:  'Der Eintrag wurde erfolgreich gelöscht.'
+    error:    'Der Eintrag kann nicht gelöscht werden.'
+    notfound: 'Element kann nicht gelöscht werden, da sie bereits gelöscht.'
 action.object.show:
-    label:    Zeigen
+    label:    'Zeigen'
 
 # Batch actions
 action.batch.delete:
-    label:    Löschen
-    confirm:  Möchten Sie wirklich alle ausgewählten Einträge löschen?
-    success:  Die Einträge wurden erfolgreich gelöscht.
-    error:    Die Einträge können nicht gelöscht werden.
+    label:    'Löschen'
+    confirm:  'Möchten Sie wirklich alle ausgewählten Einträge löschen?'
+    success:  'Die Einträge wurden erfolgreich gelöscht.'
+    error:    'Die Einträge können nicht gelöscht werden.'
 
-action.batch.none: Zuerst sollten Sie eine Aktion auswählen.
+action.batch.none: 'Zuerst sollten Sie eine Aktion auswählen.'
 
 # Custom actions
 action.custom:
-    title:    Sind Sie sicher, dass Sie die Aktion %name% ausführen möchten?
-    success:  Die Aktion %name% wurde erfolgreich ausgeführt.
-    error:    Konnte die Aktion %name% nicht ausführen.
-    confirm:  Ausführen
-    cancel:   Abbrechen
+    title:    'Sind Sie sicher, dass Sie die Aktion %name% ausführen möchten?'
+    success:  'Die Aktion %name% wurde erfolgreich ausgeführt.'
+    error:    'Konnte die Aktion %name% nicht ausführen.'
+    confirm:  'Ausführen'
+    cancel:   'Abbrechen'
 
 # Batch list
 batch.list:
-    selected:       Ausgewählte
-    none.selected:  Sie müssen mindestens einen Eintrag auswählen.
-    warning:        Konnte die Aktion aufgrund fehlender Parameter nicht ausführen.
-    send:           Senden
+    selected:       'Ausgewählte'
+    none.selected:  'Sie müssen mindestens einen Eintrag auswählen.'
+    warning:        'Konnte die Aktion aufgrund fehlender Parameter nicht ausführen.'
+    send:           'Senden'
 
 # Layout
 dashboard:
-    homepage:   Startseite
-    brand:      Übersicht
+    homepage:   'Startseite'
+    brand:      'Übersicht'
 
 admingenerator:
-    dashboard: Übersicht
+    dashboard: 'Übersicht'

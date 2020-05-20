@@ -2,61 +2,61 @@
 
 # Boolean filter
 boolean:
-    yes:        Sì
-    no:         No
-    yes_or_no:  Sì o No
+    yes:        'Sì'
+    no:         'No'
+    yes_or_no:  'Sì o No'
 
 # Pager
 pagerfanta:
-    previous:       <
-    next:           ">"
-    view.perpage:   Mostra
-    num.elements:   %number% elementi
+    previous:       '<'
+    next:           '>'
+    view.perpage:   'Mostra'
+    num.elements:   '%number% elementi'
 
 # List
 list:
-    filters: Filtras
+    filters: 'Filtras'
     button:
-        filter:         Filtra
-        reset:          Pulisci
-    no.results:     Nessun risultato.
+        filter:         'Filtra'
+        reset:          'Pulisci'
+    no.results:     'Nessun risultato.'
     display:
-        range:      Mostra i risultati da <b role="results-range-start">%start%</b> a <b role="results-range-end">%end%</b> di <b role="results-count">%count%</b>.
-        all:        Mostra tutti i <b role="results-count">%count%</b> risultati.
-        one:        Mostra <b role="results-count">%count%</b> risultato.
-    header.actions: Azioni
+        range:      'Mostra i risultati da <b role="results-range-start">%start%</b> a <b role="results-range-end">%end%</b> di <b role="results-count">%count%</b>.'
+        all:        'Mostra tutti i <b role="results-count">%count%</b> risultati.'
+        one:        'Mostra <b role="results-count">%count%</b> risultato.'
+    header.actions: 'Azioni'
 
 # Nested List
 nested.list:
-    expand:     Mostra
-    collapse:   Nascondere
-    loading:    Caricamento in corso
-    success:    L'elemento è stato spostato con successo.
-    error:      Impossibile spostare elemento.
+    expand:     'Mostra'
+    collapse:   'Nascondere'
+    loading:    'Caricamento in corso'
+    success:    'L''elemento è stato spostato con successo.'
+    error:      'Impossibile spostare elemento.'
 
 # Profile
 profile:
-    welcome:  <b>Benvenuto</b>, %username%!
-    login:    Accedi
-    logout:   Esci
-    exit:     Uscire dalla modalità di rappresentazione
-    unauthenticated: Non sei loggato
+    welcome:  '<b>Benvenuto</b>, %username%!'
+    login:    'Accedi'
+    logout:   'Esci'
+    exit:     'Uscire dalla modalità di rappresentazione'
+    unauthenticated: 'Non sei loggato'
 
 # Generic actions
 action.generic:
-    list:   Lista
-    new:    Nuovo
-    save:   Salva
-    save-and-add:   Salva e Nuovo
-    save-and-list:  Salva e Lista
-    save-and-show:  Salva e Mostrare
-    excel:  Export to Excel
-    export: Export
+    list:   'Lista'
+    new:    'Nuovo'
+    save:   'Salva'
+    save-and-add:   'Salva e Nuovo'
+    save-and-list:  'Salva e Lista'
+    save-and-show:  'Salva e Mostrare'
+    excel:  'Export to Excel'
+    export: 'Export'
 
 # Object actions
 action.object.edit:
-    label:    Modifica
-    success:  L'oggetto è stato salvato con successo.
+    label:    'Modifica'
+    success:  'L''oggetto è stato salvato con successo.'
     error:    |
                 Non è stato possibile salvare il form. Controlla gli errori e 
                 reinvia il form.
@@ -67,43 +67,43 @@ action.object.edit:
                 visualizzare le modifiche in una nuova scheda o inviare 
                 nuovamente il form di applicare le modifiche!
 action.object.delete:
-    label:    Cancellare
-    confirm:  Sei sicuro di voler eliminare questo elemento?
-    success:  Elemento è stato eliminato con successo.
-    error:    Elemento non può essere eliminato.
-    notfound: Elemento non può essere eliminato in quanto è già eliminato.
+    label:    'Cancellare'
+    confirm:  'Sei sicuro di voler eliminare questo elemento?'
+    success:  'Elemento è stato eliminato con successo.'
+    error:    'Elemento non può essere eliminato.'
+    notfound: 'Elemento non può essere eliminato in quanto è già eliminato.'
 action.object.show:
-    label:    Mostra
+    label:    'Mostra'
 
 # Batch actions
 action.batch.delete:
-    label:    Cancellare
-    confirm:  Confermi l'eliminazione di tutti gli elementi selezionati?
-    success:  I dati sono stati correttamente eliminati.
-    error:    I dati non possono essere eliminati.
+    label:    'Cancellare'
+    confirm:  'Confermi l''eliminazione di tutti gli elementi selezionati?'
+    success:  'I dati sono stati correttamente eliminati.'
+    error:    'I dati non possono essere eliminati.'
 
-action.batch.none: In primo luogo è necessario selezionare un'azione.
+action.batch.none: 'In primo luogo è necessario selezionare un''azione.'
 
 # Custom actions
 action.custom:
-    title:    Sei sicuro che si desidera eseguire l'azione %name%?
-    success:  L'azione %name% è stato eseguito con successo.
-    error:    Impossibile eseguire l'azione %name%.
-    confirm:  Confermare
-    cancel:   Annullare
+    title:    'Sei sicuro che si desidera eseguire l''azione %name%?'
+    success:  'L''azione %name% è stato eseguito con successo.'
+    error:    'Impossibile eseguire l''azione %name%.'
+    confirm:  'Confermare'
+    cancel:   'Annullare'
 
 # Batch list
 batch.list:
-    selected:       Selezionati
-    none.selected:  È necessario selezionare alemeno uno elemento.
-    warning:        Impossibile completare l'azione partita a causa di parametri mancanti.
-    selector:       Choose an action for selection
-    send:           Eseguire
+    selected:       'Selezionati'
+    none.selected:  'È necessario selezionare alemeno uno elemento.'
+    warning:        'Impossibile completare l''azione partita a causa di parametri mancanti.'
+    selector:       'Choose an action for selection'
+    send:           'Eseguire'
 
 # Layout
 dashboard:
-    homepage:   Inizio pagina
-    brand:      Cruscotto
+    homepage:   'Inizio pagina'
+    brand:      'Cruscotto'
 
 admingenerator:
-    dashboard: Cruscotto
+    dashboard: 'Cruscotto'

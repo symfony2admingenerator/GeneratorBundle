@@ -2,105 +2,105 @@
 
 # Boolean filter
 boolean:
-    yes:        Ja
-    no:         Nee
-    yes_or_no:  Ja of Nee
+    yes:        'Ja'
+    no:         'Nee'
+    yes_or_no:  'Ja of Nee'
 
 # Pager
 pagerfanta:
-    previous:       <
-    next:           ">"
-    view.perpage:   Weergeven
-    num.elements:   %number% elementen
+    previous:       '<'
+    next:           '>'
+    view.perpage:   'Weergeven'
+    num.elements:   '%number% elementen'
 
 # List
 list:
-    filters: Filters
+    filters: 'Filters'
     button:
-        filter:         Filter
-        reset:          Reset
-        close:          Sluiten
-    no.results:     Er zijn geen resultaten.
+        filter:         'Filter'
+        reset:          'Reset'
+        close:          'Sluiten'
+    no.results:     'Er zijn geen resultaten.'
     display:
-        range:      Geef <b role="results-range-start">%start%</b> - <b role="results-range-end">%end%</b> van <b role="results-count">%count%</b> resultaten weer.
-        all:        Geef alle <b role="results-count">%count%</b> resultaten weer.
-        one:        Geef <b role="results-count">%count%</b> resultaat.
-    header.actions: Acties
+        range:      'Geef <b role="results-range-start">%start%</b> - <b role="results-range-end">%end%</b> van <b role="results-count">%count%</b> resultaten weer.'
+        all:        'Geef alle <b role="results-count">%count%</b> resultaten weer.'
+        one:        'Geef <b role="results-count">%count%</b> resultaat.'
+    header.actions: 'Acties'
 
 # Nested List
 nested.list:
-    expand:     Weergeven
-    collapse:   Verbergen
-    loading:    Aan het laden
-    success:    Het element is succesvol verplaatst.
-    error:      Kan element niet verplaatsen.
+    expand:     'Weergeven'
+    collapse:   'Verbergen'
+    loading:    'Aan het laden'
+    success:    'Het element is succesvol verplaatst.'
+    error:      'Kan element niet verplaatsen.'
 
 # Profile
 profile:
-    welcome:  <b>Welkom</b>, %username%!
-    login:    Inloggen
-    logout:   Uitloggen
-    exit:     Verlaat impersonatiemodus
-    unauthenticated: Niet ingelogd
+    welcome:  '<b>Welkom</b>, %username%!'
+    login:    'Inloggen'
+    logout:   'Uitloggen'
+    exit:     'Verlaat impersonatiemodus'
+    unauthenticated: 'Niet ingelogd'
 
 # Generic actions
 action.generic:
-    list:   Lijst
-    new:    Nieuw
-    save:   Opslaan
-    save-and-add:   Opslaan en naar toevoegen
-    save-and-list:  Opslaan en naar lijst
-    save-and-show:  Opslaan en tonen
-    excel:  Exporteren naar Excel
-    export: Exporteren
+    list:   'Lijst'
+    new:    'Nieuw'
+    save:   'Opslaan'
+    save-and-add:   'Opslaan en naar toevoegen'
+    save-and-list:  'Opslaan en naar lijst'
+    save-and-show:  'Opslaan en tonen'
+    excel:  'Exporteren naar Excel'
+    export: 'Exporteren'
 
 # Object actions
 action.object.edit:
-    label:    Bewerken
-    success:  Het object is succesvol opgeslagen.
-    error:    Het formulier kan niet worden opgeslagen. Controleer op fouten en probeer opnieuw.
+    label:    'Bewerken'
+    success:  'Het object is succesvol opgeslagen.'
+    error:    'Het formulier kan niet worden opgeslagen. Controleer op fouten en probeer opnieuw.'
     locked:   |
                 Helaas heeft iemand anders dit object al gewijzigd.<br />
                 <a href="%path%" target="_blank">Klik hier</a> om de wijzigingen in een nieuwe tab te bekijken 
                 of verstuur het formulier opnieuw om uw wijzigingen toe te passen!
 action.object.delete:
-    label:    Verwijderen
-    confirm:  Weet u zeker dat u dit element wilt verwijderen?
-    success:  Element is succesvol verwijderd.
-    error:    Element kan niet verwijderd worden.
-    notfound: Element kon niet verwijderd worden omdat het al verwijderd is.
+    label:    'Verwijderen'
+    confirm:  'Weet u zeker dat u dit element wilt verwijderen?'
+    success:  'Element is succesvol verwijderd.'
+    error:    'Element kan niet verwijderd worden.'
+    notfound: 'Element kon niet verwijderd worden omdat het al verwijderd is.'
 action.object.show:
-    label:    Tonen
+    label:    'Tonen'
 
 # Batch actions
 action.batch.delete:
-    label:    Verwijderen
-    confirm:  Weet u zeker dat u alle geselecteerde elementen wilt verwijderen?
-    success:  Records zijn succesvol verwijderd.
-    error:    Records kunnen niet verwijderd worden.
+    label:    'Verwijderen'
+    confirm:  'Weet u zeker dat u alle geselecteerde elementen wilt verwijderen?'
+    success:  'Records zijn succesvol verwijderd.'
+    error:    'Records kunnen niet verwijderd worden.'
 
-action.batch.none: Eerst moet je een actie te selecteren.
+action.batch.none: 'Eerst moet je een actie te selecteren.'
 
 # Custom actions
 action.custom:
-    title:    Weet u zeker dat u %name% wilt uitvoeren?
-    success:  De %name% actie is succesvol uitgevoerd.
-    error:    Kon %name% actie niet uitvoeren.
-    confirm:  Bevestigen
-    cancel:   Annuleren
+    title:    'Weet u zeker dat u %name% wilt uitvoeren?'
+    success:  'De %name% actie is succesvol uitgevoerd.'
+    error:    'Kon %name% actie niet uitvoeren.'
+    confirm:  'Bevestigen'
+    cancel:   'Annuleren'
 
 # Batch list
 batch.list:
-    selected:       Geselecteerd
-    none.selected:  U moet minstens 1 element selecteren.
-    warning:        Kon batch-actie niet uitvoeren vanwege ontbrekende parameters
-    send:           Uitvoeren
+    selected:       'Geselecteerd'
+    none.selected:  'U moet minstens 1 element selecteren.'
+    warning:        'Kon batch-actie niet uitvoeren vanwege ontbrekende parameters'
+    send:           'Uitvoeren'
 
 # Layout
 dashboard:
-    homepage:   Homepage
-    brand:      Dashboard
+    homepage:   'Homepage'
+    brand:      'Dashboard'
 
 admingenerator:
-    dashboard: Dashboard
+    dashboard: 'Dashboard'
     

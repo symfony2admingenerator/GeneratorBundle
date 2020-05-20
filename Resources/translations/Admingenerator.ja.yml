@@ -2,103 +2,103 @@
 
 # Boolean filter
 boolean:
-    yes:        はい
-    no:         ノー
-    yes_or_no:  諾否
+    yes:        'はい'
+    no:         'ノー'
+    yes_or_no:  '諾否'
 
 # Pager
 pagerfanta:
-    previous:       <
-    next:           ">"
-    view.perpage:   を表示する
-    num.elements:   %number%つの要素
+    previous:       '<'
+    next:           '>'
+    view.perpage:   'を表示する'
+    num.elements:   '%number%つの要素'
 
 # List
 list:
-    filters: Filters
+    filters: 'Filters'
     button:
-        filter:         絞り込み
-        reset:          リセット
-    no.results:     結果がありません
+        filter:         '絞り込み'
+        reset:          'リセット'
+    no.results:     '結果がありません'
     display:
-        range:      <b role="results-count">%count%</b> 件中 <b role="results-range-start">%start%</b> - <b role="results-range-end">%end%</b> 件目を表示中
-        all:        <b role="results-count">%count%</b> 件の結果を表示中
-        one:        <b role="results-count">%count%</b> 件の結果を表示中
-    header.actions: 操作
+        range:      '<b role="results-count">%count%</b> 件中 <b role="results-range-start">%start%</b> - <b role="results-range-end">%end%</b> 件目を表示中'
+        all:        '<b role="results-count">%count%</b> 件の結果を表示中'
+        one:        '<b role="results-count">%count%</b> 件の結果を表示中'
+    header.actions: '操作'
 
 # Nested List
 nested.list:
-    expand:     見せる
-    collapse:   隠す
-    loading:    読みこみ中…
-    success:    要素が正常に移動した
-    error:      要素を移動できませんでした
+    expand:     '見せる'
+    collapse:   '隠す'
+    loading:    '読みこみ中…'
+    success:    '要素が正常に移動した'
+    error:      '要素を移動できませんでした'
 
 # Profile
 profile:
-    welcome:  <b>ようこそ</b> %username%
-    login:    ログイン
-    logout:   ログアウト
-    exit:     偽装モードを終了
-    unauthenticated: ログインしていません
+    welcome:  '<b>ようこそ</b> %username%'
+    login:    'ログイン'
+    logout:   'ログアウト'
+    exit:     '偽装モードを終了'
+    unauthenticated: 'ログインしていません'
 
 # Generic actions
 action.generic:
-    list:   一覧
-    new:    新規作成
-    save:   保存
-    save-and-add:   保存して追加
-    save-and-list:  保存して戻る
-    save-and-show:  保存して表示
-    excel:  Excel へのエクスポート
-    export: Export
+    list:   '一覧'
+    new:    '新規作成'
+    save:   '保存'
+    save-and-add:   '保存して追加'
+    save-and-list:  '保存して戻る'
+    save-and-show:  '保存して表示'
+    excel:  'Excel へのエクスポート'
+    export: 'Export'
 
 # Object actions
 action.object.edit:
-    label:    編集
-    success:  データの保存が正常に完了しました。
-    error:    データの保存に失敗しました。エラーを確認して再度保存してください。
+    label:    '編集'
+    success:  'データの保存が正常に完了しました。'
+    error:    'データの保存に失敗しました。エラーを確認して再度保存してください。'
     locked:   |
                 申し訳ありませんが、他の誰かがすでにこのオブジェクトを変更しました。<br />
                 <a href="%path%" target="_blank">ここをクリック</a>
                 新しいタブで変更を表示したり、変更を適用するには、もう一度フォームを送信します！
 action.object.delete:
-    label:    削除
-    confirm:  選択したデータを削除します。よろしいですか?
-    success:  要素が正常に削除されています。
-    error:    要素を削除することはできません。
+    label:    '削除'
+    confirm:  '選択したデータを削除します。よろしいですか?'
+    success:  '要素が正常に削除されています。'
+    error:    '要素を削除することはできません。'
 action.object.show:
-    label:    表示
+    label:    '表示'
 
 # Batch actions
 action.batch.delete:
-    label:    削除
-    confirm:  選択したすべてのデータを削除します。よろしいですか?
-    success:  データの削除が正常に完了しました。
-    error:    データの削除に失敗しました。
-    notfound: それはすでに削除されているように要素を削除することはできません。
+    label:    '削除'
+    confirm:  '選択したすべてのデータを削除します。よろしいですか?'
+    success:  'データの削除が正常に完了しました。'
+    error:    'データの削除に失敗しました。'
+    notfound: 'それはすでに削除されているように要素を削除することはできません。'
 
-action.batch.none: まず、アクションを選択する必要があります。
+action.batch.none: 'まず、アクションを選択する必要があります。'
 
 # Custom actions
 action.custom:
-    title:    あなたはの%name%のアクションを実行してもよろしいですか？
-    success:  の%name%のアクションは正常に実行されました。
-    error:    の%name%のアクションを実行できませんでした。
-    confirm:  確認する
-    cancel:   キャンセル
+    title:    'あなたはの%name%のアクションを実行してもよろしいですか？'
+    success:  'の%name%のアクションは正常に実行されました。'
+    error:    'の%name%のアクションを実行できませんでした。'
+    confirm:  '確認する'
+    cancel:   'キャンセル'
 
 # Batch list
 batch.list:
-    selected:       選択済み
-    none.selected:  1つ以上のデータを選択する必要があります。
-    warning:        により不足しているパラメータをバッチアクションを完了できませんでした
-    send:           成し遂げる
+    selected:       '選択済み'
+    none.selected:  '1つ以上のデータを選択する必要があります。'
+    warning:        'により不足しているパラメータをバッチアクションを完了できませんでした'
+    send:           '成し遂げる'
 
 # Layout
 dashboard:
-    homepage:   ホームへ
-    brand:      ダッシュボード
+    homepage:   'ホームへ'
+    brand:      'ダッシュボード'
 
 admingenerator:
-    dashboard: ダッシュボード
+    dashboard: 'ダッシュボード'
