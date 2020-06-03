@@ -44,7 +44,7 @@
         "symfony2admingenerator/twig-generator": "~1.2,>=1.2.2",
         "twig/extensions": "~1.0",
         "twig/twig": "~1.26||~2.0",
-        "white-october/pagerfanta-bundle": ">=1.0.6"
+        "babdev/pagerfanta-bundle": "~2.0"
     },
     "require-dev": {
         "doctrine/dbal": ">=2.2.3",

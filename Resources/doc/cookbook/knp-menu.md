@@ -21,7 +21,7 @@ public function registerBundles()
         // ...
         new Admingenerator\GeneratorBundle\AdmingeneratorGeneratorBundle($this),
         new Knp\Bundle\MenuBundle\KnpMenuBundle(),
-        new WhiteOctober\PagerfantaBundle\WhiteOctoberPagerfantaBundle(),
+        new BabDev\PagerfantaBundle\BabDevPagerfantaBundle(),
     );
 }
 ```

@@ -16,7 +16,7 @@ use Symfony\Component\ClassLoader\UniversalClassLoader;
 $loader = new UniversalClassLoader();
 $loader->registerNamespaces(array(
     'Symfony'           => $vendorDir.'/symfony/src',
-    'WhiteOctober\PagerfantaBundle' => $vendorDir,
+    'BabDev\PagerfantaBundle' => $vendorDir,
     'Pagerfanta'                    => $vendorDir.'/src',
     'TwigGenerator'     => $vendorDir.'/twig-generator/src',
     'Doctrine\Common'   => $vendorDir.'/doctrine-common/lib',
