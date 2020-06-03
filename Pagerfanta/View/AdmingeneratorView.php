@@ -4,7 +4,7 @@ namespace Admingenerator\GeneratorBundle\Pagerfanta\View;
 
 use Pagerfanta\PagerfantaInterface;
 use Pagerfanta\View\ViewInterface;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class AdmingeneratorView implements ViewInterface
 {
