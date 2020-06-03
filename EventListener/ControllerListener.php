@@ -140,32 +140,35 @@ class ControllerListener
     protected function findGeneratorYml($controller)
     {
         preg_match('/(.+)?Controller.+::.+/', $controller, $matches);
-        $dir = str_replace('\\', DIRECTORY_SEPARATOR, $matches[1]);
+        if (count($matches) > 1) {
+          $dir = str_replace('\\', DIRECTORY_SEPARATOR, $matches[1]);
 
-        $generatorName  = $this->getBaseGeneratorName($controller) ? $this->getBaseGeneratorName($controller).'-' : '';
-        $generatorName .= 'generator.yml';
+          $generatorName = $this->getBaseGeneratorName($controller) ? $this->getBaseGeneratorName($controller) . '-' : '';
+          $generatorName .= 'generator.yml';
 
-        $finder = new Finder();
-        $finder->files()
-                ->name($generatorName);
+          $finder = new Finder();
+          $finder->files()
+              ->name($generatorName);
 
-        if (is_dir($src = realpath($this->container->getParameter('kernel.root_dir').'/../src/'.$dir.'/Resources/config'))) {
+          if (is_dir($src = realpath($this->container->getParameter('kernel.root_dir') . '/../src/' . $dir . '/Resources/config'))) {
             $namespace_directory = $src;
-        } else {
-            $namespace_directory = realpath($this->container->getParameter('kernel.root_dir').'/../vendor/bundles/'.$dir.'/Resources/config');
-        }
+          } else {
+            $namespace_directory = realpath($this->container->getParameter('kernel.root_dir') . '/../vendor/bundles/' . $dir . '/Resources/config');
+          }
 
-        if (is_dir($namespace_directory)) {
+          if (is_dir($namespace_directory)) {
             $finder->in($namespace_directory);
             $it = $finder->getIterator();
             $it->rewind();
 
             if ($it->valid()) {
-                return $it->current()->getRealpath();
+              return $it->current()->getRealpath();
             }
+          }
         }
 
         throw new NotAdminGeneratedException;
+
     }
 
     /**
