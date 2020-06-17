@@ -2,6 +2,7 @@
 
 namespace Admingenerator\GeneratorBundle\DependencyInjection;
 
+use Admingenerator\GeneratorBundle\ClassLoader\AdmingeneratedClassLoader;
 use Admingenerator\GeneratorBundle\Exception\ModelManagerNotSelectedException;
 use Admingenerator\GeneratorBundle\Filesystem\GeneratorsFinder;
 use Symfony\Component\Config\FileLocator;
@@ -16,19 +17,6 @@ use Symfony\Component\Yaml\Yaml;
 
 class AdmingeneratorGeneratorExtension extends Extension
 {
-    /**
-     * @var KernelInterface
-     */
-    private $kernel;
-
-    /**
-     * @param KernelInterface $kernel
-     */
-    public function __construct(KernelInterface $kernel)
-    {
-        $this->kernel = $kernel;
-    }
-
     /**
      * Prepend KnpMenuBundle config
      */
@@ -240,7 +228,7 @@ class AdmingeneratorGeneratorExtension extends Extension
      */
     private function registerGeneratedFormsAsServices(ContainerBuilder $container)
     {
-        $finder = new GeneratorsFinder($this->kernel);
+        $finder = new GeneratorsFinder($container->getParameter('kernel.project_dir'));
 
         foreach ($finder->findAll() as $path => $generator) {
             $generator = Yaml::parse(file_get_contents($generator));

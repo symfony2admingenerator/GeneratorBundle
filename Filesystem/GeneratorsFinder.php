@@ -15,25 +15,21 @@ use Symfony\Component\Finder\Finder;
 class GeneratorsFinder
 {
     /**
-     * @var KernelInterface
-     */
-    private $kernel;
-    /**
      * @var array
      */
     private $yamls;
 
     /**
-     * Constructor.
-     *
-     * @param KernelInterface $kernel A KernelInterface instance
+     * @var string
      */
-    public function __construct(KernelInterface $kernel)
+    private $projectDir;
+
+    public function __construct(string $projectDir)
     {
-        $this->kernel = $kernel;
+      $this->projectDir = $projectDir;
     }
 
-    /**
+  /**
      * Find all the generator.yml in the bundle and in the kernel Resources folder.
      *
      * @return array An array of yaml files
@@ -44,12 +40,15 @@ class GeneratorsFinder
             return $this->yamls;
         }
 
-        $yamls = array();
+        $yamls =  array();
 
-        foreach ($this->kernel->getBundles() as $name => $bundle) {
-            foreach ($this->find($bundle) as $yaml) {
-                $yamls[$yaml] = $yaml;
-            }
+        $finder = new Finder();
+        $finder->files()
+            ->name('*-generator.yml')
+            ->in($this->projectDir.'/src/*/*/Resources/config');
+
+        foreach ($finder as $file) {
+            $yamls[$file->getRealPath()] = $file->getRealPath();
         }
 
         return $this->yamls = $yamls;

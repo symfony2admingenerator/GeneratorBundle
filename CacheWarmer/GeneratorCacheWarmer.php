@@ -32,7 +32,7 @@ class GeneratorCacheWarmer implements CacheWarmerInterface
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
-        $this->finder = new GeneratorsFinder($container->get('kernel'));
+        $this->finder = new GeneratorsFinder($container->getParameter('kernel.project_dir'));
     }
 
     /**

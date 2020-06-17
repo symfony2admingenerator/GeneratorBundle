@@ -16,22 +16,34 @@ class AdmingeneratedClassLoader
     protected $basePath;
 
     /**
-     * Registers this instance as an autoloader.
-     *
-     * @param Boolean $prepend Whether to prepend the autoloader or not
+     * @var bool
      */
-    public function register($prepend = false)
+    public static $initialized = false;
+
+    /**
+     * Initialize Admingenerator Class loader
+     *
+     * @param string $cacheDir
+     */
+    public static function initAdmingeneratorClassLoader(string $cacheDir)
     {
-        spl_autoload_register(array($this, 'loadClass'), true, $prepend);
+        $admingeneratedClassLoader = new self();
+        $admingeneratedClassLoader->register($cacheDir);
     }
 
     /**
-     * @param string $basePath
-     * @return string
+     * Registers this instance as an autoloader.
+     *
+     * @param string $cacheDir
      */
-    public function setBasePath($basePath)
+    public function register(string $cacheDir)
     {
-        return $this->basePath = $basePath;
+        if (self::$initialized) {
+          return;
+        }
+        $this->basePath = $cacheDir;
+        spl_autoload_register(array($this, 'loadClass'), true);
+        self::$initialized = true;
     }
 
     /**
