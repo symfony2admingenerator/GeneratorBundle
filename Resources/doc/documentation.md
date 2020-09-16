@@ -4,6 +4,10 @@ This site provides API documentation for latest build of Symfony2 Admin Generato
 we encourage you to update to latest build. If you're getting errors or have trouble with updating see 
 [submitting issues][support-issues] and open a ticket on github.
 
+**Watch out!** When using this bundle on Symfony 4 or above, you need to update your frontend controller
+and console binary to load the `AdminGenerated` namespace. If you do not do this, you will see that 
+the cache is never working when debug is enabled!
+
 ## Table of contents
 1. Installation
     - [Base installation][install-base-install]

@@ -5,7 +5,6 @@ namespace Admingenerator\GeneratorBundle;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Admingenerator\GeneratorBundle\ClassLoader\AdmingeneratedClassLoader;
 use Admingenerator\GeneratorBundle\DependencyInjection\Compiler\TwigLoaderPass;
 use Admingenerator\GeneratorBundle\DependencyInjection\Compiler\ValidatorPass;
 use Admingenerator\GeneratorBundle\DependencyInjection\Compiler\FormPass;
@@ -21,7 +20,6 @@ class AdmingeneratorGeneratorBundle extends Bundle
     {
         parent::build($container);
 
-        AdmingeneratedClassLoader::initAdmingeneratorClassLoader($container->getParameter('kernel.cache_dir'));
         $container->addCompilerPass(new ValidatorPass());
         $container->addCompilerPass(new FormPass());
         $container->addCompilerPass(new TwigLoaderPass());

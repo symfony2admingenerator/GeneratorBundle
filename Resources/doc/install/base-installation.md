@@ -22,21 +22,26 @@ This bundle depends on:
 
 > **Note:** there are also some optional dependencies, each is described in corresponding feature`s doc. This guide describes only the minimal-setup.
 
-Enable Admin Generator and its dependencies in your `app/AppKernel.php`:
+Enable Admin Generator and its dependencies in your `config/bundles.php`:
 
 ```php
 <?php
-public function registerBundles()
-{
-    $bundles = array(
-        // ...
-        new Admingenerator\GeneratorBundle\AdmingeneratorGeneratorBundle($this),
-        new BabDev\PagerfantaBundle\BabDevPagerfantaBundle(),
-    );
-}
+    Admingenerator\GeneratorBundle\AdmingeneratorGeneratorBundle::class => ['all' => true],
+    BabDev\PagerfantaBundle\BabDevPagerfantaBundle::class => ['all' => true],
 ```
 
-> **Note:** Do not forget to add the kernel to the initialization of the bundle (the `$this` argument).
+> **Note:** Make sure to follow the following step to prevent cache issues!
+
+
+Place the following in your frontend controller (`public/index.php`) and your console binary (`bin/console`)
+to ensure the `AdminGenerated` namespace is loaded! Make sure to place it directly after the kernel instantiation.
+
+```php
+use Admingenerator\GeneratorBundle\ClassLoader\AdmingeneratedClassLoader;
+
+// Preload the admin generator namespace to prevent class load errors when checking whether the cache is fresh
+AdmingeneratedClassLoader::initAdmingeneratorClassLoader($kernel->getCacheDir());
+```
 
 If you want to use the JMS Security Extra expressions, make sure to 
 [install the bundle](http://jmsyst.com/bundles/JMSSecurityExtraBundle/master/installation#using-composer-recommended)

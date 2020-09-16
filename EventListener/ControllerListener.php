@@ -28,17 +28,11 @@ class ControllerListener
      */
     protected $cacheSuffix;
 
-    /**
-     * @var string
-     */
-    protected $cacheDir;
-
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
         $this->cacheProvider = new DoctrineCache\ArrayCache();
         $this->cacheSuffix = 'default';
-        $this->cacheDir = $container->getParameter('kernel.cache_dir');
     }
 
     /**
@@ -53,9 +47,6 @@ class ControllerListener
 
     public function onKernelRequest(GetResponseEvent $event)
     {
-        // Initialize class loader if needed
-        AdmingeneratedClassLoader::initAdmingeneratorClassLoader($this->cacheDir);
-
         if (HttpKernelInterface::MASTER_REQUEST === $event->getRequestType()) {
             try {
                 $controller = $event->getRequest()->attributes->get('_controller');

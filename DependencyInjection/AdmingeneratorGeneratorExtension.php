@@ -2,7 +2,6 @@
 
 namespace Admingenerator\GeneratorBundle\DependencyInjection;
 
-use Admingenerator\GeneratorBundle\ClassLoader\AdmingeneratedClassLoader;
 use Admingenerator\GeneratorBundle\Exception\ModelManagerNotSelectedException;
 use Admingenerator\GeneratorBundle\Filesystem\GeneratorsFinder;
 use Symfony\Component\Config\FileLocator;

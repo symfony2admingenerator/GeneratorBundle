@@ -59,18 +59,11 @@
         </service>
 
         <!-- General -->
-        <service id="admingenerator.controller.listener"
+        <service id="admingenerator.generator.listener"
             class="Admingenerator\GeneratorBundle\EventListener\ControllerListener">
             <tag name="kernel.event_listener" event="kernel.request"
-                method="onKernelRequest" priority="1000" />
+                method="onKernelRequest" />
             <argument type="service" id="service_container" />
-        </service>
-
-        <service id="admingenerator.command.listener"
-                 class="Admingenerator\GeneratorBundle\EventListener\ConsoleListener">
-            <tag name="kernel.event_listener" event="console.command"
-                 method="onConsoleCommand" />
-            <argument>%kernel.cache_dir%</argument>
         </service>
 
         <service id="routing.loader.admingenerator" class="%routing.loader.admingenerator.class%" public="false">
