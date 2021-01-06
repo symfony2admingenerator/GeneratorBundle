@@ -3,11 +3,13 @@
 namespace Admingenerator\GeneratorBundle\Twig\Extension;
 
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
 /**
  * @author Stéphane Escandell <stephane.escandell@gmail.com>
  */
-class SecurityExtension extends \Twig_Extension
+class SecurityExtension extends AbstractExtension
 {
     /**
      * @var AuthorizationCheckerInterface
@@ -35,7 +37,7 @@ class SecurityExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            'is_one_admingenerator_granted' => new \Twig_SimpleFunction('is_one_admingenerator_granted', array($this, 'isOneGranted')),
+            'is_one_admingenerator_granted' => new TwigFunction('is_one_admingenerator_granted', array($this, 'isOneGranted')),
         );
     }
 

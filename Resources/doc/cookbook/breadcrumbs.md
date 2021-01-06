@@ -23,7 +23,7 @@ You can customize the example below if needed. The file should be located in `ap
 ```twig
 {% block root %}
   {% if items|length > 1 %}
-    {% spaceless %}
+    {% apply spaceless %}
       <ol id="breadcrumbs" class="breadcrumb hidden-xs hidden-print" itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
   	  {% for item in items %}
           {% if loop.last %}{%set itemClass = "active"%}{% endif %}
@@ -36,7 +36,7 @@ You can customize the example below if needed. The file should be located in `ap
   		</li>
   	  {% endfor %}
       </ol>
-    {% endspaceless %}
+    {% endapply %}
   {% endif %}
 {% endblock root %}
 ```

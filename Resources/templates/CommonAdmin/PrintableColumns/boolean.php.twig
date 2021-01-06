@@ -1,9 +1,9 @@
 {% block column_boolean %}
-    {% spaceless %}
+    {% apply spaceless %}
         {{ echo_if(builder.ModelClass ~ '.' ~ column.getter) }}
             <i class="fa fa-check"></i>
         {{ echo_else() }}
             <i class="fa fa-times"></i>
         {{ echo_endif() }}
-    {% endspaceless %}
+    {% endapply %}
 {% endblock %}

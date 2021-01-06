@@ -1,5 +1,5 @@
 {% block column_datetime %}
-    {% spaceless %}
+    {% apply spaceless %}
         {% if builder.generator.bundleConfig.twig.use_localized_date == true -%}
             {{ echo_if (builder.ModelClass ~ '.' ~ column.getter) }}
                 {%- if column.localized_date_format is defined -%}
@@ -31,5 +31,5 @@
                 {{ echo_twig(builder.ModelClass ~ '.' ~ column.getter ~ '|date(datetime_format)') }}
             {{ echo_endif() }}
         {%- endif %}
-    {% endspaceless %}
+    {% endapply %}
 {% endblock %}

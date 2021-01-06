@@ -2,10 +2,13 @@
 
 namespace Admingenerator\GeneratorBundle\Twig\Extension;
 
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
+
 /**
  * @author Piotr Gołębiewski <loostro@gmail.com>
  */
-class ConfigExtension extends \Twig_Extension
+class ConfigExtension extends AbstractExtension
 {
     /**
      * @var array
@@ -26,7 +29,7 @@ class ConfigExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            'admingenerator_config' => new \Twig_SimpleFunction('admingenerator_config', array($this, 'getAdmingeneratorConfig')),
+            'admingenerator_config' => new TwigFunction('admingenerator_config', array($this, 'getAdmingeneratorConfig')),
         );
     }
 

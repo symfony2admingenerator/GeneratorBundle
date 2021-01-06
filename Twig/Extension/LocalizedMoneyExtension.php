@@ -3,17 +3,19 @@
 namespace Admingenerator\GeneratorBundle\Twig\Extension;
 
 use Symfony\Component\Form\Extension\Core\DataTransformer\MoneyToLocalizedStringTransformer;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
 /**
  * @author Piotr Gołębiewski <loostro@gmail.com>
  */
-class LocalizedMoneyExtension extends \Twig_Extension
+class LocalizedMoneyExtension extends AbstractExtension
 {
     public function getFunctions()
     {
         return array(
-            'localized_money' => new \Twig_SimpleFunction('localized_money', array($this, 'getLocalizedMoney')),
-            'currency_sign'   => new \Twig_SimpleFunction('currency_sign', array($this, 'getCurrencySign')),
+            'localized_money' => new TwigFunction('localized_money', array($this, 'getLocalizedMoney')),
+            'currency_sign'   => new TwigFunction('currency_sign', array($this, 'getCurrencySign')),
         );
     }
 

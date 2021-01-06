@@ -2,11 +2,14 @@
 
 namespace Admingenerator\GeneratorBundle\Twig\Extension;
 
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
+
 /**
  * @author Piotr Gołębiewski <loostro@gmail.com>
  * @author Stéphane Escandell
  */
-class ArrayExtension extends \Twig_Extension
+class ArrayExtension extends AbstractExtension
 {
     /**
      * {@inheritdoc}
@@ -14,11 +17,11 @@ class ArrayExtension extends \Twig_Extension
     public function getFilters()
     {
         return array(
-            'mapBy'     => new \Twig_SimpleFilter('mapBy', array($this, 'mapBy')),
-            'flatten'   => new \Twig_SimpleFilter('flatten', array($this, 'flatten')),
-            'intersect' => new \Twig_SimpleFilter('intersect', array($this, 'intersect')),
-            'clean'     => new \Twig_SimpleFilter('clean', array($this, 'clean')),
-            'unique'    => new \Twig_SimpleFilter('unique', array($this, 'unique')),
+            'mapBy'     => new TwigFilter('mapBy', array($this, 'mapBy')),
+            'flatten'   => new TwigFilter('flatten', array($this, 'flatten')),
+            'intersect' => new TwigFilter('intersect', array($this, 'intersect')),
+            'clean'     => new TwigFilter('clean', array($this, 'clean')),
+            'unique'    => new TwigFilter('unique', array($this, 'unique')),
         );
     }
 

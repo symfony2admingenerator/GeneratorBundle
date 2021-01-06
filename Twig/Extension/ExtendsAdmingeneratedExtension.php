@@ -3,8 +3,9 @@
 namespace  Admingenerator\GeneratorBundle\Twig\Extension;
 
 use Admingenerator\GeneratorBundle\Twig\TokenParser\ExtendsAdmingeneratedTokenParser;
+use Twig\Extension\AbstractExtension;
 
-class ExtendsAdmingeneratedExtension extends \Twig_Extension
+class ExtendsAdmingeneratedExtension extends AbstractExtension
 {
     /**
      * {@inheritdoc}

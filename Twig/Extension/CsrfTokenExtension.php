@@ -4,11 +4,13 @@ namespace Admingenerator\GeneratorBundle\Twig\Extension;
 
 use Symfony\Component\Form\Extension\Csrf\CsrfProvider\CsrfProviderInterface;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
 
 /**
  * @author Stéphane Escandell
  */
-class CsrfTokenExtension extends \Twig_Extension
+class CsrfTokenExtension extends AbstractExtension
 {
     /**
      * @var CsrfTokenManagerInterface
@@ -29,7 +31,7 @@ class CsrfTokenExtension extends \Twig_Extension
     public function getFilters()
     {
         return array(
-            'csrf_token' => new \Twig_SimpleFilter('csrf_token', array($this, 'getCsrfToken')),
+            'csrf_token' => new TwigFilter('csrf_token', array($this, 'getCsrfToken')),
         );
     }
 

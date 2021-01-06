@@ -2,12 +2,16 @@
 
 namespace Admingenerator\GeneratorBundle\Twig\Extension;
 
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
+use Twig\TwigFunction;
+
 /**
  * @author Cedric LOMBARDOT
  * @author Piotr Gołębiewski <loostro@gmail.com>
  * @author Stéphane Escandell
  */
-class EchoExtension extends \Twig_Extension
+class EchoExtension extends AbstractExtension
 {
     /**
      * @var bool
@@ -25,10 +29,10 @@ class EchoExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            'echo_if_granted'     => new \Twig_SimpleFunction('echo_if_granted', array($this, 'getEchoIfGranted')),
-            'echo_path'           => new \Twig_SimpleFunction('echo_path', array($this, 'getEchoPath')),
-            'echo_trans'          => new \Twig_SimpleFunction('echo_trans', array($this, 'getEchoTrans')),
-            'echo_render'         => new \Twig_SimpleFunction('echo_render', array($this, 'getEchoRender'))
+            'echo_if_granted'     => new TwigFunction('echo_if_granted', array($this, 'getEchoIfGranted')),
+            'echo_path'           => new TwigFunction('echo_path', array($this, 'getEchoPath')),
+            'echo_trans'          => new TwigFunction('echo_trans', array($this, 'getEchoTrans')),
+            'echo_render'         => new TwigFunction('echo_render', array($this, 'getEchoRender'))
         );
     }
 
@@ -38,7 +42,7 @@ class EchoExtension extends \Twig_Extension
     public function getFilters()
     {
         return array(
-            'convert_as_form' => new \Twig_SimpleFilter('convert_as_form', array($this, 'convertAsForm')),
+            'convert_as_form' => new TwigFilter('convert_as_form', array($this, 'convertAsForm')),
         );
     }
 

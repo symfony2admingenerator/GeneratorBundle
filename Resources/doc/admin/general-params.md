@@ -165,7 +165,7 @@ In this example, the custom blocks template must contain the following block:
 
 ```twig
 {% block column_gender %}
-  {% spaceless %}
+  {% apply spaceless %}
     {% if(field_value == 'm') %}
       <i class="glyphicon glyphicon-male"></i>
     {% elseif(field_value == 'f') %}
@@ -173,7 +173,7 @@ In this example, the custom blocks template must contain the following block:
     {% else %}
       <i class="glyphicon glyphicon-unknown"></i>
     {% endif %}
-  {% endspaceless %}
+  {% endapply %}
 {% endblock %}
 ```
 

@@ -2,20 +2,26 @@
 
 namespace Admingenerator\GeneratorBundle\Twig\TokenParser;
 
-class ExtendsAdmingeneratedTokenParser extends \Twig_TokenParser
+use Twig\Error\SyntaxError;
+use Twig\Node\Expression\ConstantExpression;
+use Twig\Node\Node;
+use Twig\Token;
+use Twig\TokenParser\AbstractTokenParser;
+
+class ExtendsAdmingeneratedTokenParser extends AbstractTokenParser
 {
 
     /**
      * Parses a token and returns a node.
      *
-     * @param \Twig_Token $token A \Twig_Token instance
+     * @param Token $token A Twig Token instance
      *
-     * @return \Twig_NodeInterface A \Twig_NodeInterface instance
+     * @return Node A Twig Node instance
      */
-    public function parse(\Twig_Token $token)
+    public function parse(Token $token)
     {
         if (null !== $this->parser->getParent()) {
-            throw new \Twig_Error_Syntax('Multiple extends tags are forbidden', $token->getLine());
+            throw new SyntaxError('Multiple extends tags are forbidden', $token->getLine());
         }
 
         list($bundle, $folder, $file) = explode(':', $this->parser->getCurrentToken()->getValue());
@@ -24,8 +30,8 @@ class ExtendsAdmingeneratedTokenParser extends \Twig_TokenParser
 
         $this->parser->getExpressionParser()->parseExpression();
 
-        $this->parser->setParent(new \Twig_Node_Expression_Constant($path,$token->getLine()));
-        $this->parser->getStream()->expect(\Twig_Token::BLOCK_END_TYPE);
+        $this->parser->setParent(new ConstantExpression($path,$token->getLine()));
+        $this->parser->getStream()->expect(Token::BLOCK_END_TYPE);
 
         return null;
     }

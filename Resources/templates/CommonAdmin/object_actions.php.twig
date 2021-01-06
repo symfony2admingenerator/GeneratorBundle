@@ -33,7 +33,7 @@
     {% set actionParams = action.params ? echo_twig_assoc(action.params) : "{ 'pk': " ~ builder.ModelClass ~ "." ~ builder.getFieldGuesser().getModelPrimaryKeyName(model) ~ ", action: '" ~ action.name ~ "' }" %}
     {% set translationDomain = action.type is same as('custom') ? i18n_catalog|default("Admin") : 'Admingenerator' %}
 
-    {% spaceless %}
+    {% apply spaceless %}
         {{ echo_spaceless() }}
         <a  class="object-action btn btn-default {% if builder.yamlKey is same as('list') or builder.yamlKey is same as('nested_list') %}btn-xs {% endif %}{{ action.class|default('') }}"
             href="{{ echo_path(actionRoute, actionParams) }}"
@@ -48,7 +48,7 @@
             <span>{{ echo_trans(action.label, {}, translationDomain) }}</span>
         </a>
         {{ echo_endspaceless() }}
-    {% endspaceless %}
+    {% endapply %}
 {% endblock %}
 
 {% block object_actions_script %}
