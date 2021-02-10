@@ -7,6 +7,7 @@ use Admingenerator\GeneratorBundle\Filesystem\GeneratorsFinder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
+use Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\DependencyInjection\Reference;
@@ -160,9 +161,8 @@ class AdmingeneratorGeneratorExtension extends Extension
     {
         $container->setParameter('admingenerator.twig', $twigConfiguration);
 
-        if ($twigConfiguration['use_localized_date']) {
-            // Register Intl extension for localized date
-            $container->register('twig.extension.intl', 'Twig_Extensions_Extension_Intl')->addTag('twig.extension');
+        if ($twigConfiguration['use_localized_date'] && !class_exists('\\Twig\\Extra\\Intl\\IntlExtension')) {
+            throw new InvalidArgumentException('Install the twig/intl-extra package to use localized dates!');
         }
     }
 

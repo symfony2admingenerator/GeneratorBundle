@@ -13,7 +13,7 @@
                     {{ echo_set('date_format', builder.generator.bundleConfig.twig.date_format) }}
                 {%- endif -%}
 
-                {{ echo_twig(builder.ModelClass ~ '.' ~ column.getter ~ '|localizeddate(localized_date_format, "none", null, null, date_format)') }}
+                {{ echo_twig(builder.ModelClass ~ '.' ~ column.getter ~ '|format_date(localized_date_format, pattern=date_format)') }}
             {{ echo_endif() }}
         {%- else -%}
             {{ echo_if (builder.ModelClass ~ '.' ~ column.getter) }}

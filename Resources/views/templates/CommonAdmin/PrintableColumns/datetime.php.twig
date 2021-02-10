@@ -18,7 +18,7 @@
                     {{ echo_set('datetime_format', builder.generator.bundleConfig.twig.datetime_format) }}
                 {%- endif -%}
 
-                {{ echo_twig(builder.ModelClass ~ '.' ~ column.getter ~ '|localizeddate(localized_date_format, localized_time_format, null, null, datetime_format)') }}
+                {{ echo_twig(builder.ModelClass ~ '.' ~ column.getter ~ '|format_datetime(localized_date_format, localized_time_format, pattern=datetime_format)') }}
             {{ echo_endif() }}
         {%- else -%}
             {{ echo_if (builder.ModelClass ~ '.' ~ column.getter) }}

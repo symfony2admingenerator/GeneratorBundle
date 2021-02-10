@@ -180,8 +180,8 @@ Set this to `true` to enable the `LocalizedDate` filter from twig, instead of us
 If `use_localized_date` is enabled, the date(time) field will be rendered as:
 
 ```html+django
-{{ my_date|localizeddate(localized_date_format, "none", null, null, date_format) }}
-{{ my_date|localizeddate(localized_datetime_format, localized_datetime_format, null, null, datetime_format) }}
+{{ my_date|format_date(localized_date_format, pattern=date_format) }}
+{{ my_date|format_datetime(localized_datetime_format, localized_datetime_format, pattern=datetime_format) }}
 ```
 
 Otherwise the date(time) field will be rendered as:

@@ -8,7 +8,7 @@ use Symfony\Component\HttpKernel\KernelInterface;
 use Admingenerator\GeneratorBundle\Validator\ValidatorInterface;
 use Admingenerator\GeneratorBundle\Builder\Generator as AdminGenerator;
 use Doctrine\Common\Cache as DoctrineCache;
-use Twig_Environment as TwigEnvironment;
+use Twig\Environment;
 
 abstract class Generator implements GeneratorInterface
 {
@@ -73,7 +73,7 @@ abstract class Generator implements GeneratorInterface
     protected $router;
     
     /**
-     * @var TwigEnvironment
+     * @var Environment
      */
     protected $twig;
 
@@ -283,10 +283,10 @@ abstract class Generator implements GeneratorInterface
     }
     
     /**
-     * @param TwigEnvironment $twig
+     * @param Environment $twig
      * @return void
      */
-    public function setTwig(TwigEnvironment $twig)
+    public function setTwig(Environment $twig)
     {
         $this->twig = $twig;
     }

@@ -10,6 +10,7 @@ use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\Finder\Finder;
 use Doctrine\Common\Cache as DoctrineCache;
 use Admingenerator\GeneratorBundle\Exception\NotAdminGeneratedException;
+use Twig\Extension\CoreExtension;
 
 class ControllerListener
 {
@@ -69,11 +70,11 @@ class ControllerListener
             $twig_params = $this->container->getParameter('admingenerator.twig');
 
             if (isset($twig_params['date_format'])) {
-                $this->container->get('twig')->getExtension(\Twig_Extension_Core::class)->setDateFormat($twig_params['date_format'], '%d days');
+                $this->container->get('twig')->getExtension(CoreExtension::class)->setDateFormat($twig_params['date_format'], '%d days');
             }
 
             if (isset($twig_params['number_format'])) {
-                $this->container->get('twig')->getExtension(\Twig_Extension_Core::class)->setNumberFormat($twig_params['number_format']['decimal'], $twig_params['number_format']['decimal_point'], $twig_params['number_format']['thousand_separator']);
+                $this->container->get('twig')->getExtension(CoreExtension::class)->setNumberFormat($twig_params['number_format']['decimal'], $twig_params['number_format']['decimal_point'], $twig_params['number_format']['thousand_separator']);
             }
         }
     }

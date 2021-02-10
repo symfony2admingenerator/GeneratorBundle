@@ -57,7 +57,9 @@
         "phpoffice/phpspreadsheet": "Allows the usage of the Excel export.",
         "jms/security-extra-bundle": "Take advantages of JMS Security Extra Bundle in your generated templates.",
         "cnerta/breadcrumb-bundle": "(version ^2.0) Allows the usage of breadcrumbs.",
-        "knplabs/knp-menu-bundle": "(version >1.0,<2.2) Allows automatic rendering of the menu structure."
+        "knplabs/knp-menu-bundle": "(version >1.0,<2.2) Allows automatic rendering of the menu structure.",
+        "twig/intl-extra": "Adds support for localized dates to templates",
+        "twig/extra-bundle": "Allows autoconfiguration of Twig extras"
     },
     "autoload": {
         "psr-4": {

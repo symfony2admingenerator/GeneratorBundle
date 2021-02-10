@@ -3,6 +3,7 @@
 namespace Admingenerator\GeneratorBundle\Tests\Twig\Extension;
 
 use Admingenerator\GeneratorBundle\Twig\Extension\EchoExtension;
+use Twig\Extension\AbstractExtension;
 
 /**
  * This class test the Admingenerator\GeneratorBundle\Twig\Extension\EchoExtension
@@ -18,7 +19,7 @@ class EchoExtensionTest extends BaseExtensionTest
     protected $useJms = false;
 
     /**
-     * @return \Twig_Extension
+     * @return AbstractExtension
      */
     protected function getTestedExtension()
     {
