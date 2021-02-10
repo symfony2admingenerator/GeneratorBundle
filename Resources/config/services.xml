@@ -23,7 +23,15 @@
             <tag name="twig.extension" />
         </service>
 
+        <service id="twig.extension.admingenerator.classify" class="Admingenerator\GeneratorBundle\Twig\Extension\ClassifyExtension" public="false">
+            <tag name="twig.extension" />
+        </service>
+
         <service id="twig.extension.admingenerator.echo" class="Admingenerator\GeneratorBundle\Twig\Extension\EchoExtension" public="false">
+            <tag name="twig.extension" />
+        </service>
+
+        <service id="twig.extension.twig_generator.extra_filter" class="TwigGenerator\Extension\ExtraFilterExtension" public="false">
             <tag name="twig.extension" />
         </service>
 
@@ -83,6 +91,11 @@
 
         <service id="admingenerator.maker.make_admin" class="Admingenerator\GeneratorBundle\Maker\MakeAdmin" public="true">
             <tag name="maker.command" />
+        </service>
+
+        <service id="admingenerator.command.install-assets" class="Admingenerator\GeneratorBundle\Command\AssetsInstallCommand">
+            <tag name="console.command" />
+            <argument>%kernel.root_dir%</argument>
         </service>
 
         <!-- Validators -->

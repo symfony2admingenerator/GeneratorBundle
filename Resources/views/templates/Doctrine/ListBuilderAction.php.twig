@@ -1,0 +1,143 @@
+{% extends '@AdmingeneratorGenerator/templates/CommonAdmin/ListAction/ListBuilderAction.php.twig' %}
+{% block setFilters -%}
+    /**
+     * Store in the session service the current filters
+     *
+     * @param array the filters
+     */
+    protected function setFilters(array $filters)
+    {
+        {%- for filter,column in builder.filterColumns -%}
+            {%- if 'entity' == builder.getFieldGuesser().getDbType(model, column.filterOn) or 'collection' == builder.getFieldGuesser().getDbType(model, column.filterOn) -%}
+            {% set filterModel = builder.getFieldGuesser().getModelType(model, column.filterOn) %}
+        if (isset($filters['{{ filter }}'])) {
+                $filters['{{ filter }}'] = array (
+                    '{{ builder.getFieldGuesser().getModelPrimaryKeyName(filterModel) }}' => is_object($filters['{{ filter }}']) ? $filters['{{ filter }}']->get{{ builder.getFieldGuesser().getModelPrimaryKeyName(filterModel)|capitalize }}() : $filters['{{ filter }}'],
+                    'entityName' => '{{ filterModel }}'
+                );
+        }
+            {%- endif %}
+        {% endfor -%}
+
+        $this->get('session')->set($this->getSessionPrefix().'List\Filters', $filters);
+    }
+{% endblock %}
+
+{% block getFilters -%}
+    /**
+     * Get filters from session
+     */
+    protected function getFilters()
+    {
+        $filters = $this->get('session')->get($this->getSessionPrefix().'List\Filters', array());
+
+        {%- for filter,column in builder.filterColumns -%}
+            {%- if 'entity' == builder.getFieldGuesser().getDbType(model, column.filterOn) or 'collection' == builder.getFieldGuesser().getDbType(model, column.filterOn) -%}
+            {% set filterModel = builder.getFieldGuesser().getModelType(model, column.filterOn) %}
+        if (isset($filters['{{ filter }}'])) {
+                $filters['{{ filter }}'] = $this->getDoctrine()
+                ->getManagerForClass($filters['{{ filter }}']['entityName'])
+                ->getRepository($filters['{{ filter }}']['entityName'])->find($filters['{{ filter }}']['{{ builder.getFieldGuesser().getModelPrimaryKeyName(filterModel) }}']);
+        }
+            {%- endif %}
+        {% endfor -%}
+
+        return $filters;
+    }
+{% endblock %}
+
+{% block getQuery -%}
+    protected function getQuery()
+    {
+        $query = $this->buildQuery();
+
+        $this->processQuery($query);
+        $this->processSort($query);
+
+        $queryFilter = $this->getQueryFilter($query);
+        $this->processScopes($queryFilter);
+        $this->processFilters($queryFilter);
+
+        return $query->getQuery();
+    }
+
+    protected function buildQuery()
+    {
+        return $this->getDoctrine()
+                    ->getManagerForClass('{{ model }}')
+                    ->getRepository('{{ model }}')
+                    ->createQueryBuilder('q');
+    }
+{% endblock %}
+
+{% block processSort -%}
+    protected function processSort($query)
+    {
+        if ($this->getSortColumn()) {
+            if (!strstr($this->getSortColumn(), '.')) { //direct column
+                $query->orderBy('q.'.$this->getSortColumn(), $this->getSortOrder());
+            } else {
+                $finalColumn = $this->addJoinFor($this->getSortColumn(), $query, false);
+                $query->orderBy($finalColumn, $this->getSortOrder());
+            }
+        }
+    }
+{% endblock %}
+
+{% block getFilterForm -%}
+    protected function getFilterForm()
+    {
+        $filters = $this->getFilters();
+
+        {%- for filter,column in builder.filterColumns -%}
+            {%- if 'entity' == builder.getFieldGuesser().getDbType(model, column.filterOn) or 'collection' == builder.getFieldGuesser().getDbType(model, column.filterOn) -%}
+            {% set filterModel = builder.getFieldGuesser().getModelType(model, column.filterOn) %}
+              if (isset($filters['{{ filter }}'])) {
+                  $this->getDoctrine()
+                  ->getManagerForClass(get_class($filters['{{ filter }}']))
+                  ->getUnitOfWork()
+                  ->registerManaged($filters['{{ filter }}'], array('{{ builder.getFieldGuesser().getModelPrimaryKeyName(filterModel) }}' => $filters['{{ filter }}']->get{{ builder.getFieldGuesser().getModelPrimaryKeyName(filterModel)|capitalize }}()), array());
+              }
+
+            {%- endif %}
+
+        {% endfor -%}
+
+        return $this->createForm(
+            $this->getFiltersType(),
+            $filters,
+            $this->getFiltersOptions()
+        );
+    }
+{% endblock %}
+
+{% block addJoinFor -%}
+    protected function addJoinFor($table, $query, $currentObject = true)
+    {
+        if ($currentObject) {
+            $query->leftJoin('q.'.$table, $table);
+        } else {
+            $tables = explode('.', $table);
+            $previousTable = 'q';
+            foreach (array_slice($tables, 0, -1) as $table) {
+                $query->leftJoin(implode('.', array($previousTable, $table)), 'sort_' . $table);
+                $previousTable = 'sort_' . $table;
+            }
+            return 'sort_' . $table . '.' . end($tables);
+        }
+        return null;
+    }
+{% endblock %}
+
+
+{% block getQueryFilter %}
+    /**
+     * @return \Admingenerator\GeneratorBundle\QueryFilter\QueryFilterInterface
+     */
+    protected function getQueryFilter($query)
+    {
+        $queryFilterClass = $this->getParameter('admingenerator.queryfilter.doctrine.class');
+
+        return new $queryFilterClass($query);
+    }
+{% endblock %}

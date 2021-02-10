@@ -3,7 +3,7 @@
 namespace Admingenerator\GeneratorBundle\Guesser;
 
 use Admingenerator\GeneratorBundle\Exception\NotImplementedException;
-use Doctrine\Common\Util\Inflector;
+use Doctrine\Inflector\InflectorFactory;
 use Symfony\Component\HttpKernel\Kernel;
 
 class PropelORMFieldGuesser
@@ -59,7 +59,7 @@ class PropelORMFieldGuesser
         $return = array();
 
         foreach ($this->getMetadatas($class)->getColumns() as $column) {
-            $return[] = Inflector::tableize($column->getPhpName());
+            $return[] = InflectorFactory::create()->build()->tableize($column->getPhpName());
         }
 
         return $return;
@@ -109,7 +109,7 @@ class PropelORMFieldGuesser
     protected function getRelation($fieldName, $class)
     {
         $table = $this->getMetadatas($class);
-        $relName = Inflector::classify($fieldName);
+        $relName = InflectorFactory::create()->build()->classify($fieldName);
 
         foreach ($table->getRelations() as $relation) {
             if ($relName === $relation->getName() || $relName === $relation->getPluralName()) {
@@ -409,7 +409,7 @@ class PropelORMFieldGuesser
             return $this->cache[$class.'::'.$property] = $table->getColumn($property);
         } else {
             foreach ($table->getColumns() as $column) {
-                $tabelized = Inflector::tableize($column->getPhpName());
+                $tabelized = InflectorFactory::create()->build()->tableize($column->getPhpName());
                 if ($tabelized === $property || $column->getPhpName() === ucfirst($property)) {
                     return $this->cache[$class.'::'.$property] = $column;
                 }

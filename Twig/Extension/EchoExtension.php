@@ -28,11 +28,12 @@ class EchoExtension extends AbstractExtension
      */
     public function getFunctions()
     {
+        $options = ['is_safe' => ['html']];
         return array(
-            'echo_if_granted'     => new TwigFunction('echo_if_granted', array($this, 'getEchoIfGranted')),
-            'echo_path'           => new TwigFunction('echo_path', array($this, 'getEchoPath')),
-            'echo_trans'          => new TwigFunction('echo_trans', array($this, 'getEchoTrans')),
-            'echo_render'         => new TwigFunction('echo_render', array($this, 'getEchoRender'))
+            'echo_if_granted'     => new TwigFunction('echo_if_granted', array($this, 'getEchoIfGranted'), $options),
+            'echo_path'           => new TwigFunction('echo_path', array($this, 'getEchoPath'), $options),
+            'echo_trans'          => new TwigFunction('echo_trans', array($this, 'getEchoTrans'), $options),
+            'echo_render'         => new TwigFunction('echo_render', array($this, 'getEchoRender'), $options)
         );
     }
 
@@ -41,8 +42,9 @@ class EchoExtension extends AbstractExtension
      */
     public function getFilters()
     {
+        $options = ['is_safe' => ['html']];
         return array(
-            'convert_as_form' => new TwigFilter('convert_as_form', array($this, 'convertAsForm')),
+            'convert_as_form' => new TwigFilter('convert_as_form', array($this, 'convertAsForm'), $options),
         );
     }
 

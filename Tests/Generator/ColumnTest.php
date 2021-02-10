@@ -2,7 +2,7 @@
 
 namespace Admingenerator\GeneratorBundle\Tests\Generator;
 
-use Doctrine\Common\Util\Inflector;
+use Doctrine\Inflector\InflectorFactory;
 use Admingenerator\GeneratorBundle\Tests\TestCase;
 use Admingenerator\GeneratorBundle\Generator\Column;
 
@@ -57,7 +57,7 @@ class ColumnTest extends TestCase
 
         foreach ($options as $option => $value) {
             $column->setProperty($option, $value);
-            $this->assertEquals($value, call_user_func_array(array($column, 'get'.Inflector::classify($option)), array()));
+            $this->assertEquals($value, call_user_func_array(array($column, 'get'.InflectorFactory::create()->build()->classify($option)), array()));
         }
     }
 

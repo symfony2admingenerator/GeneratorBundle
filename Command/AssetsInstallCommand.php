@@ -4,6 +4,7 @@ namespace Admingenerator\GeneratorBundle\Command;
 
 use Admingenerator\GeneratorBundle\Filesystem\RelativePathComputer;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -17,9 +18,21 @@ use Symfony\Component\Process\Process;
  * Automatically call bower install to properly import bowers components.
  * Push them to the web root directory
  */
-class AssetsInstallCommand extends ContainerAwareCommand
+class AssetsInstallCommand extends Command
 {
+
     /**
+     * @var string
+     */
+    private $rootDir;
+
+    public function __construct(string $rootDir)
+    {
+        $this->rootDir = $rootDir;
+        parent::__construct();
+    }
+
+  /**
      * {@inheritdoc}
      */
     protected function configure()
@@ -78,7 +91,7 @@ class AssetsInstallCommand extends ContainerAwareCommand
      */
     private function computeTargetDirectory($bowerFileDirectory)
     {
-        $parentWebDir = dirname($this->getContainer()->getParameter('kernel.root_dir'));
+        $parentWebDir = dirname($this->rootDir);
         $relativePathComputer = new RelativePathComputer($bowerFileDirectory);
 
         return $relativePathComputer->computeToParent($parentWebDir) . 'web' . DIRECTORY_SEPARATOR . 'admin' . DIRECTORY_SEPARATOR . 'components';

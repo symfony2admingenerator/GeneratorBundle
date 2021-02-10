@@ -2,7 +2,7 @@
 
 namespace Admingenerator\GeneratorBundle\Generator;
 
-use Doctrine\Common\Util\Inflector;
+use Doctrine\Inflector\InflectorFactory;
 
 /**
  * This class describes an action
@@ -48,7 +48,7 @@ class Action
 
     public function setProperty($option, $value)
     {
-        $option = Inflector::classify($option);
+        $option = InflectorFactory::create()->build()->classify($option);
         call_user_func_array(array($this, 'set'.$option), array($value));
     }
 

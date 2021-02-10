@@ -1,0 +1,54 @@
+{% use '@AdmingeneratorGenerator/templates/CommonAdmin/ListTemplate/nbresults.php.twig' %}
+{% use '@AdmingeneratorGenerator/templates/CommonAdmin/ListTemplate/form.php.twig' %}
+{% use '@AdmingeneratorGenerator/templates/CommonAdmin/ListTemplate/thead.php.twig' %}
+{% use '@AdmingeneratorGenerator/templates/CommonAdmin/ListTemplate/tbody.php.twig' %}
+{% use '@AdmingeneratorGenerator/templates/CommonAdmin/ListTemplate/footer.php.twig' %}
+
+{%- block list_results -%}
+    {% if builder.filtersMode != 'top' and builder.filtersMode != 'modal' and builder.getFilterColumns() is not empty %}
+        {% set filterColumnsCredentials = builder.filterColumnsCredentials %}
+        {% if filterColumnsCredentials is not empty %}
+            {{ echo_set('filterColumnsCredentials', echo_twig_arr(filterColumnsCredentials), false) }}
+            {{ echo_if('is_one_admingenerator_granted(filterColumnsCredentials)') }}
+                <div class="col-md-9 col-xs-12 list-results-container pull-left">
+            {{ echo_else() }}
+                <div class="col-md-12 list-results-container no-filters">
+            {{ echo_endif() }}
+        {% else %}
+            <div class="col-md-9 col-xs-12 list-results-container pull-left">
+        {% endif %}
+    {% else %}
+    <div class="col-md-12 list-results-container no-filters">
+    {% endif %}
+        <div class="box box-primary">
+            <div class="box-header list-header list-nb-results clearfix">
+                {{- block('list_nbresults') -}}
+{% if builder.filtersMode == 'modal' %}
+    {{ echo_set('class', '') }}
+    {{ echo_if("app.session.get('" ~ builder.getNamespacePrefixForTemplate ~ '\\\\' ~ bundle_name ~ '\\\\' ~ builder.baseGeneratorName ~ "List\\\\Filters',{}) is empty") }}
+    {{ echo_set('class', 'disabled') }}
+    {{ echo_endif() }}
+                <div class="box-tools pull-right">          
+                  <button class="btn btn-sm btn-default" data-toggle="modal" data-target="#s2a_modal_filter_dialog">
+                    <i class="fa fa-filter"></i> {{ echo_trans('list.filters') }}
+                  </button>
+                  <a href="{{ echo_twig('filtersUrl') }}?reset=all" class="btn btn-sm btn-default {{ echo_twig('class') }}">
+                    <i class="fa fa-refresh"></i> {{ echo_trans('list.button.reset') }}
+                  </a>                    
+                </div><!-- /.box-tools -->
+{% endif %}
+            </div>
+            {{ block('form_batch_actions') }}
+                <div class="box-body table-responsive no-padding list-results">
+                    <table id="table-list-{{ builder.ModelClass|lower }}" class="table table-hover object-actions-{{ builder.ModelClass|lower }}">
+                        {{ block('list_thead') }}
+                        {{ block('list_tbody') }}
+                    </table>
+                </div>
+                <div class="box-footer list-footer">
+                    {{ block('list_footer') }}
+                </div>
+            {{ block('endform_batch_actions') }}
+        </div>
+    </div>
+{% endblock list_results %}

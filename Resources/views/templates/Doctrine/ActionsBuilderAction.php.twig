@@ -1,0 +1,106 @@
+{% extends '@AdmingeneratorGenerator/templates/CommonAdmin/ActionsAction/ActionsBuilderAction.php.twig' %}
+
+{% block getObject %}
+    /**
+     * Get object \{{ model }} with identifier $pk
+     *
+     * @param mixed $pk
+     * @return \{{ model }}
+     */
+    protected function getObject($pk)
+    {
+        ${{ builder.ModelClass }} = $this->getObjectQuery($pk)->getOneOrNullResult();
+
+        if (!${{ builder.ModelClass }}) {
+            throw new NotFoundHttpException("No \{{ model }} found on {{ builder.getFieldGuesser().getModelPrimaryKeyName(model) }} : $pk");
+        }
+
+        return ${{ builder.ModelClass }};
+    }
+
+{% endblock %}
+
+{% block getQuery -%}
+    /**
+     * Get query from query builder
+     *
+     * @param mixed $pk
+     * @return Doctrine\ORM\Query
+     */
+    protected function getObjectQuery($pk)
+    {
+        return $this->getObjectQueryBuilder($pk)->getQuery();
+    }
+
+    /**
+     * Creates a QueryBuilder instance filtering on {{ builder.getFieldGuesser().getModelPrimaryKeyName(model) }}
+     * property.
+     *
+     * @param mixed $pk
+     * @return Doctrine\ORM\QueryBuilder
+     */
+    protected function getObjectQueryBuilder($pk)
+    {
+        return $this->getDoctrine()
+             ->getManagerForClass('{{ model }}')
+             ->getRepository('{{ model }}')
+             ->createQueryBuilder('q')
+             ->where('q.{{ builder.getFieldGuesser().getModelPrimaryKeyName(model) }} = :pk')
+             ->setParameter(':pk', $pk);
+    }
+{% endblock %}
+
+{% block executeObjectDelete %}
+
+    protected function executeObjectDelete(\{{ model }} ${{ builder.ModelClass }})
+    {
+        $em = $this->getDoctrine()->getManagerForClass('{{ model }}');
+        $em->remove(${{ builder.ModelClass }});
+        $em->flush();
+        $em->clear();
+    }
+
+{% endblock %}
+
+{% block executeBatchDelete %}
+
+    protected function executeBatchDelete(array $selected)
+    {
+{% if admingenerator_config('use_doctrine_orm_batch_remove') %}
+        $em = $this->getDoctrine()->getManagerForClass('{{ model }}');
+        $objects = $em->getRepository('{{ model }}')
+            ->findBy(array('{{ builder.getFieldGuesser().getModelPrimaryKeyName(model) }}' => $selected));
+        foreach ($objects as $object) {
+            $em->remove($object);
+        }
+        $em->flush();
+        $em->clear();
+{% else %}
+        $this->getDoctrine()->getManagerForClass('{{ model }}')
+            ->createQuery('DELETE {{ model }} m WHERE m.{{ builder.getFieldGuesser().getModelPrimaryKeyName(model) }} IN (:selected)')
+            ->setParameter('selected', $selected)
+            ->getResult();
+{% endif %}
+    }
+
+{% endblock %}
+
+{% block saveObject %}
+
+    protected function saveObject(\{{ model }} ${{ builder.ModelClass }}, array $validationGroups = array(), $debug = true)
+    {
+        $validator = $this->get('validator');
+        $errors = $validator->validate(${{ builder.ModelClass }}, $validationGroups, false, true);
+
+        if (count($errors) > 0) {
+            if ($debug) {
+                $this->get('logger')->error((string) $errors);
+            }
+            throw new ValidationException($errors);
+        } else {
+            $em = $this->getDoctrine()->getManagerForClass(get_class(${{ builder.ModelClass }}));
+            $em->persist(${{ builder.ModelClass }});
+            $em->flush();
+        }
+    }
+{% endblock %}

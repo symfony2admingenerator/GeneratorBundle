@@ -2,12 +2,12 @@
 
 namespace Admingenerator\GeneratorBundle\Generator;
 
-use Doctrine\Common\Util\Inflector;
+use Doctrine\Inflector\InflectorFactory;
 
 class PropelColumn extends Column
 {
     public function getSortOn()
     {
-        return $this->sortOn != "" ? $this->sortOn : Inflector::classify($this->name);
+        return $this->sortOn != "" ? $this->sortOn : InflectorFactory::create()->build()->classify($this->name);
     }
 }

@@ -15,6 +15,9 @@ class FiltersBuilderType extends ListBuilder
 
     public function getTemplateName()
     {
-        return 'FiltersBuilderType' . self::TWIG_EXTENSION;
+        if ($this->environment === null) {
+            return $this->getGenerator()->getTemplateBaseDir() . parent::getTemplateName();
+        }
+        return '@AdmingeneratorGenerator/templates/' . $this->getGenerator()->getTemplateBaseDir() . 'FiltersBuilderType' . self::TWIG_EXTENSION;
     }
 }

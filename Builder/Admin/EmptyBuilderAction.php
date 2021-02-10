@@ -14,6 +14,6 @@ class EmptyBuilderAction extends BaseBuilder
      */
     public function getTemplateDirs()
     {
-        return array(realpath(dirname(__FILE__).'/../../Resources/templates'));
+        return array(realpath(dirname(__FILE__).'/../../Resources/views/templates'));
     }
 }

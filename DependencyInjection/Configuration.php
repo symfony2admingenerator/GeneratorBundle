@@ -233,8 +233,8 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode    = $treeBuilder->root($this->rootName);
+        $treeBuilder = new TreeBuilder($this->rootName);
+        $rootNode    = $this->getRootNode($treeBuilder, $this->rootName);
 
         $rootNode
             ->children()
@@ -364,10 +364,23 @@ class Configuration implements ConfigurationInterface
         return $treeBuilder;
     }
 
+    /**
+     * @param TreeBuilder $treeBuilder
+     * @param string $rootName
+     *
+     * @return \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition|\Symfony\Component\Config\Definition\Builder\NodeDefinition
+     */
+    private function getRootNode(TreeBuilder $treeBuilder, $rootName)
+    {
+        return method_exists(TreeBuilder::class, 'getRootNode')
+            ? $treeBuilder->getRootNode()
+            : $treeBuilder->root($rootName);
+    }
+
     private function getStylesheetNode()
     {
-        $treeBuilder = new TreeBuilder();
-        $node = $treeBuilder->root('stylesheets');
+        $treeBuilder = new TreeBuilder('stylesheets');
+        $node = $this->getRootNode($treeBuilder, 'stylesheets');
 
         $node
             ->prototype('array')
@@ -383,8 +396,8 @@ class Configuration implements ConfigurationInterface
 
     private function getJavascriptsNode()
     {
-        $treeBuilder = new TreeBuilder();
-        $node = $treeBuilder->root('javascripts');
+        $treeBuilder = new TreeBuilder('javascripts');
+        $node = $this->getRootNode($treeBuilder, 'javascripts');
 
         $node
             ->prototype('array')

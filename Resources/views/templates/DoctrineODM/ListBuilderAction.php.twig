@@ -1,0 +1,121 @@
+{% extends '@AdmingeneratorGenerator/templates/CommonAdmin/ListAction/ListBuilderAction.php.twig' %}
+{% block pager_adapter -%}
+use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter as PagerAdapter;
+{% endblock %}
+{% block setFilters -%}
+    /**
+     * Store in the session service the current filters
+     *
+     * @param array the filters
+     */
+    protected function setFilters(array $filters)
+    {
+        {%- for filter,column in builder.filterColumns -%}
+            {%- if 'document' == builder.getFieldGuesser().getDbType(model, column.filterOn) or 'collection' == builder.getFieldGuesser().getDbType(model, column.filterOn) -%}
+            {% set filterModel = builder.getFieldGuesser().getModelType(model, column.filterOn) %}
+        if (isset($filters['{{ filter }}'])) {
+                $filters['{{ filter }}'] = array (
+                    '{{ builder.getFieldGuesser().getModelPrimaryKeyName(filterModel) }}' => $filters['{{ filter }}']->get{{ builder.getFieldGuesser().getModelPrimaryKeyName(filterModel)|capitalize }}(),
+                    'documentName' => '{{ filterModel }}'
+                );
+        }
+            {%- endif %}
+        {% endfor -%}
+
+        $this->get('session')->set($this->getSessionPrefix().'List\Filters', $filters);
+    }
+{% endblock %}
+
+{% block getFilters -%}
+    /**
+     * Get filters from session
+     */
+    protected function getFilters()
+    {
+        $filters = $this->get('session')->get($this->getSessionPrefix().'List\Filters', array());
+
+        {%- for filter,column in builder.filterColumns -%}
+            {%- if 'document' == builder.getFieldGuesser().getDbType(model, column.filterOn) or 'collection' == builder.getFieldGuesser().getDbType(model, column.filterOn) -%}
+            {% set filterModel = builder.getFieldGuesser().getModelType(model, column.filterOn) %}
+        if (isset($filters['{{ filter }}'])) {
+                $filters['{{ filter }}'] = $this->getDoctrineMongoDB()->getRepository($filters['{{ filter }}']['documentName'])->find($filters['{{ filter }}']['{{ builder.getFieldGuesser().getModelPrimaryKeyName(filterModel) }}']);
+        }
+            {%- endif %}
+        {% endfor -%}
+
+        return $filters;
+    }
+{% endblock %}
+
+{% block getQuery -%}
+    protected function getQuery()
+    {
+        $query = $this->buildQuery();
+
+        $this->processQuery($query);
+        $this->processSort($query);
+
+        $queryFilter = $this->getQueryFilter($query);
+        $this->processScopes($queryFilter);
+        $this->processFilters($queryFilter);
+
+        return $query;
+    }
+
+    protected function buildQuery()
+    {
+        return $this->getDocumentManager()
+            ->createQueryBuilder('{{ model }}');
+    }
+
+{% endblock %}
+
+{% block processSort -%}
+    protected function processSort($query)
+    {
+        if ($this->getSortColumn()) {
+            $query->sort($this->getSortColumn(), $this->getSortOrder());
+        }
+    }
+{% endblock %}
+
+{% block getFilterForm -%}
+    protected function getFilterForm()
+    {
+        $filters = $this->getFilters();
+
+        {%- for filter,column in builder.filterColumns -%}
+            {%- if 'document' == builder.getFieldGuesser().getDbType(model, column.filterOn) or 'collection' == builder.getFieldGuesser().getDbType(model, column.filterOn) -%}
+            {% set filterModel = builder.getFieldGuesser().getModelType(model, column.filterOn) %}
+        if (isset($filters['{{ filter }}'])) {
+             $this->getDocumentManager()->getUnitOfWork()->registerManaged($filters['{{ filter }}'], $filters['{{ filter }}']->get{{ builder.getFieldGuesser().getModelPrimaryKeyName(filterModel)|capitalize }}(), array());
+        }
+            {%- endif %}
+        {% endfor -%}
+
+        return $this->createForm(
+            $this->getFiltersType(),
+            $filters,
+            $this->getFiltersOptions()
+        );
+    }
+{% endblock %}
+
+{% block addJoinFor -%}
+    protected function addJoinFor($table, $query)
+    {
+        $query->leftJoin('q.'.$table, $table);
+    }
+{% endblock %}
+
+{% block getQueryFilter %}
+    /**
+     * @return \Admingenerator\GeneratorBundle\QueryFilter\QueryFilterInterface
+     */
+    protected function getQueryFilter($query)
+    {
+        $queryFilterClass = $this->getParameter('admingenerator.queryfilter.doctrine_odm.class');
+
+        return new $queryFilterClass($query);
+    }
+{% endblock %}

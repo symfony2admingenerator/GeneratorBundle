@@ -21,14 +21,14 @@ class AdmingeneratorGeneratorExtension extends Extension
      */
     public function prepend(ContainerBuilder $container)
     {
-        $config = array('twig' => array(
+        $knpConfig = array('twig' => array(
             'template' => 'AdmingeneratorGeneratorBundle:KnpMenu:knp_menu_trans.html.twig',
         ));
 
         foreach ($container->getExtensions() as $name => $extension) {
             switch ($name) {
                 case 'knp_menu':
-                    $container->prependExtensionConfig($name, $config);
+                    $container->prependExtensionConfig($name, $knpConfig);
                     break;
             }
         }
@@ -83,20 +83,11 @@ class AdmingeneratorGeneratorExtension extends Extension
         }
 
         $loader = new XmlFileLoader($container, new FileLocator(dirname(__DIR__) . DIRECTORY_SEPARATOR . 'Resources' . DIRECTORY_SEPARATOR . 'config'));
-        $config['templates_dirs'][] = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'Resources' . DIRECTORY_SEPARATOR . 'templates';
-
-        $doctrineOrmTemplatesDirs = array();
-        $doctrineOdmTemplatesDirs = array();
-        $propelTemplatesDirs = array();
-        foreach ($config['templates_dirs'] as $dir) {
-            $doctrineOrmTemplatesDirs[] = $dir . DIRECTORY_SEPARATOR . 'Doctrine';
-            $doctrineOdmTemplatesDirs[] = $dir . DIRECTORY_SEPARATOR . 'DoctrineODM';
-            $propelTemplatesDirs[] = $dir . DIRECTORY_SEPARATOR . 'Propel';
-        }
+        $config['templates_dirs'][] = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'Resources' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'templates';
 
         if ($config['use_doctrine_orm']) {
             $loader->load('doctrine_orm.xml');
-            $this->addTemplatesInitialization($container->getDefinition('admingenerator.generator.doctrine'), $doctrineOrmTemplatesDirs);
+            $this->addTemplatesInitialization($container->getDefinition('admingenerator.generator.doctrine'), $config['templates_dirs']);
             if ($config['overwrite_if_exists']) {
                 $container
                     ->getDefinition('admingenerator.generator.doctrine')
@@ -113,7 +104,7 @@ class AdmingeneratorGeneratorExtension extends Extension
 
         if ($config['use_doctrine_odm']) {
             $loader->load('doctrine_odm.xml');
-            $this->addTemplatesInitialization($container->getDefinition('admingenerator.generator.doctrine_odm'), $doctrineOdmTemplatesDirs);
+            $this->addTemplatesInitialization($container->getDefinition('admingenerator.generator.doctrine_odm'), $config['templates_dirs']);
             if ($config['overwrite_if_exists']) {
                 $container
                     ->getDefinition('admingenerator.generator.doctrine_odm')
@@ -129,7 +120,7 @@ class AdmingeneratorGeneratorExtension extends Extension
 
         if ($config['use_propel']) {
             $loader->load('propel.xml');
-            $this->addTemplatesInitialization($container->getDefinition('admingenerator.generator.propel'), $propelTemplatesDirs);
+            $this->addTemplatesInitialization($container->getDefinition('admingenerator.generator.propel'), $config['templates_dirs']);
             if ($config['overwrite_if_exists']) {
                 $container
                     ->getDefinition('admingenerator.generator.propel')

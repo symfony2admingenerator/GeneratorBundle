@@ -50,6 +50,18 @@ class Generator extends TwigGeneratorGenerator
      */
     protected $router;
 
+    protected $templateBaseDir;
+
+    public function setTemplateBaseDir($templateBaseDir)
+    {
+        $this->templateBaseDir = $templateBaseDir;
+    }
+
+    public function getTemplateBaseDir()
+    {
+        return $this->templateBaseDir;
+    }
+
     /**
      * Init a new generator and automatically define the base of tempDir
      *

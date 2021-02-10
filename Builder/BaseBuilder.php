@@ -2,11 +2,11 @@
 
 namespace Admingenerator\GeneratorBundle\Builder;
 
-use Symfony\Component\Templating\TemplateNameParser;
-use Symfony\Component\Config\FileLocator;
-use Symfony\Bundle\FrameworkBundle\Templating\Loader\TemplateLocator;
-use Symfony\Bundle\TwigBundle\Loader\FilesystemLoader;
+use Doctrine\Inflector\InflectorFactory;
 use Symfony\Component\HttpFoundation\ParameterBag;
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
+use Twig\TwigFilter;
 use TwigGenerator\Builder\BaseBuilder as GenericBaseBuilder;
 use TwigGenerator\Builder\Generator as GenericBaseGenerator;
 
@@ -27,11 +27,27 @@ abstract class BaseBuilder extends GenericBaseBuilder
      */
     protected $variables;
 
-    public function __construct()
+    /**
+     * @var Environment|null
+     */
+    protected $environment;
+
+    public function getTemplateName()
+    {
+        if ($this->environment === null) {
+            return $this->getGenerator()->getTemplateBaseDir() . parent::getTemplateName();
+        }
+        return '@AdmingeneratorGenerator/templates/' . $this->getGenerator()->getTemplateBaseDir() . parent::getTemplateName();
+    }
+
+    public function __construct(Environment $environment = null)
     {
         parent::__construct();
         $this->variables = new ParameterBag(array());
-        $this->twigFilters[] = '\\Doctrine\\Common\\Util\\Inflector::classify';
+        $this->twigFilters[] = new TwigFilter('classify', function ($string) {
+            return InflectorFactory::create()->build()->classify($string);
+        });
+        $this->environment = $environment;
     }
 
     /**
@@ -97,10 +113,11 @@ abstract class BaseBuilder extends GenericBaseBuilder
 
     protected function getTwigEnvironment()
     {
-        $locator = new TemplateLocator(new FileLocator($this->getTemplateDirs()));
-        $templateNameParser = new TemplateNameParser();
-        $loader = new FilesystemLoader($locator, $templateNameParser);
-        $twig = new \Twig_Environment($loader, array(
+        if($this->environment !== null) {
+            return $this->environment;
+        }
+        $loader = new FilesystemLoader($this->getTemplateDirs());
+        $twig = new Environment($loader, array(
             'autoescape' => false,
             'strict_variables' => true,
             'debug' => true,

@@ -1,8 +1,0 @@
-{% extends '../CommonAdmin/ExcelAction/ExcelBuilderAction.php.twig' %}
-
-{% block getResults %}
-    protected function getResults()
-    {
-        return $this->getQuery()->find();
-    }
-{% endblock %}

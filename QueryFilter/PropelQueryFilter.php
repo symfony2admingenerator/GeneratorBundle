@@ -2,7 +2,7 @@
 
 namespace Admingenerator\GeneratorBundle\QueryFilter;
 
-use Doctrine\Common\Util\Inflector;
+use Doctrine\Inflector\InflectorFactory;
 
 class PropelQueryFilter extends BaseQueryFilter
 {
@@ -16,7 +16,7 @@ class PropelQueryFilter extends BaseQueryFilter
         list($query, $filteredField) = $this->addTablePathToField($field);
 
         if (!is_array($value)) {
-            $method = 'filterBy'.Inflector::classify($filteredField);
+            $method = 'filterBy'.InflectorFactory::create()->build()->classify($filteredField);
             $query->$method($value);
         } elseif (count($value) > 0) {
             $query->filterBy($filteredField, $value, \Criteria::IN);
@@ -78,7 +78,7 @@ class PropelQueryFilter extends BaseQueryFilter
             }
 
             if (count($filters) > 0) {
-                $method = 'filterBy'.Inflector::classify($filteredField);
+                $method = 'filterBy'.InflectorFactory::create()->build()->classify($filteredField);
                 $query->$method($filters);
             }
 

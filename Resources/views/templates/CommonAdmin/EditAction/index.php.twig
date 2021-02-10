@@ -1,0 +1,34 @@
+{% use '@AdmingeneratorGenerator/templates/CommonAdmin/security_action.php.twig' %}
+{% block index_use %}
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use {{ builder.namespacePrefixWithSubfolder }}\{{ bundle_name }}\Form\Type\{{ builder.BaseGeneratorName ? builder.BaseGeneratorName ~ char(92) : "" }}EditType;
+{% endblock %}
+
+{% block index %}
+
+    public function indexAction(Request $request, $pk)
+    {
+        $this->request = $request;
+
+        ${{ builder.ModelClass }} = $this->getObject($pk);
+
+        {% if concurrency_lock -%}
+        $this->saveVersion($pk, ${{ builder.ModelClass }}->getVersion());
+        {%- endif %}
+
+        if (!${{ builder.ModelClass }}) {
+            throw new NotFoundHttpException("The \{{ model }} with {{ builder.getFieldGuesser().getModelPrimaryKeyName(model) }} $pk can't be found");
+        }
+
+        {{ block('security_action_with_object') }}
+
+        $this->preBindRequest(${{ builder.ModelClass }});
+        $form = $this->getEditForm(${{ builder.ModelClass }});
+
+        return $this->render('@{{ builder.namespacePrefixForTemplate }}{{ bundle_name|slice(0, -6) }}/{{ builder.BaseGeneratorName }}Edit/index.html.twig', $this->getAdditionalRenderParameters(${{ builder.ModelClass }}) + array(
+            "{{ builder.ModelClass }}" => ${{ builder.ModelClass }},
+            'updateUrl' => $this->getUpdateUrl($pk),
+            "form" => $form->createView()
+        ));
+    }
+{% endblock %}

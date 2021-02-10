@@ -1,0 +1,112 @@
+{% use '@AdmingeneratorGenerator/templates/CommonAdmin/security_action.php.twig' %}
+{% block create_use %}
+{% endblock %}
+{% block create %}
+
+    public function createAction(Request $request)
+    {
+        $this->request = $request;
+        {{ block('security_action') }}
+
+        ${{ builder.ModelClass }} = $this->getNewObject();
+
+        $this->preBindRequest(${{ builder.ModelClass }});
+        $form = $this->getNewForm(${{ builder.ModelClass }});
+        $form->handleRequest($this->request);
+        $this->postBindRequest($form, ${{ builder.ModelClass }});
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $this->preSave($form, ${{ builder.ModelClass }});
+                $this->saveObject(${{ builder.ModelClass }});
+                $this->postSave($form, ${{ builder.ModelClass }});
+
+                $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans("{{ messages.success|default("action.object.edit.success") }}", array(), 'Admingenerator') );
+
+                {% set defaultActionAfterSave = builder.generator.bundleConfig.default_action_after_save %}
+                $actionAfterSave = "{{ actionAfterSave|default(defaultActionAfterSave) }}";
+                $pk = ${{ builder.ModelClass }}->get{{ builder.getFieldGuesser().getModelPrimaryKeyName(model)|classify }}();
+                if ($this->request->request->has('save-and-add') || ('new' == $actionAfterSave)) {
+                    return $this->redirect($this->getNewUrl());
+                } elseif ($this->request->request->has('save-and-list') || ('list' == $actionAfterSave)) {
+                    return $this->redirect($this->getListUrl());
+                } elseif ($this->request->request->has('save-and-show') || ('show' == $actionAfterSave)) {
+                    return $this->redirect($this->getShowUrl($pk));
+                } else {
+                    if (('edit' != $actionAfterSave) &&
+                        method_exists($this,'get{{ builder.actionAfterSave|default(defaultActionAfterSave)|title }}Url')) {
+                        return $this->redirect(call_user_func(array($this, 'get{{ builder.actionAfterSave|default(defaultActionAfterSave)|title }}Url'), $pk));
+
+                    }
+                    return $this->redirect($this->getEditUrl($pk));
+                }
+            } catch (\Exception $e) {
+                $logger = $this->get('logger')->error($e->getMessage());
+                $this->get('session')->getFlashBag()->add('error',  $this->get('translator')->trans("{{ messages.error|default("action.object.edit.error") }}", array(), 'Admingenerator') );
+                $this->onException($e, $form, ${{ builder.ModelClass }});
+            }
+
+        } else {
+            $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans("{{ messages.error|default("action.object.edit.error") }}", array(), 'Admingenerator') );
+        }
+
+        return $this->render('@{{ builder.namespacePrefixForTemplate }}{{ bundle_name|slice(0, -6) }}/{{ builder.BaseGeneratorName }}New/index.html.twig', $this->getAdditionalRenderParameters(${{ builder.ModelClass }}) + array(
+            '{{ builder.ModelClass }}' => ${{ builder.ModelClass }},
+            'createUrl' => $this->getCreateUrl(),
+            'form' => $form->createView(),
+        ));
+    }
+
+    /**
+     * This method is here to make your life better, so overwrite it
+     *
+     * @param \Exception $exception throwed exception
+     * @param \Symfony\Component\Form\Form $form the valid form
+     * @param \{{ model }} ${{ builder.ModelClass }} your \{{ model }} object
+     */
+    protected function onException(\Exception $exception, \Symfony\Component\Form\Form $form, \{{ model }} ${{ builder.ModelClass }})
+    {
+        if ($this->getParameter('admingenerator.throw_exceptions')) {
+            throw $exception;
+        }
+    }
+
+    /**
+     * This method is here to make your life better, so overwrite  it
+     *
+     * @param \{{ model }} ${{ builder.ModelClass }} your \{{ model }} object
+     */
+    protected function preBindRequest(\{{ model }} ${{ builder.ModelClass }})
+    {
+    }
+
+    /**
+     * This method is here to make your life better, so overwrite  it
+     *
+     * @param \Symfony\Component\Form\Form $form the valid form
+     * @param \{{ model }} ${{ builder.ModelClass }} your \{{ model }} object
+     */
+    protected function postBindRequest(\Symfony\Component\Form\Form $form, \{{ model }} ${{ builder.ModelClass }})
+    {
+    }
+
+    /**
+     * This method is here to make your life better, so overwrite  it
+     *
+     * @param \Symfony\Component\Form\Form $form the valid form
+     * @param \{{ model }} ${{ builder.ModelClass }} your \{{ model }} object
+     */
+    protected function preSave(\Symfony\Component\Form\Form $form, \{{ model }} ${{ builder.ModelClass }})
+    {
+    }
+
+    /**
+     * This method is here to make your life better, so overwrite  it
+     *
+     * @param \Symfony\Component\Form\Form $form the valid form
+     * @param \{{ model }} ${{ builder.ModelClass }} your \{{ model }} object
+     */
+    protected function postSave(\Symfony\Component\Form\Form $form, \{{ model }} ${{ builder.ModelClass }})
+    {
+    }
+{% endblock %}

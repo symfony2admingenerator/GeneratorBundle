@@ -15,6 +15,9 @@ class NewBuilderType extends NewBuilder
 
     public function getTemplateName()
     {
-        return 'EditBuilderType' . self::TWIG_EXTENSION;
+        if ($this->environment === null) {
+            return $this->getGenerator()->getTemplateBaseDir() . parent::getTemplateName();
+        }
+        return '@AdmingeneratorGenerator/templates/' . $this->getGenerator()->getTemplateBaseDir() . 'EditBuilderType' . self::TWIG_EXTENSION;
     }
 }

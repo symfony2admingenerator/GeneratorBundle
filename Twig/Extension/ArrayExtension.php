@@ -16,12 +16,13 @@ class ArrayExtension extends AbstractExtension
      */
     public function getFilters()
     {
+        $options = ['is_safe' => ['html']];
         return array(
-            'mapBy'     => new TwigFilter('mapBy', array($this, 'mapBy')),
-            'flatten'   => new TwigFilter('flatten', array($this, 'flatten')),
-            'intersect' => new TwigFilter('intersect', array($this, 'intersect')),
-            'clean'     => new TwigFilter('clean', array($this, 'clean')),
-            'unique'    => new TwigFilter('unique', array($this, 'unique')),
+            'mapBy'     => new TwigFilter('mapBy', array($this, 'mapBy'), $options),
+            'flatten'   => new TwigFilter('flatten', array($this, 'flatten'), $options),
+            'intersect' => new TwigFilter('intersect', array($this, 'intersect'), $options),
+            'clean'     => new TwigFilter('clean', array($this, 'clean'), $options),
+            'unique'    => new TwigFilter('unique', array($this, 'unique'), $options),
         );
     }
 

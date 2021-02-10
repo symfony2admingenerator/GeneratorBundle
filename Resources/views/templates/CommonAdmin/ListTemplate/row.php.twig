@@ -1,0 +1,34 @@
+{% use '@AdmingeneratorGenerator/templates/CommonAdmin/ListTemplate/column.php.twig' %}
+{% use '@AdmingeneratorGenerator/templates/CommonAdmin/object_actions.php.twig' %}
+
+{% block list_row_content %}
+    {{ echo_block("list_row_content") }}
+        {% if builder.batchActions|default is not empty %}
+            <td class="list-results-fields-row-column-batch">
+                <input type="checkbox" name="selected[]" class="list-results-fields-row-batch-selector" value="{{- echo_twig(builder.ModelClass ~ '.' ~ builder.getFieldGuesser().getModelPrimaryKeyName(model)) -}}" />
+            </td>
+        {% endif %}
+
+        {% for column in builder.columns %}
+            {% if column.credentials|default is not empty %}
+                {{ echo_if_granted(column.credentials, builder.ModelClass) }}
+            {% endif %}
+            <td class="list-results-fields-row-{{ column.dbType|lower }} list-results-fields-row-column-{{ column.name|lower }}">
+                {{- block('column_default') -}}
+            </td>
+            {% if column.credentials|default is not empty %}
+                {{ echo_endif() }}
+            {% endif %}
+        {% endfor %}
+
+        {%- if builder.objectActions|default is not empty %}
+            {{ echo_block("list_row_actions") }}
+            <td class="list-results-fields-row-objectactions">
+                <div class="col-md-12 btn-group">
+                    {{ block('object_actions') }}
+                </div>
+            </td>
+            {{ echo_endblock() }}
+        {% endif -%}
+    {{ echo_endblock() }}
+{% endblock %}

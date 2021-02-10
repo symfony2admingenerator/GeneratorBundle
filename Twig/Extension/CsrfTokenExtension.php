@@ -30,8 +30,9 @@ class CsrfTokenExtension extends AbstractExtension
      */
     public function getFilters()
     {
+        $options = ['is_safe' => ['html']];
         return array(
-            'csrf_token' => new TwigFilter('csrf_token', array($this, 'getCsrfToken')),
+            'csrf_token' => new TwigFilter('csrf_token', array($this, 'getCsrfToken'), $options),
         );
     }
 

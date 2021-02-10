@@ -1,0 +1,146 @@
+{% use '@AdmingeneratorGenerator/templates/CommonAdmin/security_action.php.twig' %}
+{% use '@AdmingeneratorGenerator/templates/CommonAdmin/csrf_protection.php.twig' %}
+
+{% block attemptObjectDelete %}
+
+    /**
+     * This function handles common object actions behaviour like
+     * checking CSRF protection token or credentials.
+     *
+     * To customize your action look into:
+     * executeObjectDelete() - holds action logic
+     * successObjectDelete() - called if action was successfull
+     * errorObjectDelete()   - called if action errored
+     */
+    protected function attemptObjectDelete($pk)
+    {
+        try {
+            ${{ builder.ModelClass }} = $this->getObject($pk);
+        } catch (NotFoundHttpException $e) {
+            return $this->notFoundObjectDelete();
+        }
+
+        try {
+            {{ block('security_action_with_object') -}}
+
+            if ('POST' == $this->request->getMethod()) {
+                {{ block('csrf_action_check_token') }}
+
+                $this->executeObjectDelete(${{ builder.ModelClass }});
+
+                return $this->successObjectDelete(${{ builder.ModelClass }});
+            }
+
+        } catch (\Exception $e) {
+            return $this->errorObjectDelete($e, ${{ builder.ModelClass }});
+        }
+
+        return $this->render(
+            '@{{ namespace_prefix }}{{ bundle_name|slice(0, -6) }}/{{ builder.BaseGeneratorName }}Actions/index.html.twig',
+            $this->getAdditionalRenderParameters(${{ builder.ModelClass }}, '{{ action.name }}') + array(
+                "{{ builder.ModelClass }}" => ${{ builder.ModelClass }},
+                "title" => $this->get('translator')->trans(
+                    "{{ action.options.title|default('action.object.delete.confirm') }}",
+                    array(),
+                    '{{ action.options.i18n|default('Admingenerator') }}'
+                ),
+                "actionRoute" => "{{ builder.objectActionsRoute }}",
+                "actionParams" => array("pk" => $pk, "action" => "delete")
+            )
+        );
+    }
+
+{% endblock %}
+
+{% block executeObjectDelete %}
+
+    /**
+     * This function is for you to customize what action actually does
+     */
+    protected function executeObjectDelete(\{{ model }} ${{ builder.ModelClass }})
+    {
+        //The orm replace this method
+    }
+
+{% endblock %}
+
+{% block successObjectDelete %}
+
+    /**
+     * This is called when action is successful
+     * Default behavior is redirecting to list with success message
+     *
+     * @param \{{ model }} ${{ builder.ModelClass }} Your \{{ model }} object
+     * @return Response Must return a response!
+     */
+    protected function successObjectDelete(\{{ model }} ${{ builder.ModelClass }})
+    {
+        $this->get('session')->getFlashBag()->add(
+            'success',
+            $this->get('translator')->trans(
+                '{{ action.options.success|default('action.object.delete.success') }}',
+                array('%name%' => '{{ action.name }}'),
+                '{{ action.options.i18n|default('Admingenerator') }}'
+            )
+        );
+
+        return $this->redirect($this->generateUrl("{{ builder.baseActionsRoute }}_list"));
+    }
+
+{% endblock %}
+
+{% block errorObjectDelete %}
+
+    /**
+     * This is called when action throws an exception
+     * Default behavior is redirecting to list with error message
+     *
+     * @param \Exception $e Exception
+     * @param \{{ model }} ${{ builder.ModelClass }} Your \{{ model }} object
+     * @return Response Must return a response!
+     */
+    protected function errorObjectDelete(\Exception $e, \{{ model }} ${{ builder.ModelClass }} = null)
+    {
+
+        // Throw exception if defined
+        if ($this->getParameter('admingenerator.throw_exceptions')) {
+            throw $e;
+        }
+
+        $this->get('session')->getFlashBag()->add(
+            'error',
+            $this->get('translator')->trans(
+                "{{ action.options.error|default('action.object.delete') }}",
+                array(),
+                '{{ action.options.i18n|default('Admingenerator') }}'
+            )
+        );
+
+        return $this->redirect($this->generateUrl("{{ builder.baseActionsRoute }}_list"));
+    }
+
+{% endblock %}
+
+{% block notFoundObjectDelete %}
+
+    /**
+     * This is called when the object was already deleted
+     * Default behavior is redirecting to list with a error message
+     *
+     * @return Response Must return a response!
+     */
+    protected function notFoundObjectDelete()
+    {
+        $this->get('session')->getFlashBag()->add(
+            'error',
+            $this->get('translator')->trans(
+                "{{ action.options.notfound|default('action.object.delete.notfound') }}",
+                array(),
+                '{{ action.options.i18n|default('Admingenerator') }}'
+            )
+        );
+
+        return $this->redirect($this->generateUrl("{{ builder.baseActionsRoute }}_list"));
+    }
+
+{% endblock %}

@@ -1,0 +1,27 @@
+{% use '@AdmingeneratorGenerator/templates/CommonAdmin/batch_actions.php.twig' %}
+{% use '@AdmingeneratorGenerator/templates/CommonAdmin/generic_actions.php.twig' %}
+
+{% block list_footer %}
+    {{ echo_block("list_footer") }}
+        <div class="row">
+            <div class="list-results-actions">
+                {{ echo_block("batch_actions_wrapper") }}
+                    {% if builder.batchActions|default is not empty %}
+                        <div class="list-results-actions-batch col-md-{{ builder.actions|default is empty ? '12' : '4' }}" role="batch-actions">
+                            {{ block('batch_actions') }}
+                            {{ block('batch_actions_script') }}
+                        </div>
+                    {% endif -%}
+                {{ echo_endblock() }}
+                {{ echo_block("generic_actions_wrapper") }}
+                    {% if builder.actions|default is not empty %}
+                        <div class="list-results-actions-generic col-md-{{ builder.batchActions|default is empty ? '12' : '8' }} text-right" role="generic-actions">
+                            {{ block('generic_actions') -}}
+                            {{ block('generic_actions_script') }}
+                        </div>
+                    {% endif -%}
+                {{ echo_endblock() }}
+            </div>
+        </div>
+    {{ echo_endblock() }}
+{% endblock %}

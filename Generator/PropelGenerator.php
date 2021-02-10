@@ -45,6 +45,7 @@ class PropelGenerator extends Generator
         $generator->setTwigExtensions($this->twig->getExtensions());
         $generator->setTwigFilters($this->twig->getFilters());
         $generator->setTemplateDirs($this->templatesDirectories);
+        $generator->setTemplateBaseDir('Propel' . DIRECTORY_SEPARATOR);
         $generator->setBaseController('Admingenerator\GeneratorBundle\Controller\Propel\BaseController');
         $generator->setColumnClass('Admingenerator\GeneratorBundle\Generator\PropelColumn');
         $generator->setBaseGeneratorName($this->getBaseGeneratorName());
@@ -52,40 +53,40 @@ class PropelGenerator extends Generator
         $builders = $generator->getFromYaml('builders', array());
 
         if (array_key_exists('list', $builders)) {
-            $generator->addBuilder(new ListBuilderAction());
-            $generator->addBuilder(new ListBuilderTemplate());
-            $generator->addBuilder(new FiltersBuilderType());
+            $generator->addBuilder(new ListBuilderAction($this->twig));
+            $generator->addBuilder(new ListBuilderTemplate($this->twig));
+            $generator->addBuilder(new FiltersBuilderType($this->twig));
         }
 
         if (array_key_exists('nested_list', $builders)) {
-            $generator->addBuilder(new NestedListBuilderAction());
-            $generator->addBuilder(new NestedListBuilderTemplate());
+            $generator->addBuilder(new NestedListBuilderAction($this->twig));
+            $generator->addBuilder(new NestedListBuilderTemplate($this->twig));
         }
 
         if (array_key_exists('edit', $builders)) {
-            $generator->addBuilder(new EditBuilderAction());
-            $generator->addBuilder(new EditBuilderTemplate());
-            $generator->addBuilder(new EditBuilderType());
+            $generator->addBuilder(new EditBuilderAction($this->twig));
+            $generator->addBuilder(new EditBuilderTemplate($this->twig));
+            $generator->addBuilder(new EditBuilderType($this->twig));
         }
 
         if (array_key_exists('new', $builders)) {
-            $generator->addBuilder(new NewBuilderAction());
-            $generator->addBuilder(new NewBuilderTemplate());
-            $generator->addBuilder(new NewBuilderType());
+            $generator->addBuilder(new NewBuilderAction($this->twig));
+            $generator->addBuilder(new NewBuilderTemplate($this->twig));
+            $generator->addBuilder(new NewBuilderType($this->twig));
         }
 
         if (array_key_exists('show', $builders)) {
-            $generator->addBuilder(new ShowBuilderAction());
-            $generator->addBuilder(new ShowBuilderTemplate());
+            $generator->addBuilder(new ShowBuilderAction($this->twig));
+            $generator->addBuilder(new ShowBuilderTemplate($this->twig));
         }
 
         if (array_key_exists('excel', $builders)) {
-            $generator->addBuilder(new ExcelBuilderAction());
+            $generator->addBuilder(new ExcelBuilderAction($this->twig));
         }
 
         if (array_key_exists('actions', $builders)) {
-            $generator->addBuilder(new ActionsBuilderAction());
-            $generator->addBuilder(new ActionsBuilderTemplate());
+            $generator->addBuilder(new ActionsBuilderAction($this->twig));
+            $generator->addBuilder(new ActionsBuilderTemplate($this->twig));
         }
 
         $generator->writeOnDisk(

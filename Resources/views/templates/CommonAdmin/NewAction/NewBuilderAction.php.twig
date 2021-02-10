@@ -1,0 +1,122 @@
+{% use '@AdmingeneratorGenerator/templates/CommonAdmin/NewAction/index.php.twig' %}
+{% use '@AdmingeneratorGenerator/templates/CommonAdmin/NewAction/create.php.twig' %}
+{% use '@AdmingeneratorGenerator/templates/CommonAdmin/security_action.php.twig' %}
+<?php
+
+namespace Admingenerated\{{ namespace_prefix }}{{ bundle_name }}\{{ builder.generator.GeneratedControllerFolder }};
+
+use {{ builder.generator.baseController }} as BaseController;
+use Symfony\Component\HttpFoundation\Request;
+
+{{- block('index_use') -}}
+
+{{- block('create_use') -}}
+
+{{- block('security_use') }}
+
+class NewController extends BaseController
+{
+    {{- block('index') -}}
+
+    {{- block('create') -}}
+
+    {{- block('security_check') }}
+
+    /**
+     * Get list URL
+     *
+     * @return string
+     */
+    protected function getListUrl()
+    {
+        return $this->generateUrl("{{ builder.baseActionsRoute ~ '_list' }}");
+    }
+
+    /**
+     * Get new URL
+     *
+     * @return string
+     */
+    protected function getNewUrl()
+    {
+        return $this->generateUrl("{{ builder.baseActionsRoute }}_new" );
+    }
+
+    /**
+     * Get create URL
+     *
+     * @return string
+     */
+    protected function getCreateUrl()
+    {
+        return $this->generateUrl("{{ builder.baseActionsRoute }}_create" );
+    }
+
+    /**
+     * Get edit URL
+     *
+     * @return string
+     */
+    protected function getEditUrl($pk)
+    {
+        return $this->generateUrl("{{ builder.baseActionsRoute }}_edit", array('pk' => $pk) );
+    }
+
+    /**
+     * Get show URL
+     *
+     * @return string
+     */
+    protected function getShowUrl($pk)
+    {
+        return $this->generateUrl("{{ builder.baseActionsRoute }}_show", array('pk' => $pk) );
+    }    
+
+    /**
+     * Get additional parameters for rendering.
+     *
+     * @param \{{ model }} ${{ builder.ModelClass }}
+     * @return array
+     */
+    protected function getAdditionalRenderParameters(\{{ model }} ${{ builder.ModelClass }})
+    {
+        return array();
+    }
+
+    /**
+     * Get optional form options.
+     *
+     * @param \{{ model }} ${{ builder.ModelClass }}
+     * @return array
+     */
+    protected function getFormOptions(\{{ model }} ${{ builder.ModelClass }})
+    {
+        return array();
+    }
+
+    protected function getNewForm(\{{ model }} ${{ builder.ModelClass }})
+    {
+        return $this->createForm(
+            $this->getNewType(),
+            ${{ builder.ModelClass }},
+            $this->getFormOptions(${{ builder.ModelClass }})
+        );
+    }
+
+    protected function getNewType()
+    {
+        return '{{ builder.formType }}';
+    }
+    
+    protected function getNewObject()
+    {
+        return new \{{ model }};
+    }
+
+    {% block saveObject -%}
+    protected function saveObject(\{{ model }} ${{ builder.ModelClass }})
+    {
+        // ORM JOB
+    }
+    {% endblock %}
+}

@@ -28,8 +28,9 @@ class ConfigExtension extends AbstractExtension
      */
     public function getFunctions()
     {
+        $options = ['is_safe' => ['html']];
         return array(
-            'admingenerator_config' => new TwigFunction('admingenerator_config', array($this, 'getAdmingeneratorConfig')),
+            'admingenerator_config' => new TwigFunction('admingenerator_config', array($this, 'getAdmingeneratorConfig'), $options),
         );
     }
 

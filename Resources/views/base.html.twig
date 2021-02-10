@@ -1,4 +1,4 @@
-{% use 'AdmingeneratorGeneratorBundle::flash.html.twig' %}
+{% use '@AdmingeneratorGenerator/flash.html.twig' %}
 
 <!DOCTYPE html>
 <html>
@@ -58,12 +58,12 @@
 
     {% block wrapper_content %}
         {% block header %}
-            {% include 'AdmingeneratorGeneratorBundle::header.html.twig' %}
+            {% include '@AdmingeneratorGenerator/header.html.twig' %}
         {% endblock header%}
 
         {% block sidebar %}
             <aside class="main-sidebar sidebar-offcanvas">
-                {% include "AdmingeneratorGeneratorBundle:Sidebar:layout.html.twig" %}
+                {% include "@AdmingeneratorGenerator/Sidebar/layout.html.twig" %}
             </aside>
         {% endblock sidebar %}
 

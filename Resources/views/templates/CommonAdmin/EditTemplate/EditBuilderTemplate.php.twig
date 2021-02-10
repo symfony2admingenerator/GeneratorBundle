@@ -1,0 +1,80 @@
+{% use '@AdmingeneratorGenerator/templates/CommonAdmin/title.php.twig' %}
+{% use '@AdmingeneratorGenerator/templates/CommonAdmin/stylesheets.php.twig' %}
+{% use '@AdmingeneratorGenerator/templates/CommonAdmin/javascripts.php.twig' %}
+{% use '@AdmingeneratorGenerator/templates/CommonAdmin/tabs.php.twig' %}
+{% use '@AdmingeneratorGenerator/templates/CommonAdmin/generic_actions.php.twig' %}
+{% use '@AdmingeneratorGenerator/templates/CommonAdmin/object_actions.php.twig' %}
+{% use '@AdmingeneratorGenerator/templates/CommonAdmin/modals.php.twig' %}
+
+{{ echo_extends( builder.getBaseAdminTemplate ) }}
+
+{{ echo_block("stylesheets") }}
+    {{- block('complementary_stylesheets') -}}
+{{ echo_endblock() }}
+
+{{ echo_block("javascripts") }}
+    {{- block('complementary_javascripts') -}}
+{{ echo_endblock() }}
+
+{{- block('site_title') -}}
+
+{{- block('page_title') -}}
+
+{{ echo_block("page_content") }}
+    <div class="row">
+        <div class="form-model form-model-{{ builder.modelClass|lower }} col-md-12">
+            {{ echo_if('updateUrl is defined') }}
+                {{ echo_set("attr", "{'class': 'form-model-update', 'action': updateUrl}|merge(form.vars.attr|default({}))", false) }}
+            {{ echo_else() }}
+                {{ echo_set("attr", "{'class': 'form-model-new', 'action': createUrl}|merge(form.vars.attr|default({}))", false) }}
+            {{ echo_endif() }}
+            {{ echo_twig('form_start(form, attr|merge({role:"form", method:"post"}))') }}
+
+                {% if tabs|default is not empty %}
+                    {{- block('tabs') }}
+                        <div class="tab-content form-model-content">
+                {% else %}
+                    <div class="box box-primary">
+                        <div class="box-body form-model-content">
+                {% endif %}
+
+                {{ echo_include('@' ~ builder.namespacePrefixForTemplate ~ bundle_name|slice(0, -6) ~ '/' ~ builder.BaseGeneratorName ~ (builder.yamlKey | capitalize) ~ '/form.html.twig') }}
+
+                {% if tabs|default is not empty %}
+                        </div>
+                {% else %}
+                        </div>
+                        <div class="box-footer">
+                {% endif %}
+
+                {{ echo_block("form_actions") }}
+                    <div class="form-model-actions row">
+                        {% if builder.objectActions|default is not empty %}
+                            <div class="form-model-actions-object col-md-{{ builder.actions|default is empty ? '12' : '6' }} btn-group" role="object-actions">
+                                {{ block('object_actions') }}
+                                {{ block('object_actions_script') }}
+                            </div>
+                        {% endif %}
+                        {% if builder.actions|default is not empty %}
+                            <div class="form-model-actions-generic col-md-{{ builder.objectActions|default is empty ? '12' : '6' }} text-right" role="generic-actions">
+                                {{ block('generic_actions') }}
+                                {{ block('generic_actions_script') }}
+                            </div>
+                        {% endif %}
+                    </div>
+                {{ echo_endblock() }}
+
+                {% if tabs|default is not empty %}
+                    {{- block('end_tabs') }}
+                {% else %}
+                        </div>
+                    </div>
+                {% endif %}
+
+
+            </form>
+        </div>
+    </div>	
+{{ echo_endblock() }}
+
+{{- block('modals') -}}

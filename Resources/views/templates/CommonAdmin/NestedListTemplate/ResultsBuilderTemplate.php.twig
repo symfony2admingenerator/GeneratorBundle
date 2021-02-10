@@ -1,0 +1,45 @@
+{% use '@AdmingeneratorGenerator/templates/CommonAdmin/NestedListTemplate/nbresults.php.twig' %}
+{% use '@AdmingeneratorGenerator/templates/CommonAdmin/ListTemplate/form.php.twig' %}
+{% use '@AdmingeneratorGenerator/templates/CommonAdmin/NestedListTemplate/thead.php.twig' %}
+{% use '@AdmingeneratorGenerator/templates/CommonAdmin/ListTemplate/tbody.php.twig' %}
+{% use '@AdmingeneratorGenerator/templates/CommonAdmin/NestedListTemplate/footer.php.twig' %}
+
+{% block list_results %}
+    <div class="col-md-12 list-results-container no-filters nested-list">
+        <div class="box box-primary">
+            <div class="box-header list-header list-nb-results">
+                {{- block('list_nbresults') -}}
+            </div>
+            {{ block('form_batch_actions') }}
+                <div class="box-body table-responsive no-padding list-results">
+                    <table id="table-list-{{ builder.ModelClass|lower }}" class="table table-hover nested-table object-actions-{{ builder.ModelClass|lower }}">
+                        {{ block('list_thead') }}
+                        {{ block('list_tbody') }}
+                    </table>
+                </div>
+                <div class="box-footer list-footer">
+                    {{ block('list_footer') }}
+                </div>
+            {{ block('endform_batch_actions') }}
+        </div>
+    </div>
+    {# {% set admingeneratorNestedRoute=builder.baseActionsRoute ~ "_nested_move" %} #}
+    {{ echo_block('nested_tree_script_container') }}
+    <script type="application/javascript">
+        {{ echo_block('nested_tree_script_inner') }}
+        window.S2A = window.S2A || {};
+        window.S2A.nestedTreeAdminOptions = {
+            tableSelector: '#table-list-{{ builder.ModelClass|lower }}',
+            urls: {
+                {# move: '{{ echo_path( admingeneratorNestedRoute, "{ 'dragged': '|dragged|', 'action': '|action|', 'dropped': '|dropped|' }") }}' #}
+            },
+            labels: {
+                expand: '{{ echo_trans('nested.list.expand') }}',
+                collapse: '{{ echo_trans('nested.list.collapse') }}'
+            },
+            columnIndex: {{ builder.indentationColumnIndex }}
+        };
+        {{ echo_endblock() }}
+    </script>
+    {{ echo_endblock() }}
+{% endblock list_results %}

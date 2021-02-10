@@ -1,0 +1,29 @@
+{% use '@AdmingeneratorGenerator/templates/CommonAdmin/ListTemplate/scopes.php.twig' %}
+{% use '@AdmingeneratorGenerator/templates/CommonAdmin/stylesheets.php.twig' %}
+{% use '@AdmingeneratorGenerator/templates/CommonAdmin/javascripts.php.twig' %}
+{% use '@AdmingeneratorGenerator/templates/CommonAdmin/title.php.twig' %}
+{% use '@AdmingeneratorGenerator/templates/CommonAdmin/modals.php.twig' %}
+
+{{ echo_extends( builder.getBaseAdminTemplate ) }}
+
+{{ echo_block("stylesheets") }}
+    {{- block('complementary_stylesheets') -}}
+{{ echo_endblock() }}
+
+{{ echo_block("javascripts") }}
+    {{- block('complementary_javascripts') -}}
+{{ echo_endblock() }}
+
+{{- block('site_title') -}}
+
+{{- block('page_title') -}}
+
+{{ echo_block("page_content") }}
+    {{- block('list_scopes') -}}
+    <div class="row">
+        {{ echo_include('@' ~ builder.namespacePrefixForTemplate ~ bundle_name|slice(0, -6) ~ '/' ~ builder.BaseGeneratorName ~ 'List/filters.html.twig') }}
+        {{ echo_include('@' ~ builder.namespacePrefixForTemplate ~ bundle_name|slice(0, -6) ~ '/' ~ builder.BaseGeneratorName ~ 'List/results.html.twig') }}
+    </div>
+{{ echo_endblock() }}
+
+{{- block('modals') -}}

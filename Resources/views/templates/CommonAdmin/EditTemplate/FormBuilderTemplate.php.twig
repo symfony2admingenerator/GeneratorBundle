@@ -1,0 +1,10 @@
+{% use "@AdmingeneratorGenerator/templates/CommonAdmin/EditTemplate/fieldsets.php.twig" %}
+
+
+{% block form %}
+    {{ echo_block('form_fields') }}
+        {{ echo_twig("form_errors(form)") }}
+        {{- block('form_fieldsets') }}
+        {{ echo_twig("form_rest(form)") }}
+    {{ echo_endblock() }}
+{% endblock %}

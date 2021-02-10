@@ -2,7 +2,7 @@
 
 namespace Admingenerator\GeneratorBundle\Controller\DoctrineODM;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @author cedric Lombardot
  *
  */
-abstract class BaseController extends Controller
+abstract class BaseController extends AbstractController
 {
     /**
      * @var Request

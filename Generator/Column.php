@@ -11,7 +11,7 @@ use Admingenerator\GeneratorBundle\Exception\InvalidOptionException;
  * @author Piotr Gołębiewski <loostro@gmail.com>
  * @author Stéphane Escandell <stephane.escandell@gmail.com>
  */
-use Doctrine\Common\Util\Inflector;
+use Doctrine\Inflector\InflectorFactory;
 
 class Column
 {
@@ -163,7 +163,7 @@ class Column
 
     public function setProperty($option, $value)
     {
-        $setter = 'set'.Inflector::classify($option);
+        $setter = 'set'.InflectorFactory::create()->build()->classify($option);
 
         if (method_exists($this, $setter)) {
             $this->{$setter}($value);
@@ -179,7 +179,7 @@ class Column
 
     public function getGetter()
     {
-        return $this->getter ? $this->getter : Inflector::camelize($this->name);
+        return $this->getter ? $this->getter : InflectorFactory::create()->build()->camelize($this->name);
     }
 
     public function setGetter($getter)

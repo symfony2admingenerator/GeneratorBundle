@@ -1,0 +1,20 @@
+{% use '@AdmingeneratorGenerator/templates/CommonAdmin/object_actions.php.twig' %}
+
+{% block list_tbody %}
+    {{ echo_block("list_tbody") }}
+        <tbody>
+            {{ echo_block("list_tbody_rows") }}
+                {{ echo_if (builder.ModelClass ~ "s is not empty") }}
+                    {{ echo_for(builder.ModelClass, builder.ModelClass ~ "s" ) }}
+                        {{ echo_include('@' ~ builder.namespacePrefixForTemplate ~ bundle_name|slice(0, -6) ~ '/' ~ builder.BaseGeneratorName ~ 'List/row.html.twig') }}
+                    {{ echo_endfor() }}
+                {{ echo_else() }}
+                    <tr role="row" class="list-results-fields-row list-results-fields-row-noresults">
+                        <td colspan="999">{{ echo_trans('list.no.results') }}</td>
+                    </tr>
+                {{ echo_endif() }}
+            {{ echo_endblock() }}
+        </tbody>
+    {{ echo_endblock() }}
+    {{ block('object_actions_script') }}
+{% endblock %}

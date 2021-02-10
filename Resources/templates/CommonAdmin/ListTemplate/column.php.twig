@@ -1,7 +1,0 @@
-{% use '../CommonAdmin/PrintableColumns/columns.php.twig' %}
-
-{% block column_default %}
-    {{ echo_block('list_td_column_' ~ column.name) -}}
-        {{- block('printable_columns') -}}
-    {{- echo_endblock() }}
-{% endblock %}
