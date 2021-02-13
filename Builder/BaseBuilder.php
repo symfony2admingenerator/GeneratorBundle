@@ -2,6 +2,7 @@
 
 namespace Admingenerator\GeneratorBundle\Builder;
 
+use Admingenerator\GeneratorBundle\Twig\Extension\ClassifyExtension;
 use Doctrine\Inflector\InflectorFactory;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Twig\Environment;
@@ -44,9 +45,7 @@ abstract class BaseBuilder extends GenericBaseBuilder
     {
         parent::__construct();
         $this->variables = new ParameterBag(array());
-        $this->twigFilters[] = new TwigFilter('classify', function ($string) {
-            return InflectorFactory::create()->build()->classify($string);
-        });
+        $this->twigExtensions[] = ClassifyExtension::class;
         $this->environment = $environment;
     }
 
