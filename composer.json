@@ -43,7 +43,8 @@
         "symfony/yaml": ">=3.3,<6.0",
         "symfony2admingenerator/twig-generator": "~1.4",
         "twig/twig": "~1.40||~2.9||~3.0",
-        "babdev/pagerfanta-bundle": "~2.0"
+        "babdev/pagerfanta-bundle": "~2.0",
+        "psr/log": "~1.0"
     },
     "require-dev": {
         "doctrine/dbal": ">=2.2.3",

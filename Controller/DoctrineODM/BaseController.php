@@ -2,6 +2,7 @@
 
 namespace Admingenerator\GeneratorBundle\Controller\DoctrineODM;
 
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -36,5 +37,23 @@ abstract class BaseController extends AbstractController
     protected function getDocumentManager()
     {
         return $this->get('doctrine.odm.mongodb.document_manager');
+    }
+
+    /**
+     * Ensure the translator and logger services are available for usage
+     *
+     * @return array
+     */
+    public static function getSubscribedServices()
+    {
+        return array_merge(
+            parent::getSubscribedServices(),
+            [
+                'translator' => interface_exists('Symfony\Contracts\Translation\TranslatorInterface')
+                    ? \Symfony\Contracts\Translation\TranslatorInterface::class
+                    : \Symfony\Component\Translation\TranslatorInterface::class,
+                'logger' => LoggerInterface::class,
+            ]
+        );
     }
 }
