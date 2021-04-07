@@ -17,5 +17,11 @@ class TwigLoaderPass implements CompilerPassInterface
                 ->getDefinition('twig.loader.filesystem')
                 ->addMethodCall('addPath', array($container->getParameter('kernel.cache_dir')));
         }
+
+        if ($container->hasDefinition('twig.loader.native_filesystem')) {
+            $container
+                ->getDefinition('twig.loader.native_filesystem')
+                ->addMethodCall('addPath', array($container->getParameter('kernel.cache_dir')));
+        }
     }
 }

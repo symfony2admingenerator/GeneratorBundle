@@ -24,7 +24,13 @@ class ExtendsAdmingeneratedTokenParser extends AbstractTokenParser
             throw new SyntaxError('Multiple extends tags are forbidden', $token->getLine());
         }
 
-        list($bundle, $folder, $file) = explode(':', $this->parser->getCurrentToken()->getValue());
+        $templateParts = explode(':', $this->parser->getCurrentToken()->getValue()); //AcmeBundle:namespace:template.html.twig
+        if (count($templateParts) !== 3) {
+          list($bundle, $folder, $file) = explode('/', $this->parser->getCurrentToken()->getValue()); //@Acme/namespace/template.html.twig
+          $bundle = sprintf('%sBundle', substr($bundle, 1));
+        } else {
+          list($bundle, $folder, $file) = $templateParts;
+        }
 
         $path = "Admingenerated/$bundle/Resources/views/$folder/$file";
 
