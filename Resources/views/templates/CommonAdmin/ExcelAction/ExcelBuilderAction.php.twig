@@ -69,7 +69,7 @@ class ExcelController extends \{{ namespace_prefix }}\{{ bundle_name }}\Controll
           $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, $fileType);
           $response = new StreamedResponse(
               function () use ($writer) {
-                  $tempFile = $this->get('kernel')->getCacheDir().'/'.
+                  $tempFile = $this->getParameter('kernel.cache_dir').'/'.
                   rand(0, getrandmax()).rand(0, getrandmax()).".tmp";
                   $writer->save($tempFile);
                   readfile($tempFile);
@@ -114,7 +114,7 @@ class ExcelController extends \{{ namespace_prefix }}\{{ bundle_name }}\Controll
           $writer = $phpexcel->createWriter($phpExcelObject, $fileType);
           $response = new StreamedResponse(
               function () use ($writer) {
-                  $tempFile = $this->get('kernel')->getCacheDir().'/'.
+                  $tempFile = $this->getParameter('kernel.cache_dir').'/'.
                       rand(0, getrandmax()).rand(0, getrandmax()).".tmp";
                   $writer->save($tempFile);
                   readfile($tempFile);
