@@ -252,13 +252,13 @@ after an update and you're using custom templates, please check those first!
 
 ### Generator cache
 
-`generator_cache`: __default__: `null` __type__: `string` (service name extending `Doctrine\Common\Cache\CacheProvider`)
+`generator_cache`: __default__: `null` __type__: `string` (service name extending `Symfony\Contracts\Cache\CacheInterface`)
 
 By default, for each request matching an Admingenerated controller, the `ControllerListener` will iterate over
 the filesystem to find which right generator.yml and the right `Generator` have to be used to build generated
 files. This process could take some time. Thanks to this configuration, you can define a cache provider to bypass
 this process once all files are generated. The service name defined here need to extend the class
-`Doctrine\Common\Cache\CacheProvider`.
+`Symfony\Contracts\Cache\CacheInterface`.
 
 Example:
 

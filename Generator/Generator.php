@@ -2,12 +2,14 @@
 
 namespace Admingenerator\GeneratorBundle\Generator;
 
+use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Admingenerator\GeneratorBundle\Validator\ValidatorInterface;
 use Admingenerator\GeneratorBundle\Builder\Generator as AdminGenerator;
-use Doctrine\Common\Cache as DoctrineCache;
+use Symfony\Contracts\Cache\CacheInterface;
+use Symfony\Contracts\Cache\ItemInterface;
 use Twig\Environment;
 
 abstract class Generator implements GeneratorInterface
@@ -48,7 +50,7 @@ abstract class Generator implements GeneratorInterface
     protected $validators = array();
 
     /**
-     * @var DoctrineCache\CacheProvider
+     * @var CacheInterface
      */
     protected $cacheProvider;
 
@@ -90,15 +92,15 @@ abstract class Generator implements GeneratorInterface
     {
         $this->root_dir = $root_dir;
         $this->cache_dir = $cache_dir;
-        $this->cacheProvider = new DoctrineCache\ArrayCache();
+        $this->cacheProvider = new ArrayAdapter();
     }
 
     /**
-     * @param DoctrineCache\CacheProvider $cacheProvider
+     * @param CacheInterface $cacheProvider
      * @param string $cacheSuffix
      * @return void
      */
-    public function setCacheProvider(DoctrineCache\CacheProvider $cacheProvider, $cacheSuffix = 'default')
+    public function setCacheProvider(CacheInterface $cacheProvider, $cacheSuffix = 'default')
     {
         $this->cacheProvider = $cacheProvider;
         $this->cacheSuffix = $cacheSuffix;
@@ -171,12 +173,12 @@ abstract class Generator implements GeneratorInterface
      */
     public function build($forceGeneration = false)
     {
-        if (!$forceGeneration && $this->cacheProvider->fetch($this->getCacheKey())) {
+        if (!$forceGeneration && $this->cacheProvider->get($this->getCacheKey(), function (ItemInterface $item) {return false;})) {
             return;
         }
 
         $this->doBuild();
-        $this->cacheProvider->save($this->getCacheKey(), true);
+        $this->cacheProvider->get($this->getCacheKey(), function (ItemInterface $item) {return true;});
     }
 
     /**
@@ -189,7 +191,7 @@ abstract class Generator implements GeneratorInterface
      */
     protected function getCacheKey()
     {
-        return sprintf('admingen_isbuilt_%s_%s', $this->getBaseGeneratorName(), $this->cacheSuffix);
+        return str_replace(str_split('@{}\/:'), '_', sprintf('admingen_isbuilt_%s_%s', $this->getBaseGeneratorName(), $this->cacheSuffix));
     }
 
     /**

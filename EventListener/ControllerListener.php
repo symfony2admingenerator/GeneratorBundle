@@ -2,14 +2,15 @@
 
 namespace Admingenerator\GeneratorBundle\EventListener;
 
-use Admingenerator\GeneratorBundle\ClassLoader\AdmingeneratedClassLoader;
+use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\Finder\Finder;
-use Doctrine\Common\Cache as DoctrineCache;
 use Admingenerator\GeneratorBundle\Exception\NotAdminGeneratedException;
+use Symfony\Contracts\Cache\CacheInterface;
+use Symfony\Contracts\Cache\ItemInterface;
 use Twig\Extension\CoreExtension;
 
 class ControllerListener
@@ -20,7 +21,7 @@ class ControllerListener
     protected $container;
 
     /**
-     * @var DoctrineCache\CacheProvider
+     * @var CacheInterface
      */
     protected $cacheProvider;
 
@@ -32,21 +33,21 @@ class ControllerListener
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
-        $this->cacheProvider = new DoctrineCache\ArrayCache();
+        $this->cacheProvider = new ArrayAdapter();
         $this->cacheSuffix = 'default';
     }
 
     /**
-     * @param DoctrineCache\CacheProvider $cacheProvider
-     * @param string                      $cacheSuffix
+     * @param CacheInterface $cacheProvider
+     * @param string         $cacheSuffix
      */
-    public function setCacheProvider(DoctrineCache\CacheProvider $cacheProvider = null, $cacheSuffix = 'default')
+    public function setCacheProvider(CacheInterface $cacheProvider = null, $cacheSuffix = 'default')
     {
         $this->cacheProvider = $cacheProvider;
         $this->cacheSuffix = $cacheSuffix;
     }
 
-    public function onKernelRequest(GetResponseEvent $event)
+    public function onKernelRequest(RequestEvent $event)
     {
         if (HttpKernelInterface::MASTER_REQUEST === $event->getRequestType()) {
             try {
@@ -84,10 +85,9 @@ class ControllerListener
      */
     protected function getGenerator($generatorYaml)
     {
-        if (!$generatorName = $this->cacheProvider->fetch($this->getCacheKey($generatorYaml.'_generator'))) {
-            $yamlParsed = Yaml::parse(file_get_contents($generatorYaml));
-            $this->cacheProvider->save($this->getCacheKey($generatorYaml.'_generator'), $generatorName = $yamlParsed['generator']);
-        }
+        $generatorName = $this->cacheProvider->get($this->getCacheKey($generatorYaml.'_generator'), function (ItemInterface $item) use ($generatorYaml) {
+            return Yaml::parse(file_get_contents($generatorYaml));
+        });
 
         return $this->container->get($generatorName);
     }
@@ -117,15 +117,13 @@ class ControllerListener
      */
     protected function getGeneratorYml($controller)
     {
-        if (!$generatorYml = $this->cacheProvider->fetch($this->getCacheKey($controller))) {
+        $generatorYml = $this->cacheProvider->get($this->getCacheKey($controller), function (ItemInterface $item) use ($controller) {
             try {
-                $this->cacheProvider->save($this->getCacheKey($controller), $generatorYml = $this->findGeneratorYml($controller));
+                return $this->findGeneratorYml($controller);
             } catch (NotAdminGeneratedException $e) {
-                $this->cacheProvider->save($this->getCacheKey($controller), $generatorYml = 'NotAdminGeneratedException');
-
-                throw $e;
+                return 'NotAdminGeneratedException';
             }
-        }
+        });
 
         if ('NotAdminGeneratedException' == $generatorYml) {
             throw new NotAdminGeneratedException();
@@ -179,7 +177,7 @@ class ControllerListener
      */
     protected function getCacheKey($key)
     {
-        return sprintf('admingen_controller_%s_%s', $key, $this->cacheSuffix);
+        return str_replace(str_split('@{}()\/:'), '_ ', sprintf('admingen_controller_%s_%s', $key, $this->cacheSuffix));
     }
 
 }

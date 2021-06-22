@@ -82,13 +82,10 @@ class QueryFilterTest extends TestCase
      */
     protected function _getTestEntityManager($conn = null, $conf = null, $eventManager = null)
     {
-        $metadataCache = new \Doctrine\Common\Cache\ArrayCache;
 
         $config = new \Doctrine\ORM\Configuration();
 
-        $config->setMetadataCacheImpl($metadataCache);
         $config->setMetadataDriverImpl($config->newDefaultAnnotationDriver());
-        $config->setQueryCacheImpl(new \Doctrine\Common\Cache\ArrayCache);
         $config->setProxyDir(__DIR__ . '/Proxies');
         $config->setProxyNamespace('Doctrine\Tests\Proxies');
 
