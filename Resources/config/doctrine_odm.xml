@@ -19,7 +19,6 @@
 
         <service id="admingenerator.generator.doctrine_odm"
             class="%admingenerator.doctrine_odm.class%">
-            <argument type="string">%kernel.root_dir%</argument>
             <argument type="string">%kernel.cache_dir%</argument>
             <call method="setBundleConfig">
                 <argument type="expression">parameter('admingenerator')</argument>

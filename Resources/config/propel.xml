@@ -17,7 +17,6 @@
 
         <service id="admingenerator.generator.propel"
             class="%admingenerator.propel.class%">
-            <argument type="string">%kernel.root_dir%</argument>
             <argument type="string">%kernel.cache_dir%</argument>
             <call method="setBundleConfig">
                 <argument type="expression">parameter('admingenerator')</argument>

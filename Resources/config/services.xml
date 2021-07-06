@@ -95,7 +95,7 @@
 
         <service id="admingenerator.command.install-assets" class="Admingenerator\GeneratorBundle\Command\AssetsInstallCommand">
             <tag name="console.command" />
-            <argument>%kernel.root_dir%</argument>
+            <argument>%kernel.project_dir%</argument>
         </service>
 
         <!-- Validators -->

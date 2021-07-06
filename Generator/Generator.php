@@ -17,11 +17,6 @@ abstract class Generator implements GeneratorInterface
     /**
      * @var string
      */
-    protected $root_dir;
-
-    /**
-     * @var string
-     */
     protected $cache_dir;
 
     /**
@@ -85,12 +80,10 @@ abstract class Generator implements GeneratorInterface
     protected $kernel;
 
     /**
-     * @param $root_dir
      * @param $cache_dir
      */
-    public function __construct($root_dir, $cache_dir)
+    public function __construct($cache_dir)
     {
-        $this->root_dir = $root_dir;
         $this->cache_dir = $cache_dir;
         $this->cacheProvider = new ArrayAdapter();
     }

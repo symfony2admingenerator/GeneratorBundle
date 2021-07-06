@@ -86,7 +86,7 @@ class ControllerListener
     protected function getGenerator($generatorYaml)
     {
         $generatorName = $this->cacheProvider->get($this->getCacheKey($generatorYaml.'_generator'), function (ItemInterface $item) use ($generatorYaml) {
-            return Yaml::parse(file_get_contents($generatorYaml));
+            return Yaml::parse(file_get_contents($generatorYaml))['generator'];
         });
 
         return $this->container->get($generatorName);
@@ -150,10 +150,10 @@ class ControllerListener
           $finder->files()
               ->name($generatorName);
 
-          if (is_dir($src = realpath($this->container->getParameter('kernel.root_dir') . '/../src/' . $dir . '/Resources/config'))) {
+          if (is_dir($src = realpath($this->container->getParameter('kernel.project_dir') . '/src/' . $dir . '/Resources/config'))) {
             $namespace_directory = $src;
           } else {
-            $namespace_directory = realpath($this->container->getParameter('kernel.root_dir') . '/../vendor/bundles/' . $dir . '/Resources/config');
+            $namespace_directory = realpath($this->container->getParameter('kernel.project_dir') . '/vendor/bundles/' . $dir . '/Resources/config');
           }
 
           if (is_dir($namespace_directory)) {

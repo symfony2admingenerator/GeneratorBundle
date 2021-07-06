@@ -24,11 +24,11 @@ class AssetsInstallCommand extends Command
     /**
      * @var string
      */
-    private $rootDir;
+    private $projectDir;
 
-    public function __construct(string $rootDir)
+    public function __construct(string $projectDir)
     {
-        $this->rootDir = $rootDir;
+        $this->projectDir = $projectDir;
         parent::__construct();
     }
 
@@ -91,9 +91,8 @@ class AssetsInstallCommand extends Command
      */
     private function computeTargetDirectory($bowerFileDirectory)
     {
-        $parentWebDir = dirname($this->rootDir);
         $relativePathComputer = new RelativePathComputer($bowerFileDirectory);
 
-        return $relativePathComputer->computeToParent($parentWebDir) . 'web' . DIRECTORY_SEPARATOR . 'admin' . DIRECTORY_SEPARATOR . 'components';
+        return $relativePathComputer->computeToParent($this->projectDir) . 'web' . DIRECTORY_SEPARATOR . 'admin' . DIRECTORY_SEPARATOR . 'components';
     }
 }

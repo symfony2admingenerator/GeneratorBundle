@@ -11,7 +11,7 @@ This is quite easy, but you will have to do some steps.
 ```yaml
 # config.yml
 admingenerator_generator:
-  templates_dirs: [ "%kernel.root_dir%/../app/Resources/AdmingeneratorGeneratorBundle/templates" ]
+  templates_dirs: [ "%kernel.project_dir%/app/Resources/AdmingeneratorGeneratorBundle/templates" ]
 ```
 
 2. Keep in mind that you will at least need **one dir** in the previous specified template directory, namely of the 
