@@ -22,7 +22,7 @@
             $form = $this->getFilterForm();
             $form->handleRequest($this->request);
 
-            if ($form->isValid()) {
+            if ($form->isSubmitted() && $form->isValid()) {
                 $filters = $form->getViewData();
             }
         }
