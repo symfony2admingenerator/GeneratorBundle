@@ -41,7 +41,7 @@
      */
     protected function getObjectQueryBuilder($pk)
     {
-        return $this->getDoctrine()
+        return $this->doctrine
              ->getManagerForClass('{{ model }}')
              ->getRepository('{{ model }}')
              ->createQueryBuilder('q')
@@ -54,7 +54,7 @@
 
     protected function executeObjectDelete(\{{ model }} ${{ builder.ModelClass }})
     {
-        $em = $this->getDoctrine()->getManagerForClass('{{ model }}');
+        $em = $this->doctrine->getManagerForClass('{{ model }}');
         $em->remove(${{ builder.ModelClass }});
         $em->flush();
         $em->clear();
@@ -67,7 +67,7 @@
     protected function executeBatchDelete(array $selected)
     {
 {% if admingenerator_config('use_doctrine_orm_batch_remove') %}
-        $em = $this->getDoctrine()->getManagerForClass('{{ model }}');
+        $em = $this->doctrine->getManagerForClass('{{ model }}');
         $objects = $em->getRepository('{{ model }}')
             ->findBy(array('{{ builder.getFieldGuesser().getModelPrimaryKeyName(model) }}' => $selected));
         foreach ($objects as $object) {
@@ -76,7 +76,7 @@
         $em->flush();
         $em->clear();
 {% else %}
-        $this->getDoctrine()->getManagerForClass('{{ model }}')
+        $this->doctrine->getManagerForClass('{{ model }}')
             ->createQuery('DELETE {{ model }} m WHERE m.{{ builder.getFieldGuesser().getModelPrimaryKeyName(model) }} IN (:selected)')
             ->setParameter('selected', $selected)
             ->getResult();
@@ -98,7 +98,7 @@
             }
             throw new ValidationException($errors);
         } else {
-            $em = $this->getDoctrine()->getManagerForClass(get_class(${{ builder.ModelClass }}));
+            $em = $this->doctrine->getManagerForClass(get_class(${{ builder.ModelClass }}));
             $em->persist(${{ builder.ModelClass }});
             $em->flush();
         }

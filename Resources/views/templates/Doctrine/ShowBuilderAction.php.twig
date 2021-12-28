@@ -34,7 +34,7 @@
      */
     protected function getQueryBuilder($pk)
     {
-        return $this->getDoctrine()
+        return $this->doctrine
              ->getManagerForClass('{{ model }}')
              ->getRepository('{{ model }}')
              ->createQueryBuilder('q')

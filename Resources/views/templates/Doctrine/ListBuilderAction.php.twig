@@ -35,7 +35,7 @@
             {%- if 'entity' == builder.getFieldGuesser().getDbType(model, column.filterOn) or 'collection' == builder.getFieldGuesser().getDbType(model, column.filterOn) -%}
             {% set filterModel = builder.getFieldGuesser().getModelType(model, column.filterOn) %}
         if (isset($filters['{{ filter }}'])) {
-                $filters['{{ filter }}'] = $this->getDoctrine()
+                $filters['{{ filter }}'] = $this->doctrine
                 ->getManagerForClass($filters['{{ filter }}']['entityName'])
                 ->getRepository($filters['{{ filter }}']['entityName'])->find($filters['{{ filter }}']['{{ builder.getFieldGuesser().getModelPrimaryKeyName(filterModel) }}']);
         }
@@ -63,7 +63,7 @@
 
     protected function buildQuery()
     {
-        return $this->getDoctrine()
+        return $this->doctrine
                     ->getManagerForClass('{{ model }}')
                     ->getRepository('{{ model }}')
                     ->createQueryBuilder('q');
@@ -93,7 +93,7 @@
             {%- if 'entity' == builder.getFieldGuesser().getDbType(model, column.filterOn) or 'collection' == builder.getFieldGuesser().getDbType(model, column.filterOn) -%}
             {% set filterModel = builder.getFieldGuesser().getModelType(model, column.filterOn) %}
               if (isset($filters['{{ filter }}'])) {
-                  $this->getDoctrine()
+                  $this->doctrine
                   ->getManagerForClass(get_class($filters['{{ filter }}']))
                   ->getUnitOfWork()
                   ->registerManaged($filters['{{ filter }}'], array('{{ builder.getFieldGuesser().getModelPrimaryKeyName(filterModel) }}' => $filters['{{ filter }}']->get{{ builder.getFieldGuesser().getModelPrimaryKeyName(filterModel)|capitalize }}()), array());

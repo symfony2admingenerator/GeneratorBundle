@@ -9,7 +9,7 @@
 
     protected function buildQuery()
     {
-        return $this->getDoctrine()
+        return $this->doctrine
                     ->getManagerForClass('{{ model }}')
                     ->getRepository('{{ model }}')
                     ->getChildrenQueryBuilder()
@@ -39,7 +39,7 @@
             throw new NotFoundHttpException("Unknown action");
         }
 
-        $em = $this->getDoctrine()->getManagerForClass('{{ model }}');
+        $em = $this->doctrine->getManagerForClass('{{ model }}');
         $repo = $em->getRepository('{{ model }}');
 
         $dragged = $repo->findOneBy{{ builder.getFieldGuesser().getModelPrimaryKeyName(model)|classify }}($dragged);
