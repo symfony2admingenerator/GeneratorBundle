@@ -54,7 +54,7 @@
         "doctrine/dbal": ">=2.2.3",
         "doctrine/orm": ">=2.2.3",
         "symfony/class-loader": ">=2.8,<6.0",
-        "phpunit/phpunit": "~4.3"
+        "phpunit/phpunit": "~9"
     },
     "suggest": {
         "symfony2admingenerator/form-extensions-bundle": "Symfony form extensions",
