@@ -28,7 +28,7 @@ class CsrfTokenExtension extends AbstractExtension
     /**
      * {@inheritdoc}
      */
-    public function getFilters()
+    public function getFilters(): array
     {
         $options = ['is_safe' => ['html']];
         return array(

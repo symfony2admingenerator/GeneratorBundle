@@ -11,7 +11,7 @@ use Twig\TwigFunction;
  */
 class LocalizedMoneyExtension extends AbstractExtension
 {
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return array(
             'localized_money' => new TwigFunction('localized_money', array($this, 'getLocalizedMoney')),

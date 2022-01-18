@@ -10,7 +10,7 @@ use Twig\TwigFilter;
 class ClassifyExtension extends AbstractExtension
 {
 
-  public function getFilters()
+  public function getFilters(): array
   {
     $options = ['is_safe' => ['html']];
     return array(

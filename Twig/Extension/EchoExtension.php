@@ -26,7 +26,7 @@ class EchoExtension extends AbstractExtension
     /**
      * {@inheritdoc}
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         $options = ['is_safe' => ['html']];
         return array(
@@ -40,7 +40,7 @@ class EchoExtension extends AbstractExtension
     /**
      * {@inheritdoc}
      */
-    public function getFilters()
+    public function getFilters(): array
     {
         $options = ['is_safe' => ['html']];
         return array(

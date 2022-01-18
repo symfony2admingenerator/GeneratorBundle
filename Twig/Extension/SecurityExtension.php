@@ -34,7 +34,7 @@ class SecurityExtension extends AbstractExtension
     /**
      * {@inheritdoc}
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return array(
             'is_one_admingenerator_granted' => new TwigFunction('is_one_admingenerator_granted', array($this, 'isOneGranted')),

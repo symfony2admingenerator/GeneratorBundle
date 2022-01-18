@@ -26,7 +26,7 @@ class ConfigExtension extends AbstractExtension
     /**
      * {@inheritdoc}
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         $options = ['is_safe' => ['html']];
         return array(

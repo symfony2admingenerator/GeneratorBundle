@@ -87,7 +87,7 @@ class {{ builder.YamlKey|ucfirst }}Type extends BaseType
 
 {% endfor %}
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return '{{ builder.YamlKey }}_{{ bundle_name|lower }}_{{ builder.ModelClass|lower }}';
     }
