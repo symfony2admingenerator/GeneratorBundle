@@ -21,10 +21,10 @@
         }
     ],
     "require": {
-        "doctrine/common": "~2.2|~3.0",
-        "doctrine/inflector": "~1.4|~2.0",
+        "doctrine/common": "~2.2||~3.0",
+        "doctrine/inflector": "~1.4||~2.0",
         "symfony/cache": ">=3.3,<6.0",
-        "symfony/cache-contracts": "^1.0|^2.0",
+        "symfony/cache-contracts": "^1.0||^2.0",
         "symfony/config": ">=3.3,<6.0",
         "symfony/console": ">=3.3,<6.0",
         "symfony/dependency-injection": ">=3.3,<6.0",
@@ -46,8 +46,8 @@
         "symfony/yaml": ">=3.3,<6.0",
         "symfony2admingenerator/twig-generator": "~1.4",
         "twig/twig": "~1.40||~2.9||~3.0",
-        "babdev/pagerfanta-bundle": "~2.0",
-        "psr/log": "~1.0"
+        "babdev/pagerfanta-bundle": "~2.0||~3.0",
+        "psr/log": "~1.0||~2.0||~3.0"
     },
     "require-dev": {
         "doctrine/dbal": ">=2.2.3",
