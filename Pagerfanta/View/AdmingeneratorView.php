@@ -19,7 +19,7 @@ class AdmingeneratorView implements ViewInterface
     /**
      * {@inheritdoc}
      */
-    public function render(PagerfantaInterface $pagerfanta, $routeGenerator, array $options = array())
+    public function render(PagerfantaInterface $pagerfanta, callable $routeGenerator, array $options = array()): string
     {
         $options = array_merge(array(
             'proximity'              => 2,
@@ -128,7 +128,7 @@ class AdmingeneratorView implements ViewInterface
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getName(): string
     {
         return 'admingenerator';
     }
