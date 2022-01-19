@@ -17,7 +17,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 use Pagerfanta\Pagerfanta;
 {% block pager_adapter -%}
-use Pagerfanta\Adapter\DoctrineORMAdapter as PagerAdapter;
+use Pagerfanta\Doctrine\ORM\QueryAdapter as PagerAdapter;
 {% endblock %}
 
 class ListController extends BaseController
