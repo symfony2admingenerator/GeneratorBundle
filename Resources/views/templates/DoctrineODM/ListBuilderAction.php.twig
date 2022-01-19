@@ -1,6 +1,6 @@
 {% extends '@AdmingeneratorGenerator/templates/CommonAdmin/ListAction/ListBuilderAction.php.twig' %}
 {% block pager_adapter -%}
-use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter as PagerAdapter;
+use Pagerfanta\Doctrine\MongoDBODM\QueryAdapter as PagerAdapter;
 {% endblock %}
 {% block setFilters -%}
     /**
