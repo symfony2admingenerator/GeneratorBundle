@@ -53,7 +53,7 @@ class ControllerListener
             try {
                 $controller = $event->getRequest()->attributes->get('_controller');
 
-                if (strstr($controller, '::')) { //Check if its a "real controller" not assetic for example
+                if (is_string($controller) && strstr($controller, '::')) { //Check if its a "real controller" not assetic for example
                     $generatorYaml = $this->getGeneratorYml($controller);
 
                     $generator = $this->getGenerator($generatorYaml);
