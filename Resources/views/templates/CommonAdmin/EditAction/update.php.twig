@@ -76,7 +76,7 @@
             $this->get('session')->getFlashBag()->add('error',  $this->get('translator')->trans("{{ messages.error|default("action.object.edit.error") }}", array(), 'Admingenerator') );
         }
 
-        return $this->render('@{{ builder.namespacePrefixForTemplate }}{{ bundle_name|slice(0, -6) }}/{{ builder.BaseGeneratorName }}Edit/index.html.twig', $this->getAdditionalRenderParameters(${{ builder.ModelClass }}) + array(
+        return $this->render('{% if builder.bundleContext %}@{{ builder.namespacePrefixForTemplate }}{{ bundle_name|slice(0, -6) }}/{% endif %}{{ builder.BaseGeneratorName }}Edit/index.html.twig', $this->getAdditionalRenderParameters(${{ builder.ModelClass }}) + array(
             "{{ builder.ModelClass }}" => ${{ builder.ModelClass }},
             'updateUrl' => $this->getUpdateUrl($pk),
             "form" => $form->createView()

@@ -18,7 +18,7 @@ use {{ builder.namespacePrefixWithSubfolder }}\{{ bundle_name }}\Form\Type\{{ bu
         $scopes = $this->getScopes();
         $form = $this->getFilterForm();
 
-        return $this->render('@{{ builder.namespacePrefixForTemplate }}{{ bundle_name|slice(0, -6) }}/{{ builder.BaseGeneratorName }}List/index.html.twig', $this->getAdditionalRenderParameters() + array(
+        return $this->render('{% if builder.bundleContext %}@{{ builder.namespacePrefixForTemplate }}{{ bundle_name|slice(0, -6) }}/{% endif %}{{ builder.BaseGeneratorName }}List/index.html.twig', $this->getAdditionalRenderParameters() + array(
             '{{ builder.ModelClass }}s' => $this->getPager(),
             'listRoute'                 => $this->getListRoute(),
             'filtersUrl'                => $this->getFiltersUrl(),

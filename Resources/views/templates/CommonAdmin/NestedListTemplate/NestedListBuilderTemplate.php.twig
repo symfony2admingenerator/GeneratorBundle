@@ -18,7 +18,12 @@
 
 {{ echo_block("page_content") }}
     <div class="row">
-        {{ echo_include('@' ~ builder.namespacePrefixForTemplate ~ bundle_name|slice(0, -6) ~ '/' ~ builder.BaseGeneratorName ~ 'List/results.html.twig') }}
+        {% set resultsInclude = builder.BaseGeneratorName ~ 'List/results.html.twig' %}
+        {% if builder.bundleContext %}
+            {% set resultsInclude = '@' ~ builder.namespacePrefixForTemplate ~ bundle_name|slice(0, -6) ~ '/' ~ resultsInclude %}
+        {% endif %}
+
+        {{ echo_include(resultsInclude) }}
     </div>
 {{ echo_endblock() }}
 

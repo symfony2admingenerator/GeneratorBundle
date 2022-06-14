@@ -63,7 +63,7 @@
 
         <service id="twig.extension.admingenerator.security" class="Admingenerator\GeneratorBundle\Twig\Extension\SecurityExtension" public="false">
             <tag name="twig.extension" />
-            <argument type="service" id="security.authorization_checker" />
+            <argument type="service" id="Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface" />
         </service>
 
         <!-- General -->

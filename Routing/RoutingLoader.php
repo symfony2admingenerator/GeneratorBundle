@@ -11,7 +11,7 @@ use Symfony\Component\Yaml\Yaml;
 
 class RoutingLoader extends FileLoader
 {
-    // Assoc beetween a controller and its route path
+    // Assoc between a controller and its route path
     //@todo make an object for this
     protected $actions = array(
         'list' => array(
@@ -109,7 +109,11 @@ class RoutingLoader extends FileLoader
 
             $loweredNamespace = str_replace(array('/', '\\'), '_', $namespace);
             if ($controller_folder = $this->getControllerFolder($resource)) {
-                $route_name = $loweredNamespace . '_' . $bundle_name . '_' . $controller_folder . '_' . $controller;
+                if ($this->bundleContext($resource)) {
+                    $route_name = $loweredNamespace . '_' . $bundle_name . '_' . $controller_folder . '_' . $controller;
+                } else {
+                    $route_name = $loweredNamespace . '_' . $controller_folder . '_' . $controller;
+                }
             } else {
                 $route_name = $loweredNamespace . '_' . $bundle_name . '_' . $controller;
             }
@@ -134,11 +138,18 @@ class RoutingLoader extends FileLoader
             }
 
             if ($controller_folder) {
-                $datas['defaults']['_controller'] = $namespace . '\\'
-                        . $bundle_name . '\\Controller\\'
-                        . $controller_folder . '\\'
-                        . ucfirst($controller) . 'Controller::'
-                        . $action . 'Action';
+                if ($this->bundleContext($resource)) {
+                  $datas['defaults']['_controller'] = $namespace . '\\'
+                      . $bundle_name . '\\Controller\\'
+                      . $controller_folder . '\\'
+                      . ucfirst($controller) . 'Controller::'
+                      . $action . 'Action';
+                } else {
+                  $datas['defaults']['_controller'] = $namespace . '\\Controller\\'
+                      . $controller_folder . '\\'
+                      . ucfirst($controller) . 'Controller::'
+                      . $action . 'Action';
+                }
             } else {
                 $datas['defaults']['_controller'] = $loweredNamespace
                         . $bundle_name . ':'
@@ -167,8 +178,11 @@ class RoutingLoader extends FileLoader
      */
     protected function getControllerFolder($resource)
     {
-        preg_match('#.+/.+Bundle/Controller?/(.*?)/?$#', $resource, $matches);
-
+        if ($this->bundleContext($resource)) {
+            preg_match('#.+/.+Bundle/Controller?/(.*?)/?$#', $resource, $matches);
+        } else {
+            preg_match('#.+/.+/Controller?/(.*?)/?$#', $resource, $matches);
+        }
         return $matches[1];
     }
 
@@ -177,26 +191,34 @@ class RoutingLoader extends FileLoader
      */
     protected function getBundleNameFromResource($resource)
     {
-        preg_match('#.+/(.+Bundle)/Controller?/(.*?)/?$#', $resource, $matches);
+        if ($this->bundleContext($resource)) {
+            preg_match('#.+/(.+Bundle)/Controller?/(.*?)/?$#', $resource, $matches);
 
-        return $matches[1];
+            return $matches[1];
+        } else {
+            return '';
+        }
     }
 
     protected function getNamespaceFromResource($resource)
     {
-        $finder = Finder::create()
-            ->name('*Bundle.php')
-            ->depth(0)
-            ->in(realpath($resource.'/../../')) // ressource is controller folder
-            ->getIterator();
+        if ($this->bundleContext($resource)) {
+            $finder = Finder::create()
+                ->name('*Bundle.php')
+                ->depth(0)
+                ->in(realpath($resource . '/../../')) // ressource is controller folder
+                ->getIterator();
 
-        foreach ($finder as $file) {
-            preg_match('/namespace (.+);/', file_get_contents($file->getRealPath()), $matches);
+            foreach ($finder as $file) {
+                preg_match('/namespace (.+);/', file_get_contents($file->getRealPath()), $matches);
 
-            return implode('\\', explode('\\', $matches[1], -1)); // Remove the short bundle name
+                return implode('\\', explode('\\', $matches[1], -1)); // Remove the short bundle name
+            }
+
+            throw new \Exception(sprintf('Bundle file not found in %s.', realpath($resource . '/../../')));
+        } else {
+            return 'App';
         }
-
-        throw new \Exception(sprintf('Bundle file not found in %s.', realpath($resource.'/../../')));
     }
 
     /**
@@ -207,9 +229,13 @@ class RoutingLoader extends FileLoader
         // TODO: use the GeneratorsFinder
         // Find the *-generator.yml
         $finder = Finder::create()
-            ->name($this->getControllerFolder($resource).'-generator.yml')
-            ->in(realpath($resource.'/../../Resources/config/'))
-            ->getIterator();
+            ->name($this->getControllerFolder($resource).'-generator.yml');
+        if ($this->bundleContext($resource)) {
+            $finder->in($resource.'/../../Resources/config/');
+        } else {
+            $finder->in($resource.'/../../../config/admin');
+        }
+        $finder = $finder->getIterator();
 
         foreach ($finder as $file) {
             return $file->getRealPath();
@@ -237,5 +263,15 @@ class RoutingLoader extends FileLoader
         }
 
         return $search_in;
+    }
+
+    /**
+     * @param $resource
+     *
+     * @return bool
+     */
+    private function bundleContext($resource): bool
+    {
+        return str_contains($resource, 'Bundle');
     }
 }

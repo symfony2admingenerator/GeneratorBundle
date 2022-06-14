@@ -2,6 +2,7 @@
 
 namespace Admingenerator\GeneratorBundle\Filesystem;
 
+use Symfony\Component\Finder\Exception\DirectoryNotFoundException;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 use Symfony\Component\Finder\Finder;
@@ -44,8 +45,12 @@ class GeneratorsFinder
 
         $finder = new Finder();
         $finder->files()
-            ->name('*-generator.yml')
-            ->in($this->projectDir.'/src/*/*/Resources/config');
+            ->name('*-generator.yml');
+        try {
+          $finder->in($this->projectDir . '/src/*/*/Resources/config');
+        } catch (DirectoryNotFoundException) {
+          $finder->in($this->projectDir . '/config/admin');
+        }
 
         foreach ($finder as $file) {
             $yamls[$file->getRealPath()] = $file->getRealPath();

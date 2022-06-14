@@ -16,7 +16,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
         {{ block('security_action_with_object') }}
 
-        return $this->render('@{{ builder.namespacePrefixForTemplate }}{{ bundle_name|slice(0, -6) }}/{{ builder.BaseGeneratorName }}Show/index.html.twig', $this->getAdditionalRenderParameters(${{ builder.ModelClass }}) + array(
+        return $this->render('{% if builder.bundleContext %}@{{ builder.namespacePrefixForTemplate }}{{ bundle_name|slice(0, -6) }}/{% endif %}{{ builder.BaseGeneratorName }}Show/index.html.twig', $this->getAdditionalRenderParameters(${{ builder.ModelClass }}) + array(
             '{{ builder.ModelClass }}' => ${{ builder.ModelClass }},
         ));
     }

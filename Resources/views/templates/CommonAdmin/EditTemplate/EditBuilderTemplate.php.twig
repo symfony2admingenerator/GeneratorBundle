@@ -38,7 +38,12 @@
                         <div class="box-body form-model-content">
                 {% endif %}
 
-                {{ echo_include('@' ~ builder.namespacePrefixForTemplate ~ bundle_name|slice(0, -6) ~ '/' ~ builder.BaseGeneratorName ~ (builder.yamlKey | capitalize) ~ '/form.html.twig') }}
+                {% set formInclude = builder.BaseGeneratorName ~ (builder.yamlKey | capitalize) ~ '/form.html.twig' %}
+                {% if builder.bundleContext %}
+                    {% set formInclude = '@' ~ builder.namespacePrefixForTemplate ~ bundle_name|slice(0, -6) ~ '/' ~ formInclude %}
+                {% endif %}
+
+                {{ echo_include(formInclude) }}
 
                 {% if tabs|default is not empty %}
                         </div>

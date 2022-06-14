@@ -664,4 +664,8 @@ class BaseBuilder extends GenericBaseBuilder
 
         return $javascripts;
     }
+
+    public function isBundleContext() {
+        return str_contains($this->getVariable('bundle_name'), 'Bundle');
+    }
 }

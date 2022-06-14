@@ -6,7 +6,11 @@
             {{ echo_block("list_tbody_rows") }}
                 {{ echo_if (builder.ModelClass ~ "s is not empty") }}
                     {{ echo_for(builder.ModelClass, builder.ModelClass ~ "s" ) }}
-                        {{ echo_include('@' ~ builder.namespacePrefixForTemplate ~ bundle_name|slice(0, -6) ~ '/' ~ builder.BaseGeneratorName ~ 'List/row.html.twig') }}
+                        {% set rowInclude = builder.BaseGeneratorName ~ 'List/row.html.twig' %}
+                        {% if builder.bundleContext %}
+                            {% set rowInclude = '@' ~ builder.namespacePrefixForTemplate ~ bundle_name|slice(0, -6) ~ '/' ~ rowInclude %}
+                        {% endif %}
+                        {{ echo_include(rowInclude) }}
                     {{ echo_endfor() }}
                 {{ echo_else() }}
                     <tr role="row" class="list-results-fields-row list-results-fields-row-noresults">
