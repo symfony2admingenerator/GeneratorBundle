@@ -21,39 +21,39 @@
         }
     ],
     "require": {
+        "php": "^8.1",
         "doctrine/common": "~2.2||~3.0",
         "doctrine/inflector": "~1.4||~2.0",
-        "symfony/cache": ">=3.3,<6.0",
-        "symfony/cache-contracts": "^1.0||^2.0",
-        "symfony/config": ">=3.3,<6.0",
-        "symfony/console": ">=3.3,<6.0",
-        "symfony/dependency-injection": ">=3.3,<6.0",
-        "symfony/filesystem": ">=3.3,<6.0",
-        "symfony/finder": ">=3.3,<6.0",
-        "symfony/form": ">=3.3,<6.0",
-        "symfony/framework-bundle": ">=3.3,<6.0",
-        "symfony/http-foundation": ">=3.3,<6.0",
-        "symfony/http-kernel": ">=3.3,<6.0",
-        "symfony/maker-bundle": "~1.0",
-        "symfony/options-resolver": ">=3.3,<6.0",
-        "symfony/process": ">=3.3,<6.0",
-        "symfony/routing": ">=3.3,<6.0",
-        "symfony/security-csrf": ">=3.3,<6.0",
-        "symfony/security-core": ">=3.3,<6.0",
-        "symfony/translation": ">=3.3,<6.0",
-        "symfony/twig-bundle": ">=3.3,<6.0",
-        "symfony/validator": ">=3.3,<6.0",
-        "symfony/yaml": ">=3.3,<6.0",
+        "symfony/cache": ">=4.4,<7.0",
+        "symfony/cache-contracts": "^1.0||^2.0||~3.0",
+        "symfony/config": ">=4.4,<7.0",
+        "symfony/console": ">=4.4,<7.0",
+        "symfony/dependency-injection": ">=4.4,<7.0",
+        "symfony/filesystem": ">=4.4,<7.0",
+        "symfony/finder": ">=4.4,<7.0",
+        "symfony/form": ">=4.4,<7.0",
+        "symfony/framework-bundle": ">=4.4,<7.0",
+        "symfony/http-foundation": ">=4.4,<7.0",
+        "symfony/http-kernel": ">=4.4,<7.0",
+        "symfony/options-resolver": ">=4.4,<7.0",
+        "symfony/process": ">=4.4,<7.0",
+        "symfony/routing": ">=4.4,<7.0",
+        "symfony/security-csrf": ">=4.4,<7.0",
+        "symfony/security-core": ">=4.4,<7.0",
+        "symfony/translation": ">=4.4,<7.0",
+        "symfony/twig-bundle": ">=4.4,<7.0",
+        "symfony/validator": ">=4.4,<7.0",
+        "symfony/yaml": ">=4.4,<7.0",
         "symfony2admingenerator/twig-generator": "~1.4",
-        "twig/twig": "~1.40||~2.9||~3.0",
+        "twig/twig": "^2.15.3||^3.4.3",
         "babdev/pagerfanta-bundle": "~2.0||~3.0",
         "pagerfanta/pagerfanta": "~3.0",
         "psr/log": "~1.0||~2.0||~3.0"
     },
     "require-dev": {
-        "doctrine/dbal": ">=2.2.3",
-        "doctrine/orm": ">=2.2.3",
-        "symfony/class-loader": ">=2.8,<6.0",
+        "doctrine/dbal": ">=3.5.3",
+        "doctrine/orm": ">=2.14.1",
+        "symfony/maker-bundle": "~1.0",
         "phpunit/phpunit": "~9"
     },
     "suggest": {
@@ -64,7 +64,8 @@
         "cnerta/breadcrumb-bundle": "(version ^2.0) Allows the usage of breadcrumbs.",
         "knplabs/knp-menu-bundle": "(version >1.0,<2.2) Allows automatic rendering of the menu structure.",
         "twig/intl-extra": "Adds support for localized dates to templates",
-        "twig/extra-bundle": "Allows autoconfiguration of Twig extras"
+        "twig/extra-bundle": "Allows autoconfiguration of Twig extras",
+        "symfony/maker-bundle": "To use the command for autogenerating configuration"
     },
     "autoload": {
         "psr-4": {
@@ -73,7 +74,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "2.0-dev"
+            "dev-master": "3.0-dev"
         }
     },
     "config": {
