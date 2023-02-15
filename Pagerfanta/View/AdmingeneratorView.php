@@ -8,30 +8,23 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class AdmingeneratorView implements ViewInterface
 {
-
-    protected $translator;
-
-    public function __construct(TranslatorInterface $translator)
+    public function __construct(protected readonly TranslatorInterface $translator)
     {
-        $this->translator = $translator;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function render(PagerfantaInterface $pagerfanta, callable $routeGenerator, array $options = array()): string
     {
-        $options = array_merge(array(
+        $options = array_merge([
             'proximity'              => 2,
-            'previous_message'       => $this->translator->trans('pagerfanta.previous', array(), 'Admingenerator'),
-            'next_message'           => $this->translator->trans('pagerfanta.next', array(), 'Admingenerator'),
+            'previous_message'       => $this->translator->trans('pagerfanta.previous', [], 'Admingenerator'),
+            'next_message'           => $this->translator->trans('pagerfanta.next', [], 'Admingenerator'),
             'css_disabled_class'     => 'disabled',
             'css_dots_class'         => 'dots',
             'css_current_class'      => 'active',
             'css_alignment_class'    => 'pagination-right',
             'css_buttons_size_class' => 'pagination-sm',
             'css_custom_class'       => ''
-        ), $options);
+        ], $options);
 
         $currentPage = $pagerfanta->getCurrentPage();
 
@@ -47,18 +40,18 @@ class AdmingeneratorView implements ViewInterface
             $endPage = $pagerfanta->getNbPages();
         }
 
-        $pages = array();
+        $pages = [];
 
         // previous
         if ($pagerfanta->hasPreviousPage()) {
-            $pages[] = array($pagerfanta->getPreviousPage(), $options['previous_message']);
+            $pages[] = [$pagerfanta->getPreviousPage(), $options['previous_message']];
         }
 
         // first
         if ($startPage > 1) {
-            $pages[] = array(1, 1);
+            $pages[] = [1, 1];
             if (3 == $startPage) {
-                $pages[] = array(2, 2);
+                $pages[] = [2, 2];
             } elseif (2 != $startPage) {
                 $pages[] = sprintf(
                     '<li class="%s"><span class="%s">...</span></li>',
@@ -77,7 +70,7 @@ class AdmingeneratorView implements ViewInterface
                     $page
                 );
             } else {
-                $pages[] = array($page, $page);
+                $pages[] = [$page, $page];
             }
         }
 
@@ -91,16 +84,16 @@ class AdmingeneratorView implements ViewInterface
                         $options['css_dots_class']
                     );
                 } else {
-                    $pages[] = array($endPage + 1, $endPage + 1);
+                    $pages[] = [$endPage + 1, $endPage + 1];
                 }
             }
 
-            $pages[] = array($pagerfanta->getNbPages(), $pagerfanta->getNbPages());
+            $pages[] = [$pagerfanta->getNbPages(), $pagerfanta->getNbPages()];
         }
 
         // next
         if ($pagerfanta->hasNextPage()) {
-            $pages[] = array($pagerfanta->getNextPage(), $options['next_message']);
+            $pages[] = [$pagerfanta->getNextPage(), $options['next_message']];
         }
 
         // process
@@ -125,9 +118,6 @@ class AdmingeneratorView implements ViewInterface
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getName(): string
     {
         return 'admingenerator';

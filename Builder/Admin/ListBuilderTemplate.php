@@ -9,28 +9,17 @@ namespace Admingenerator\GeneratorBundle\Builder\Admin;
  */
 class ListBuilderTemplate extends ListBuilder
 {
-    /**
-     * @var string
-     */
-    protected $filtersMode = null;
+    protected ?string $filtersMode = null;
 
-    /**
-     * @var string
-     */
-    protected $defaultFiltersVisibility = null;
+    protected ?string $defaultFiltersVisibility = null;
 
-    /**
-     * @var string
-     */
-    protected $filtersModalSize = null;
+    protected ?string $filtersModalSize = null;
 
     /**
      * Retrieve the filters mode parameter defined into the
      * YAML generator file under the list builder.
-     *
-     * @return string
      */
-    public function getFiltersMode()
+    public function getFiltersMode(): string
     {
         if (null === $this->filtersMode) {
             $this->filtersMode = $this->getGenerator()->getFromYaml('builders.list.params.filtersMode', 'default');
@@ -39,7 +28,7 @@ class ListBuilderTemplate extends ListBuilder
         return $this->filtersMode;
     }
 
-    public function getDefaultFiltersVisibility()
+    public function getDefaultFiltersVisibility(): string
     {
         if (null === $this->defaultFiltersVisibility) {
             $this->defaultFiltersVisibility = $this->getGenerator()->getFromYaml('builders.list.params.defaultFiltersVisibility', 'expanded');
@@ -48,7 +37,7 @@ class ListBuilderTemplate extends ListBuilder
         return $this->defaultFiltersVisibility;
     }
 
-    public function getFiltersModalSize()
+    public function getFiltersModalSize(): string
     {
         if (null === $this->filtersModalSize) {
             $this->filtersModalSize = $this->getGenerator()->getFromYaml('builders.list.params.filtersModalSize', 'medium');
@@ -57,18 +46,13 @@ class ListBuilderTemplate extends ListBuilder
         return $this->filtersModalSize;
     }
 
-    /**
-     * (non-PHPdoc).
-     *
-     * @see \Admingenerator\GeneratorBundle\Builder\BaseBuilder::getTemplatesToGenerate()
-     */
-    public function getTemplatesToGenerate()
+    public function getTemplatesToGenerate(): array
     {
-        return parent::getTemplatesToGenerate() + array(
+        return parent::getTemplatesToGenerate() + [
             'ListBuilderTemplate'.self::TWIG_EXTENSION => 'Resources/views/'.$this->getBaseGeneratorName().'List/index.html.twig',
             'List/FiltersBuilderTemplate'.self::TWIG_EXTENSION => 'Resources/views/'.$this->getBaseGeneratorName().'List/filters.html.twig',
             'List/ResultsBuilderTemplate'.self::TWIG_EXTENSION => 'Resources/views/'.$this->getBaseGeneratorName().'List/results.html.twig',
             'List/RowBuilderTemplate'.self::TWIG_EXTENSION => 'Resources/views/'.$this->getBaseGeneratorName().'List/row.html.twig',
-        );
+            ];
     }
 }

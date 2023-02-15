@@ -14,33 +14,14 @@ use Admingenerator\GeneratorBundle\Filesystem\GeneratorsFinder;
  */
 class GeneratorCacheWarmer implements CacheWarmerInterface
 {
-    /**
-     * @var ContainerInterface
-     */
-    protected $container;
+    protected GeneratorsFinder $finder;
 
-    /**
-     * @var GeneratorsFinder
-     */
-    protected $finder;
-
-    /**
-     * Constructor.
-     *
-     * @param ContainerInterface $container The dependency injection container
-     */
-    public function __construct(ContainerInterface $container)
+    public function __construct(protected ContainerInterface $container)
     {
-        $this->container = $container;
         $this->finder = new GeneratorsFinder($container->getParameter('kernel.project_dir'));
     }
 
-    /**
-     * Warms up the cache.
-     *
-     * @param string $cacheDir The cache directory
-     */
-    public function warmUp($cacheDir)
+    public function warmUp(string $cacheDir): array
     {
         if ($this->container->has('admingenerator.generator.propel')) {
             $this->propelInit();
@@ -63,19 +44,15 @@ class GeneratorCacheWarmer implements CacheWarmerInterface
                     $e->getTraceAsString();
             }
         }
+        return [];
     }
 
-    /**
-     * Checks whether this warmer is optional or not.
-     *
-     * @return Boolean always false
-     */
-    public function isOptional()
+    public function isOptional(): bool
     {
         return false;
     }
 
-    protected function buildFromYaml($file)
+    protected function buildFromYaml($file): void
     {
         $generatorConfiguration = Yaml::parse(file_get_contents($file));
         $generator = $this->container->get($generatorConfiguration['generator']);
@@ -94,7 +71,7 @@ class GeneratorCacheWarmer implements CacheWarmerInterface
     /**
      * Force Propel boot before cache warmup
      */
-    protected function propelInit()
+    protected function propelInit(): void
     {
         if (!\Propel::isInit()) {
             \Propel::setConfiguration($this->container->get('propel.configuration'));

@@ -6,7 +6,7 @@
 
 This page contains all upgrade notes since the release of the stable 2.0.0 version.
 
-## Current `sf4` branch
+## Current `master` branch
 
 - You need to load the `AdminGenerated` namespace manually in your frontend controller in order to have a valid cache when debug is enabled.
   Check the [base installation](Resources/doc/install/base-installation.md) on how to do that!

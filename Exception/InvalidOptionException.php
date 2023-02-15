@@ -2,7 +2,9 @@
 
 namespace Admingenerator\GeneratorBundle\Exception;
 
-class InvalidOptionException extends \LogicException
+use LogicException;
+
+class InvalidOptionException extends LogicException
 {
     public function __construct($property, $column, $generator, $builder)
     {

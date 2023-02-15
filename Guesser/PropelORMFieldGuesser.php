@@ -6,55 +6,25 @@ use Admingenerator\GeneratorBundle\Exception\NotImplementedException;
 use Doctrine\Inflector\InflectorFactory;
 use Symfony\Component\HttpKernel\Kernel;
 
-class PropelORMFieldGuesser
+class PropelORMFieldGuesser implements FieldGuesser
 {
-    /**
-     * @var boolean
-     */
-    private $guessRequired;
+    private array $cache = [];
 
-    /**
-     * @var boolean
-     */
-    private $defaultRequired;
-
-    /**
-     * @var array
-     */
-    private $cache = array();
-
-    /**
-     * @var array
-     */
-    private $formTypes;
-
-    /**
-     * @var array
-     */
-    private $filterTypes;
-
-    public function __construct(array $formTypes, array $filterTypes, $guessRequired, $defaultRequired)
+    public function __construct(
+        private readonly array $formTypes,
+        private readonly array $filterTypes,
+        private readonly bool $guessRequired,
+        private readonly bool$defaultRequired
+    )
     {
-        $this->formTypes = $formTypes;
-        $this->filterTypes = $filterTypes;
-        $this->guessRequired = $guessRequired;
-        $this->defaultRequired = $defaultRequired;
     }
 
-    /**
-     * @param $class
-     * @return mixed
-     */
-    protected function getMetadatas($class)
+    protected function getMetadatas(string $class): mixed
     {
         return $this->getTable($class);
     }
 
-    /**
-     * @param $class
-     * @return array
-     */
-    public function getAllFields($class)
+    public function getAllFields(string $class): array
     {
         $return = array();
 
@@ -65,7 +35,7 @@ class PropelORMFieldGuesser
         return $return;
     }
 
-    public function getManyToMany($model, $fieldPath)
+    public function getManyToMany(string $model, string $fieldPath): bool
     {
         $resolved = $this->resolveRelatedField($model, $fieldPath);
         $relation = $this->getRelation($resolved['field'], $resolved['class']);
@@ -84,7 +54,7 @@ class PropelORMFieldGuesser
      * @param  string $fieldPath The field path.
      * @return string The leaf field's primary key.
      */
-    public function getDbType($model, $fieldPath)
+    public function getDbType(string $model, string $fieldPath): string
     {
         $resolved = $this->resolveRelatedField($model, $fieldPath);
         $class = $resolved['class'];
@@ -101,12 +71,7 @@ class PropelORMFieldGuesser
         return $column ? $column->getType() : 'virtual';
     }
 
-    /**
-     * @param $fieldName
-     * @param $class
-     * @return object|false The relation object or false.
-     */
-    protected function getRelation($fieldName, $class)
+    protected function getRelation(string $fieldName, string $class): object|false
     {
         $table = $this->getMetadatas($class);
         $relName = InflectorFactory::create()->build()->classify($fieldName);
@@ -121,11 +86,9 @@ class PropelORMFieldGuesser
     }
 
     /**
-     * @param $class
-     * @param $fieldName
      * @return string|void
      */
-    public function getPhpName($class, $fieldName)
+    public function getPhpName(string $class, string $fieldName)
     {
         $column = $this->getColumn($class, $fieldName);
 
@@ -138,18 +101,18 @@ class PropelORMFieldGuesser
      * @param $dbType
      * @return string
      */
-    public function getSortType($dbType)
+    public function getSortType(string $dbType): string
     {
-        $alphabeticTypes = array(
+        $alphabeticTypes = [
             \PropelColumnTypes::CHAR,
             \PropelColumnTypes::VARCHAR,
             \PropelColumnTypes::LONGVARCHAR,
             \PropelColumnTypes::BLOB,
             \PropelColumnTypes::CLOB,
             \PropelColumnTypes::CLOB_EMU,
-        );
+        ];
 
-        $numericTypes = array(
+        $numericTypes = [
             \PropelColumnTypes::FLOAT,
             \PropelColumnTypes::REAL,
             \PropelColumnTypes::DOUBLE,
@@ -159,7 +122,7 @@ class PropelORMFieldGuesser
             \PropelColumnTypes::INTEGER,
             \PropelColumnTypes::BIGINT,
             \PropelColumnTypes::NUMERIC,
-        );
+        ];
 
         if (in_array($dbType, $alphabeticTypes)) {
             return 'alphabetic';
@@ -172,13 +135,7 @@ class PropelORMFieldGuesser
         return 'default';
     }
 
-    /**
-     * @param $dbType
-     * @param $class: for debug only
-     * @param $columnName: for debug only
-     * @return string
-     */
-    public function getFormType($dbType, $class, $columnName)
+    public function getFormType(string $dbType, string $class, string $columnName): string
     {
         $formTypes = array();
 
@@ -206,12 +163,7 @@ class PropelORMFieldGuesser
         );
     }
 
-    /**
-     * @param $dbType
-     * @param $columnName
-     * @return string
-     */
-    public function getFilterType($dbType, $class, $columnName)
+    public function getFilterType(string $dbType, string $class, string $columnName): string
     {
         $filterTypes = array();
 
@@ -239,42 +191,20 @@ class PropelORMFieldGuesser
         );
     }
 
-    /**
-     * @param $formType
-     * @param $dbType
-     * @param $model
-     * @param $fieldPath
-     * @return array
-     */
-    public function getFormOptions($formType, $dbType, $model, $fieldPath)
+    public function getFormOptions(string $formType, string $dbType, string $model, string $fieldPath): array
     {
-        return $this->getOptions($formType, $dbType, $model, $fieldPath, false);
+        return $this->getOptions($formType, $dbType, $model, $fieldPath);
     }
 
-    /**
-     * @param $filterType
-     * @param $dbType
-     * @param $model
-     * @param $fieldPath
-     * @return array
-     */
-    public function getFilterOptions($filterType, $dbType, $model, $fieldPath)
+    public function getFilterOptions(string $filterType, string $dbType, string $model, string $fieldPath): array
     {
         return $this->getOptions($filterType, $dbType, $model, $fieldPath, true);
     }
 
-    /**
-     * @param      $type
-     * @param      $dbType
-     * @param      $model
-     * @param      $fieldPath
-     * @param bool $filter
-     * @return array
-     */
-    protected function getOptions($type, $dbType, $model, $fieldPath, $filter = false)
+    protected function getOptions(string $type, string $dbType, string $model, string $fieldPath, bool $filter = false): array
     {
         if ('virtual' === $dbType) {
-            return array();
+            return [];
         }
 
         $resolved = $this->resolveRelatedField($model, $fieldPath);
@@ -283,15 +213,15 @@ class PropelORMFieldGuesser
 
         if ((\PropelColumnTypes::BOOLEAN == $dbType || \PropelColumnTypes::BOOLEAN_EMU == $dbType) &&
             preg_match("#ChoiceType$#i", $type)) {
-            $options = array(
-                'choices' => array(
+            $options = [
+                'choices' => [
                     'boolean.no' => 0,
                     'boolean.yes' => 1
-                ),
+                ],
                 'placeholder' => 'boolean.yes_or_no',
                 'translation_domain' => 'Admingenerator',
                 'choice_translation_domain' => 'Admingenerator'
-            );
+            ];
 
             if (Kernel::MAJOR_VERSION < 3) {
                 $options['choices_as_values'] = true;
@@ -303,25 +233,25 @@ class PropelORMFieldGuesser
         if (!$filter &&
             (\PropelColumnTypes::BOOLEAN == $dbType || \PropelColumnTypes::BOOLEAN_EMU == $dbType) &&
             preg_match("#CheckboxType#i", $type)) {
-            return array(
+            return [
                 'required' => false
-            );
+            ];
         }
 
         if (preg_match("#ModelType$#i", $type)) {
             $relation = $this->getRelation($columnName, $class);
             if ($relation) {
                 if (\RelationMap::MANY_TO_ONE === $relation->getType()) {
-                    return array(
+                    return [
                         'class'     => $relation->getForeignTable()->getClassname(),
                         'multiple'  => false,
-                    );
+                    ];
                 }
 
-                return array(
+                return [
                     'class'     => $relation->getLocalTable()->getClassname(),
                     'multiple'  => false,
-                );
+                ];
             }
         }
 
@@ -329,35 +259,35 @@ class PropelORMFieldGuesser
             $relation = $this->getRelation($columnName, $class);
 
             if ($relation) {
-                return array(
+                return [
                     'allow_add'     => true,
                     'allow_delete'  => true,
                     'by_reference'  => false,
                     'entry_type' => 'entity',
-                    'entry_options' => array(
+                    'entry_options' => [
                         'class' => \RelationMap::MANY_TO_ONE === $relation->getType() ? $relation->getForeignTable()->getClassname() : $relation->getLocalTable()->getClassname()
-                    )
-                );
+                    ]
+                ];
             }
             
-            return array(
+            return [
                     'entry_type' => 'text',
-                );
+            ];
         }
 
         if (\PropelColumnTypes::ENUM == $dbType) {
             $valueSet = $this->getMetadatas($class)->getColumn($columnName)->getValueSet();
 
-            return array(
-                'required' => $filter ? false : $this->isRequired($class, $columnName),
+            return [
+                'required' => !$filter && $this->isRequired($class, $columnName),
                 'choices'  => array_combine($valueSet, $valueSet),
-            );
+            ];
         }
 
-        return array('required' => $filter ? false : $this->isRequired($class, $columnName));
+        return ['required' => !$filter && $this->isRequired($class, $columnName)];
     }
 
-    protected function isRequired($class, $fieldName)
+    protected function isRequired(string $class, string $fieldName): bool
     {
         if (!$this->guessRequired) {
             return $this->defaultRequired;
@@ -371,7 +301,7 @@ class PropelORMFieldGuesser
     /**
      * Find the pk name
      */
-    public function getModelPrimaryKeyName($class)
+    public function getModelPrimaryKeyName(string $class): ?string
     {
         $pks = $this->getMetadatas($class)->getPrimaryKeyColumns();
 
@@ -382,7 +312,7 @@ class PropelORMFieldGuesser
         throw new \LogicException('No valid primary keys found');
     }
 
-    protected function getTable($class)
+    protected function getTable(string $class): string
     {
         if (isset($this->cache[$class])) {
             return $this->cache[$class];
@@ -397,7 +327,7 @@ class PropelORMFieldGuesser
         throw new \LogicException('Can\'t find query class '.$queryClass);
     }
 
-    protected function getColumn($class, $property)
+    protected function getColumn(string $class, string $property): mixed
     {
         if (isset($this->cache[$class.'::'.$property])) {
             return $this->cache[$class.'::'.$property];
@@ -415,6 +345,7 @@ class PropelORMFieldGuesser
                 }
             }
         }
+        return null;
     }
 
     /**
@@ -424,7 +355,7 @@ class PropelORMFieldGuesser
      * @param  string $fieldPath The field path.
      * @return string The leaf field's primary key.
      */
-    public function getPrimaryKeyFor($model, $fieldPath)
+    public function getPrimaryKeyFor(string $model, string $fieldPath): ?string
     {
         $resolved = $this->resolveRelatedField($model, $fieldPath);
         $class = $resolved['class'];
@@ -447,7 +378,7 @@ class PropelORMFieldGuesser
      * @param  string $fieldPath The field path.
      * @return array  An array containing field and class information.
      */
-    private function resolveRelatedField($model, $fieldPath)
+    private function resolveRelatedField(string $model, string $fieldPath): array
     {
         $path = explode('.', $fieldPath);
         $field = array_pop($path);
@@ -461,9 +392,9 @@ class PropelORMFieldGuesser
             $class = $relation->getName();
         }
 
-        return array(
+        return [
             'field' => $field,
             'class' => $class
-        );
+        ];
     }
 }

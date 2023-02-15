@@ -11,24 +11,21 @@ use Twig\TwigFilter;
  */
 class ArrayExtension extends AbstractExtension
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getFilters(): array
     {
         $options = ['is_safe' => ['html']];
-        return array(
-            'mapBy'     => new TwigFilter('mapBy', array($this, 'mapBy'), $options),
-            'flatten'   => new TwigFilter('flatten', array($this, 'flatten'), $options),
-            'intersect' => new TwigFilter('intersect', array($this, 'intersect'), $options),
-            'clean'     => new TwigFilter('clean', array($this, 'clean'), $options),
-            'unique'    => new TwigFilter('unique', array($this, 'unique'), $options),
-        );
+        return [
+            'mapBy'     => new TwigFilter('mapBy', $this->mapBy(...), $options),
+            'flatten'   => new TwigFilter('flatten', $this->flatten(...), $options),
+            'intersect' => new TwigFilter('intersect', $this->intersect(...), $options),
+            'clean'     => new TwigFilter('clean', $this->clean(...), $options),
+            'unique'    => new TwigFilter('unique', array_unique(...), $options),
+        ];
     }
 
     /**
      * Map collection by key. For objects, return the property, use
-     * get method or is method, if avaliable.
+     * get method or is method, if available.
      *
      * @param  array                     $input Array of arrays or objects.
      * @param  string                    $key   Key to map by.
@@ -36,7 +33,7 @@ class ArrayExtension extends AbstractExtension
      * @throws \LogicException           If array item could not be mapped by given key.
      * @return array                     Mapped array.
      */
-    public function mapBy(array $input, $key)
+    public function mapBy(array $input, string $key): array
     {
         return array_map(function ($item) use ($key) {
             if (is_array($item)) {
@@ -83,7 +80,7 @@ class ArrayExtension extends AbstractExtension
      * @param  array $input Array of arrays.
      * @return array Flat array.
      */
-    public function flatten(array $input)
+    public function flatten(array $input): array
     {
         $it = new \RecursiveIteratorIterator(
             new \RecursiveArrayIterator($input)
@@ -94,45 +91,23 @@ class ArrayExtension extends AbstractExtension
 
     /**
      * Computes the intersection of arrays
-     *
-     * @return array
      */
-    public function intersect()
+    public function intersect(): array
     {
         return call_user_func_array('array_intersect', func_get_args());
     }
 
     /**
      * Remove entries with value $car
-     *
-     * @param array $input
-     * @param string $car
-     * @return array
      */
-    public function clean(array $input, $car = '')
+    public function clean(array $input, string $car = ''): array
     {
         return array_filter($input, function($v) use ($car) {
             return $car != $v;
         });
     }
 
-    /**
-     * Remove duplicate entries
-     *
-     * @param array $input
-     * @return array
-     */
-    public function unique(array $input)
-    {
-        return array_unique($input);
-    }
-
-    /**
-     * Returns the name of the extension.
-     *
-     * @return string The extension name
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'admingenerator_array';
     }

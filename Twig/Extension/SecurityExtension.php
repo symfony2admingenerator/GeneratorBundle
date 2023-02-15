@@ -11,41 +11,22 @@ use Twig\TwigFunction;
  */
 class SecurityExtension extends AbstractExtension
 {
-    /**
-     * @var AuthorizationCheckerInterface
-     */
-    private $authorizationChecker;
 
-    /**
-     * @var bool
-     */
-    private $useExpression;
-
-    /**
-     * @param AuthorizationCheckerInterface $authorizationChecker
-     * @param bool $useExpression
-     */
-    public function __construct(AuthorizationCheckerInterface $authorizationChecker, $useExpression = false)
+    public function __construct(
+        private readonly AuthorizationCheckerInterface $authorizationChecker,
+        private readonly bool $useExpression = false
+    )
     {
-        $this->authorizationChecker = $authorizationChecker;
-        $this->useExpression = $useExpression;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFunctions(): array
     {
-        return array(
-            'is_one_admingenerator_granted' => new TwigFunction('is_one_admingenerator_granted', array($this, 'isOneGranted')),
-        );
+        return [
+            'is_one_admingenerator_granted' => new TwigFunction('is_one_admingenerator_granted', $this->isOneGranted(...)),
+        ];
     }
 
-    /**
-     * @param  array  $credentials
-     * @return bool
-     */
-    public function isOneGranted(array $credentials, $object = null)
+    public function isOneGranted(array $credentials, object $object = null): bool
     {
         if (empty($credentials)) {
             return true;
@@ -68,12 +49,7 @@ class SecurityExtension extends AbstractExtension
         return false;
     }
 
-    /**
-     * Returns the name of the extension.
-     *
-     * @return string The extension name
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'admingenerator_security';
     }

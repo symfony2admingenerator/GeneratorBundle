@@ -8,7 +8,7 @@ namespace Admingenerator\GeneratorBundle\Builder\Admin;
  */
 class ListBuilderAction extends ListBuilder
 {
-    public function getOutputName()
+    public function getOutputName(): string
     {
         return $this->getGenerator()->getGeneratedControllerFolder().'/ListController.php';
     }

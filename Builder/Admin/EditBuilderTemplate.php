@@ -8,17 +8,13 @@ namespace Admingenerator\GeneratorBundle\Builder\Admin;
  */
 class EditBuilderTemplate extends EditBuilder
 {
-    /**
-     * (non-PHPdoc)
-     * @see \Admingenerator\GeneratorBundle\Builder\BaseBuilder::getTemplatesToGenerate()
-     */
-    public function getTemplatesToGenerate()
+    public function getTemplatesToGenerate(): array
     {
-        return parent::getTemplatesToGenerate() + array(
+        return parent::getTemplatesToGenerate() + [
                 'EditBuilderTemplate'.self::TWIG_EXTENSION
                     => 'Resources/views/'.$this->getBaseGeneratorName().'Edit/index.html.twig',
                 'Edit/FormBuilderTemplate'.self::TWIG_EXTENSION
                     => 'Resources/views/'.$this->getBaseGeneratorName().'Edit/form.html.twig',
-        );
+            ];
     }
 }

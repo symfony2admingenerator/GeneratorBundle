@@ -2,9 +2,11 @@
 
 namespace Admingenerator\GeneratorBundle\Routing;
 
+use Symfony\Component\Routing\RouteCollection;
+
 class NestedRoutingLoader extends RoutingLoader
 {
-    public function load($resource, $type = null)
+    public function load(mixed $resource, string $type = null): RouteCollection
     {
         $this->actions['nested_move'] = array(
             'path'         => '/nested-move/{dragged}/{action}/{dropped}',
@@ -17,7 +19,7 @@ class NestedRoutingLoader extends RoutingLoader
         return parent::load($resource, $type);
     }
 
-    public function supports($resource, $type = null)
+    public function supports(mixed $resource, string $type = null): bool
     {
         return 'admingenerator_nested' == $type;
     }

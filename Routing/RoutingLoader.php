@@ -13,88 +13,85 @@ class RoutingLoader extends FileLoader
 {
     // Assoc between a controller and its route path
     //@todo make an object for this
-    protected $actions = array(
-        'list' => array(
+    protected array $actions = [
+        'list' => [
             'path'         => '/',
-            'defaults'     => array(),
-            'requirements' => array(),
-            'methods'      => array('GET'),
-        ),
-        'excel'=> array(
+            'defaults'     => [],
+            'requirements' => [],
+            'methods'      => ['GET'],
+        ],
+        'excel'=> [
             'path'         => '/excel/{key}',
-            'defaults'     => array('key'=>null),
-            'requirements' => array(),
-            'methods'      => array('GET'),
+            'defaults'     => ['key'=>null],
+            'requirements' => [],
+            'methods'      => ['GET'],
             'controller'   => 'excel',
-        ),
-        'edit' => array(
+        ],
+        'edit' => [
             'path'         => '/{pk}/edit',
-            'defaults'     => array(),
-            'requirements' => array(),
-            'methods'      => array('GET'),
-        ),
-        'update' => array(
+            'defaults'     => [],
+            'requirements' => [],
+            'methods'      => ['GET'],
+        ],
+        'update' => [
             'path'         => '/{pk}/update',
-            'defaults'     => array(),
-            'requirements' => array(),
-            'methods'      => array('POST'),
+            'defaults'     => [],
+            'requirements' => [],
+            'methods'      => ['POST'],
             'controller'   => 'edit',
-        ),
-        'show' => array(
+        ],
+        'show' => [
             'path'         => '/{pk}/show',
-            'defaults'     => array(),
-            'requirements' => array(),
-            'methods'      => array('GET'),
-        ),
-        'object' => array(
+            'defaults'     => [],
+            'requirements' => [],
+            'methods'      => ['GET'],
+        ],
+        'object' => [
             'path'         => '/{pk}/{action}',
-            'defaults'     => array(),
-            'requirements' => array(),
-            'methods'      => array('GET', 'POST'),
+            'defaults'     => [],
+            'requirements' => [],
+            'methods'      => ['GET', 'POST'],
             'controller'   => 'actions',
-        ),
-        'batch' => array(
+        ],
+        'batch' => [
             'path'         => '/batch',
-            'defaults'     => array(),
-            'requirements' => array(),
-            'methods'      => array('POST'),
+            'defaults'     => [],
+            'requirements' => [],
+            'methods'      => ['POST'],
             'controller'   => 'actions',
-        ),
-        'new' => array(
+        ],
+        'new' => [
             'path'         => '/new',
-            'defaults'     => array(),
-            'requirements' => array(),
-            'methods'      => array('GET'),
-        ),
-        'create' => array(
+            'defaults'     => [],
+            'requirements' => [],
+            'methods'      => ['GET'],
+        ],
+        'create' => [
             'path'         => '/create',
-            'defaults'     => array(),
-            'requirements' => array(),
-            'methods'      => array('POST'),
+            'defaults'     => [],
+            'requirements' => [],
+            'methods'      => ['POST'],
             'controller'   => 'new',
-        ),
-        'filters' => array(
+        ],
+        'filters' => [
             'path'         => '/filter',
-            'defaults'     => array(),
-            'requirements' => array(),
-            'methods'      => array('POST', 'GET'),
+            'defaults'     => [],
+            'requirements' => [],
+            'methods'      => ['POST', 'GET'],
             'controller'   => 'list',
-        ),
-        'scopes' => array(
+        ],
+        'scopes' => [
             'path'         => '/scope/{group}/{scope}',
-            'defaults'     => array(),
-            'requirements' => array(),
-            'methods'      => array('POST', 'GET'),
+            'defaults'     => [],
+            'requirements' => [],
+            'methods'      => ['POST', 'GET'],
             'controller'   => 'list',
-        ),
-    );
+        ],
+    ];
 
-    /**
-     * @var array
-     */
-    protected $yaml = array();
+    protected array $yaml = [];
 
-    public function load($resource, $type = null)
+    public function load(mixed $resource, string $type = null): RouteCollection
     {
         $collection = new RouteCollection();
 
@@ -107,7 +104,7 @@ class RoutingLoader extends FileLoader
         foreach ($this->actions as $controller => $datas) {
             $action = 'index';
 
-            $loweredNamespace = str_replace(array('/', '\\'), '_', $namespace);
+            $loweredNamespace = str_replace(['/', '\\'], '_', $namespace);
             if ($controller_folder = $this->getControllerFolder($resource)) {
                 if ($this->bundleContext($resource)) {
                     $route_name = $loweredNamespace . '_' . $bundle_name . '_' . $controller_folder . '_' . $controller;
@@ -118,11 +115,11 @@ class RoutingLoader extends FileLoader
                 $route_name = $loweredNamespace . '_' . $bundle_name . '_' . $controller;
             }
 
-            if (in_array($controller, array('edit', 'update', 'object', 'show')) &&
+            if (in_array($controller, ['edit', 'update', 'object', 'show']) &&
                 null !== $pk_requirement = $this->getFromYaml('params.pk_requirement', null)) {
                 $datas['requirements'] = array_merge(
                     $datas['requirements'],
-                    array('pk' => $pk_requirement)
+                    ['pk' => $pk_requirement]
                 );
             }
 
@@ -168,15 +165,12 @@ class RoutingLoader extends FileLoader
         return $collection;
     }
 
-    public function supports($resource, $type = null)
+    public function supports(mixed $resource, string $type = null): bool
     {
         return 'admingenerator' == $type;
     }
 
-    /**
-     * @return string
-     */
-    protected function getControllerFolder($resource)
+    protected function getControllerFolder(mixed $resource): string
     {
         if ($this->bundleContext($resource)) {
             preg_match('#.+/.+Bundle/Controller?/(.*?)/?$#', $resource, $matches);
@@ -186,10 +180,7 @@ class RoutingLoader extends FileLoader
         return $matches[1];
     }
 
-    /**
-     * @return string
-     */
-    protected function getBundleNameFromResource($resource)
+    protected function getBundleNameFromResource(mixed $resource): string
     {
         if ($this->bundleContext($resource)) {
             preg_match('#.+/(.+Bundle)/Controller?/(.*?)/?$#', $resource, $matches);
@@ -200,7 +191,7 @@ class RoutingLoader extends FileLoader
         }
     }
 
-    protected function getNamespaceFromResource($resource)
+    protected function getNamespaceFromResource(mixed $resource): string
     {
         if ($this->bundleContext($resource)) {
             $finder = Finder::create()
@@ -221,10 +212,7 @@ class RoutingLoader extends FileLoader
         }
     }
 
-    /**
-     * @return string
-     */
-    protected function getGeneratorFilePath($resource)
+    protected function getGeneratorFilePath(mixed $resource): string
     {
         // TODO: use the GeneratorsFinder
         // Find the *-generator.yml
@@ -248,14 +236,11 @@ class RoutingLoader extends FileLoader
         ));
     }
 
-    /**
-     * @param string $yaml_path string with point for levels
-     */
-    protected function getFromYaml($yaml_path, $default = null)
+    protected function getFromYaml(string $yamlPath, mixed $default = null): mixed
     {
         $search_in = $this->yaml;
-        $yaml_path = explode('.', $yaml_path);
-        foreach ($yaml_path as $key) {
+        $yamlPath = explode('.', $yamlPath);
+        foreach ($yamlPath as $key) {
             if (!isset($search_in[$key])) {
                 return $default;
             }
@@ -265,12 +250,7 @@ class RoutingLoader extends FileLoader
         return $search_in;
     }
 
-    /**
-     * @param $resource
-     *
-     * @return bool
-     */
-    private function bundleContext($resource): bool
+    private function bundleContext(mixed $resource): bool
     {
         return str_contains($resource, 'Bundle');
     }

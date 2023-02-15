@@ -8,13 +8,9 @@ namespace Admingenerator\GeneratorBundle\Builder\Admin;
  */
 class NestedListBuilderTemplate extends NestedListBuilder
 {
-    /**
-     * (non-PHPdoc)
-     * @see \Admingenerator\GeneratorBundle\Builder\BaseBuilder::getTemplatesToGenerate()
-     */
-    public function getTemplatesToGenerate()
+    public function getTemplatesToGenerate(): array
     {
-        return parent::getTemplatesToGenerate() + array(
+        return parent::getTemplatesToGenerate() + [
             'NestedListBuilderTemplate'.self::TWIG_EXTENSION
                 => 'Resources/views/'.$this->getBaseGeneratorName().'List/index.html.twig',
             'NestedList/ResultsBuilderTemplate'.self::TWIG_EXTENSION
@@ -23,6 +19,6 @@ class NestedListBuilderTemplate extends NestedListBuilder
                 => 'Resources/views/'.$this->getBaseGeneratorName().'List/row.html.twig',
             'List/FiltersBuilderTemplate'.self::TWIG_EXTENSION
                 => 'Resources/views/'.$this->getBaseGeneratorName().'List/filters.html.twig',
-        );
+            ];
     }
 }

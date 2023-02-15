@@ -6,12 +6,9 @@ use Doctrine\Inflector\InflectorFactory;
 
 class PropelQueryFilter extends BaseQueryFilter
 {
-    /**
-     * @var array
-     */
-    protected $joins = array();
+    protected array $joins = [];
 
-    public function addDefaultFilter($field, $value)
+    public function addDefaultFilter(string $field, mixed $value): void
     {
         list($query, $filteredField) = $this->addTablePathToField($field);
 
@@ -23,24 +20,22 @@ class PropelQueryFilter extends BaseQueryFilter
         }
     }
 
-    public function addBooleanFilter($field, $value)
+    public function addBooleanFilter(string $field, bool $value): void
     {
-        if ("" !== $value) {
-            $this->addDefaultFilter($field, $value);
-        }
+        $this->addDefaultFilter($field, $value);
     }
 
-    public function addVarcharFilter($field, $value)
+    public function addVarcharFilter(string $field, string $value): void
     {
         $this->addDefaultFilter($field, '%'.$value.'%');
     }
 
-    public function addCollectionFilter($field, $value)
+    public function addCollectionFilter(string $field, mixed $value): void
     {
         list($query, $filteredField) = $this->addTablePathToField($field);
 
         if (!is_array($value)) {
-            $value = array($value->getId());
+            $value = [$value->getId()];
         }
 
         $query->filterBy($filteredField, $value, \Criteria::IN)
@@ -48,12 +43,12 @@ class PropelQueryFilter extends BaseQueryFilter
               ->groupById();
     }
 
-    public function addDateFilter($field, $value, $format = 'Y-m-d')
+    public function addDateFilter(string $field, mixed $value, string $format = 'Y-m-d'): void
     {
         list($query, $filteredField) = $this->addTablePathToField($field);
 
         if (is_string($value)) {
-            if (false === strpos($value, ' - ') && false !== $date = $this->formatDate($value, $format)) {
+            if (!str_contains($value, ' - ') && false !== $date = $this->formatDate($value, $format)) {
                 $query->filterBy($filteredField, $date);
             } else {
                 // manage date range as a string
@@ -62,12 +57,12 @@ class PropelQueryFilter extends BaseQueryFilter
                 $from = $this->formatDate($values[0], $format);
                 $to = $this->formatDate($values[1], $format);
 
-                $value = array('from' => $from, 'to' => $to);
+                $value = ['from' => $from, 'to' => $to];
             }
         }
 
         if (is_array($value)) {
-            $filters = array();
+            $filters = [];
 
             if (array_key_exists('from', $value) && $from = $this->formatDate($value['from'], $format)) {
                 $filters['min'] = $from;
@@ -85,29 +80,29 @@ class PropelQueryFilter extends BaseQueryFilter
         }
     }
 
-    public function addTimestampFilter($field, $value)
+    public function addTimestampFilter(string $field, mixed $value): void
     {
-        return $this->addDateFilter($field, $value);
+        $this->addDateFilter($field, $value);
     }
 
-    public function addNullFilter($field, $value = null)
+    public function addNullFilter(string $field): void
     {
         list($query, $filteredField) = $this->addTablePathToField($field);
 
         $query->filterBy($filteredField, null, \Criteria::EQUAL);
     }
 
-    public function addNotNullFilter($field, $value = null)
+    public function addNotNullFilter(string $field): void
     {
         list($query, $filteredField) = $this->addTablePathToField($field);
 
         $query->filterBy($filteredField, null, \Criteria::NOT_EQUAL);
     }
 
-    protected function addTablePathToField($field)
+    protected function addTablePathToField(string $field): array
     {
         if (!strpos($field, '.')) {
-            return array($this->query, $field);
+            return [$this->query, $field];
         }
 
         $fieldParts = explode('.', $field);
@@ -117,11 +112,11 @@ class PropelQueryFilter extends BaseQueryFilter
         foreach ($fieldParts as $field) {
             $joinAlias = $field . '_table_filter_join';
             if (!array_key_exists($joinAlias, $this->joins)) {
-                $this->joins[$joinAlias] = call_user_func_array(array($parentQuery, 'use'.$field.'Query'), array($field, \Criteria::INNER_JOIN));
+                $this->joins[$joinAlias] = call_user_func_array([$parentQuery, 'use'.$field.'Query'], [$field, \Criteria::INNER_JOIN]);
             }
             $parentQuery = $this->joins[$joinAlias];
         }
 
-        return array($parentQuery, $filteredField);
+        return [$parentQuery, $filteredField];
     }
 }

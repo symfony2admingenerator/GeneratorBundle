@@ -4,7 +4,7 @@ namespace Admingenerator\GeneratorBundle\Menu;
 
 class DefaultMenuBuilder extends AdmingeneratorMenuBuilder
 {
-    public function sidebarMenu(array $options)
+    public function sidebarMenu(array $options): mixed
     {
         $menu = $this->factory->createItem('root');
         $menu->setChildrenAttributes(array('class' => 'sidebar-menu'));

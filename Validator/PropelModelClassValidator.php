@@ -7,7 +7,7 @@ use Admingenerator\GeneratorBundle\Exception\GeneratedModelClassNotFoundExceptio
 
 class PropelModelClassValidator extends BaseValidator implements ValidatorInterface
 {
-    public function validate(Generator $generator)
+    public function validate(Generator $generator): void
     {
         $model = $this->getFromYaml($generator, 'params.model');
         $parts = explode('\\', $model);

@@ -15,41 +15,20 @@ use Admingenerator\GeneratorBundle\Generator\Action\Generic\ExcelAction;
  */
 class ListBuilder extends BaseBuilder
 {
-   /**
-    * @var array
-    */
-    protected $excelActions = null;
+    protected ?array $excelActions = null;
 
-    /**
-     * @var array
-     */
-    protected $batchActions = null;
+    protected ?array $batchActions = null;
 
-    /**
-     * @var array
-     */
-    protected $scopeColumns = null;
+    protected ?array $scopeColumns = null;
 
-    /**
-     * @var array
-     */
-    protected $filterColumns = null;
+    protected ?array $filterColumns = null;
 
-    /**
-     * (non-PHPdoc)
-     * @see Admingenerator\GeneratorBundle\Builder.BaseBuilder::getYamlKey()
-     */
-    public function getYamlKey()
+    public function getYamlKey(): string
     {
         return 'list';
     }
 
-    /**
-     * Retrieve the FQCN formType used by this builder
-     *
-     * @return string
-     */
-    public function getFormType()
+    public function getFormType(): string
     {
         return sprintf(
             '%s%s\\Form\Type\\%s\\FiltersType',
@@ -59,17 +38,17 @@ class ListBuilder extends BaseBuilder
         );
     }
 
-    public function getFilterColumns()
+    public function getFilterColumns(): array
     {
         if (null === $this->filterColumns) {
-            $this->filterColumns = array();
+            $this->filterColumns = [];
             $this->findFilterColumns();
         }
 
         return $this->filterColumns;
     }
 
-    protected function findFilterColumns()
+    protected function findFilterColumns(): void
     {
         $columnsName = $this->getVariable('filters');
         $fromFilterConfiguration = true;
@@ -87,20 +66,20 @@ class ListBuilder extends BaseBuilder
         }
     }
 
-    protected function addFilterColumn(Column $column)
+    protected function addFilterColumn(Column $column): void
     {
         $this->filterColumns[$column->getName()] = $column;
     }
 
-    public function getFilterColumnsCredentials()
+    public function getFilterColumnsCredentials(): array
     {
-        $credentials = array();
+        $credentials = [];
 
         foreach($this->getFilterColumns() as $column) {
             if (! $filterCredentials = $column->getFiltersCredentials()) {
                 // If one column has no Credentials constraint, we always
                 // have to display the filter panel
-                return array();
+                return [];
             }
 
             $credentials[] = $filterCredentials;
@@ -109,28 +88,22 @@ class ListBuilder extends BaseBuilder
         return $credentials;
     }
 
-    /**
-     * Find scopes parameters
-     */
-    public function getScopes()
+    public function getScopes(): mixed
     {
         return $this->getGenerator()->getFromYaml('builders.list.params.scopes');
     }
 
-    /**
-     * @return array
-     */
-    public function getScopeColumns()
+    public function getScopeColumns(): array
     {
         if (null === $this->scopeColumns) {
-            $this->scopeColumns = array();
+            $this->scopeColumns = [];
             $this->findScopeColumns();
         }
 
         return $this->scopeColumns;
     }
 
-    protected function findScopeColumns()
+    protected function findScopeColumns(): void
     {
         foreach ($this->getScopesDisplayColumns() as $columnName) {
             $column = $this->createColumn($columnName, true);
@@ -140,13 +113,10 @@ class ListBuilder extends BaseBuilder
         }
     }
 
-    /**
-     * @return array Scopes display column names
-     */
-    protected function getScopesDisplayColumns()
+    protected function getScopesDisplayColumns(): array
     {
-        $scopeGroups = $this->getGenerator()->getFromYaml('builders.list.params.scopes', array());
-        $scopeColumns = array();
+        $scopeGroups = $this->getGenerator()->getFromYaml('builders.list.params.scopes', []);
+        $scopeColumns = [];
 
         foreach ($scopeGroups as $scopeGroup) {
             foreach ($scopeGroup as $scopeFilter) {
@@ -161,35 +131,31 @@ class ListBuilder extends BaseBuilder
         return $scopeColumns;
     }
 
-    protected function addScopeColumn(Column $column)
+    protected function addScopeColumn(Column $column): void
     {
         $this->scopeColumns[$column->getName()] = $column;
     }
 
-    /**
-     * Return a list of batch action from list.batch_actions
-     * @return array
-     */
-    public function getBatchActions()
+    public function getBatchActions(): array
     {
         if (null === $this->batchActions) {
-            $this->batchActions = array();
+            $this->batchActions = [];
             $this->findBatchActions();
         }
 
         return $this->batchActions;
     }
 
-    protected function setUserBatchActionConfiguration(Action $action)
+    protected function setUserBatchActionConfiguration(Action $action): void
     {
-        $batchActions = $this->getVariable('batch_actions', array());
+        $batchActions = $this->getVariable('batch_actions', []);
         $builderOptions = is_array($batchActions) && array_key_exists($action->getName(), $batchActions)
             ? $batchActions[$action->getName()]
-            : array();
+            : [];
 
         $globalOptions = $this->getGenerator()->getFromYaml(
             'params.batch_actions.'.$action->getName(),
-            array()
+            []
         );
 
         if (null !== $builderOptions) {
@@ -203,14 +169,14 @@ class ListBuilder extends BaseBuilder
         }
     }
 
-    protected function addBatchAction(Action $action)
+    protected function addBatchAction(Action $action): void
     {
         $this->batchActions[$action->getName()] = $action;
     }
 
-    protected function findBatchActions()
+    protected function findBatchActions(): void
     {
-        $batchActions = $this->getVariable('batch_actions', array());
+        $batchActions = $this->getVariable('batch_actions', []);
 
         foreach ($batchActions as $actionName => $actionParams) {
             $action = $this->findBatchAction($actionName);
@@ -230,12 +196,7 @@ class ListBuilder extends BaseBuilder
         }
     }
 
-  /**
-   * Return a list of actions from excel.export
-   * 
-   * @return array
-   */
-  public function getExcelActions()
+  public function getExcelActions(): array
   {
       if (null === $this->excelActions) {
           $this->excelActions = array();
@@ -245,13 +206,13 @@ class ListBuilder extends BaseBuilder
       return $this->excelActions;
   }
 
-  protected function fillExportActions()
+  protected function fillExportActions(): void
   {
       $export = $this->getGenerator()->getFromYaml('builders.excel.params.export', []);
       if (!count($export)) return;
 
       foreach ($export as $keyName => $params ) {
-          if (!isset($params['show_button']) || (isset($params['show_button']) && filter_var($params['show_button'], FILTER_VALIDATE_BOOLEAN))) {
+          if (!isset($params['show_button']) || filter_var($params['show_button'], FILTER_VALIDATE_BOOLEAN)) {
               $action = new ExcelAction($keyName, $this);
               $action->setCredentials($this->getExportParamsForKey($keyName, 'credentials', 'AdmingenAllowed'));
               $action->setClass($this->getExportParamsForKey($keyName, 'class', 'btn-info'));
@@ -262,7 +223,7 @@ class ListBuilder extends BaseBuilder
       }
   }
 
-  public function getExportParamsForKey($key, $name, $default)
+  public function getExportParamsForKey(string|int|null $key, string|int|null $name, mixed $default): mixed
   {
       if (!$key) return $default;
 

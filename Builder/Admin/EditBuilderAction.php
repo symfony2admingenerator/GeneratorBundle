@@ -8,16 +8,15 @@ namespace Admingenerator\GeneratorBundle\Builder\Admin;
  */
 class EditBuilderAction extends EditBuilder
 {
-    public function getOutputName()
+    public function getOutputName(): string
     {
         return $this->getGenerator()->getGeneratedControllerFolder().'/EditController.php';
     }
 
     /**
      * Return a list of action from list.object_actions
-     * @return array
      */
-    public function getObjectActions()
+    public function getObjectActions(): array
     {
         $objectActions = parent::getObjectActions();
 

@@ -8,7 +8,7 @@ namespace Admingenerator\GeneratorBundle\Builder\Admin;
  */
 class ShowBuilderTemplate extends ShowBuilder
 {
-    public function getOutputName()
+    public function getOutputName(): string
     {
         return 'Resources/views/'.$this->getBaseGeneratorName().'Show/index.html.twig';
     }

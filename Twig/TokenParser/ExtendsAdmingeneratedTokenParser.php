@@ -11,14 +11,7 @@ use Twig\TokenParser\AbstractTokenParser;
 class ExtendsAdmingeneratedTokenParser extends AbstractTokenParser
 {
 
-    /**
-     * Parses a token and returns a node.
-     *
-     * @param Token $token A Twig Token instance
-     *
-     * @return Node A Twig Node instance
-     */
-    public function parse(Token $token)
+    public function parse(Token $token): ?Node
     {
         if (null !== $this->parser->getParent()) {
             throw new SyntaxError('Multiple extends tags are forbidden', $token->getLine());
@@ -42,12 +35,7 @@ class ExtendsAdmingeneratedTokenParser extends AbstractTokenParser
         return null;
     }
 
-    /**
-     * Gets the tag name associated with this token parser.
-     *
-     * @return string The tag name
-     */
-    public function getTag()
+    public function getTag(): string
     {
         return 'extends_admingenerated';
     }

@@ -12,210 +12,180 @@ use Doctrine\Inflector\InflectorFactory;
  */
 class Action
 {
-    protected $name;
+    protected ?string $label = null;
 
-    protected $type;
+    protected string $icon = '';
 
-    protected $label;
+    protected string $class = '';
 
-    protected $icon;
+    protected array $options = [];
 
-    protected $class;
+    protected string $submit = '';
 
-    protected $options = array();
+    protected string $route = '';
 
-    protected $submit;
+    protected array $params = [];
 
-    protected $route;
+    protected string $confirmMessage = '';
 
-    protected $params = array();
+    protected string $confirmModal = '';
 
-    protected $confirmMessage;
+    protected bool $csrfProtected = false;
 
-    protected $confirmModal;
+    protected bool $forceIntermediate = false;
 
-    protected $csrfProtected = false;
+    protected mixed $credentials = 'AdmingenAllowed';
 
-    protected $forceIntermediate = false;
-
-    protected $credentials = 'AdmingenAllowed';
-
-    public function __construct($name, $type = 'custom')
+    public function __construct(protected readonly string $name, protected readonly string $type = 'custom')
     {
-        $this->name = $name;
-        $this->type = $type;
     }
 
-    public function setProperty($option, $value)
+    public function setProperty($option, $value): void
     {
         $option = InflectorFactory::create()->build()->classify($option);
         call_user_func_array(array($this, 'set'.$option), array($value));
     }
 
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    public function getTwigName()
+    public function getTwigName(): string
     {
         return strtolower(str_replace('-', '_', $this->name));
     }
 
-    public function getType()
+    public function getType(): string
     {
         return $this->type;
     }
 
-    /**
-     * @param string $label
-     */
-    public function setLabel($label)
+    public function setLabel(string $label): void
     {
         $this->label = $label;
     }
 
-    public function getLabel()
+    public function getLabel(): string
     {
-        if (isset($this->label)) {
+        if ($this->label) {
             return $this->label;
         }
 
         return $this->humanize($this->getName());
     }
 
-    /**
-     * @param string $icon
-     */
-    public function setIcon($icon)
+    public function setIcon(string $icon): void
     {
         $this->icon = $icon;
     }
 
-    public function getIcon()
+    public function getIcon(): string
     {
         return $this->icon;
     }
 
-    /**
-     * @param string $class
-     */
-    public function setClass($class)
+    public function setClass(string $class): void
     {
         $this->class = $class;
     }
 
-    public function getClass()
+    public function getClass(): string
     {
         return $this->class;
     }
 
-    /**
-     * @param string $route
-     */
-    public function setRoute($route)
+    public function setRoute(string $route): void
     {
         $this->route = $route;
     }
 
-    public function getRoute()
+    public function getRoute(): string
     {
         return $this->route;
     }
 
-    /**
-     * @param boolean $submit
-     */
-    public function setSubmit($submit)
+    public function setSubmit(bool $submit): void
     {
-        $this->submit = (bool) $submit;
+        $this->submit = $submit;
     }
 
-    public function getSubmit()
+    public function getSubmit(): bool
     {
         return $this->submit;
     }
 
-    private function humanize($text)
+    private function humanize(string $text): string
     {
         return ucfirst(str_replace('_', ' ', $text));
     }
 
-    /**
-     * @param string $confirmMessage
-     */
-    public function setConfirm($confirmMessage)
+    public function setConfirm(string $confirmMessage): void
     {
         $this->confirmMessage = $confirmMessage;
     }
 
-    public function getConfirm()
+    public function getConfirm(): string
     {
         return $this->confirmMessage;
     }
 
-    /**
-     * @param string $confirmModal
-     */
-    public function setConfirmModal($confirmModal)
+    public function setConfirmModal(string $confirmModal): void
     {
         $this->confirmModal = $confirmModal;
     }
 
-    public function getConfirmModal()
+    public function getConfirmModal(): string
     {
         return $this->confirmModal;
     }
 
-    /**
-     * @param boolean $csrfProtected
-     */
-    public function setCsrfProtected($csrfProtected)
+    public function setCsrfProtected(bool $csrfProtected): void
     {
         $this->csrfProtected = $csrfProtected;
     }
 
-    public function getCsrfProtected()
+    public function getCsrfProtected(): bool
     {
         return $this->csrfProtected;
     }
 
-    public function setCredentials($credentials)
+    public function setCredentials(mixed $credentials): void
     {
         $this->credentials = $credentials;
     }
 
-    public function setForceIntermediate($forceIntermediate)
+    public function setForceIntermediate(bool $forceIntermediate): void
     {
         $this->forceIntermediate = $forceIntermediate;
     }
 
-    public function getForceIntermediate()
+    public function getForceIntermediate(): bool
     {
         return $this->forceIntermediate;
     }
 
-    public function getCredentials()
+    public function getCredentials(): mixed
     {
         return $this->credentials;
     }
 
-    public function getParams()
+    public function getParams(): array
     {
         return $this->params;
     }
 
-    public function setParams(array $params)
+    public function setParams(array $params): void
     {
         $this->params = $params;
     }
 
-    public function getOptions()
+    public function getOptions(): array
     {
         return $this->options;
     }
 
-    public function setOptions(array $options)
+    public function setOptions(array $options): void
     {
         $this->options = $options;
     }

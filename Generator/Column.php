@@ -15,40 +15,18 @@ use Doctrine\Inflector\InflectorFactory;
 
 class Column
 {
-    /**
-     * @var string
-     */
-    protected $name;
 
-    /**
-     * @var bool
-     */
-    protected $sortable = true;
+    protected bool $sortable = true;
 
-    /**
-     * @var string
-     */
-    protected $sortOn;
+    protected string $sortOn = '';
 
-    /**
-     * @var string
-     */
-    protected $sortType = 'default';
+    protected string $sortType = 'default';
 
-    /**
-     * @var bool
-     */
-    protected $filterable = false;
+    protected bool $filterable = false;
 
-    /**
-     * @var string
-     */
-    protected $filterOn;
+    protected ?string $filterOn = null;
 
-    /**
-     * @var string
-     */
-    protected $dbType;
+    protected ?string $dbType = null;
 
     /**
      * If set, formats field for scopes and filters. The formatting is a simple
@@ -66,102 +44,49 @@ class Column
      *
      * Note: this feature was created mainly for Date/DateTime fields.
      */
-    protected $dbFormat;
+    protected ?string $dbFormat = null;
 
-    /**
-     * @var string
-     */
-    protected $customView = null;
+    protected ?string $customView = null;
 
-    /**
-     * @var string
-     */
-    protected $formType;
+    protected ?string $formType = null;
 
-    /**
-     * @var string
-     */
-    protected $filterType;
+    protected ?string $filterType = null;
 
-    /**
-     * @var array
-     */
-    protected $formOptions = array();
+    protected array $formOptions = [];
 
-    /**
-     * @var array
-     */
-    protected $filterOptions = array();
+    protected array $filterOptions = [];
 
-    /**
-     * @var string
-     */
-    protected $getter;
+    protected ?string $getter = null;
 
-    /**
-     * @var string
-     */
-    protected $label = null;
+    protected ?string $label = null;
 
-    /**
-     * @var string
-     */
-    protected $help;
+    protected ?string $help = null;
 
-    /**
-     * @var string
-     */
-    protected $localizedDateFormat;
+    protected ?string $localizedDateFormat = null;
 
-    /**
-     * @var string
-     */
-    protected $localizedTimeFormat;
+    protected ?string $localizedTimeFormat = null;
 
-    /**
-     * @var string
-     */
-    protected $primaryKey = null;
+    protected ?string $primaryKey = null;
 
     /**
      * For special columns template
-     *
-     * @var array
      */
-    protected $extras = array();
+    protected array $extras = [];
 
-    /**
-     * @var string
-     */
-    protected $credentials = 'AdmingenAllowed';
+    protected string|array $credentials = 'AdmingenAllowed';
 
-    /**
-     * @var string
-     */
-    protected $filtersCredentials = false;
+    protected bool $filtersCredentials = false;
 
-    /**
-     * @var string
-     */
-    protected $gridClass = '';
+    protected string $gridClass = '';
 
-    /* Used for more verbose error messages */
-    protected $debug = array();
+    protected bool $manyToMany = false;
 
-    protected $manyToMany = false;
-
-    /**
-     * @param string $name
-     * @param array  $debug
-     */
-    public function __construct($name, $debug)
+    public function __construct(protected readonly string $name, protected array|false $debug)
     {
-        $this->name     = $name;
         $this->filterOn = $name;
-        $this->debug    = $debug;
     }
 
-    public function setProperty($option, $value)
+    public function setProperty(string $option, mixed $value): void
     {
         $setter = 'set'.InflectorFactory::create()->build()->classify($option);
 
@@ -172,256 +97,253 @@ class Column
         }
     }
 
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    public function getGetter()
+    public function getGetter(): string
     {
-        return $this->getter ? $this->getter : InflectorFactory::create()->build()->camelize($this->name);
+        return $this->getter ?: InflectorFactory::create()->build()->camelize($this->name);
     }
 
-    public function setGetter($getter)
+    public function setGetter(string $getter): void
     {
         $this->getter = $getter;
     }
 
-    public function getLabel()
+    public function getLabel(): string
     {
         return false !== $this->label && empty($this->label)
             ? $this->humanize($this->getName())
             : $this->label;
     }
 
-    public function setLabel($label)
+    public function setLabel(string $label): string
     {
         return $this->label = $label;
     }
 
-    public function getHelp()
+    public function getHelp(): ?string
     {
         return $this->help;
     }
 
-    public function setHelp($help)
+    public function setHelp(string $help): string
     {
         return $this->help = $help;
     }
 
-    public function isSortable()
+    public function isSortable(): bool
     {
         return $this->sortable;
     }
 
-    public function isFilterable()
+    public function isFilterable(): bool
     {
         return $this->filterable;
     }
 
-    public function isReal()
+    public function isReal(): bool
     {
         return $this->dbType != 'virtual';
     }
 
-    public function getSortable()
+    public function getSortable(): bool
     {
         return $this->sortable;
     }
 
-    public function setSortable($sortable)
+    public function setSortable(bool $sortable): bool
     {
         return $this->sortable = filter_var($sortable, FILTER_VALIDATE_BOOLEAN);
     }
 
-    public function getSortOn()
+    public function getSortOn(): string
     {
         return $this->sortOn != "" ? $this->sortOn : $this->name;
     }
 
-    public function setSortOn($sort_on)
+    public function setSortOn(string $sort_on): string
     {
         return $this->sortOn = $sort_on;
     }
 
-    public function getFilterable()
+    public function getFilterable(): bool
     {
         return $this->filterable;
     }
 
-    public function setFilterable($filterable)
+    public function setFilterable(bool $filterable): bool
     {
         return $this->filterable = filter_var($filterable, FILTER_VALIDATE_BOOLEAN);
     }
 
-    public function getFilterOn()
+    public function getFilterOn(): ?string
     {
         return $this->filterOn;
     }
 
-    public function setFilterOn($filterOn)
+    public function setFilterOn(string $filterOn): string
     {
         return $this->filterOn = $filterOn;
     }
 
-    /**
-     * @param string $text
-     */
-    private function humanize($text)
+    private function humanize(string $text): string
     {
         return ucfirst(str_replace('_', ' ', $text));
     }
 
-    public function setDbType($dbType)
+    public function setDbType(string $dbType): void
     {
         $this->dbType = $dbType;
     }
 
-    public function getDbType()
+    public function getDbType(): ?string
     {
         return $this->dbType;
     }
 
-    public function setDbFormat($dbFormat)
+    public function setDbFormat(string $dbFormat): void
     {
         $this->dbFormat = $dbFormat;
     }
 
-    public function getDbFormat()
+    public function getDbFormat(): ?string
     {
         return $this->dbFormat;
     }
 
-    public function setFormType($formType)
+    public function setFormType(string $formType): void
     {
         $this->formType = $formType;
     }
 
-    public function getFormType()
+    public function getFormType(): ?string
     {
         return $this->formType;
     }
 
-    public function setFormOptions($formOptions)
+    public function setFormOptions(array $formOptions): void
     {
         $this->formOptions = $formOptions;
     }
 
-    public function getFormOptions()
+    public function getFormOptions(): array
     {
         return $this->formOptions;
     }
 
-    public function setFilterType($filterType)
+    public function setFilterType(string $filterType): void
     {
         $this->filterType = $filterType;
     }
 
-    public function getFilterType()
+    public function getFilterType(): ?string
     {
         return $this->filterType;
     }
 
-    public function setFilterOptions($filterOptions)
+    public function setFilterOptions(array $filterOptions): void
     {
         $this->filterOptions = $filterOptions;
     }
 
-    public function getFilterOptions()
+    public function getFilterOptions(): array
     {
         return $this->filterOptions;
     }
 
-    public function setLocalizedDateFormat($localizedDateFormat)
+    public function setLocalizedDateFormat(string $localizedDateFormat): void
     {
         $this->localizedDateFormat = $localizedDateFormat;
     }
 
-    public function getLocalizedDateFormat()
+    public function getLocalizedDateFormat(): ?string
     {
         return $this->localizedDateFormat;
     }
 
-    public function setLocalizedTimeFormat($localizedTimeFormat)
+    public function setLocalizedTimeFormat(string $localizedTimeFormat): void
     {
         $this->localizedTimeFormat = $localizedTimeFormat;
     }
 
-    public function getLocalizedTimeFormat()
+    public function getLocalizedTimeFormat(): ?string
     {
         return $this->localizedTimeFormat;
     }
 
-    public function setAddFormOptions(array $additionalOptions = array())
+    public function setAddFormOptions(array $additionalOptions = []): void
     {
         foreach ($additionalOptions as $name => $option) {
             $this->formOptions[$name] = $this->parseOption($option);
         }
     }
 
-    public function setAddFilterOptions(array $additionalOptions = array())
+    public function setAddFilterOptions(array $additionalOptions = []): void
     {
         foreach ($additionalOptions as $name => $option) {
            $this->filterOptions[$name] = $this->parseOption($option);
         }
     }
 
-    public function setExtras(array $values)
+    public function setExtras(array $values): void
     {
         $this->extras = $values;
     }
 
-    public function getExtras()
+    public function getExtras(): array
     {
         return $this->extras;
     }
 
-    public function setSortType($type)
+    public function setSortType(string $type): void
     {
         $this->sortType = $type;
     }
 
-    public function getSortType()
+    public function getSortType(): ?string
     {
         return $this->sortType;
     }
 
-    public function getCustomView()
+    public function getCustomView(): ?string
     {
         return $this->customView;
     }
 
-    public function setCustomView($customView)
+    public function setCustomView(string $customView): void
     {
         $this->customView = $customView;
     }
 
-    public function setPrimaryKey($primaryKey)
+    public function setPrimaryKey(string $primaryKey): void
     {
         $this->primaryKey = $primaryKey;
     }
 
-    public function getPrimaryKey()
+    public function getPrimaryKey(): ?string
     {
         return $this->primaryKey;
     }
 
-    public function setCredentials($credentials = '')
+    public function setCredentials(string|array $credentials = ''): string|array
     {
         return $this->credentials = $credentials;
     }
 
-    public function getCredentials()
+    public function getCredentials(): string|array
     {
         return $this->credentials;
     }
 
-    public function setFiltersCredentials($credentials = '')
+    public function setFiltersCredentials(string|array $credentials = ''): void
     {
         $this->filtersCredentials = $credentials;
     }
 
-    public function getFiltersCredentials()
+    public function getFiltersCredentials(): string|array
     {
         if (false === $this->filtersCredentials) {
             return $this->credentials;
@@ -430,27 +352,27 @@ class Column
         return $this->filtersCredentials;
     }
 
-    public function setGridClass($gridClass)
+    public function setGridClass(string $gridClass): void
     {
         $this->gridClass = $gridClass;
     }
 
-    public function getGridClass()
+    public function getGridClass(): string
     {
         return $this->gridClass;
     }
 
-    public function setManyToMany($manyToMany)
+    public function setManyToMany(bool $manyToMany): void
     {
         $this->manyToMany = $manyToMany;
     }
 
-    public function getManyToMany()
+    public function getManyToMany(): bool
     {
         return $this->manyToMany;
     }
 
-    protected function parseOption($option)
+    protected function parseOption(mixed $option): mixed
     {
         if (!is_array($option)) {
             return $option;

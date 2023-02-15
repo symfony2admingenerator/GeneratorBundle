@@ -2,6 +2,7 @@
 
 namespace Admingenerator\GeneratorBundle\Generator;
 
+use Admingenerator\GeneratorBundle\Guesser\FieldGuesser;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Routing\RouterInterface;
@@ -9,205 +10,108 @@ use Symfony\Component\HttpKernel\KernelInterface;
 use Admingenerator\GeneratorBundle\Validator\ValidatorInterface;
 use Admingenerator\GeneratorBundle\Builder\Generator as AdminGenerator;
 use Symfony\Contracts\Cache\CacheInterface;
-use Symfony\Contracts\Cache\ItemInterface;
 use Twig\Environment;
 
 abstract class Generator implements GeneratorInterface
 {
-    /**
-     * @var string
-     */
-    protected $cache_dir;
+    protected ?string $generatorYml = null;
 
-    /**
-     * @var string
-     */
-    protected $generator_yaml;
+    protected array $bundleConfig = [];
 
-    /**
-     * @var array $bundleConfig Generator bundle config.
-     */
-    protected $bundleConfig;
+    protected FieldGuesser $fieldGuesser;
 
-    /**
-     * @var object $fieldGuesser The fieldguesser.
-     */
-    protected $fieldGuesser;
+    protected ?string $baseGeneratorName = null;
 
-    /**
-     * @var string
-     */
-    protected $baseGeneratorName;
+    protected array $validators = [];
 
-    /**
-     * @var array
-     */
-    protected $validators = array();
+    protected CacheInterface $cacheProvider;
 
-    /**
-     * @var CacheInterface
-     */
-    protected $cacheProvider;
+    protected string $cacheSuffix = 'default';
 
-    /**
-     * @var string
-     */
-    protected $cacheSuffix = 'default';
+    protected array $templatesDirectories = [];
 
-    /**
-     * @var array
-     */
-    protected $templatesDirectories = array();
+    protected bool $overwriteIfExists = false;
 
-    /**
-     * @var bool
-     */
-    protected $overwriteIfExists = false;
+    protected RouterInterface $router;
 
-    /**
-     * @var RouterInterface
-     */
-    protected $router;
-    
-    /**
-     * @var Environment
-     */
-    protected $twig;
+    protected Environment $twig;
 
-    /**
-     * @var KernelInterface
-     */
-    protected $kernel;
+    protected KernelInterface $kernel;
 
-    /**
-     * @param $cache_dir
-     */
-    public function __construct($cache_dir)
+    public function __construct(protected readonly string $cache_dir)
     {
-        $this->cache_dir = $cache_dir;
         $this->cacheProvider = new ArrayAdapter();
     }
 
-    /**
-     * @param CacheInterface $cacheProvider
-     * @param string $cacheSuffix
-     * @return void
-     */
-    public function setCacheProvider(CacheInterface $cacheProvider, $cacheSuffix = 'default')
+    public function setCacheProvider(CacheInterface $cacheProvider, string $cacheSuffix = 'default'): void
     {
         $this->cacheProvider = $cacheProvider;
         $this->cacheSuffix = $cacheSuffix;
     }
 
-    /**
-     * Force overwrite files if exists mode.
-     * @return void
-     */
-    public function forceOverwriteIfExists()
+    public function forceOverwriteIfExists(): void
     {
         $this->overwriteIfExists = true;
     }
 
-    /**
-     * @param $directory
-     * @return void
-     */
-    public function addTemplatesDirectory($directory)
+    public function addTemplatesDirectory(string $directory): void
     {
         $this->templatesDirectories[] = $directory;
     }
 
-    /**
-     * @param $yaml_file
-     * @return void
-     */
-    public function setGeneratorYml($yaml_file)
+    public function setGeneratorYml(string $yamlFile): void
     {
-        $this->generator_yaml = $yaml_file;
+        $this->generatorYml = $yamlFile;
     }
 
-    /**
-     * @return string
-     */
-    public function getGeneratorYml()
+    public function getGeneratorYml(): ?string
     {
-        return $this->generator_yaml;
+        return $this->generatorYml;
     }
 
-    /**
-     * @param $baseGeneratorName
-     * @return void
-     */
-    public function setBaseGeneratorName($baseGeneratorName)
+    public function setBaseGeneratorName(string $baseGeneratorName): void
     {
         $this->baseGeneratorName = $baseGeneratorName;
     }
 
-    /**
-     * @return string
-     */
-    protected function getBaseGeneratorName()
+    protected function getBaseGeneratorName(): ?string
     {
         return $this->baseGeneratorName;
     }
 
-    /**
-     * (non-PHPdoc)
-     * @see Generator/Admingenerator\GeneratorBundle\Generator.GeneratorInterface::getCachePath()
-     */
-    public function getCachePath($namespace, $bundle_name)
+    public function getCachePath(string $namespace, string $bundleName): string
     {
-        return $this->cache_dir.'/Admingenerated/'.str_replace('\\', DIRECTORY_SEPARATOR, $namespace).$bundle_name;
+        return $this->cache_dir.'/Admingenerated/'.str_replace('\\', DIRECTORY_SEPARATOR, $namespace).$bundleName;
     }
 
-    /**
-     * (non-PHPdoc)
-     * @see Generator/Admingenerator\GeneratorBundle\Generator.GeneratorInterface::build()
-     */
-    public function build($forceGeneration = false)
+    public function build($forceGeneration = false): void
     {
-        if (!$forceGeneration && $this->cacheProvider->get($this->getCacheKey(), function (ItemInterface $item) {return false;})) {
+        if (!$forceGeneration && $this->cacheProvider->get($this->getCacheKey(), fn () => false)) {
             return;
         }
 
         $this->doBuild();
-        $this->cacheProvider->get($this->getCacheKey(), function (ItemInterface $item) {return true;});
+        $this->cacheProvider->get($this->getCacheKey(), fn () => true);
     }
 
-    /**
-     * Process build
-     */
-    abstract protected function doBuild();
+    abstract protected function doBuild(): void;
 
-    /**
-     * @return string
-     */
-    protected function getCacheKey()
+    protected function getCacheKey(): string
     {
         return str_replace(str_split('@{}\/:'), '_', sprintf('admingen_isbuilt_%s_%s', $this->getBaseGeneratorName(), $this->cacheSuffix));
     }
 
-    /**
-     * @param object $fieldGuesser The fieldguesser.
-     * @return void
-     */
-    public function setFieldGuesser($fieldGuesser)
+    public function setFieldGuesser(FieldGuesser $fieldGuesser): void
     {
         $this->fieldGuesser = $fieldGuesser;
     }
 
-    /**
-     * @return object The fieldguesser.
-     */
-    public function getFieldGuesser()
+    public function getFieldGuesser(): FieldGuesser
     {
         return $this->fieldGuesser;
     }
 
-    /**
-     * Check if we have to build file
-     */
-    public function needToOverwrite(AdminGenerator $generator)
+    public function needToOverwrite(AdminGenerator $generator): bool
     {
         if ($this->overwriteIfExists) {
             return true;
@@ -233,7 +137,7 @@ abstract class Generator implements GeneratorInterface
 
         $finder = new Finder();
         foreach ($finder->files()->in($cacheDir) as $file) {
-            if (false !== strpos(file_get_contents($file), 'AdmingeneratorEmptyBuilderClass')) {
+            if (str_contains(file_get_contents($file), 'AdmingeneratorEmptyBuilderClass')) {
                 return true;
             }
         }
@@ -241,56 +145,34 @@ abstract class Generator implements GeneratorInterface
         return false;
     }
 
-    /**
-     * @return void
-     */
-    public function addValidator(ValidatorInterface $validator)
+    public function addValidator(ValidatorInterface $validator): void
     {
         $this->validators[] = $validator;
     }
 
-    /**
-     * @return void
-     */
-    public function validateYaml()
+    public function validateYaml(): void
     {
         foreach ($this->validators as $validator) {
             $validator->validate($this);
         }
     }
 
-    /**
-     * @param array $bundleConfig
-     * @return void
-     */
-    public function setBundleConfig(array $bundleConfig)
+    public function setBundleConfig(array $bundleConfig): void
     {
         $this->bundleConfig = $bundleConfig;
     }
 
-    /**
-     * @param \Symfony\Component\Routing\RouterInterface $router
-     * @return void
-     */
-    public function setRouter(RouterInterface $router)
+    public function setRouter(RouterInterface $router): void
     {
         $this->router = $router;
     }
-    
-    /**
-     * @param Environment $twig
-     * @return void
-     */
-    public function setTwig(Environment $twig)
+
+    public function setTwig(Environment $twig): void
     {
         $this->twig = $twig;
     }
-    
-    /**
-     * @param KernelInterface $kernel
-     * @return void
-     */
-    public function setKernel(KernelInterface $kernel)
+
+    public function setKernel(KernelInterface $kernel): void
     {
         $this->kernel = $kernel;
     }

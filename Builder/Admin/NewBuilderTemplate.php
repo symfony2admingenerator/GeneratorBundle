@@ -12,13 +12,13 @@ class NewBuilderTemplate extends NewBuilder
      * (non-PHPdoc)
      * @see \Admingenerator\GeneratorBundle\Builder\BaseBuilder::getTemplatesToGenerate()
      */
-    public function getTemplatesToGenerate()
+    public function getTemplatesToGenerate(): array
     {
-        return parent::getTemplatesToGenerate() + array(
+        return parent::getTemplatesToGenerate() + [
             'EditBuilderTemplate'.self::TWIG_EXTENSION
                 => 'Resources/views/'.$this->getBaseGeneratorName().'New/index.html.twig',
             'Edit/FormBuilderTemplate'.self::TWIG_EXTENSION
                 => 'Resources/views/'.$this->getBaseGeneratorName().'New/form.html.twig',
-        );
+            ];
     }
 }

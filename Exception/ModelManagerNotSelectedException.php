@@ -2,7 +2,9 @@
 
 namespace Admingenerator\GeneratorBundle\Exception;
 
-class ModelManagerNotSelectedException extends \LogicException
+use LogicException;
+
+class ModelManagerNotSelectedException extends LogicException
 {
     public function __construct()
     {

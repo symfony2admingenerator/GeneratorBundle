@@ -14,17 +14,12 @@ use Symfony\Component\HttpFoundation\Request;
  */
 abstract class BaseController extends AbstractController
 {
-    /**
-     * @var Request
-     */
-    protected $request;
+    protected ?Request $request = null;
 
     /**
      * Ensure the translator and logger services are available for usage
-     *
-     * @return array
      */
-    public static function getSubscribedServices()
+    public static function getSubscribedServices(): array
     {
         return array_merge(
             parent::getSubscribedServices(),

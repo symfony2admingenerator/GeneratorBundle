@@ -7,17 +7,14 @@ use Twig\Extension\AbstractExtension;
 
 class ExtendsAdmingeneratedExtension extends AbstractExtension
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function getTokenParsers()
+    public function getTokenParsers(): array
     {
-        return array(
+        return [
             new ExtendsAdmingeneratedTokenParser(),
-        );
+        ];
     }
 
-    public function getName()
+    public function getName(): string
     {
         return 'extends_admingenerated';
     }

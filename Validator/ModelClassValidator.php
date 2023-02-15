@@ -7,7 +7,7 @@ use Admingenerator\GeneratorBundle\Exception\ModelClassNotFoundException;
 
 class ModelClassValidator extends BaseValidator implements ValidatorInterface
 {
-    public function validate(Generator $generator)
+    public function validate(Generator $generator): void
     {
         if (!$model = $this->getFromYaml($generator, 'params.model')) {
             throw new ModelClassNotFoundException(sprintf('You should define params.model option in %s', $generator->getGeneratorYml()));

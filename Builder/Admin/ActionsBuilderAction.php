@@ -8,7 +8,7 @@ namespace Admingenerator\GeneratorBundle\Builder\Admin;
  */
 class ActionsBuilderAction extends ActionsBuilder
 {
-    public function getOutputName()
+    public function getOutputName(): string
     {
         return $this->getGenerator()->getGeneratedControllerFolder().'/ActionsController.php';
     }

@@ -15,19 +15,10 @@ use Symfony\Component\Finder\Finder;
  */
 class GeneratorsFinder
 {
-    /**
-     * @var array
-     */
-    private $yamls;
+    private ?array $yamls = null;
 
-    /**
-     * @var string
-     */
-    private $projectDir;
-
-    public function __construct(string $projectDir)
+    public function __construct(private readonly string $projectDir)
     {
-      $this->projectDir = $projectDir;
     }
 
   /**
@@ -35,13 +26,13 @@ class GeneratorsFinder
      *
      * @return array An array of yaml files
      */
-    public function findAll()
+    public function findAll(): array
     {
         if (null !== $this->yamls) {
             return $this->yamls;
         }
 
-        $yamls =  array();
+        $yamls = [];
 
         $finder = new Finder();
         $finder->files()
@@ -66,9 +57,9 @@ class GeneratorsFinder
      *
      * @return array of yaml paths
      */
-    private function find(BundleInterface $bundle)
+    private function find(BundleInterface $bundle): array
     {
-        $yamls =  array();
+        $yamls = [];
 
         if (!is_dir($bundle->getPath().'/Resources/config')) {
             return $yamls;

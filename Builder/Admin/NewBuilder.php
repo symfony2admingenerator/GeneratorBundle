@@ -11,21 +11,12 @@ namespace Admingenerator\GeneratorBundle\Builder\Admin;
  */
 class NewBuilder extends BaseBuilder
 {
-    /**
-     * (non-PHPdoc)
-     * @see Admingenerator\GeneratorBundle\Builder.BaseBuilder::getYamlKey()
-     */
-    public function getYamlKey()
+    public function getYamlKey(): string
     {
         return 'new';
     }
 
-    /**
-     * Retrieve the FQCN formType used by this builder
-     *
-     * @return string
-     */
-    public function getFormType()
+    public function getFormType(): string
     {
         return sprintf(
             '%s%s\\Form\Type\\%s\\NewType',

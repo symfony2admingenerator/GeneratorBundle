@@ -3,6 +3,7 @@
 namespace Admingenerator\GeneratorBundle\Twig\Extension;
 
 use Symfony\Component\Form\Extension\Csrf\CsrfProvider\CsrfProviderInterface;
+use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
@@ -12,41 +13,24 @@ use Twig\TwigFilter;
  */
 class CsrfTokenExtension extends AbstractExtension
 {
-    /**
-     * @var CsrfTokenManagerInterface
-     */
-    protected $csrfTokenManager;
-
-    /**
-     * @param CsrfTokenManagerInterface $csrfTokenManager
-     */
-    public function __construct(CsrfTokenManagerInterface $csrfTokenManager)
+    public function __construct(protected readonly CsrfTokenManagerInterface $csrfTokenManager)
     {
-        $this->csrfTokenManager = $csrfTokenManager;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFilters(): array
     {
         $options = ['is_safe' => ['html']];
-        return array(
-            'csrf_token' => new TwigFilter('csrf_token', array($this, 'getCsrfToken'), $options),
-        );
+        return [
+            'csrf_token' => new TwigFilter('csrf_token', $this->getCsrfToken(...), $options),
+        ];
     }
 
-    public function getCsrfToken($intention)
+    public function getCsrfToken(string $intention): CsrfToken
     {
         return $this->csrfTokenManager->getToken($intention);
     }
 
-    /**
-     * Returns the name of the extension.
-     *
-     * @return string The extension name
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'admingenerator_csrf';
     }

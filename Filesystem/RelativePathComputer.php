@@ -1,6 +1,8 @@
 <?php
 namespace Admingenerator\GeneratorBundle\Filesystem;
 
+use LogicException;
+
 /**
  * Class RelativePathComputer
  * @package Admingenerator\GeneratorBundle\Filesystem
@@ -8,29 +10,23 @@ namespace Admingenerator\GeneratorBundle\Filesystem;
  */
 class RelativePathComputer
 {
-    /**
-     * @var string
-     */
-    private $referencePath;
+    private string $referencePath;
 
     /**
-     * @param $path The path reference
+     * @param string $path The path reference
      */
-    public function __construct($path)
+    public function __construct(string $path)
     {
         $this->referencePath = realpath($path);
     }
 
     /**
      * Retrieve relative path from reference to $dir
-     *
-     * @param string $dir
-     * @return string
      */
-    public function computeToParent($dir)
+    public function computeToParent(string $dir): string
     {
         if (!$this->isParent($dir)) {
-            throw new \LogicException('Targeted dir must be a parent to the reference path.');
+            throw new LogicException('Targeted dir must be a parent to the reference path.');
         }
 
         $pathToReference = substr($this->referencePath, strlen($dir));
@@ -42,12 +38,9 @@ class RelativePathComputer
 
     /**
      * Check if $dir is a parent to the referenced directory
-     *
-     * @param $dir
-     * @return bool
      */
-    public function isParent($dir)
+    public function isParent(string $dir): bool
     {
-        return 0 === strpos($this->referencePath, realpath($dir));
+        return str_starts_with($this->referencePath, realpath($dir));
     }
 }

@@ -13,28 +13,18 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
  */
 abstract class BaseType extends AbstractType
 {
-    /**
-     * @var AuthorizationCheckerInterface
-     */
-    protected $authorizationChecker;
+    protected AuthorizationCheckerInterface $authorizationChecker;
 
-    /**
-     * @param AuthorizationCheckerInterface $authorizationChecker
-     */
-    public function setAuthorizationChecker(AuthorizationCheckerInterface $authorizationChecker)
+    public function setAuthorizationChecker(AuthorizationCheckerInterface $authorizationChecker): void
     {
         $this->authorizationChecker = $authorizationChecker;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
     }
 
-    /**
-     * @param $credentials
-     * @return bool
-     */
-    protected function checkCredentials($credentials, $model)
+    protected function checkCredentials(mixed $credentials, mixed $model): bool
     {
         return 'AdmingenAllowed' == $credentials
             || $this->authorizationChecker->isGranted($credentials, $model);
@@ -49,7 +39,12 @@ abstract class BaseType extends AbstractType
      * @param  object|null  $optionsClass       The options class.
      * @return array                            Resolved field options.
      */
-    protected function resolveOptions($name, array $fieldOptions, array $builderOptions = array(), $optionsClass = null)
+    protected function resolveOptions(
+        string $name,
+        array $fieldOptions,
+        array $builderOptions = [],
+        ?object $optionsClass = null
+    ): array
     {
         $getter = 'get'.ucfirst($name).'Options';
 

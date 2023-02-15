@@ -26,7 +26,7 @@ class PropelGenerator extends Generator
      * (non-PHPdoc)
      * @see Generator/Admingenerator\GeneratorBundle\Generator.Generator::doBuild()
      */
-    protected function doBuild()
+    protected function doBuild(): void
     {
         $this->validateYaml();
 

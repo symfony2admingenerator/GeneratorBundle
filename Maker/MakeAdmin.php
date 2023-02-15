@@ -14,47 +14,39 @@ use Symfony\Component\Console\Question\ChoiceQuestion;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Console\Question\Question;
 
-
 class MakeAdmin extends AbstractMaker
 {
 
-  const ACTIONS = array(
-      'New'     => array('views' => array(
+  const ACTIONS = [
+      'New'     => ['views' => [
           'index',
           'form',
-      )),
-      'List'    => array('views' => array(
+      ]],
+      'List'    => ['views' => [
           'index',
           'results',
           'filters',
           'row',
-      )),
-      'Excel'   => array('views' => array()),
-      'Edit'    => array('views' => array(
+      ]],
+      'Excel'   => ['views' => []],
+      'Edit'    => ['views' => [
           'index',
           'form',
-      )),
-      'Show'    => array('views' => array('index')),
-      'Actions' => array('views' => array('index')),
-  );
+      ]],
+      'Show'    => ['views' => ['index']],
+      'Actions' => ['views' => ['index']],
+  ];
 
-  const FORMS = array('New', 'Filters', 'Edit');
+  const FORMS = ['New', 'Filters', 'Edit'];
 
   const ORMS = ['doctrine', 'doctrine_odm', 'propel'];
 
-
-  /**
-   * @inheritDoc
-   */
   public static function getCommandName(): string
   {
     return 'admin:generate-admin';
   }
 
-  /**
-   * @inheritDoc
-   */
-  public function configureCommand(Command $command, InputConfiguration $inputConfig)
+  public function configureCommand(Command $command, InputConfiguration $inputConfig): void
   {
     $command
         ->setDescription('Generate new admin pages given a model')
@@ -74,7 +66,7 @@ EOT
         );
   }
 
-  public function interact(InputInterface $input, ConsoleStyle $io, Command $command)
+  public function interact(InputInterface $input, ConsoleStyle $io, Command $command): void
   {
     $io->section('Welcome to the Admingenerator');
     $question = new Question(
@@ -134,18 +126,12 @@ EOT
 
   }
 
-  /**
-   * @inheritDoc
-   */
-  public function configureDependencies(DependencyBuilder $dependencies)
+  public function configureDependencies(DependencyBuilder $dependencies): void
   {
 
   }
 
-  /**
-   * @inheritDoc
-   */
-  public function generate(InputInterface $input, ConsoleStyle $io, Generator $generator)
+  public function generate(InputInterface $input, ConsoleStyle $io, Generator $generator): void
   {
     $orm = $input->getArgument('orm');
     // Retrieve model folder depending on chosen Model Manager
@@ -252,12 +238,8 @@ EOT
 
   /**
    * Validates that the given namespace (e.g. Acme\Foo) is a valid format.
-   *
-   * @param string $namespace
-   *
-   * @return string
    */
-  public static function validateNamespace(string $namespace)
+  public static function validateNamespace(string $namespace): string
   {
     $namespace = strtr($namespace, '/', '\\');
     if (!preg_match('/^(?:[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*\\\?)+$/', $namespace)) {

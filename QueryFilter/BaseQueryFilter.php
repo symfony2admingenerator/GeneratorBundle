@@ -2,70 +2,43 @@
 
 namespace Admingenerator\GeneratorBundle\QueryFilter;
 
+use DateTime;
+use DateTimeInterface;
+use LogicException;
+
 abstract class BaseQueryFilter implements QueryFilterInterface
 {
-    /**
-     * @var mixed
-     */
-    protected $query;
 
-    /**
-     * @param $query
-     */
-    public function __construct($query)
+    public function __construct(protected readonly mixed $query)
     {
-        $this->query = $query;
     }
 
-    /**
-     * (non-PHPdoc)
-     * @see GeneratorBundle\QueryFilter.QueryFilterInterface::getQuery()
-     */
-    public function getQuery()
+    public function getQuery(): mixed
     {
         return $this->query;
     }
 
-    /**
-     * (non-PHPdoc)
-     * @see \GeneratorBundle\QueryFilter.QueryFilterInterface::addDefaultFilter()
-     */
-    public function addDefaultFilter($field, $value)
+    public function addDefaultFilter(string $field, string $value): void
     {
-        throw new \LogicException('No method defined to execute this type of filters');
+        throw new LogicException('No method defined to execute this type of filters');
     }
 
     /**
-     *
      * By default we call addDefaultFilter
-     *
-     * @param $name
-     * @param $values
      */
-    public function __call($name, $values = array())
+    public function __call(string $name, array $values = [])
     {
         if (preg_match('/add(.+)Filter/', $name)) {
             $this->addDefaultFilter($values[0], $values[1]);
         }
     }
 
-    /**
-     * @param string $format
-     */
-    protected function formatDate($date, $format)
+    protected function formatDate(mixed $date, string $format): string|false
     {
-        if ($date === null) {
+        if ($date === null || $date === false) {
             return false;
         }
 
-        if (!($date instanceof \DateTime)) {
-            $date = new \DateTime($date);
-        }
-
-        if (false !== $date) {
-            return $date->format($format);
-        }
-
-        return $date;
+        return $date instanceof DateTimeInterface ? $date->format($format) : (new DateTime($date))->format($format);
     }
 }

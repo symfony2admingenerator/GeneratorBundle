@@ -6,37 +6,21 @@ use Admingenerator\GeneratorBundle\Builder\Admin\EmptyBuilderAction;
 use Admingenerator\GeneratorBundle\Builder\EmptyGenerator;
 
 /**
- * This class autoload admingenarated & if they not exists try to generate
+ * This class autoload admingenarated & if they not exist try to generate
  */
 class AdmingeneratedClassLoader
 {
-    /**
-     * @var string
-     */
-    protected $basePath;
+    protected string $basePath;
 
-    /**
-     * @var bool
-     */
-    public static $initialized = false;
+    public static bool $initialized = false;
 
-    /**
-     * Initialize Admingenerator Class loader
-     *
-     * @param string $cacheDir
-     */
-    public static function initAdmingeneratorClassLoader(string $cacheDir)
+    public static function initAdmingeneratorClassLoader(string $cacheDir): void
     {
         $admingeneratedClassLoader = new self();
         $admingeneratedClassLoader->register($cacheDir);
     }
 
-    /**
-     * Registers this instance as an autoloader.
-     *
-     * @param string $cacheDir
-     */
-    public function register(string $cacheDir)
+    public function register(string $cacheDir): void
     {
         if (self::$initialized) {
           return;
@@ -46,14 +30,9 @@ class AdmingeneratedClassLoader
         self::$initialized = true;
     }
 
-    /**
-     * Loads the given class or interface.
-     *
-     * @param string $class The name of the class
-     */
-    public function loadClass($class)
+    public function loadClass(string $class): void
     {
-        if (0 === strpos($class, 'Admingenerated')) {
+        if (str_starts_with($class, 'Admingenerated')) {
             $filePath = $this->basePath.DIRECTORY_SEPARATOR.str_replace('\\', DIRECTORY_SEPARATOR, $class).'.php';
 
             if (!file_exists($filePath)) {
@@ -66,10 +45,7 @@ class AdmingeneratedClassLoader
         }
     }
 
-    /**
-     * @param string $class
-     */
-    protected function generateEmptyController($class)
+    protected function generateEmptyController(string $class): void
     {
         $generator = new EmptyGenerator($this->basePath);
 

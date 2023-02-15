@@ -2,26 +2,20 @@
 
 namespace Admingenerator\GeneratorBundle\Exception;
 
+use LogicException;
 use Symfony\Component\Validator\ConstraintViolation;
 
-class ValidationException extends \LogicException
+class ValidationException extends LogicException
 {
-    /**
-     * @var ConstraintViolation[] An array of ConstraintViolation instances.
-     */
-    protected $errors;
-
     /**
      * @param ConstraintViolation[] $errors An array of ConstraintViolation instances.
      */
-    public function __construct($errors = array())
+    public function __construct(protected array $errors = [])
     {
-        $this->setErrors($errors);
-
         parent::__construct();
     }
 
-    public function getErrors()
+    public function getErrors(): array
     {
         return $this->errors;
     }
@@ -31,7 +25,7 @@ class ValidationException extends \LogicException
      *
      * @param ConstraintViolation[] $errors An array of ConstraintViolation instances.
      */
-    public function setErrors($errors = array())
+    public function setErrors(array $errors = []): void
     {
         foreach ($errors as $error) {
             if (!$error instanceof ConstraintViolation) {

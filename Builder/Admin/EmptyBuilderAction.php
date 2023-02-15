@@ -8,12 +8,8 @@ namespace Admingenerator\GeneratorBundle\Builder\Admin;
  */
 class EmptyBuilderAction extends BaseBuilder
 {
-    /**
-     * (non-PHPdoc)
-     * @see Admingenerator\GeneratorBundle\Builder.BuilderInterface::getDefaultTemplateDirs()
-     */
-    public function getTemplateDirs()
+    public function getTemplateDirs(): array
     {
-        return array(realpath(dirname(__FILE__).'/../../Resources/views/templates'));
+        return [realpath(dirname(__FILE__).'/../../Resources/views/templates')];
     }
 }

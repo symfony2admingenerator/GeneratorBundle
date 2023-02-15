@@ -10,37 +10,19 @@ use Twig\TwigFunction;
  */
 class ConfigExtension extends AbstractExtension
 {
-    /**
-     * @var array
-     */
-    protected $bundleConfig;
-
-    /**
-     * @param array $bundleConfig
-     */
-    public function __construct(array $bundleConfig)
+    public function __construct(protected readonly array $bundleConfig)
     {
-        $this->bundleConfig = $bundleConfig;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFunctions(): array
     {
         $options = ['is_safe' => ['html']];
-        return array(
-            'admingenerator_config' => new TwigFunction('admingenerator_config', array($this, 'getAdmingeneratorConfig'), $options),
-        );
+        return [
+            'admingenerator_config' => new TwigFunction('admingenerator_config', $this->getAdmingeneratorConfig(...), $options),
+        ];
     }
 
-    /**
-     * Returns admingenerator parameter
-     *
-     * @param  string   $name
-     * @return string   Parameter value
-     */
-    public function getAdmingeneratorConfig($name)
+    public function getAdmingeneratorConfig(string $name): string
     {
         $search_in = $this->bundleConfig;
         $path = explode('.', $name);
@@ -54,12 +36,7 @@ class ConfigExtension extends AbstractExtension
         return $search_in;
     }
 
-    /**
-     * Returns the name of the extension.
-     *
-     * @return string The extension name
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'admingenerator_config';
     }

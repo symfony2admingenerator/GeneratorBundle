@@ -2,36 +2,29 @@
 
 namespace Admingenerator\GeneratorBundle\Generator;
 
+use Admingenerator\GeneratorBundle\Guesser\FieldGuesser;
+
 interface GeneratorInterface
 {
 
     /**
      * Give the cache path to save the files
-     *
-     * @param string $namespace   The namespace of the bundle
-     * @param string $bundle_name the bundle name
-     *
-     * @return string
      */
-    public function getCachePath($namespace, $bundle_name);
+    public function getCachePath(string $namespace, string $bundleName): string;
 
     /**
      * Run builders & create files in cache
-     * @return void
      */
-    public function build();
+    public function build(): void;
 
     /**
-     * Force generator to overwrite files if exist.
-     * @return void
+     * Force generator to overwrite files if they exist.
      */
-    public function forceOverwriteIfExists();
+    public function forceOverwriteIfExists(): void;
 
     /**
      * Inject the field guesser.
-     *
-     * @param $fieldGuesser
      */
-    public function setFieldGuesser($fieldGuesser);
+    public function setFieldGuesser(FieldGuesser $fieldGuesser): void;
 
 }

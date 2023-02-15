@@ -11,21 +11,15 @@ namespace Admingenerator\GeneratorBundle\Builder\Admin;
  */
 class EditBuilder extends BaseBuilder
 {
-    /**
-     * (non-PHPdoc)
-     * @see Admingenerator\GeneratorBundle\Builder.BaseBuilder::getYamlKey()
-     */
-    public function getYamlKey()
+    public function getYamlKey(): string
     {
         return 'edit';
     }
 
     /**
      * Retrieve the FQCN formType used by this builder
-     *
-     * @return string
      */
-    public function getFormType()
+    public function getFormType(): string
     {
         return sprintf(
             '%s%s\\Form\Type\\%s\\EditType',

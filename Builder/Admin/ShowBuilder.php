@@ -10,20 +10,12 @@ namespace Admingenerator\GeneratorBundle\Builder\Admin;
  */
 class ShowBuilder extends BaseBuilder
 {
-    /**
-     * (non-PHPdoc)
-     * @see Admingenerator\GeneratorBundle\Builder.BaseBuilder::getYamlKey()
-     */
-    public function getYamlKey()
+    public function getYamlKey(): string
     {
         return 'show';
     }
 
-    /**
-     * Return a list of action from list.object_actions
-     * @return array
-     */
-    public function getObjectActions()
+    public function getObjectActions(): array
     {
         $objectActions = parent::getObjectActions();
 

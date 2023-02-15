@@ -8,11 +8,9 @@ use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
-use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
-use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Yaml\Yaml;
 
 class AdmingeneratorGeneratorExtension extends Extension
@@ -20,22 +18,20 @@ class AdmingeneratorGeneratorExtension extends Extension
     /**
      * Prepend KnpMenuBundle config
      */
-    public function prepend(ContainerBuilder $container)
+    public function prepend(ContainerBuilder $container): void
     {
-        $knpConfig = array('twig' => array(
+        $knpConfig = ['twig' => [
             'template' => 'AdmingeneratorGeneratorBundle:KnpMenu:knp_menu_trans.html.twig',
-        ));
+        ]];
 
         foreach ($container->getExtensions() as $name => $extension) {
-            switch ($name) {
-                case 'knp_menu':
-                    $container->prependExtensionConfig($name, $knpConfig);
-                    break;
+            if ($name == 'knp_menu') {
+                $container->prependExtensionConfig($name, $knpConfig);
             }
         }
     }
 
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.xml');
@@ -73,11 +69,9 @@ class AdmingeneratorGeneratorExtension extends Extension
     }
 
     /**
-     * @param array $config
-     * @param ContainerBuilder $container
      * @throws ModelManagerNotSelectedException
      */
-    private function processModelManagerConfiguration(array $config, ContainerBuilder $container)
+    private function processModelManagerConfiguration(array $config, ContainerBuilder $container): void
     {
         if (!($config['use_doctrine_orm'] || $config['use_doctrine_odm'] || $config['use_propel'])) {
             throw new ModelManagerNotSelectedException();
@@ -139,25 +133,18 @@ class AdmingeneratorGeneratorExtension extends Extension
     /**
      * Update $generatorDefinition to add calls to the addTemplatesDirectory
      * for all $directories.
-     *
-     * @param Definition $generatorDefinition
-     * @param array $directories
      */
-    private function addTemplatesInitialization(Definition $generatorDefinition, array $directories)
+    private function addTemplatesInitialization(Definition $generatorDefinition, array $directories): void
     {
         foreach ($directories as $directory) {
             $generatorDefinition->addMethodCall(
                 'addTemplatesDirectory',
-                array($directory)
+                [$directory]
             );
         }
     }
 
-    /**
-     * @param array $twigConfiguration
-     * @param ContainerBuilder $container
-     */
-    private function processTwigConfiguration(array $twigConfiguration, ContainerBuilder $container)
+    private function processTwigConfiguration(array $twigConfiguration, ContainerBuilder $container): void
     {
         $container->setParameter('admingenerator.twig', $twigConfiguration);
 
@@ -166,11 +153,7 @@ class AdmingeneratorGeneratorExtension extends Extension
         }
     }
 
-    /**
-     * @param array $config
-     * @param ContainerBuilder $container
-     */
-    private function processCacheConfiguration(array $config, ContainerBuilder $container)
+    private function processCacheConfiguration(array $config, ContainerBuilder $container): void
     {
         if (empty($config['generator_cache'])) {
             return;
@@ -196,11 +179,7 @@ class AdmingeneratorGeneratorExtension extends Extension
         }
     }
 
-    /**
-     * @param string $cacheProviderServiceName
-     * @param Definition $serviceDefinition
-     */
-    private function addCacheProviderToGenerator($cacheProviderServiceName, Definition $serviceDefinition, ContainerBuilder $container)
+    private function addCacheProviderToGenerator($cacheProviderServiceName, Definition $serviceDefinition, ContainerBuilder $container): void
     {
         $serviceDefinition
             ->addMethodCall('setCacheProvider', array(
@@ -214,9 +193,8 @@ class AdmingeneratorGeneratorExtension extends Extension
      * Unfortunately, our generated form types require Dependency Injection.
      * We so need to register all generated form as services so Security Authorization
      * Checker is injected.
-     * @param ContainerBuilder $container
      */
-    private function registerGeneratedFormsAsServices(ContainerBuilder $container)
+    private function registerGeneratedFormsAsServices(ContainerBuilder $container): void
     {
         $finder = new GeneratorsFinder($container->getParameter('kernel.project_dir'));
 
@@ -239,12 +217,8 @@ class AdmingeneratorGeneratorExtension extends Extension
     /**
      * Register forms as services for a generator.
      * Register only generated forms based on defined builders.
-     *
-     * @param array $generatorParameters
-     * @param array $builders
-     * @param ContainerBuilder $container
      */
-    private function registerFormsServicesFromGenerator(array $generatorParameters, array $builders, ContainerBuilder $container)
+    private function registerFormsServicesFromGenerator(array $generatorParameters, array $builders, ContainerBuilder $container): void
     {
         $modelParts                       = explode('\\', $generatorParameters['model']);
         $model                            = strtolower(array_pop($modelParts)); // @TODO: BC Support, remove it starting from v.3.0.0
@@ -263,7 +237,7 @@ class AdmingeneratorGeneratorExtension extends Extension
         if (in_array('new', $builders)) {
             $newDefinition = new Definition($formsBundleNamespace . '\\' . 'NewType');
             $newDefinition
-                ->addMethodCall('setAuthorizationChecker', array($authorizationCheckerServiceReference))
+                ->addMethodCall('setAuthorizationChecker', [$authorizationCheckerServiceReference])
                 ->addTag('form.type');
 
             $container->setDefinition(($id = 'admingen_generator_' . $fullQualifiedNormalizedFormName . '_new'), $newDefinition);
@@ -274,7 +248,7 @@ class AdmingeneratorGeneratorExtension extends Extension
         if (in_array('edit', $builders)) {
             $editDefinition = new Definition($formsBundleNamespace . '\\' . 'EditType');
             $editDefinition
-                ->addMethodCall('setAuthorizationChecker', array($authorizationCheckerServiceReference))
+                ->addMethodCall('setAuthorizationChecker', [$authorizationCheckerServiceReference])
                 ->addTag('form.type');
 
             $container->setDefinition(($id = 'admingen_generator_' . $fullQualifiedNormalizedFormName . '_edit'), $editDefinition);
@@ -285,7 +259,7 @@ class AdmingeneratorGeneratorExtension extends Extension
         if (in_array('list', $builders) || in_array('nested_list', $builders)) {
             $filterDefinition = new Definition($formsBundleNamespace . '\\' . 'FiltersType');
             $filterDefinition
-                ->addMethodCall('setAuthorizationChecker', array($authorizationCheckerServiceReference))
+                ->addMethodCall('setAuthorizationChecker', [$authorizationCheckerServiceReference])
                 ->addTag('form.type');
 
             $container->setDefinition(($id = 'admingen_generator_' . $fullQualifiedNormalizedFormName . '_filter'), $filterDefinition);
@@ -294,20 +268,12 @@ class AdmingeneratorGeneratorExtension extends Extension
         }
     }
 
-    /**
-     * @param array $config
-     * @param ContainerBuilder $container
-     * @return Configuration
-     */
-    public function getConfiguration(array $config, ContainerBuilder $container)
+    public function getConfiguration(array $config, ContainerBuilder $container): Configuration
     {
         return new Configuration($this->getAlias());
     }
 
-    /**
-     * @return string
-     */
-    public function getAlias()
+    public function getAlias(): string
     {
         return 'admingenerator_generator';
     }

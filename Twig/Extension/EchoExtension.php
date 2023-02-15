@@ -13,39 +13,28 @@ use Twig\TwigFunction;
  */
 class EchoExtension extends AbstractExtension
 {
-    /**
-     * @var bool
-     */
-    private $useExpression;
 
-    public function __construct($useExpression = false)
+    public function __construct(private readonly bool $useExpression = false)
     {
-        $this->useExpression = $useExpression;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFunctions(): array
     {
         $options = ['is_safe' => ['html']];
-        return array(
-            'echo_if_granted'     => new TwigFunction('echo_if_granted', array($this, 'getEchoIfGranted'), $options),
-            'echo_path'           => new TwigFunction('echo_path', array($this, 'getEchoPath'), $options),
-            'echo_trans'          => new TwigFunction('echo_trans', array($this, 'getEchoTrans'), $options),
-            'echo_render'         => new TwigFunction('echo_render', array($this, 'getEchoRender'), $options)
-        );
+        return [
+            'echo_if_granted' => new TwigFunction('echo_if_granted', $this->getEchoIfGranted(...), $options),
+            'echo_path'       => new TwigFunction('echo_path', $this->getEchoPath(...), $options),
+            'echo_trans'      => new TwigFunction('echo_trans', $this->getEchoTrans(...), $options),
+            'echo_render'     => new TwigFunction('echo_render', $this->getEchoRender(...), $options)
+        ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFilters(): array
     {
         $options = ['is_safe' => ['html']];
-        return array(
-            'convert_as_form' => new TwigFilter('convert_as_form', array($this, 'convertAsForm'), $options),
-        );
+        return [
+            'convert_as_form' => new TwigFilter('convert_as_form', $this->convertAsForm(...), $options),
+        ];
     }
 
     /**
@@ -57,14 +46,8 @@ class EchoExtension extends AbstractExtension
      *    > Tranforms [query_builder|query] into valid Closure:
      *      addFormOptions:
      *          query_builder: function($er) { return $er->createMyCustomQueryBuilder(); }
-     *
-     *
-     * @param string $options  the string as php
-     * @param string $formType the form type
-     *
-     * @return string the new options
      */
-    public function convertAsForm($options, $formType)
+    public function convertAsForm(string $options, string $formType): string
     {
         // Transforms PHP call into PHP (simple copy/paste)
         preg_match("/'__php\((.+?)\)'/i", stripslashes($options), $matches);
@@ -108,16 +91,11 @@ class EchoExtension extends AbstractExtension
     /**
      * Print "trans" tag for string $str with parameters $parameters
      * for catalog $catalog.
-     *
-     * @param $str
-     * @param  array  $parameters
-     * @param  string $catalog
-     * @return string
      */
-    public function getEchoTrans($str, array $parameters = array(), $catalog = 'Admingenerator', $escape = null)
+    public function getEchoTrans(string $str, array $parameters = [], string $catalog = 'Admingenerator', bool $escape = null): string
     {
-        $transParameters='{}';
-        $bag_parameters=array();
+        $transParameters = '{}';
+        $bag_parameters = [];
 
         if ($parameterBag = $this->getParameterBag($str)) {
             $str = $parameterBag['string'];
@@ -125,16 +103,16 @@ class EchoExtension extends AbstractExtension
         }
 
         if (!empty($parameters) || !empty($bag_parameters)) {
-            $transParameters="{";
+            $transParameters = "{";
 
             foreach ($parameters as $key => $value) {
-                $transParameters.= "'%".$key."%': '".str_replace("'", "\'", $value)."',";
+                $transParameters .= "'%".$key."%': '".str_replace("'", "\'", $value)."',";
             }
             foreach ($bag_parameters as $key => $value) {
-                $transParameters.= "'%".$key."%': ".str_replace("'", "\'", $value).",";
+                $transParameters .= "'%".$key."%': ".str_replace("'", "\'", $value).",";
             }
 
-            $transParameters.="}";
+            $transParameters .= "}";
         }
 
         return sprintf(
@@ -148,13 +126,8 @@ class EchoExtension extends AbstractExtension
 
     /**
      * Print "echo tag with path call" to the path $path with params $params.
-     *
-     * @param $path
-     * @param  array        $params
-     * @param  array|string $filters
-     * @return string
      */
-    public function getEchoPath($path, $params = null, $filters = null)
+    public function getEchoPath(string $path, array $params = null, array|string $filters = null): string
     {
         if (null === $params) {
             return (null === $filters)
@@ -185,12 +158,8 @@ class EchoExtension extends AbstractExtension
     /**
      * Print "if" tag with condition to is_expr_granted('$credentials')
      * If $modelName is not null, append the $modelName to the function call.
-     *
-     * @param $credentials
-     * @param  null   $modelName
-     * @return string
      */
-    public function getEchoIfGranted($credentials, $modelName = null)
+    public function getEchoIfGranted(string $credentials, string $modelName = null): string
     {
         if ('AdmingenAllowed' == $credentials) {
             return "{% if (true) %}";
@@ -207,12 +176,8 @@ class EchoExtension extends AbstractExtension
     /**
      * Print "echo tag with render call" to the controller $controller
      * with $params parameters.
-     *
-     * @param $controller
-     * @param  array  $params
-     * @return string
      */
-    public function getEchoRender($controller, array $params = array())
+    public function getEchoRender(string $controller, array $params = []): string
     {
         $params = $this->getTwigAssociativeArray($params);
 
@@ -281,7 +246,7 @@ class EchoExtension extends AbstractExtension
      *     [Book.title] -> Book.title
      *     [Book.author.name] -> Book.author.name
      */
-    private function getParameterBag($subject)
+    private function getParameterBag(array $subject): array|false
     {
         // Backwards compability - replace twig tags with parameters
         $pattern_bc = '/\{\{\s(?<param>[a-zA-Z0-9.]+)\s\}\}+/';
@@ -289,15 +254,15 @@ class EchoExtension extends AbstractExtension
         if (preg_match_all($pattern_bc, $subject, $match_params)) {
             $string = preg_filter($pattern_bc, '%\1%', $subject);
 
-            $param = array();
+            $param = [];
             foreach ($match_params['param'] as $value) {
                 $param[$value] = $value;
             }
 
-            return array(
+            return [
                 'string' => $string,
                 'params' => $param
-            );
+            ];
         }
 
         # Feature - read key/value syntax parameters
@@ -308,17 +273,17 @@ class EchoExtension extends AbstractExtension
             $string = $match_string['string'];
             $parameter_bag = $match_string['parameter_bag'];
 
-            $param = array();
+            $param = [];
             preg_match_all($pattern_params, $parameter_bag, $match_params, PREG_SET_ORDER);
 
             foreach ($match_params as $match) {
                 $param[$match['key']] = $match['value'];
             }
 
-            return array(
+            return [
                 'string' => $string,
                 'params' => $param
-            );
+            ];
         }
 
         # Feature - read abbreviated syntax parameters
@@ -329,17 +294,17 @@ class EchoExtension extends AbstractExtension
             $string = $match_string['string'];
             $parameter_bag = $match_string['parameter_bag'];
 
-            $param = array();
+            $param = [];
             preg_match_all($abbreviated_pattern_params, $parameter_bag, $match_params);
 
             foreach ($match_params['param'] as $value) {
                 $param[$value] = $value;
             }
 
-            return array(
+            return [
                 'string' => $string,
                 'params' => $param
-            );
+            ];
         }
 
         // If subject does not match any pattern, return false
@@ -363,11 +328,11 @@ class EchoExtension extends AbstractExtension
      *
      * @return string
      */
-    private function getTwigAssociativeArray(array $hashmap)
+    private function getTwigAssociativeArray(array $hashmap): string
     {
         $contents = array();
         foreach ($hashmap as $key => $value) {
-            if (!strstr($value, '{{') || !strstr($value, '}}')) {
+            if (!str_contains($value, '{{') || !str_contains($value, '}}')) {
                 $value = "'$value'";
             } else {
                 $value = trim(str_replace(array('{{', '}}'), '', $value));
@@ -379,12 +344,7 @@ class EchoExtension extends AbstractExtension
         return '{ ' . implode(', ', $contents) . ' }';
     }
 
-    /**
-     * Returns the name of the extension.
-     *
-     * @return string The extension name
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'admingenerator_echo';
     }

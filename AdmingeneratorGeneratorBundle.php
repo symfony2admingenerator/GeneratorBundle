@@ -2,21 +2,17 @@
 
 namespace Admingenerator\GeneratorBundle;
 
+use Admingenerator\GeneratorBundle\DependencyInjection\AdmingeneratorGeneratorExtension;
+use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Admingenerator\GeneratorBundle\DependencyInjection\Compiler\TwigLoaderPass;
 use Admingenerator\GeneratorBundle\DependencyInjection\Compiler\ValidatorPass;
 use Admingenerator\GeneratorBundle\DependencyInjection\Compiler\FormPass;
-use Symfony\Component\HttpKernel\KernelInterface;
 
 class AdmingeneratorGeneratorBundle extends Bundle
 {
-    /**
-     * (non-PHPdoc)
-     * @see \Symfony\Component\HttpKernel\Bundle\Bundle::build()
-     */
-    public function build(ContainerBuilder $container)
+    public function build(ContainerBuilder $container): void
     {
         parent::build($container);
 
@@ -25,12 +21,9 @@ class AdmingeneratorGeneratorBundle extends Bundle
         $container->addCompilerPass(new TwigLoaderPass());
     }
 
-    /**
-     * @return \Admingenerator\GeneratorBundle\DependencyInjection\AdmingeneratorGeneratorExtension
-     */
-    public function getContainerExtension()
+    public function getContainerExtension(): AdmingeneratorGeneratorExtension
     {
-        $this->extension = new DependencyInjection\AdmingeneratorGeneratorExtension();
+        $this->extension = new AdmingeneratorGeneratorExtension();
 
         return $this->extension;
     }

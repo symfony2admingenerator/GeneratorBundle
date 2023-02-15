@@ -6,31 +6,20 @@ use Doctrine\ORM\QueryBuilder;
 
 class DoctrineQueryFilter extends BaseQueryFilter
 {
-    /**
-     * @var QueryBuilder
-     */
-    protected $query;
+    protected array $joins = [];
 
-    /**
-     * @var array
-     */
-    protected $joins = array();
-
-    /**
-     * @var integer
-     */
-    protected $paramNumber = 0;
+    protected int $paramNumber = 0;
 
     /**
      * @param string $field Table field name.
      * @return string Parameter name with unique key.
      */
-    public function getParamName($field)
+    public function getParamName(string $field): string
     {
         return $field.'_'.$this->paramNumber++;
     }
 
-    public function addDefaultFilter($field, $value)
+    public function addDefaultFilter(string $field, mixed $value): void
     {
         list($tableAlias, $filteredField) = $this->addTablePathToField($field);
 
@@ -45,28 +34,17 @@ class DoctrineQueryFilter extends BaseQueryFilter
         }
     }
 
-    /**
-     * @param string $field
-     * @param boolean $value
-     */
-    public function addBooleanFilter($field, $value)
+    public function addBooleanFilter(string $field, bool $value): void
     {
-        if ("" !== $value) {
-            list($tableAlias, $filteredField) = $this->addTablePathToField($field);
+        list($tableAlias, $filteredField) = $this->addTablePathToField($field);
 
-            $paramName = $this->getParamName($tableAlias.'_'.$filteredField);
-            $this->query->andWhere(sprintf('%s.%s = :%s', $tableAlias, $filteredField, $paramName));
-            $this->query->setParameter($paramName, !!$value);
-        }
+        $paramName = $this->getParamName($tableAlias.'_'.$filteredField);
+        $this->query->andWhere(sprintf('%s.%s = :%s', $tableAlias, $filteredField, $paramName));
+        $this->query->setParameter($paramName, !!$value);
     }
 
-    /**
-     * @param string $field
-     * @param string $value
-     */
-    public function addStringFilter($field, $value)
+    public function addStringFilter(string $field, string $value): void
     {
-
         list($tableAlias, $filteredField) = $this->addTablePathToField($field);
 
         $paramName = $this->getParamName($tableAlias.'_'.$filteredField);
@@ -78,20 +56,16 @@ class DoctrineQueryFilter extends BaseQueryFilter
         }
     }
 
-    /**
-     * @param string $field
-     * @param string $value
-     */
-    public function addTextFilter($field, $value)
+    public function addTextFilter(string $field, string $value): void
     {
         $this->addStringFilter($field, $value);
     }
 
-    public function addCollectionFilter($field, $value, $manyToMany = false)
+    public function addCollectionFilter(string $field, mixed $value, bool $manyToMany = false): void
     {
         list($tableAlias, $filteredField) = $this->addTablePathToField($field);
         if (!is_array($value)) {
-            $value = array($value->getId());
+            $value = [$value->getId()];
         }
 
         $paramName = $this->getParamName($tableAlias.'_'.$filteredField);
@@ -109,7 +83,7 @@ class DoctrineQueryFilter extends BaseQueryFilter
 
     }
 
-    public function addDateFilter($field, $value, $format = 'Y-m-d')
+    public function addDateFilter(string $field, mixed $value, string $format = 'Y-m-d'): void
     {
         list($tableAlias, $filteredField) = $this->addTablePathToField($field);
 
@@ -139,29 +113,29 @@ class DoctrineQueryFilter extends BaseQueryFilter
         }
     }
 
-    public function addDatetimeFilter($field, $value, $format = 'Y-m-d H:i:s')
+    public function addDatetimeFilter(string $field, mixed $value, string $format = 'Y-m-d H:i:s'): void
     {
         $this->addDateFilter($field, $value, $format);
     }
 
-    public function addNullFilter($field, $value = null)
+    public function addNullFilter(string $field): void
     {
         list($tableAlias, $filteredField) = $this->addTablePathToField($field);
 
         $this->query->andWhere(sprintf('%s.%s IS NULL', $tableAlias, $filteredField));
     }
 
-    public function addNotNullFilter($field, $value = null)
+    public function addNotNullFilter(string $field): void
     {
         list($tableAlias, $filteredField) = $this->addTablePathToField($field);
 
         $this->query->andWhere(sprintf('%s.%s IS NOT NULL', $tableAlias, $filteredField));
     }
 
-    protected function addTablePathToField($field)
+    protected function addTablePathToField(string $field): array
     {
         if (!strpos($field, '.')) {
-            return array('q', $field);
+            return ['q', $field];
         }
 
         $fieldParts = explode('.', $field);

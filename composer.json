@@ -44,7 +44,7 @@
         "symfony/twig-bundle": ">=4.4,<7.0",
         "symfony/validator": ">=4.4,<7.0",
         "symfony/yaml": ">=4.4,<7.0",
-        "symfony2admingenerator/twig-generator": "~1.4",
+        "symfony2admingenerator/twig-generator": "^2.0.1",
         "twig/twig": "^2.15.3||^3.4.3",
         "babdev/pagerfanta-bundle": "~2.0||~3.0",
         "pagerfanta/pagerfanta": "~3.0",

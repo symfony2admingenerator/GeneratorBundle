@@ -3,7 +3,7 @@
 namespace Admingenerator\GeneratorBundle\Command;
 
 use Admingenerator\GeneratorBundle\Filesystem\RelativePathComputer;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -18,28 +18,17 @@ use Symfony\Component\Process\Process;
  * Automatically call bower install to properly import bowers components.
  * Push them to the web root directory
  */
+#[AsCommand(name: 'admin:assets-install', description: 'Fetch bower declared dependencies and push them into web root directory')]
 class AssetsInstallCommand extends Command
 {
-
-    /**
-     * @var string
-     */
-    private $projectDir;
-
-    public function __construct(string $projectDir)
+    public function __construct(private readonly string $projectDir)
     {
-        $this->projectDir = $projectDir;
         parent::__construct();
     }
 
-  /**
-     * {@inheritdoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
-            ->setName('admin:assets-install')
-            ->setDescription('Fetch bower declared dependencies and push them into web root directory')
             ->setHelp('The <info>admin:assets-install</info> command fetch bower dependencies (CSS and JS files) to the web root dir.')
             ->setDefinition(array(
                 new InputOption('mode', 'm', InputOption::VALUE_OPTIONAL, 'Mode to fetch dependencies', 'install'),
@@ -48,27 +37,23 @@ class AssetsInstallCommand extends Command
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $bowerFileLocation = dirname(dirname(__FILE__));
         $targetDir = $this->computeTargetDirectory($bowerFileLocation);
         $formatter = $this->getHelperSet()->get('formatter');
 
         $cmd = sprintf(
-            '%s %s --config.directory=%s',
-            $input->getOption('bower-bin'),
+            '%s --config.directory=%s',
             $input->getOption('mode'),
             $targetDir
         );
 
         if (OutputInterface::VERBOSITY_VERBOSE <= $output->getVerbosity()) {
-            $output->writeln($formatter->formatSection('Bower', sprintf('Running command %s', $cmd)));
+            $output->writeln($formatter->formatSection('Bower', sprintf('Running command %s with argument %s', $input->getOption('bower-bin'), $cmd)));
         }
 
-        $process = new Process($cmd);
+        $process = new Process([$input->getOption('bower-bin') => $cmd]);
         $process->setTimeout(300);
         $process->setWorkingDirectory($bowerFileLocation);
         $output->writeln($formatter->formatSection('Bower', sprintf('Fetching vendors using the <info>%s</info> mode.', $input->getOption('mode'))));
@@ -85,11 +70,8 @@ class AssetsInstallCommand extends Command
 
     /**
      * Compute relative path from $bowerFileDirectory to the web directory
-     *
-     * @param string $bowerFileDirectory
-     * @return string
      */
-    private function computeTargetDirectory($bowerFileDirectory)
+    private function computeTargetDirectory(string $bowerFileDirectory): string
     {
         $relativePathComputer = new RelativePathComputer($bowerFileDirectory);
 

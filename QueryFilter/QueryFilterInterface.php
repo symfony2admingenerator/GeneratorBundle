@@ -5,11 +5,11 @@ namespace Admingenerator\GeneratorBundle\QueryFilter;
 interface QueryFilterInterface
 {
     /**
-     * @return mixed the query object interface depend of the ORM
+     * @return mixed the query object interface depending on the ORM
      *
      * @api
      */
-    public function getQuery();
+    public function getQuery(): mixed;
 
     /**
      * Add filter for Default db types (types, not found
@@ -19,8 +19,7 @@ interface QueryFilterInterface
      * @param string $value the search value
      *
      * @api
-     * @return void
      */
-    public function addDefaultFilter($field, $value);
+    public function addDefaultFilter(string $field, string $value): void;
 
 }

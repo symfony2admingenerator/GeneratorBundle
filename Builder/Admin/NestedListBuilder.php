@@ -8,21 +8,11 @@ namespace Admingenerator\GeneratorBundle\Builder\Admin;
  */
 class NestedListBuilder extends ListBuilder
 {
-    /**
-     * @var array
-     */
-    protected $treeConfiguration = array();
+    protected array $treeConfiguration = [];
 
-    /**
-     * @var mixed
-     */
-    protected $indentationColumnIndex = null;
+    protected mixed $indentationColumnIndex = null;
 
-    /**
-     * (non-PHPdoc)
-     * @see Admingenerator\GeneratorBundle\Builder.BaseBuilder::getYamlKey()
-     */
-    public function getYamlKey()
+    public function getYamlKey(): string
     {
         return 'nested_list';
     }
@@ -34,10 +24,8 @@ class NestedListBuilder extends ListBuilder
      *    left   => left field
      *    right  => right field
      *    parent => parent field
-     *
-     * @return array
      */
-    public function getTreeConfiguration()
+    public function getTreeConfiguration(): array
     {
         if (empty($this->treeConfiguration)) {
             $this->findTreeConfiguration();
@@ -48,11 +36,9 @@ class NestedListBuilder extends ListBuilder
 
     /**
      * Get the indentation field that should be used.
-     * No validity is made uppon the field name.
-     *
-     * @return mixed
+     * No validity is made upon the field name.
      */
-    public function getIndentationColumnIndex()
+    public function getIndentationColumnIndex(): mixed
     {
         if (null === $this->indentationColumnIndex) {
             $field = $this->getGenerator()->getFromYaml('builders.nested_list.indentation.field');
@@ -75,13 +61,13 @@ class NestedListBuilder extends ListBuilder
      *     right  => rgt
      *     parent => parent
      */
-    protected function findTreeConfiguration()
+    protected function findTreeConfiguration(): void
     {
-        $this->treeConfiguration = array_merge(array(
+        $this->treeConfiguration = array_merge([
             'root'   => 'root',
             'left'   => 'lft',
             'right'  => 'rgt',
             'parent' => 'parent'
-        ), $this->getGenerator()->getFromYaml('builders.nested_list.tree') ?: array());
+        ], $this->getGenerator()->getFromYaml('builders.nested_list.tree') ?: []);
     }
 }

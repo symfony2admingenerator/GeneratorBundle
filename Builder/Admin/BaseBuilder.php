@@ -2,6 +2,9 @@
 
 namespace Admingenerator\GeneratorBundle\Builder\Admin;
 
+use Admingenerator\GeneratorBundle\Guesser\FieldGuesser;
+use RecursiveArrayIterator;
+use RecursiveIteratorIterator;
 use Symfony\Component\DependencyInjection\Container;
 use Admingenerator\GeneratorBundle\Builder\BaseBuilder as GenericBaseBuilder;
 use Admingenerator\GeneratorBundle\Generator\Column;
@@ -16,52 +19,38 @@ use Admingenerator\GeneratorBundle\Generator\Action;
  */
 class BaseBuilder extends GenericBaseBuilder
 {
-    /**
-     * @var array
-     */
-    protected $columns = null;
+    protected ?array $columns = null;
 
-    /**
-     * @var array
-     */
-    protected $actions = null;
+    protected ?array $actions = null;
 
-    /**
-     * @var array
-     */
-    protected $objectActions = null;
+    protected ?array $objectActions = null;
 
-    /**
-     * @var string
-     */
-    protected $columnClass = 'Column';
+    protected string $columnClass = 'Column';
 
-    public function getBaseAdminTemplate()
+    public function getBaseAdminTemplate(): string
     {
         return $this->getGenerator()->getBaseAdminTemplate();
     }
 
     /**
      * Return a list of columns from list.display.
-     *
-     * @return array
      */
-    public function getColumns()
+    public function getColumns(): array
     {
         if (null === $this->columns) {
-            $this->columns = array();
+            $this->columns = [];
             $this->findColumns();
         }
 
         return $this->columns;
     }
 
-    protected function addColumn(Column $column)
+    protected function addColumn(Column $column): void
     {
         $this->columns[$column->getName()] = $column;
     }
 
-    protected function findColumns()
+    protected function findColumns(): void
     {
         foreach ($this->getDisplayColumns() as $columnName) {
             $column = $this->createColumn($columnName, true);
@@ -71,9 +60,9 @@ class BaseBuilder extends GenericBaseBuilder
         }
     }
 
-    public function getColumnGroups()
+    public function getColumnGroups(): array
     {
-        $groups = array();
+        $groups = [];
 
         foreach ($this->getColumns() as $column) {
             $groups = array_merge($groups, $column->getGroups());
@@ -84,19 +73,14 @@ class BaseBuilder extends GenericBaseBuilder
 
     /**
      * Creates new column instance.
-     *
-     * @param string $columnName The name of the column.
-     * @param bool   $withForms  If true, add column form configuration.
-     *
-     * @return Column
      */
-    protected function createColumn($columnName, $withForms = false)
+    protected function createColumn(string $columnName, bool $withForms = false): Column
     {
-        $column = new $this->columnClass($columnName, array(
+        $column = new $this->columnClass($columnName, [
             /* used for more verbose error messages */
             'builder' => $this->getYamlKey(),
             'generator' => $this->getBaseGeneratorName(),
-        ));
+        ]);
 
         //Set the user parameters
         $this->setUserColumnConfiguration($column);
@@ -182,10 +166,10 @@ class BaseBuilder extends GenericBaseBuilder
                 ));
             }
 
-            $fields = $this->getVariable('fields', array());
+            $fields = $this->getVariable('fields', []);
             $fieldOptions = is_array($fields) && array_key_exists($column->getName(), $fields)
                 ? $fields[$column->getName()]
-                : array();
+                : [];
 
             if (array_key_exists('addFormOptions', $fieldOptions)) {
                 $column->setAddFormOptions($fieldOptions['addFormOptions']);
@@ -201,32 +185,47 @@ class BaseBuilder extends GenericBaseBuilder
         return $column;
     }
 
-    protected function getColumnClass()
+    /**
+     * @return array|mixed
+     */
+    public function getDisplay(): mixed
+    {
+        $display = $this->getVariable('display');
+
+        // tabs
+        if (null == $display || (is_array($display) && 0 == count($display))) {
+            $tabs = $this->getVariable('tabs');
+
+            if (null != $tabs || (is_array($tabs) && 0 < count($tabs))) {
+                $display = [];
+
+                foreach ($tabs as $tab) {
+                    $display = array_merge($display, $tab);
+                }
+            }
+        }
+        return $display;
+    }
+
+    protected function getColumnClass(): string
     {
         return $this->columnClass;
     }
 
-    public function setColumnClass($columnClass)
+    public function setColumnClass($columnClass): string
     {
         return $this->columnClass = $columnClass;
     }
 
-    /**
-     * @param Column $column
-     * @param string $optionName
-     * @param string $default
-     *
-     * @return string
-     */
-    protected function getFieldOption(Column $column, $optionName, $default = null)
+    protected function getFieldOption(Column $column, string $optionName, mixed $default = null): string
     {
         $optionsFields = $this->getVariable('fields', array());
         $options = is_array($optionsFields) && array_key_exists($column->getName(), $optionsFields) ? $optionsFields[$column->getName()] : array();
 
-        return isset($options[$optionName]) ? $options[$optionName] : $default;
+        return $options[$optionName] ?? $default;
     }
 
-    protected function setUserColumnConfiguration(Column $column)
+    protected function setUserColumnConfiguration(Column $column): void
     {
         $optionsFields = $this->getVariable('fields', array());
         $options = is_array($optionsFields) && array_key_exists($column->getName(), $optionsFields) ? $optionsFields[$column->getName()] : array();
@@ -236,30 +235,14 @@ class BaseBuilder extends GenericBaseBuilder
         }
     }
 
-    public function getFieldGuesser()
+    public function getFieldGuesser(): FieldGuesser
     {
         return $this->getGenerator()->getFieldGuesser();
     }
 
-    /**
-     * @return array Display column names
-     */
-    protected function getDisplayColumns()
+    protected function getDisplayColumns(): array
     {
-        $display = $this->getVariable('display');
-
-        // tabs
-        if (null == $display || (is_array($display) && 0 == count($display))) {
-            $tabs = $this->getVariable('tabs');
-
-            if (null != $tabs || (is_array($tabs) && 0 < count($tabs))) {
-                $display = array();
-
-                foreach ($tabs as $tab) {
-                    $display = array_merge($display, $tab);
-                }
-            }
-        }
+        $display = $this->getDisplay();
 
         if (null == $display || (is_array($display) && 0 == count($display))) {
             return $this->getAllFields();
@@ -270,7 +253,7 @@ class BaseBuilder extends GenericBaseBuilder
         }
 
         //there is fieldsets
-        $return = array();
+        $return = [];
 
         foreach ($display as $fieldset => $rows_or_fields) {
             foreach ($rows_or_fields as $fields) {
@@ -285,42 +268,21 @@ class BaseBuilder extends GenericBaseBuilder
         return $return;
     }
 
-    /**
-     * Retrieve all columns.
-     *
-     * @return array
-     */
-    protected function getAllFields()
+    protected function getAllFields(): array
     {
         return $this->getFieldGuesser()->getAllFields($this->getVariable('model'));
     }
 
-    /**
-     * @return array
-     */
-    public function getFieldsets()
+    public function getFieldsets(): array
     {
-        $display = $this->getVariable('display');
-
-        // tabs
-        if (null == $display || (is_array($display) && 0 == count($display))) {
-            $tabs = $this->getVariable('tabs');
-
-            if (null != $tabs || (is_array($tabs) && 0 < count($tabs))) {
-                $display = array();
-
-                foreach ($tabs as $tab) {
-                    $display = array_merge($display, $tab);
-                }
-            }
-        }
+        $display = $this->getDisplay();
 
         if (null == $display || (is_array($display) && 0 == count($display))) {
             $display = $this->getAllFields();
         }
 
         if (isset($display[0])) {
-            $display = array('NONE' => $display);
+            $display = ['NONE' => $display];
         }
 
         foreach ($display as $fieldset => $rows_or_fields) {
@@ -330,9 +292,9 @@ class BaseBuilder extends GenericBaseBuilder
         return $display;
     }
 
-    protected function getRowsFromFieldset(array $rows_or_fields)
+    protected function getRowsFromFieldset(array $rows_or_fields): array
     {
-        $rows = array();
+        $rows = [];
 
         foreach ($rows_or_fields as $key => $field) {
             if (is_array($field)) { //The row is defined in yaml
@@ -347,18 +309,14 @@ class BaseBuilder extends GenericBaseBuilder
 
     /**
      * Get columns for tab, fieldset, row or field.
-     *
-     * @param mixed $input
-     *
-     * @return array Array of columns.
      */
-    public function getColumnsFor($input)
+    public function getColumnsFor(mixed $input): array
     {
         if (!is_array($input)) {
             $input = array($input);
         }
 
-        $it = new \RecursiveIteratorIterator(new \RecursiveArrayIterator($input));
+        $it = new RecursiveIteratorIterator(new RecursiveArrayIterator($input));
 
         $fieldsNames = iterator_to_array($it, false);
 
@@ -367,27 +325,25 @@ class BaseBuilder extends GenericBaseBuilder
 
     /**
      * Return a list of action from list.actions.
-     *
-     * @return array
      */
-    public function getActions()
+    public function getActions(): array
     {
         if (null === $this->actions) {
-            $this->actions = array();
+            $this->actions = [];
             $this->findActions();
         }
 
         return $this->actions;
     }
 
-    protected function setUserActionConfiguration(Action $action)
+    protected function setUserActionConfiguration(Action $action): void
     {
-        $actions = $this->getVariable('actions', array());
-        $builderOptions = is_array($actions) && array_key_exists($action->getName(), $actions) ? $actions[$action->getName()] : array();
+        $actions = $this->getVariable('actions', []);
+        $builderOptions = is_array($actions) && array_key_exists($action->getName(), $actions) ? $actions[$action->getName()] : [];
 
         $globalOptions = $this->getGenerator()->getFromYaml(
             'params.actions.'.$action->getName(),
-            array()
+            []
         );
 
         if (null !== $builderOptions) {
@@ -408,14 +364,14 @@ class BaseBuilder extends GenericBaseBuilder
         }
     }
 
-    protected function addAction(Action $action)
+    protected function addAction(Action $action): void
     {
         $this->actions[$action->getName()] = $action;
     }
 
-    protected function findActions()
+    protected function findActions(): void
     {
-        foreach ($this->getVariable('actions', array()) as $actionName => $actionParams) {
+        foreach ($this->getVariable('actions', []) as $actionName => $actionParams) {
             $action = $this->findGenericAction($actionName);
 
             if (!$action) {
@@ -439,29 +395,27 @@ class BaseBuilder extends GenericBaseBuilder
 
     /**
      * Return a list of action from list.object_actions.
-     *
-     * @return array
      */
-    public function getObjectActions()
+    public function getObjectActions(): array
     {
         if (null === $this->objectActions) {
-            $this->objectActions = array();
+            $this->objectActions = [];
             $this->findObjectActions();
         }
 
         return $this->objectActions;
     }
 
-    protected function setUserObjectActionConfiguration(Action $action)
+    protected function setUserObjectActionConfiguration(Action $action): void
     {
-        $objectActions = $this->getVariable('object_actions', array());
+        $objectActions = $this->getVariable('object_actions', []);
         $builderOptions = is_array($objectActions) && array_key_exists($action->getName(), $objectActions)
             ? $objectActions[$action->getName()]
-            : array();
+            : [];
 
         $globalOptions = $this->getGenerator()->getFromYaml(
             'params.object_actions.'.$action->getName(),
-            array()
+            []
         );
 
         if (null !== $builderOptions) {
@@ -475,14 +429,14 @@ class BaseBuilder extends GenericBaseBuilder
         }
     }
 
-    protected function addObjectAction(Action $action)
+    protected function addObjectAction(Action $action): void
     {
         $this->objectActions[$action->getName()] = $action;
     }
 
-    protected function findObjectActions()
+    protected function findObjectActions(): void
     {
-        $objectActions = $this->getVariable('object_actions', array());
+        $objectActions = $this->getVariable('object_actions', []);
 
         foreach ($objectActions as $actionName => $actionParams) {
             $action = $this->findObjectAction($actionName);
@@ -501,7 +455,7 @@ class BaseBuilder extends GenericBaseBuilder
         }
     }
 
-    public function findGenericAction($actionName)
+    public function findGenericAction($actionName): object|false
     {
         $class = 'Admingenerator\\GeneratorBundle\\Generator\\Action\\Generic\\'
                 .Container::camelize(str_replace('-', '_', $actionName).'Action');
@@ -509,7 +463,7 @@ class BaseBuilder extends GenericBaseBuilder
         return (class_exists($class)) ? new $class($actionName, $this) : false;
     }
 
-    public function findObjectAction($actionName)
+    public function findObjectAction($actionName): object|false
     {
         $class = 'Admingenerator\\GeneratorBundle\\Generator\\Action\\Object\\'
                 .Container::camelize(str_replace('-', '_', $actionName).'Action');
@@ -517,7 +471,7 @@ class BaseBuilder extends GenericBaseBuilder
         return (class_exists($class)) ? new $class($actionName, $this) : false;
     }
 
-    public function findBatchAction($actionName)
+    public function findBatchAction($actionName): object|false
     {
         $class = 'Admingenerator\\GeneratorBundle\\Generator\\Action\\Batch\\'
                 .Container::camelize(str_replace('-', '_', $actionName).'Action');
@@ -525,28 +479,28 @@ class BaseBuilder extends GenericBaseBuilder
         return (class_exists($class)) ? new $class($actionName, $this) : false;
     }
 
-    public function getBaseGeneratorName()
+    public function getBaseGeneratorName(): string
     {
         return $this->getGenerator()->getBaseGeneratorName();
     }
 
-    public function getNamespacePrefixWithSubfolder()
+    public function getNamespacePrefixWithSubfolder(): string
     {
         return $this->getVariable('namespace_prefix')
                .($this->hasVariable('subfolder') ? '\\'.$this->getVariable('subfolder') : '');
     }
 
-    public function getRoutePrefixWithSubfolder()
+    public function getRoutePrefixWithSubfolder(): string
     {
         return str_replace('\\', '_', $this->getNamespacePrefixWithSubfolder());
     }
 
-    public function getNamespacePrefixForTemplate()
+    public function getNamespacePrefixForTemplate(): string
     {
         return str_replace('\\', '', $this->getVariable('namespace_prefix'));
     }
 
-    public function getBaseActionsRoute()
+    public function getBaseActionsRoute(): string
     {
         return ltrim(
             str_replace(
@@ -561,17 +515,15 @@ class BaseBuilder extends GenericBaseBuilder
         );
     }
 
-    public function getObjectActionsRoute()
+    public function getObjectActionsRoute(): string
     {
         return $this->getBaseActionsRoute().'_object';
     }
 
     /**
      * Get the PK column name.
-     *
-     * @return string parameter
      */
-    public function getModelPrimaryKeyName()
+    public function getModelPrimaryKeyName(): string
     {
         return $this->getGenerator()->getFieldGuesser()->getModelPrimaryKeyName($this->getVariable('model'));
     }
@@ -579,15 +531,12 @@ class BaseBuilder extends GenericBaseBuilder
     /**
      * Allow to add complementary strylesheets.
      *
-     *
      * param:
      *   stylesheets:
      *     - path/css.css
      *     - { path: path/css.css, media: all }
-     *
-     * @return array
      */
-    public function getStylesheets()
+    public function getStylesheets(): array
     {
         $parse_stylesheets = function ($params, $stylesheets) {
             foreach ($params as $css) {
@@ -610,26 +559,21 @@ class BaseBuilder extends GenericBaseBuilder
         );
 
         // From generator.yml
-        $stylesheets = $parse_stylesheets(
+        return $parse_stylesheets(
             $this->getVariable('stylesheets', array()), $stylesheets
         );
-
-        return $stylesheets;
     }
 
     /**
      * Allow to add complementary javascripts.
-     *
      *
      * param:
      *   javascripts:
      *     - path/js.js
      *     - { path: path/js.js }
      *     - { route: my_route, routeparams: {} }
-     *
-     * @return array
      */
-    public function getJavascripts()
+    public function getJavascripts(): array
     {
         $self = $this;
         $parse_javascripts = function ($params, $javascripts) use ($self) {
@@ -658,14 +602,13 @@ class BaseBuilder extends GenericBaseBuilder
         );
 
         // From generator.yml
-        $javascripts = $parse_javascripts(
+        return $parse_javascripts(
             $this->getVariable('javascripts', array()), $javascripts
         );
-
-        return $javascripts;
     }
 
-    public function isBundleContext() {
+    public function isBundleContext(): bool
+    {
         return str_contains($this->getVariable('bundle_name'), 'Bundle');
     }
 }

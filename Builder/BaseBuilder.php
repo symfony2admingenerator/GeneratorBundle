@@ -3,37 +3,21 @@
 namespace Admingenerator\GeneratorBundle\Builder;
 
 use Admingenerator\GeneratorBundle\Twig\Extension\ClassifyExtension;
-use Doctrine\Inflector\InflectorFactory;
-use Symfony\Component\HttpFoundation\ParameterBag;
+use LogicException;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
-use Twig\TwigFilter;
 use TwigGenerator\Builder\BaseBuilder as GenericBaseBuilder;
 use TwigGenerator\Builder\Generator as GenericBaseGenerator;
 
 abstract class BaseBuilder extends GenericBaseBuilder
 {
-    /**
-     * @var \Admingenerator\GeneratorBundle\Builder\Generator    The generator.
-     */
-    protected $generator;
+    protected GenericBaseGenerator $generator;
 
-    /**
-     * @var array
-     */
-    protected $templatesToGenerate = array();
+    protected array $templatesToGenerate = [];
 
-    /**
-     * @var \Symfony\Component\HttpFoundation\ParameterBag
-     */
-    protected $variables;
+    protected ?Environment $environment;
 
-    /**
-     * @var Environment|null
-     */
-    protected $environment;
-
-    public function getTemplateName()
+    public function getTemplateName(): string
     {
         if ($this->environment === null) {
             return $this->getGenerator()->getTemplateBaseDir() . parent::getTemplateName();
@@ -44,38 +28,24 @@ abstract class BaseBuilder extends GenericBaseBuilder
     public function __construct(Environment $environment = null)
     {
         parent::__construct();
-        $this->variables = new ParameterBag(array());
         $this->twigExtensions[] = ClassifyExtension::class;
         $this->environment = $environment;
     }
 
     /**
-     * Set files to generate
-     *
      * @param array $templatesToGenerate (key => template file; value => output file name)
      */
-    public function setTemplatesToGenerate(array $templatesToGenerate)
+    public function setTemplatesToGenerate(array $templatesToGenerate): void
     {
         $this->templatesToGenerate = $templatesToGenerate;
     }
 
-    /**
-     * Add a file to generate
-     *
-     * @param string $template
-     * @param string $outputName
-     */
-    public function addTemplateToGenerate($template, $outputName)
+    public function addTemplateToGenerate(string $template, string $outputName): void
     {
         $this->templatesToGenerate[$template] = $outputName;
     }
 
-    /**
-     * Retrieve files to generate.
-     *
-     * @return array
-     */
-    public function getTemplatesToGenerate()
+    public function getTemplatesToGenerate(): array
     {
         return $this->templatesToGenerate;
     }
@@ -83,21 +53,15 @@ abstract class BaseBuilder extends GenericBaseBuilder
     /**
      * Check if builder must generate multiple files
      * based on templatesToGenerate property.
-     *
-     * @return boolean
      */
-    public function isMultiTemplatesBuilder()
+    public function isMultiTemplatesBuilder(): bool
     {
         $tmp = $this->getTemplatesToGenerate();
 
         return !empty($tmp);
     }
 
-    /**
-     * (non-PHPdoc)
-     * @see \TwigGenerator\Builder\BaseBuilder::writeOnDisk()
-     */
-    public function writeOnDisk($outputDirectory)
+    public function writeOnDisk($outputDirectory): void
     {
         if ($this->isMultiTemplatesBuilder()) {
             foreach ($this->getTemplatesToGenerate() as $templateName => $outputName) {
@@ -110,7 +74,7 @@ abstract class BaseBuilder extends GenericBaseBuilder
         }
     }
 
-    protected function getTwigEnvironment()
+    protected function getTwigEnvironment(): Environment
     {
         if($this->environment !== null) {
             return $this->environment;
@@ -129,67 +93,44 @@ abstract class BaseBuilder extends GenericBaseBuilder
         return $twig;
     }
 
-    /**
-     * @return string the YamlKey
-     */
-    public function getYamlKey()
+    public function getYamlKey(): string
     {
         return $this->getSimpleClassName();
     }
 
-    public function setVariables(array $variables)
+    public function setVariables(array $variables): void
     {
-        $variables = new ParameterBag($variables);
         $this->variables = $variables;
     }
 
-    /**
-     * (non-PHPdoc)
-     * @see Builder/Admingenerator\GeneratorBundle\Builder.BuilderInterface::getVariables()
-     */
-    public function getVariables()
+    public function getVariables(): array
     {
-        return $this->variables->all();
+        return $this->variables;
     }
 
-    /**
-     * (non-PHPdoc)
-     * @see Builder/Admingenerator\GeneratorBundle\Builder.BuilderInterface::hasVariable()
-     * @param string $key
-     * @return bool
-     */
-    public function hasVariable($key)
+    public function hasVariable($key): bool
     {
-        return $this->variables->has($key);
+        return array_key_exists($key, $this->variables);
     }
 
     /**
      * (non-PHPdoc)
      * @see Builder/Admingenerator\GeneratorBundle\Builder.BuilderInterface::getVariable()
      */
-    public function getVariable($key, $default = null, $deep = false)
+    public function getVariable(string $key, $default = null): mixed
     {
-        return $this->variables->get($key, $default, $deep);
+        return $this->variables[$key] ?? $default;
     }
 
-    /**
-     * Get model class from model param
-     * @return string
-     */
-    public function getModelClass()
+    public function getModelClass(): string
     {
         return $this->getSimpleClassName($this->getVariable('model'));
     }
 
-    /**
-     * Set the generator.
-     *
-     * @param \TwigGenerator\Builder\Generator $generator A generator.
-     */
-    public function setGenerator(GenericBaseGenerator $generator)
+    public function setGenerator(GenericBaseGenerator $generator): void
     {
         if (!$generator instanceof Generator) {
-            throw new \LogicException(
+            throw new LogicException(
                 '$generator must be an instance of Admingenerator\GeneratorBundle\Builder\Generator, '
                .'other instances are not supported.'
             );
@@ -198,13 +139,10 @@ abstract class BaseBuilder extends GenericBaseBuilder
         $this->generator = $generator;
     }
 
-    /**
-     * Return the generator.
-     *
-     * @return \Admingenerator\GeneratorBundle\Builder\Generator    The generator.
-     */
-    public function getGenerator()
+    public function getGenerator(): Generator
     {
-        return $this->generator;
+        $generator = $this->generator;
+        assert($generator instanceof Generator);
+        return $generator;
     }
 }

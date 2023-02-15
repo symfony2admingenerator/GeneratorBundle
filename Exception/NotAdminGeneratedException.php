@@ -2,12 +2,14 @@
 
 namespace Admingenerator\GeneratorBundle\Exception;
 
+use LogicException;
+
 /**
  * Throw when the bundle not contains a generator.yml file
  *
  * @author Cedric LOMBARDOT
  */
-class NotAdminGeneratedException extends \LogicException
+class NotAdminGeneratedException extends LogicException
 {
     public function __construct()
     {

@@ -9,7 +9,7 @@ namespace Admingenerator\GeneratorBundle\Builder\Admin;
  */
 class ExcelBuilderAction extends ExcelBuilder
 {
-    public function getOutputName()
+    public function getOutputName(): string
     {
         return $this->getGenerator()->getGeneratedControllerFolder().'/ExcelController.php';
     }

@@ -12,6 +12,8 @@ use Composer\Script\CommandEvent;
  * Inspired from SensioDistributionBundle ScriptHandler
  *
  * @package Admingenerator\GeneratorBundle\Composer
+ *
+ * @deprecated This class is no longer compatible with the latest composer extension structure, and should not be used.
  */
 class ScriptHandler
 {

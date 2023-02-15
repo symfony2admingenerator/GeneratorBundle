@@ -10,37 +10,22 @@ use Admingenerator\GeneratorBundle\Generator\Action;
  */
 class ActionsBuilder extends BaseBuilder
 {
-    /**
-     * @var array
-     */
-    protected $batchActions  = null;
+    protected ?array $batchActions = null;
 
-    /**
-     * (non-PHPdoc)
-     * @see Admingenerator\GeneratorBundle\Builder.BaseBuilder::getYamlKey()
-     */
-    public function getYamlKey()
+    public function getYamlKey(): string
     {
         return 'actions';
     }
 
-    /**
-     * (non-PHPdoc)
-     * @see \Admingenerator\GeneratorBundle\Builder\BaseBuilder::getVariables()
-     */
-    public function getVariables()
+    public function getVariables(): array
     {
-        if (!$this->variables->count()) {
-            return array();
-        }
-
         // If credentials are not globally defined,
         // check if an action have credentials
         if (null === $this->getVariable('credentials')) {
-            $this->variables->set('credentials', false);
+            $this->variables['credentials'] = false;
             foreach (array_merge(array_values($this->getObjectActions()), array_values($this->getBatchActions())) as $action) {
                 if ($action->getCredentials()) {
-                    $this->variables->set('credentials', true);
+                    $this->variables['credentials'] = true;
                     break;
                 }
             }
@@ -51,12 +36,11 @@ class ActionsBuilder extends BaseBuilder
 
     /**
      * Return a list of batch action from list.batch_actions
-     * @return array
      */
-    public function getBatchActions()
+    public function getBatchActions(): array
     {
         if (null === $this->batchActions) {
-            $this->batchActions = array();
+            $this->batchActions = [];
             $this->findBatchActions();
         }
 

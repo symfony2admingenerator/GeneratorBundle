@@ -2,6 +2,7 @@
 
 namespace Admingenerator\GeneratorBundle\DependencyInjection;
 
+use Symfony\Component\Config\Definition\Builder\NodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -12,21 +13,13 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
  */
 class Configuration implements ConfigurationInterface
 {
-    /**
-     * @var string
-     */
-    protected $rootName;
 
-    /**
-     * @param string $rootName
-     */
-    public function __construct($rootName)
+    public function __construct(protected readonly string $rootName)
     {
-        $this->rootName = $rootName;
     }
 
-    private $defaultFormTypes = array(
-        'doctrine_orm' => array(
+    private array $defaultFormTypes = [
+        'doctrine_orm' => [
             // datetime types
             'datetime'    => 'Symfony\Component\Form\Extension\Core\Type\DateTimeType',
             'vardatetime' => 'Symfony\Component\Form\Extension\Core\Type\DateTimeType',
@@ -52,8 +45,8 @@ class Configuration implements ConfigurationInterface
             'array'       => 'Symfony\Component\Form\Extension\Core\Type\CollectionType',
             // boolean types
             'boolean'     => 'Symfony\Component\Form\Extension\Core\Type\CheckboxType',
-        ),
-        'doctrine_odm' => array(
+        ],
+        'doctrine_odm' => [
             // datetime types
             'datetime'    => 'Symfony\Component\Form\Extension\Core\Type\DateTimeType',
             'timestamp'   => 'Symfony\Component\Form\Extension\Core\Type\DateTimeType',
@@ -84,8 +77,8 @@ class Configuration implements ConfigurationInterface
             'hash'        => 'Symfony\Component\Form\Extension\Core\Type\CollectionType',
             // boolean types
             'boolean'     => 'Symfony\Component\Form\Extension\Core\Type\CheckboxType',
-        ),
-        'propel'       => array(
+        ],
+        'propel'       => [
             // datetime types
             'TIMESTAMP'    => 'Symfony\Component\Form\Extension\Core\Type\DateTimeType',
             'BU_TIMESTAMP' => 'Symfony\Component\Form\Extension\Core\Type\DateTimeType',
@@ -123,10 +116,10 @@ class Configuration implements ConfigurationInterface
             // boolean types
             'BOOLEAN'      => 'Symfony\Component\Form\Extension\Core\Type\CheckboxType',
             'BOOLEAN_EMU'  => 'Symfony\Component\Form\Extension\Core\Type\CheckboxType',
-        ));
+        ]];
 
-    private $defaultFilterTypes = array(
-        'doctrine_orm' => array(
+    private array $defaultFilterTypes = [
+        'doctrine_orm' => [
             // datetime types
             'datetime'    => 'Symfony\Component\Form\Extension\Core\Type\DateTimeType',
             'vardatetime' => 'Symfony\Component\Form\Extension\Core\Type\DateTimeType',
@@ -152,8 +145,8 @@ class Configuration implements ConfigurationInterface
             'array'       => 'Symfony\Component\Form\Extension\Core\Type\TextType',
             // boolean types
             'boolean'     => 'Symfony\Component\Form\Extension\Core\Type\ChoiceType',
-        ),
-        'doctrine_odm' => array(
+        ],
+        'doctrine_odm' => [
             // datetime types
             'datetime'    => 'Symfony\Component\Form\Extension\Core\Type\DateTimeType',
             'timestamp'   => 'Symfony\Component\Form\Extension\Core\Type\DateTimeType',
@@ -184,8 +177,8 @@ class Configuration implements ConfigurationInterface
             'hash'        => 'Symfony\Component\Form\Extension\Core\Type\TextType',
             // boolean types
             'boolean'     => 'Symfony\Component\Form\Extension\Core\Type\ChoiceType',
-        ),
-        'propel' => array(
+        ],
+        'propel' => [
             // datetime types
             'TIMESTAMP'    => 'Symfony\Component\Form\Extension\Core\Type\DateTimeType',
             'BU_TIMESTAMP' => 'Symfony\Component\Form\Extension\Core\Type\DateTimeType',
@@ -223,15 +216,9 @@ class Configuration implements ConfigurationInterface
             // boolean types
             'BOOLEAN'      => 'Symfony\Component\Form\Extension\Core\Type\ChoiceType',
             'BOOLEAN_EMU'  => 'Symfony\Component\Form\Extension\Core\Type\ChoiceType',
-        ));
+        ]];
 
-    /**
-     * Generates the configuration tree builder.
-     *
-     *
-     * @return \Symfony\Component\Config\Definition\Builder\TreeBuilder The tree builder
-     */
-    public function getConfigTreeBuilder()
+    public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder($this->rootName);
         $rootNode    = $this->getRootNode($treeBuilder, $this->rootName);
@@ -364,20 +351,14 @@ class Configuration implements ConfigurationInterface
         return $treeBuilder;
     }
 
-    /**
-     * @param TreeBuilder $treeBuilder
-     * @param string $rootName
-     *
-     * @return \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition|\Symfony\Component\Config\Definition\Builder\NodeDefinition
-     */
-    private function getRootNode(TreeBuilder $treeBuilder, $rootName)
+    private function getRootNode(TreeBuilder $treeBuilder, string $rootName): NodeDefinition
     {
         return method_exists(TreeBuilder::class, 'getRootNode')
             ? $treeBuilder->getRootNode()
             : $treeBuilder->root($rootName);
     }
 
-    private function getStylesheetNode()
+    private function getStylesheetNode(): NodeDefinition
     {
         $treeBuilder = new TreeBuilder('stylesheets');
         $node = $this->getRootNode($treeBuilder, 'stylesheets');
@@ -394,7 +375,7 @@ class Configuration implements ConfigurationInterface
         return $node;
     }
 
-    private function getJavascriptsNode()
+    private function getJavascriptsNode(): NodeDefinition
     {
         $treeBuilder = new TreeBuilder('javascripts');
         $node = $this->getRootNode($treeBuilder, 'javascripts');

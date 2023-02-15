@@ -15,45 +15,29 @@ use Twig\Extension\CoreExtension;
 
 class ControllerListener
 {
-    /**
-     * @var ContainerInterface
-     */
-    protected $container;
+    protected CacheInterface $cacheProvider;
 
-    /**
-     * @var CacheInterface
-     */
-    protected $cacheProvider;
+    protected string $cacheSuffix;
 
-    /**
-     * @var string
-     */
-    protected $cacheSuffix;
-
-    public function __construct(ContainerInterface $container)
+    public function __construct(protected readonly ContainerInterface $container)
     {
-        $this->container = $container;
         $this->cacheProvider = new ArrayAdapter();
         $this->cacheSuffix = 'default';
     }
 
-    /**
-     * @param CacheInterface $cacheProvider
-     * @param string         $cacheSuffix
-     */
-    public function setCacheProvider(CacheInterface $cacheProvider = null, $cacheSuffix = 'default')
+    public function setCacheProvider(CacheInterface $cacheProvider = null, $cacheSuffix = 'default'): void
     {
         $this->cacheProvider = $cacheProvider;
         $this->cacheSuffix = $cacheSuffix;
     }
 
-    public function onKernelRequest(RequestEvent $event)
+    public function onKernelRequest(RequestEvent $event): void
     {
-        if (HttpKernelInterface::MASTER_REQUEST === $event->getRequestType()) {
+        if (HttpKernelInterface::MAIN_REQUEST === $event->getRequestType()) {
             try {
                 $controller = $event->getRequest()->attributes->get('_controller');
 
-                if (is_string($controller) && strstr($controller, '::')) { //Check if its a "real controller" not assetic for example
+                if (is_string($controller) && strstr($controller, '::')) { //Check if it's a "real controller", not assetic for example
                     $generatorYaml = $this->getGeneratorYml($controller);
 
                     $generator = $this->getGenerator($generatorYaml);
@@ -62,7 +46,7 @@ class ControllerListener
                     $generator->build();
 
                 }
-            } catch (NotAdminGeneratedException $e) {
+            } catch (NotAdminGeneratedException) {
                 //Lets the word running this is not an admin generated module
             }
         }
@@ -80,29 +64,27 @@ class ControllerListener
         }
     }
 
-    /**
-     * @param string $generatorYaml
-     */
-    protected function getGenerator($generatorYaml)
+    protected function getGenerator(string $generatorYaml): ?object
     {
-        $generatorName = $this->cacheProvider->get($this->getCacheKey($generatorYaml.'_generator'), function (ItemInterface $item) use ($generatorYaml) {
-            return Yaml::parse(file_get_contents($generatorYaml))['generator'];
-        });
+        $generatorName = $this->cacheProvider->get(
+            $this->getCacheKey($generatorYaml.'_generator'),
+            fn () => Yaml::parse(file_get_contents($generatorYaml))['generator']
+        );
 
         return $this->container->get($generatorName);
     }
 
-    protected function getBaseGeneratorName($controller)
+    protected function getBaseGeneratorName($controller): string
     {
         preg_match('/(.+)Controller(.+)::.+/', $controller, $matches);
 
-        //Find if its a name-generator or generator.yml
+        //Find if it's a name-generator or generator.yml
         if (isset($matches[2]) && strstr($matches[2], '\\')) {
             if (3 != count(explode('\\', $matches[2]))) {
                 return '';
             }
 
-            list($firstSlash, $generatorName) = explode('\\', $matches[2], 3);
+            list(, $generatorName) = explode('\\', $matches[2], 3);
 
             return $generatorName;
         }
@@ -110,17 +92,12 @@ class ControllerListener
         return '';
     }
 
-    /**
-     * @param  string                     $controller
-     * @throws NotAdminGeneratedException
-     * @return string
-     */
-    protected function getGeneratorYml($controller)
+    protected function getGeneratorYml(string $controller): string
     {
-        $generatorYml = $this->cacheProvider->get($this->getCacheKey($controller), function (ItemInterface $item) use ($controller) {
+        $generatorYml = $this->cacheProvider->get($this->getCacheKey($controller), function () use ($controller) {
             try {
                 return $this->findGeneratorYml($controller);
-            } catch (NotAdminGeneratedException $e) {
+            } catch (NotAdminGeneratedException) {
                 return 'NotAdminGeneratedException';
             }
         });
@@ -134,10 +111,8 @@ class ControllerListener
 
     /**
      * @TODO: Find objects in vendor dirs
-     * @param  string                     $controller
-     * @throws NotAdminGeneratedException
      */
-    protected function findGeneratorYml($controller)
+    protected function findGeneratorYml(string $controller): string|bool
     {
         preg_match('/(.+)?Controller.+::.+/', $controller, $matches);
         if (count($matches) > 1) {
@@ -171,11 +146,7 @@ class ControllerListener
 
     }
 
-    /**
-     * @param  string $key
-     * @return string
-     */
-    protected function getCacheKey($key)
+    protected function getCacheKey(string $key): string
     {
         return str_replace(str_split('@{}()\/:'), '_ ', sprintf('admingen_controller_%s_%s', $key, $this->cacheSuffix));
     }

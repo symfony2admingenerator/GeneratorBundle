@@ -8,7 +8,7 @@ namespace Admingenerator\GeneratorBundle\Builder\Admin;
  */
 class ActionsBuilderTemplate extends ActionsBuilder
 {
-    public function getOutputName()
+    public function getOutputName(): string
     {
         return 'Resources/views/'.$this->getBaseGeneratorName().'Actions/index.html.twig';
     }

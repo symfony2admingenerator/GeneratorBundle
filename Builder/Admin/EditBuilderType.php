@@ -8,7 +8,7 @@ namespace Admingenerator\GeneratorBundle\Builder\Admin;
  */
 class EditBuilderType extends EditBuilder
 {
-    public function getOutputName()
+    public function getOutputName(): string
     {
         return 'Form/Base'.$this->getBaseGeneratorName().'Type/EditType.php';
     }

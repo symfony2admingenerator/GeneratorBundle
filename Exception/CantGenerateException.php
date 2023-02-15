@@ -2,7 +2,9 @@
 
 namespace Admingenerator\GeneratorBundle\Exception;
 
-class CantGenerateException extends \LogicException
+use LogicException;
+
+class CantGenerateException extends LogicException
 {
 
 }

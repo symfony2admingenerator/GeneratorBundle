@@ -18,16 +18,10 @@ abstract class BaseController extends AbstractController
     /**
      * @var Request
      */
-    protected $request;
+    protected ?Request $request = null;
 
-    /**
-     * @var ManagerRegistry
-     */
-    protected $doctrine;
-
-    public function __construct(ManagerRegistry $doctrine)
+    public function __construct(protected readonly ManagerRegistry $doctrine)
     {
-      $this->doctrine = $doctrine;
     }
 
     /**
@@ -35,7 +29,7 @@ abstract class BaseController extends AbstractController
      *
      * @return array
      */
-    public static function getSubscribedServices()
+    public static function getSubscribedServices(): array
     {
         return array_merge(
             parent::getSubscribedServices(),

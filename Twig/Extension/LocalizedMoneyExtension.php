@@ -13,16 +13,16 @@ class LocalizedMoneyExtension extends AbstractExtension
 {
     public function getFunctions(): array
     {
-        return array(
-            'localized_money' => new TwigFunction('localized_money', array($this, 'getLocalizedMoney')),
-            'currency_sign'   => new TwigFunction('currency_sign', array($this, 'getCurrencySign')),
-        );
+        return [
+            'localized_money' => new TwigFunction('localized_money', $this->getLocalizedMoney(...)),
+            'currency_sign'   => new TwigFunction('currency_sign', $this->getCurrencySign(...)),
+        ];
     }
 
     /**
      * @param float $value Money amount.
      *
-     * @param string $currency This can be any 3 letter ISO 4217 code. You
+     * @param string|false $currency This can be any 3 letter ISO 4217 code. You
      * can also set this to false to hide the currency symbol.
      *
      * @param integer $precision For some reason, if you need some precision
@@ -30,7 +30,7 @@ class LocalizedMoneyExtension extends AbstractExtension
      * won't need to do this unless, for example, you want to round to the
      * nearest dollar (set the precision to 0).
      *
-     * @param string $grouping This value is used internally as the
+     * @param string|bool $grouping This value is used internally as the
      * NumberFormatter::GROUPING_USED value when using PHP's NumberFormatter
      * class. Its documentation is non-existent, but it appears that if you set
      * this to true, numbers will be grouped with a comma or period (depending
@@ -42,7 +42,7 @@ class LocalizedMoneyExtension extends AbstractExtension
      *
      * @return string Localized money
      */
-    public function getLocalizedMoney($value, $currency = 'EUR', $precision = 2, $grouping = true, $divisor = 1)
+    public function getLocalizedMoney(float $value, string|false $currency = 'EUR', int $precision = 2, string|bool $grouping = true, int $divisor = 1): string
     {
         $locale = \Locale::getDefault();
 
@@ -66,12 +66,12 @@ class LocalizedMoneyExtension extends AbstractExtension
     }
 
     /**
-     * @param string $currency This can be any 3 letter ISO 4217 code. You
+     * @param string|false $currency This can be any 3 letter ISO 4217 code. You
      * can also set this to false to return the general currency symbol.
      *
      * @return string Currency sign
      */
-    public function getCurrencySign($currency = false)
+    public function getCurrencySign(string|false $currency = false): string
     {
         $locale = \Locale::getDefault();
 
@@ -91,12 +91,7 @@ class LocalizedMoneyExtension extends AbstractExtension
         return $currency_sign;
     }
 
-    /**
-     * Returns the name of the extension.
-     *
-     * @return string The extension name
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'localized_money';
     }
