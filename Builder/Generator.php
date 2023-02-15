@@ -27,13 +27,13 @@ class Generator extends TwigGeneratorGenerator
 
     protected string $baseAdminTemplate = 'AdmingeneratoroldThemeBundle::base.html.twig';
 
-    protected string $baseGeneratorName;
+    protected string $baseGeneratorName = '';
 
-    protected array $bundleConfig;
+    protected array $bundleConfig = [];
 
     protected RouterInterface $router;
 
-    protected string $templateBaseDir;
+    protected string $templateBaseDir = '';
 
     protected FieldGuesser $fieldGuesser;
 
