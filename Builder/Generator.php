@@ -19,7 +19,7 @@ class Generator extends TwigGeneratorGenerator
 {
     protected const TEMP_DIR_PREFIX = 'Admingenerator';
 
-    protected array $yaml; // Default in constructor
+    protected array $yaml = [];
 
     protected string $baseController = '';
 
