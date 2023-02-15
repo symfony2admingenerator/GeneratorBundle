@@ -46,10 +46,14 @@ class MakeAdmin extends AbstractMaker
     return 'admin:generate-admin';
   }
 
-  public function configureCommand(Command $command, InputConfiguration $inputConfig): void
+  public static function getCommandDescription(): string
+  {
+      return 'Generate new admin pages given a model';
+  }
+
+    public function configureCommand(Command $command, InputConfiguration $inputConfig): void
   {
     $command
-        ->setDescription('Generate new admin pages given a model')
         ->addArgument('namespace', InputArgument::OPTIONAL, 'The namespace to place the admin', 'App')
         ->addArgument('sf4', InputArgument::OPTIONAL, 'Whether to use the Symfony 4 directory structure or the old bundle structure', 'Yes')
         ->addArgument('orm', InputArgument::OPTIONAL, 'The orm to use (propel, doctrine, doctrine_odm)', 'doctrine')
