@@ -217,18 +217,18 @@ class BaseBuilder extends GenericBaseBuilder
         return $this->columnClass = $columnClass;
     }
 
-    protected function getFieldOption(Column $column, string $optionName, mixed $default = null): string
+    protected function getFieldOption(Column $column, string $optionName, mixed $default = null): mixed
     {
-        $optionsFields = $this->getVariable('fields', array());
-        $options = is_array($optionsFields) && array_key_exists($column->getName(), $optionsFields) ? $optionsFields[$column->getName()] : array();
+        $optionsFields = $this->getVariable('fields', []);
+        $options = is_array($optionsFields) && array_key_exists($column->getName(), $optionsFields) ? $optionsFields[$column->getName()] : [];
 
         return $options[$optionName] ?? $default;
     }
 
     protected function setUserColumnConfiguration(Column $column): void
     {
-        $optionsFields = $this->getVariable('fields', array());
-        $options = is_array($optionsFields) && array_key_exists($column->getName(), $optionsFields) ? $optionsFields[$column->getName()] : array();
+        $optionsFields = $this->getVariable('fields', []);
+        $options = is_array($optionsFields) && array_key_exists($column->getName(), $optionsFields) ? $optionsFields[$column->getName()] : [];
 
         foreach ($options as $option => $value) {
             $column->setProperty($option, $value);
