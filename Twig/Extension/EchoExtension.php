@@ -92,7 +92,7 @@ class EchoExtension extends AbstractExtension
      * Print "trans" tag for string $str with parameters $parameters
      * for catalog $catalog.
      */
-    public function getEchoTrans(string $str, array $parameters = [], string $catalog = 'Admingenerator', bool $escape = null): string
+    public function getEchoTrans(string $str, array $parameters = [], string $catalog = 'Admingenerator', bool|string $escape = null): string
     {
         $transParameters = '{}';
         $bag_parameters = [];
@@ -127,31 +127,31 @@ class EchoExtension extends AbstractExtension
     /**
      * Print "echo tag with path call" to the path $path with params $params.
      */
-    public function getEchoPath(string $path, array $params = null, array|string $filters = null): string
+    public function getEchoPath(string $path, string $params = null, array|string $filters = null): string
     {
         if (null === $params) {
             return (null === $filters)
-                ? strtr('{{ path("%%path%%") }}', array('%%path%%' => $path))
+                ? strtr('{{ path("%%path%%") }}', ['%%path%%' => $path])
                 : strtr(
                     '{{ path("%%path%%")|%%filters%% }}',
-                    array(
+                    [
                         '%%path%%' => $path,
                         '%%filters%%' => (is_array($filters) ? implode('|', $filters) : $filters)
-                    )
+                    ]
                 );
         }
 
         $params = preg_replace('/\{\{\s+?([\w\.]+)\s+?\}\}/i', '$1', $params);
 
         return (null === $filters)
-            ? strtr('{{ path("%%path%%", %%params%%) }}', array('%%path%%' => $path, '%%params%%' => $params))
+            ? strtr('{{ path("%%path%%", %%params%%) }}', ['%%path%%' => $path, '%%params%%' => $params])
             : strtr(
                 '{{ path("%%path%%", %%params%%)|%%filters%% }}',
-                array(
+                [
                     '%%path%%' => $path,
                     '%%params%%' => $params,
                     '%%filters%%' => (is_array($filters) ? implode('|', $filters) : $filters)
-                )
+                ]
             );
     }
 
@@ -246,7 +246,7 @@ class EchoExtension extends AbstractExtension
      *     [Book.title] -> Book.title
      *     [Book.author.name] -> Book.author.name
      */
-    private function getParameterBag(array $subject): array|false
+    private function getParameterBag(string $subject): array|false
     {
         // Backwards compability - replace twig tags with parameters
         $pattern_bc = '/\{\{\s(?<param>[a-zA-Z0-9.]+)\s\}\}+/';

@@ -318,7 +318,7 @@ class Column
         $this->customView = $customView;
     }
 
-    public function setPrimaryKey(string $primaryKey): void
+    public function setPrimaryKey(?string $primaryKey): void
     {
         $this->primaryKey = $primaryKey;
     }
