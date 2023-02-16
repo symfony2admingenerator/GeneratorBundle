@@ -19,6 +19,12 @@ class ActionsBuilder extends BaseBuilder
 
     public function getVariables(): array
     {
+        // Return empty array if the variables have not yet been set,
+        // to prevent calling getObjectActions or getBatchActions without reading the configuration
+        if (empty($this->variables)) {
+            return [];
+        }
+
         // If credentials are not globally defined,
         // check if an action have credentials
         if (null === $this->getVariable('credentials')) {
@@ -49,13 +55,13 @@ class ActionsBuilder extends BaseBuilder
 
     protected function setUserBatchActionConfiguration(Action $action)
     {
-        $batchActions = $this->getVariable('batch_actions', array());
+        $batchActions = $this->getVariable('batch_actions', []);
         $builderOptions = is_array($batchActions) && array_key_exists($action->getName(), $batchActions)
             ? $batchActions[$action->getName()]
-            : array();
+            : [];
 
         $globalOptions = $this->getGenerator()->getFromYaml(
-            'params.batch_actions.'.$action->getName(), array()
+            'params.batch_actions.'.$action->getName(), []
         );
 
         if (null !== $builderOptions) {
@@ -76,7 +82,7 @@ class ActionsBuilder extends BaseBuilder
 
     protected function findBatchActions()
     {
-        $batchActions = $this->getVariable('batch_actions', array());
+        $batchActions = $this->getVariable('batch_actions', []);
 
         foreach ($batchActions as $actionName => $actionParams) {
             $action = $this->findBatchAction($actionName);

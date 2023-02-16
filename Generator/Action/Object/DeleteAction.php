@@ -24,10 +24,10 @@ class DeleteAction extends Action
 
         $this->setRoute($builder->getObjectActionsRoute());
 
-        $this->setParams(array(
+        $this->setParams([
             'pk' => '{{ '.$builder->getModelClass().'.'.$builder->getModelPrimaryKeyName().' }}',
             'action' => 'delete'
-        ));
+        ]);
 
     }
 }
