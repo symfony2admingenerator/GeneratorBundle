@@ -71,6 +71,7 @@
     protected function getPager()
     {
         $paginator = new Pagerfanta(new PagerAdapter($this->getQuery()));
+        $paginator->setNormalizeOutOfRangePages(true);
         $paginator->setMaxPerPage($this->getPerPage());
         $paginator->setCurrentPage($this->getPage(), false, true);
 
