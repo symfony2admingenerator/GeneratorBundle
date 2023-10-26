@@ -3,6 +3,7 @@
 namespace Admingenerator\GeneratorBundle;
 
 use Admingenerator\GeneratorBundle\DependencyInjection\AdmingeneratorGeneratorExtension;
+use Admingenerator\GeneratorBundle\DependencyInjection\Compiler\RemoveMakerCommandPass;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Admingenerator\GeneratorBundle\DependencyInjection\Compiler\TwigLoaderPass;
@@ -18,6 +19,7 @@ class AdmingeneratorGeneratorBundle extends Bundle
         $container->addCompilerPass(new ValidatorPass());
         $container->addCompilerPass(new FormPass());
         $container->addCompilerPass(new TwigLoaderPass());
+        $container->addCompilerPass(new RemoveMakerCommandPass());
     }
 
     public function getContainerExtension(): AdmingeneratorGeneratorExtension

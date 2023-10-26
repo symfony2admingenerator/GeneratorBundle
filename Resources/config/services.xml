@@ -92,6 +92,7 @@
 
         <service id="admingenerator.maker.make_admin" class="Admingenerator\GeneratorBundle\Maker\MakeAdmin" public="true">
             <tag name="maker.command" />
+            <tag name="container.no_preload" />
         </service>
 
         <service id="admingenerator.command.install-assets" class="Admingenerator\GeneratorBundle\Command\AssetsInstallCommand">
