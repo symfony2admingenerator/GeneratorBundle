@@ -2,6 +2,7 @@
 
 namespace Admingenerator\GeneratorBundle\DependencyInjection;
 
+use Admingenerator\GeneratorBundle\CacheBuilder\GeneratorCacheBuilder;
 use Admingenerator\GeneratorBundle\Exception\ModelManagerNotSelectedException;
 use Admingenerator\GeneratorBundle\Filesystem\GeneratorsFinder;
 use Symfony\Component\Config\FileLocator;
@@ -12,6 +13,7 @@ use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\Yaml\Yaml;
+use function Symfony\Component\DependencyInjection\Loader\Configurator\param;
 
 class AdmingeneratorGeneratorExtension extends Extension
 {
@@ -60,12 +62,40 @@ class AdmingeneratorGeneratorExtension extends Extension
         if ($config['use_jms_security']) {
             $container->getDefinition('twig.extension.admingenerator.security')->addArgument(true);
             $container->getDefinition('twig.extension.admingenerator.echo')->addArgument(true);
-        } 
+        }
 
         $this->registerGeneratedFormsAsServices($container);
         $this->processModelManagerConfiguration($config, $container);
         $this->processTwigConfiguration($config['twig'], $container);
         $this->processCacheConfiguration($config, $container);
+
+        if ($config['generate_base_in_project_dir']) {
+            $container->removeDefinition('admingenerator.cache_warmer');
+            $generationDir = $container->getParameterBag()->resolveValue(
+                param('kernel.project_dir') . DIRECTORY_SEPARATOR . $config['generate_base_in_project_dir_directory']
+            );
+            $container->setParameter('admingenerator.generate_base_in_project_dir_directory', $generationDir);
+            if ($config['use_doctrine_orm']) {
+                $this->replaceGenerationDir($container, 'admingenerator.generator.doctrine');
+            }
+            if ($config['use_doctrine_odm']) {
+                $this->replaceGenerationDir($container, 'admingenerator.generator.doctrine_odm');
+            }
+            if ($config['use_propel']) {
+                $this->replaceGenerationDir($container, 'admingenerator.generator.propel');
+            }
+
+            (new GeneratorCacheBuilder($container))->buildEmpty($generationDir, true);
+        } else {
+            $container->removeDefinition('admingenerator.command.generate_base_classes');
+        }
+    }
+
+    private function replaceGenerationDir(ContainerBuilder $container, string $definition): void
+    {
+        $container
+            ->getDefinition($definition)
+            ->replaceArgument(0, param('admingenerator.generate_base_in_project_dir_directory')->__toString());
     }
 
     /**
@@ -87,7 +117,6 @@ class AdmingeneratorGeneratorExtension extends Extension
                 $container
                     ->getDefinition('admingenerator.generator.doctrine')
                     ->addMethodCall('forceOverwriteIfExists');
-
             }
 
             $container->getDefinition('admingenerator.fieldguesser.doctrine')

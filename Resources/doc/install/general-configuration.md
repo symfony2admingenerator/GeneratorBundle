@@ -9,6 +9,8 @@ Below the default configuration is given for this bundle.
 
 ```yaml
 admingenerator_generator:
+    generate_base_in_project_dir: false
+    generate_base_in_project_dir_directory: admin
     use_doctrine_orm: false
     use_doctrine_odm: false
     use_propel: false
@@ -51,6 +53,23 @@ admingenerator_generator:
     stylesheets: {  }
     javascripts: {  }
 ```
+
+### Generate in project dir
+
+`generate_base_in_project_dir`: __default__: `false` __type: `boolean`
+`generate_base_in_project_dir_directory`: __default: `admin` __type: `string`
+
+Normally, the admingenerator generates the base files in the cache directory, which can have a negative impact on the
+IDE DX and requires adjustments to autoload the generator classes correctly. If set to true, the admin generator will
+generate the base admin files in `%kernel.project_dir%/admin/Admingenerated` instead. You will need to run the
+`admin:generate-base-classes` each time you update your configuration, with the advantage of the result being versioned
+and easily loaded into your project/IDE.
+
+If you need to adjust the default folder (`admin`), just update the `generate_base_in_project_dir_directory` parameter.
+
+Also make sure to configure the composer autoloading accordingly, for example:
+
+
 
 ### Use Doctrine ORM/ODM/Propel
 

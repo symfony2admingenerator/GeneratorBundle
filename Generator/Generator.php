@@ -24,8 +24,6 @@ abstract class Generator implements GeneratorInterface
 
     protected array $validators = [];
 
-    protected CacheInterface $cacheProvider;
-
     protected string $cacheSuffix = 'default';
 
     protected array $templatesDirectories = [];
@@ -38,9 +36,10 @@ abstract class Generator implements GeneratorInterface
 
     protected KernelInterface $kernel;
 
-    public function __construct(protected readonly string $cache_dir)
+    public function __construct(
+        protected readonly string $outputDir,
+        protected CacheInterface $cacheProvider = new ArrayAdapter())
     {
-        $this->cacheProvider = new ArrayAdapter();
     }
 
     public function setCacheProvider(CacheInterface $cacheProvider, string $cacheSuffix = 'default'): void
@@ -81,7 +80,7 @@ abstract class Generator implements GeneratorInterface
 
     public function getCachePath(string $namespace, string $bundleName): string
     {
-        return $this->cache_dir.'/Admingenerated/'.str_replace('\\', DIRECTORY_SEPARATOR, $namespace).$bundleName;
+        return $this->outputDir.'/Admingenerated/'.str_replace('\\', DIRECTORY_SEPARATOR, $namespace).$bundleName;
     }
 
     public function build($forceGeneration = false): void

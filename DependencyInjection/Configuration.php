@@ -225,6 +225,8 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
+                ->booleanNode('generate_base_in_project_dir')->defaultFalse()->end()
+                ->scalarNode('generate_base_in_project_dir_directory')->defaultValue('admin')->end()
                 ->booleanNode('use_doctrine_orm')->defaultFalse()->end()
                 ->booleanNode('use_doctrine_odm')->defaultFalse()->end()
                 ->booleanNode('use_propel')->defaultFalse()->end()
