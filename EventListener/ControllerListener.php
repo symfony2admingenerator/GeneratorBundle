@@ -33,7 +33,8 @@ class ControllerListener
 
     public function onKernelRequest(RequestEvent $event): void
     {
-        if (HttpKernelInterface::MAIN_REQUEST === $event->getRequestType()) {
+        if (HttpKernelInterface::MAIN_REQUEST === $event->getRequestType()
+            && !$this->container->hasParameter('admingenerator.generate_base_in_project_dir_directory')) {
             try {
                 $controller = $event->getRequest()->attributes->get('_controller');
 
