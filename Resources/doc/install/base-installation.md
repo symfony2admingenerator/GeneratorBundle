@@ -30,8 +30,9 @@ Enable Admin Generator and its dependencies in your `config/bundles.php`:
     BabDev\PagerfantaBundle\BabDevPagerfantaBundle::class => ['all' => true],
 ```
 
-> **Note:** Make sure to follow the following step to prevent cache issues!
+> **Note:** Make sure to follow the following step to prevent cache issues.
 
+> **Note:** This is not needed when using the `generate_base_in_project_dir` setting.
 
 Place the following in your frontend controller (`public/index.php`) and your console binary (`bin/console`)
 to ensure the `AdminGenerated` namespace is loaded! Make sure to place it directly after the kernel instantiation.

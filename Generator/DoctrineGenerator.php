@@ -26,7 +26,7 @@ class DoctrineGenerator extends Generator
     {
         $this->validateYaml();
 
-        $generator = new AdminGenerator($this->cache_dir, $this->getGeneratorYml());
+        $generator = new AdminGenerator($this->outputDir, $this->getGeneratorYml());
         $generator->setBundleConfig($this->bundleConfig);
         $generator->setRouter($this->router);
         $generator->setBaseAdminTemplate(

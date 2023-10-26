@@ -8,6 +8,7 @@
         <!--  Base -->
         <parameter key="routing.loader.admingenerator.class">Admingenerator\GeneratorBundle\Routing\RoutingLoader</parameter>
         <parameter key="routing.loader.admingenerator_nested.class">Admingenerator\GeneratorBundle\Routing\NestedRoutingLoader</parameter>
+        <parameter key="admingenerator.generator_cache_builder">Admingenerator\GeneratorBundle\CacheBuilder\GeneratorCacheBuilder</parameter>
         <parameter key="admingenerator.cache_warmer.class">Admingenerator\GeneratorBundle\CacheWarmer\GeneratorCacheWarmer</parameter>
         <parameter key="form.type_guesser.admingenerator.class">Admingenerator\GeneratorBundle\Validator\ValidatorTypeGuesser</parameter>
         <parameter key="admingenerator.pagination.class">Admingenerator\GeneratorBundle\Pagerfanta\View\AdmingeneratorView</parameter>
@@ -107,9 +108,18 @@
             <tag name="admingenerator.validator.propel" alias="propel_model_class" />
         </service>
 
+        <service id="admingenerator.generator_cache_builder" class="%admingenerator.generator_cache_builder%" public="false">
+            <argument type="service" id="service_container" />
+        </service>
+
         <service id="admingenerator.cache_warmer" class="%admingenerator.cache_warmer.class%" public="false">
             <tag name="kernel.cache_warmer" priority="100" />
-            <argument type="service" id="service_container" />
+            <argument type="service" id="admingenerator.generator_cache_builder" />
+        </service>
+
+        <service id="admingenerator.command.generate_base_classes" class="Admingenerator\GeneratorBundle\Command\GenerateBaseClassesCommand">
+            <tag name="console.command" />
+            <argument type="service" id="admingenerator.generator_cache_builder" />
         </service>
         
     </services>

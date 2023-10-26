@@ -6,7 +6,7 @@ use Admingenerator\GeneratorBundle\Builder\Admin\EmptyBuilderAction;
 use Admingenerator\GeneratorBundle\Builder\EmptyGenerator;
 
 /**
- * This class autoload admingenarated & if they not exist try to generate
+ * This class autoload admingenerated & if they not exist try to generate
  */
 class AdmingeneratedClassLoader
 {
