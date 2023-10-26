@@ -5,6 +5,7 @@ namespace Admingenerator\GeneratorBundle\CacheBuilder;
 use Admingenerator\GeneratorBundle\Filesystem\GeneratorsFinder;
 use Admingenerator\GeneratorBundle\Generator\Generator;
 use Closure;
+use RuntimeException;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Yaml\Yaml;
@@ -18,7 +19,7 @@ class GeneratorCacheBuilder
         $this->finder = new GeneratorsFinder($this->container->getParameter('kernel.project_dir'));
     }
 
-    public function buildFull(?ProgressBar $progressBar = null): void
+    public function buildFull(?ProgressBar $progressBar = null, ?string $generatorName = null): void
     {
         $this->propelInit();
 
@@ -35,6 +36,7 @@ class GeneratorCacheBuilder
                 $generator->build(true);
             },
             $progressBar,
+            $generatorName,
         );
     }
 
@@ -48,19 +50,40 @@ class GeneratorCacheBuilder
         });
     }
 
+    public function getFinder(): GeneratorsFinder
+    {
+        return $this->finder;
+    }
+
     /** @param Closure(string):void $buildClosure Takes the yaml file path to generate the required files */
     protected function build(
         Closure $buildClosure,
-        ?ProgressBar $progressBar = null
+        ?ProgressBar $progressBar = null,
+        ?string $yamlName = null,
     ): void
     {
-        $yamls = $this->finder->findAll();
+        if ($yamlName) {
+            // Clear progress bar, as we only generate one
+            $progressBar = null;
+        }
+
+        $yamls = $yamls ?? $this->finder->findAll();
         $progressBar?->setMaxSteps(count($yamls));
+        $buildCount = 0;
         foreach ($yamls as $yaml) {
+            if ($yamlName && basename($yaml) !== $yamlName) {
+                continue;
+            }
+
             $progressBar?->advance();
             $buildClosure($yaml);
+            $buildCount++;
         }
         $progressBar?->finish();
+
+        if ($buildCount === 0) {
+            throw new RuntimeException('No configuration files found');
+        }
     }
 
     protected function getBaseGeneratorName(string $fileName): string
