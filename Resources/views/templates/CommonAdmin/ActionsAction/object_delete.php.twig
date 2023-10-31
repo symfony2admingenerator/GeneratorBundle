@@ -39,7 +39,7 @@
             '@{{ namespace_prefix }}{{ bundle_name|slice(0, -6) }}/{{ builder.BaseGeneratorName }}Actions/index.html.twig',
             $this->getAdditionalRenderParameters(${{ builder.ModelClass }}, '{{ action.name }}') + array(
                 "{{ builder.ModelClass }}" => ${{ builder.ModelClass }},
-                "title" => $this->get('translator')->trans(
+                "title" => $this->getTranslator()->trans(
                     "{{ action.options.title|default('action.object.delete.confirm') }}",
                     array(),
                     '{{ action.options.i18n|default('Admingenerator') }}'
@@ -75,9 +75,9 @@
      */
     protected function successObjectDelete(\{{ model }} ${{ builder.ModelClass }})
     {
-        $this->get('session')->getFlashBag()->add(
+        $this->addFlash(
             'success',
-            $this->get('translator')->trans(
+            $this->getTranslator()->trans(
                 '{{ action.options.success|default('action.object.delete.success') }}',
                 array('%name%' => '{{ action.name }}'),
                 '{{ action.options.i18n|default('Admingenerator') }}'
@@ -107,9 +107,9 @@
             throw $e;
         }
 
-        $this->get('session')->getFlashBag()->add(
+        $this->addFlash(
             'error',
-            $this->get('translator')->trans(
+            $this->getTranslator()->trans(
                 "{{ action.options.error|default('action.object.delete') }}",
                 array(),
                 '{{ action.options.i18n|default('Admingenerator') }}'
@@ -131,9 +131,9 @@
      */
     protected function notFoundObjectDelete()
     {
-        $this->get('session')->getFlashBag()->add(
+        $this->addFlash(
             'error',
-            $this->get('translator')->trans(
+            $this->getTranslator()->trans(
                 "{{ action.options.notfound|default('action.object.delete.notfound') }}",
                 array(),
                 '{{ action.options.i18n|default('Admingenerator') }}'

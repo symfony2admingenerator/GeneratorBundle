@@ -11,6 +11,10 @@ This page contains all upgrade notes since the release of the stable 2.0.0 versi
 - You need to load the `AdminGenerated` namespace manually in your frontend controller in order to have a valid cache when debug is enabled.
   Check the [base installation](Resources/doc/install/base-installation.md) on how to do that!
 
+## 4.1.0
+
+- Migrated from direct container access to scoped container access. New methods have been added to the controllers to be to resolve the required services.
+
 ## 4.0.0
 
 - Add support for static generated base builders, old behaviour is still the default

@@ -57,9 +57,9 @@
      */
     protected function successBatch{{ action.name|php_name|capitalize }}()
     {
-        $this->get('session')->getFlashBag()->add(
+        $this->addFlash(
             'success',
-            $this->get('translator')->trans(
+            $this->getTranslator()->trans(
                 '{{ action.options.success|default("action.custom.success") }}',
                 array('%name%' => '{{ action.name }}'),
                 '{{ action.options.i18n|default('Admingenerator') }}'
@@ -88,9 +88,9 @@
             throw $e;
         }
 
-        $this->get('session')->getFlashBag()->add(
+        $this->addFlash(
             'error',
-            $this->get('translator')->trans(
+            $this->getTranslator()->trans(
                 '{{ action.options.error|default("action.custom.error") }}',
                 array('%name%' => '{{ action.name }}'),
                 '{{ action.options.i18n|default('Admingenerator') }}'
@@ -109,9 +109,9 @@
      */
     protected function attemptBatchNone(array $selected)
     {
-        $this->get('session')->getFlashBag()->add(
+        $this->addFlash(
             'error',
-            $this->get('translator')->trans(
+            $this->getTranslator()->trans(
                 'action.batch.none',
                 array(),
                 'Admingenerator'

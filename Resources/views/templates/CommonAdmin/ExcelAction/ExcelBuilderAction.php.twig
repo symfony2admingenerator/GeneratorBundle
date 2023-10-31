@@ -139,7 +139,7 @@ class ExcelController extends \{{ namespace_prefix }}\{{ bundle_name }}\Controll
     */
     protected function createSpreadsheetHeader(\PhpOffice\PhpSpreadsheet\Worksheet\Worksheet $sheet)
     {
-        $translator = $this->get('translator');
+        $translator = $this->getTranslator();
 
         $colNum = 1;
         {% for column in builder.columns %}
@@ -205,7 +205,7 @@ class ExcelController extends \{{ namespace_prefix }}\{{ bundle_name }}\Controll
       {% set credentials = builder.exportCredentials(keyname) %}
       {{ block('security_action') }}
 
-      $translator = $this->get('translator');
+      $translator = $this->getTranslator();
 
       $colNum = 1;
       {% for column in columns %}

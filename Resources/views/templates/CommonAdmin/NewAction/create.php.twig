@@ -21,7 +21,7 @@
                 $this->saveObject(${{ builder.ModelClass }});
                 $this->postSave($form, ${{ builder.ModelClass }});
 
-                $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans("{{ messages.success|default("action.object.edit.success") }}", array(), 'Admingenerator') );
+                $this->addFlash('success', $this->getTranslator()->trans("{{ messages.success|default("action.object.edit.success") }}", array(), 'Admingenerator') );
 
                 {% set defaultActionAfterSave = builder.generator.bundleConfig.default_action_after_save %}
                 $actionAfterSave = "{{ actionAfterSave|default(defaultActionAfterSave) }}";
@@ -41,13 +41,13 @@
                     return $this->redirect($this->getEditUrl($pk));
                 }
             } catch (\Exception $e) {
-                $logger = $this->get('logger')->error($e->getMessage());
-                $this->get('session')->getFlashBag()->add('error',  $this->get('translator')->trans("{{ messages.error|default("action.object.edit.error") }}", array(), 'Admingenerator') );
+                $logger = $this->getLogger()->error($e->getMessage());
+                $this->addFlash('error',  $this->getTranslator()->trans("{{ messages.error|default("action.object.edit.error") }}", array(), 'Admingenerator') );
                 $this->onException($e, $form, ${{ builder.ModelClass }});
             }
 
         } else {
-            $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans("{{ messages.error|default("action.object.edit.error") }}", array(), 'Admingenerator') );
+            $this->addFlash('error', $this->getTranslator()->trans("{{ messages.error|default("action.object.edit.error") }}", array(), 'Admingenerator') );
         }
 
         return $this->render('{% if builder.bundleContext %}@{{ builder.namespacePrefixForTemplate }}{{ bundle_name|slice(0, -6) }}/{% endif %}{{ builder.BaseGeneratorName }}New/index.html.twig', $this->getAdditionalRenderParameters(${{ builder.ModelClass }}) + array(

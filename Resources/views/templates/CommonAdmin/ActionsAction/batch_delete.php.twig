@@ -54,9 +54,9 @@
      */
     protected function successBatchDelete()
     {
-        $this->get('session')->getFlashBag()->add(
+        $this->addFlash(
             'success',
-            $this->get('translator')->trans(
+            $this->getTranslator()->trans(
                 '{{ action.options.success|default('action.batch.delete.success') }}',
                 array(),
                 '{{ action.options.i18n|default('Admingenerator') }}'
@@ -85,9 +85,9 @@
             throw $e;
         }
 
-        $this->get('session')->getFlashBag()->add(
+        $this->addFlash(
             'error',
-            $this->get('translator')->trans(
+            $this->getTranslator()->trans(
                 '{{ action.options.error|default('action.batch.delete.error') }}',
                 array(),
                 '{{ action.options.i18n|default('Admingenerator') }}'

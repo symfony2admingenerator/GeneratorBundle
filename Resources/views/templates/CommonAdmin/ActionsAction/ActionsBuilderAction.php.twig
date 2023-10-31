@@ -44,9 +44,9 @@ class ActionsController extends BaseController
         $selected = $request->get('selected');
 
         if (!$selected || !$action) {
-            $this->get('session')->getFlashBag()->add(
+            $this->addFlash(
                 'warning',
-                $this->get('translator')->trans(
+                $this->getTranslator()->trans(
                     "action.batch.warning",
                     array(),
                     'Admingenerator'
@@ -156,7 +156,7 @@ class ActionsController extends BaseController
         if (count($exception->getErrors()) > 0) {
             $html = '<dl class="dl-horizontal dl-actions-error">';
             foreach ($exception->getErrors() as $error) {
-                $label = $this->get('translator')->trans(ucfirst($error->getPropertyPath()), array(), $translationDomain);
+                $label = $this->getTranslator()->trans(ucfirst($error->getPropertyPath()), array(), $translationDomain);
 
                 $html .= '<dt>'.$label.'</dt><dd>'.$error->getMessage().'</dd>';
             }

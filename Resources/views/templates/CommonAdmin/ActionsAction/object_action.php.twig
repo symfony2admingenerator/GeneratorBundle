@@ -41,7 +41,7 @@
             '{{ namespace_prefix }}{{ bundle_name }}:{{ builder.BaseGeneratorName }}Actions:index.html.twig',
             $this->getAdditionalRenderParameters(${{ builder.ModelClass }}, '{{ action.name }}') + array(
                 "{{ builder.ModelClass }}" => ${{ builder.ModelClass }},
-                "title" => $this->get('translator')->trans(
+                "title" => $this->getTranslator()->trans(
                     "{{ action.options.title|default("action.custom.title") }}",
                     array('%name%' => '{{ action.name }}'),
                     '{{ action.options.title|default is empty ? "Admingenerator" : i18n_catalog|default("Admin") }}'
@@ -78,9 +78,9 @@
      */
     protected function successObject{{ action.name|php_name|capitalize }}(\{{ model }} ${{ builder.ModelClass }})
     {
-        $this->get('session')->getFlashBag()->add(
+        $this->addFlash(
             'success',
-            $this->get('translator')->trans(
+            $this->getTranslator()->trans(
                 "{{ action.options.success|default("action.custom.success") }}",
                 array('%name%' => '{{ action.label }}'),
                 '{{ action.options.success is defined ? i18n_catalog|default("Admin") : 'Admingenerator' }}'
@@ -110,7 +110,7 @@
             throw $e;
         }
 
-        $header = $this->get('translator')->trans(
+        $header = $this->getTranslator()->trans(
             "{{ action.options.error|default("action.custom.error") }}",
             array('%name%' => '{{ action.label }}'),
             '{{ action.options.error is defined ? i18n_catalog|default("Admin") : 'Admingenerator' }}'
@@ -118,7 +118,7 @@
 
         $errors = $this->renderErrorsAsHTML($e, '{{ action.options.error is defined ? i18n_catalog|default("Admin") : "Admingenerator" }}');
 
-        $this->get('session')->getFlashBag()->add('error', $header.' '.$errors);
+        $this->addFlash('error', $header.' '.$errors);
 
         return $this->redirect($this->generateUrl("{{ builder.baseActionsRoute }}_list"));
     }

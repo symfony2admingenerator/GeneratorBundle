@@ -73,6 +73,7 @@
             <tag name="kernel.event_listener" event="kernel.request"
                 method="onKernelRequest" />
             <argument type="service" id="service_container" />
+            <argument type="service" id="twig" />
         </service>
 
         <service id="routing.loader.admingenerator" class="%routing.loader.admingenerator.class%" public="false">
