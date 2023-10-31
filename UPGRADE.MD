@@ -11,6 +11,15 @@ This page contains all upgrade notes since the release of the stable 2.0.0 versi
 - You need to load the `AdminGenerated` namespace manually in your frontend controller in order to have a valid cache when debug is enabled.
   Check the [base installation](Resources/doc/install/base-installation.md) on how to do that!
 
+## 4.0.0
+
+- Add support for static generated base builders, old behaviour is still the default
+- Dropped PHPExcel support
+
+## 3.0.0
+
+- Symfony 5 support
+
 ## 2.5.0
 
 - Added support for PHPSpreadsheet due to the abandonment of PHPExcel
