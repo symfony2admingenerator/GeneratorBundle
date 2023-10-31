@@ -51,7 +51,7 @@
     {% block setFilters -%}
     protected function setFilters(array $filters)
     {
-        $this->get('session')->set($this->getSessionPrefix().'List\Filters', $filters);
+        $this->getSession()->set($this->getSessionPrefix().'List\Filters', $filters);
     }
     {% endblock %}
 
@@ -61,7 +61,7 @@
     */
     protected function getFilters()
     {
-        return $this->get('session')->get($this->getSessionPrefix().'List\Filters', array());
+        return $this->getSession()->get($this->getSessionPrefix().'List\Filters', array());
     }
     {% endblock %}
 

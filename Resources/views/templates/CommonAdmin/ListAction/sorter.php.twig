@@ -7,12 +7,12 @@
      */
     protected function setSort($column, $order_by)
     {
-        $this->get('session')->set($this->getSessionPrefix().'List\Sort', $column);
+        $this->getSession()->set($this->getSessionPrefix().'List\Sort', $column);
 
         if ($order_by == 'desc') {
-            $this->get('session')->set($this->getSessionPrefix().'List\OrderBy', 'DESC');
+            $this->getSession()->set($this->getSessionPrefix().'List\OrderBy', 'DESC');
         } else {
-             $this->get('session')->set($this->getSessionPrefix().'List\OrderBy', 'ASC');
+             $this->getSession()->set($this->getSessionPrefix().'List\OrderBy', 'ASC');
         }
     }
 
@@ -25,10 +25,10 @@
     {
         {% if sort is defined and sort[0] != '' -%}
 
-            return $this->get('session')->get($this->getSessionPrefix().'List\Sort', '{{ sort[0] }}');
+            return $this->getSession()->get($this->getSessionPrefix().'List\Sort', '{{ sort[0] }}');
         {% else -%}
 
-            return $this->get('session')->get($this->getSessionPrefix().'List\Sort');
+            return $this->getSession()->get($this->getSessionPrefix().'List\Sort');
         {% endif -%}
     }
 
@@ -41,10 +41,10 @@
     {
         {% if sort is defined and sort[1] is defined -%}
 
-            return $this->get('session')->get($this->getSessionPrefix().'List\OrderBy', '{{ sort[1] }}');
+            return $this->getSession()->get($this->getSessionPrefix().'List\OrderBy', '{{ sort[1] }}');
         {% else -%}
 
-            return $this->get('session')->get($this->getSessionPrefix().'List\OrderBy', 'ASC');
+            return $this->getSession()->get($this->getSessionPrefix().'List\OrderBy', 'ASC');
         {% endif -%}
     }
 

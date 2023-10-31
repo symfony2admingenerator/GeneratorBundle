@@ -10,7 +10,7 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\Finder\Finder;
 use Admingenerator\GeneratorBundle\Exception\NotAdminGeneratedException;
 use Symfony\Contracts\Cache\CacheInterface;
-use Symfony\Contracts\Cache\ItemInterface;
+use Twig\Environment;
 use Twig\Extension\CoreExtension;
 
 class ControllerListener
@@ -19,7 +19,9 @@ class ControllerListener
 
     protected string $cacheSuffix;
 
-    public function __construct(protected readonly ContainerInterface $container)
+    public function __construct(
+        protected readonly ContainerInterface $container,
+        protected readonly Environment $twig)
     {
         $this->cacheProvider = new ArrayAdapter();
         $this->cacheSuffix = 'default';
@@ -56,11 +58,11 @@ class ControllerListener
             $twig_params = $this->container->getParameter('admingenerator.twig');
 
             if (isset($twig_params['date_format'])) {
-                $this->container->get('twig')->getExtension(CoreExtension::class)->setDateFormat($twig_params['date_format'], '%d days');
+                $this->twig->getExtension(CoreExtension::class)->setDateFormat($twig_params['date_format'], '%d days');
             }
 
             if (isset($twig_params['number_format'])) {
-                $this->container->get('twig')->getExtension(CoreExtension::class)->setNumberFormat($twig_params['number_format']['decimal'], $twig_params['number_format']['decimal_point'], $twig_params['number_format']['thousand_separator']);
+                $this->twig->getExtension(CoreExtension::class)->setNumberFormat($twig_params['number_format']['decimal'], $twig_params['number_format']['decimal_point'], $twig_params['number_format']['thousand_separator']);
             }
         }
     }

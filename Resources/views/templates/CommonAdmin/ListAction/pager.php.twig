@@ -25,7 +25,7 @@
      */
     protected function setPage($page)
     {
-        $this->get('session')->set($this->getSessionPrefix().'List\Page', $page);
+        $this->getSession()->set($this->getSessionPrefix().'List\Page', $page);
     }
 
     /**
@@ -35,7 +35,7 @@
      */
     protected function getPage()
     {
-        return $this->get('session')->get($this->getSessionPrefix().'List\Page', 1);
+        return $this->getSession()->get($this->getSessionPrefix().'List\Page', 1);
     }
 
     /**
@@ -55,7 +55,7 @@
      */
     protected function setPerPage($perPage)
     {
-        $this->get('session')->set($this->getSessionPrefix().'List\PerPage', $perPage);
+        $this->getSession()->set($this->getSessionPrefix().'List\PerPage', $perPage);
     }
 
     /**
@@ -65,7 +65,7 @@
      */
     protected function getPerPage()
     {
-        return $this->get('session')->get($this->getSessionPrefix().'List\PerPage', {{ maxPerPage is defined ? maxPerPage : 10 }});
+        return $this->getSession()->get($this->getSessionPrefix().'List\PerPage', {{ maxPerPage is defined ? maxPerPage : 10 }});
     }
 
     protected function getPager()

@@ -2,43 +2,17 @@
 
 namespace Admingenerator\GeneratorBundle\Controller\Doctrine;
 
+use Admingenerator\GeneratorBundle\Controller\AdminBaseController;
 use Doctrine\Persistence\ManagerRegistry;
-use Psr\Log\LoggerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
  * A base controller for Doctrine
  *
  * @author cedric Lombardot
- *
  */
-abstract class BaseController extends AbstractController
+abstract class BaseController extends AdminBaseController
 {
-    /**
-     * @var Request
-     */
-    protected ?Request $request = null;
-
     public function __construct(protected readonly ManagerRegistry $doctrine)
     {
-    }
-
-    /**
-     * Ensure the translator and logger services are available for usage
-     *
-     * @return array
-     */
-    public static function getSubscribedServices(): array
-    {
-        return array_merge(
-            parent::getSubscribedServices(),
-            [
-                'translator' => interface_exists('Symfony\Contracts\Translation\TranslatorInterface')
-                    ? \Symfony\Contracts\Translation\TranslatorInterface::class
-                    : \Symfony\Component\Translation\TranslatorInterface::class,
-                'logger' => LoggerInterface::class,
-            ]
-        );
     }
 }
