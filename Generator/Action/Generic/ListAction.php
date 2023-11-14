@@ -16,7 +16,7 @@ class ListAction extends Action
     {
         parent::__construct($name, 'generic');
 
-        $this->setIcon('fa-list-alt');
+        $this->setIcon('fa-rectangle-list fa-regular');
         $this->setLabel('action.generic.list');
     }
 }

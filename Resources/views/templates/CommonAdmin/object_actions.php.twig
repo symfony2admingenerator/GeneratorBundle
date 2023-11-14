@@ -44,7 +44,7 @@
                     data-toggle="modal"
                 {% endif -%}
                 {%- if action.csrfProtected and not action.forceIntermediate %} data-csrf-token="{{ echo_path(actionRoute, actionParams, ['csrf_token']) }}" {% endif -%}>
-            <i class="fa fa-fw {{ action.icon|default('fa-square-o') }}"></i>
+            <i class="fa fa-fw {{ action.icon|default('fa-square fa-regular') }}"></i>
             <span>{{ echo_trans(action.label, {}, translationDomain) }}</span>
         </a>
         {{ echo_endspaceless() }}
