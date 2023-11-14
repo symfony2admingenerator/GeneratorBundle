@@ -216,7 +216,7 @@ class ListBuilder extends BaseBuilder
               $action = new ExcelAction($keyName, $this);
               $action->setCredentials($this->getExportParamsForKey($keyName, 'credentials', 'AdmingenAllowed'));
               $action->setClass($this->getExportParamsForKey($keyName, 'class', 'btn-info'));
-              $action->setIcon($this->getExportParamsForKey($keyName, 'icon', 'fa-file-excel-o'));
+              $action->setIcon($this->getExportParamsForKey($keyName, 'icon', 'fa-regular fa-file-excel'));
               $action->setLabel($this->getExportParamsForKey($keyName, 'label', 'action.generic.excel'));
               $this->excelActions[$keyName] = $action;
           }

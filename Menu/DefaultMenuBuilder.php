@@ -12,7 +12,7 @@ class DefaultMenuBuilder extends AdmingeneratorMenuBuilder
         if ($dashboardRoute = $this->dashboardRoute) {
             $this
                 ->addLinkRoute($menu, 'admingenerator.dashboard', $dashboardRoute)
-                ->setExtra('icon', 'fa fa-dashboard');
+                ->setExtra('icon', 'fa fa-gauge');
         }
 
         $overwrite = $this->addDropdown($menu, 'Replace this menu');

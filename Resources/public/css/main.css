@@ -4,43 +4,31 @@ table.table {
     max-width: none !important;
 }
 
-table.table thead .sorting,
-table.table thead .sorting_asc,
-table.table thead .sorting_desc,
-table.table thead .sorting_asc_disabled,
-table.table thead .sorting_desc_disabled {
-    cursor: pointer;
-    *cursor: hand;
+table.table thead .sorting-container {
+    display: flex;
 }
 
-table.table thead .sorting:after,
-table.table thead .sorting_asc:after,
-table.table thead .sorting_desc:after,
-table.table thead .sorting_asc_disabled:after,
-table.table thead .sorting_desc_disabled:after {
-    font-family: 'FontAwesome';
+table.table thead .sorting-icons {
+    color: black;
+    align-self: center;
 }
-html[direction='ltr'] table.table thead .sorting:after,
-html[direction='ltr'] table.table thead .sorting_asc:after,
-html[direction='ltr'] table.table thead .sorting_desc:after,
-html[direction='ltr'] table.table thead .sorting_asc_disabled:after,
-html[direction='ltr'] table.table thead .sorting_desc_disabled:after {
-    text-align: right;
-    float: right;
+
+table.table thead .sorting-icons .fa-stack {
+    height: 1em;
+    width: 1.25em;
 }
-html[direction='rtl'] table.table thead .sorting:after,
-html[direction='rtl'] table.table thead .sorting_asc:after,
-html[direction='rtl'] table.table thead .sorting_desc:after,
-html[direction='rtl'] table.table thead .sorting_asc_disabled:after,
-html[direction='rtl'] table.table thead .sorting_desc_disabled:after {
-    text-align: left;
-    float: left;
+
+table.table thead .sorting-icons .fa-sort {
+    opacity: 0.2;
 }
-table.table thead .sorting:after { content: '\f0dc'; opacity: 0.2; }
-table.table thead .sorting_asc:after { content: '\f0d8'; }
-table.table thead .sorting_desc:after { content: '\f0d7'; }
-table.table thead .sorting_asc_disabled:after { content: '\f0d8'; opacity: 0.2; }
-table.table thead .sorting_desc_disabled:after { content: '\f0d7'; opacity: 0.2; }
+
+table.table thead .sorting-icons .fa-sort-up,
+table.table thead .sorting-icons .fa-sort-down {
+    opacity: 0;
+}
+
+table.table thead .sorting-icons.asc .fa-sort-up { opacity: 1; }
+table.table thead .sorting-icons.desc .fa-sort-down { opacity: 1; }
 
 .list-results-fields-row-objectactions a>span {display:none}
 .list-results-container .list-footer .row+.row {margin-top: 5px}
