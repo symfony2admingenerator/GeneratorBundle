@@ -1,6 +1,6 @@
 <?= "<?php\n" ?>
 
-namespace <?= $namespace ?>\Form\Type<?= $prefix ? sprintf('%s\\', $prefix) : '' ?>;
+namespace <?= $namespace ?>\Form\Type<?= $prefix ? sprintf('\\%s', $prefix) : '' ?>;
 
 /**
  * Options class
