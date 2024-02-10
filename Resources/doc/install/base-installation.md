@@ -54,7 +54,7 @@ jms_security_extra:
     expressions: true
 
 admingenerator_generator:
-	use_jms_security: true
+    use_jms_security: true
 ```
 
 ### 3. Basic configuration

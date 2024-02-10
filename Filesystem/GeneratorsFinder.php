@@ -21,7 +21,7 @@ class GeneratorsFinder
     {
     }
 
-  /**
+    /**
      * Find all the generator.yml in the bundle and in the kernel Resources folder.
      *
      * @return array An array of yaml files
@@ -40,7 +40,11 @@ class GeneratorsFinder
         try {
           $finder->in($this->projectDir . '/src/*/*/Resources/config');
         } catch (DirectoryNotFoundException) {
-          $finder->in($this->projectDir . '/config/admin');
+          try {
+            $finder->in($this->projectDir . '/config/admin');
+          } catch (DirectoryNotFoundException) {
+            return [];
+          }
         }
 
         foreach ($finder as $file) {

@@ -69,7 +69,6 @@ class GeneratorCacheBuilder
 
         $yamls = $yamls ?? $this->finder->findAll();
         $progressBar?->setMaxSteps(count($yamls));
-        $buildCount = 0;
         foreach ($yamls as $yaml) {
             if ($yamlName && basename($yaml) !== $yamlName) {
                 continue;
@@ -77,13 +76,8 @@ class GeneratorCacheBuilder
 
             $progressBar?->advance();
             $buildClosure($yaml);
-            $buildCount++;
         }
         $progressBar?->finish();
-
-        if ($buildCount === 0) {
-            throw new RuntimeException('No configuration files found');
-        }
     }
 
     protected function getBaseGeneratorName(string $fileName): string
