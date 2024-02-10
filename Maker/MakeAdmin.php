@@ -10,7 +10,6 @@ use Symfony\Bundle\MakerBundle\Maker\AbstractMaker;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Question\ChoiceQuestion;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Console\Question\Question;
 
@@ -171,8 +170,8 @@ EOT
     $dir              = trim(strtr($namespace, '\\', '/'));
     $generator->generateFile(
         sprintf(
-            '%sconfig/%s-generator.yml',
-            $sf4 ? '' : sprintf('src/%s/Resources/', $dir),
+            '%s/%s-generator.yml',
+            $sf4 ? 'config/admin' : sprintf('src/%s/Resources/config', $dir),
             $prefix
         ),
         __DIR__ . '/../Resources/skeleton/config/yml_generator.tpl.php',
