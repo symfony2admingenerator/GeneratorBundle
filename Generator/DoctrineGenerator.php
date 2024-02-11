@@ -87,7 +87,7 @@ class DoctrineGenerator extends Generator
 
         $generator->writeOnDisk(
             $this->getCachePath(
-                $generator->getFromYaml('params.namespace_prefix'),
+                $generator->getFromYaml('params.namespace_prefix') ?? '',
                 $generator->getFromYaml('params.bundle_name')
             )
         );

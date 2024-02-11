@@ -116,7 +116,10 @@ abstract class Generator implements GeneratorInterface
             return true;
         }
 
-        $cacheDir = $this->getCachePath($generator->getFromYaml('params.namespace_prefix'), $generator->getFromYaml('params.bundle_name'));
+        $cacheDir = $this->getCachePath(
+            $generator->getFromYaml('params.namespace_prefix') ?? '',
+            $generator->getFromYaml('params.bundle_name'))
+        ;
 
         if (!is_dir($cacheDir)) {
             return true;
