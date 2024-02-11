@@ -22,7 +22,7 @@ class ConfigExtension extends AbstractExtension
         ];
     }
 
-    public function getAdmingeneratorConfig(string $name): string
+    public function getAdmingeneratorConfig(string $name): ?string
     {
         $search_in = $this->bundleConfig;
         $path = explode('.', $name);
