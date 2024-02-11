@@ -23,7 +23,7 @@
      */
     protected function getSortColumn()
     {
-        {% if sort is defined and sort[0] != '' -%}
+        {% if sort is defined and sort is not null and sort[0] != '' -%}
 
             return $this->getSession()->get($this->getSessionPrefix().'List\Sort', '{{ sort[0] }}');
         {% else -%}
