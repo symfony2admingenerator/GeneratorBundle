@@ -198,7 +198,7 @@ EOT
             sprintf(
                 '%s/%s%s/%s.html.twig',
                 $sf4 ? 'templates' : sprintf('src/%s/Resources/views', $dir),
-                $dirPrefix,
+                $prefix,
                 $action,
                 $view
             ),
