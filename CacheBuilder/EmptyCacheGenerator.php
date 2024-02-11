@@ -16,7 +16,7 @@ class EmptyCacheGenerator extends Generator
         $generator->setMustOverwriteIfExists(false);
         $generator->setBaseGeneratorName($this->getBaseGeneratorName());
 
-        $namespace = $generator->getFromYaml('params.namespace_prefix');
+        $namespace = $generator->getFromYaml('params.namespace_prefix') ?? '';
         $bundleName = $generator->getFromYaml('params.bundle_name');
 
         $builders = $generator->getFromYaml('builders', []);
