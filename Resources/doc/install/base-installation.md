@@ -18,7 +18,7 @@ admingenerator_generator:
     use_doctrine_odm:     false
 
     # add this line if you want to use assetic
-    base_admin_template: AdmingeneratorGeneratorBundle::base_uncompressed.html.twig
+    base_admin_template: @AdmingeneratorGenerator/base_uncompressed.html.twig
 ```
 
 ### 2. Update `composer.json`:

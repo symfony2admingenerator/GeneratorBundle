@@ -19,7 +19,7 @@ admingenerator_generator:
     default_required: true
     overwrite_if_exists: false
     throw_exceptions: false
-    base_admin_template: 'AdmingeneratorGeneratorBundle::base.html.twig'
+    base_admin_template: '@AdmingeneratorGenerator/base.html.twig'
     knp_menu_alias: ~
     dashboard_route: null
     login_route: null
@@ -120,7 +120,7 @@ handler.
 
 ### Base admin template
  
-`base_admin_template`: __default__: `AdmingeneratorGeneratorBundle::base.html.twig` __type__: `string`
+`base_admin_template`: __default__: `@AdmingeneratorGenerator/base.html.twig` __type__: `string`
 
 ### KnpMenuBundle alias
 
