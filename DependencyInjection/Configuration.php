@@ -236,7 +236,7 @@ class Configuration implements ConfigurationInterface
                 ->booleanNode('overwrite_if_exists')->defaultFalse()->end()
                 ->booleanNode('throw_exceptions')->defaultFalse()->end()
                 ->scalarNode('base_admin_template')
-                    ->defaultValue("AdmingeneratorGeneratorBundle::base.html.twig")
+                    ->defaultValue("@AdmingeneratorGenerator/base.html.twig")
                 ->end()
                 ->scalarNode('dashboard_route')->defaultNull()->end()
                 ->scalarNode('login_route')->defaultNull()->end()
