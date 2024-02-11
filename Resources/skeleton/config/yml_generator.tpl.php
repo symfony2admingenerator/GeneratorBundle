@@ -1,7 +1,7 @@
 generator: <?= $generator ?><?= "\n" ?>
 params:
     model: <?= $namespace ?>\<?= $modelFolder ?>\<?= $modelName ?><?= "\n" ?>
-    namespace_prefix: <?= $namespacePrefix ?><?= "\n" ?>
+    namespace_prefix: <?= $namespacePrefix ?: "''" ?><?= "\n" ?>
     concurrency_lock: ~
     credentials: ~
     bundle_name: <?= $bundleName ?><?= "\n" ?>
