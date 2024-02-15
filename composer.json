@@ -67,6 +67,9 @@
         "twig/extra-bundle": "Allows autoconfiguration of Twig extras",
         "symfony/maker-bundle": "To use the command for autogenerating configuration"
     },
+    "conflict": {
+        "phpoffice/phpspreadsheet": ">=2"
+    },
     "autoload": {
         "psr-4": {
             "Admingenerator\\GeneratorBundle\\": ""
