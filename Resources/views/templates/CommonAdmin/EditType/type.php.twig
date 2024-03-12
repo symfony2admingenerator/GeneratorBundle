@@ -14,7 +14,7 @@ use Symfony\Component\Form\FormEvents;
 
 class {{ builder.YamlKey|ucfirst }}Type extends BaseType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
     {%- set columnAdded = 0 -%}
     {% for column in builder.columns %}

@@ -97,7 +97,7 @@
         </service>
 
         <service id="admingenerator.command.install-assets" class="Admingenerator\GeneratorBundle\Command\AssetsInstallCommand">
-            <tag name="console.command" />
+            <tag name="console.command" command="admin:assets-install" />
             <argument>%kernel.project_dir%</argument>
         </service>
 
@@ -120,7 +120,7 @@
         </service>
 
         <service id="admingenerator.command.generate_base_classes" class="Admingenerator\GeneratorBundle\Command\GenerateBaseClassesCommand">
-            <tag name="console.command" />
+            <tag name="console.command" command="admin:generate-base-classes" />
             <argument type="service" id="admingenerator.generator_cache_builder" />
         </service>
         

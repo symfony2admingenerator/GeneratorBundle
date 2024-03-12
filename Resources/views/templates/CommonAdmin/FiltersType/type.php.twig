@@ -13,7 +13,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class FiltersType extends BaseType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
     {% for column in builder.filterColumns %}
         if ($this->canDisplay{{ column.name|classify|php_name }}()) {
