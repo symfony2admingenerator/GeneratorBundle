@@ -3,6 +3,7 @@
 namespace Admingenerator\GeneratorBundle\Command;
 
 use Admingenerator\GeneratorBundle\CacheBuilder\GeneratorCacheBuilder;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Completion\CompletionInput;
 use Symfony\Component\Console\Completion\CompletionSuggestions;
@@ -15,10 +16,6 @@ class GenerateBaseClassesCommand extends Command
 {
     private const CONFIGURATION = 'configuration';
 
-    protected static $defaultName = 'admin:generate-base-classes';
-
-    protected static $defaultDescription = 'Generates the admin base classes in the project dir.';
-
     public function __construct(private readonly GeneratorCacheBuilder $generatorCacheBuilder)
     {
         parent::__construct();
@@ -26,7 +23,9 @@ class GenerateBaseClassesCommand extends Command
 
     protected function configure(): void
     {
-        $this->addArgument(self::CONFIGURATION, InputArgument::OPTIONAL, 'Filename of the generation configuration');
+        $this
+            ->setDescription('Generates the admin base classes in the project dir.')
+            ->addArgument(self::CONFIGURATION, InputArgument::OPTIONAL, 'Filename of the generation configuration');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -61,6 +60,4 @@ class GenerateBaseClassesCommand extends Command
             ));
         }
     }
-
-
 }

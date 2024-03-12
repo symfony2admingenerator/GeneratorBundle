@@ -10,7 +10,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\Process;
 
 /**
- * Class AssetsInstallCommand
  * @package Admingenerator\GeneratorBundle\Command
  * @author Stéphane Escandell
  *
@@ -19,9 +18,6 @@ use Symfony\Component\Process\Process;
  */
 class AssetsInstallCommand extends Command
 {
-    protected static $defaultName = 'admin:assets-install';
-    protected static $defaultDescription = 'Fetch bower declared dependencies and push them into web root directory';
-
     public function __construct(private readonly string $projectDir)
     {
         parent::__construct();
@@ -30,6 +26,7 @@ class AssetsInstallCommand extends Command
     protected function configure(): void
     {
         $this
+            ->setDescription('Fetch bower declared dependencies and push them into web root directory')
             ->setHelp('The <info>admin:assets-install</info> command fetch bower dependencies (CSS and JS files) to the web root dir.')
             ->setDefinition(array(
                 new InputOption('mode', 'm', InputOption::VALUE_OPTIONAL, 'Mode to fetch dependencies', 'install'),
