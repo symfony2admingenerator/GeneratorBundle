@@ -1,11 +1,11 @@
 {% block page_title %}
     {{ echo_block("page_header_content") }}
-        <h1>{% if title|default is not empty %}{{ echo_trans(title, {}, i18n_catalog|default("Admin") ) }}{% endif %}</h1>
+        <h1>{% if title|default is not empty %}{{ echo_trans(title, {}, i18n_catalog|default("Admin"), 'html' ) }}{% endif %}</h1>
     {{ echo_endblock() }}
 {% endblock %}
 
 {% block site_title %}
     {{ echo_block("title") }}
-        {{ echo_twig('parent()') }} - {% if title|default is not empty %}{{ echo_trans(title, {}, i18n_catalog|default("Admin") ) }}{% endif %}
+        {{ echo_twig('parent()') }} - {% if title|default is not empty %}{{ echo_trans(title, {}, i18n_catalog|default("Admin"), 'html' ) }}{% endif %}
     {{ echo_endblock() }}
 {% endblock %}

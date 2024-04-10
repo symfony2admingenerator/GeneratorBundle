@@ -13,7 +13,7 @@
             {{ echo_block("form_fieldset_" ~ fieldsetName|classify|replace({'.': '_'})) }}
                 <fieldset class="form-model-tab-pane tab-pane-model-{{ fieldsetName|classify|replace({'.': '-'}) }} tab-pane">
                     {% if "NONE" != fieldsetName[:4] and "!" != fieldsetName[:1] %}
-                        <legend><span>{{ echo_trans(fieldsetName,{}, i18n_catalog|default("Admin") ) }}</span></legend>
+                        <legend><span>{{ echo_trans(fieldsetName,{}, i18n_catalog|default("Admin"), 'html' ) }}</span></legend>
                     {% endif %}
 
                     {% for rowName,row in fieldset %}

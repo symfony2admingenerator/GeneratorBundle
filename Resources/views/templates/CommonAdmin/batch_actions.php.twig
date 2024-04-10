@@ -46,7 +46,7 @@
         {% endif -%}
         >
             {% if action.icon %}<i class="{% if action.icon is defined and action.icon|length > 0 %}fa {{ action.icon }}{% endif %}"></i> {% endif %}
-            {{ echo_trans(action.label, {}, translationDomain) }}
+            {{ echo_trans(action.label, {}, translationDomain, 'html') }}
     </option>
 {% endblock %}
 

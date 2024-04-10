@@ -11,7 +11,7 @@
                            "{ 'group': '" ~  (groupName|classify|lower) ~ "', 'scope': '" ~ (scopeName|classify|lower) ~ "' }") }}
                        ">
                         {%- if params.icon is defined %}<i class="fa {{ params.icon }}"></i> {% endif -%}
-                        {{- echo_trans(scopeName, {}, i18n_catalog|default("Admin")) -}}
+                        {{- echo_trans(scopeName, {}, i18n_catalog|default("Admin"), 'html') -}}
                     </a>
                     {% endfor %}
                 </div>

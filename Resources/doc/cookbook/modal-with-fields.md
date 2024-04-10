@@ -27,8 +27,8 @@ You can simply do it by adding modal with the field:
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default cancel" data-dismiss="modal">{{ 'action.custom.cancel'|trans({}, "Admingenerator")|raw }}</button>
-            <button type="submit" class="btn btn-primary confirm">{{ 'action.custom.confirm'|trans({}, "Admingenerator")|raw }}</button>
+            <button type="button" class="btn btn-default cancel" data-dismiss="modal">{{ 'action.custom.cancel'|trans({}, "Admingenerator") }}</button>
+            <button type="submit" class="btn btn-primary confirm">{{ 'action.custom.confirm'|trans({}, "Admingenerator") }}</button>
         </div>
         </form>
       </div>

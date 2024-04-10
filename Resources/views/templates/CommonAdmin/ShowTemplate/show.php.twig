@@ -13,7 +13,7 @@
 
                 <div class="show-model-tab-pane tab-pane-model-{{ fieldsetName|classify|replace({'.': '-'}) }} tab-pane">
                     {% if "NONE" != fieldsetName[:4] and "!" != fieldsetName[:1] %}
-                        <h2>{{ echo_trans(fieldsetName,{}, i18n_catalog is defined ? i18n_catalog : "Admin" ) }}</h2>
+                        <h2>{{ echo_trans(fieldsetName,{}, i18n_catalog is defined ? i18n_catalog : "Admin", 'html' ) }}</h2>
                     {% endif %}
 
                     {% for row in fieldset %}

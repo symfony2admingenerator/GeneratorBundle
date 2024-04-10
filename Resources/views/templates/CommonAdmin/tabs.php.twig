@@ -20,7 +20,7 @@
                                 <li>
                                     <a data-toggle="tab" href="#"
                                        data-target="{%- for fieldsetName,fieldset in tab -%}{{ '.tab-pane-model-'~fieldsetName|classify|replace({'.': '-'}) }}{%if not loop.last%},{% endif %}{% endfor %}">
-                                        {{ echo_trans(name, {}, i18n_catalog|default("Admin") ) }}
+                                        {{ echo_trans(name, {}, i18n_catalog|default("Admin"), 'html' ) }}
                                     </a>
                                 </li>
                             {% if tabCredentials is not empty %}
