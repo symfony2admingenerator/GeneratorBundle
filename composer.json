@@ -68,7 +68,7 @@
         "symfony/maker-bundle": "To use the command for autogenerating configuration"
     },
     "conflict": {
-        "phpoffice/phpspreadsheet": ">=2"
+        "phpoffice/phpspreadsheet": "<1.23.0"
     },
     "autoload": {
         "psr-4": {
