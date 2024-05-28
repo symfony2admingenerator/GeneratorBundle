@@ -147,10 +147,10 @@ class ExcelController extends \{{ namespace_prefix }}\{{ bundle_name }}\Controll
             {% set credentials = column.credentials %}
             if ($this->validateCredentials('{{ credentials }}')) {
           {% endif %}
-          $sheet->setCellValueByColumnAndRow($colNum, 1, $translator->trans("{{ column.label }}", array(), '{{ i18n_catalog|default("Admin") }}'));
-          $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex($colNum);
-          $sheet->getStyle($columnLetter . '1')->getFont()->setBold(true);
-          $sheet->getColumnDimension($columnLetter)->setAutoSize(true);
+          $coordinate = \PhpOffice\PhpSpreadsheet\Cell\CellAddress::fromColumnAndRow($colNum, 1);
+          $sheet->setCellValue($coordinate, $translator->trans("{{ column.label }}", array(), '{{ i18n_catalog|default("Admin") }}'));
+          $sheet->getStyle($coordinate)->getFont()->setBold(true);
+          $sheet->getColumnDimension($coordinate->columnName())->setAutoSize(true);
 
           $colNum++;
           {% if column.credentials is not empty and column.credentials is not same as('AdmingenAllowed') %}
@@ -181,7 +181,8 @@ class ExcelController extends \{{ namespace_prefix }}\{{ bundle_name }}\Controll
                   $formattedValue = $formattedValue->format('{{ builder.dateTimeFormat }}');
               }
 
-              $sheet->setCellValueByColumnAndRow($colNum, $row, $formattedValue);
+              $coordinate = \PhpOffice\PhpSpreadsheet\Cell\CellAddress::fromColumnAndRow($colNum, $row);
+              $sheet->setCellValue($coordinate, $formattedValue);
               {% if column.credentials is not empty and column.credentials is not same as('AdmingenAllowed') %}
                 }
               {% endif %}
@@ -213,10 +214,10 @@ class ExcelController extends \{{ namespace_prefix }}\{{ bundle_name }}\Controll
           {% set credentials = column.credentials %}
           if ($this->validateCredentials('{{ credentials }}')) {
         {% endif %}
-        $sheet->setCellValueByColumnAndRow($colNum, 1, $translator->trans("{{ column.label }}", array(), '{{ i18n_catalog|default("Admin") }}'), true);
-        $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex($colNum);
-        $sheet->getStyle($columnLetter . '1')->getFont()->setBold(true);
-        $sheet->getColumnDimension($columnLetter)->setAutoSize(true);
+        $coordinate = \PhpOffice\PhpSpreadsheet\Cell\CellAddress::fromColumnAndRow($colNum, 1);
+        $sheet->setCellValue($coordinate, $translator->trans("{{ column.label }}", array(), '{{ i18n_catalog|default("Admin") }}'), true);
+        $sheet->getStyle($coordinate)->getFont()->setBold(true);
+        $sheet->getColumnDimension($coordinate->columnName())->setAutoSize(true);
 
         $colNum++;
         {% if column.credentials is not empty and column.credentials is not same as('AdmingenAllowed') %}
@@ -247,7 +248,8 @@ class ExcelController extends \{{ namespace_prefix }}\{{ bundle_name }}\Controll
             $formattedValue = $formattedValue->format('{{ builder.dateTimeFormat(keyname) }}');
             }
 
-            $sheet->setCellValueByColumnAndRow($colNum, $row, $formattedValue);
+            $coordinate = \PhpOffice\PhpSpreadsheet\Cell\CellAddress::fromColumnAndRow($colNum, $row);
+            $sheet->setCellValue($coordinate, $formattedValue);
             {% if column.credentials is not empty and column.credentials is not same as('AdmingenAllowed') %}
               }
             {% endif %}
