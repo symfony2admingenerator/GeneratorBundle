@@ -55,34 +55,27 @@ class EchoExtension extends AbstractExtension
             $options = preg_replace("/'__php\((.+?)\)'/i", $matches[1], $options);
         }
 
-        // Query builder: remove quotes around closure
-        // Should we really check formType or can we just
-        // look for query_builder option?
-        if (preg_match("/EntityType$/i", $formType)) {
-            preg_match("/'query_builder' => '(.+?)}',/i", $options, $matches);
+        // Query builder: remove quotes around closure (for 'query_builder' and 'query' arguments of all forms)
+        preg_match("/'query_builder' => '(.+?)}',/i", $options, $matches);
 
-            if (count($matches) > 0) {
-              $options = str_replace("'query_builder' => '$matches[1]}'", "'query_builder' => ".stripslashes($matches[1]).'}', $options);
-            }
-            preg_match("/'query_builder' => '(.+?)',/i", $options, $matches);
+        if (count($matches) > 0) {
+          $options = str_replace("'query_builder' => '$matches[1]}'", "'query_builder' => ".stripslashes($matches[1]).'}', $options);
+        }
+        preg_match("/'query_builder' => '(.+?)',/i", $options, $matches);
 
-            if (count($matches) > 0) {
-                $options = str_replace("'query_builder' => '$matches[1]'", "'query_builder' => ".stripslashes($matches[1]), $options);
-            }
+        if (count($matches) > 0) {
+            $options = str_replace("'query_builder' => '$matches[1]'", "'query_builder' => ".stripslashes($matches[1]), $options);
         }
 
-        // Same question here
-        if (preg_match("/ModelType$/i", $formType)) {
-            preg_match("/'query' => '(.+?)}',/i", $options, $matches);
+        preg_match("/'query' => '(.+?)}',/i", $options, $matches);
 
-            if (count($matches) > 0) {
-                $options = str_replace("'query' => '$matches[1]}'", "'query' => ".stripslashes($matches[1]).'}', $options);
-            }
-            preg_match("/'query' => '(.+?)',/i", $options, $matches);
+        if (count($matches) > 0) {
+            $options = str_replace("'query' => '$matches[1]}'", "'query' => ".stripslashes($matches[1]).'}', $options);
+        }
+        preg_match("/'query' => '(.+?)',/i", $options, $matches);
 
-            if (count($matches) > 0) {
-                $options = str_replace("'query' => '$matches[1]'", "'query' => ".stripslashes($matches[1]), $options);
-            }
+        if (count($matches) > 0) {
+            $options = str_replace("'query' => '$matches[1]'", "'query' => ".stripslashes($matches[1]), $options);
         }
 
         return $options;
