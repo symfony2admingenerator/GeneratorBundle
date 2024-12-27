@@ -2,96 +2,155 @@
 
 namespace Admingenerator\GeneratorBundle\Tests\Mocks\Doctrine;
 
-class DatabasePlatformMock extends \Doctrine\DBAL\Platforms\AbstractPlatform
+use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Platforms\AbstractPlatform;
+use Doctrine\DBAL\Platforms\DateIntervalUnit;
+use Doctrine\DBAL\Platforms\Exception\NotSupported;
+use Doctrine\DBAL\Platforms\Keywords\KeywordList;
+use Doctrine\DBAL\Schema\AbstractSchemaManager;
+use Doctrine\DBAL\Schema\TableDiff;
+use Doctrine\DBAL\TransactionIsolationLevel;
+use Override;
+
+class DatabasePlatformMock extends AbstractPlatform
 {
-    private $_sequenceNextValSql = "";
-    private $_prefersIdentityColumns = true;
-    private $_prefersSequences = false;
+    private string $_sequenceNextValSql = "";
 
-    /**
-     * @override
-     */
-    public function getNativeDeclaration(array $field) {}
-
-    /**
-     * @override
-     */
-    public function getPortableDeclaration(array $field) {}
-
-    /**
-     * @override
-     */
-    public function prefersIdentityColumns()
-    {
-        return $this->_prefersIdentityColumns;
-    }
-
-    /**
-     * @override
-     */
-    public function prefersSequences()
-    {
-        return $this->_prefersSequences;
-    }
-
-    /** @override */
-    public function getSequenceNextValSQL($sequenceName)
+    #[Override]
+    public function getSequenceNextValSQL($sequence): string
     {
         return $this->_sequenceNextValSql;
     }
 
-    /** @override */
-    public function getBooleanTypeDeclarationSQL(array $field) {}
+    #[Override]
+    public function getBooleanTypeDeclarationSQL(array $column): string
+    {
+        return '';
+    }
 
-    /** @override */
-    public function getIntegerTypeDeclarationSQL(array $field) {}
+    #[Override]
+    public function getIntegerTypeDeclarationSQL(array $column): string
+    {
+        return '';
+    }
 
-    /** @override */
-    public function getBigIntTypeDeclarationSQL(array $field) {}
+    #[Override]
+    public function getBigIntTypeDeclarationSQL(array $column): string
+    {
+        return '';
+    }
 
-    /** @override */
-    public function getSmallIntTypeDeclarationSQL(array $field) {}
+    #[Override]
+    public function getSmallIntTypeDeclarationSQL(array $column): string
+    {
+        return '';
+    }
 
-    /** @override */
-    protected function _getCommonIntegerTypeDeclarationSQL(array $columnDef) {}
+    #[Override]
+    protected function _getCommonIntegerTypeDeclarationSQL(array $column): string
+    {
+        return '';
+    }
 
-    /** @override */
-    public function getVarcharTypeDeclarationSQL(array $field) {}
-
-    /** @override */
-    public function getClobTypeDeclarationSQL(array $field) {}
+    #[Override]
+    public function getClobTypeDeclarationSQL(array $column): string
+    {
+        return '';
+    }
 
     /* MOCK API */
 
-    public function setPrefersIdentityColumns($bool)
-    {
-        $this->_prefersIdentityColumns = $bool;
-    }
-
-    public function setPrefersSequences($bool)
-    {
-        $this->_prefersSequences = $bool;
-    }
-
-    public function setSequenceNextValSql($sql)
-    {
-        $this->_sequenceNextValSql = $sql;
-    }
-
-    public function getName()
+    public function getName(): string
     {
         return 'mock';
     }
 
-    protected function initializeDoctrineTypeMappings()
+    #[Override]
+    protected function initializeDoctrineTypeMappings(): void
     {
 
     }
-    /**
-     * Gets the SQL Snippet used to declare a BLOB column type.
-     */
-    public function getBlobTypeDeclarationSQL(array $field)
+
+    #[Override]
+    public function getBlobTypeDeclarationSQL(array $column): string
     {
-        throw DBALException::notSupported(__METHOD__);
+        throw NotSupported::new(__METHOD__);
+    }
+
+    #[Override]
+    public function getLocateExpression(string $string, string $substring, ?string $start = null): string
+    {
+        return '';
+    }
+
+    #[Override]
+    public function getDateDiffExpression(string $date1, string $date2): string
+    {
+        return '';
+    }
+
+    #[Override]
+    protected function getDateArithmeticIntervalExpression(string $date, string $operator, string $interval, DateIntervalUnit $unit,): string
+    {
+        return '';
+    }
+
+    #[Override]
+    public function getCurrentDatabaseExpression(): string
+    {
+        return '';
+    }
+
+    #[Override]
+    public function getAlterTableSQL(TableDiff $diff): array
+    {
+        return [];
+    }
+
+    #[Override]
+    public function getListViewsSQL(string $database): string
+    {
+        return '';
+    }
+
+    #[Override]
+    public function getSetTransactionIsolationSQL(TransactionIsolationLevel $level): string
+    {
+        return '';
+    }
+
+    #[Override]
+    public function getDateTimeTypeDeclarationSQL(array $column): string
+    {
+        return '';
+    }
+
+    #[Override]
+    public function getDateTypeDeclarationSQL(array $column): string
+    {
+        return '';
+    }
+
+    #[Override]
+    public function getTimeTypeDeclarationSQL(array $column): string
+    {
+        return '';
+    }
+
+    #[Override]
+    protected function createReservedKeywordsList(): KeywordList
+    {
+        return new class extends KeywordList {
+            protected function getKeywords(): array
+            {
+                return [];
+            }
+        };
+    }
+
+    #[Override]
+    public function createSchemaManager(Connection $connection): AbstractSchemaManager
+    {
+        return $connection->createSchemaManager();
     }
 }

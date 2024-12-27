@@ -3,12 +3,10 @@ namespace Admingenerator\GeneratorBundle\Tests\Twig\Extension;
 
 /**
  * Dummy object for EchoExtensionTest
- *
- * @author Cedric LOMBARDOT
  */
 class TestObject
 {
-    public static $called = array(
+    public static array $called = array(
         '__toString'  => 0,
         'foo'         => 0,
         'getFooBar'   => 0,
@@ -19,13 +17,13 @@ class TestObject
 
     }
 
-    public static function reset()
+    public static function reset(): void
     {
-        self::$called = array(
+        self::$called = [
             '__toString'  => 0,
             'foo'         => 0,
             'getFooBar'   => 0,
-        );
+        ];
     }
 
     public function __toString()
@@ -35,14 +33,14 @@ class TestObject
         return 'foo';
     }
 
-    public function foo()
+    public function foo(): string
     {
         ++self::$called['foo'];
 
         return 'foo';
     }
 
-    public function getFooBar()
+    public function getFooBar(): string
     {
         ++self::$called['getFooBar'];
 

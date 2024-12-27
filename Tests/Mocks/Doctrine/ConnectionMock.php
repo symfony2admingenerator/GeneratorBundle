@@ -2,106 +2,83 @@
 
 namespace Admingenerator\GeneratorBundle\Tests\Mocks\Doctrine;
 
-class ConnectionMock extends \Doctrine\DBAL\Connection
-{
-    private $_fetchOneResult;
-    private $_platformMock;
-    private $_lastInsertId = 0;
-    private $_inserts = array();
-    private $_executeUpdates = array();
+use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Platforms\AbstractPlatform;
+use Override;
 
-    public function __construct(array $params, $driver, $config = null, $eventManager = null)
+class ConnectionMock extends Connection
+{
+    private DatabasePlatformMock $_platformMock;
+    private int $_lastInsertId = 0;
+    private array $_inserts = [];
+    private array $_executeUpdates = [];
+    private DatabasePlatformMock $_platform;
+
+    public function __construct(array $params, $driver, $config = null)
     {
         $this->_platformMock = new DatabasePlatformMock();
 
-        parent::__construct($params, $driver, $config, $eventManager);
+        parent::__construct($params, $driver, $config);
 
         // Override possible assignment of platform to database platform mock
         $this->_platform = $this->_platformMock;
     }
 
-    /**
-     * @override
-     */
-    public function getDatabasePlatform()
+    #[Override]
+    public function getDatabasePlatform(): AbstractPlatform
     {
         return $this->_platformMock;
     }
 
-    /**
-     * @override
-     */
-    public function insert($tableName, array $data, array $types = array())
+    #[Override]
+    public function insert($table, array $data, array $types = array()): int
     {
-        $this->_inserts[$tableName][] = $data;
+        $this->_inserts[$table][] = $data;
+        return $this->_lastInsertId++;
     }
 
-    /**
-     * @override
-     */
-    public function executeUpdate($query, array $params = array(), array $types = array())
-    {
-        $this->_executeUpdates[] = array('query' => $query, 'params' => $params, 'types' => $types);
-    }
 
-    /**
-     * @override
-     */
-    public function lastInsertId($seqName = null)
+    #[Override]
+    public function lastInsertId($seqName = null): int
     {
         return $this->_lastInsertId;
     }
 
-    /**
-     * @override
-     */
-    public function fetchColumn($statement, array $params = array(), $colnum = 0, array $types = array())
+    #[Override]
+    public function quote($value, $type = null): string
     {
-        return $this->_fetchOneResult;
-    }
-
-    /**
-     * @override
-     */
-    public function quote($input, $type = null)
-    {
-        if (is_string($input)) {
-            return "'" . $input . "'";
+        if (is_string($value)) {
+            return "'" . $value . "'";
         }
 
-        return $input;
+        return $value;
     }
 
     /* Mock API */
 
-    public function setFetchOneResult($fetchOneResult)
-    {
-        $this->_fetchOneResult = $fetchOneResult;
-    }
-
-    public function setDatabasePlatform($platform)
+    public function setDatabasePlatform($platform): void
     {
         $this->_platformMock = $platform;
     }
 
-    public function setLastInsertId($id)
+    public function setLastInsertId($id): void
     {
         $this->_lastInsertId = $id;
     }
 
-    public function getInserts()
+    public function getInserts(): array
     {
         return $this->_inserts;
     }
 
-    public function getExecuteUpdates()
+    public function getExecuteUpdates(): array
     {
         return $this->_executeUpdates;
     }
 
-    public function reset()
+    public function reset(): void
     {
-        $this->_inserts = array();
+        $this->_inserts = [];
         $this->_lastInsertId = 0;
     }
 }

@@ -2,14 +2,19 @@
 
 namespace Admingenerator\GeneratorBundle\Tests\QueryFilter;
 
+use Admingenerator\GeneratorBundle\Tests\Mocks\Doctrine\EntityManagerMock;
 use Admingenerator\GeneratorBundle\Tests\TestCase;
 use Admingenerator\GeneratorBundle\QueryFilter\DoctrineQueryFilter;
+use Doctrine\DBAL\DriverManager;
+use Doctrine\ORM\Configuration;
+use Doctrine\ORM\Mapping\Driver\AttributeDriver;
+use Doctrine\ORM\QueryBuilder;
 
-class QueryFilterTest extends TestCase
+class DoctrineQueryFilterTest extends TestCase
 {
-    protected $queryFilter;
+    protected DoctrineQueryFilter $queryFilter;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -20,35 +25,35 @@ class QueryFilterTest extends TestCase
         $this->queryFilter = $this->initQueryFilter();
     }
 
-    public function testAddStringFilter()
+    public function testAddStringFilter(): void
     {
         $this->queryFilter->addStringFilter('title', 'test');
 
         $this->assertEquals('SELECT q FROM Admingenerator\GeneratorBundle\Tests\QueryFilter\Entity\Movie q WHERE q.title LIKE :q_title_0', $this->queryFilter->getQuery()->getDql());
     }
 
-    public function testAddTextFilter()
+    public function testAddTextFilter(): void
     {
         $this->queryFilter->addTextFilter('desc', 'test');
 
         $this->assertEquals('SELECT q FROM Admingenerator\GeneratorBundle\Tests\QueryFilter\Entity\Movie q WHERE q.desc LIKE :q_desc_0', $this->queryFilter->getQuery()->getDql());
     }
 
-    public function testAddDefaultFilter()
+    public function testAddDefaultFilter(): void
     {
         $this->queryFilter->addDefaultFilter('title', 'test');
 
         $this->assertEquals('SELECT q FROM Admingenerator\GeneratorBundle\Tests\QueryFilter\Entity\Movie q WHERE q.title = :q_title_0', $this->queryFilter->getQuery()->getDql());
     }
 
-    public function testFilterOnAssociation()
+    public function testFilterOnAssociation(): void
     {
         $this->queryFilter->addTextFilter('producer.name', 'test');
 
         $this->assertEquals('SELECT q FROM Admingenerator\GeneratorBundle\Tests\QueryFilter\Entity\Movie q INNER JOIN q.producer producer_table_filter_join WHERE producer_table_filter_join.name LIKE :producer_table_filter_join_name_0', $this->queryFilter->getQuery()->getDql());
     }
 
-    public function testMultipleFiltersOnAssociation()
+    public function testMultipleFiltersOnAssociation(): void
     {
         $this->queryFilter->addTextFilter('producer.name', 'test');
         $this->queryFilter->addBooleanFilter('producer.published', true);
@@ -56,52 +61,50 @@ class QueryFilterTest extends TestCase
         $this->assertEquals('SELECT q FROM Admingenerator\GeneratorBundle\Tests\QueryFilter\Entity\Movie q INNER JOIN q.producer producer_table_filter_join WHERE producer_table_filter_join.name LIKE :producer_table_filter_join_name_0 AND producer_table_filter_join.published = :producer_table_filter_join_published_1', $this->queryFilter->getQuery()->getDql());
     }
 
-    public function testCall()
+    public function testCall(): void
     {
         $this->queryFilter->addFooFilter('title', 'test');
 
         $this->assertEquals('SELECT q FROM Admingenerator\GeneratorBundle\Tests\QueryFilter\Entity\Movie q WHERE q.title = :q_title_0', $this->queryFilter->getQuery()->getDql());
     }
 
-    protected function initQueryFilter()
+    protected function initQueryFilter(): DoctrineQueryFilter
     {
         $em =  $this->_getTestEntityManager();
-        $qb = new \Doctrine\ORM\QueryBuilder($em);
+        $qb = new QueryBuilder($em);
 
         $query = $qb->select('q')
                     ->from('Admingenerator\GeneratorBundle\Tests\QueryFilter\Entity\Movie', 'q');
-        $queryFilter = new DoctrineQueryFilter($query);
-
-        return $queryFilter;
+        return new DoctrineQueryFilter($query);
     }
 
     /**
      * Creates an EntityManager for testing purposes.
      *
-     * @return \Admingenerator\GeneratorBundle\Tests\Mocks\Doctrine\EntityManagerMock
+     * @return EntityManagerMock
      */
-    protected function _getTestEntityManager($conn = null, $conf = null, $eventManager = null)
+    protected function _getTestEntityManager($conn = null, $conf = null, $eventManager = null): EntityManagerMock
     {
 
-        $config = new \Doctrine\ORM\Configuration();
+        $config = new Configuration();
 
-        $config->setMetadataDriverImpl($config->newDefaultAnnotationDriver());
+        $config->setMetadataDriverImpl(new AttributeDriver([]));
         $config->setProxyDir(__DIR__ . '/Proxies');
         $config->setProxyNamespace('Doctrine\Tests\Proxies');
 
         if ($conn === null) {
-            $conn = array(
+            $conn = [
                 'driverClass'  => '\Admingenerator\GeneratorBundle\Tests\Mocks\Doctrine\DriverMock',
                 'wrapperClass' => '\Admingenerator\GeneratorBundle\Tests\Mocks\Doctrine\ConnectionMock',
                 'user'         => 'john',
                 'password'     => 'wayne'
-            );
+            ];
         }
 
         if (is_array($conn)) {
-            $conn = \Doctrine\DBAL\DriverManager::getConnection($conn, $config, $eventManager);
+            $conn = DriverManager::getConnection($conn, $config);
         }
 
-        return \Admingenerator\GeneratorBundle\Tests\Mocks\Doctrine\EntityManagerMock::create($conn, $config, $eventManager);
+        return EntityManagerMock::create($conn, $config, $eventManager);
     }
 }
