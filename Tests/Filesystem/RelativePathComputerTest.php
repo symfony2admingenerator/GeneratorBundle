@@ -2,32 +2,29 @@
 namespace Admingenerator\GeneratorBundle\Tests\Filesystem;
 
 use Admingenerator\GeneratorBundle\Filesystem\RelativePathComputer;
+use LogicException;
+use PHPUnit\Framework\TestCase;
 
-/**
- * Class RelativePathComputerTest
- * @package Admingenerator\GeneratorBundle\Tests\Filesystem
- * @author Stéphane Escandell
- */
-class RelativePathComputerTest extends \PHPUnit_Framework_TestCase
+class RelativePathComputerTest extends TestCase
 {
-    public function testComputingToParent()
+    public function testComputingToParent(): void
     {
         $referencePath = __FILE__;
 
         $computer = new RelativePathComputer($referencePath);
         $this->assertEquals(str_repeat('..' . DIRECTORY_SEPARATOR, 1), $computer->computeToParent(dirname($referencePath)));
-        $this->assertEquals(str_repeat('..' . DIRECTORY_SEPARATOR, 3), $computer->computeToParent(dirname(dirname(dirname($referencePath)))));
+        $this->assertEquals(str_repeat('..' . DIRECTORY_SEPARATOR, 3), $computer->computeToParent(dirname($referencePath, 3)));
 
         $referencePath = dirname($referencePath);
         $computer = new RelativePathComputer($referencePath);
         $this->assertEquals(str_repeat('..' . DIRECTORY_SEPARATOR, 1), $computer->computeToParent(dirname($referencePath)));
-        $this->assertEquals(str_repeat('..' . DIRECTORY_SEPARATOR, 3), $computer->computeToParent(dirname(dirname(dirname($referencePath)))));
+        $this->assertEquals(str_repeat('..' . DIRECTORY_SEPARATOR, 3), $computer->computeToParent(dirname($referencePath, 3)));
     }
 
-    public function testExceptionThrowIfNotParent()
+    public function testExceptionThrowIfNotParent(): void
     {
         $computer = new RelativePathComputer(__FILE__);
-        $this->setExpectedException('\LogicException');
+        $this->expectException(LogicException::class);
 
         $computer->computeToParent(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Fake');
     }

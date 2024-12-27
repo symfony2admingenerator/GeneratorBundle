@@ -8,30 +8,27 @@ use Admingenerator\GeneratorBundle\Generator\Action;
 class ActionTest extends TestCase
 {
 
-    public function testGetName()
+    public function testGetName(): void
     {
-        $from_to_array = array(
+        $from_to_array = [
             'name' => 'name',
             'underscored_name' => 'underscored_name',
-        );
+        ];
 
         $this->checkAction($from_to_array, 'getName');
     }
 
-    public function testGetLabel()
+    public function testGetLabel(): void
     {
-        $from_to_array = array(
+        $from_to_array = [
             'name' => 'Name',
             'underscored_name' => 'Underscored name',
-        );
+        ];
 
         $this->checkAction($from_to_array, 'getLabel');
     }
 
-    /**
-     * @param string $method
-     */
-    protected function checkAction($from_to_array, $method)
+    protected function checkAction(array $from_to_array, string $method): void
     {
         foreach ($from_to_array as $from => $to) {
             $action = new Action($from);

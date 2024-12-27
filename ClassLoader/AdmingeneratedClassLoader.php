@@ -26,7 +26,7 @@ class AdmingeneratedClassLoader
           return;
         }
         $this->basePath = $cacheDir;
-        spl_autoload_register(array($this, 'loadClass'), true);
+        spl_autoload_register([$this, 'loadClass'], true);
         self::$initialized = true;
     }
 

@@ -3,75 +3,44 @@ namespace Admingenerator\GeneratorBundle\Tests\QueryFilter\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity()
- * @ORM\Table(name="producer")
- */
+#[ORM\Entity]
+#[ORM\Table(name: 'producer')]
 class Producer
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $id;
+    #[ORM\Id]
+    #[ORM\Column]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    protected ?int $id = null;
 
-    /**
-     * @ORM\Column(length="255")
-     * @ORM\Index
-     */
-    protected $name;
+    #[ORM\Column(length: 255)]
+    protected ?string $name = null;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    protected $published = true;
+    #[ORM\Column]
+    protected bool $published = true;
 
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * Set name
-     *
-     * @param string $name
-     */
-    public function setName($name)
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
 
-    /**
-     * Get name
-     *
-     * @return string
-     */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    /**
-     * @param $published
-     * @return Producer
-     */
-    public function setPublished($published)
+    public function setPublished(mixed $published): self
     {
         $this->published = !!$published;
 
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function isPublished()
+    public function isPublished(): bool
     {
         return $this->published;
     }

@@ -1,132 +1,74 @@
 <?php
 namespace Admingenerator\GeneratorBundle\Tests\QueryFilter\Entity;
 
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="Admingenerator\GeneratorBundle\Tests\QueryFilter\Entity\MovieRepository")
- * @ORM\Table(name="movies")
- */
+#[ORM\Entity(repositoryClass: MovieRepository::class)]
+#[ORM\Table(name: 'movies')]
 class Movie
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $id;
+    #[ORM\Id]
+    #[ORM\Column]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    protected ?int $id = null;
 
-    /**
-     * @ORM\Column(length="255")
-     * @ORM\Index
-     */
-    protected $title;
+    #[ORM\Column(length: 255)]
+    protected ?string $title = null;
 
-    /**
-     * @ORM\Column(type="text", nullable="true")
-     * @ORM\Index
-     */
-    protected $desc;
+    #[ORM\Column(type: Types::TEXT, length: 255)]
+    protected ?string $desc = null;
 
-    /**
-     * @ORM\Column(type="boolean", nullable="true")
-     */
-    protected $is_published;
+    #[ORM\Column(nullable: true)]
+    protected ?bool $is_published = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Producer")
-     * @JoinColumn(name="producer_id", referencedColumnName="id")
-     *
-     * @var Producer
-     */
-    protected $producer;
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn]
+    protected ?Producer $producer = null;
 
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * Set title
-     *
-     * @param string $title
-     */
-    public function setTitle($title)
+    public function setTitle(string $title): void
     {
         $this->title = $title;
     }
 
-    /**
-     * Get title
-     *
-     * @return string
-     */
-    public function getTitle()
+    public function getTitle(): ?string
     {
         return $this->title;
     }
 
-    /**
-     * Set desc
-     *
-     * @param string $desc
-     */
-    public function setDesc($desc)
+    public function setDesc(string $desc): void
     {
         $this->desc = $desc;
     }
 
-    /**
-     * Get desc
-     *
-     * @return string
-     */
-    public function getDesc()
+    public function getDesc(): ?string
     {
         return $this->desc;
     }
 
-    /**
-     * Set is_published
-     *
-     * @param boolean $isPublished
-     */
-    public function setIsPublished($isPublished)
+    public function setIsPublished(?bool $isPublished): void
     {
         $this->is_published = $isPublished;
     }
 
-    /**
-     * Get is_published
-     *
-     * @return boolean
-     */
-    public function getIsPublished()
+    public function getIsPublished(): ?bool
     {
         return $this->is_published;
     }
 
-    /**
-     * @param Producer $producer
-     *
-     * @return Movie
-     */
-    public function setProducer(Producer $producer)
+    public function setProducer(?Producer $producer): self
     {
         $this->producer = $producer;
 
         return $this;
     }
 
-    /**
-     * @return Producer
-     */
-    public function getProducer()
+    public function getProducer(): ?Producer
     {
         return $this->producer;
     }

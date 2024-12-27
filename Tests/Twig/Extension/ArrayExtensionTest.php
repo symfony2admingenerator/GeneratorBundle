@@ -3,118 +3,110 @@
 namespace Admingenerator\GeneratorBundle\Tests\Twig\Extension;
 
 use Admingenerator\GeneratorBundle\Twig\Extension\ArrayExtension;
+use InvalidArgumentException;
+use LogicException;
+use PHPUnit\Framework\TestCase;
 
 /**
- * This class test the Admingenerator\GeneratorBundle\Twig\Extension\ArrayExtension
- *
- * @author Stéphane Escandell
+ * This class tests the Admingenerator\GeneratorBundle\Twig\Extension\ArrayExtension
  */
-class ArrayExtensionTest extends \PHPUnit_Framework_TestCase
+class ArrayExtensionTest extends TestCase
 {
-    /**
-     * @var ArrayExtension
-     */
-    private $extension;
+    private ?ArrayExtension $extension = null;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->extension = new ArrayExtension();
     }
 
-    public function testMapByWithNumericKey()
+    public function testMapByWithNumericKey(): void
     {
         $source = array(
-            array('val0FromArray1', 'val1FromArray1'),
-            array('val0FromArray2', 'val1FromArray2')
+            ['val0FromArray1', 'val1FromArray1'],
+            ['val0FromArray2', 'val1FromArray2']
         );
 
         $this->assertEquals(
-            array('val0FromArray1', 'val0FromArray2'),
+            ['val0FromArray1', 'val0FromArray2'],
             $this->extension->mapBy($source, 0)
         );
 
         $this->assertEquals(
-            array('val1FromArray1', 'val1FromArray2'),
+            ['val1FromArray1', 'val1FromArray2'],
             $this->extension->mapBy($source, 1)
         );
     }
 
-    public function testMapByWithNamedKey()
+    public function testMapByWithNamedKey(): void
     {
-        $source = array(
-            array('foo' => 'fooFromArray1', 'bar' => 'barFromArray1'),
-            array('foo' => 'fooFromArray2', 'bar' => 'barFromArray2')
-        );
+        $source = [
+            ['foo' => 'fooFromArray1', 'bar' => 'barFromArray1'],
+            ['foo' => 'fooFromArray2', 'bar' => 'barFromArray2']
+        ];
 
         $this->assertEquals(
-            array('barFromArray1', 'barFromArray2'),
+            ['barFromArray1', 'barFromArray2'],
             $this->extension->mapBy($source, 'bar')
         );
     }
 
-    public function testMapByOnObject()
+    public function testMapByOnObject(): void
     {
-        $source = array(
+        $source = [
             new TestObject()
-        );
+        ];
 
         $this->assertEquals(
-            array('foo'),
+            ['foo'],
             $this->extension->mapBy($source, 'foo')
         );
 
         $this->assertEquals(
-            array('foobar'),
+            ['foobar'],
             $this->extension->mapBy($source, 'foobar')
         );
     }
 
-    /**
-     * @expectedException     \InvalidArgumentException
-     */
-    public function testMapByReturnsExceptionOnNonArrayOrObject()
+    public function testMapByReturnsExceptionOnNonArrayOrObject(): void
     {
-        $this->extension->mapBy(array('foo'), 0);
+        $this->expectException(InvalidArgumentException::class);
+        $this->extension->mapBy(['foo'], 0);
     }
 
-    /**
-     * @expectedException     \LogicException
-     */
-    public function testMapByReturnsExceptionOnNonExistingKeyForArray()
+    public function testMapByReturnsExceptionOnNonExistingKeyForArray(): void
     {
-        $this->extension->mapBy(array(array('foo')), 5);
+        $this->expectException(LogicException::class);
+        $this->extension->mapBy([['foo']], 5);
     }
 
-    /**
-     * @expectedException     \LogicException
-     */
-    public function testMapByReturnsExceptionOnNonExistingPropertyOrMethodOnObject()
+    public function testMapByReturnsExceptionOnNonExistingPropertyOrMethodOnObject(): void
     {
-        $this->extension->mapBy(array(new TestObject()), 'dontExists');
+        $this->expectException(LogicException::class);
+        $this->extension->mapBy([new TestObject()], 'dontExists');
     }
 
-    public function testFlattenWithFlatArrays()
+    public function testFlattenWithFlatArrays(): void
     {
-        $source = array(
-            array('foo' => 'fooFromArray1', 'bar' => 'barFromArray1'),
-            array('foo' => 'fooFromArray2', 'bar' => 'barFromArray2')
-        );
+        $source = [
+            ['foo' => 'fooFromArray1', 'bar' => 'barFromArray1'],
+            ['foo' => 'fooFromArray2', 'bar' => 'barFromArray2']
+        ];
 
         $this->assertEquals(
-            array('fooFromArray1', 'barFromArray1', 'fooFromArray2', 'barFromArray2'),
+            ['fooFromArray1', 'barFromArray1', 'fooFromArray2', 'barFromArray2'],
             $this->extension->flatten($source)
         );
     }
 
-    public function testFlattenWithNestedArrays()
+    public function testFlattenWithNestedArrays(): void
     {
-        $source = array(
-            array('foo' => 'fooFromArray1', 'bar' => array('barFromArray1')),
-            array('foo' => 'fooFromArray2', 'bar' => 'barFromArray2')
-        );
+        $source = [
+            ['foo' => 'fooFromArray1', 'bar' => ['barFromArray1']],
+            ['foo' => 'fooFromArray2', 'bar' => 'barFromArray2']
+        ];
 
         $this->assertEquals(
-            array('fooFromArray1', 'barFromArray1', 'fooFromArray2', 'barFromArray2'),
+            ['fooFromArray1', 'barFromArray1', 'fooFromArray2', 'barFromArray2'],
             $this->extension->flatten($source)
         );
     }

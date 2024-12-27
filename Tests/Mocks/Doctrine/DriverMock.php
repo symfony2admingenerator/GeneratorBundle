@@ -2,71 +2,39 @@
 
 namespace Admingenerator\GeneratorBundle\Tests\Mocks\Doctrine;
 
-class DriverMock implements \Doctrine\DBAL\Driver
+use Doctrine\DBAL\Driver;
+use Doctrine\DBAL\Driver\API\ExceptionConverter;
+use Doctrine\DBAL\Platforms\AbstractPlatform;
+use Doctrine\DBAL\ServerVersionProvider;
+use Override;
+
+class DriverMock implements Driver
 {
-    private $_platformMock;
+    private ?DatabasePlatformMock $_platformMock = null;
 
-    private $_schemaManagerMock;
-
-    public function connect(array $params, $username = null, $password = null, array $driverOptions = array())
+    public function connect(array $params, $username = null, $password = null, array $driverOptions = array()): Driver\Connection
     {
         return new DriverConnectionMock();
     }
 
-    /**
-     * Constructs the Sqlite PDO DSN.
-     *
-     * @return string The DSN.
-     * @override
-     */
-    protected function _constructPdoDsn(array $params)
+    #[Override]
+    public function getDatabasePlatform(ServerVersionProvider $versionProvider): AbstractPlatform
     {
-        return "";
-    }
-
-    /**
-     * @override
-     */
-    public function getDatabasePlatform()
-    {
-        if (! $this->_platformMock) {
+        if (!$this->_platformMock) {
             $this->_platformMock = new DatabasePlatformMock;
         }
 
         return $this->_platformMock;
     }
 
-    /**
-     * @override
-     */
-    public function getSchemaManager(\Doctrine\DBAL\Connection $conn)
-    {
-        if ($this->_schemaManagerMock == null) {
-            return new SchemaManagerMock($conn);
-        } else {
-            return $this->_schemaManagerMock;
-        }
-    }
-
     /* MOCK API */
-
-    public function setDatabasePlatform(\Doctrine\DBAL\Platforms\AbstractPlatform $platform)
-    {
-        $this->_platformMock = $platform;
-    }
-
-    public function setSchemaManager(\Doctrine\DBAL\Schema\AbstractSchemaManager $sm)
-    {
-        $this->_schemaManagerMock = $sm;
-    }
-
     public function getName()
     {
         return 'mock';
     }
 
-    public function getDatabase(\Doctrine\DBAL\Connection $conn)
+    public function getExceptionConverter(): ExceptionConverter
     {
-        return;
+        return new ExceptionConverterMock();
     }
 }

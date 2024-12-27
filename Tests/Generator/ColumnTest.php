@@ -9,69 +9,69 @@ use Admingenerator\GeneratorBundle\Generator\Column;
 class ColumnTest extends TestCase
 {
 
-    public function testGetName()
+    public function testGetName(): void
     {
-        $from_to_array = array(
+        $from_to_array = [
             'name' => 'name',
             'underscored_name' => 'underscored_name',
-        );
+        ];
 
         $this->checkColumn($from_to_array, 'getName');
     }
 
-    public function testGetGetter()
+    public function testGetGetter(): void
     {
-        $from_to_array = array(
+        $from_to_array = [
             'name' => 'name',
             'underscored_name' => 'underscoredName',
-        );
+        ];
 
         $this->checkColumn($from_to_array, 'getGetter');
     }
 
-    public function testGetLabel()
+    public function testGetLabel(): void
     {
-        $from_to_array = array(
+        $from_to_array = [
             'name' => 'Name',
             'underscored_name' => 'Underscored name',
-        );
+        ];
 
         $this->checkColumn($from_to_array, 'getLabel');
     }
 
-    public function testSetProperty()
+    public function testSetProperty(): void
     {
-        $options = array(
+        $options = [
             'label' => 'my label',
             'getter' => 'getFoo',
             'sort_on' => 'foo',
             'sortOn' => 'foo',
             'dbType' => 'text',
             'formType' => 'choices',
-            'formOptions' => array('foo' => 'bar'),
+            'formOptions' => ['foo' => 'bar'],
             'filterType' => 'choice',
-            'filterOptions' => array('bar' => 'foo'),
-        );
+            'filterOptions' => ['bar' => 'foo'],
+        ];
 
         $column = new Column("test", false);
 
         foreach ($options as $option => $value) {
             $column->setProperty($option, $value);
-            $this->assertEquals($value, call_user_func_array(array($column, 'get'.InflectorFactory::create()->build()->classify($option)), array()));
+            $this->assertEquals($value, call_user_func_array([$column, 'get'.InflectorFactory::create()->build()->classify($option)], []));
         }
     }
 
-    public function testSetAddFormFilterOptionsPhpFunction()
+    public function testSetAddFormFilterOptionsPhpFunction(): void
     {
         $column = new Column("test", false);
 
-        $addOptions = array('years' => array('.range' => array('from' => 1900, 'to' => 1915, 'step' => 5)));
+        $addOptions = ['years' => ['.range' => ['start' => 1900, 'end' => 1915, 'step' => 5]]];
 
         $column->setAddFormOptions($addOptions);
 
         $options = $column->getFormOptions();
 
-        $testOptions = array(1900, 1905, 1910, 1915);
+        $testOptions = [1900, 1905, 1910, 1915];
 
         $this->assertEquals($testOptions, $options['years']);
 
@@ -82,35 +82,32 @@ class ColumnTest extends TestCase
         $this->assertEquals($testOptions, $options['years']);
     }
 
-    public function testCredentials()
+    public function testCredentials(): void
     {
         $column = new Column('test', false);
 
-        $column->setCredentials(array('credential1', 'credential2'));
-        $column->setFiltersCredentials(array('credential3', 'credential4'));
+        $column->setCredentials(['credential1', 'credential2']);
+        $column->setFiltersCredentials(['credential3', 'credential4']);
 
-        $this->assertEquals(array('credential1', 'credential2'), $column->getCredentials());
-        $this->assertEquals(array('credential3', 'credential4'), $column->getFiltersCredentials());
+        $this->assertEquals(['credential1', 'credential2'], $column->getCredentials());
+        $this->assertEquals(['credential3', 'credential4'], $column->getFiltersCredentials());
 
-        $column->setFiltersCredentials(array());
+        $column->setFiltersCredentials([]);
 
-        $this->assertEquals(array(), $column->getFiltersCredentials());
+        $this->assertEquals([], $column->getFiltersCredentials());
     }
 
-    public function testFiltersCredentialsFallbackOnCredentialsIfNotCustomized()
+    public function testFiltersCredentialsFallbackOnCredentialsIfNotCustomized(): void
     {
         $column = new Column('test', false);
 
-        $column->setCredentials(array('credential1', 'credential2'));
+        $column->setCredentials(['credential1', 'credential2']);
 
-        $this->assertEquals(array('credential1', 'credential2'), $column->getFiltersCredentials());
+        $this->assertEquals(['credential1', 'credential2'], $column->getFiltersCredentials());
     }
 
 
-    /**
-     * @param string $method
-     */
-    protected function checkColumn($from_to_array, $method)
+    protected function checkColumn(array $from_to_array, string $method): void
     {
         foreach ($from_to_array as $from => $to) {
             $column = new Column($from, false);

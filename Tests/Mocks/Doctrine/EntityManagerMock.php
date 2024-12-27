@@ -21,55 +21,30 @@
 
 namespace Admingenerator\GeneratorBundle\Tests\Mocks\Doctrine;
 
+use Doctrine\DBAL\Connection;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\UnitOfWork;
+
 /**
  * Special EntityManager mock used for testing purposes.
  */
-class EntityManagerMock extends \Doctrine\ORM\EntityManager
+class EntityManagerMock extends EntityManager
 {
-    private $_uowMock;
-    private $_proxyFactoryMock;
-    private $_idGenerators = array();
-
     /**
      * @override
      */
-    public function getUnitOfWork()
+    public function getUnitOfWork(): UnitOfWork
     {
-        return isset($this->_uowMock) ? $this->_uowMock : parent::getUnitOfWork();
+        return parent::getUnitOfWork();
     }
 
     /* Mock API */
 
     /**
-     * Sets a (mock) UnitOfWork that will be returned when getUnitOfWork() is called.
-     *
-     * @param \Doctrine\ORM\UnitOfWork $uow
-     */
-    public function setUnitOfWork($uow)
-    {
-        $this->_uowMock = $uow;
-    }
-
-    public function setProxyFactory($proxyFactory)
-    {
-        $this->_proxyFactoryMock = $proxyFactory;
-    }
-
-    public function getProxyFactory()
-    {
-        return isset($this->_proxyFactoryMock) ? $this->_proxyFactoryMock : parent::getProxyFactory();
-    }
-
-    /**
      * Mock factory method to create an EntityManager.
-     *
-     * @param  unknown_type               $conn
-     * @param  \Doctrine\ORM\Configuration     $config
-     * @param  \Doctrine\Common\EventManager      $eventManager
-     * @return EntityManagerMock
      */
-    public static function create($conn, \Doctrine\ORM\Configuration $config = null,
-            \Doctrine\Common\EventManager $eventManager = null)
+    public static function create(Connection $conn, \Doctrine\ORM\Configuration $config = null,
+            \Doctrine\Common\EventManager $eventManager = null): EntityManagerMock
     {
         if (is_null($config)) {
             $config = new \Doctrine\ORM\Configuration();

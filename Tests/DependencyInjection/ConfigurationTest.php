@@ -3,14 +3,15 @@
 namespace Admingenerator\GeneratorBundle\Tests\DependencyInjection;
 
 use Admingenerator\GeneratorBundle\DependencyInjection\Configuration;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Config\Definition\Processor;
 
-class ConfigurationTest extends \PHPUnit_Framework_TestCase
+class ConfigurationTest extends TestCase
 {
     /**
      * Test that default configuration is correctly initialized
      */
-    public function testDefaultConfig()
+    public function testDefaultConfig(): void
     {
         $processor = new Processor();
         $config = $processor->processConfiguration(new Configuration('admingen_generator'), array());
@@ -21,13 +22,10 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
     /**
      * Get waiting default values from configuration. If $key is not null
      * and is in first level keys, returns value of this specific key only.
-     *
-     * @param  string $key
-     * @return mixed
      */
-    private function getBundleDefaultConfig($key = null)
+    private function getBundleDefaultConfig(string $key = null): mixed
     {
-        static $defaultConfiguration = array(
+        static $defaultConfiguration = [
             'generate_base_in_project_dir'  => false,
             'use_doctrine_orm'              => false,
             'use_doctrine_odm'              => false,
@@ -46,22 +44,22 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
             'use_doctrine_orm_batch_remove' => false,
             'use_doctrine_odm_batch_remove' => false,
             'use_propel_batch_remove'       => false,
-            'twig'                  => array(
+            'twig'                  => [
                 'use_form_resources'        => true,
                 'use_localized_date'        => false,
                 'date_format'               => 'Y-m-d',
                 'datetime_format'           => 'Y-m-d H:i:s',
                 'localized_date_format'     => 'medium',
                 'localized_datetime_format' => 'medium',
-                'number_format'             => array(
+                'number_format'             => [
                     'decimal'               => 0,
                     'decimal_point'         => '.',
                     'thousand_separator'    => ','
-                )
-            ),
-            'templates_dirs'        => array(),
-            'form_types'            => array(
-                'doctrine_orm'  => array(
+                ]
+            ],
+            'templates_dirs'        => [],
+            'form_types'            => [
+                'doctrine_orm'  => [
                     'datetime'      => 'Symfony\Component\Form\Extension\Core\Type\DateTimeType',
                     'vardatetime'   => 'Symfony\Component\Form\Extension\Core\Type\DateTimeType',
                     'datetimetz'    => 'Symfony\Component\Form\Extension\Core\Type\DateTimeType',
@@ -78,8 +76,8 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
                     'collection'    => 'Symfony\Component\Form\Extension\Core\Type\CollectionType',
                     'array'         => 'Symfony\Component\Form\Extension\Core\Type\CollectionType',
                     'boolean'       => 'Symfony\Component\Form\Extension\Core\Type\CheckboxType',
-                ),
-                'doctrine_odm'  => array(
+                ],
+                'doctrine_odm'  => [
                     'datetime'    => 'Symfony\Component\Form\Extension\Core\Type\DateTimeType',
                     'timestamp'   => 'Symfony\Component\Form\Extension\Core\Type\DateTimeType',
                     'vardatetime' => 'Symfony\Component\Form\Extension\Core\Type\DateTimeType',
@@ -101,8 +99,8 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
                     'collection'  => 'Symfony\Component\Form\Extension\Core\Type\CollectionType',
                     'hash'        => 'Symfony\Component\Form\Extension\Core\Type\CollectionType',
                     'boolean'     => 'Symfony\Component\Form\Extension\Core\Type\CheckboxType',
-                ),
-                'propel'        => array(
+                ],
+                'propel'        => [
                     'TIMESTAMP'    => 'Symfony\Component\Form\Extension\Core\Type\DateTimeType',
                     'BU_TIMESTAMP' => 'Symfony\Component\Form\Extension\Core\Type\DateTimeType',
                     'DATE'         => 'Symfony\Component\Form\Extension\Core\Type\DateType',
@@ -129,10 +127,10 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
                     'ENUM'         => 'Symfony\Component\Form\Extension\Core\Type\ChoiceType',
                     'BOOLEAN'      => 'Symfony\Component\Form\Extension\Core\Type\CheckboxType',
                     'BOOLEAN_EMU'  => 'Symfony\Component\Form\Extension\Core\Type\CheckboxType',
-                ),
-            ),
-            'filter_types'          => array(
-                'doctrine_orm'  => array(
+                ],
+            ],
+            'filter_types'          => [
+                'doctrine_orm'  => [
                     'datetime'    => 'Symfony\Component\Form\Extension\Core\Type\DateTimeType',
                     'vardatetime' => 'Symfony\Component\Form\Extension\Core\Type\DateTimeType',
                     'datetimetz'  => 'Symfony\Component\Form\Extension\Core\Type\DateTimeType',
@@ -149,8 +147,8 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
                     'collection'  => 'Symfony\Component\Form\Extension\Core\Type\CollectionType',
                     'array'       => 'Symfony\Component\Form\Extension\Core\Type\TextType',
                     'boolean'     => 'Symfony\Component\Form\Extension\Core\Type\ChoiceType',
-                ),
-                'doctrine_odm'  => array(
+                ],
+                'doctrine_odm'  => [
                     'datetime'    => 'Symfony\Component\Form\Extension\Core\Type\DateTimeType',
                     'timestamp'   => 'Symfony\Component\Form\Extension\Core\Type\DateTimeType',
                     'vardatetime' => 'Symfony\Component\Form\Extension\Core\Type\DateTimeType',
@@ -172,8 +170,8 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
                     'collection'  => 'Symfony\Component\Form\Extension\Core\Type\CollectionType',
                     'hash'        => 'Symfony\Component\Form\Extension\Core\Type\TextType',
                     'boolean'     => 'Symfony\Component\Form\Extension\Core\Type\ChoiceType',
-                ),
-                'propel'        => array(
+                ],
+                'propel'        => [
                     'TIMESTAMP'    => 'Symfony\Component\Form\Extension\Core\Type\DateTimeType',
                     'BU_TIMESTAMP' => 'Symfony\Component\Form\Extension\Core\Type\DateTimeType',
                     'DATE'         => 'Symfony\Component\Form\Extension\Core\Type\DateType',
@@ -200,16 +198,14 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
                     'ENUM'         => 'Symfony\Component\Form\Extension\Core\Type\TextType',
                     'BOOLEAN'      => 'Symfony\Component\Form\Extension\Core\Type\ChoiceType',
                     'BOOLEAN_EMU'  => 'Symfony\Component\Form\Extension\Core\Type\ChoiceType',
-                ),
-            ),
-            'stylesheets'               => array(),
-            'javascripts'               => array(),
+                ],
+            ],
+            'stylesheets'               => [],
+            'javascripts'               => [],
             'default_action_after_save' => 'edit',
             'throw_exceptions'          => false,
-            'use_doctrine_orm_batch_remove' => false,
-            'use_doctrine_odm_batch_remove' => false,
-            'use_propel_batch_remove'       => false,
-        );
+            'generate_base_in_project_dir_directory' => 'admin',
+        ];
 
         if (!is_null($key) && array_key_exists($key, $defaultConfiguration)) {
             return $defaultConfiguration[$key];

@@ -3,33 +3,27 @@
 namespace Admingenerator\GeneratorBundle\Tests\Twig\Extension;
 
 use Admingenerator\GeneratorBundle\Twig\Extension\ConfigExtension;
+use InvalidArgumentException;
+use PHPUnit\Framework\TestCase;
 
 /**
- * This class test the Admingenerator\GeneratorBundle\Twig\Extension\ConfigExtension
- *
- * @author Piotr Gołębiewski <loostro@gmail.com>
+ * This class tests the Admingenerator\GeneratorBundle\Twig\Extension\ConfigExtension
  */
-class ConfigExtensionTest extends \PHPUnit_Framework_TestCase
+class ConfigExtensionTest extends TestCase
 {
-    /**
-     * @var ConfigExtension
-     */
-    private $extension;
-    
-    /**
-     * @var array
-     */
-    private $exampleConfig = array(
-        'array1' => array('val0' => 'val0FromArray1', 'val1' => 'val1FromArray1'),
-        'array2' => array('val0FromArray2', 'val1FromArray2'),
-    );
+    private ?ConfigExtension $extension = null;
 
-    public function setUp()
+    private array $exampleConfig = [
+        'array1' => ['val0' => 'val0FromArray1', 'val1' => 'val1FromArray1'],
+        'array2' => ['val0FromArray2', 'val1FromArray2'],
+    ];
+
+    public function setUp(): void
     {
         $this->extension = new ConfigExtension($this->exampleConfig);
     }
 
-    public function testGetAdmingeneratorConfig()
+    public function testGetAdmingeneratorConfig(): void
     {
         $this->assertEquals(
             $this->exampleConfig['array1']['val0'],
@@ -42,11 +36,9 @@ class ConfigExtensionTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    /**
-     * @expectedException     \InvalidArgumentException
-     */
     public function testGetAdmingeneratorConfigReturnsExceptionOnUnknownKey()
     {
+        $this->expectException(InvalidArgumentException::class);
         $this->extension->getAdmingeneratorConfig('unknown.key');
     }
 }
