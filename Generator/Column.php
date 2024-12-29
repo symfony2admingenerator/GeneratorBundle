@@ -75,7 +75,7 @@ class Column
 
     protected string|array $credentials = 'AdmingenAllowed';
 
-    protected bool $filtersCredentials = false;
+    protected bool|string|array $filtersCredentials = false;
 
     protected string $gridClass = '';
 
