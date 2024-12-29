@@ -5,9 +5,6 @@ namespace Admingenerator\GeneratorBundle\Twig\Extension;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
-/**
- * @author Piotr Gołębiewski <loostro@gmail.com>
- */
 class ConfigExtension extends AbstractExtension
 {
     public function __construct(protected readonly array $bundleConfig)
@@ -22,7 +19,7 @@ class ConfigExtension extends AbstractExtension
         ];
     }
 
-    public function getAdmingeneratorConfig(string $name): ?string
+    public function getAdmingeneratorConfig(string $name): array|string|null
     {
         $search_in = $this->bundleConfig;
         $path = explode('.', $name);
