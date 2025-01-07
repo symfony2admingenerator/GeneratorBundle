@@ -19,7 +19,7 @@ class GeneratorCacheWarmer implements CacheWarmerInterface
     {
     }
 
-    public function warmUp(string $cacheDir): array
+    public function warmUp(string $cacheDir, ?string $buildDir = null): array
     {
         $this->generatorCacheBuilder->buildFull();
 
