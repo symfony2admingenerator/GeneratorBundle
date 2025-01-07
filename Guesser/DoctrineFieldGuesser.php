@@ -4,7 +4,7 @@ namespace Admingenerator\GeneratorBundle\Guesser;
 
 use Admingenerator\GeneratorBundle\Exception\NotImplementedException;
 use Doctrine\Persistence\ManagerRegistry;
-use Doctrine\ORM\Mapping\ClassMetadataInfo;
+use Doctrine\ORM\Mapping\ClassMetadata as ORMClassMetadata;
 use Doctrine\Persistence\Mapping\ClassMetadata;
 use Symfony\Component\HttpKernel\Kernel;
 
@@ -215,7 +215,7 @@ abstract class DoctrineFieldGuesser implements FieldGuesser
             $mapping = $this->getMetadatas($class)->getAssociationMapping($columnName);
 
             return array(
-                'multiple'      => ($mapping['type'] === ClassMetadataInfo::MANY_TO_MANY || $mapping['type'] === ClassMetadataInfo::ONE_TO_MANY),
+                'multiple'      => ($mapping['type'] === ORMClassMetadata::MANY_TO_MANY || $mapping['type'] === ORMClassMetadata::ONE_TO_MANY),
                 'em'            => $this->getObjectManagerName($mapping['target'.ucfirst($this->objectModel)]),
                 'class'         => $mapping['target'.ucfirst($this->objectModel)],
                 'required'      => !$filter && $this->isRequired($class, $columnName),
