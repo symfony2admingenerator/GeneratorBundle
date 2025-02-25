@@ -1,9 +1,7 @@
 {% block column_collection %}
-    {% apply spaceless %}
-        <ul>
-            {{ echo_for('object', builder.ModelClass ~ '.' ~ column.getter ) }}
-                <li>{{ echo_twig('object') }}</li>
-            {{ echo_endfor() }}
-        </ul>
-    {% endapply %}
+    <ul>
+        {{- echo_for('object', builder.ModelClass ~ '.' ~ column.getter ) -}}
+            <li>{{ echo_twig('object') }}</li>
+        {{- echo_endfor() -}}
+    </ul>
 {% endblock %}

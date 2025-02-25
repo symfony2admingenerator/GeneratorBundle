@@ -33,22 +33,18 @@
     {% set actionParams = action.params ? echo_twig_assoc(action.params) : "{ 'pk': " ~ builder.ModelClass ~ "." ~ builder.getFieldGuesser().getModelPrimaryKeyName(model) ~ ", action: '" ~ action.name ~ "' }" %}
     {% set translationDomain = action.type is same as('custom') ? i18n_catalog|default("Admin") : 'Admingenerator' %}
 
-    {% apply spaceless %}
-        {{ echo_spaceless() }}
-        <a  class="object-action btn btn-default {% if builder.yamlKey is same as('list') or builder.yamlKey is same as('nested_list') %}btn-xs {% endif %}{{ action.class|default('') }}"
-            href="{{ echo_path(actionRoute, actionParams) }}"
-            title="{{ echo_trans(action.label, {}, translationDomain, 'html_attr') }}"
-                {%- if action.confirm and not action.forceIntermediate %}
-                    data-confirm="{{ echo_trans(action.confirm, {}, translationDomain, 'html_attr') }}"
-                    data-confirm-modal="{{ action.confirmModal|default('#confirmObjectModal') }}"
-                    data-toggle="modal"
-                {% endif -%}
-                {%- if action.csrfProtected and not action.forceIntermediate %} data-csrf-token="{{ echo_path(actionRoute, actionParams, ['csrf_token']) }}" {% endif -%}>
-            <i class="fa fa-fw {{ action.icon|default('fa-square fa-regular') }}"></i>
-            <span>{{ echo_trans(action.label, {}, translationDomain, 'html') }}</span>
-        </a>
-        {{ echo_endspaceless() }}
-    {% endapply %}
+    <a  class="object-action btn btn-default {% if builder.yamlKey is same as('list') or builder.yamlKey is same as('nested_list') %}btn-xs {% endif %}{{ action.class|default('') }}"
+        href="{{ echo_path(actionRoute, actionParams) }}"
+        title="{{ echo_trans(action.label, {}, translationDomain, 'html_attr') }}"
+            {%- if action.confirm and not action.forceIntermediate %}
+                data-confirm="{{ echo_trans(action.confirm, {}, translationDomain, 'html_attr') }}"
+                data-confirm-modal="{{ action.confirmModal|default('#confirmObjectModal') }}"
+                data-toggle="modal"
+            {% endif -%}
+            {%- if action.csrfProtected and not action.forceIntermediate %} data-csrf-token="{{ echo_path(actionRoute, actionParams, ['csrf_token']) }}" {% endif -%}>
+        <i class="fa fa-fw {{ action.icon|default('fa-square fa-regular') }}"></i>
+        <span>{{ echo_trans(action.label, {}, translationDomain, 'html') }}</span>
+    </a>
 {% endblock %}
 
 {% block object_actions_script %}
