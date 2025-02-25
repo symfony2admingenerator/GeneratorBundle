@@ -3,6 +3,7 @@
 namespace Admingenerator\GeneratorBundle\Twig\TokenParser;
 
 use Twig\Error\SyntaxError;
+use Twig\Node\EmptyNode;
 use Twig\Node\Expression\ConstantExpression;
 use Twig\Node\Node;
 use Twig\Token;
@@ -13,10 +14,6 @@ class ExtendsAdmingeneratedTokenParser extends AbstractTokenParser
 
     public function parse(Token $token): ?Node
     {
-        if (null !== $this->parser->getParent()) {
-            throw new SyntaxError('Multiple extends tags are forbidden', $token->getLine());
-        }
-
         $templateParts = explode(':', $this->parser->getCurrentToken()->getValue()); //AcmeBundle:namespace:template.html.twig
         if (count($templateParts) !== 3) {
           list($bundle, $folder, $file) = explode('/', $this->parser->getCurrentToken()->getValue()); //@Acme/namespace/template.html.twig
@@ -32,7 +29,7 @@ class ExtendsAdmingeneratedTokenParser extends AbstractTokenParser
         $this->parser->setParent(new ConstantExpression($path,$token->getLine()));
         $this->parser->getStream()->expect(Token::BLOCK_END_TYPE);
 
-        return null;
+        return new EmptyNode($token->getLine());
     }
 
     public function getTag(): string
