@@ -13,7 +13,7 @@
     * @param \{{ model }} ${{ builder.ModelClass }}
     * @return boolean
     */
-    protected function validateCredentials($credentials, \{{ model }} ${{ builder.ModelClass }} = null)
+    protected function validateCredentials($credentials, ?\{{ model }} ${{ builder.ModelClass }} = null)
     {
     {% if(admingenerator_config('use_jms_security')) %}
         $credentials = new Expression($credentials);
@@ -29,7 +29,7 @@
     * @param \{{ model }} ${{ builder.ModelClass }}
     * @throws AccessDeniedException if is not allowed
     */
-    protected function denyAccessUnlessValidateCredentials($credentials, \{{ model }} ${{ builder.ModelClass }} = null)
+    protected function denyAccessUnlessValidateCredentials($credentials, ?\{{ model }} ${{ builder.ModelClass }} = null)
     {
     if (!$this->validateCredentials($credentials, ${{ builder.ModelClass }})) {
     throw $this->createAccessDeniedException('Credentials unsatisfied');

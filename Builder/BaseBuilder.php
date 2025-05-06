@@ -25,7 +25,7 @@ abstract class BaseBuilder extends GenericBaseBuilder
         return '@AdmingeneratorGenerator/templates/' . $this->getGenerator()->getTemplateBaseDir() . parent::getTemplateName();
     }
 
-    public function __construct(Environment $environment = null)
+    public function __construct(?Environment $environment = null)
     {
         parent::__construct();
         $this->twigExtensions[] = ClassifyExtension::class;

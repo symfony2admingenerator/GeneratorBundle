@@ -71,7 +71,7 @@ class {{ builder.YamlKey|ucfirst }}Type extends BaseType
      *
      * @return boolean
      */
-    protected function canDisplay{{ column.name|classify|php_name }}(\{{ model }} ${{ builder.ModelClass }} = null)
+    protected function canDisplay{{ column.name|classify|php_name }}(?\{{ model }} ${{ builder.ModelClass }} = null)
     {
         {% if column.credentials is not empty and column.credentials != 'AdmingenAllowed' %}
             {% if(admingenerator_config('use_jms_security')) %}

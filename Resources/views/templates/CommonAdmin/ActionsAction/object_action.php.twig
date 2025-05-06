@@ -102,7 +102,7 @@
      * @param \{{ model }} ${{ builder.ModelClass }} Your \{{ model }} object
      * @return Response Must return a response!
      */
-    protected function errorObject{{ action.name|php_name|capitalize }}(\Exception $e, \{{ model }} ${{ builder.ModelClass }} = null)
+    protected function errorObject{{ action.name|php_name|capitalize }}(\Exception $e, ?\{{ model }} ${{ builder.ModelClass }} = null)
     {
 
         // Throw exception if defined

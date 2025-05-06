@@ -26,7 +26,7 @@ class SecurityExtension extends AbstractExtension
         ];
     }
 
-    public function isOneGranted(array $credentials, object $object = null): bool
+    public function isOneGranted(array $credentials, ?object $object = null): bool
     {
         if (empty($credentials)) {
             return true;

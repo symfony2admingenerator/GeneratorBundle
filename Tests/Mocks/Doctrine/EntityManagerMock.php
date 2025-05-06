@@ -43,8 +43,8 @@ class EntityManagerMock extends EntityManager
     /**
      * Mock factory method to create an EntityManager.
      */
-    public static function create(Connection $conn, \Doctrine\ORM\Configuration $config = null,
-            \Doctrine\Common\EventManager $eventManager = null): EntityManagerMock
+    public static function create(Connection $conn, ?\Doctrine\ORM\Configuration $config = null,
+            ?\Doctrine\Common\EventManager $eventManager = null): EntityManagerMock
     {
         if (is_null($config)) {
             $config = new \Doctrine\ORM\Configuration();
