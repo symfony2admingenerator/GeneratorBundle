@@ -23,7 +23,7 @@ class ConfigurationTest extends TestCase
      * Get waiting default values from configuration. If $key is not null
      * and is in first level keys, returns value of this specific key only.
      */
-    private function getBundleDefaultConfig(string $key = null): mixed
+    private function getBundleDefaultConfig(?string $key = null): mixed
     {
         static $defaultConfiguration = [
             'generate_base_in_project_dir'  => false,

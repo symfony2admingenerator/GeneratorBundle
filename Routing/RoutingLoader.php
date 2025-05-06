@@ -91,7 +91,7 @@ class RoutingLoader extends FileLoader
 
     protected array $yaml = [];
 
-    public function load(mixed $resource, string $type = null): RouteCollection
+    public function load(mixed $resource, ?string $type = null): RouteCollection
     {
         $collection = new RouteCollection();
 
@@ -165,7 +165,7 @@ class RoutingLoader extends FileLoader
         return $collection;
     }
 
-    public function supports(mixed $resource, string $type = null): bool
+    public function supports(mixed $resource, ?string $type = null): bool
     {
         return 'admingenerator' == $type;
     }

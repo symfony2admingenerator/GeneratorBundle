@@ -85,7 +85,7 @@ class EchoExtension extends AbstractExtension
      * Print "trans" tag for string $str with parameters $parameters
      * for catalog $catalog.
      */
-    public function getEchoTrans(string $str, array $parameters = [], string $catalog = 'Admingenerator', bool|string $escape = null): string
+    public function getEchoTrans(string $str, array $parameters = [], string $catalog = 'Admingenerator', bool|string|null $escape = null): string
     {
         $transParameters = '{}';
         $bag_parameters = [];
@@ -120,7 +120,7 @@ class EchoExtension extends AbstractExtension
     /**
      * Print "echo tag with path call" to the path $path with params $params.
      */
-    public function getEchoPath(string $path, string $params = null, array|string $filters = null): string
+    public function getEchoPath(string $path, string $params = null, array|string|null $filters = null): string
     {
         if (null === $params) {
             return (null === $filters)
@@ -152,7 +152,7 @@ class EchoExtension extends AbstractExtension
      * Print "if" tag with condition to is_expr_granted('$credentials')
      * If $modelName is not null, append the $modelName to the function call.
      */
-    public function getEchoIfGranted(string $credentials, string $modelName = null): string
+    public function getEchoIfGranted(string $credentials, ?string $modelName = null): string
     {
         if ('AdmingenAllowed' == $credentials) {
             return "{% if (true) %}";

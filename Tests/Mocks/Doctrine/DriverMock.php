@@ -12,7 +12,7 @@ class DriverMock implements Driver
 {
     private ?DatabasePlatformMock $_platformMock = null;
 
-    public function connect(array $params, $username = null, $password = null, array $driverOptions = array()): Driver\Connection
+    public function connect(array $params, $username = null, $password = null, array $driverOptions = []): Driver\Connection
     {
         return new DriverConnectionMock();
     }

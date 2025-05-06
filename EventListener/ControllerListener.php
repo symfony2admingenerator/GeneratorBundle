@@ -27,7 +27,7 @@ class ControllerListener
         $this->cacheSuffix = 'default';
     }
 
-    public function setCacheProvider(CacheInterface $cacheProvider = null, $cacheSuffix = 'default'): void
+    public function setCacheProvider(?CacheInterface $cacheProvider = null, $cacheSuffix = 'default'): void
     {
         $this->cacheProvider = $cacheProvider;
         $this->cacheSuffix = $cacheSuffix;

@@ -53,7 +53,7 @@ class AdmingeneratorMenuBuilder
     /**
      * Set active class to current item and all its parents (so it is automatically opened)
      */
-    protected function setActive(ItemInterface $item = null): void
+    protected function setActive(?ItemInterface $item = null): void
     {
         if ($item) {
             $this->setActive($item->getParent());
