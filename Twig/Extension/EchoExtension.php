@@ -120,7 +120,7 @@ class EchoExtension extends AbstractExtension
     /**
      * Print "echo tag with path call" to the path $path with params $params.
      */
-    public function getEchoPath(string $path, string $params = null, array|string|null $filters = null): string
+    public function getEchoPath(string $path, ?string $params = null, array|string|null $filters = null): string
     {
         if (null === $params) {
             return (null === $filters)
