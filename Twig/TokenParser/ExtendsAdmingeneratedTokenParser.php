@@ -2,7 +2,7 @@
 
 namespace Admingenerator\GeneratorBundle\Twig\TokenParser;
 
-use Twig\Error\SyntaxError;
+use Twig\Environment;
 use Twig\Node\EmptyNode;
 use Twig\Node\Expression\ConstantExpression;
 use Twig\Node\Node;
@@ -24,7 +24,11 @@ class ExtendsAdmingeneratedTokenParser extends AbstractTokenParser
 
         $path = "Admingenerated/$bundle/Resources/views/$folder/$file";
 
-        $this->parser->getExpressionParser()->parseExpression();
+        if (Environment::VERSION_ID < 32100) { // BC
+            $this->parser->getExpressionParser()->parseExpression();
+        } else {
+            $this->parser->parseExpression();
+        }
 
         $this->parser->setParent(new ConstantExpression($path,$token->getLine()));
         $this->parser->getStream()->expect(Token::BLOCK_END_TYPE);
