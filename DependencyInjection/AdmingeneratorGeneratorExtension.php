@@ -9,9 +9,9 @@ use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
-use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
 use Symfony\Component\DependencyInjection\Reference;
-use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\Yaml\Yaml;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\param;
 
@@ -35,8 +35,8 @@ class AdmingeneratorGeneratorExtension extends Extension
 
     public function load(array $configs, ContainerBuilder $container): void
     {
-        $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
-        $loader->load('services.xml');
+        $loader = new PhpFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $loader->load('services.php');
 
         $config = $this->processConfiguration($this->getConfiguration($configs, $container), $configs);
 
@@ -107,11 +107,11 @@ class AdmingeneratorGeneratorExtension extends Extension
             throw new ModelManagerNotSelectedException();
         }
 
-        $loader = new XmlFileLoader($container, new FileLocator(dirname(__DIR__) . DIRECTORY_SEPARATOR . 'Resources' . DIRECTORY_SEPARATOR . 'config'));
+        $loader = new PhpFileLoader($container, new FileLocator(dirname(__DIR__) . DIRECTORY_SEPARATOR . 'Resources' . DIRECTORY_SEPARATOR . 'config'));
         $config['templates_dirs'][] = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'Resources' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'templates';
 
         if ($config['use_doctrine_orm']) {
-            $loader->load('doctrine_orm.xml');
+            $loader->load('doctrine_orm.php');
             $this->addTemplatesInitialization($container->getDefinition('admingenerator.generator.doctrine'), $config['templates_dirs']);
             if ($config['overwrite_if_exists']) {
                 $container
@@ -127,7 +127,7 @@ class AdmingeneratorGeneratorExtension extends Extension
         }
 
         if ($config['use_doctrine_odm']) {
-            $loader->load('doctrine_odm.xml');
+            $loader->load('doctrine_odm.php');
             $this->addTemplatesInitialization($container->getDefinition('admingenerator.generator.doctrine_odm'), $config['templates_dirs']);
             if ($config['overwrite_if_exists']) {
                 $container
@@ -143,7 +143,7 @@ class AdmingeneratorGeneratorExtension extends Extension
         }
 
         if ($config['use_propel']) {
-            $loader->load('propel.xml');
+            $loader->load('propel.php');
             $this->addTemplatesInitialization($container->getDefinition('admingenerator.generator.propel'), $config['templates_dirs']);
             if ($config['overwrite_if_exists']) {
                 $container
