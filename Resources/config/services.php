@@ -78,8 +78,6 @@ return static function (ContainerConfigurator $container): void {
     $services->set('admingenerator.maker.make_admin', MakeAdmin::class)
         ->tag('maker.command')
         ->tag('container.no_preload');
-
-
     $services->set('admingenerator.command.install-assets', AssetsInstallCommand::class)
         ->tag('console.command', ['command' => 'admin:install-assets'])
         ->arg('$projectDir', param('kernel.project_dir'));
