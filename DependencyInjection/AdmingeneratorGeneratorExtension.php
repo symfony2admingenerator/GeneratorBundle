@@ -95,7 +95,7 @@ class AdmingeneratorGeneratorExtension extends Extension
     {
         $container
             ->getDefinition($definition)
-            ->replaceArgument(0, param('admingenerator.generate_base_in_project_dir_directory')->__toString());
+            ->replaceArgument('$outputDir', param('admingenerator.generate_base_in_project_dir_directory')->__toString());
     }
 
     /**
@@ -120,10 +120,10 @@ class AdmingeneratorGeneratorExtension extends Extension
             }
 
             $container->getDefinition('admingenerator.fieldguesser.doctrine')
-                ->addArgument($config['form_types']['doctrine_orm'])
-                ->addArgument($config['filter_types']['doctrine_orm'])
-                ->addArgument($config['guess_required'])
-                ->addArgument($config['default_required']);
+                ->setArgument('$formTypes', $config['form_types']['doctrine_orm'])
+                ->setArgument('$filterTypes', $config['filter_types']['doctrine_orm'])
+                ->setArgument('$guessRequired', $config['guess_required'])
+                ->setArgument('$defaultRequired', $config['default_required']);
         }
 
         if ($config['use_doctrine_odm']) {
@@ -136,10 +136,10 @@ class AdmingeneratorGeneratorExtension extends Extension
             }
 
             $container->getDefinition('admingenerator.generator.doctrine_odm')
-                ->addArgument($config['form_types']['doctrine_odm'])
-                ->addArgument($config['filter_types']['doctrine_odm'])
-                ->addArgument($config['guess_required'])
-                ->addArgument($config['default_required']);
+                ->setArgument('$formTypes', $config['form_types']['doctrine_odm'])
+                ->setArgument('$filterTypes', $config['filter_types']['doctrine_odm'])
+                ->setArgument('$guessRequired', $config['guess_required'])
+                ->setArgument('$defaultRequired', $config['default_required']);
         }
 
         if ($config['use_propel']) {
@@ -152,10 +152,10 @@ class AdmingeneratorGeneratorExtension extends Extension
             }
 
             $container->getDefinition('admingenerator.fieldguesser.propel')
-                ->addArgument($config['form_types']['propel'])
-                ->addArgument($config['filter_types']['propel'])
-                ->addArgument($config['guess_required'])
-                ->addArgument($config['default_required']);
+                ->setArgument('$formTypes', $config['form_types']['propel'])
+                ->setArgument('$filterTypes', $config['filter_types']['propel'])
+                ->setArgument('$guessRequired', $config['guess_required'])
+                ->setArgument('$defaultRequired', $config['default_required']);
         }
     }
 
@@ -190,10 +190,10 @@ class AdmingeneratorGeneratorExtension extends Extension
 
         $container
             ->getDefinition('admingenerator.generator.listener')
-            ->addMethodCall('setCacheProvider', array(
+            ->addMethodCall('setCacheProvider', [
                 new Reference($config['generator_cache']),
                 $container->getParameter('kernel.environment'),
-            ));
+            ]);
 
         if ($config['use_doctrine_orm']) {
             $this->addCacheProviderToGenerator($config['generator_cache'], $container->getDefinition('admingenerator.generator.doctrine'), $container);
@@ -211,10 +211,10 @@ class AdmingeneratorGeneratorExtension extends Extension
     private function addCacheProviderToGenerator($cacheProviderServiceName, Definition $serviceDefinition, ContainerBuilder $container): void
     {
         $serviceDefinition
-            ->addMethodCall('setCacheProvider', array(
+            ->addMethodCall('setCacheProvider', [
                 new Reference($cacheProviderServiceName),
                 $container->getParameter('kernel.environment'),
-            ));
+            ]);
     }
 
     /**
