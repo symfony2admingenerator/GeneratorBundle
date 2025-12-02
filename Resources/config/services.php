@@ -56,7 +56,7 @@ return static function (ContainerConfigurator $container): void {
     $configureTwigExtension('twig.extension.admingenerator.localized_money', LocalizedMoneyExtension::class);
     $configureTwigExtension('twig.extension.admingenerator.extends', ExtendsAdmingeneratedExtension::class);
     $configureTwigExtension('twig.extension.admingenerator.security', SecurityExtension::class)
-        ->arg('$authorizationChecker', AuthorizationCheckerInterface::class);
+        ->arg('$authorizationChecker', service(AuthorizationCheckerInterface::class));
 
     $services->set('admingenerator.generator.listener', ControllerListener::class)
         ->tag('kernel.event_listener', ['event' => 'kernel.request', 'method' => 'onKernelRequest'])
