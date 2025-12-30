@@ -1,7 +1,7 @@
 <?php
 
 use Admingenerator\GeneratorBundle\Generator\DoctrineGenerator;
-use Admingenerator\GeneratorBundle\Guesser\DoctrineFieldGuesser;
+use Admingenerator\GeneratorBundle\Guesser\DoctrineORMFieldGuesser;
 use Admingenerator\GeneratorBundle\QueryFilter\DoctrineQueryFilter;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\param;
@@ -10,7 +10,7 @@ use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 return static function (ContainerConfigurator $container): void {
     $container->parameters()
         ->set('admingenerator.doctrine.class', DoctrineGenerator::class)
-        ->set('admingenerator.fieldguesser.doctrine.class', DoctrineFieldGuesser::class)
+        ->set('admingenerator.fieldguesser.doctrine.class', DoctrineORMFieldGuesser::class)
         ->set('admingenerator.queryfilter.doctrine.class', DoctrineQueryFilter::class);
 
     $services = $container->services();
