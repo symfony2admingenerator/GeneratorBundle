@@ -2,7 +2,8 @@
     public function scopesAction(Request $request)
     {
         $this->request = $request;
-        $this->setScope($this->request->get('group'), $this->request->get('scope'));
+        $routeParams   = $this->request->attributes->get('_route_params');
+        $this->setScope($routeParams['group'], $routeParams['scope']);
 
         return $this->redirect($this->getListUrl());
     }
