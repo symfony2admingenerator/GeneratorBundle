@@ -14,7 +14,7 @@ require_once $vendorDir.'/symfony/src/Symfony/Component/ClassLoader/UniversalCla
 use Symfony\Component\ClassLoader\UniversalClassLoader;
 
 $loader = new UniversalClassLoader();
-$loader->registerNamespaces(array(
+$loader->registerNamespaces([
     'Symfony'           => $vendorDir.'/symfony/src',
     'BabDev\PagerfantaBundle' => $vendorDir,
     'Pagerfanta'                    => $vendorDir.'/src',
@@ -23,10 +23,10 @@ $loader->registerNamespaces(array(
     'Doctrine\DBAL'     => $vendorDir.'/../vendor/doctrine-dbal/lib',
     'Doctrine\Tests'    => $vendorDir.'/doctrine/tests',
     'Doctrine'          => $vendorDir.'/doctrine/lib',
-));
-$loader->registerPrefixes(array(
-    'Twig_'             => array($vendorDir.'/twig/lib', $vendorDir.'/twig-extensions/lib'),
-));
+]);
+$loader->registerPrefixes([
+    'Twig_'             => [$vendorDir.'/twig/lib', $vendorDir.'/twig-extensions/lib'],
+]);
 $loader->register();
 
 spl_autoload_register(function($class) {

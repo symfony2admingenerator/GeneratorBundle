@@ -20,7 +20,7 @@ abstract class DoctrineFieldGuesser implements FieldGuesser
         private readonly bool $guessRequired,
         private readonly bool $defaultRequired)
     {
-        if (!in_array($objectModel = strtolower($objectModel), array('document', 'entity'))) {
+        if (!in_array($objectModel = strtolower($objectModel), ['document', 'entity'])) {
             throw new \InvalidArgumentException('$objectModel must be Document or Entity');
         }
 
@@ -214,21 +214,21 @@ abstract class DoctrineFieldGuesser implements FieldGuesser
         if (preg_match(sprintf('/%sType$/i', ucfirst($this->objectModel)), $type)) {
             $mapping = $this->getMetadatas($class)->getAssociationMapping($columnName);
 
-            return array(
+            return [
                 'multiple'      => ($mapping['type'] === ORMClassMetadata::MANY_TO_MANY || $mapping['type'] === ORMClassMetadata::ONE_TO_MANY),
                 'em'            => $this->getObjectManagerName($mapping['target'.ucfirst($this->objectModel)]),
                 'class'         => $mapping['target'.ucfirst($this->objectModel)],
                 'required'      => !$filter && $this->isRequired($class, $columnName),
-            );
+            ];
         }
 
         if (preg_match("/CollectionType$/i", $type)) {
-            $options = array(
+            $options = [
                 'allow_add'     => true,
                 'allow_delete'  => true,
                 'by_reference'  => false,
                 'entry_type' => $filter ? $this->filterTypes[$this->objectModel] : $this->formTypes[$this->objectModel],
-            );
+            ];
 
             if ($this->getMetadatas($class)->hasAssociation($columnName)) {
                 $mapping = $this->getMetadatas($class)->getAssociationMapping($columnName);
@@ -240,9 +240,9 @@ abstract class DoctrineFieldGuesser implements FieldGuesser
             return $options;
         }
 
-        return array(
+        return [
             'required' => !$filter && $this->isRequired($class, $columnName)
-        );
+        ];
     }
 
     protected function isRequired(string $class, string $fieldName): bool

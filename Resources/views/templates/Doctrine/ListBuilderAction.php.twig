@@ -29,7 +29,7 @@
      */
     protected function getFilters()
     {
-        $filters = $this->getSession()->get($this->getSessionPrefix().'List\Filters', array());
+        $filters = $this->getSession()->get($this->getSessionPrefix().'List\Filters', []);
 
         {%- for filter,column in builder.filterColumns -%}
             {%- if 'entity' == builder.getFieldGuesser().getDbType(model, column.filterOn) or 'collection' == builder.getFieldGuesser().getDbType(model, column.filterOn) -%}
@@ -96,7 +96,7 @@
                   $this->doctrine
                   ->getManagerForClass(get_class($filters['{{ filter }}']))
                   ->getUnitOfWork()
-                  ->registerManaged($filters['{{ filter }}'], array('{{ builder.getFieldGuesser().getModelPrimaryKeyName(filterModel) }}' => $filters['{{ filter }}']->get{{ builder.getFieldGuesser().getModelPrimaryKeyName(filterModel)|capitalize }}()), array());
+                  ->registerManaged($filters['{{ filter }}'], ['{{ builder.getFieldGuesser().getModelPrimaryKeyName(filterModel) }}' => $filters['{{ filter }}']->get{{ builder.getFieldGuesser().getModelPrimaryKeyName(filterModel)|capitalize }}()], []);
               }
 
             {%- endif %}
@@ -120,7 +120,7 @@
             $tables = explode('.', $table);
             $previousTable = 'q';
             foreach (array_slice($tables, 0, -1) as $table) {
-                $query->leftJoin(implode('.', array($previousTable, $table)), 'sort_' . $table);
+                $query->leftJoin(implode('.', [$previousTable, $table]), 'sort_' . $table);
                 $previousTable = 'sort_' . $table;
             }
             return 'sort_' . $table . '.' . end($tables);

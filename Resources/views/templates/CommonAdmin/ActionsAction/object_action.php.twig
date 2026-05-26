@@ -39,16 +39,16 @@
 
         return $this->render(
             '{{ namespace_prefix }}{{ bundle_name }}:{{ builder.BaseGeneratorName }}Actions:index.html.twig',
-            $this->getAdditionalRenderParameters(${{ builder.ModelClass }}, '{{ action.name }}') + array(
+            $this->getAdditionalRenderParameters(${{ builder.ModelClass }}, '{{ action.name }}') + [
                 "{{ builder.ModelClass }}" => ${{ builder.ModelClass }},
                 "title" => $this->getTranslator()->trans(
                     "{{ action.options.title|default("action.custom.title") }}",
-                    array('%name%' => '{{ action.name }}'),
+                    ['%name%' => '{{ action.name }}'],
                     '{{ action.options.title|default is empty ? "Admingenerator" : i18n_catalog|default("Admin") }}'
                 ),
                 "actionRoute" => "{{ builder.objectActionsRoute }}",
-                "actionParams" => array("pk" => $pk, "action" => "{{ action.name }}")
-            )
+                "actionParams" => ["pk" => $pk, "action" => "{{ action.name }}"]
+            ]
         );
     }
 
@@ -82,7 +82,7 @@
             'success',
             $this->getTranslator()->trans(
                 "{{ action.options.success|default("action.custom.success") }}",
-                array('%name%' => '{{ action.label }}'),
+                ['%name%' => '{{ action.label }}'],
                 '{{ action.options.success is defined ? i18n_catalog|default("Admin") : 'Admingenerator' }}'
             )
         );
@@ -112,7 +112,7 @@
 
         $header = $this->getTranslator()->trans(
             "{{ action.options.error|default("action.custom.error") }}",
-            array('%name%' => '{{ action.label }}'),
+            ['%name%' => '{{ action.label }}'],
             '{{ action.options.error is defined ? i18n_catalog|default("Admin") : 'Admingenerator' }}'
         );
 

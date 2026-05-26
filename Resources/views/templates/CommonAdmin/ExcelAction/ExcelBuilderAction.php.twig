@@ -56,12 +56,12 @@ class ExcelController extends \{{ namespace_prefix }}\{{ bundle_name }}\Controll
         }
 
         // Create the first bold row in the Excel spreadsheet
-        call_user_func(array($this,"createSpreadsheetHeader$suffix"), $sheet);
+        call_user_func([$this,"createSpreadsheetHeader$suffix"], $sheet);
         // Print the data
-        call_user_func(array($this,"createSpreadsheetData$suffix"), $sheet, $results);
+        call_user_func([$this,"createSpreadsheetData$suffix"], $sheet, $results);
 
-        $fileType = call_user_func(array($this,"getSpreadsheetFileType$suffix"));
-        $fileName = call_user_func(array($this,"getSpreadsheetFileName$suffix"), $fileType);
+        $fileType = call_user_func([$this,"getSpreadsheetFileType$suffix"]);
+        $fileName = call_user_func([$this,"getSpreadsheetFileName$suffix"], $fileType);
         $mimeType = $this->getSpreadsheetMimeType($fileType);
 
         // Create the Writer, Response and add header
@@ -74,7 +74,7 @@ class ExcelController extends \{{ namespace_prefix }}\{{ bundle_name }}\Controll
             readfile($tempFile);
             unlink($tempFile);
           },
-          200, array()
+          200, []
         );
         $response->headers->set('Content-Type', $mimeType.'; charset=utf-8');
         $response->headers->set('Content-Disposition', 'attachment;filename='.$fileName);
@@ -148,7 +148,7 @@ class ExcelController extends \{{ namespace_prefix }}\{{ bundle_name }}\Controll
             if ($this->validateCredentials('{{ credentials }}')) {
           {% endif %}
           $coordinate = \PhpOffice\PhpSpreadsheet\Cell\CellAddress::fromColumnAndRow($colNum, 1);
-          $sheet->setCellValue($coordinate, $translator->trans("{{ column.label }}", array(), '{{ i18n_catalog|default("Admin") }}'));
+          $sheet->setCellValue($coordinate, $translator->trans("{{ column.label }}", [], '{{ i18n_catalog|default("Admin") }}'));
           $sheet->getStyle($coordinate)->getFont()->setBold(true);
           $sheet->getColumnDimension($coordinate->columnName())->setAutoSize(true);
 
@@ -215,7 +215,7 @@ class ExcelController extends \{{ namespace_prefix }}\{{ bundle_name }}\Controll
           if ($this->validateCredentials('{{ credentials }}')) {
         {% endif %}
         $coordinate = \PhpOffice\PhpSpreadsheet\Cell\CellAddress::fromColumnAndRow($colNum, 1);
-        $sheet->setCellValue($coordinate, $translator->trans("{{ column.label }}", array(), '{{ i18n_catalog|default("Admin") }}'), true);
+        $sheet->setCellValue($coordinate, $translator->trans("{{ column.label }}", [], '{{ i18n_catalog|default("Admin") }}'), true);
         $sheet->getStyle($coordinate)->getFont()->setBold(true);
         $sheet->getColumnDimension($coordinate->columnName())->setAutoSize(true);
 

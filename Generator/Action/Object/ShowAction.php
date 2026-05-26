@@ -21,8 +21,8 @@ class ShowAction extends Action
 
         $this->setRoute($builder->getBaseActionsRoute().'_show');
 
-        $this->setParams(array(
+        $this->setParams([
             'pk' => '{{ '.$builder->getModelClass().'.'.$builder->getModelPrimaryKeyName().' }}',
-        ));
+        ]);
     }
 }

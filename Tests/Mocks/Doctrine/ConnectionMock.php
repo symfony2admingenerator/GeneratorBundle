@@ -31,7 +31,7 @@ class ConnectionMock extends Connection
     }
 
     #[Override]
-    public function insert($table, array $data, array $types = array()): int
+    public function insert($table, array $data, array $types = []): int
     {
         $this->_inserts[$table][] = $data;
         return $this->_lastInsertId++;

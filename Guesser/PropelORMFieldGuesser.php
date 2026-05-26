@@ -26,7 +26,7 @@ class PropelORMFieldGuesser implements FieldGuesser
 
     public function getAllFields(string $class): array
     {
-        $return = array();
+        $return = [];
 
         foreach ($this->getMetadatas($class)->getColumns() as $column) {
             $return[] = InflectorFactory::create()->build()->tableize($column->getPhpName());
@@ -137,7 +137,7 @@ class PropelORMFieldGuesser implements FieldGuesser
 
     public function getFormType(string $dbType, string $class, string $columnName): string
     {
-        $formTypes = array();
+        $formTypes = [];
 
         foreach ($this->formTypes as $key => $value) {
             // if config is all uppercase use it to retrieve \PropelColumnTypes
@@ -165,7 +165,7 @@ class PropelORMFieldGuesser implements FieldGuesser
 
     public function getFilterType(string $dbType, string $class, string $columnName): string
     {
-        $filterTypes = array();
+        $filterTypes = [];
 
         foreach ($this->filterTypes as $key => $value) {
             // if config is all uppercase use it to retrieve \PropelColumnTypes

@@ -59,7 +59,7 @@ class NewController extends BaseController
      */
     protected function getEditUrl($pk)
     {
-        return $this->generateUrl("{{ builder.baseActionsRoute }}_edit", array('pk' => $pk) );
+        return $this->generateUrl("{{ builder.baseActionsRoute }}_edit", ['pk' => $pk] );
     }
 
     /**
@@ -69,7 +69,7 @@ class NewController extends BaseController
      */
     protected function getShowUrl($pk)
     {
-        return $this->generateUrl("{{ builder.baseActionsRoute }}_show", array('pk' => $pk) );
+        return $this->generateUrl("{{ builder.baseActionsRoute }}_show", ['pk' => $pk] );
     }    
 
     /**
@@ -80,7 +80,7 @@ class NewController extends BaseController
      */
     protected function getAdditionalRenderParameters(\{{ model }} ${{ builder.ModelClass }})
     {
-        return array();
+        return [];
     }
 
     /**
@@ -91,7 +91,7 @@ class NewController extends BaseController
      */
     protected function getFormOptions(\{{ model }} ${{ builder.ModelClass }})
     {
-        return array();
+        return [];
     }
 
     protected function getNewForm(\{{ model }} ${{ builder.ModelClass }})

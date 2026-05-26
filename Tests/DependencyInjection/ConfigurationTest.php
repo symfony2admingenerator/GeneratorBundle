@@ -14,7 +14,7 @@ class ConfigurationTest extends TestCase
     public function testDefaultConfig(): void
     {
         $processor = new Processor();
-        $config = $processor->processConfiguration(new Configuration('admingen_generator'), array());
+        $config = $processor->processConfiguration(new Configuration('admingen_generator'), []);
 
         $this->assertEquals($this->getBundleDefaultConfig(), $config);
     }

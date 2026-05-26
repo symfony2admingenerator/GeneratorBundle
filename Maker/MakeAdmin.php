@@ -155,7 +155,7 @@ EOT
     $namespaceParts   = explode('\\', $namespace);
     $prefix           = $input->getArgument('prefix');
     $bundledNamespace = count($namespaceParts) > 1;
-    $bundleName       = strtr($namespace, array('\\' => ''));
+    $bundleName       = strtr($namespace, ['\\' => '']);
     $parameters       = [
         'bundle'          => $bundleName,
         'bundleName'      => $bundledNamespace ? end($namespaceParts) : $namespace,

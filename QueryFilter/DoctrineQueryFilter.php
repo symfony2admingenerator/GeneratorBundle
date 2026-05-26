@@ -151,6 +151,6 @@ class DoctrineQueryFilter extends BaseQueryFilter
             $parentTableAlias = $joinAlias;
         }
 
-        return array($parentTableAlias, $filteredField);
+        return [$parentTableAlias, $filteredField];
     }
 }

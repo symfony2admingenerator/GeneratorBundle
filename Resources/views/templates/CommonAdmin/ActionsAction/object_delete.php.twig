@@ -37,16 +37,16 @@
 
         return $this->render(
             '@{{ namespace_prefix }}{{ bundle_name|slice(0, -6) }}/{{ builder.BaseGeneratorName }}Actions/index.html.twig',
-            $this->getAdditionalRenderParameters(${{ builder.ModelClass }}, '{{ action.name }}') + array(
+            $this->getAdditionalRenderParameters(${{ builder.ModelClass }}, '{{ action.name }}') + [
                 "{{ builder.ModelClass }}" => ${{ builder.ModelClass }},
                 "title" => $this->getTranslator()->trans(
                     "{{ action.options.title|default('action.object.delete.confirm') }}",
-                    array(),
+                    [],
                     '{{ action.options.i18n|default('Admingenerator') }}'
                 ),
                 "actionRoute" => "{{ builder.objectActionsRoute }}",
-                "actionParams" => array("pk" => $pk, "action" => "delete")
-            )
+                "actionParams" => ["pk" => $pk, "action" => "delete"]
+            ]
         );
     }
 
@@ -79,7 +79,7 @@
             'success',
             $this->getTranslator()->trans(
                 '{{ action.options.success|default('action.object.delete.success') }}',
-                array('%name%' => '{{ action.name }}'),
+                ['%name%' => '{{ action.name }}'],
                 '{{ action.options.i18n|default('Admingenerator') }}'
             )
         );
@@ -111,7 +111,7 @@
             'error',
             $this->getTranslator()->trans(
                 "{{ action.options.error|default('action.object.delete') }}",
-                array(),
+                [],
                 '{{ action.options.i18n|default('Admingenerator') }}'
             )
         );
@@ -135,7 +135,7 @@
             'error',
             $this->getTranslator()->trans(
                 "{{ action.options.notfound|default('action.object.delete.notfound') }}",
-                array(),
+                [],
                 '{{ action.options.i18n|default('Admingenerator') }}'
             )
         );

@@ -10,8 +10,8 @@ class TestCase extends PHPUnitTestCase
 {
     protected function getContainer(): ContainerBuilder
     {
-        return new ContainerBuilder(new ParameterBag(array(
+        return new ContainerBuilder(new ParameterBag([
             'kernel.debug' => false,
-        )));
+        ]));
     }
 }

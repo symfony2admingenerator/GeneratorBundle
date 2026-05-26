@@ -28,10 +28,10 @@ class AssetsInstallCommand extends Command
         $this
             ->setDescription('Fetch bower declared dependencies and push them into web root directory')
             ->setHelp('The <info>admin:assets-install</info> command fetch bower dependencies (CSS and JS files) to the web root dir.')
-            ->setDefinition(array(
+            ->setDefinition([
                 new InputOption('mode', 'm', InputOption::VALUE_OPTIONAL, 'Mode to fetch dependencies', 'install'),
                 new InputOption('bower-bin', 'b', InputOption::VALUE_REQUIRED, 'Path to the bower binary', 'bower')
-            ))
+            ])
         ;
     }
 

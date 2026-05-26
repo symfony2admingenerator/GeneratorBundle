@@ -91,7 +91,7 @@ class ExcelBuilder extends ListBuilder
       if (!count($optionsFields)) return;
 
       $options = array_key_exists($column->getName(), $optionsFields) ?
-          $optionsFields[$column->getName()] : array();
+          $optionsFields[$column->getName()] : [];
 
       foreach ($options as $option => $value) {
           $column->setProperty($option, $value);

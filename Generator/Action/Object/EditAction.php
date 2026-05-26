@@ -21,8 +21,8 @@ class EditAction extends Action
 
         $this->setRoute($builder->getBaseActionsRoute().'_edit');
 
-        $this->setParams(array(
+        $this->setParams([
             'pk' => '{{ '.$builder->getModelClass().'.'.$builder->getModelPrimaryKeyName().' }}',
-        ));
+        ]);
     }
 }

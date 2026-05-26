@@ -323,12 +323,12 @@ class EchoExtension extends AbstractExtension
      */
     private function getTwigAssociativeArray(array $hashmap): string
     {
-        $contents = array();
+        $contents = [];
         foreach ($hashmap as $key => $value) {
             if (!str_contains($value, '{{') || !str_contains($value, '}}')) {
                 $value = "'$value'";
             } else {
-                $value = trim(str_replace(array('{{', '}}'), '', $value));
+                $value = trim(str_replace(['{{', '}}'], '', $value));
             }
 
             $contents[] = "$key: $value";

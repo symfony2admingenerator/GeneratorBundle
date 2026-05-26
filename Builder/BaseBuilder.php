@@ -80,12 +80,12 @@ abstract class BaseBuilder extends GenericBaseBuilder
             return $this->environment;
         }
         $loader = new FilesystemLoader($this->getTemplateDirs());
-        $twig = new Environment($loader, array(
+        $twig = new Environment($loader, [
             'autoescape' => false,
             'strict_variables' => true,
             'debug' => true,
             'cache' => $this->getGenerator()->getTempDir(),
-        ));
+        ]);
 
         $this->loadTwigExtensions($twig);
         $this->loadTwigFilters($twig);

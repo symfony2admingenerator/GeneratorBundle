@@ -25,7 +25,7 @@ class AdmingeneratorMenuBuilder
      */
     protected function addLinkURI(ItemInterface $menu, string $label, string $uri): ItemInterface
     {
-        $item = $menu->addChild($label, array('uri' => $uri));
+        $item = $menu->addChild($label, ['uri' => $uri]);
         $item->setExtra('translation_domain', $this->translation_domain);
 
         if ($this->isCurrentUri($item->getUri())) {
@@ -40,7 +40,7 @@ class AdmingeneratorMenuBuilder
      */
     protected function addLinkRoute(ItemInterface $menu, string $label, string $route, array $routeParameters = []): ItemInterface
     {
-        $item = $menu->addChild($label, array('route' => $route, 'routeParameters' => $routeParameters, 'routeAbsolute' => UrlGeneratorInterface::ABSOLUTE_PATH));
+        $item = $menu->addChild($label, ['route' => $route, 'routeParameters' => $routeParameters, 'routeAbsolute' => UrlGeneratorInterface::ABSOLUTE_PATH]);
         $item->setExtra('translation_domain', $this->translation_domain);
 
         if ($this->isCurrentUri($item->getUri())) {
@@ -67,8 +67,8 @@ class AdmingeneratorMenuBuilder
     protected function addDropdown(ItemInterface $menu, string $label, bool $caret = true): ItemInterface
     {
         $item = $this->addLinkURI($menu, $label, '#');
-        $item->setChildrenAttributes(array('class' => 'treeview-menu'));
-        $item->setAttributes(array('class' => 'treeview'));
+        $item->setChildrenAttributes(['class' => 'treeview-menu']);
+        $item->setAttributes(['class' => 'treeview']);
         $item->setExtra('caret', $caret);
 
         return $item;

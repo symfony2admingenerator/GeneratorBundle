@@ -61,7 +61,7 @@
             'success',
             $this->getTranslator()->trans(
                 '{{ action.options.success|default("action.custom.success") }}',
-                array('%name%' => '{{ action.name }}'),
+                ['%name%' => '{{ action.name }}'],
                 '{{ action.options.i18n|default('Admingenerator') }}'
             )
         );
@@ -92,7 +92,7 @@
             'error',
             $this->getTranslator()->trans(
                 '{{ action.options.error|default("action.custom.error") }}',
-                array('%name%' => '{{ action.name }}'),
+                ['%name%' => '{{ action.name }}'],
                 '{{ action.options.i18n|default('Admingenerator') }}'
             )
         );
@@ -113,7 +113,7 @@
             'error',
             $this->getTranslator()->trans(
                 'action.batch.none',
-                array(),
+                [],
                 'Admingenerator'
             )
         );

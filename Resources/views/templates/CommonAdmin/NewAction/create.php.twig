@@ -21,7 +21,7 @@
                 $this->saveObject(${{ builder.ModelClass }});
                 $this->postSave($form, ${{ builder.ModelClass }});
 
-                $this->addFlash('success', $this->getTranslator()->trans("{{ messages.success|default("action.object.edit.success") }}", array(), 'Admingenerator') );
+                $this->addFlash('success', $this->getTranslator()->trans("{{ messages.success|default("action.object.edit.success") }}", [], 'Admingenerator') );
 
                 {% set defaultActionAfterSave = builder.generator.bundleConfig.default_action_after_save %}
                 $actionAfterSave = "{{ actionAfterSave|default(defaultActionAfterSave) }}";
@@ -35,26 +35,26 @@
                 } else {
                     if (('edit' != $actionAfterSave) &&
                         method_exists($this,'get{{ builder.actionAfterSave|default(defaultActionAfterSave)|title }}Url')) {
-                        return $this->redirect(call_user_func(array($this, 'get{{ builder.actionAfterSave|default(defaultActionAfterSave)|title }}Url'), $pk));
+                        return $this->redirect(call_user_func([$this, 'get{{ builder.actionAfterSave|default(defaultActionAfterSave)|title }}Url'], $pk));
 
                     }
                     return $this->redirect($this->getEditUrl($pk));
                 }
             } catch (\Exception $e) {
                 $logger = $this->getLogger()->error($e->getMessage());
-                $this->addFlash('error',  $this->getTranslator()->trans("{{ messages.error|default("action.object.edit.error") }}", array(), 'Admingenerator') );
+                $this->addFlash('error',  $this->getTranslator()->trans("{{ messages.error|default("action.object.edit.error") }}", [], 'Admingenerator') );
                 $this->onException($e, $form, ${{ builder.ModelClass }});
             }
 
         } else {
-            $this->addFlash('error', $this->getTranslator()->trans("{{ messages.error|default("action.object.edit.error") }}", array(), 'Admingenerator') );
+            $this->addFlash('error', $this->getTranslator()->trans("{{ messages.error|default("action.object.edit.error") }}", [], 'Admingenerator') );
         }
 
-        return $this->render('{% if builder.bundleContext %}@{{ builder.namespacePrefixForTemplate }}{{ bundle_name|slice(0, -6) }}/{% endif %}{{ builder.BaseGeneratorName }}New/index.html.twig', $this->getAdditionalRenderParameters(${{ builder.ModelClass }}) + array(
+        return $this->render('{% if builder.bundleContext %}@{{ builder.namespacePrefixForTemplate }}{{ bundle_name|slice(0, -6) }}/{% endif %}{{ builder.BaseGeneratorName }}New/index.html.twig', $this->getAdditionalRenderParameters(${{ builder.ModelClass }}) + [
             '{{ builder.ModelClass }}' => ${{ builder.ModelClass }},
             'createUrl' => $this->getCreateUrl(),
             'form' => $form->createView(),
-        ));
+        ]);
     }
 
     /**

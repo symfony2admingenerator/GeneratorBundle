@@ -65,7 +65,7 @@ class EditController extends BaseController
      */
     protected function getEditUrl($pk)
     {
-        return $this->generateUrl("{{ builder.baseActionsRoute }}_edit", array('pk' => $pk) );
+        return $this->generateUrl("{{ builder.baseActionsRoute }}_edit", ['pk' => $pk] );
     }
 
     /**
@@ -75,7 +75,7 @@ class EditController extends BaseController
      */
     protected function getShowUrl($pk)
     {
-        return $this->generateUrl("{{ builder.baseActionsRoute }}_show", array('pk' => $pk) );
+        return $this->generateUrl("{{ builder.baseActionsRoute }}_show", ['pk' => $pk] );
     }
     
     /**
@@ -85,7 +85,7 @@ class EditController extends BaseController
      */
     protected function getUpdateUrl($pk)
     {
-        return $this->generateUrl("{{ builder.baseActionsRoute }}_update", array('pk' => $pk) );
+        return $this->generateUrl("{{ builder.baseActionsRoute }}_update", ['pk' => $pk] );
     }
 
     /**
@@ -96,7 +96,7 @@ class EditController extends BaseController
      */
     protected function getAdditionalRenderParameters(\{{ model }} ${{ builder.ModelClass }})
     {
-        return array();
+        return [];
     }
 
     /**
@@ -107,7 +107,7 @@ class EditController extends BaseController
      */
     protected function getFormOptions(\{{ model }} ${{ builder.ModelClass }})
     {
-        return array();
+        return [];
     }
 
     {% block getObject -%}
@@ -134,12 +134,12 @@ class EditController extends BaseController
     {% block getVersions %}
     protected function getVersions()
     {
-        return $this->getSession()->get('{{ namespace_prefix }}\{{ bundle_name }}\{{ builder.BaseGeneratorName }}Edit\Versions', array());
+        return $this->getSession()->get('{{ namespace_prefix }}\{{ bundle_name }}\{{ builder.BaseGeneratorName }}Edit\Versions', []);
     }
     {% endblock %}
 
     {% block setVersions %}
-    protected function setVersions($versions = array())
+    protected function setVersions($versions = [])
     {
         $this->getSession()->set('{{ namespace_prefix }}\{{ bundle_name }}\{{ builder.BaseGeneratorName }}Edit\Versions', $versions);
     }
