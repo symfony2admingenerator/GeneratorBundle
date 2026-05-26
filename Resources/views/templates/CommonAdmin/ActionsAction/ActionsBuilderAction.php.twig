@@ -40,8 +40,8 @@ class ActionsController extends BaseController
     public function batchAction(Request $request)
     {
         $this->request = $request;
-        $action = $request->get('action');
-        $selected = $request->get('selected');
+        $action = $request->request->get('action');
+        $selected = $request->request->all('selected');
 
         if (!$selected || !$action) {
             $this->addFlash(

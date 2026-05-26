@@ -14,7 +14,7 @@ class {{ controllerName }} extends AbstractController
 {
     public function indexAction(Request $request{% if require_pk %}, $pk{% endif %})
     {
-        if ($request->get('stop_loop')) {
+        if ($request->query->has('stop_loop')) {
             {% if generateBaseInProjectDir|default(false) -%}
             throw new CantGenerateException('Make sure to run the `admin:generate-base-classes` command if you are seeing this!');
             {%- else -%}
