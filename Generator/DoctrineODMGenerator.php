@@ -44,7 +44,7 @@ class DoctrineODMGenerator extends Generator
         );
         $generator->setBaseGeneratorName($this->getBaseGeneratorName());
 
-        $builders = $generator->getFromYaml('builders', array());
+        $builders = $generator->getFromYaml('builders', []);
 
         if (array_key_exists('list', $builders)) {
             $generator->addBuilder(new ListBuilderAction($this->twig));

@@ -21,10 +21,10 @@ class ArrayExtensionTest extends TestCase
 
     public function testMapByWithNumericKey(): void
     {
-        $source = array(
+        $source = [
             ['val0FromArray1', 'val1FromArray1'],
             ['val0FromArray2', 'val1FromArray2']
-        );
+        ];
 
         $this->assertEquals(
             ['val0FromArray1', 'val0FromArray2'],

@@ -60,11 +60,11 @@ class AdmingeneratedClassLoader
         $generator->addBuilder($builder);
         $builder->setOutputName($fileName.'.php');
 
-        $builder->setVariables(array(
+        $builder->setVariables([
             'controllerName' => $controllerName,
             'namespace'      => $namespace,
             'require_pk'     => 'ListController' != $controllerName // We don't care about ActionsController and filters
-        ));
+        ]);
 
         $generator->writeOnDisk($this->basePath);
     }

@@ -15,10 +15,10 @@ use {{ builder.namespacePrefixWithSubfolder }}\{{ bundle_name }}\Form\Type\{{ bu
         $this->preBindRequest(${{ builder.ModelClass }});
         $form = $this->getNewForm(${{ builder.ModelClass }});
 
-        return $this->render('{% if builder.bundleContext %}@{{ builder.namespacePrefixForTemplate }}{{ bundle_name|slice(0, -6) }}/{% endif %}{{ builder.BaseGeneratorName }}New/index.html.twig', $this->getAdditionalRenderParameters(${{ builder.ModelClass }}) + array(
+        return $this->render('{% if builder.bundleContext %}@{{ builder.namespacePrefixForTemplate }}{{ bundle_name|slice(0, -6) }}/{% endif %}{{ builder.BaseGeneratorName }}New/index.html.twig', $this->getAdditionalRenderParameters(${{ builder.ModelClass }}) + [
             '{{ builder.ModelClass }}' => ${{ builder.ModelClass }},
             'createUrl' => $this->getCreateUrl(),
             'form' => $form->createView(),
-        ));
+        ]);
     }
 {% endblock %}

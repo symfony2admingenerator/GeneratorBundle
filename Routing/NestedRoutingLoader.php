@@ -8,13 +8,13 @@ class NestedRoutingLoader extends RoutingLoader
 {
     public function load(mixed $resource, ?string $type = null): RouteCollection
     {
-        $this->actions['nested_move'] = array(
+        $this->actions['nested_move'] = [
             'path'         => '/nested-move/{dragged}/{action}/{dropped}',
-            'defaults'     => array(),
-            'requirements' => array(),
-            'methods'      => array('GET'),
+            'defaults'     => [],
+            'requirements' => [],
+            'methods'      => ['GET'],
             'controller'   => 'list',
-        );
+        ];
 
         return parent::load($resource, $type);
     }

@@ -313,7 +313,7 @@ class BaseBuilder extends GenericBaseBuilder
     public function getColumnsFor(mixed $input): array
     {
         if (!is_array($input)) {
-            $input = array($input);
+            $input = [$input];
         }
 
         $it = new RecursiveIteratorIterator(new RecursiveArrayIterator($input));
@@ -541,10 +541,10 @@ class BaseBuilder extends GenericBaseBuilder
         $parse_stylesheets = function ($params, $stylesheets) {
             foreach ($params as $css) {
                 if (is_string($css)) {
-                    $css = array(
+                    $css = [
                         'path' => $css,
                         'media' => 'all',
-                    );
+                    ];
                 }
 
                 $stylesheets[] = $css;
@@ -555,12 +555,12 @@ class BaseBuilder extends GenericBaseBuilder
 
         // From config.yml
         $stylesheets = $parse_stylesheets(
-            $this->getGenerator()->getFromBundleConfig('stylesheets', array()), array()
+            $this->getGenerator()->getFromBundleConfig('stylesheets', []), []
         );
 
         // From generator.yml
         return $parse_stylesheets(
-            $this->getVariable('stylesheets', array()), $stylesheets
+            $this->getVariable('stylesheets', []), $stylesheets
         );
     }
 
@@ -579,15 +579,15 @@ class BaseBuilder extends GenericBaseBuilder
         $parse_javascripts = function ($params, $javascripts) use ($self) {
             foreach ($params as $js) {
                 if (is_string($js)) {
-                    $js = array(
+                    $js = [
                         'path' => $js,
-                    );
+                    ];
                 } elseif (isset($js['route'])) {
-                    $js = array(
+                    $js = [
                         'path' => $self->getGenerator()
                                         ->getRouter()
                                         ->generate($js['route'], $js['routeparams']),
-                    );
+                    ];
                 }
 
                 $javascripts[] = $js;
@@ -598,12 +598,12 @@ class BaseBuilder extends GenericBaseBuilder
 
         // From config.yml
         $javascripts = $parse_javascripts(
-            $this->getGenerator()->getFromBundleConfig('javascripts', array()), array()
+            $this->getGenerator()->getFromBundleConfig('javascripts', []), []
         );
 
         // From generator.yml
         return $parse_javascripts(
-            $this->getVariable('javascripts', array()), $javascripts
+            $this->getVariable('javascripts', []), $javascripts
         );
     }
 

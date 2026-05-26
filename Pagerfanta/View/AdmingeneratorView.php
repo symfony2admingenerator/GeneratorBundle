@@ -12,7 +12,7 @@ class AdmingeneratorView implements ViewInterface
     {
     }
 
-    public function render(PagerfantaInterface $pagerfanta, callable $routeGenerator, array $options = array()): string
+    public function render(PagerfantaInterface $pagerfanta, callable $routeGenerator, array $options = []): string
     {
         $options = array_merge([
             'proximity'              => 2,

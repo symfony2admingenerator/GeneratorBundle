@@ -6,11 +6,11 @@ namespace Admingenerator\GeneratorBundle\Tests\Twig\Extension;
  */
 class TestObject
 {
-    public static array $called = array(
+    public static array $called = [
         '__toString'  => 0,
         'foo'         => 0,
         'getFooBar'   => 0,
-    );
+    ];
 
     public function __construct($bar = 'bar')
     {

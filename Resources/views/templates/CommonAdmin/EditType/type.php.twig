@@ -55,7 +55,7 @@ class {{ builder.YamlKey|ucfirst }}Type extends BaseType
      * @param  array $builderOptions The builder options.
      * @return array Field options.
      */
-    protected function getOptions{{ column.name|classify|php_name }}(array $builderOptions = array())
+    protected function getOptions{{ column.name|classify|php_name }}(array $builderOptions = [])
     {
         $optionsClass = '{{ builder.namespacePrefixWithSubfolder }}\{{ bundle_name }}\Form\Type\{{ builder.BaseGeneratorName }}\Options';
         $options = class_exists($optionsClass) ? new $optionsClass() : null;

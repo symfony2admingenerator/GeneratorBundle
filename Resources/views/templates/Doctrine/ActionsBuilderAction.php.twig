@@ -69,7 +69,7 @@
 {% if admingenerator_config('use_doctrine_orm_batch_remove') %}
         $em = $this->doctrine->getManagerForClass('{{ model }}');
         $objects = $em->getRepository('{{ model }}')
-            ->findBy(array('{{ builder.getFieldGuesser().getModelPrimaryKeyName(model) }}' => $selected));
+            ->findBy(['{{ builder.getFieldGuesser().getModelPrimaryKeyName(model) }}' => $selected]);
         foreach ($objects as $object) {
             $em->remove($object);
         }
@@ -87,7 +87,7 @@
 
 {% block saveObject %}
 
-    protected function saveObject(\{{ model }} ${{ builder.ModelClass }}, array $validationGroups = array(), $debug = true)
+    protected function saveObject(\{{ model }} ${{ builder.ModelClass }}, array $validationGroups = [], $debug = true)
     {
         $validator = $this->getValidator();
         $errors = $validator->validate(${{ builder.ModelClass }}, $validationGroups, false, true);

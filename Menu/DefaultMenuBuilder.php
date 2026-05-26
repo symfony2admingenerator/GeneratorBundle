@@ -7,7 +7,7 @@ class DefaultMenuBuilder extends AdmingeneratorMenuBuilder
     public function sidebarMenu(array $options): mixed
     {
         $menu = $this->factory->createItem('root');
-        $menu->setChildrenAttributes(array('class' => 'sidebar-menu'));
+        $menu->setChildrenAttributes(['class' => 'sidebar-menu']);
 
         if ($dashboardRoute = $this->dashboardRoute) {
             $this

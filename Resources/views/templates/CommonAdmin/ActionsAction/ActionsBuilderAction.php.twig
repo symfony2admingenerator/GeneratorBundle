@@ -48,7 +48,7 @@ class ActionsController extends BaseController
                 'warning',
                 $this->getTranslator()->trans(
                     "action.batch.warning",
-                    array(),
+                    [],
                     'Admingenerator'
                 )
             );
@@ -129,7 +129,7 @@ class ActionsController extends BaseController
      */
     protected function getAdditionalRenderParameters(\{{ model }} ${{ builder.ModelClass }}, $action)
     {
-        return array();
+        return [];
     }
 
     /**
@@ -156,7 +156,7 @@ class ActionsController extends BaseController
         if (count($exception->getErrors()) > 0) {
             $html = '<dl class="dl-horizontal dl-actions-error">';
             foreach ($exception->getErrors() as $error) {
-                $label = $this->getTranslator()->trans(ucfirst($error->getPropertyPath()), array(), $translationDomain);
+                $label = $this->getTranslator()->trans(ucfirst($error->getPropertyPath()), [], $translationDomain);
 
                 $html .= '<dt>'.$label.'</dt><dd>'.$error->getMessage().'</dd>';
             }

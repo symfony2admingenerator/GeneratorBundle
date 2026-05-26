@@ -41,7 +41,7 @@
 
         if (isset($filters)) {
             // Set no active scope
-            $this->setScopes(array());
+            $this->setScopes([]);
             $this->setFilters($filters);
         }
 
@@ -61,7 +61,7 @@
     */
     protected function getFilters()
     {
-        return $this->getSession()->get($this->getSessionPrefix().'List\Filters', array());
+        return $this->getSession()->get($this->getSessionPrefix().'List\Filters', []);
     }
     {% endblock %}
 
@@ -106,7 +106,7 @@
     */
     protected function getFiltersOptions()
     {
-        return array();
+        return [];
     }
 
    /**

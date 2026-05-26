@@ -92,7 +92,7 @@ class ScriptHandler
 
     protected static function getPhpArguments()
     {
-        $arguments = array();
+        $arguments = [];
         $phpFinder = new PhpExecutableFinder();
         if (method_exists($phpFinder, 'findArguments')) {
             $arguments = $phpFinder->findArguments();

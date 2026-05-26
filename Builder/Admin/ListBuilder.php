@@ -199,7 +199,7 @@ class ListBuilder extends BaseBuilder
   public function getExcelActions(): array
   {
       if (null === $this->excelActions) {
-          $this->excelActions = array();
+          $this->excelActions = [];
           $this->fillExportActions();
       }
 

@@ -32,7 +32,7 @@ use Pagerfanta\Doctrine\MongoDBODM\QueryAdapter as PagerAdapter;
      */
     protected function getFilters()
     {
-        $filters = $this->getSession()->get($this->getSessionPrefix().'List\Filters', array());
+        $filters = $this->getSession()->get($this->getSessionPrefix().'List\Filters', []);
 
         {%- for filter,column in builder.filterColumns -%}
             {%- if 'document' == builder.getFieldGuesser().getDbType(model, column.filterOn) or 'collection' == builder.getFieldGuesser().getDbType(model, column.filterOn) -%}
@@ -88,7 +88,7 @@ use Pagerfanta\Doctrine\MongoDBODM\QueryAdapter as PagerAdapter;
             {%- if 'document' == builder.getFieldGuesser().getDbType(model, column.filterOn) or 'collection' == builder.getFieldGuesser().getDbType(model, column.filterOn) -%}
             {% set filterModel = builder.getFieldGuesser().getModelType(model, column.filterOn) %}
         if (isset($filters['{{ filter }}'])) {
-             $this->getDocumentManager()->getUnitOfWork()->registerManaged($filters['{{ filter }}'], $filters['{{ filter }}']->get{{ builder.getFieldGuesser().getModelPrimaryKeyName(filterModel)|capitalize }}(), array());
+             $this->getDocumentManager()->getUnitOfWork()->registerManaged($filters['{{ filter }}'], $filters['{{ filter }}']->get{{ builder.getFieldGuesser().getModelPrimaryKeyName(filterModel)|capitalize }}(), []);
         }
             {%- endif %}
         {% endfor -%}

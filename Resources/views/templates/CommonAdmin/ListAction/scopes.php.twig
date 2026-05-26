@@ -36,7 +36,7 @@
         $scopes[strtolower($groupName)] = strtolower($scopeName);
         $this->setScopes($scopes);
 
-        $filters = array();
+        $filters = [];
         foreach ($scopes as $scopeGroupName => $scopeName) {
             $filters += $this->getScopeFilters($scopeGroupName);
         }
@@ -59,7 +59,7 @@
 
     protected function getDefaultScopes()
     {
-        $scopes = array();
+        $scopes = [];
 
         {% if scopes is defined -%}
         {%- for groupName, group in scopes %}
@@ -93,11 +93,11 @@
     protected function getScopeFilters($groupName)
     {
         if (!$scope = $this->getScope($groupName)) {
-            return array();
+            return [];
         }
 
         $groupName = strtolower($groupName);
-        $filters = array();
+        $filters = [];
 
         {% if scopes is defined -%}
         {% for groupName, group in scopes -%}

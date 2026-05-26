@@ -43,7 +43,7 @@ class Action
     public function setProperty($option, $value): void
     {
         $option = InflectorFactory::create()->build()->classify($option);
-        call_user_func_array(array($this, 'set'.$option), array($value));
+        call_user_func_array([$this, 'set'.$option], [$value]);
     }
 
     public function getName(): string
